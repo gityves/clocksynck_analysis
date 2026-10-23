@@ -2,7 +2,11 @@
 
 ## Purpose, scope and rules
 
-The agent runs nine work packages (WP0-WP8) that close the paper's main weaknesses: a fragile Figure 3 control, no mechanism, a missing positive control, no living-human validation of internal time beyond one cohort, and an unexplained cancer break; WP8 adds tissue proxies for night work, breast cancer and social jetlag. Everything uses public data or data already held by the project; no new experiments and no new access requests.
+The agent runs nine work packages (WP0-WP8) that close the paper's main weaknesses: a fragile Figure 3 control, no mechanism, no living-human validation of internal time beyond one cohort, and an unexplained cancer break; WP8 adds tissue proxies for night work, breast cancer and social jetlag. Everything uses public data or data already held by the project; no new experiments and no new access requests.
+
+**Positives.** The paper's pre-specified disease positives are the cancer break (A86, A87, A97) and the psoriatic local-clock delay (A54, A78, A81b); WP5 and WP6 strengthen them. The perturbation controls of WP3 (feeding, A111, A112, A129) and WP8 (simulated night shift, A124) are interesting additions, not required for the paper: run them, but no main claim waits on them, except that the A126-A127 cue results are read as claims only if A124 passes.
+
+**Confirmatory family.** Five hypotheses carry the headline claims and are tested with Holm's correction over the five (family-wise alpha 0.05, each one-sided as registered): H109.1 and H109.2 (Figure 3: organs coupled without cues, and the coupling is clock rotation, not a shared displacement), H114.1 (cancer: MYC beyond proliferation, purity-adjusted), H115.1 and H116.1 (psoriasis: trait component, and reversal specific to treatment). Every other hypothesis is secondary (own alpha 0.05, labelled secondary in the text) or descriptive. Report both the raw and the Holm-adjusted p of the five. The registration of each of the five states its membership in the family.
 
 **Out of scope (do not attempt):** brain-bank times of death (HBCC, AMP-PD), the circadiomics left-ventricle request, ICU temperature records, Synapse or dbGaP datasets not already held (Ruzicka 2024, AMP RA, ImmuNexUT), and any wet-lab or animal experiment. GTEx protected phenotypes already held under phs000424 may be used, aggregates only, as in A46-A99.
 
@@ -76,11 +80,13 @@ These remove inconsistencies a reviewer would find in the supplement. None needs
 
 **6. Gene-symbol audit (after the A85 correction of 2026-10-22).** The legacy A85 script matched gene symbols against the Ensembl `var_names` of `atlas_wg/*/pseudobulk.h5ad`, so every gene resolved to the same column. List every script that reads an Ensembl-indexed h5ad and matches symbols with `gene_columns(a.var_names, ...)` or similar; check first those behind A31b, A39, A50 and A96. Search `paper/` (migrated code, `common/gtex.py`, `common/datasets/`) and the legacy scripts those results came from. For each, rerun with matching on `feature_name`, record which results change, and add a dated erratum to `results_preliminary.md`. *Base code:* A31b `results/figure_2/scripts/gene_rhythms/compute_atlas_gene_rhythms.py`, A39 `.../gene_rhythms/compute_donor_curve.py`, A50 `.../gene_rhythms/compute_gene_map.py`, A96 `results/figure_4/scripts/resilience/compute_gtex_sex_bmi.py` with builders `common/datasets/{islets_a96,masld_pooled_a96}`. All new builds (A118, A122) match on `feature_name` from the start, and every script reports the number of requested genes found.
 
+**8. Anchor robustness as a standard readout.** In datasets with disease donors only, or where the anchors were chosen by rule rather than learned, the host depends on the anchor choice. For every contrast cited in Figures 4-5, report the block agreement r\* between the anchor block and the remaining compartments (`Dataset.agreement`, as the brain-periphery test of A103) and the contrast recomputed on the host of all compartments (leave one out). Add this as a general function to clocksync (with a test) if `agreement` does not already cover it, and as a column of the contrast tables. A contrast whose sign changes with the host is flagged in the figure table.
+
 **7. A22 V17.2 note.** The legacy coherence values came from an empty stratum read as NaN (pairs not centred). Record the centred values from the port (e\_control 0.45-0.55; `results/extended_data/scripts/simulations/compute_a22_colon.py`, README) as an erratum to the archive run note; the verdict is unchanged.
 
 ## WP1. Is the coupling of organs without cues a clock? (A109, GTEx; highest priority)
 
-Figure 3 rests on inter-organ coherence C staying at 0.41-0.46 in ventilated and slow deaths (A92, A93). C has no clock-specific null, and A25 found a shared non-temporal post-mortem state lying inside the clock plane. A109 tests whether C is clock-shaped.
+Figure 3 rests on inter-organ coherence C staying at 0.41-0.46 in ventilated and slow deaths (A92, A93). C has no clock-specific null, and A25 found a shared non-temporal post-mortem state lying inside the clock plane. A109 tests whether C is clock-shaped and whether it reflects clocks that keep their phase relations, not a shared push. Two confounds are fixed in advance. (1) Procurement: ventilated donors are beating-heart organ donors, fast deaths are post-mortem collections, so they differ in collection as well as in cues; Hardy 3 and Hardy 4 deaths are post-mortem collections without daily cues, and the fast-vs-Hardy 4 contrast is reported beside every fast-vs-ventilated one. (2) Amplitude: C falls when the clock-plane variance falls relative to noise, with no change in coupling; every C is reported with the per-tissue clock-plane variance (z2 V + 2 psi, A104) of the same group.
 
 *Base code:* `results/figure_3/scripts/gtex_cues/compute_coupling_sources.py` (A92, A93: C, groups, equal-n subsampling, GC score), `results/figure_3/scripts/cues_lost/compute_walltime_hosts.py`, `.../gtex_cues/compute_glucocorticoid.py` (A27 pull direction), `results/figure_1/scripts/windows/compute_nontemporal.py` (A26 non-temporal direction), `common/gtex.py`. Nulls: `clocksync.paired.pseudo_waveforms` (expression-matched pseudo-clock sets with the clock's loadings) and `Waveform.permuted` (permuted acrophases).
 
@@ -89,10 +95,10 @@ Figure 3 rests on inter-organ coherence C staying at 0.41-0.46 in ventilated and
 **Nulls (fixed before scoring).**
 
 1. *Pseudo-clock genes.* 200 expression-matched 14-gene sets (`clocksync.paired.pseudo_waveforms`, matched on mean log CPM per tissue, clock and D6 clock-output genes excluded) carrying the GTEx waveform loadings; C recomputed for each.
-2. *Permuted-acrophase planes.* 200 waveforms with gene acrophases permuted; C recomputed.
+2. *Permuted-acrophase planes (secondary null).* 200 waveforms with gene acrophases permuted; C recomputed. The clock genes peak in two antiphase blocks, so many permutations keep a clock-like plane and this null is conservative; it is reported, not required.
 3. *Shuffled pairing.* Donor labels shuffled within tissue (expected C about 0; sanity check).
 
-**Primary (H109.1).** In ventilated donors, C\_clock exceeds the 95th percentile of both the pseudo-clock and the acrophase nulls. Statistic: C\_clock minus the null median, one-sided empirical p < 0.05 against each null (both must pass).
+**Primary (H109.1, confirmatory family).** In ventilated donors, C\_clock exceeds the pseudo-clock null. Statistic: C\_clock minus the pseudo-clock null median, one-sided empirical p (Holm over the family). Secondary: the same against the acrophase null.
 
 **Secondary.**
 
@@ -100,15 +106,18 @@ Figure 3 rests on inter-organ coherence C staying at 0.41-0.46 in ventilated and
 - *Excess coherence*, C\_clock minus pseudo-clock median, per group with donor bootstrap: does the clock-specific part fall from fast to ventilated, and by how much?
 - *Non-temporal component.* In fast deaths, regress each tissue's state on (cos, sin) of time of death; the residual cross-tissue covariance defines the non-temporal shared direction. Report the share of ventilated C along that direction vs orthogonal to it.
 - *Processing check.* C restricted to tissue pairs collected by different procedures (exclude pairs dissected together if GTEx annotations allow).
+- *Procurement check.* H109.1 and H109.2 repeated in Hardy 4 (post-mortem, no cues); a pass in ventilated donors with a failure in Hardy 4 is read as procurement-dependent.
 
-**H109.2 Rotating clocks or a shared displacement? (primary, Holm with H109.1).** A shared perturbation (steroids, catecholamines, hypoxia, the agonal phase) that pushes every organ's clock genes the same way would create cross-organ covariance without phase coupling. Ventilation durations vary, so truly drifting clocks should scatter donors' shared states around the clock plane, while a displacement keeps them along one axis.
+**H109.2 Rotating clocks or a shared displacement? (primary, confirmatory family).** A shared perturbation (steroids, catecholamines, hypoxia, the agonal phase) that pushes every organ's clock genes the same way would create cross-organ covariance without phase coupling. Two direct signatures separate the readings: running clocks keep the organs' phase relations, and their shared states scatter around the plane; a displacement gives real-valued (0 or 12 h) relations along one axis.
 
-- Statistics, ventilated donors (fast deaths as reference): (a) major-axis share of the noise-corrected host covariance; (b) circular spread of donors' host phases (Rayleigh R, and axial R of doubled angles); (c) angle between the major axis and the A27 glucocorticoid pull direction (17.7 h on the GTEx clock), modulo 12 h.
-- Simulations at the ventilated design (same donors, tissues, depths, 200 each): (i) clocks rotating with uniform phases at the observed coupling; (ii) a pure shared displacement of the observed size along the A27 direction; (iii) mixtures at 25 / 50 / 75 % displacement.
-- Pass (rotating clocks): the observed major-axis share lies within the 95 % range of (i) and outside that of (ii), and the axis is more than 2 h (mod 12) from the glucocorticoid direction.
-- Reading: H109.2 failing toward (ii) means the coupling is a shared state, not phase coupling; the coupling claim is removed whatever H109.1 shows. Report the mixture fraction that best matches the data.
+- *Offset preservation (primary statistic).* For each tissue pair, the phase of the noise-corrected complex covariance, arg E[z\_a conj(z\_b)], in ventilated donors vs the same in fast deaths. Statistic: circular correlation (Fisher-Lee) over the 66 pairs; null: tissue labels permuted jointly in the ventilated group (10,000). Pass: correlation > 0, one-sided p (Holm over the family), and the median absolute phase of the ventilated pair relations, folded to [0, 12 h], is not closer to 0 or 12 h than in fast deaths (one-sided permutation p > 0.05 for "closer").
+- *Circularity (secondary).* Pooled ratio |E[z\_a z\_b]| / |E[z\_a conj(z\_b)]| over pairs (pseudo-covariance over covariance): near 0 for rotating clocks with scattered phases, near 1 for a displacement. Compared with simulations at the ventilated design (same donors, tissues, depths, 200 each): (i) clocks rotating with uniform phases at the observed coupling; (ii) a pure displacement of the observed size along the A27 glucocorticoid direction (17.7 h on the GTEx clock); (iii) mixtures at 25 / 50 / 75 % displacement. Report the mixture fraction that best matches the data.
+- *Descriptive.* Major-axis share of the host covariance; Rayleigh and axial R of donors' host phases; angle between the major axis and the glucocorticoid direction, modulo 12 h.
+- Reading: offset preservation failing (relations collapse to 0 / 12 h, or no correlation with the fast-death relations) means the coupling is a shared state, not phase coupling; the coupling claim is removed whatever H109.1 shows.
 
-**Reading.** H109.1 passes: organs share a clock-shaped state without cues; Figure 3 stands. Fails against the acrophase null only: shared, not clock-shaped; Figure 3 is reframed as "organs share a donor state", and the mechanism tests of WP2 are dropped from the main text. Fails both: remove the coupling claim.
+**A109b, independent replication in Tabula Sapiens (secondary).** Tabula Sapiens donors are brain-dead, ventilated organ donors with many organs each, outside GTEx; the archive's multi-organ gate already passes on them (healthy-atlas table, p\_acrophase 0.017; check the number in the archive results before citing). Per donor x organ pseudobulks of stromal-vascular cells (fibroblasts, endothelium, mural cells; the A17 anchor families), organs with >= 5 donors. Statistics: C against the pseudo-clock null (as H109.1) and offset preservation against the GTEx fast-death pair relations for the organs both share (as H109.2). One-sided p < 0.05 each. Feasibility rule: >= 6 organs shared by >= 5 donors, otherwise descriptive. Builder: `common/datasets/cells_census` or a new `tabula_sapiens_organs` builder (Census, feature\_name matching).
+
+**Reading.** H109.1 and H109.2 pass: organs share a clock-shaped state without cues and keep their phase relations; Figure 3 stands (with A109b as replication if it passes). H109.1 passes and H109.2 fails: organs share a donor state, not a running clock; Figure 3 is reframed as "organs share a donor state", and WP2 is dropped from the main text. H109.1 fails: remove the coupling claim. A pass in ventilated donors only (Hardy 4 failing) is reported as procurement-dependent.
 
 ## WP2. What keeps organs coupled? Memory, active coupling, and exclusions (A110)
 
@@ -116,13 +125,11 @@ Figure 3 rests on inter-organ coherence C staying at 0.41-0.46 in ventilated and
 
 Run only if H109.1 and H109.2 pass. Three explanations remain after WP1: memory of the last common phase, active coupling among peripheral organs that free-run as a group, or a residual external cue. A110 decides between the first two and tests the cues brain-dead ICU patients are unlikely to have. Data, groups and states as A92/A93; protected phenotypes aggregates only.
 
-**H110.1 Memory or a plateau? (primary).**
+**H110.1 Does coupling decay with time without cues? (primary of A110, secondary for the paper).** Ventilation days go with case mix (cause of death, sepsis, steroids), few donors pass 10 days, and the date of brain death or of cue loss is not recorded, so a pre-specified contrast is preferred to model selection between curves.
 
-- Coherence against ventilation days, continuous: C in sliding windows of 60 donors ordered by days (step 10 donors), with donor bootstrap; report donors per window.
-- Two models fitted to the windows (weighted least squares, bootstrap intervals): M0 memory, C(t) = C0 exp(-(2 pi sigma\_T t / 24)^2 / 2); M1 relaxation to a plateau, C(t) = C\_inf + (C0 - C\_inf) exp(-t / tau).
-- Pass (active coupling): M1 preferred over M0 (held-out likelihood over bootstrap splits, or delta AIC > 4) and the lower 95 % bound of C\_inf above the A109 pseudo-clock null median.
-- Also report the upper bound on sigma\_T under M0. Context only: published spreads of human fibroblast periods (Brown et al. 2005) and the time course of peripheral desynchrony in SCN-lesioned mice (Yoo et al. 2004; Tahara et al. 2012). Verify each paper's numbers before citing.
-- Limit stated in advance: few donors beyond 10 days, so the plateau is weakly identified at long times.
+- Statistic: C in the top vs the bottom quintile of ventilation days (equal n), difference with donor bootstrap; null: day labels permuted within cause-of-death class (Hardy 0 cause categories of the protected phenotypes; classes with < 10 donors pooled), 2,000. Prediction of memory alone: top < bottom. Report the MDE of the difference at this design.
+- Reading: no decay with the MDE below the C drop that a memory model gives at the top-quintile median days for a period spread of 0.3 h/day (computed by simulation before scoring, as A92's power note) supports maintained coupling; a decay supports memory.
+- Descriptive: C in sliding windows of 60 donors ordered by days, with the M0 memory curve, C(t) = C0 exp(-(2 pi sigma\_T t / 24)^2 / 2), and the plateau curve, C(t) = C\_inf + (C0 - C\_inf) exp(-t / tau), fitted for display; the upper bound on sigma\_T under M0. Context only: published spreads of human fibroblast periods (Brown et al. 2005) and peripheral desynchrony in SCN-lesioned mice (Yoo et al. 2004; Tahara et al. 2012). Verify each paper's numbers before citing.
 
 **H110.2 Signatures of active peripheral coupling (secondary, Holm over a-c).**
 
@@ -138,7 +145,7 @@ Run only if H109.1 and H109.2 pass. Three explanations remain after WP1: memory 
 
 **Deliverable.** A Figure 3 panel showing the three explanations with their verdicts. If WP1 passes, H110.1 passes and at least one of H110.2a-c passes, the abstract sentence becomes: the human periphery behaves as a self-coupled oscillator network that holds together without the brain and without daily cues, and free-runs away from wall time. Related precedent to check before citing: hepatocytes stay synchronised without the SCN or other extrahepatic clocks (Sinturel et al. 2021).
 
-## WP3. Feeding: a positive control for organ desynchrony and a test of the lock measure (A111, A112; public mouse data)
+## WP3. Feeding and genetic controls: organ desynchrony, the lock measure, a tissue without its clock (A111, A112, A129; public mouse data; interesting, not required)
 
 A49 (Deota) could not serve as a positive control because night-time feeding produced almost no desynchrony. Daytime and inverted feeding do. Arrhythmic feeding gives a timed truth for the cue/locked distinction.
 
@@ -159,7 +166,8 @@ A49 (Deota) could not serve as a positive control because night-time feeding pro
 - H111.1 (offsets): the untimed change in tissue offsets relative to the host correlates with the timed change, circular correlation (Fisher-Lee) > 0, exact permutation p < 0.05 over tissues.
 - H111.2 (coupling): liver coupling to the non-liver host falls under daytime feeding (untimed d < 0), in the direction of the timed liver-vs-rest R^2 change. Permutation of condition labels within ZT.
 - Informativeness rule (as A49): the timed truth must show a liver phase shift >= 3 h relative to the other tissues; otherwise report uninformative.
-- Descriptive: liver-clock mutant arm (does the rest of the body stay together without a liver clock?).
+- H111.3 (secondary, a positive control for a break): in the liver-clock mutant arm under ad libitum feeding, liver coupling to the non-liver host is lower than in wild type (untimed d < 0 at a common host spread, d\*), or the liver fails the cross gate while the other tissues pass; condition labels permuted within ZT, one-sided p < 0.05. Check the mutant's design in the paper first (which clock gene, which cells) and write it into the amendment.
+- Descriptive: does the rest of the body stay together without a liver clock (C among non-liver tissues, mutant vs wild type)?
 
 **A112, lock validation (Greenwell).**
 
@@ -168,6 +176,12 @@ A49 (Deota) could not serve as a positive control because night-time feeding pro
 - H112.1: cue-set orthologues lose more lock under arrhythmic feeding than locked-set orthologues (median log lock ratio, cue minus locked < 0), gene-label permutation p < 0.05.
 - Truth check: Greenwell's own rhythmicity calls (rhythmic in ad libitum, lost in arrhythmic) should be enriched among cue orthologues.
 - Reading: a pass shows the GTEx-derived cue/locked split corresponds to feeding-driven vs clock-driven rhythms in a controlled experiment, across species.
+
+**A129, a tissue without its clock (scout, then register).** No work package so far shows that the method reports a break when a tissue's own clock is removed.
+
+- Scout public multi-tissue transcriptomes of tissue-specific clock knockout or reconstitution mice with >= 2 tissues per mouse: e.g. Koronowski et al. 2019 (liver-only Bmal1 reconstitution), Welz et al. 2019 (epidermis-only reconstitution), and tissue-specific Bmal1 knockouts. Verify accessions and designs; use only open matrices.
+- If found (>= 6 mice per genotype with the tissues of interest): H129.1, the tissue lacking its clock has lower coupling to the host of the other tissues than in controls (d\* < 0), or fails the cross gate, while a companion tissue with an intact clock does not change (specificity on the same permutations). Timed truth where ZT is recorded. Register after the scout, before scoring.
+- If none: state it as a limitation; A111 H111.3 is the only genetic control.
 
 ## WP4. Internal time in living humans (A113)
 
@@ -208,26 +222,35 @@ V25.5 (breast surgery, 42 patients) is the only living-hospital validation of pe
 - Secondary: the same against truth (ii); CHIRAL (pychiral) run on the same 08-18 h donors as the comparator that assigns phases.
 - Deliverable: a CHIRAL-style organ figure built from working-hours donors only, for Figure 1.
 
+**A130, internal time against known chronotype epidemiology.** Chronotype advances with age after early adulthood and is earlier in women until about 50 (Roenneberg et al. 2004; verify before citing). In GTEx the age advance was already seen (A94: about 0.2-0.5 h per decade, peripheral tissues) and the sex phase difference was estimated (A99: +0.35 h, SE 0.31): both are reported as consistent with that epidemiology, labelled post hoc.
+
+- H130.1 (secondary, pre-registered replication outside GTEx): per-subject internal minus wall time against age, pooled over the living cohorts of A113 and V25.5 that record age (cohort as stratum, A25 internal time with the hospital prior where sampling is in working hours, timed phase where times span the day). Slope < 0 (earlier with age), one-sided permutation of age within cohort, p < 0.05. Feasibility: >= 30 subjects with age and an age range >= 25 years, otherwise descriptive.
+- Descriptive: women minus men, same estimand, by age above or below 50.
+
+**A131, sun time within time zones (scout, exploratory).** Human chronotype follows sun time within a time zone (Roenneberg et al. 2007; verify). GTEx samples carry a collection-centre code (`SMCENTER`). Scout whether public GTEx documentation maps the codes to locations, and whether the donor's place of death is near the centre (OPO catchment). If yes: centre longitude offset from its time-zone meridian against the donor's host phase minus time of death (fast deaths; A93 H93.3 machinery), centre as the unit, descriptive with interval. Centres differ in procedures, so any trend is a candidate, not a finding. Aggregates per centre only.
+
 ## WP5. Why malignant cells lose clock coherence (A114)
 
-A86, A87 and A97 show that malignant cells keep amplitude but lose gene coherence, more so in proliferative tumours. A114 asks whether oncogenic transcription, copy number or proliferation itself explains it, and whether proliferating normal cells lose coherence too.
+A86, A87 and A97 show that malignant cells keep amplitude but lose gene coherence, more so in proliferative tumours. A114 asks whether oncogenic transcription, copy number or proliferation itself explains it, and whether proliferating normal cells lose coherence too. In bulk tumours, proliferation rises with purity, and a mixture of incoherent malignant cells with coherent stroma becomes less coherent as purity rises, so every bulk coherence contrast is adjusted for purity.
 
 *Base code:* A87 and A97 `results/figure_5/scripts/cancer/{compute_decomposition,compute_proliferation,compute_delay}.py`, A24 `.../cancer/compute_cycling_a24.py`, A86 `.../cancer/compute_malignant_gate.py`; builders `common/datasets/{tcga_paired,cancer_sc,cells_cancer,cells_cancer_cycle,colon_chrono}`; A21 `results/figure_1/scripts/species/compute_colon_injury.py`.
 
 **Data.** TCGA (recount3, the 11 local projects), plus open GDC gene-level copy number and published open aneuploidy and purity/ploidy scores (download only open-access tiers). A21 colon chrono-atlas (known time). A86 single-cell cancer studies. Census lymphoma (67b6b9ac), ovarian (b252b015) and prostate (881e0e6b) cancer sets.
 
-**H114.1 MYC beyond proliferation.**
+**H114.0 Purity check of A97 (secondary, run first).** Purity per tumour from open estimates (ESTIMATE, or ABSOLUTE purity where open; record the source). The A97 proliferation contrast of coherence within purity tertiles (tertile as stratum, labels permuted within cancer x purity tertile, 1,000), and coherence against purity alone. Reading: the A97 association holds within purity tertiles (one-sided p < 0.05) = proliferation, not purity; otherwise the bulk proliferation claim is restated as purity-confounded and rests on the single-cell malignant arm (A86/A87, same contrast with per-cell cycling fraction).
 
-- Score: Hallmark MYC\_TARGETS\_V1 and V2, clock and A97 G2M genes removed; residualised on the A97 proliferation score within cancer.
+**H114.1 MYC beyond proliferation (confirmatory family).** Mechanism to test, known in the literature: MYC represses the clock through BMAL1 (Altman et al. 2015; Shostak et al. 2016; verify before citing).
+
+- Score: Hallmark MYC\_TARGETS\_V1 and V2, clock and A97 G2M genes removed; residualised on the A97 proliferation score and on purity within cancer.
 - Statistic: mean over cancers of gene coherence (A87) in the top minus the bottom tertile of the residual MYC score; tertile labels permuted within cancer (1000).
-- Pass: < 0, one-sided p < 0.05. Companion: the A97 proliferation contrast within MYC halves.
+- Pass: < 0, one-sided p, Holm over the confirmatory family. Companion: the A97 proliferation contrast within MYC halves. Single-cell check (secondary): the same contrast in malignant cells of the A86 studies, MYC score per patient.
 
 **H114.2 Copy number at the clock loci.**
 
 - Per tumour, copy-number deviation at the 14 clock-gene loci; and the aneuploidy score.
-- (a) A87 coherence recomputed after excluding tumours with any arm-level change at a clock locus; does the tumour-normal coherence gap shrink by more than half?
+- (a) Per-gene dosage: for each of the 14 clock genes, regress the gene's deviation from the tumour's clock-plane fit (A87 residual) on its own copy-number deviation, pooled over cancers (cancer as stratum, purity as covariate); and recompute the tumour-normal coherence gap after removing the dosage-explained part of each gene. (Excluding every tumour with an arm-level change at any of 14 loci would leave too few tumours.)
 - (b) Coherence by aneuploidy tertile within cancer, proliferation held by stratification.
-- Pass for "copy number explains it": (a) gap shrinks > 50 % with bootstrap support. Otherwise copy number is ruled out as the main cause.
+- Pass for "copy number explains it": (a) the gap shrinks > 50 % after the dosage correction, with bootstrap support. Otherwise copy number is ruled out as the main cause.
 
 **H114.3 Do proliferating normal cells lose coherence? (known time)**
 
@@ -290,12 +313,12 @@ The lesional local-clock delay is replicated (A54, A78, A81b), but two questions
 - Scout for public mouse embryonic or fetal transcriptomes (bulk or single cell, any tissue, E15-P0) sampled at >= 4 recorded clock times.
 - If found: the A108 H108.1 statistic (R of host phase vs clock time, one-sided permutation), pre-registered before scoring. If none: the embryo panel's place is decided by A121 alone.
 
-**A121, the embryo clock against the known timing of fetal clock emergence (Qiu 2024 data already built; written before scoring).** The A108 result agrees in timing with prior work: no cell-autonomous oscillation in E10 hearts and clear oscillation at E18 (Umemura et al. 2017), and fetal peaks stabilising near dusk around E15.5 in in utero PER2::LUC imaging (a 2023 preprint). A121 tests two predictions of that picture; both must pass for the Figure 2 embryo panel to stay in the main text.
+**A121, the embryo clock against the known timing of fetal clock emergence (Qiu 2024 data already built; written before scoring).** The A108 result agrees in timing with prior work: no cell-autonomous oscillation in E10 hearts and clear oscillation at E18 (Umemura et al. 2017), and fetal peaks stabilising near dusk around E15.5 in in utero PER2::LUC imaging (a 2023 preprint). A121 tests two predictions of that picture; H121.1 must pass, and H121.2 must pass or be uninformative, for the Figure 2 embryo panel to stay in the main text.
 
 - *H121.1, onset within the window.* Alignment with clock time is stronger in E17.0-E18.75 than in E15.0-E16.75. Per half: the H108.1 statistic R (8 embryos each, batch intercepts, host refitted per half). Statistic: R(late) minus R(early); null by permuting clock times within batch in both halves (10,000), one-sided p < 0.05. Secondary: the same per lineage (hepatocytes, mesenchyme), descriptive.
-- *H121.2, phase against the known fetal timing.* Convert the common offset of the embryo host (host phase minus clock time) into mouse ZT using the human-to-mouse frame offset measured in colon (V25.4, about -3 h). The light schedule is not recorded: report the predicted ZT of the embryo clock peak for lights-on at 06:00, 07:00 and 08:00. Pass if, under at least the standard schedule (07:00), the predicted ZT of the peak lies within 3 h of the published fetal peak; verify that value in the preprint before fixing it in the amendment.
+- *H121.2, phase against the known fetal timing.* Convert the common offset of the embryo host (host phase minus clock time) into mouse ZT with a human-to-mouse frame offset calibrated on every timed mouse dataset in hand that uses the same orthologue projection (A21 colon, A48 mouse ages, A72 mouse skin; V25.4 alone failed as specified): offset = inverse-variance weighted circular mean of the per-dataset offsets, with its SE by bootstrap over datasets and samples. The light schedule is not recorded: report the predicted ZT of the embryo clock peak for lights-on at 06:00, 07:00 and 08:00. Pass if, under the standard schedule (07:00), the published fetal peak lies within the 95 % interval of the predicted ZT (interval from the offset SE and the embryo host SE). If the calibrated offset's SE exceeds 1.5 h, or the datasets disagree by more than 3 h, H121.2 is uninformative and reported descriptively. Verify the published fetal peak in the preprint before fixing it in the amendment.
 - *Heart, stated in advance.* Cardiomyocytes were not rhythmic in either half (A108c; p 0.22, 0.28). The paper says "consistent with" the heart literature, not "replicates".
-- *Reading.* Both pass: the Figure 2 embryo panel, labelled exploratory, framed as consistent with and extending known late emergence. Either fails: the embryo goes back to Extended Data.
+- *Reading.* H121.1 passes and H121.2 passes (or is uninformative): the Figure 2 embryo panel, labelled exploratory, framed as consistent with and extending known late emergence. H121.1 fails, or H121.2 fails: the embryo goes back to Extended Data.
 
 **A122, controls for the corrected A85 result (written after seeing it: immune cue-following index 0.182, structural 0.095, difference +0.087, one-sided p 0.002; tables in `paper/results/figure_5/output/cancer/`).** Immune classes have a small host loading, so the index |b| / (|a| + |b|) can rise mechanically. These controls decide whether the result carries a Figure 2 panel. Gene matching on `feature_name`.
 
@@ -334,9 +357,9 @@ Rationale: tumour incoherence grows with proliferation (A97); each luteal phase 
   - [Murrow et al. 2022, GSE198732](https://pmc.ncbi.nlm.nih.gov/articles/PMC9590200): premenopausal breast scRNA-seq, per-donor hormone state, parity, obesity (primary).
   - Breast atlases with menopausal status, BMI and BRCA carriers: Kumar et al. 2023 (HBCA), Reed et al. 2024, Pal et al. 2021. Verify accessions and metadata at scout.
   - GTEx breast, women under 45 (timed; BMI held).
-  - Endometrium across the cycle (positive control): GSE266265 (already built, menstrual phase recorded), Wang et al. 2020, Garcia-Alonso et al. 2021.
+  - Endometrium across the cycle: GSE266265 (already built, menstrual phase recorded), Wang et al. 2020, Garcia-Alonso et al. 2021.
 - **Scores (fixed now).** Luteal/progesterone score in hormone-responsive luminal cells: mean z of PGR, TNFSF11, WNT4, AREG; use the authors' hormone-state annotation when given. Proliferation: the A97 G2M set.
-- **Positive control first (H126.0).** Endometrial epithelium: A87 coherence in proliferative minus secretory phase < 0, phase labels permuted within study, one-sided p < 0.05. If it fails, breast results are descriptive.
+- **Proliferation control first (H126.0).** Progesterone regulates clock genes directly, so a menstrual-phase contrast mixes hormone with proliferation. The control is within tissue: in endometrial epithelium (single-cell series) and in breast luminal cells, A87 coherence of cycling minus non-cycling cells of the same donors (A24 top-quartile rule), donor-level label swaps, one-sided p < 0.05. If it fails, breast results are descriptive. Descriptive: endometrial coherence in proliferative minus secretory phase.
 - **H126.1 (B1, primary).** Breast epithelial coherence (A87; luminal hormone-responsive, luminal progenitor, basal) is lower in donors in the top vs bottom tertile of the luteal score, pooled over Murrow and the atlases (study as stratum), one-sided permutation p < 0.05. Secondary: epithelial phase relative to the stromal host (A23 y4) by luteal tertile.
 - **H126.2 (B2).** Core-cue offset in hormone-responsive cells varies with the luteal score (circular-linear slope), two-sided p < 0.05.
 - **H126.3 (B3, obesity).** Epithelial coupling and coherence against BMI (A19 covariate model; Murrow obese vs not), two-sided.
@@ -345,38 +368,42 @@ Rationale: tumour incoherence grows with proliferation (A97); each luteal phase 
 
 ### A127, breast tumours: scale and cue misalignment
 
-- **SCAN-B (GSE96058; about 3,000 tumours with follow-up; verify access).** H127.1: A87 coherence lower in the top vs bottom proliferation tertile within PAM50 subtype (replicates A97 at scale), one-sided. H127.2: ER-negative vs ER-positive coherence (replicates the A97 breast observation), one-sided. Exploratory: survival (Cox with age, stage, subtype; off-plane score as A97).
+- **SCAN-B (GSE96058; about 3,000 tumours with follow-up; verify access).** H127.1: A87 coherence lower in the top vs bottom proliferation tertile within PAM50 subtype and purity tertile (replicates A97 at scale, purity-adjusted as H114.0), one-sided. H127.2: ER-negative vs ER-positive coherence (replicates the A97 breast observation), one-sided. Exploratory: survival (Cox with age, stage, subtype; off-plane score as A97).
 - **Single-cell tumours (Wu et al. 2021; Pal et al. 2021; verify accessions).** H127.3: within patients, core-cue offset of malignant cells minus that of stromal cells (fibroblast, endothelial) differs from 0, two-sided, patient-level label swaps; locked set as control. The psoriasis analogue: is the tumour's local clock misaligned from body-wide cues while its stroma is not?
 - **Li 2024 breast (V25.5), descriptive.** Per-patient misalignment (internal minus wall time) against menopausal status, BMI and tumour proliferation, if recorded.
 
-### A128, social jetlag: the weekly clock in GTEx
+### A128, social jetlag: the weekly clock in GTEx (descriptive)
 
 - **Data.** GTEx fast deaths with time of death; weekday from the held date of death (aggregates only). Ventilated donors as negative control (no weekly social schedule).
 - **Estimand.** Per donor, host phase minus clock time (A93 H93.3 machinery); negative = internal clock delayed.
-- **H128.1.** Deaths on Monday-Tuesday are delayed relative to Thursday-Friday (circular mean difference < 0), weekday labels permuted (2,000), one-sided p < 0.05. Report the MDE: with about 240 donors over seven days, only shifts near 1 h are detectable.
+- **D128.1 (descriptive, not a hypothesis test).** Deaths on Monday-Tuesday vs Thursday-Friday, circular mean difference with its interval and the weekday-permutation p (2,000). The MDE (about 1 h with about 240 donors over seven days) exceeds any plausible tissue effect of social jetlag, so a null is uninformative and is reported with the MDE.
 - **Negative control.** No weekday effect in ventilated donors.
 - **Descriptive.** Interaction with BMI and age (younger people have more social jetlag); weekend deaths; the week after vs before daylight-saving transitions (low power).
-- **Reading.** A pass is the first physiological trace of social jetlag in human organs; with the BMI interaction it links the weekly clock to body mass in tissue.
+- **Reading.** Descriptive only: a clear delay would be a candidate for a registered test in another cohort, not a claim.
 
 ## Order of work and decision rules
 
 Run in this order; packages on the same line can run in parallel. Each outcome changes the figures as listed.
 
-1. **WP0** (integrity) and **WP1** (A109, coupling nulls).
-2. **WP2** (A110, mechanism), only if A109 passes; **WP3** (A111-A112, feeding) and **WP4** (A113, living humans; A123, GTEx working-hours donors) in parallel.
+1. **WP0** (integrity; item 2 first resolves the `compute_cancer_split.py` null difference of M2) and **WP1** (A109, coupling nulls; A109b Tabula Sapiens).
+2. **WP2** (A110, mechanism), only if H109.1 and H109.2 pass; **WP3** (A111-A112 feeding, A129 scout) and **WP4** (A113 living humans; A123 GTEx working-hours donors; A130 chronotype; A131 scout) in parallel.
 3. **WP5** (A114, cancer) and **WP6** (A115-A116, psoriasis).
 4. **WP7** (A117-A122): scouts first for A117, A119 and A120; A121 and A122 run on data already built.
 5. **WP8** (A124-A128): A124 first, in parallel with WP5-WP6; A126-A127 cue results are claims only if A124 passes; A128 any time (GTEx data in hand).
 
 | outcome | consequence for the paper |
 | --- | --- |
-| A109 passes | Figure 3 as planned, provided H109.2 also passes (rotating clocks, not a shared displacement); WP2 results become its mechanism panel |
-| A109 fails against the acrophase null only | Figure 3 reframed as "organs share a donor state"; drop WP2 from the main text |
-| A109 fails both nulls | Remove the coupling-without-cues claim (same if H109.2 points to a shared displacement); Figure 3 keeps loss of wall time and drug-target rhythms |
-| A111 passes | Positive-control panel in Figure 1; replaces the failed A49 control |
+| H109.1 and H109.2 pass (Holm) | Figure 3 as planned; WP2 results become its mechanism panel; A109b as replication panel if it passes |
+| H109.1 passes, H109.2 fails (no offset preservation) | Figure 3 reframed as "organs share a donor state"; drop WP2 from the main text |
+| H109.1 fails | Remove the coupling-without-cues claim; Figure 3 keeps loss of wall time and drug-target rhythms |
+| Pass in ventilated donors, fail in Hardy 4 | Coupling reported as procurement-dependent; Figure 3 claim restricted accordingly |
+| A111 passes | Feeding-control panel in Figure 1 (an addition, not a required positive); replaces the failed A49 control |
+| A111 H111.3 or A129 passes | Genetic control panel (a tissue without its clock is detected as a break) in Figure 5 next to the taxonomy; otherwise a limitation sentence |
 | A112 passes | Cue/locked split validated across species; shown in Figure 3 |
 | A113 passes in >= 2 cohorts | Internal-time readout in living people is a headline translational result |
+| H114.0 fails (A97 not seen within purity tertiles) | Bulk proliferation claim restated as purity-confounded; the proliferation panel rests on single-cell malignant cells |
 | A114: MYC or copy number explains incoherence | Mechanism sentence in Figure 5; otherwise state that proliferation tracks it, cause open |
+| A130 H130.1 passes | Internal time matches chronotype epidemiology outside GTEx: Figure 2 panel with the GTEx age and sex readouts; otherwise GTEx readouts in ED, labelled post hoc |
 | A115 passes | Psoriasis delay partly a trait of patients' skin; changes the psoriasis claim in Figure 5 |
 | A116 passes | Reversal specific to treatment; otherwise "follows clinical response, not shown to be specific" |
 | A118: core damped in a break | That break described as damping; otherwise as a relative loss of coupling |
@@ -386,11 +413,13 @@ Run in this order; packages on the same line can run in parallel. Each outcome c
 | A124 passes (imposed misalignment detected) | Misalignment readout validated: panel in Figure 1 next to the feeding control; A126-A127 cue results become claims. Otherwise they are descriptive |
 | A126: endometrial control and H126.1 pass | Figure 5 panel: physiological proliferation perturbs the breast clock as tumours do; Discussion links it to lifetime menstrual cycles as a risk factor |
 | A127 H127.1-H127.2 pass | SCAN-B replication of the proliferation and ER findings in Figure 5; H127.3 as a panel if A124 passes |
-| A128 passes (weekday delay, none in ventilated donors) | Figure 2 panel: a trace of social jetlag in human organs; otherwise a sentence with its MDE in the Discussion |
+| A128 (descriptive) | A sentence with its interval and MDE in the Discussion; a clear delay is named as a candidate for a registered test elsewhere |
 
 **Reporting.** After each package: amendment in `paper/docs/registered_experiments.md` (committed before scoring), run note and result in `paper/docs/results_preliminary.md` with `src` pointers, a row in `paper/docs/METHOD.md` when it validates the method, scorecard row, a line in `paper/docs/AMENDMENT_INDEX.md` once a script is promoted to `results/`, and a one-line message to the PI with the verdict. Subagent numbers are checked against the output files before they enter the docs.
 
 ## Narrative arc
+
+**Positives.** The disease positives are the cancer and psoriasis breaks (Figure 5); the feeding and night-shift controls, if they pass, add perturbation evidence but are not required.
 
 **One sentence:** human organs keep internal time with each other rather than with the clock on the wall; this coupling survives the loss of daily cues, chronic disease and age, and breaks only locally, in three distinct ways.
 
@@ -418,7 +447,7 @@ Five main figures plus a graphical abstract. Each figure states one claim; its t
 | Heart surgery patients, morning vs afternoon | Jia et al. 2024 heart samples | Living patients sampled in working hours are placed correctly on the internal day | main |
 | Breast surgery: per-patient internal time vs recorded resection time (1.1 h) | V25.5 | Per-patient ordering in a living hospital cohort | main |
 | Timed truths: baboon (offsets 0.5 h), regenerating mouse colon (9 h shift recovered blind), mouse at three ages, living skin layers | A36, A21, A48, A37 | Relations match known time across species, ages and a perturbation | main (baboon, colon); ED (rest) |
-| Positive control: daytime feeding desynchronises the liver, detected untimed | **new** A111 | The method sees a known desynchrony between organs | main if passes |
+| Feeding control: daytime feeding desynchronises the liver, detected untimed | **new** A111 | The method sees a known desynchrony between organs (addition, not required) | main if passes |
 | Living timed muscle and adipose cohorts | **new** A113 | Internal time estimated in living people beyond one cohort | main if passes, else ED |
 | Working-hours windows in baboon; human vs baboon reference | A40, A41 | Robust to window width and to the species of the reference | ED |
 
@@ -436,16 +465,17 @@ Five main figures plus a graphical abstract. Each figure states one claim; its t
 | Mouse embryo: shared clock from E15, mesenchyme first, aligned to the mother's day | A108, A108b, A108c; **new** A121 (A120 if data exist) | The backbone is built late in gestation, consistent with known late emergence | main (exploratory label) if passes, else ED |
 | Neurons carry the brain host, glia less; retina | 02, 04, A18 3.5 | The brain's backbone is neuronal | ED |
 | Age: small phase advance in the periphery; prefrontal amplitude loss above 60 | A94, A3; **new** A117 if feasible | Ageing changes timing, not organisation, in the periphery | ED |
+| Internal time follows chronotype epidemiology: earlier with age, women earlier | A94, A99 (post hoc); **new** A130 replication | A known-answer test of internal time in health | main if A130 passes, else ED |
 | Gene-rhythm maps per cell type, lung and prefrontal cortex | A50 | Resource | ED |
 
 ### Figure 3. When daily cues are lost, organs lose wall time but stay coupled to each other
 
 | content | source | how it supports the claim | main or ED |
 | --- | --- | --- | --- |
-| Fast, intermediate, slow and ventilated deaths: wall-time alignment falls, inter-organ coherence holds, against clock-specific nulls | A93; **new** A109 | The core observation, with its controls | main |
+| Fast, intermediate, slow and ventilated deaths: wall-time alignment falls, inter-organ coherence holds, against clock-specific nulls; organ phase relations preserved | A93; **new** A109 (H109.1, H109.2), A109b Tabula Sapiens | The core observation, with its controls and an independent cohort | main |
 | A step, not a drift: no decay with ventilation days; no reset at intubation | A46, A92, A95 | Rules out a slow free-run and a common reset | main |
 | Liver, muscle and adrenal loosen; the brain leaves the body | A33, A93 | Which organs depend on behavioural cues | main |
-| Rotating clocks vs shared displacement; memory vs plateau; strong-clock, stroma and hub signatures; temperature, SCN and feeding excluded | **new** A109 H109.2, A110 | Mechanism: a self-sustained peripheral network | main if passes |
+| Circularity and displacement simulations; decay with ventilation days; strong-clock, stroma and hub signatures; temperature, SCN and feeding excluded | **new** A109 H109.2, A110 | Mechanism: a self-sustained peripheral network | main if passes |
 | Rhythmic genes follow internal time (liver 2,691 vs 0); cue/locked split validated in mouse | A91, A102; **new** A112 | Gene rhythms follow the body's clock, not the clock on the wall | main |
 | Drug targets lose their wall-time rhythm in hospital; internal time estimable from a biopsy | A100, A102, V25.5; **new** A113 | Translational consequence | main |
 | Glucocorticoid axis in ventilated donors | A27 | Part of the shared state, small part of the coupling | ED |
@@ -468,7 +498,8 @@ Five main figures plus a graphical abstract. Each figure states one claim; its t
 | --- | --- | --- | --- |
 | Malignant cells: clock-shaped share near null while the stroma of the same tumours is intact | A86 | The break is in the cancer cells, not the tumour | main |
 | Decomposition: amplitude kept, coherence lost, partly misaligned | A87 | Defines the cancer break as incoherence | main |
-| Incoherence grows with proliferation; MYC, copy-number and proliferating-normal controls | A97; **new** A114 | Links the break to tumour biology | main |
+| Incoherence grows with proliferation (purity-adjusted); MYC, copy-number and proliferating-normal controls | A97; **new** A114 (H114.0-H114.3) | Links the break to tumour biology | main |
+| A tissue without its own clock reads as a break | **new** A111 H111.3, A129 | Genetic control of the break readout | main if passes, else limitation |
 | Psoriatic lesions run about 1-1.5 h late, discovery and held-out | A54 | A replicated local delay | main |
 | Core clock delayed while systemic cues are on time (skin set and independent GTEx set) | A78, A81b | The delay is in the local clock, not in its inputs | main |
 | The delay shrinks with treatment and clinical response; placebo pooling; trait vs state | A56, A57, A74; **new** A115, A116 | The delay follows disease activity | main |
