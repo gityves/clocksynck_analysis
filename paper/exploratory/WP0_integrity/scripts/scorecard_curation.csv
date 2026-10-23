@@ -1,0 +1,30 @@
+amendment,hypothesis_id,verdict,quote,results_line,note
+A10,,descriptive,"Small-n calibration (A10): gate reliable from 8 donors (heart, kidney); per-class intervals undercover below",RESULTS_preliminary.md:978,
+A12,,descriptive,"Host-state identity check (A12): lung (Natri) T decoupling robust (1.00 vs 0.10, p 0.03); kidney T 'increase'",RESULTS_preliminary.md:982,
+A14,,fail,the pre-specified prediction (about 0) fails. Not depth,RESULTS_preliminary.md:992,structural-minus-immune prediction fails; Crohn primaries null
+A15,,uninformative,"Immune Aging (A15, 19-24 organ donors): spleen, thoracic lymph node, jejunum and lung immune cells, and seven",RESULTS_preliminary.md:998,gates fail in 7 organs/groups; part 2 infeasible
+A16,,fail,colon: not replicated. Kong's fractions are separate libraries; host-state identity,RESULTS_preliminary.md:1003,
+A27,,descriptive,Not pre-registered (A27 disclosure in the plan). Outputs are in each folder's output/. The phase-error,RESULTS_preliminary.md:1544,
+A54,H54.1,fail,"H54.1 fails: held-out pooled r +0.156 (random effects +0.106 [-0.278, 0.490]), swap p 0.11; pseudo 95th",PLAN_internal_desync.md:3324,held-out
+A54,H54.2,pass,"H54.2 passes: held-out pooled offset -0.93 h, one-sided swap p 0.004; 5 of 6 gated series negative",PLAN_internal_desync.md:3327,held-out
+A57,H57.1,pass,"A57 clinical response (passes, narrowly): in GSE117468, the lesional delay shrinks by 2.33 h in PASI75",RESULTS_preliminary.md:2199,
+A61,,descriptive,"A61 (descriptive, single cell): lesions shift keratinocyte mRNA from differentiated (61 % -> 45 %) to cycling",RESULTS_preliminary.md:2232,
+A70,H70.1,infeasible,"(A70, A71 infeasible).",RESULTS_preliminary.md:2270,
+A71,H71.1,infeasible,"(A70, A71 infeasible).",RESULTS_preliminary.md:2270,
+A75,H75.1,infeasible,"A75 infeasible (no in vitro keratinocyte / fibroblast time series; Sandu 2012, one",RESULTS_preliminary.md:2275,
+A81b,H81.2,fail,"H81.2, timed skin (fails, p 0.084): epidermis-minus-dermis offset, core +1.93 h vs cue +0.43 h, difference",RESULTS_preliminary.md:2311,
+A83,H83,pass,H83: the clock-shaped share of clock-gene covariance is lower in tumours than in the same patients' normals,RESULTS_preliminary.md:2379,no direction pre-specified; two-sided p 0.002 in the registered direction of the quote
+A87,,descriptive,"Question (user). The method should say, where the signal allows, whether a loss comes from unaligned cells,",PLAN_internal_desync.md:4318,"registered a decomposition, no pass/fail rule"
+A90,,uninformative,All are undetermined at these sizes (wide intervals).,RESULTS_preliminary.md:2552,
+A95,H95,fail,"Verdicts: H94.1-3 FAIL, H95 FAIL, H96.1 FAIL, H96.2 FAIL (bootstrap interval excludes 0, permutation p 0.28),",PLAN_internal_desync.md:4646,
+A98,,descriptive,"decomposition of the nominal breaks (descriptive, donor bootstrap). Relative amplitude |z| (to the anchor",RESULTS_preliminary.md:2747,
+A102,,descriptive,Extended covariates (A102) = D2 covariates + RIN + centre + top-10 genome-wide PCs not associated with the host or,RESULTS_preliminary.md:2820,sensitivity analysis; no registered test
+A105,H105.2,uninformative,"H105.2 not met (uninformative): sharing between organs not detected. Delorey nuclei, lung, heart, liver,",RESULTS_preliminary.md:2929,overrides keyword pass
+A105c,,descriptive,"A105c (post hoc-informed), pooled ventilation length in COVID-19 lungs (Melms + Delorey, study as stratum).",RESULTS_preliminary.md:3007,post hoc; text: No claim
+A108b,,descriptive,"Secondary and descriptive; same data, window, rules and",PLAN_internal_desync.md:5036,as registered
+A108c,,descriptive,"A108c (descriptive), which lineage first?",RESULTS_preliminary.md:3055,
+A109,H109.1,pass,"H109.1 (confirmatory): PASS. Ventilated C_clock 0.463 vs pseudo-clock null median 0.154; excess 0.310; one-sided p 0.005",results_preliminary.md:A109,"scored 2026-10-23"
+A109,H109.2,fail,"H109.2 (confirmatory): FAIL in ventilated donors. rho 0.261, one-sided p 0.165; p_closer 0.001 (Hardy 4 passes, secondary)",results_preliminary.md:A109,"scored 2026-10-23"
+A109b,,pending,"A109b (2026-10-23, written before scoring): replication in Tabula Sapiens (secondary)",registered_experiments.md:59,"registered 2026-10-23, not scored"
+A22,V17.2,fail,V17.2 fails as in the archive. Other legacy coherence runs on tables with an empty,results_preliminary.md:17,"erratum 2026-10-23 (A22 V17.2 centred coherence): verdict unchanged, fail"
+A22,V17.3,,"V17.3, simulated decoupling of 2 anchors per contrast in the cases (thinning of the real counts, 3 replicates): detected 86 % at s = 0",RESULTS_preliminary.md:1267,keyword verdict ("Fails.") belonged to V17.2; V17.3 states no pass/fail

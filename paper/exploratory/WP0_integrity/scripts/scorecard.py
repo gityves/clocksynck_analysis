@@ -113,7 +113,7 @@ def verdict_from(lines):
     return None, cand[0][0], "ambiguous: " + "/".join(sorted(allc))
 
 
-def keyword_pass(res_secs, a, hid):
+def keyword_pass(res_secs, a, hid, plan_lines=()):
     """Second pass: last verdict-bearing sentence (single class) of the amendment's RESULTS sections.
     Sections naming several amendments contribute only sentences naming `a`; with a hypothesis id, sentences naming it
     are tried first (else the amendment-level sentence is used, and flagged)."""
@@ -135,10 +135,33 @@ def keyword_pass(res_secs, a, hid):
         v, x = last([y for y in sents if pat.search(y)])
         if v:
             return v, x, ""
+        hit = id_window_verdict(list(plan_lines) + [l for _, ls in res_secs for l in ls], hid)
+        if hit:
+            return hit[0], hit[1], "keyword: id-anchored verdict word"
         v, x = last(sents)
         return v, x, "keyword: amendment-level sentence, not hypothesis-specific" if v else ""
     v, x = last(sents)
     return v, x, ""
+
+
+def id_window_verdict(lines, hid):
+    """Third rule: a line in which the hypothesis id is followed within 25 characters by a verdict word (`H54.1 fails`,
+    `H105.2 not met (uninformative)`).  Rule statements (`->`, `if`, `Reading`) are skipped; the last such line decides.
+    'uninformative' written next to a fail word wins (the text labels it)."""
+    pat = re.compile(re.escape(hid) + r"(?![\w]|\.\d)(.{0,25})", re.I)
+    hit = None
+    for ln in lines:
+        if re.search(r"->|\bif\b|Reading|Supported if|called", ln, re.I):
+            continue
+        for m in pat.finditer(re.sub(r"[*`]", "", ln)):
+            w = m.group(1)
+            w = re.split(r"[;]|(?<=\w)\.\s", w)[0]
+            c = classify(w)
+            if "uninformative" in c:
+                c = ["uninformative"]
+            if len(c) == 1:
+                hit = (c[0], ln.strip())
+    return hit
 
 
 def numbers(line):
@@ -247,7 +270,7 @@ def build(plan_path, res_path, repo, plan_rel, res_rel, only=None):
                 v, line, vn = verdict_from(src)
                 vsrc, vtext, sup = ("structured", line, "") if v else ("", "", "")
                 if not v:
-                    k, x, kn = keyword_pass(res_secs, a, h)
+                    k, x, kn = keyword_pass(res_secs, a, h, lines)
                     if k:
                         v, vsrc, vtext, line = k, "keyword", x, x
                         notes = [n for n in notes if not n.startswith(("no verdict token", "ambiguous"))] + ([kn] if kn else [])
@@ -279,6 +302,21 @@ def main():
     rows += build(REPO / "paper/docs/registered_experiments.md", REPO / "paper/docs/results_preliminary.md", REPO,
                   "paper/docs/registered_experiments.md", "paper/docs/results_preliminary.md")
     df = pd.DataFrame(rows)
+    # curated verdicts (hand-read run notes), source "curated"; they override parsed values
+    cur = pd.read_csv(Path(__file__).with_name("scorecard_curation.csv"), keep_default_na=False)
+    for _, c in cur.iterrows():
+        m = (df.amendment == c.amendment) & (df.hypothesis_id == c.hypothesis_id)
+        if not m.any() and (c.hypothesis_id == "") and (df.amendment == c.amendment).any():
+            m = (df.amendment == c.amendment)   # amendment-level curation covers all its rows
+        if not m.any():
+            df = pd.concat([df, pd.DataFrame([dict(amendment=c.amendment, hypothesis_id=c.hypothesis_id, source="curated")])], ignore_index=True)
+            m = (df.amendment == c.amendment) & (df.hypothesis_id == c.hypothesis_id)
+        df.loc[m, ["verdict", "verdict_source", "verdict_text"]] = [c.verdict, "curated", c.quote[:200]]
+        extra = f"curated ({c.results_line})" + (f"; {c.note}" if c.note else "")
+        df.loc[m, "parse_note"] = df.loc[m, "parse_note"].fillna("").astype(str).str.cat([extra] * int(m.sum()), sep="; ")
+        if c.superseded_by if "superseded_by" in c else False:
+            df.loc[m, "superseded_by"] = c.superseded_by
+    df = df.fillna("")
     has_h = set(df[df.hypothesis_id != ""].amendment)
     df = df[(df.hypothesis_id != "") | ~df.amendment.isin(has_h)]
     df = df.drop_duplicates(subset=["amendment", "hypothesis_id"], keep="first")
