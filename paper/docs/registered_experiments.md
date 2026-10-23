@@ -148,3 +148,37 @@ p_acrophase 0.032) and the coupling is 0 in 3 of 4 organs; a failed gate is unin
 across the lung's cell classes (gate passes, H105.1), COVID donors vs the 7 surgical controls, with a donor
 permutation p for the difference in ratio (1,000) reported but not tested. It asks whether a shared push across cell
 types appears within a lung of fatal COVID (mostly ventilated).
+
+**A109 note (2026-10-23, post hoc, after A109 and A109c were scored): framing decided by the PI.** The registered
+reading for "H109.1 passes, H109.2 fails" was "organs share a donor state". The PI chose instead: organs keep a shared
+clock-shaped state without daily cues (H109.1, confirmatory); when cues are lost through illness (Hardy 4, registered
+secondary check (e); H109c.2) the organs keep their phase relations; in ventilated, mostly brain-dead organ donors a
+shared perturbation overrides those relations (H109.2 fails, reported as a failure of a confirmatory hypothesis). This
+framing is post hoc; the Holm table keeps H109.2 as failed.
+
+## A132 (2026-10-23, written after A109/A109c were scored, before scoring): brain death or ventilation? The collapse of organ phase relations in ventilated donors
+
+PI hypothesis: brain-dead donors have probably lost the SCN, whereas Hardy 4 donors keep it with perturbed zeitgebers.
+Brain death co-occurs with donor management (methylprednisolone, thyroid hormone, vasopressin, vasopressors), so loss of
+the SCN and these drugs cannot be separated in GTEx; this amendment separates brain death (with its management) from
+ventilation and ICU care. All hypotheses secondary (own alpha 0.05). Data: GTEx v10, A109 states and tissues; protected
+phenotypes, aggregates only. Code: `paper/exploratory/A132_brain_death/`.
+
+**Groups.** Within Hardy 0: organ donors (`COHORT` organ donor / OPO, brain dead) vs ventilated post-mortem cases
+(`COHORT` post-mortem, not declared brain dead). Group sizes and pairs with >= 20 shared donors: after the scout.
+Feasibility rule: >= 40 donors and >= 40 of 66 pairs in the smaller group, otherwise descriptive.
+
+**H132.1 (collapse in brain death).** The A109 readouts per group, fast-death relations as reference: Fisher-Lee rho of
+the pair offsets (10,000 joint tissue-label permutations) and the folded distance to 0 / 12 h (p_closer, 1,000
+donor-label permutations vs fast). Statistic: difference in folded distance, organ donors minus ventilated post-mortem
+cases, with a donor-label permutation p (1,000, one-sided, prediction < 0: organ donors closer to 0 / 12 h), at equal n.
+Reading: organ donors collapse and ventilated post-mortem cases do not -> the collapse goes with brain death and its
+management (SCN loss or donor drugs); both collapse -> it goes with ventilation / ICU care; neither differs -> no
+separation at this power (MDE reported).
+
+**H132.2 (dose).** Within Hardy 0 organ donors, ventilation duration (protected phenotype) top vs bottom tertile:
+difference in folded distance, donor-label permutation p (1,000, one-sided, prediction: longer -> closer to 0 / 12 h).
+MDE after the scout.
+
+**D132.3 (descriptive).** Long-term steroids (protected phenotype) yes vs no within Hardy 0 and within Hardy 4: folded
+distance and the glucocorticoid-direction share (A109 non-temporal output), if >= 15 donors per arm.

@@ -6,23 +6,6 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 
 ## Open
 
-### Q1 (2026-10-23): Figure 3 framing after A109
-H109.1 passes (organs share a clock-shaped state in every death group); H109.2 fails in ventilated donors (phase
-relations collapse to 0 / 12 h; about half of the shared covariance is a displacement) but passes in Hardy 4
-(secondary). Registered reading: "organs share a donor state", WP2 out of the main text. Proposed alternative: coupled
-running clocks without cues, shown in Hardy 4 / Hardy 3, with ventilated donors as a shared displacement overriding
-the clock relations. PI comment (2026-10-23): check first that Hardy 4 clocks are decorrelated from wall time, and
-whether the 0 / 12 h push is seen in COVID ventilated patients -> registered as A109c (dab55ab), being scored.
-- **A109c H109c.1-2 (2026-10-23):** no detectable wall-time alignment in Hardy 4 (R 0.097, p 0.56; MDE 0.145-0.208);
-  offsets preserved after removing wall time (rho 0.750, p 0.0002), also without ventilator cases and in inpatients
-  only. COVID (D109c.3-4, descriptive): Delorey organs uninformative (too few shared donors); Melms lung shows no
-  push in COVID vs controls. The circularity ratio is confounded by host-phase concentration (sampling window), so the
-  offset test (H109.2) is the decisive readout; the ventilated collapse to 0 / 12 h rests on it (p_closer 0.001).
-- **Question:** after A109c, which framing (registered default, or the Hardy 4 framing as a registered amendment
-  labelled post hoc relative to A109)?
-- **On hold:** WP2 (A110); edits of the Figure 3 table and narrative.
-- Evidence: results_preliminary.md, sections A109, A109b (and A109c when scored).
-
 ### Q2 (2026-10-23): figure-table numbers used against their archive verdict (WP0 item 1)
 - A104 rho +0.73 quoted as support; H104.1 predicted rho < 0 (archive: not supported; H104.2 not replicated).
 - A54 psoriasis "replicated in discovery and held-out": the delay replicates (H54.2) but H54.1 and H54.3 fail.
@@ -50,3 +33,26 @@ work, so it was not applied.
 - **On hold:** nothing (no current result affected).
 
 ## Answered
+
+### Q1 (2026-10-23): Figure 3 framing after A109
+H109.1 passes (organs share a clock-shaped state in every death group); H109.2 fails in ventilated donors (phase
+relations collapse to 0 / 12 h; about half of the shared covariance is a displacement) but passes in Hardy 4
+(secondary). Registered reading: "organs share a donor state", WP2 out of the main text. Proposed alternative: coupled
+running clocks without cues, shown in Hardy 4 / Hardy 3, with ventilated donors as a shared displacement overriding
+the clock relations. PI comment (2026-10-23): check first that Hardy 4 clocks are decorrelated from wall time, and
+whether the 0 / 12 h push is seen in COVID ventilated patients -> registered as A109c (dab55ab), being scored.
+- **A109c H109c.1-2 (2026-10-23):** no detectable wall-time alignment in Hardy 4 (R 0.097, p 0.56; MDE 0.145-0.208);
+  offsets preserved after removing wall time (rho 0.750, p 0.0002), also without ventilator cases and in inpatients
+  only. COVID (D109c.3-4, descriptive): Delorey organs uninformative (too few shared donors); Melms lung shows no
+  push in COVID vs controls. The circularity ratio is confounded by host-phase concentration (sampling window), so the
+  offset test (H109.2) is the decisive readout; the ventilated collapse to 0 / 12 h rests on it (p_closer 0.001).
+- **Question:** after A109c, which framing (registered default, or the Hardy 4 framing as a registered amendment
+  labelled post hoc relative to A109)?
+- **On hold:** WP2 (A110); edits of the Figure 3 table and narrative.
+- Evidence: results_preliminary.md, sections A109, A109b (and A109c when scored).
+- **Answer (PI, 2026-10-23):** reframed claim accepted: when daily cues are lost through illness (Hardy 4), organs
+  remain coupled clocks with their phase relations; in ventilated (mostly brain-dead) organ donors a shared perturbation
+  overrides them. PI note: brain-dead donors have probably lost the SCN, Hardy 4 donors keep it with perturbed
+  zeitgebers; caveat: drugs in both groups, not only cues. Follow-up: A132 (SCN loss vs ventilation), A110 rewritten
+  for Hardy 4 / Hardy 3.
+
