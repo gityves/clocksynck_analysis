@@ -1,0 +1,32 @@
+# Human homologs of mouse genes cycling in >=10 of 12 tissues (Zhang et al. 2014 PNAS atlas, JTK q<0.05, Homologene); CYCLOPS SeedGenes/Human_UbiquityCyclers.csv, https://github.com/ranafi/CYCLOPS (Anafi et al. 2017 PNAS 114:5312, doi:10.1073/pnas.1619320114). 30 genes (source row 16 was NA, dropped). NOT the 71-gene CYCLOPS-2.0 README example list, which could not be located.
+# C1orf51 renamed to its current symbol CIART.
+CDKN1A
+MMP14
+CLOCK
+PER2
+PER1
+ARNTL
+POR
+WEE1
+SLC16A1
+PER3
+NR1D1
+DBP
+NPAS2
+TSC22D3
+TEF
+TENC1
+HLF
+NFIL3
+USP2
+NR1D2
+FMO2
+TSPAN4
+LEO1
+TMEM57
+STK35
+LONRF3
+GRAMD4
+COQ10B
+DTX4
+CIART

@@ -1,0 +1,71 @@
+name,dataset,kind,study,tissue,label,ref,groups,within,primary,donors,compartments,cases,controls
+psychad_hbcc,psychad_hbcc,healthy,PsychAD,brain,A1 healthy,brain:OPC,control|case,,,145,9,,
+psychad_mssm,psychad_mssm,healthy,PsychAD,brain,A1 healthy,brain:astrocyte,control|case,,,257,9,,
+seaad_dlpfc,seaad_dlpfc,healthy,SEA-AD,brain,A1 healthy,brain:OPC,control|case,,,44,8,,
+seaad_mtg,seaad_mtg,healthy,SEA-AD,brain,A1 healthy,brain:inhibitory_CGE,control|case,,,47,8,,
+retina,retina,healthy,eye_pool,retina,A2 primary,eye:amacrine,control|case,,,95,10,,
+lung_hlca,lung_hlca,healthy,HLCA,lung,A4 primary,lung:macrophage,control|case,,,198,18,,
+lung_natri_control,lung_natri_control,healthy,Natri,lung,A6 control (non-cycling T),lung:monocyte,control|case,,,40,9,,
+blood_onek1k,blood_onek1k,healthy,OneK1K,blood,A6 (d),blood:CD14_monocyte,control|case,,,981,6,,
+blood_aida,blood_aida,healthy,AIDA,blood,A9,blood:cMono,control|case,,,624,7,,
+heart,heart_global,healthy,heart_global,heart,A8 healthy,heart:endothelial,control|case,,,45,7,,
+kidney_sc,kidney_sc,healthy,KPMP,kidney,A8 healthy,kidney:endothelial,control|case,,,26,5,,
+pd_control,parkinson,healthy,PD_d3cb449b,brain,A9 controls,brain:PFC_oligodendrocyte,control|case,,,24,30,,
+organ_breast,organ_breast,healthy,Kumar2023,breast,A9 part 2,breast:endothelial,control|case,,,126,13,,
+organ_bone_marrow,organ_bone_marrow,healthy,Zeng2025,marrow,A9 part 2,bone_marrow:B,control|case,,,45,11,,
+organ_adipose,organ_adipose,healthy,Emont2022,adipose,A9 part 2,adipose:subcutaneous_adipocyte,control|case,,,22,3,,
+organ_muscle,organ_muscle,healthy,HCA_muscle,muscle,A9 part 2,muscle:endothelial,control|case,,,32,4,,
+organ_ileum,organ_ileum,healthy,Kong2023,gut,A9 part 2,ileum:CD4_T,control|case,,,36,9,,
+organ_colon,organ_colon,healthy,colon_16023185,gut,A9 part 2,colon:epithelial,control|case,,,36,10,,
+organ_optic_nerve,organ_optic_nerve,healthy,eye_pool,eye,A9 part 2,optic_nerve:nerve_fibroblast_stromal,control|case,,,83,13,,
+organ_eye_anterior,organ_eye_anterior,healthy,eye_pool,eye,A9 part 2,eye_anterior:ciliary_epithelial,control|case,,,67,12,,
+skin_ad_control,skin_ad,healthy,GSE328048,skin,A11 healthy,skin:fibroblast,control|case,,,20,5,,
+skin_ssc_control,skin_ssc,healthy,GSE195452,skin,A11 healthy,skin:fibroblast,control|case,,,53,4,,
+islets,islets,healthy,islets_e51bae9a,pancreas,A13 healthy,islet:alpha,control|case,,,17,7,,
+ibd_ileum,ibd_ileum,healthy,IBDverse,gut,A14 healthy,ileum:T,control|case,,,242,8,,
+ibd_rectum,ibd_rectum,healthy,IBDverse,gut,A14 healthy,rectum:T,control|case,,,274,8,,
+ia_spleen,ia_spleen,healthy,ImmuneAging,lymphoid,A15,ia:B,control|case,,,22,9,,
+ia_thoracic_ln,ia_thoracic_ln,healthy,ImmuneAging,lymphoid,A15,ia:B,control|case,,,23,6,,
+ia_mesenteric_ln,ia_mesenteric_ln,healthy,ImmuneAging,lymphoid,A15,ia:B,control|case,,,21,4,,
+ia_jejunum,ia_jejunum,healthy,ImmuneAging,gut,A15,ia:CD4_T,control|case,,,20,8,,
+ia_lung,ia_lung,healthy,ImmuneAging,lung,A15,ia:CD8_T,control|case,,,19,8,,
+kong_ileum,kong_ileum,healthy,Kong2023,gut,A16 primary,ileum:CD8_T,control|case,,,30,14,,
+kong_colon,kong_colon,healthy,Kong2023,gut,A16 secondary,colon:CD4_T,control|case,,,21,12,,
+endometrium,endometrium,healthy,GSE266265,endometrium,A11 part 3,endometrium:stromal,control|case,,,25,5,,
+tabula_sapiens,tabula_sapiens,healthy,TabulaSapiens,multi,A17 step 7 (confirmation only),blood:monocyte,control|case,,,14,63,,
+AD_mssm,psychad_mssm,contrast,PsychAD,brain,A1 primary,brain:excitatory,control|case,stratum,,1032,9,428.0,163.0
+AD_radc,psychad_radc,contrast,PsychAD,brain,A1 replication,brain:excitatory,control|case,stratum,,152,9,72.0,25.0
+AD_seaad_dlpfc,seaad_dlpfc,contrast,SEA-AD,brain,A1 replication,brain:excitatory,control|case,stratum,,83,8,39.0,41.0
+AD_seaad_mtg,seaad_mtg,contrast,SEA-AD,brain,A1 replication,brain:excitatory,control|case,stratum,,89,8,42.0,42.0
+ADNC_seaad_dlpfc,seaad_dlpfc,contrast,SEA-AD,brain,A1 secondary,brain:excitatory,control|case,stratum,,83,8,39.0,41.0
+ADNC_seaad_mtg,seaad_mtg,contrast,SEA-AD,brain,A1 secondary,brain:excitatory,control|case,stratum,,89,8,42.0,42.0
+SCZ_hbcc,psychad_hbcc,contrast,PsychAD,brain,A1,brain:excitatory,control|case,stratum,,299,9,56.0,94.0
+SCZ_mssm,psychad_mssm,contrast,PsychAD,brain,A1,brain:excitatory,control|case,stratum,,1032,9,116.0,257.0
+BD_hbcc,psychad_hbcc,contrast,PsychAD,brain,A1,brain:excitatory,control|case,stratum,,299,9,69.0,94.0
+age_mssm,psychad_mssm,contrast,PsychAD,brain,A1 age,brain:excitatory,control|case,stratum,,1032,9,86.0,87.0
+age_hbcc,psychad_hbcc,contrast,PsychAD,brain,A1 age,brain:excitatory,control|case,stratum,,299,9,34.0,35.0
+DLBD_mssm,psychad_mssm,contrast,PsychAD,brain,A13 primary,brain:excitatory,control|case,stratum,,1032,9,103.0,163.0
+DLBpure_mssm,psychad_mssm,contrast,PsychAD,brain,A13 secondary,brain:excitatory,control|case,stratum,,1032,9,34.0,163.0
+PD_mssm,psychad_mssm,contrast,PsychAD,brain,A13,brain:excitatory,control|case,stratum,,1032,9,32.0,163.0
+VaD_mssm,psychad_mssm,contrast,PsychAD,brain,A13,brain:excitatory,control|case,stratum,,1032,9,59.0,163.0
+ASCVD_hbcc,psychad_hbcc,contrast,PsychAD,brain,A13,brain:excitatory,control|case,stratum,,299,9,40.0,94.0
+DM_radc,psychad_radc,contrast,PsychAD,brain,A13,brain:excitatory,control|case,stratum,,152,9,41.0,26.0
+lung_ipf_hlca,lung_hlca,contrast,HLCA,lung,A4 secondary,lung:macrophage,control|case,block:block_lung_ipf_hlca,,125,13,52.0,73.0
+ild_natri,lung_natri,contrast,Natri,lung,A5 primary (infeasible as specified),lung:monocyte,control|case,stratum,,101,17,61.0,40.0
+hlca_fibrotic,hlca_fibrotic,contrast,HLCA,lung,A5 origin (exploratory),lung:macrophage,control|case,,,269,18,71.0,198.0
+lupus,blood_lupus,contrast,lupus,blood,A9,blood:cMono,control|case,stratum,T_coupling;monocyte_coupling,261,7,162.0,99.0
+dcm,heart_dcm,contrast,heart_global,heart,A8 primary,heart:endothelial,control|case,stratum,fibroblast_coupling,68,7,50.0,18.0
+dcm_healthy,heart_dcm_healthy,contrast,heart_global,heart,A8 secondary,heart:endothelial,control|case,,lymphocyte_coupling,95,7,50.0,45.0
+myocarditis,heart_myocarditis,contrast,heart_global,heart,A8 secondary,heart:endothelial,control|case,stratum,,42,7,24.0,18.0
+ckd_sc,kidney_sc,contrast,KPMP,kidney,A8 primary,kidney:endothelial,control|case,stratum,T_coupling;interstitial_coupling,63,10,37.0,26.0
+pd,parkinson,contrast,PD_d3cb449b,brain,A9 primary,brain:PFC_oligodendrocyte,control|case,stratum,cortical_neuron_coupling;glia_coupling,97,41,73.0,24.0
+skin_ad,skin_ad,contrast,GSE328048,skin,A11 primary,skin:fibroblast,control|case,,T_coupling;fibroblast_coupling,62,10,42.0,20.0
+skin_ad_nonlesional,skin_ad_nonlesional,contrast,GSE328048,skin,A11 secondary,skin:fibroblast,control|case,,,55,10,35.0,20.0
+skin_ssc,skin_ssc,contrast,GSE195452,skin,A11 primary,skin:fibroblast,control|case,,T_coupling;fibroblast_coupling,151,9,97.0,54.0
+islets_t2d,islets,contrast,islets_e51bae9a,pancreas,A13 primary,islet:alpha,control|case,stratum,beta_coupling,34,9,17.0,17.0
+ibd_crohn,ibd_ileum,contrast,IBDverse,gut,A14 primary,ileum:T,control|case,,T_coupling;stromal_coupling,359,10,117.0,242.0
+ibd_crohn_inflamed,ibd_ileum,contrast,IBDverse,gut,A14 secondary,ileum:T,control|case,,,307,10,65.0,242.0
+ibd_crohn_uninflamed,ibd_ileum,contrast,IBDverse,gut,A14 secondary,ileum:T,control|case,,,294,10,52.0,242.0
+ia_crohn,ia_crohn,contrast,GutCellAtlas,gut,A15 part 4,ileum:epithelial,control|case,,T_coupling,61,16,22.0,39.0
+endometriosis,endometrium,contrast,GSE266265,endometrium,A11 part 3 primary,endometrium:stromal,control|case,,lymphocyte_coupling;stromal_coupling,60,5,35.0,25.0
+endometriosis_severe,endometrium,contrast,GSE266265,endometrium,A11 part 3 secondary,endometrium:stromal,control|case,,,45,5,20.0,25.0

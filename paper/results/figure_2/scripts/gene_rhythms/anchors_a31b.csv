@@ -1,0 +1,38 @@
+atlas,compartment,donors,family,anchor,anchor_fixed,source,status
+lung_hlca,lung:AT1,90,epithelial,True,False,A17 target lung_hlca,ok
+lung_hlca,lung:AT2,126,epithelial,True,False,A17 target lung_hlca,ok
+lung_hlca,lung:B,91,lymphocyte,False,False,A17 target lung_hlca,ok
+lung_hlca,lung:DC,117,myeloid,False,False,A17 target lung_hlca,ok
+lung_hlca,lung:EC_arterial,61,endothelial,True,True,A17 target lung_hlca,ok
+lung_hlca,lung:EC_capillary,82,endothelial,True,True,A17 target lung_hlca,ok
+lung_hlca,lung:EC_venous,85,endothelial,True,True,A17 target lung_hlca,ok
+lung_hlca,lung:NK_ILC,96,lymphocyte,False,False,A17 target lung_hlca,ok
+lung_hlca,lung:T,125,lymphocyte,False,False,A17 target lung_hlca,ok
+lung_hlca,lung:basal,85,epithelial,True,False,A17 target lung_hlca,ok
+lung_hlca,lung:fibroblast,104,fibroblast_stromal,False,True,A17 target lung_hlca,ok
+lung_hlca,lung:lymphatic_EC,56,endothelial,True,True,A17 target lung_hlca,ok
+lung_hlca,lung:macrophage,147,myeloid,False,False,A17 target lung_hlca,ok
+lung_hlca,lung:mast,65,myeloid,False,False,A17 target lung_hlca,ok
+lung_hlca,lung:monocyte,137,myeloid,False,False,A17 target lung_hlca,ok
+lung_hlca,lung:multiciliated,149,epithelial,True,False,A17 target lung_hlca,ok
+lung_hlca,lung:secretory,134,epithelial,True,False,A17 target lung_hlca,ok
+lung_hlca,lung:smooth_muscle,49,mural,True,True,A17 target lung_hlca,ok
+breast_hbca,breast:endothelial,54,endothelial,True,True,A17 rule (new target),ok
+breast_hbca,breast:epithelial,55,epithelial,True,False,A17 rule (new target),ok
+breast_hbca,breast:fibroblast_stromal,54,fibroblast_stromal,True,True,A17 rule (new target),ok
+breast_hbca,breast:mural_smooth_muscle,39,mural,False,True,A17 rule (new target),ok
+breast_hbca,breast:progenitor,54,other,False,False,A17 rule (new target),ok
+liver_xu,liver:CD8_T,27,lymphocyte,False,False,A17 rule (new target),ok
+liver_xu,liver:NK,25,lymphocyte,False,False,A17 rule (new target),ok
+liver_xu,liver:endothelial,27,endothelial,True,False,A17 rule (new target),ok
+liver_xu,liver:epithelial,25,epithelial,True,False,A17 rule (new target),ok
+liver_xu,liver:macrophage_DC,33,myeloid,True,False,A17 rule (new target),ok
+skin_ganier,skin:T_other,20,lymphocyte,False,False,A17 rule (new target),ok
+skin_ganier,skin:endothelial,25,endothelial,True,True,A17 rule (new target),ok
+skin_ganier,skin:epithelial,22,epithelial,False,False,A17 rule (new target),ok
+skin_ganier,skin:fibroblast_stromal,25,fibroblast_stromal,True,True,A17 rule (new target),ok
+skin_ganier,skin:macrophage_DC,24,myeloid,False,False,A17 rule (new target),ok
+skin_ganier,skin:mural_smooth_muscle,25,mural,True,True,A17 rule (new target),ok
+adipose_emont,adipose:subcutaneous_T_other,21,lymphocyte,True,False,A17 target organ_adipose,ok
+adipose_emont,adipose:subcutaneous_adipocyte,22,parenchyma,True,False,A17 target organ_adipose,ok
+adipose_emont,adipose:subcutaneous_macrophage_DC,21,myeloid,True,False,A17 target organ_adipose,ok
