@@ -245,3 +245,12 @@ group-label permutation; excluded if not > 0 at p < 0.05.
 people dying after long illness remain coupled clocks with their phase relations, and (if H110.1 shows no decay and
 H110.2a or b passes) that the coupling is maintained rather than remembered. No sentence claims coupling without the
 brain: Hardy 4 donors have it.
+
+## A132b (2026-10-24, POST HOC: chosen after seeing A132's per-group readouts; requested by the PI): do ventilated post-mortem cases keep the fast-death phase relations better than brain-dead organ donors?
+
+A132 showed both Hardy 0 groups pushed toward 0 / 12 h, with offset preservation descriptively only in the ventilated
+post-mortem cases (rho 0.690 vs 0.161). Statistic: Fisher-Lee rho vs fast deaths, ventilated post-mortem minus organ
+donors, at equal n (the same 79 organ donors as A132, seed 132), over the pairs with >= 20 shared donors in fast deaths
+and in both groups (fixed mask); null: donor labels permuted between the two groups (1,000), two-sided p. Reported as
+post hoc, with both per-group readouts (offsets and folded distance) described side by side. Code:
+`paper/exploratory/A132_brain_death/scripts/compute_posthoc_rho.py`; output `a132b_rho_difference.csv`.
