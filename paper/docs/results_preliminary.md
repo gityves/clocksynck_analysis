@@ -115,3 +115,15 @@ own-noise "damping" (withdrawn in A22) and COVID A105 (2 anchors, no A22 confirm
 capillary EC anchor is unresolved). Several flags are by design (r*, C and block hosts are different readouts, not
 couplings); the figure text must name the readout. Scorecard: 108/120 amendments with a verdict after curation.
 <!-- src: paper/exploratory/WP0_integrity/output/estimator_consistency.csv (column flag); output/scorecard.csv -->
+
+## A109b (scored 2026-10-23): Tabula Sapiens replication (secondary)
+
+**Not replicated; underpowered.** C of stromal-vascular pseudobulks across 9 organs (12 donors, 36 pairs with >= 3
+shared donors): C_clock 0.683 vs pseudo-clock null median 0.675, excess +0.009, one-sided p 0.438 (MDE 0.104).
+Sensitivity (7 pairs with >= 5 shared donors): 0.619 vs 0.531, excess +0.087, p 0.204 (MDE 0.187). At 3-5 shared
+donors the null floor of |correlation| is 0.53-0.68, so only a large excess could be detected. Offset test (4 organs
+shared with GTEx, 6 pairs, 24 permutations): rho 0.091, p 0.417; registered as uninformative (power 0.06-0.13). The
+archive's Tabula Sapiens multi-organ gate (p_acrophase 0.017, all compartments, 14 donors) is a different readout and
+is not contradicted. Reading: Tabula Sapiens adds no evidence for or against H109.1 at this design; no replication
+panel.
+<!-- src: paper/exploratory/A109_coupling_nulls/output/a109b_c_null.csv; a109b_offsets.csv; a109b_power.csv -->

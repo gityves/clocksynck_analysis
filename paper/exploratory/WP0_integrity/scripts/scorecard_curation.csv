@@ -25,6 +25,6 @@ A108b,,descriptive,"Secondary and descriptive; same data, window, rules and",PLA
 A108c,,descriptive,"A108c (descriptive), which lineage first?",RESULTS_preliminary.md:3055,
 A109,H109.1,pass,"H109.1 (confirmatory): PASS. Ventilated C_clock 0.463 vs pseudo-clock null median 0.154; excess 0.310; one-sided p 0.005",results_preliminary.md:A109,"scored 2026-10-23"
 A109,H109.2,fail,"H109.2 (confirmatory): FAIL in ventilated donors. rho 0.261, one-sided p 0.165; p_closer 0.001 (Hardy 4 passes, secondary)",results_preliminary.md:A109,"scored 2026-10-23"
-A109b,,pending,"A109b (2026-10-23, written before scoring): replication in Tabula Sapiens (secondary)",registered_experiments.md:59,"registered 2026-10-23, not scored"
+A109b,,fail,"Not replicated; underpowered. excess +0.009, p 0.438 (MDE 0.104); offsets uninformative",results_preliminary.md:A109b,"scored 2026-10-23; secondary"
 A22,V17.2,fail,V17.2 fails as in the archive. Other legacy coherence runs on tables with an empty,results_preliminary.md:17,"erratum 2026-10-23 (A22 V17.2 centred coherence): verdict unchanged, fail"
 A22,V17.3,,"V17.3, simulated decoupling of 2 anchors per contrast in the cases (thinning of the real counts, 3 replicates): detected 86 % at s = 0",RESULTS_preliminary.md:1267,keyword verdict ("Fails.") belonged to V17.2; V17.3 states no pass/fail
