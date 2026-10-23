@@ -18,16 +18,18 @@
 | `paper/exploratory` | Any exploratory code, testing new hypothesis, create one folder per registered hypothesis |
 | `paper/results` | Any validated analysis that is required to generate a figure. Code in figure_x/scripts, data used are for the figure are in /data (symlink) and output for all the csv,... required to draw a figure |
 | `data/` | Data folder for small data |
-| `docs/registered_experiment.md` | History of the experiments registered |
-| `docs/results_preliminary.md` | Outcome of the experiment registered |
-| `docs/METHOD.md` | Description of the method |
+| `paper/docs/registered_experiments.md` | History of the experiments registered (A109 onwards; A1-A108c in the archive) |
+| `paper/docs/results_preliminary.md` | Outcome of the experiment registered; errata to archive results |
+| `paper/docs/METHOD.md` | Description of the method |
+| `paper/docs/provisory_plan_paper.md` | Work plan of the paper (WP0-WP8), repository layout and migration status |
+| `paper/docs/AMENDMENT_INDEX.md` | Archive amendment -> migrated script |
 | `/home/maxine/Documents/paychere/scCircadianCancer` | Archive folder containing the full project history |
 
 
 ## Rules
-- **Pre-register.** Every new hypothesis tested is an amendment in `docs/registered_experiment.md`, written and committed before
+- **Pre-register.** Every new hypothesis tested is an amendment in `paper/docs/registered_experiments.md`, written and committed before
   its data are scored. Anything chosen after seeing results is labelled post hoc. Results go to
-  `docs/results_preliminary.md` (plus a row in `docs/METHOD.md` when useful).
+  `paper/docs/results_preliminary.md` (plus a row in `paper/docs/METHOD.md` when useful).
 - **Subagents** Delegate clearly defined tasks to Sonnet 5.5 agents. Verify their numbers against output files before writing them into the docs.
 - **Statistics.** A failed gate is uninformative, never "decoupled". Coupling scales with host spread: compare across
   groups only at a common spread (d*) or on z2/psi. Every disease contrast needs a specificity companion on the same
@@ -39,7 +41,7 @@
 
 ## Environment and data
 - Python: `$(conda info --base)/envs/sccc/bin/python` (as every `run.sh` uses).
-- Shared machine: call `sccc.config.limit_threads()`; at most 4 parallel jobs per agent; at most 30 GB RAM per agent
+- Shared machine: call `clocksync.config.limit_threads()` (done by `common.cli.setup`); at most 4 parallel jobs per agent; at most 30 GB RAM per agent
   (read backed or chunked).
 - Data: `/mnt/max8tb/data/CoPhaser_data/cancer_circadian/` (`$SCCC_DATA`), with a `PROVENANCE.md` (URL, date, sha256)
   per source. Self-imposed cap 400 GB. Processed matrices only, no FASTQ mapping.

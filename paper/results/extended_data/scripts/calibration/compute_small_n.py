@@ -116,3 +116,7 @@ def main():
     piv = s[s.set.isin(["heart", "kidney"])].pivot(index="n", columns="set", values="meets_rule")
     ok = piv.index[piv.all(axis=1)] if piv.shape[1] == 2 else []
     print("rule (A10): smallest n meeting all criteria in heart and kidney:", int(ok.min()) if len(ok) else "none (the minimum stays at 15)")
+
+
+if __name__ == "__main__":
+    main()

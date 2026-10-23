@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import sys
 import warnings
+import zlib
 from pathlib import Path
 
 PAPER = Path(__file__).resolve().parents[4]
@@ -107,7 +108,7 @@ def one(name, k, scenario, sim, n_null, subsample, seed, min_age):
     warnings.simplefilter("ignore")
     pb, donors, age, anc = design(name, subsample, seed)
     ds = cs.Dataset(pb, anchors=anc, donors=donors, name=name)
-    rng = np.random.default_rng([seed, sim, scenario == "planted", hash(k) % 10**6])
+    rng = np.random.default_rng([seed, sim, scenario == "planted", zlib.crc32(str(k).encode()) % 10**6])  # crc32: stable across processes (str hash is salted)
     a = permuted_ages(ds, age, rng) / 10.0
     x = a - a.median()
     if scenario == "planted":

@@ -62,3 +62,12 @@ def source_data(group: str) -> Path:
     p = group_out(group) / "source_data"
     p.mkdir(parents=True, exist_ok=True)
     return p
+
+
+def exploratory_dir(amendment: str, subsample: bool = False) -> Path:
+    """Outputs of a registered hypothesis not yet validated for a figure: exploratory/<amendment>/output/; created.
+
+    `amendment` is the folder name, e.g. "A109_coupling_nulls"."""
+    p = PAPER / "exploratory" / amendment / "output" / ("subsample" if subsample else "")
+    p.mkdir(parents=True, exist_ok=True)
+    return p

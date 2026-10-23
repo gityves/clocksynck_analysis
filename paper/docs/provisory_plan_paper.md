@@ -6,30 +6,89 @@ The agent runs nine work packages (WP0-WP8) that close the paper's main weakness
 
 **Out of scope (do not attempt):** brain-bank times of death (HBCC, AMP-PD), the circadiomics left-ventricle request, ICU temperature records, Synapse or dbGaP datasets not already held (Ruzicka 2024, AMP RA, ImmuNexUT), and any wet-lab or animal experiment. GTEx protected phenotypes already held under phs000424 may be used, aggregates only, as in A46-A99.
 
+## Repository and migration (read before any work package)
+
+The project moved on 2026-10-23 from the archive `$SCCC_ARCHIVE` = `/home/maxine/Documents/paychere/scCircadianCancer` (read only) to this repository. Amendment ids A1-A108c, V and D notes refer to the archive's `docs/PLAN_internal_desync.md` and `docs/RESULTS_preliminary.md`; new amendments start at A109.
+
+### Layout
+
+| path | content |
+| --- | --- |
+| `clocksync/` | the method package (own git repository; public API, tests, tutorials) |
+| `paper/common/` | `paths.py` (all paths; read it first), `cli.py` (`--subsample`, `--seed`, `--jobs`), `data.py` (`load(name)` of standard pseudobulk tables), `gtex.py` (GTEx v10, controlled access), `anchors.py` + `anchors_a17.csv` (frozen A17 anchors), `benchmark/` (COFE, CYCLOPS, CHIRAL, TimeTeller), `run.sh` (RAM-capped runner, default 30 GB) |
+| `paper/common/datasets/<name>/build.py` | dataset builders: raw public files -> standard tables in `$SCCC_DATA/pseudobulk/`; indexes `INDEX_{atlases,bulk,natexp_cancer}.md` |
+| `paper/results/<figure>/scripts/<group>/` | validated analyses, one group (folder of `compute_*.py`, `_shared.py`, `README.md`, `run.sh`) per topic, in the figure whose claim it supports; outputs in `paper/results/<figure>/output/<group>/` (`common.paths.out_dir(group)`) |
+| `paper/exploratory/<A1xx_slug>/` | one folder per new registered hypothesis: `scripts/`, `output/` (`common.paths.exploratory_dir`), `README.md`. Moved to a `results/` group once the hypothesis is scored and kept for a figure |
+| `paper/data/` | small data (GTEx waveform, CHIRAL DIP, GSE233242 ids; `Gtex_phenotypes/`: controlled access, git-ignored) |
+| `paper/docs/` | this plan; `registered_experiments.md` (new amendments, append only); `results_preliminary.md` (new results and errata to archive results, append only); `METHOD.md`; `AMENDMENT_INDEX.md` (archive amendment -> migrated script) |
+
+Groups per figure (`common.paths.GROUPS`): figure_1 `method`, `windows`, `species`; figure_2 `organs`, `backbone`, `embryo`, `atlas_fits`, `gene_rhythms`; figure_3 `cues_lost`, `gtex_cues`; figure_4 `resilience`, `spread_multiplicity`, `natural_experiments`; figure_5 `cancer`, `cancer_pipeline`, `lung_breaks`, `psoriasis`, `psoriasis_details`; extended_data `calibration`, `gate`, `host_identity`, `simulations`. A group stays in one figure folder even when some of its outputs go to Extended Data; the figure tables below say where each panel goes.
+
+### What was migrated (M1, done 2026-10-23, commit cb8b896)
+
+- The archive's clean analyses (`paper/code/`, all on the public clocksync API, each checked against the legacy outputs in its README) for every amendment the figure tables below cite, by `paper/common/migration/migrate_from_archive.py`. Path expressions were rewritten to the same files (report: `paper/common/migration/migration_report.md`). Archive folder -> group: `FOLDERS` in that script.
+- Not migrated (not cited): A5, A6, A7, A12, A13, A29, A30, A32 and the cycling checks of the cancer analysis plan (2026-10-04); builders `hlca_tstates_a7`, `natri_tstates_a7`. They stay in the archive (`docs/AMENDMENT_INDEX.md`, "archive only").
+- Archive full-run outputs were copied to `paper/results/<figure>/output/<group>/` with their sha256 in `ARCHIVE_SNAPSHOT.tsv` (`snapshot_outputs.py`), so scripts that read another group's tables run before any rerun. A file whose hash still matches is an archive number. Tables with a per-donor column were not copied.
+- Still read from the archive (through `common.paths.ARCHIVE` / `LEGACY`): legacy tables that builders convert with `from_legacy()` when `$SCCC_DATA/pseudobulk/<name>.parquet` does not exist; legacy outputs that READMEs compare against (`legacy/desync/**/output/`, `legacy/desync/common_output/`); `outputs/` tables of the cancer cell builders; the legacy code of amendments listed as not ported.
+
+### Migration status and remaining steps
+
+- **M2, subsample equivalence (2026-10-23).** Every migrated compute script run with its README's `--subsample N` and compared with the archive's subsample outputs (same seeds). Result per group: see the table at the end of this section. A script listed as failing or differing must be fixed (or its difference explained in its group README) before it is used in a work package.
+- **M3, full reruns, per figure, on demand.** Before a figure's numbers go into text, rerun its groups in full (`run.sh` without `--subsample`, registered permutation and bootstrap sizes, `paper/common/run.sh` for RAM caps) and compare point estimates with the archive snapshot (`ARCHIVE_SNAPSHOT.tsv`; READMEs give the expected values). Record agreement or explained differences in the group README; a full rerun replaces the snapshot files (delete the snapshot rows of rerun files). Symlink the input tables the figure reads (`$SCCC_DATA/pseudobulk/*.parquet`, GTEx aggregates) into `results/<figure>/data/`. Long runs (> 20 min) are documented scripts, launched in the background, at most 4 parallel jobs.
+- **M4, cut the data dependency on the archive.** For each dataset a work package uses, save the standard table once (`common.data.save(name, *build_module.from_legacy())`, or `build()` from raw files) so later runs read `$SCCC_DATA/pseudobulk/` only. When every used dataset is saved, `from_legacy()` paths are dead code for this repository.
+- **M5, before public release (user's call).** Remove amendment ids from user-facing docstrings, delete `paper/common/migration/`, delete per-donor scratch (none migrated), choose licence.
+
+### Rules for the work packages in this repository
+
+- **Registration.** Write each amendment in `paper/docs/registered_experiments.md` (dated, hypothesis ids, estimand, null, pass rule, data rule, power or MDE) and commit it before scoring. The work-package texts below are drafts of those amendments: copy them, complete the data-dependent parts after the scout (labelled "written after the scout, before scoring"), and commit. Results and run notes go to `paper/docs/results_preliminary.md` with a `src:` pointer to the output table; corrections of archive results (WP0) go there under "Errata to the archive", never into the archive.
+- **Code.** New analyses in `paper/exploratory/<A1xx_slug>/scripts/`, following the conventions of the migrated groups (docstring with amendment, hypotheses, estimand, null, outputs; `common.cli.parser`; `--subsample` check first; seeds fixed). Use the public clocksync API; extend clocksync (with a test) when a tool is generally useful, otherwise a helper in `paper/common/`. Do not edit a migrated group for a new hypothesis; import its helpers or copy what is needed.
+- **Base code.** Each work package names the migrated scripts it builds on ("Base code"). `paper/docs/AMENDMENT_INDEX.md` maps any other archive amendment to its script.
+
+### M2 result per group
+
+All 22 groups run after the migration and reproduce the archive's subsample outputs file for file (identical to 1e-9 relative, most byte-identical), with the arguments in `paper/common/migration/subsample_args.md`. No migration breakage was found. Differences that remain are not caused by the migration:
+
+| group, script | status | action before use |
+| --- | --- | --- |
+| backbone `compute_cancer_split.py` (A18 per-cell, cancer) | `D_null` differs from the archive (D itself matches), and so do the null-derived D, R, rho, lambda columns; suspected change in `clocksync.cells.vonmises.group_stats` (not verified) | **resolve first in WP0 item 2**: rerun the archive script and the migrated one at the same N, find which null is right |
+| resilience `compute_gtex_sex_bmi.py` (A96, A99, A94 cue-core) | same donors, values differ slightly (log radius 1.4e-2); the archive file predates clocksync edits of 2026-10-22 | explain in M3 (full rerun vs archive full-run snapshot) before A118 or WP0 item 6 use it |
+| calibration `compute_age_acceptance.py` (A19 acceptance) | archive not reproducible: seed used Python's salted `hash()`. **Fixed 2026-10-23** (`zlib.crc32`); numbers will differ from the archive | rerun in M3; erratum if the A19 acceptance verdict changes |
+| calibration `compute_small_n.py` (A10) | `main()` was never called (archive too), so `run.sh` skipped it. **Fixed** (`__main__` guard); reproduces the archive | none |
+| windows `compute_internal_time.py --jobs > 1` | failed: callable clocksync modules could not be pickled. **Fixed in clocksync** (f7f3c86, with a test); `--jobs 4` reproduces the archive | none |
+| gate `compute_sheep_reference_primary.py` (A41) | runs; archive subsample N not recovered (13 vs 16 tissues) | compare in M3 on the full run |
+| method `compute_cyclops_anchoring.py`; simulations `compute_celltype_truth.py` (colon arm, V13) | not run: > 25-30 min on a subsample | M3 full run only |
+| gtex_cues a101_tissues, a46 CIs; species a21 (cellbender log z2), a34_amplitude; organs phase_resid_corr_fast; backbone a18_pd_braak, a18_thinning; cancer a84, a24_cancer; lung_breaks decomposition CIs; psoriasis a81b_h2 (n_boot) | archive subsample files are stale (written before the archive script's last edit) or used other resample sizes; the newer archive runs match | none (M3 compares with the full-run snapshot) |
+| psoriasis `compute_cues.py`; psoriasis_details `compute_cues_matched.py`, `compute_cue_context.py` | exceed 30 GB with `--jobs 2` | run with `--jobs 1` (about 6 GB) |
+
+`paper/common/run.sh` forwards script arguments (`RUN_CAP_GB=30 paper/common/run.sh <script> [args...]`).
+
 
 ## WP0. Integrity fixes (no new data; do first)
 
-These remove inconsistencies a reviewer would find in the supplement. None needs a pre-registration; each gets a dated run note.
+These remove inconsistencies a reviewer would find in the supplement. None needs a pre-registration; each gets a dated run note in `results_preliminary.md` (corrections of archive numbers under "Errata to the archive"). Code and outputs: `paper/exploratory/WP0_integrity/`.
 
-1. **Missing tables.** Recompute the fibrotic-lung T-cell Fisher combined p (HLCA p 0.027, Natri p 0.009; quoted as 0.002) from the A17 contrast outputs and write it to `common_output/`. Search `RESULTS_preliminary.md` for every number without a `src` pointer; produce the table or remove the number.
-2. **Malignant cells: per-cell synchrony vs coherence.** The 2026-10-08 copy-number check reads malignant cells as no less synchronous than normal epithelium (dR -0.09); A86/A87 read a loss of clock-shaped share and gene coherence. On the same 79 patients (A87 set), compute side by side: A86 share, A87 coherence and alignment, the anchored coupling, and the per-cell D, lambda and R of `x5_vm_human.py --cnv`. Simulate a compartment with incoherent gene phases (gene phases drawn uniformly, amplitude unchanged) at the real depths and show what each readout returns. Deliverable: a one-paragraph reconciliation for Methods and a decision on which cancer per-cell numbers stay in the paper.
-3. **Pre-registration scorecard.** Script that parses every amendment and its run note into one table: amendment, date, commit, hypothesis id, label (primary, secondary, exploratory, post hoc), estimate, interval, p, MDE, verdict (pass, fail, uninformative, infeasible), output file. This becomes Extended Data Table 1 and the backbone of the cover letter.
+1. **Missing tables.** Recompute the fibrotic-lung T-cell Fisher combined p (HLCA p 0.027, Natri p 0.009; quoted as 0.002) from the A17 contrast outputs and write it to `paper/exploratory/WP0_integrity/output/` (inputs: the A17 contrast tables `$SCCC_ARCHIVE/legacy/desync/common_output/a17_unified_*.csv`; script `results/figure_4/scripts/resilience/compute_contrasts_a17.py`). Search the archive `RESULTS_preliminary.md` for every number cited by the figure tables below without a `src` pointer; produce the table or list the number as unsupported in the errata.
+2. **Malignant cells: per-cell synchrony vs coherence.** The 2026-10-08 copy-number check reads malignant cells as no less synchronous than normal epithelium (dR -0.09); A86/A87 read a loss of clock-shaped share and gene coherence. On the same 79 patients (A87 set), compute side by side: A86 share, A87 coherence and alignment, the anchored coupling, and the per-cell D, lambda and R of `x5_vm_human.py --cnv` (migrated as `results/figure_2/scripts/backbone/compute_cancer_split.py`, A18 part 2; legacy `$SCCC_ARCHIVE/legacy/scripts/x5_vm_human.py`). Simulate a compartment with incoherent gene phases (gene phases drawn uniformly, amplitude unchanged) at the real depths and show what each readout returns. Deliverable: a one-paragraph reconciliation for Methods and a decision on which cancer per-cell numbers stay in the paper.
+   *Base code:* `results/figure_5/scripts/cancer/{compute_malignant_gate,compute_decomposition}.py` (A86, A87), `results/extended_data/scripts/calibration/compute_vonmises_calibration.py` (V11 simulations at human depths), `clocksync.cells`, `clocksync.simulate`.
+3. **Pre-registration scorecard.** Script that parses every amendment and its run note (archive `docs/PLAN_internal_desync.md` and `docs/RESULTS_preliminary.md` for A1-A108c; `paper/docs/registered_experiments.md` and `results_preliminary.md` from A109; commits from both git histories) into one table: amendment, date, commit, hypothesis id, label (primary, secondary, exploratory, post hoc), estimate, interval, p, MDE, verdict (pass, fail, uninformative, infeasible), output file. This becomes Extended Data Table 1 and the backbone of the cover letter.
 4. **Estimator consistency.** Confirm that every main-text coupling uses the A17+ anchored estimator with A22 confirmation. List any figure panel still built on free-fit or pre-A17 values (for example the early near-1 immune couplings, A20 own-noise "damping") and flag it for removal.
-5. **CHIRAL reanalysis robustness (A101b, A102b).** Rerun the death-type-matched count comparison with TMM normalisation (as CHIRAL) instead of library-size CPM, and add CHIRAL's sex comparison under the same matching. Report beside the existing numbers; no new hypothesis.
+5. **CHIRAL reanalysis robustness (A101b, A102b).** Rerun the death-type-matched count comparison with TMM normalisation (as CHIRAL) instead of library-size CPM, and add CHIRAL's sex comparison under the same matching. Report beside the existing numbers; no new hypothesis. *Base code:* `results/figure_3/scripts/gtex_cues/{compute_chiral_prep_counts,compute_chiral_age,compute_covariate_sensitivity}.py`, `results/figure_4/scripts/resilience/compute_gtex_chiral_age.py`.
 
-**6. Gene-symbol audit (after the A85 correction of 2026-10-22).** The legacy A85 script matched gene symbols against the Ensembl `var_names` of `atlas_wg/*/pseudobulk.h5ad`, so every gene resolved to the same column. List every script that reads an Ensembl-indexed h5ad and matches symbols with `gene_columns(a.var_names, ...)` or similar; check first those behind A31b, A39, A50 and A96. For each, rerun with matching on `feature_name`, record which results change, and correct `RESULTS_preliminary.md` with a dated note. All new builds (A118, A122) match on `feature_name` from the start, and every script reports the number of requested genes found.
+**6. Gene-symbol audit (after the A85 correction of 2026-10-22).** The legacy A85 script matched gene symbols against the Ensembl `var_names` of `atlas_wg/*/pseudobulk.h5ad`, so every gene resolved to the same column. List every script that reads an Ensembl-indexed h5ad and matches symbols with `gene_columns(a.var_names, ...)` or similar; check first those behind A31b, A39, A50 and A96. Search `paper/` (migrated code, `common/gtex.py`, `common/datasets/`) and the legacy scripts those results came from. For each, rerun with matching on `feature_name`, record which results change, and add a dated erratum to `results_preliminary.md`. *Base code:* A31b `results/figure_2/scripts/gene_rhythms/compute_atlas_gene_rhythms.py`, A39 `.../gene_rhythms/compute_donor_curve.py`, A50 `.../gene_rhythms/compute_gene_map.py`, A96 `results/figure_4/scripts/resilience/compute_gtex_sex_bmi.py` with builders `common/datasets/{islets_a96,masld_pooled_a96}`. All new builds (A118, A122) match on `feature_name` from the start, and every script reports the number of requested genes found.
 
-**7. A22 V17.2 note.** The legacy coherence values came from an empty stratum read as NaN (pairs not centred). Replace them in the run note with the centred values from the port (e\_control 0.45-0.55); the verdict is unchanged.
+**7. A22 V17.2 note.** The legacy coherence values came from an empty stratum read as NaN (pairs not centred). Record the centred values from the port (e\_control 0.45-0.55; `results/extended_data/scripts/simulations/compute_a22_colon.py`, README) as an erratum to the archive run note; the verdict is unchanged.
 
 ## WP1. Is the coupling of organs without cues a clock? (A109, GTEx; highest priority)
 
 Figure 3 rests on inter-organ coherence C staying at 0.41-0.46 in ventilated and slow deaths (A92, A93). C has no clock-specific null, and A25 found a shared non-temporal post-mortem state lying inside the clock plane. A109 tests whether C is clock-shaped.
 
+*Base code:* `results/figure_3/scripts/gtex_cues/compute_coupling_sources.py` (A92, A93: C, groups, equal-n subsampling, GC score), `results/figure_3/scripts/cues_lost/compute_walltime_hosts.py`, `.../gtex_cues/compute_glucocorticoid.py` (A27 pull direction), `results/figure_1/scripts/windows/compute_nontemporal.py` (A26 non-temporal direction), `common/gtex.py`. Nulls: `clocksync.paired.pseudo_waveforms` (expression-matched pseudo-clock sets with the clock's loadings) and `Waveform.permuted` (permuted acrophases).
+
 **Data.** GTEx v10, the 12 A92 tissues; groups fast (Hardy 1-2), Hardy 3, Hardy 4, ventilated (Hardy 0). Clock states as A92 (GTEx waveform projection, Poisson variance, centred within tissue and group). Equal n by subsampling as A93.
 
 **Nulls (fixed before scoring).**
 
-1. *Pseudo-clock genes.* 200 expression-matched 14-gene sets (`sccc.controls.pseudo_clock_genes`, matched on mean log CPM per tissue, clock and D6 clock-output genes excluded) carrying the GTEx waveform loadings; C recomputed for each.
+1. *Pseudo-clock genes.* 200 expression-matched 14-gene sets (`clocksync.paired.pseudo_waveforms`, matched on mean log CPM per tissue, clock and D6 clock-output genes excluded) carrying the GTEx waveform loadings; C recomputed for each.
 2. *Permuted-acrophase planes.* 200 waveforms with gene acrophases permuted; C recomputed.
 3. *Shuffled pairing.* Donor labels shuffled within tissue (expected C about 0; sanity check).
 
@@ -52,6 +111,8 @@ Figure 3 rests on inter-organ coherence C staying at 0.41-0.46 in ventilated and
 **Reading.** H109.1 passes: organs share a clock-shaped state without cues; Figure 3 stands. Fails against the acrophase null only: shared, not clock-shaped; Figure 3 is reframed as "organs share a donor state", and the mechanism tests of WP2 are dropped from the main text. Fails both: remove the coupling claim.
 
 ## WP2. What keeps organs coupled? Memory, active coupling, and exclusions (A110)
+
+*Base code:* A104 `results/figure_2/scripts/backbone/compute_oscillator_gtex.py`, A33 `results/figure_3/scripts/cues_lost/compute_ventilator_tissues.py`, Eraslan stromal-vascular fraction `results/figure_2/scripts/atlas_fits/compute_step7_confirmations.py`, A46 `results/figure_3/scripts/gtex_cues/compute_ventilation_dose.py`, WP1 code.
 
 Run only if H109.1 and H109.2 pass. Three explanations remain after WP1: memory of the last common phase, active coupling among peripheral organs that free-run as a group, or a residual external cue. A110 decides between the first two and tests the cues brain-dead ICU patients are unlikely to have. Data, groups and states as A92/A93; protected phenotypes aggregates only.
 
@@ -80,6 +141,8 @@ Run only if H109.1 and H109.2 pass. Three explanations remain after WP1: memory 
 ## WP3. Feeding: a positive control for organ desynchrony and a test of the lock measure (A111, A112; public mouse data)
 
 A49 (Deota) could not serve as a positive control because night-time feeding produced almost no desynchrony. Daytime and inverted feeding do. Arrhythmic feeding gives a timed truth for the cue/locked distinction.
+
+*Base code:* mouse orthologue convention (A48) `results/figure_4/scripts/resilience/compute_mouse_ageing.py`; Deota builder `common/datasets/mouse_ageing_deota` (A49); timed truth `clocksync.timed` (`Dataset.timed`, `timed_loadings`, `cosinor`). New builders go to `common/datasets/<name>/build.py` with a `PROVENANCE.md` under `$SCCC_DATA/<name>/`.
 
 **Datasets (scout first; take accessions from the papers).**
 
@@ -110,6 +173,8 @@ A49 (Deota) could not serve as a positive control because night-time feeding pro
 
 V25.5 (breast surgery, 42 patients) is the only living-hospital validation of per-patient internal time. A113 adds living timed cohorts, including one where the feeding rhythm is flattened.
 
+*Base code:* A28 E1 projector `results/extended_data/scripts/gate/compute_extended_clock.py`; A35 within-subject arm `results/figure_2/scripts/gene_rhythms/compute_blood_clock.py`; A25 window estimator `results/figure_1/scripts/windows/{compute_internal_time,_internal_time}.py`; V25.5 `.../windows/compute_breast_timed.py`.
+
 **Datasets (scout first).**
 
 - GSE108539 (timed skeletal muscle) and GSE104674 (timed adipose): listed in the plan as timed human bulk sets, never used. Confirm subjects, sampling times, repeated biopsies per subject, platform and count type.
@@ -135,6 +200,7 @@ V25.5 (breast surgery, 42 patients) is the only living-hospital validation of pe
 
 **A123, the GTEx organ map from working-hours deaths only (written before scoring; the 8-tissue window results of the benchmark have been seen).** Reproduce the CHIRAL organ figure using only donors who died in working hours, with times hidden.
 
+- *Base code:* `results/figure_1/scripts/method/compute_gtex_benchmark.py` (benchmark truth, CHIRAL runner, windows), `common/benchmark/chiral.py`, `results/figure_2/scripts/organs/compute_organs_timed.py`.
 - Donors: GTEx v10 fast deaths (Hardy 1-2) who died 08-18 h; every tissue with >= 20 such donors.
 - Estimates: untimed reference-free tissue phase offsets and relative amplitudes; per-donor internal time (A25 tangent coordinate, flip by the hospital prior).
 - Truth (i): per-tissue cosinor on recorded time of all fast deaths, reduced by complex SVD (the benchmark truth). Truth (ii): CHIRAL's published per-tissue phases and amplitudes (naef-lab/CHIRAL, commit 1f78a9a).
@@ -145,6 +211,8 @@ V25.5 (breast surgery, 42 patients) is the only living-hospital validation of pe
 ## WP5. Why malignant cells lose clock coherence (A114)
 
 A86, A87 and A97 show that malignant cells keep amplitude but lose gene coherence, more so in proliferative tumours. A114 asks whether oncogenic transcription, copy number or proliferation itself explains it, and whether proliferating normal cells lose coherence too.
+
+*Base code:* A87 and A97 `results/figure_5/scripts/cancer/{compute_decomposition,compute_proliferation,compute_delay}.py`, A24 `.../cancer/compute_cycling_a24.py`, A86 `.../cancer/compute_malignant_gate.py`; builders `common/datasets/{tcga_paired,cancer_sc,cells_cancer,cells_cancer_cycle,colon_chrono}`; A21 `results/figure_1/scripts/species/compute_colon_injury.py`.
 
 **Data.** TCGA (recount3, the 11 local projects), plus open GDC gene-level copy number and published open aneuploidy and purity/ploidy scores (download only open-access tiers). A21 colon chrono-atlas (known time). A86 single-cell cancer studies. Census lymphoma (67b6b9ac), ovarian (b252b015) and prostate (881e0e6b) cancer sets.
 
@@ -176,6 +244,8 @@ A86, A87 and A97 show that malignant cells keep amplitude but lose gene coherenc
 
 The lesional local-clock delay is replicated (A54, A78, A81b), but two questions a reviewer will ask are open: is part of it already in the patient's uninvolved skin, and does treatment reverse it more than placebo (A56 post hoc p 0.28)?
 
+*Base code:* A54 `results/figure_5/scripts/psoriasis/compute_replication.py`, A78 / A81b core-cue estimator `.../psoriasis/{_cues,compute_cues,compute_cues_gtex}.py`, A56 `.../psoriasis/{compute_treatment,compute_dose}.py`, A57 `.../psoriasis/compute_response.py`, A61-A69 `results/figure_5/scripts/psoriasis_details/`; builders `common/datasets/skin_paired_{discovery,heldout,treatment,other}`; GTEx cue sets `results/figure_3/output/gtex_cues/a81b_*.csv`.
+
 **A115, trait vs state (data already on disk).**
 
 - Data rule: the A54/A53 psoriasis and atopic dermatitis series that also contain healthy-control skin from different persons (check each series' metadata; for example GSE121212 is expected to include healthy controls). Same platform within a series.
@@ -194,6 +264,8 @@ The lesional local-clock delay is replicated (A54, A78, A81b), but two questions
 **Descriptive, keratinocyte route.** In series with healthy controls, does the keratinocyte differentiation score (A61 sets) differ between uninvolved psoriatic and healthy skin? It links A115 to the transit model.
 
 ## WP7. Timed human brain and the remaining fragile results (A117-A122)
+
+*Base code:* A3 `results/figure_2/scripts/organs/compute_chen_age.py`, V25.3 `results/figure_1/scripts/windows/compute_chen_windows.py`; A96-style cue and locked builders `common/datasets/{islets_a96,masld_pooled_a96}` and `_atlas/heldout.py`; A19 procurement `results/figure_4/scripts/resilience/compute_procurement.py`; A108 `results/figure_2/scripts/embryo/`; A85 `results/figure_5/scripts/cancer/compute_cue_following.py`; A98 `results/figure_5/scripts/lung_breaks/compute_decomposition.py`.
 
 **A117, timed brain regions (public only).** The brain claims rest on GTEx, sheep and one timed cortex study (Chen 2016).
 
@@ -225,7 +297,7 @@ The lesional local-clock delay is replicated (A54, A78, A81b), but two questions
 - *Heart, stated in advance.* Cardiomyocytes were not rhythmic in either half (A108c; p 0.22, 0.28). The paper says "consistent with" the heart literature, not "replicates".
 - *Reading.* Both pass: the Figure 2 embryo panel, labelled exploratory, framed as consistent with and extending known late emergence. Either fails: the embryo goes back to Extended Data.
 
-**A122, controls for the corrected A85 result (written after seeing it: immune cue-following index 0.182, structural 0.095, difference +0.087, one-sided p 0.002; tables in `outputs/paper/figure_6_cancer/`).** Immune classes have a small host loading, so the index |b| / (|a| + |b|) can rise mechanically. These controls decide whether the result carries a Figure 2 panel. Gene matching on `feature_name`.
+**A122, controls for the corrected A85 result (written after seeing it: immune cue-following index 0.182, structural 0.095, difference +0.087, one-sided p 0.002; tables in `paper/results/figure_5/output/cancer/`).** Immune classes have a small host loading, so the index |b| / (|a| + |b|) can rise mechanically. These controls decide whether the result carries a Figure 2 panel. Gene matching on `feature_name`.
 
 - *H122.1, locked-set control (primary).* Rerun A85 with the A81b locked set in place of the cue set. Statistic: (immune minus structural, cue index) minus (immune minus structural, locked index), pooled over atlases as A85. Pass: > 0, one-sided p < 0.05 (atlas bootstrap).
 - *H122.2, pseudo-cue sets.* 200 expression-matched random 40-gene sets (excluding clock, cue and locked genes). Pass: the observed immune-minus-structural difference exceeds their 95th percentile.
@@ -238,6 +310,8 @@ The lesional local-clock delay is replicated (A54, A78, A81b), but two questions
 ## WP8. Circadian disruption, breast cancer and body mass: tissue proxies in public data (A124-A128)
 
 No public tissue dataset records night work or sleep timing. WP8 uses the processes thought to link them to disease, which public data do record: imposed misalignment, the menstrual cycle, proliferation, body mass, and the weekly social clock. The readout is the core-vs-cue offset (A78, A81b): a local clock lagging or leading the body-wide cues in the same samples. It cannot show causation; it provides the tissue intermediate that epidemiology lacks. Run A124 first: the other cue-based tests are read as claims only if it passes.
+
+*Base code:* core-cue offset estimator `results/figure_5/scripts/psoriasis/_cues.py` (A78/A115 estimator, array convention of A53), GTEx cue and locked sets `results/figure_3/output/gtex_cues/a81b_*.csv`; breast and endometrium builders `common/datasets/{endometrium,endometrium_scored,breast_hbca_genome,organ_breast,breast_timed_gse233242}`; A97 `results/figure_5/scripts/cancer/compute_proliferation.py`; A93 H93.3 machinery `results/figure_3/scripts/gtex_cues/compute_coupling_sources.py`.
 
 ### A124, positive control: misalignment imposed by a simulated night shift
 
@@ -314,7 +388,7 @@ Run in this order; packages on the same line can run in parallel. Each outcome c
 | A127 H127.1-H127.2 pass | SCAN-B replication of the proliferation and ER findings in Figure 5; H127.3 as a panel if A124 passes |
 | A128 passes (weekday delay, none in ventilated donors) | Figure 2 panel: a trace of social jetlag in human organs; otherwise a sentence with its MDE in the Discussion |
 
-**Reporting.** After each package: amendment and run note in the plan, entry in `RESULTS_preliminary.md` with `src` pointers, scorecard row, and a one-line message to the PI with the verdict.
+**Reporting.** After each package: amendment in `paper/docs/registered_experiments.md` (committed before scoring), run note and result in `paper/docs/results_preliminary.md` with `src` pointers, a row in `paper/docs/METHOD.md` when it validates the method, scorecard row, a line in `paper/docs/AMENDMENT_INDEX.md` once a script is promoted to `results/`, and a one-line message to the PI with the verdict. Subagent numbers are checked against the output files before they enter the docs.
 
 ## Narrative arc
 
