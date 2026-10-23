@@ -182,3 +182,19 @@ MDE after the scout.
 
 **D132.3 (descriptive).** Long-term steroids (protected phenotype) yes vs no within Hardy 0 and within Hardy 4: folded
 distance and the glucocorticoid-direction share (A109 non-temporal output), if >= 15 donors per arm.
+
+**A132 note (2026-10-23, written after the scout, before scoring).** Scout:
+`paper/exploratory/A132_brain_death/output/scout_{variables,cohort_hardy,groups,tertiles,steroids,mde}.csv` (full data;
+null spreads only, no observed contrast). An end-to-end `--subsample` check also ran; its observed values were deleted
+and not read by the lead. Variables: `COHORT`, `DTHVNT`, `DTHVNTD` (hours), `MHSTRDLT`. Analysis universe (>= 2 tissues,
+time of death): Hardy 0 organ donors 298, Hardy 0 post-mortem 79 (all `DTHVNT` = 1), fast reference 244.
+- **Feasible.** Smaller group (ventilated post-mortem) 79 donors, 66 / 66 pairs with >= 20 shared donors (organ donors at
+  equal n = 79: 64 pairs). Fixed choices: pairs with < 20 shared donors in either group are masked for that comparison;
+  the equal-n contrast uses one fixed draw of 79 organ donors (seed in the script).
+- **MDE (80 %, one-sided 0.05, 2.49 x null SD).** H132.1: 0.46 h (null SD 0.186 h). The A109 ventilated-minus-fast
+  difference in median folded distance was 0.42 h (0.60 vs 1.02 h), so a full collapse in organ donors with none in
+  post-mortem cases is detectable with power about 0.7; a partial split is not. A null H132.1 is uninformative, not
+  evidence that the two groups collapse alike.
+- **H132.2.** Tertile cuts 61.0 h and 101.0 h (median 79.2 h, no missing durations); bottom 101, top 100 donors, 66 pairs
+  each; MDE 0.46 h.
+- **D132.3 not reportable:** long-term steroids yes in 8 Hardy 0 and 5 Hardy 4 donors (< 15 per arm). Dropped.
