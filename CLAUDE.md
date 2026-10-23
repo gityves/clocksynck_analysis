@@ -37,6 +37,7 @@
 - **Numbers in text** come from output tables, never from memory.
 - **Style:** clean, concise, publication-grade code and docs. Long runs (> 20 min) are documented `.py` scripts;
   notebooks only for quick analyses and figures.
+- **Compaction:** when compacting, preserve the current work package and amendment, registered-but-unscored amendments, running background jobs (PID, log path), running subagents and their tasks, files modified since the last commit, and numbers not yet written to the docs (with their source file).
 - **code** use clocksync public API whenever possible. Modify clocksync if tools potentially useful for future users are missing.
 
 ## Environment and data
