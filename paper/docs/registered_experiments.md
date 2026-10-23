@@ -114,3 +114,37 @@ test is therefore reported but read as uninformative whatever its p; the C test 
 known, this replication is read for ventilated donors in a second cohort (H109.1-type C only). Script
 `paper/exploratory/A109_coupling_nulls/scripts/compute_tabula_sapiens.py`.
 <!-- src: paper/exploratory/A109_coupling_nulls/output/a109b_c_null.csv; a109b_power.csv -->
+
+## A109c (2026-10-23, written after A109 was scored, before scoring; motivated by A109): is the Hardy 4 pass inherited from wall time, and is the 0 / 12 h push found in fatal COVID?
+
+A109 found the organ phase relations of fast deaths preserved in Hardy 4 deaths (secondary) but collapsed towards
+0 / 12 h in ventilated donors, with about half of the shared covariance behaving as a displacement along one axis
+(PI comment 2026-10-23: as expected for a stopped clock, e.g. Bmal1 or Per knockout, but the push acts identically in
+all organs). Hardy 4 donors are mostly hospital inpatients (archive A93: 85 of 107; 12 hospice, 4 ventilated) and may
+keep meals (oral, enteral or intravenous) and ward light; their wall-time alignment R was 0.10 (fast 0.53, ventilated
+0.15), never tested against a null. All tests below are secondary (own alpha 0.05, outside the confirmatory family).
+Code: `paper/exploratory/A109_coupling_nulls/`.
+
+**H109c.1 (Hardy 4 wall time).** R (A92/A93 wall-time alignment of the host phase with time of death, equal-n 103)
+against 1,000 time-of-death permutations within Hardy 4. One-sided p; MDE reported. Reading: p >= 0.05 with an MDE
+below 0.15 means no detectable entrainment; p < 0.05 means residual entrainment, and H109c.2 decides whether it
+explains the offsets.
+
+**H109c.2 (offsets without wall time).** H109.2 repeated in Hardy 4 after removing the wall-time component: each
+tissue's state regressed on (cos, sin) of time of death within Hardy 4, residuals used. Same statistic, null (10,000
+joint tissue-label permutations) and pass rule as H109.2 (rho > 0 one-sided p < 0.05 AND p_closer > 0.05), fast-death
+relations as reference (unchanged). Sensitivities: without the 4 ventilated Hardy 4 donors; hospital inpatients only
+(if the death-place variable allows; aggregates only). Reading: pass -> the Hardy 4 preservation is not inherited from
+linear wall-time entrainment; fail -> it may be.
+
+**D109c.3 (descriptive, fatal COVID, Delorey 2021, `covid_delorey`).** Four organs (heart, liver, kidney, lung), 6
+pairs: pooled circularity ratio |E[z_a z_b]| / |E[z_a conj z_b]|, median folded pair phase distance to 0 / 12 h, and
+Fisher-Lee correlation with the GTEx fast-death relations of the matching tissues; each compared with 200 simulations
+at the Delorey design (rotating vs pure displacement vs 50 % mixture, as A109) and with the GTEx fast and ventilated
+values on the same tissues. Descriptive, because the archive organ gate is mixed (H105.2: p_pairing 0.284,
+p_acrophase 0.032) and the coupling is 0 in 3 of 4 organs; a failed gate is uninformative.
+
+**D109c.4 (descriptive, fatal COVID lung, Melms 2021, `covid_melms`).** The same circularity ratio and folded distance
+across the lung's cell classes (gate passes, H105.1), COVID donors vs the 7 surgical controls, with a donor
+permutation p for the difference in ratio (1,000) reported but not tested. It asks whether a shared push across cell
+types appears within a lung of fatal COVID (mostly ventilated).
