@@ -32,6 +32,8 @@ work, so it was not applied.
 - **Question:** apply it (own commit, only these files)?
 - **On hold:** nothing (no current result affected).
 
+## Answered
+
 ### Q5 (2026-10-23): A132 outcome and the Figure 3 wording
 Within ventilated (Hardy 0) donors, the push of pair phases toward 0 / 12 h is seen in both brain-dead organ donors and
 ventilated post-mortem cases (not brain dead), with no separation (H132.1, MDE 0.44-0.54 h). Descriptively, only the
@@ -41,8 +43,9 @@ non-brain-dead group keeps the fast-death phase relations (rho 0.69, p 0.0006 vs
   post-mortem, as support for your SCN reading, or leave it descriptive?
 - **On hold:** Figure 3 narrative wording; any A132 follow-up. A110 continues (H110.4 already uses organ donors).
 - Evidence: results_preliminary.md, section A132.
-
-## Answered
+- **Answer (PI, 2026-10-24):** describe both groups (the 0 / 12 h pull in both, phase relations kept only without
+  brain death); a post hoc p for the difference is fine, labelled post hoc -> A132b (rho difference 0.517, p 0.008).
+  PI reading: the pull is likely drug-induced; the kept offsets are hard to explain.
 
 ### Q1 (2026-10-23): Figure 3 framing after A109
 H109.1 passes (organs share a clock-shaped state in every death group); H109.2 fails in ventilated donors (phase

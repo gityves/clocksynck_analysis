@@ -219,3 +219,12 @@ incoherent one, while A87 coherence is low. Either the A87 coherence gap is part
 per-cell D is insensitive in this regime; this bears on the A86/A87 main claim ("coherence lost"). Next (item 2, part 3):
 calibrate the simulation to the real normal epithelium, and downsample real normal-epithelium counts to malignant depth
 and recompute share, coherence and D. Cancer lambda, R and d_R stay out of the text meanwhile (d_R is not significant).
+
+### 2026-10-24, A132b (POST HOC, PI request): offset preservation differs between the two ventilated groups
+Over the 65 pairs with >= 20 shared donors in fast deaths and both groups (79 donors each), Fisher-Lee rho vs fast:
+ventilated post-mortem 0.678, brain-dead organ donors 0.161; difference 0.517, two-sided donor-label permutation p 0.008
+(null SD 0.204). Post hoc: chosen after A132's per-group readouts. Both groups are pushed toward 0 / 12 h (A132: folded
+0.77 and 0.75 h vs 1.01-1.02 h in fast deaths). Description: ventilated donors not declared brain dead keep the
+fast-death order of organ phase relations while these relations are pulled toward 0 / 12 h; brain-dead organ donors
+show the pull without the order. A132 rho 0.690 for post-mortem cases was over 66 pairs (mask with one group).
+<!-- src: paper/exploratory/A132_brain_death/output/a132b_rho_difference.csv; a132_groups.csv -->
