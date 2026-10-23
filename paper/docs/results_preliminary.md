@@ -197,3 +197,25 @@ ventilated post-mortem cases keep the fast-death pair relations (Fisher-Lee rho 
 
 D132.3 dropped (scout note). Scoring MDEs differ slightly from the scout values (different random draws; the scoring
 draw is fixed by seed in `compute_brain_death.py`).
+
+### 2026-10-24, WP0 item 2 (second part): per-cell D vs A86/A87 in malignant cells (inconclusive; simulation not calibrated)
+Same 79 patients (A87 set). Real readouts, malignant / normal epithelium / fibroblast: A86 share 0.084 / 0.212 / 0.495
+(permuted-acrophase null 0.058 / 0.044 / 0.064); A87 coherence 0.228 / 0.782 / 0.840, alignment 0.273 / 0.642 / 0.773
+(d_coherence -0.554 [-0.725, -0.091], d_align -0.370 [-0.644, -0.076]); anchored coupling 0.284 / 0.325 / 0.461 (cohort
+medians); per-cell D 4.01 (SE 0.68) / 7.11 (SE 8.05) / 17.1 (SE 4.9); R 0.462 / 0.462 / 0.487; malignant minus normal
+d_R -0.178 (SE 0.20, 52 paired patients; A18: -0.249). Share and A87 components equal the stored A86/A87 outputs.
+<!-- src: paper/exploratory/WP0_integrity/output/malignant_readouts.csv -->
+
+Simulation (50 reps; malignant gene phases coherent vs uniform, amplitude unchanged): per-cell D 4.19 (SD 0.87) vs
+-0.44 (SD 1.23) at the simulated depth; share 0.034 vs 0.030 and coherence 0.31 vs 0.27 (they separate only at x100 UMI:
+share 0.35 vs 0.05, coherence 0.81 vs 0.28). **Not usable for the reconciliation yet:** the simulated normal epithelium
+does not reproduce the real one (share 0.036 vs 0.212; coupling about 0; alignment degenerate), so the simulated depth or
+between-patient variance is unrealistic, and "pseudobulk readouts sit at null at real depth" is a property of the
+simulation, not shown for the data (the real normal epithelium is well above null at its depth).
+<!-- src: paper/exploratory/WP0_integrity/output/incoherence_sim.csv -->
+
+Lead's reading (no decision yet): real malignant D (4.0) sits at the coherent-scenario value and far from the
+incoherent one, while A87 coherence is low. Either the A87 coherence gap is partly a depth / observability effect, or
+per-cell D is insensitive in this regime; this bears on the A86/A87 main claim ("coherence lost"). Next (item 2, part 3):
+calibrate the simulation to the real normal epithelium, and downsample real normal-epithelium counts to malignant depth
+and recompute share, coherence and D. Cancer lambda, R and d_R stay out of the text meanwhile (d_R is not significant).

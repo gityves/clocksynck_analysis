@@ -14,9 +14,9 @@ tumour fibroblasts as reference):
   D, lam, R  per-cell split of `compute_cancer_split` (D minus its acrophase-permuted null; rho^2 = s / (1 - R_W^2) with
              s = 2 psi c / (1 - c) of the refit above), delete-one-cohort jackknife SE.
 Simulation (`incoherent_sim.csv`): patients, cell counts, mean depths and gene fractions of the real malignant and normal
-groups; every patient has a host phase mu (uniform 08-18 h) shared by its stromal host rows, normal epithelium and malignant
+groups; every patient has a host phase mu (uniform on the circle) shared by its stromal host rows, normal epithelium and malignant
 cells (cell phases von Mises(mu, kappa=2), lam=3). Scenarios: `coherent` (malignant cells with the GTEx waveform) and
-`incoherent` (malignant gene phases drawn uniformly on the circle, amplitudes unchanged, redrawn per replicate); each also with the malignant depth per cell x10 (`_umi10`: separates blindness from lack of power). Normal epithelium and
+`incoherent` (malignant gene phases drawn uniformly on the circle, amplitudes unchanged, redrawn per replicate); each also with the malignant depth per cell x100 (`_umi100`: separates blindness from lack of power). Normal epithelium and
 host are coherent in both. Same seeds across scenarios, so the replicates are paired.
 
     python reconcile_malignant.py [--subsample N] [--reps R] [--jobs 4]
@@ -58,6 +58,7 @@ COMPS = {"malignant": MAL, "normal_epithelium": NORM, "fibroblast": FIB}
 GENES = sh.GENES
 SEED = 2026
 LAM, KAPPA = 3.0, 2.0
+BASELINE = "study"  # --baseline: gene fractions of the simulated groups
 MIN_CELLS, N_NULL, N_SPLITS = ccs.MIN_CELLS, ccs.N_NULL, ccs.N_SPLITS
 WF = sh.WF
 CW = WF.amp * np.exp(-1j * WF.psi)
@@ -263,7 +264,7 @@ def sim_replicate(rep: int, scenario_psi: bool, umi_mult: float, rows: pd.DataFr
     ss = np.random.SeedSequence([SEED, rep])
     r_mu, r_host, r_norm, r_mal, r_psi, r_stat = (np.random.default_rng(x) for x in ss.spawn(6))
     pts = sorted(rows.donor.unique())
-    mu = dict(zip(pts, r_mu.uniform(8, 18, len(pts)) * 2 * np.pi / 24))
+    mu = dict(zip(pts, r_mu.uniform(0, 2 * np.pi, len(pts))))
     if scenario_psi:
         psi = r_psi.uniform(0, 2 * np.pi, len(GENES))
         c_mal = WF.amp * np.exp(-1j * psi)
@@ -319,35 +320,46 @@ def simulate_all(reps, jobs, subsample, seed) -> pd.DataFrame:
     if subsample:
         pts = sorted(np.random.default_rng(SEED + seed).permutation(pts)[:subsample])
     rows = sim_context(pb, pts)["rows"]
+    if BASELINE == "study":  # common baseline: mean clock-gene fractions of the (cohort, compartment); removes the real between-patient baseline variance
+        f = rows[GENES].div(rows.depth, axis=0)
+        mean_f = f.groupby([rows.study, rows.compartment]).transform("mean")
+        rows = rows.copy()
+        rows[GENES] = mean_f.mul(rows.depth, axis=0).to_numpy()
     learned = {st: learned_anchors(st) for st in rows.study.unique()}
-    jobs_ = [(rep, scen, um) for rep in range(reps) for um in (1.0, 10.0) for scen in (False, True)]
+    jobs_ = [(rep, scen, um) for rep in range(reps) for um in (1.0, 100.0) for scen in (False, True)]
     res = Parallel(n_jobs=jobs)(delayed(sim_replicate)(rep, scen, um, rows, learned, None, subsample) for rep, scen, um in jobs_)
     recs = []
     for (rep, scen, um), r in zip(jobs_, res):
         for nm, d in r.items():
             for k, v in d.items():
-                recs.append(dict(scenario=("incoherent" if scen else "coherent") + ("_umi10" if um > 1 else ""), compartment=nm, readout=k, rep=rep, value=v))
+                recs.append(dict(scenario=("incoherent" if scen else "coherent") + (f"_umi{int(um)}" if um > 1 else ""), compartment=nm, readout=k, rep=rep, value=v))
     return pd.DataFrame(recs)
 
 
 def main():
     ap = cli.parser(__doc__)
     ap.add_argument("--reps", type=int, default=50)
+    ap.add_argument("--baseline", choices=["study", "patient"], default="study", help="simulated gene fractions: (cohort, compartment) mean or the real patient's own")
+    ap.add_argument("--sim-only", action="store_true")
     args = ap.parse_args()
+    global BASELINE
+    BASELINE = args.baseline
     run = cli.setup(args)
     quick = run["quick"]
     out = OUT / ("subsample" if quick else "")
     out.mkdir(parents=True, exist_ok=True)
     n_boot, n_perm = (30, 30) if quick else (500, 500)
-    real = real_readouts(args.subsample, args.seed, n_boot, n_perm)
-    real.to_csv(out / "malignant_readouts.csv", index=False)
-    print(real.round(3).to_string(index=False), flush=True)
+    if not args.sim_only:
+        real = real_readouts(args.subsample, args.seed, n_boot, n_perm)
+        real.to_csv(out / "malignant_readouts.csv", index=False)
+        print(real.round(3).to_string(index=False), flush=True)
     reps = min(args.reps, 4) if quick else args.reps
     sim = simulate_all(reps, args.jobs, args.subsample, args.seed)
-    sim.to_csv(out / "incoherence_runs.csv", index=False)
-    s = (sim.groupby(["scenario", "compartment", "readout"]).value.agg(mean="mean", sd="std", n_finite=lambda x: int(np.isfinite(x).sum()),
+    tag = "" if BASELINE == "study" else "_patient_baseline"
+    sim.to_csv(out / f"incoherence_runs{tag}.csv", index=False)
+    s = (sim.groupby(["scenario", "compartment", "readout"]).value.agg(mean="mean", sd="std", median="median", n_finite=lambda x: int(np.isfinite(x).sum()),
                                                                           n_reps="size").reset_index())
-    s.to_csv(out / "incoherence_sim.csv", index=False)
+    s.to_csv(out / f"incoherence_sim{tag}.csv", index=False)
     print(s.round(3).to_string(index=False))
 
 
