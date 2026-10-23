@@ -142,3 +142,17 @@ Reading: under TMM, CHIRAL's age dampening reproduces and vanishes with death-ty
 matched-minus-pooled difference is weaker, p 0.092; H101b was already a fail). CHIRAL's female excess of rhythmic genes
 shrinks by one half to two thirds with death-type matching and is no longer significant.
 <!-- src: paper/exploratory/WP0_integrity/output/chiral_tmm/count_comparison_tmm_summary.csv; sex_comparison_matched_summary.csv (columns estimate, lo, hi, p) -->
+
+## A109c (scored 2026-10-23): Hardy 4 and wall time (H109c.1, H109c.2; secondary)
+
+**H109c.1: no detectable wall-time alignment in Hardy 4, at limited power.** R 0.097 vs time-of-death permutation null
+median 0.101 (sd 0.024), one-sided p 0.56 (103 donors, 1,000 permutations). Null q95 0.145; R for 80 % power 0.208.
+By the registered reading the MDE condition (< 0.15) is met by the null q95 but not by the 80 %-power definition:
+entrainment as strong as in ventilated donors (0.15) cannot be excluded, weaker entrainment than in fast deaths (0.53)
+can.
+**H109c.2: PASS.** Hardy 4 offset preservation survives removal of the wall-time component: residual rho 0.750, p 0.0002,
+p_closer 0.39 (raw 0.784, 0.0002, 0.57). Without the 4 ventilator cases (99 donors): 0.745, p 0.0004, p_closer 0.37;
+hospital inpatients only (85): 0.805, p 0.0001, p_closer 0.62.
+Reading: the preserved phase relations of Hardy 4 are not inherited from (first-harmonic) wall-time entrainment, and do
+not depend on the ventilator cases.
+<!-- src: paper/exploratory/A109_coupling_nulls/output/a109c_walltime.csv; a109c_walltime_power.csv; a109c_offsets_residual.csv -->

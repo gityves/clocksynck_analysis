@@ -13,6 +13,9 @@ relations collapse to 0 / 12 h; about half of the shared covariance is a displac
 running clocks without cues, shown in Hardy 4 / Hardy 3, with ventilated donors as a shared displacement overriding
 the clock relations. PI comment (2026-10-23): check first that Hardy 4 clocks are decorrelated from wall time, and
 whether the 0 / 12 h push is seen in COVID ventilated patients -> registered as A109c (dab55ab), being scored.
+- **A109c H109c.1-2 (2026-10-23):** no detectable wall-time alignment in Hardy 4 (R 0.097, p 0.56; MDE 0.145-0.208);
+  offsets preserved after removing wall time (rho 0.750, p 0.0002), also without ventilator cases and in inpatients
+  only. COVID readouts (D109c.3-4, descriptive) pending.
 - **Question:** after A109c, which framing (registered default, or the Hardy 4 framing as a registered amendment
   labelled post hoc relative to A109)?
 - **On hold:** WP2 (A110); edits of the Figure 3 table and narrative.
