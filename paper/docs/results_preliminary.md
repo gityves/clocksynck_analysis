@@ -228,3 +228,22 @@ ventilated post-mortem 0.678, brain-dead organ donors 0.161; difference 0.517, t
 fast-death order of organ phase relations while these relations are pulled toward 0 / 12 h; brain-dead organ donors
 show the pull without the order. A132 rho 0.690 for post-mortem cases was over 66 pairs (mask with one group).
 <!-- src: paper/exploratory/A132_brain_death/output/a132b_rho_difference.csv; a132_groups.csv -->
+
+**A132b descriptive (POST HOC, PI request): pull with the order kept, or reordering.** Signed deviation of each pair
+phase from its nearest pole (0 or 12 h), group vs fast deaths (pairs with >= 20 shared donors; ratio = median
+group / fast deviation over same-pole pairs with |fast deviation| >= 1 h; 1 = no pull, 0 = full pull):
+
+| group | n | Spearman (p, tissue-label perm.) | ratio | same pole | Rayleigh R of time of death |
+|---|---|---|---|---|---|
+| ventilated post-mortem | 79 | 0.649 (0.001) | 0.58 | 1.00 | 0.067 |
+| organ donors (equal n) | 79 | 0.257 (0.066) | 0.40 | 0.97 | 0.138 |
+| organ donors (all) | 298 | 0.095 (0.37) | -0.01 | 1.00 | 0.110 |
+| Hardy 4 | 103 | 0.788 (0.001) | 0.77 | 1.00 | 0.072 |
+| fast (reference) | 244 | | | | 0.099 |
+
+Reading: in ventilated post-mortem cases the deviations keep their order and shrink to about 0.6 of the fast-death
+values, as expected for running clocks plus a shared non-temporal displacement; in organ donors the order is mostly
+lost. Same pole is uninformative (most fast-death pairs lie within 6 h of 0). Times of death cover the day: R is near
+its value under uniform times (about 0.10 at n = 79, 0.05 at n = 298); a concentration of host phases alone would not
+pull offsets toward 0 / 12 h (it rescales E[z_a conj z_b] without changing its phase).
+<!-- src: paper/exploratory/A132_brain_death/output/a132b_shrinkage.csv -->
