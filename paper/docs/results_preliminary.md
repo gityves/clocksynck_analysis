@@ -156,3 +156,21 @@ hospital inpatients only (85): 0.805, p 0.0001, p_closer 0.62.
 Reading: the preserved phase relations of Hardy 4 are not inherited from (first-harmonic) wall-time entrainment, and do
 not depend on the ventilator cases.
 <!-- src: paper/exploratory/A109_coupling_nulls/output/a109c_walltime.csv; a109c_walltime_power.csv; a109c_offsets_residual.csv -->
+
+## A109c D109c.3-4 (scored 2026-10-23, descriptive): the 0 / 12 h push in fatal COVID
+
+**Delorey (4 organs, 23 donors, 8-14 shared donors per pair, C 0.485): uninformative.** Pooled circularity ratio 0.833
+lies inside the simulated range of every model at this design (rotating median 0.64 [0.35, 1.08], 50 % mixture 0.81,
+displacement 1.01); median folded pair distance 3.17 h (sims: rotating 3.1, mixture 2.2, displacement 1.4 h; GTEx fast
+1.02, ventilated 0.60 h). Only heart-lung maps to an A92 GTEx tissue, so no Fisher-Lee correlation.
+**Melms lung (8 cell classes, 19 COVID vs 7 surgical controls; C at the 0.99 simulation cap in both arms): no evidence
+of a push in COVID.** Ratio COVID 0.677 vs controls 0.984 (permutation p 0.008); sims, rotating / 50 % / displacement:
+COVID 0.454 / 0.650 / 1.004, controls 0.648 / 0.776 / 0.999. Folded distance 1.19 vs 1.65 h (p 0.56).
+**Note on the circularity readout (written after these results).** For rotating clocks, E[z_a z_b] vanishes only if the
+donors' host phases are uniform; any concentration of host phases (sampling window, synchronised schedule) raises the
+ratio without a displacement. The surgical controls, sampled in operating hours, are expected near 1 for that reason,
+and the ventilated GTEx ratio (0.456; axial R 0.26) can come from either a displacement or host phases concentrated on
+one axis. The ratio is therefore not diagnostic on its own; offset preservation (H109.2, independent of the host-phase
+distribution) is the decisive readout. Reading: the fatal COVID data do not show the GTEx-ventilated 0 / 12 h collapse,
+but at these sizes they could not have shown it reliably.
+<!-- src: paper/exploratory/A109_coupling_nulls/output/a109c_covid_delorey.csv; a109c_covid_melms.csv; a109c_covid_sims.csv (column dataset) -->

@@ -15,7 +15,9 @@ the clock relations. PI comment (2026-10-23): check first that Hardy 4 clocks ar
 whether the 0 / 12 h push is seen in COVID ventilated patients -> registered as A109c (dab55ab), being scored.
 - **A109c H109c.1-2 (2026-10-23):** no detectable wall-time alignment in Hardy 4 (R 0.097, p 0.56; MDE 0.145-0.208);
   offsets preserved after removing wall time (rho 0.750, p 0.0002), also without ventilator cases and in inpatients
-  only. COVID readouts (D109c.3-4, descriptive) pending.
+  only. COVID (D109c.3-4, descriptive): Delorey organs uninformative (too few shared donors); Melms lung shows no
+  push in COVID vs controls. The circularity ratio is confounded by host-phase concentration (sampling window), so the
+  offset test (H109.2) is the decisive readout; the ventilated collapse to 0 / 12 h rests on it (p_closer 0.001).
 - **Question:** after A109c, which framing (registered default, or the Hardy 4 framing as a registered amendment
   labelled post hoc relative to A109)?
 - **On hold:** WP2 (A110); edits of the Figure 3 table and narrative.
