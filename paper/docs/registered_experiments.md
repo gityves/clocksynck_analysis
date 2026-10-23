@@ -198,3 +198,50 @@ time of death): Hardy 0 organ donors 298, Hardy 0 post-mortem 79 (all `DTHVNT` =
 - **H132.2.** Tertile cuts 61.0 h and 101.0 h (median 79.2 h, no missing durations); bottom 101, top 100 donors, 66 pairs
   each; MDE 0.46 h.
 - **D132.3 not reportable:** long-term steroids yes in 8 Hardy 0 and 5 Hardy 4 donors (< 15 per arm). Dropped.
+
+## A110 (2026-10-23, written after A109/A109c were scored and the PI chose the framing (Q1), before scoring): what keeps organs coupled when daily cues are disrupted by illness?
+
+Replaces the WP2 draft in `provisory_plan_paper.md`, which assumed ventilated donors kept their phase relations
+(H109.2 failed there). Groups follow the PI's reading: Hardy 4 (slow death after long illness; SCN presumably intact,
+zeitgebers perturbed, drugs present) is the main group, Hardy 3 a secondary group, fast deaths (Hardy 1-2) the reference
+and Hardy 0 organ donors (brain dead, SCN presumably lost) the contrast for H110.4. Drugs and illness cannot be
+separated from cue loss in GTEx; every reading below is about this state, not about cues alone. Data, tissues, states and
+C as A109 (`paper/exploratory/A109_coupling_nulls/scripts/_helpers.py`); protected phenotypes aggregates only. Code:
+`paper/exploratory/A110_mechanism/`. H110.1 is the primary of A110 (secondary for the paper); the others are secondary,
+with Holm within H110.2.
+
+**H110.1 (does coupling decay with time ill?).** Hardy 4 donors split by the interval from onset of the immediate cause
+of death to death (`DTHCODD`, unit `DTHCODDU`; the scout checks completeness; if < 60 % of Hardy 4 donors have it, the
+first underlying cause interval `DTHFUCODD` is used instead). Statistic: C in the top minus the bottom tertile (median
+split if either tertile has < 40 pairs with >= 20 shared donors), equal n, one-sided donor-label permutation p (1,000;
+memory predicts top < bottom). MDE after the scout; a memory-model C drop at the top-tertile median interval for a period
+spread of 0.3 h/day is simulated before scoring (as A92's power note). Reading: decay -> coupling decays without regular
+cues (memory); no decay with the MDE below the simulated drop -> coupling is maintained; otherwise uninformative. The
+interval is not the time without cues (hospitalisation dates are not recorded): stated as a limitation.
+
+**H110.2 (signatures of a coupled network; Holm over a-b).** In Hardy 4, fast deaths as reference.
+- (a) Strong clocks carry the network: Spearman(own amplitude A, coupling c) over peripheral tissues (A104 statistic),
+  one-sided rho > 0, tissue-label permutation p.
+- (b) Stroma: retained coupling per tissue (Hardy 4 / fast, A33 machinery, at common spread d*) against the Eraslan
+  stromal-vascular fraction; one-sided Spearman > 0, permutation p.
+- (c, descriptive) Hubs: the WP2-draft split-half hub removal; Hardy 4 is too small for a confirmatory split.
+
+**H110.3 (temperature, exclusion).** As the WP2 draft (CIRBP, RBM3; HSPA1A, HSPA1B, HSPH1, DNAJB1; residualised on
+ischaemic time and its square per tissue), in Hardy 4: excluded if the drop in C after regressing the scores out is
+< 0.05 with upper bound < 0.05 and not above 200 expression-matched random 6-gene scores.
+
+**H110.4 (SCN).** Coupling of Brain - Hypothalamus minus the median other brain region, each to the peripheral host
+(anchored estimator, common d*), in Hardy 3-4 pooled vs Hardy 0 organ donors. PI hypothesis predicts the difference is
+larger in Hardy 3-4; one-sided donor-label permutation p (1,000). Feasibility rule: >= 20 donors with hypothalamus and
+>= 3 other brain regions in each group, otherwise descriptive (fast vs Hardy 3-4 as a fallback, labelled descriptive).
+Caveats in the text: GTEx hypothalamus dissections need not contain the SCN, and brain death alters brain tissue
+itself, so a pass supports but does not show an SCN-driven body.
+
+**H110.5 (feeding, exclusion).** Digestive (colon transverse and sigmoid, stomach, oesophagus mucosa and muscularis,
+liver, pancreas) vs other A109 tissues: within-digestive minus digestive-to-other coherence, Hardy 4 minus fast,
+group-label permutation; excluded if not > 0 at p < 0.05.
+
+**Reading.** The Figure 3 panel reports each explanation with its verdict. The abstract sentence may say that organs of
+people dying after long illness remain coupled clocks with their phase relations, and (if H110.1 shows no decay and
+H110.2a or b passes) that the coupling is maintained rather than remembered. No sentence claims coupling without the
+brain: Hardy 4 donors have it.

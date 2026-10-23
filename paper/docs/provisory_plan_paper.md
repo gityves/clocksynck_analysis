@@ -123,7 +123,7 @@ Figure 3 rests on inter-organ coherence C staying at 0.41-0.46 in ventilated and
 
 *Base code:* A104 `results/figure_2/scripts/backbone/compute_oscillator_gtex.py`, A33 `results/figure_3/scripts/cues_lost/compute_ventilator_tissues.py`, Eraslan stromal-vascular fraction `results/figure_2/scripts/atlas_fits/compute_step7_confirmations.py`, A46 `results/figure_3/scripts/gtex_cues/compute_ventilation_dose.py`, WP1 code.
 
-Run only if H109.1 and H109.2 pass. Three explanations remain after WP1: memory of the last common phase, active coupling among peripheral organs that free-run as a group, or a residual external cue. A110 decides between the first two and tests the cues brain-dead ICU patients are unlikely to have. Data, groups and states as A92/A93; protected phenotypes aggregates only.
+**Superseded (2026-10-23):** after A109/A109c and the PI's framing decision (Q1), WP2 is registered as A110 in `registered_experiments.md` on Hardy 4 / Hardy 3, with Hardy 0 organ donors as the SCN contrast. The draft below is kept for its base code and tests. Run only if H109.1 and H109.2 pass. Three explanations remain after WP1: memory of the last common phase, active coupling among peripheral organs that free-run as a group, or a residual external cue. A110 decides between the first two and tests the cues brain-dead ICU patients are unlikely to have. Data, groups and states as A92/A93; protected phenotypes aggregates only.
 
 **H110.1 Does coupling decay with time without cues? (primary of A110, secondary for the paper).** Ventilation days go with case mix (cause of death, sepsis, steroids), few donors pass 10 days, and the date of brain death or of cue loss is not recorded, so a pre-specified contrast is preferred to model selection between curves.
 
