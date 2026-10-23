@@ -103,3 +103,15 @@ already corrected on 2026-10-22. No result changes. Latent risk: `clocksync.gene
 a missing symbol (and -1 indexes the last column); a `missing=` option with an all-absent guard is proposed for
 clocksync (diff and test not yet applied).
 <!-- src: paper/exploratory/WP0_integrity/output/gene_audit/ (proposed_fix.diff); scripts/gene_audit/count_*.py -->
+
+### 2026-10-23, WP0 item 4: estimator consistency of the figure-table couplings (for the PI)
+
+Of 30 figure-table rows, 8 use the A17+ anchored estimator with A22 confirmation, 9 cite no coupling, 13 are flagged:
+Fig 1 A21 colon (an anchor decouples, V17.2 fails); Fig 2 GTEx organ departures (pre-A17 timed), A103/A42 r* and A104
+(block or all-tissue hosts, not the A17 rule), A85 index (leave-class-out mean host), neurons/retina panels (pre-A17
+free fit; A18 3.5 is anchored); Fig 3 A92/A93 coherence C and the A33 tissue host (not the anchored c); Fig 4 A20
+own-noise "damping" (withdrawn in A22) and COVID A105 (2 anchors, no A22 confirmation); Fig 5 fibrotic-lung T cells
+(A5 coupling 0.45 was a free fit; whether `a17_unified_contrast.csv` reflects the A22 refit without the ild_natri
+capillary EC anchor is unresolved). Several flags are by design (r*, C and block hosts are different readouts, not
+couplings); the figure text must name the readout. Scorecard: 108/120 amendments with a verdict after curation.
+<!-- src: paper/exploratory/WP0_integrity/output/estimator_consistency.csv (column flag); output/scorecard.csv -->
