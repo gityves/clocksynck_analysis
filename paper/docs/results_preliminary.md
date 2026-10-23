@@ -17,3 +17,15 @@ delta -0.17 to -0.40; lymphatic EC: delta -0.399 (SE 0.164), e_case 0.048. The v
 dropped, lymphatic EC is not dropped, V17.2 fails as in the archive. Other legacy coherence runs on tables with an empty
 stratum may carry the same artefact (to be checked where cited).
 <!-- src: paper/results/extended_data/output/simulations/a22_colon_confirm.csv (archive-port snapshot, sha256 e00e28cc...) -->
+
+### 2026-10-23, WP0 item 2 (first part): `compute_cancer_split.py` D_null difference of M2 (no archive number changes)
+
+The M2 difference in `D_null` was not a migration or clocksync change: the archive's stored subsample file was written
+by an earlier version of the archive script that drew each permuted plane and its splits interleaved; the archive's
+current script, its full run and the migrated script draw all planes first. A copy of the current archive script and the
+migrated script give byte-identical outputs at `--subsample 12 --seed 0`; the archive full run matches the legacy
+`x5_vm_human.py --cnv` groups (2,249 groups, D_null to 7e-13). Both orders are valid draws of the A18 null; D is
+deterministic. The per-group `D_null` (mean over 10 permuted planes) is Monte-Carlo noisy (the two orders differ by up to
+144 per group at equal mean), so per-cell null-corrected numbers are read pooled over groups. The reconciliation of
+per-cell synchrony vs A86/A87 coherence (rest of item 2) follows.
+<!-- src: paper/exploratory/WP0_integrity/scratch/cancer_split/{arch,mig}/a18_cancer_groups.csv (identical, cmp) -->

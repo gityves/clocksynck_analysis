@@ -63,6 +63,8 @@ estimators, anchor flags), `family_medians.csv` (variant, estimator, family, med
 | PD DMV by Braak stage, neuron_other | 5-6: 0.000 vs stage 0 0.446 (host of stages 0 and 5-6; 0.540 on the host of 0 and 1-4); 1-4: 0.233; 5-6 minus 0: -0.446 (bootstrap interval -0.887, 0.069) | 0.524 / 0.231 / 0.000; -0.524 (jackknife SE 0.285) | deviation 5 (host and SE differ); 5-6 minus 0 negative in 6 of 7 estimable compartments, as legacy (ependymal +0.171) |
 | HBCC halves, 18 compartment x disease means over 10 splits | mean d identical (max 0.005); share of halves with p < 0.05 within 0.15 | `a18_hbcc.csv` | SCZ inhibitory_CGE -0.36 (90 % of halves), excitatory -0.28 |
 
+Subsample check of `compute_cancer_split.py` (WP0 item 2, 2026-10-23): the archive's stored subsample `a18_cancer_groups.csv` came from an earlier script version that drew each permuted plane and its splits interleaved; only `D_null` (and the columns derived from it) differ, D is deterministic. The draw order here is the one of the archive's full run: a copy of the current archive script and this one give byte-identical outputs at `--subsample 12 --seed 0`, and the archive full run in this order (snapshot `a18_cancer_groups.csv`) matches the legacy `vm_cnv_groups.csv` (2,249 groups, D_null to 7e-13); the migrated full run is left to M3. `D_null` is a mean over 10 permuted planes and is noisy per group (the two orders differ by up to 144 per group, same mean); read it pooled.
+
 ## Deviations
 1. **Host in the per-cell rho.** The legacy held the pooled anchored host fixed and took s = 2 psi c / (1 - c) of the group's
    donors. `Dataset.contrast` reports only c and ratios per group, not z2, psi, V, so here the host is refitted on each

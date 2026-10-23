@@ -54,7 +54,7 @@ All 22 groups run after the migration and reproduce the archive's subsample outp
 
 | group, script | status | action before use |
 | --- | --- | --- |
-| backbone `compute_cancer_split.py` (A18 per-cell, cancer) | `D_null` differs from the archive (D itself matches), and so do the null-derived D, R, rho, lambda columns; suspected change in `clocksync.cells.vonmises.group_stats` (not verified) | **resolve first in WP0 item 2**: rerun the archive script and the migrated one at the same N, find which null is right |
+| backbone `compute_cancer_split.py` (A18 per-cell, cancer) | **resolved (WP0 item 2, 2026-10-23)**: the archive subsample file predates a change of the random draw order (interleaved -> batch); the migrated script equals the current archive script (byte-identical subsample outputs), whose full run matches the legacy groups; not clocksync | M3 full rerun as planned; see backbone README |
 | resilience `compute_gtex_sex_bmi.py` (A96, A99, A94 cue-core) | same donors, values differ slightly (log radius 1.4e-2); the archive file predates clocksync edits of 2026-10-22 | explain in M3 (full rerun vs archive full-run snapshot) before A118 or WP0 item 6 use it |
 | calibration `compute_age_acceptance.py` (A19 acceptance) | archive not reproducible: seed used Python's salted `hash()`. **Fixed 2026-10-23** (`zlib.crc32`); numbers will differ from the archive | rerun in M3; erratum if the A19 acceptance verdict changes |
 | calibration `compute_small_n.py` (A10) | `main()` was never called (archive too), so `run.sh` skipped it. **Fixed** (`__main__` guard); reproduces the archive | none |
