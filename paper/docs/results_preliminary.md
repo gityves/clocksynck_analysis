@@ -174,3 +174,26 @@ one axis. The ratio is therefore not diagnostic on its own; offset preservation 
 distribution) is the decisive readout. Reading: the fatal COVID data do not show the GTEx-ventilated 0 / 12 h collapse,
 but at these sizes they could not have shown it reliably.
 <!-- src: paper/exploratory/A109_coupling_nulls/output/a109c_covid_delorey.csv; a109c_covid_melms.csv; a109c_covid_sims.csv (column dataset) -->
+
+## A132 (2026-10-23): brain death or ventilation? (secondary)
+
+**H132.1 not supported (no separation at this power).** Within Hardy 0, organ donors (brain dead) are not closer to
+0 / 12 h than ventilated post-mortem cases: folded-distance difference +0.115 h at equal n (79 vs 79, 65 pairs; p 0.72;
+MDE 0.54 h) and -0.057 h at full n (298 vs 79; p 0.68; MDE 0.44 h). Both groups are closer to 0 / 12 h than fast deaths
+(median folded distance 0.75 and 0.77 h vs 1.01-1.02 h; p_closer 0.013 and 0.035; full-n organ donors 0.72 h, p_closer
+0.012). Under the registered reading the push to 0 / 12 h goes with ventilation / ICU care rather than with brain
+death, but the MDE exceeds the A109 ventilated-minus-fast gap, so a partial difference is not excluded.
+<!-- src: paper/exploratory/A132_brain_death/output/a132_groups.csv; a132_contrast.csv -->
+
+**Descriptive (registered as a per-group readout, no between-group test registered).** Offset preservation differs:
+ventilated post-mortem cases keep the fast-death pair relations (Fisher-Lee rho 0.690, p 0.0006), organ donors do not
+(rho 0.161, p 0.19 at equal n; 0.093, p 0.36 at full n). A test of this difference would be post hoc.
+<!-- src: paper/exploratory/A132_brain_death/output/a132_groups.csv -->
+
+**H132.2 not supported.** Top minus bottom ventilation-duration tertile (organ donors, cuts 61 / 101 h, 100 vs 100):
+-0.192 h in the predicted direction, p 0.155 (MDE 0.45 h). Per tertile: folded 0.62 h (p_closer 0.009; rho -0.089) vs
+0.79 h (p_closer 0.044; rho 0.247, p 0.16).
+<!-- src: paper/exploratory/A132_brain_death/output/a132_groups.csv; a132_contrast.csv -->
+
+D132.3 dropped (scout note). Scoring MDEs differ slightly from the scout values (different random draws; the scoring
+draw is fixed by seed in `compute_brain_death.py`).

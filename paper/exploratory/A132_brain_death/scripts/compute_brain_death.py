@@ -10,7 +10,7 @@ Registered in paper/docs/registered_experiments.md, section A132 (H132.1, H132.2
           groups compared (fixed mask), as the feasibility rule counts them.
   H132.2  Organ donors, ventilation duration (DTHVNTD, hours) top vs bottom tertile: difference in folded distance
           (top minus bottom), donor-label permutation p (one-sided, prediction < 0), equal n.
-  D132.3  Long-term steroids (MHSTRDLT 1 vs 0), Hardy 0 and Hardy 4: folded distance and share of the cross-covariance
+  D132.3  (dropped: too few steroid users; not computed) Long-term steroids (MHSTRDLT 1 vs 0), Hardy 0 and Hardy 4: folded distance and share of the cross-covariance
           along the glucocorticoid direction (A109 non-temporal output), arms >= 15 donors.
 MDE (80 % power, one-sided 0.05) = (z.95 + z.80) x SD of the donor-label permutation null of the difference; no
 observed difference is computed in --scout.
@@ -104,14 +104,14 @@ def vs_fast(Zraw, M, fast, gd, group, rng, sz) -> dict:
                 p_closer=N.pval(d_f - d_g, nl), n_pairs=int(len(iu)), n_fast=nf, n_perm_rho=len(null))
 
 
-def contrast(Zraw, M, a, b, rng, sz, label, rng_draw) -> dict:
+def contrast(Zraw, M, a, b, rng, sz, label, rng_draw, equal=True) -> dict:
     """Difference of folded distance a minus b at equal n (one draw), donor-label permutation, one-sided < 0."""
-    n = min(len(a), len(b))
-    a_, b_ = (rng_draw.choice(g, n, replace=False) if len(g) > n else g for g in (a, b))
+    n = min(len(a), len(b)) if equal else None
+    a_, b_ = (rng_draw.choice(g, n, replace=False) if equal and len(g) > n else g for g in (a, b))
     mask = pair_mask(M, a_, b_)
     obs = fold(phase(Zraw, M, a_, mask)) - fold(phase(Zraw, M, b_, mask))
     null = diff_null(Zraw, M, a_, b_, mask, sz["n_perm"], rng)
-    return dict(contrast=label, difference_h=obs, p=N.pval(obs, null, upper=False), n_each=n, n_pairs=int(mask.sum()),
+    return dict(contrast=label, difference_h=obs, p=N.pval(obs, null, upper=False), n_each=n if equal else len(a_), n_b=len(b_), n_pairs=int(mask.sum()),
                 n_perm=len(null), **mde_of(null))
 
 
@@ -218,21 +218,10 @@ def score(T, ph, Zraw, M, rng, sz, out, seed):
     g = pd.DataFrame(gr)[["group", "n", "rho", "p", "folded_h", "p_closer", "n_pairs", "folded_fast_h", "n_fast", "n_perm_rho"]]
     g.to_csv(out / "a132_groups.csv", index=False)
     c = pd.DataFrame([contrast(Zraw, M, od, pm, rng, sz, "H132.1_organ_donor_minus_ventilated_postmortem", rd),
+                      contrast(Zraw, M, od, pm, rng, sz, "H132.1_full_n", rd, equal=False),
                       contrast(Zraw, M, top, bot, rng, sz, "H132.2_top_minus_bottom_tertile", rd)])
     c.to_csv(out / "a132_contrast.csv", index=False)
-    rows = []
-    for gname, grp in (("H0", T.group_donors("vent")), ("H4", T.group_donors("H4"))):
-        s = ph.MHSTRDLT.to_numpy()[grp]
-        for arm, v in (("yes", 1), ("no", 0)):
-            d = grp[s == v]
-            fl = len(d) >= MIN_ARM
-            mk = pair_mask(M, d) if fl else None
-            rows.append(dict(group=gname, steroids=arm, n=len(d), reported=fl,
-                             folded_h=fold(phase(Zraw, M, d, mk)) if fl else np.nan,
-                             n_pairs=int(mk.sum()) if fl else np.nan, gc_share=gc_share(Zraw, M, d) if fl else np.nan))
-    pd.DataFrame(rows).to_csv(out / "a132_steroids.csv", index=False)
-    for t in (g, c, pd.DataFrame(rows)):
-        print(t.round(4).to_string(index=False), flush=True)
+    print(g.round(4).to_string(index=False), "\n", c.round(4).to_string(index=False), flush=True)
 
 
 def main(argv=None):
