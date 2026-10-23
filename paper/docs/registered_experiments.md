@@ -103,3 +103,14 @@ to validate the estimator).
   collection kit (SMCAT Yellow vs Aqua), so it compares the 11 blood pairs with the 55 others. Holm adjustment over the
   family is applied in `results_preliminary.md` when all five are scored.
 - *A109b MDE*: computed with the same null at the Tabula Sapiens design before A109b is scored.
+
+**A109b MDE note (2026-10-23, written after A109 was scored, before A109b is scored).** Pseudo-clock null of C at the
+Tabula Sapiens design (12 donors, 9 organs, 200 sets; pair C clipped at 1): pairs with >= 3 shared donors (primary, 36
+pairs) null median 0.675, sd 0.060, MDE 0.104 (p < 0.05); >= 5 shared donors (sensitivity, 7 pairs) 0.531, 0.102,
+0.187. The A92 minimum of 20 shared donors cannot apply here. Offset test: 4 GTEx-shared organs (adipose ->
+subcutaneous, heart -> atrial appendage, musculature -> skeletal muscle, respiratory -> lung), 6 pairs, 24 exact label
+permutations (minimum p 1/24 = 0.042); power at p <= 0.042 is 0.06-0.13 for couplings 0.3-0.8 (0.41 at 0.95). The offset
+test is therefore reported but read as uninformative whatever its p; the C test is the A109b readout. Since A109 is
+known, this replication is read for ventilated donors in a second cohort (H109.1-type C only). Script
+`paper/exploratory/A109_coupling_nulls/scripts/compute_tabula_sapiens.py`.
+<!-- src: paper/exploratory/A109_coupling_nulls/output/a109b_c_null.csv; a109b_power.csv -->
