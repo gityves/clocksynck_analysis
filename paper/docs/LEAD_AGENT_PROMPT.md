@@ -23,9 +23,34 @@ You lead the analyses of the paper "The human body keeps internal time" (Yves Pa
 - **Before a figure's numbers enter text**, do the M3 full rerun of the migrated groups it uses and compare with the archive snapshot (`ARCHIVE_SNAPSHOT.tsv`), as the plan describes.
 
 ## Subagents
-- Delegate scouts (dataset search and feasibility: accessions, design, sample counts, licence, open matrices), builders, and well-specified compute scripts to Sonnet 5.5 agents. Give each a complete brief: goal, files to read, the registered text, the exact outputs, what not to touch, the resource limits. Ask for a concise report with output paths.
+- Delegate scouts (dataset search and feasibility: accessions, design, sample counts, licence, open matrices), builders, and well-specified compute scripts to Sonnet 5.5 agents (`model: "sonnet"`). Give each a complete brief: goal, the registered text, the exact outputs, what not to touch, the resource limits. Ask for a concise report with output paths.
 - At most 3 subagents at once (more hit the rate limit). They do not commit and do not edit `paper/docs/`, `CLAUDE.md` or the archive.
 - Check every number a subagent reports against its output file before it enters the docs. Review the code it wrote against the registration.
+
+### Token budget of a subagent
+Every file a subagent reads stays in its context and is re-billed on every later turn, so the brief, not the agent, decides the cost. Design each task so the agent needs as little context as possible:
+- **One narrow task per agent.** Split scout, build and run into separate agents; a scout never writes analysis code, a builder never searches the web. A task that needs more than about 10 files read is two tasks.
+- **Paste, do not point.** The brief contains what the agent needs, extracted by you once: the amendment text (not the 78 KB plan, which a subagent never reads), the estimand, null and outputs, the signatures of the clocksync functions it will call (`grep -n "def " clocksync/src/clocksync/<module>.py`, not the module), and the arguments of `common.cli.parser`. `CLAUDE.md` is loaded automatically: do not ask the agent to read it or restate it.
+- **Point with line ranges.** When the agent must read code, name the file and the lines (`sed -n 'a,bp'`), and one small code model (e.g. `gtex_cues/_shared.py` and one `compute_*.py`), never a whole group, `dataset.py` (47 KB) or a group README (24 KB) unless the task is about them.
+- **Quiet tools.** Tell the agent: no `cat` of data, logs or CSVs (use `head`, `wc -l`, `tail -n 20`, `grep`, or a pandas `describe()`/`shape`); silence progress bars and warnings (`2>&1 | tail -n 30`); install and download commands with quiet flags; no listing of large directories without `| head`.
+- **No waiting in context.** The agent writes the script and runs the `--subsample` check only. Full runs longer than a few minutes you launch yourself in the background (`run_in_background`, log to a file) and inspect with `tail`; no agent sits in a loop polling a job.
+- **Web scouts.** Cap the search: a fixed list of queries or repositories, at most about 10 searches, standard mode first, stop at the first N candidates that meet the stated criteria. Return a table (accession, design, n, timing, licence, matrix URL, size), not prose.
+- **Short, fixed-format report** (at most about 200 words): output paths, the few key numbers with the file and column they come from, deviations from the brief, open problems. No code listings, no restating the brief. You then check those numbers by reading only the named rows or columns.
+- **Follow-ups.** A small fix to a finished agent's work goes through `SendMessage` to the same agent (its context is already built); a new or unrelated task goes to a fresh agent with a fresh brief, never to one whose context is already large.
+- **Do small things yourself.** A lookup, a one-line fix or a check of a few tool calls costs less inline than a brief plus a subagent's start-up reading.
+
+Brief template (keep under about 60 lines):
+```
+Goal: <one sentence>. Amendment <A1xx>, hypotheses <ids>.
+Registered text: <pasted estimand, null, test, data rule>
+Inputs: <paths> (format, size, key columns)
+API to use: <pasted signatures>; code model: <file:lines>
+Write: <script path>; outputs: <exact file names and columns>
+Run: --subsample check only: <command>. Do not run the full analysis.
+Do not touch: paper/docs/, CLAUDE.md, the archive, migrated groups, git.
+Limits: 4 jobs, 30 GB (RUN_CAP_GB=30 paper/common/run.sh); quiet tool output as listed.
+Report (<= 200 words): paths, key numbers with file:column, deviations, problems.
+```
 
 ## Resource and data rules
 - Python: `$(conda info --base)/envs/sccc/bin/python`. Shared machine: at most 4 parallel jobs and 30 GB RAM per agent; heavy steps through `RUN_CAP_GB=30 paper/common/run.sh <script> [args...]`; long runs (> 20 min) as documented scripts in the background. Never pkill by pattern: kill only PIDs you started.
