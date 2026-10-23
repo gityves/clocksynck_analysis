@@ -254,3 +254,22 @@ donors, at equal n (the same 79 organ donors as A132, seed 132), over the pairs 
 and in both groups (fixed mask); null: donor labels permuted between the two groups (1,000), two-sided p. Reported as
 post hoc, with both per-group readouts (offsets and folded distance) described side by side. Code:
 `paper/exploratory/A132_brain_death/scripts/compute_posthoc_rho.py`; output `a132b_rho_difference.csv`.
+
+## A133 (2026-10-24, written after A109/A132b, before any GTEx scoring; method): separating running clocks from a shared displacement
+
+Motivation (post hoc relative to A109/A132): ventilated pair phases are pulled toward 0 / 12 h. Clock time spread over
+the cycle contributes to the Hermitian cross-covariance E[z_a conj z_b] only (its pseudo-covariance E[z_a z_b] vanishes
+for uniformly covered phases); a shared donor-level displacement s_d u_a (s real, varying between donors; a constant
+shift cancels on centring) contributes s-variance u_a conj(u_b) to the first and u_a u_b to the second. Estimator: fit
+the axial part from the pseudo-covariance matrix (rank-1 Takagi factor u), subtract it from the Hermitian
+cross-covariance, read coupling and offsets on the remainder ("circular part").
+- **V133.1 (simulation, gate for the rest).** Running clocks with known offsets plus displacements (mixture fraction 0 to
+  0.8), at GTEx ventilated sizes (n 79 and 298, 12 tissues, real noise): the circular part recovers the offsets
+  (Fisher-Lee rho with truth >= 0.8 at fraction 0.5, n 79) where the raw estimator does not; with no displacement it
+  agrees with the raw estimator (rho >= 0.95). Confounder: host phases concentrated (Rayleigh R up to 0.3) with no
+  displacement must not be "corrected" into different offsets (rho >= 0.9). Fails -> A133 stops, the method stays.
+- **H133.1 (secondary; only if V133.1 passes).** On the circular part, Fisher-Lee rho vs fast deaths in ventilated
+  post-mortem cases and in organ donors (A132 groups, equal n, same permutations as A132). Reading: organ donors' offsets
+  recovered (one-sided p < 0.05) -> a displacement masked running clocks with kept relations; not recovered with the
+  post-mortem cases recovered -> relations lost in brain death (A132b). Folded distance on the circular part reported.
+- Code in `paper/exploratory/A133_axial_decomposition/`; a clocksync function is proposed to the PI only after V133.1.
