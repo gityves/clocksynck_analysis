@@ -29,3 +29,10 @@ deterministic. The per-group `D_null` (mean over 10 permuted planes) is Monte-Ca
 144 per group at equal mean), so per-cell null-corrected numbers are read pooled over groups. The reconciliation of
 per-cell synchrony vs A86/A87 coherence (rest of item 2) follows.
 <!-- src: paper/exploratory/WP0_integrity/scratch/cancer_split/{arch,mig}/a18_cancer_groups.csv (identical, cmp) -->
+
+### 2026-10-23, WP0 item 1 (first part): fibrotic-lung T-cell Fisher combined p (supports archive A17 quote "0.002")
+
+Fisher's combination of the two A17 learned-anchor permutation p values for lung T cells, HLCA fibrotic (0.0270) and
+Natri ILD (0.0090), both two-sided (|null| >= |diff|): chi2 16.65, 4 df, combined p 0.0023. The archive's "0.002" is
+this value rounded; the table now exists. The trace of the other figure numbers follows.
+<!-- src: paper/exploratory/WP0_integrity/output/fisher_lung_tcell.csv (inputs: $SCCC_ARCHIVE/legacy/desync/common_output/a17_unified_contrast.csv, rows hlca_fibrotic and ild_natri x lung:T, column p_perm_learned) -->
