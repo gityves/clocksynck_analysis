@@ -12,7 +12,7 @@ while true; do
   sleep 60
   if [ -f "$ledger" ] && [ "$(wc -l < "$ledger")" -gt "$seen" ]; then
     new=$(tail -n +"$((seen + 1))" "$ledger"); seen=$(wc -l < "$ledger")
-    bad=$(awk -F'\t' '$3 != "ok" {print $3 " exit " $4 " peak " $5 " GB: " $8 " " $9 " (log " $10 ")"}' <<< "$new")
+    bad=$(awk -F'\t' '$1 != "start" && $3 != "ok" {print $3 " exit " $4 " peak " $5 " GB: " $8 " " $9 " (log " $10 ")"}' <<< "$new")
     [ -n "$bad" ] && { echo "ATTENTION run ended badly:"; echo "$bad"; exit 1; }
   fi
   running=0; now=$(date +%s)
