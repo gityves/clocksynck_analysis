@@ -31,6 +31,10 @@ AD skin) keep their sign. Per-cohort cancer tumour-minus-normal coupling changes
 - **Question:** keep the brain disease panels with the anchor dependence stated, move them to Extended Data, or drop?
 - **PI (2026-10-24):** decide evidence- and literature-driven whether one compartment has a good reason to be the brain reference (covariance, clock strength, literature). -> A135 (registered before any brain contrast is recomputed).
 - **A135 result (2026-10-24):** no compartment family qualifies (excitatory neurons first in 2 of 5 control sets; rule 4 of 5). By the registered rule the brain disease panels go to Extended Data with the anchor dependence stated. Confirm, or keep open?
+- **Time of death for the brain cohorts (checked 2026-10-24, column names only):** absent from every local donor table
+  (PsychAD MSSM/HBCC/RADC, SEA-AD DLPFC/MTG, PD atlas) and from the public SEA-AD donor metadata (PMI only). Controlled
+  portals not checked (no access from here): PsychAD on Synapse syn52160016; ROSMAP clinical (`ROSMAP_clinical.csv`, AD
+  Knowledge Portal); PD atlas (Prashant et al. 2024, AMP PD Knowledge Platform). PI to decide whether to request it.
 - **On hold:** Figure 4 brain panels.
 - Evidence: results_preliminary.md, WP0 item 8.
 
