@@ -390,3 +390,18 @@ justified; brain disease panels go to Extended Data with their anchor dependence
 <!-- src: paper/exploratory/A135_brain_reference/output/a135_decision.csv; a135_ranks.csv; a135_criteria.csv -->
 Choices beyond the registration: >= 15 control donors per compartment and >= 15 shared donors per pair (20 left the
 Parkinson gate without pairs); nested control sets collapsed to the largest per cohort.
+
+## A134 (2026-10-24): malignant coherence after removing inferred copy number and oncogenic programmes
+- **H134.1 passes by p, small effect.** Regressing each clock gene on its own inferred copy-number score raises malignant
+  coherence 0.228 -> 0.291 (gain +0.063) and normal epithelium 0.782 -> 0.768 (-0.014); malignant minus normal gain
+  +0.077, one-sided permutation p 0.017 (null SD 0.039, MDE 0.097); patient-bootstrap interval [-0.160, 0.266] includes
+  0. Copy number accounts for about a tenth of the 0.55 gap. Per-gene correlation with own-locus score 0.09-0.50
+  (CRY2 0.50, NR1D2 0.44).
+- **H134.2 not supported.** MYC targets, hypoxia and cycling jointly: -0.092, p 0.96 (each alone: MYC -0.055, hypoxia
+  -0.088, cycling +0.003).
+- **D134.3 uninformative.** Per-cell D with patient-specific vs common gene phases (64 patients): intervals span about
+  +-10 (malignant minus normal cross-fit gain -0.56 [-14.8, 13.2]).
+- Reading: copy-number variation of the clock loci explains a small, detectable part of the lower malignant coherence;
+  oncogenic programmes do not; most of the gap remains unexplained. The registered restatement ("tumour-to-tumour
+  variation breaks the shared phase structure") is supported only for that small part (PI, Q8 follow-up).
+<!-- src: paper/exploratory/A134_cancer_coherence/output/a134_h1_h2.csv; a134_h1_h2_gene_effects.csv; a134_d134_3.csv -->

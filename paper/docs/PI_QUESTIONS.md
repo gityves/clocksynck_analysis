@@ -87,6 +87,7 @@ shows 3-fold higher off-plane (non-clock) variance of the clock genes across tum
   part of each clock gene (WP5 H114 dosage). Register as an amendment before scoring.
 - **Question:** agree with testing this before WP5, and with the possible restatement of the Figure 5 claim?
 - **Answer (PI, 2026-10-24):** agreed -> A134.
+- **A134 result (2026-10-24):** inferred copy number explains a small part (malignant coherence 0.23 -> 0.29, p 0.017 vs normal; about 1/10 of the gap); oncogenic programmes nothing; per-cell test uninformative. Figure 5 wording: keep "coherence lost" with the per-cell caveat and the copy-number share, or restate? (open)
 - **On hold:** the Figure 5 cancer narrative; WP5 (A114) framing. The A86/A87 numbers themselves stand.
 - Evidence: results_preliminary.md, WP0 item 2 (second and third parts).
 
