@@ -331,3 +331,24 @@ non-clock sources". Question to the PI (Q8). Cancer lambda, R and d_R stay out o
   -0.0005, p 0.49 (MDE 0.20), on 2 within-digestive pairs (43 cross) at this fast draw. Excluded by the registered
   rule; with 2 pairs this exclusion carries little weight.
 <!-- src: paper/exploratory/A110_mechanism/output/a110_h2.csv; a110_h2b_tissues.csv; a110_h2c_hubs.csv; a110_h3.csv; a110_h4.csv; a110_h5.csv -->
+
+## A113 / A130 (2026-10-24): internal time in living humans
+**H113.1: adipose passes; muscle passes only with an estimator chosen after the registered default failed (post hoc).**
+The registration says "circular correlation"; the A35 default (Jammalamadaka-SenGupta) is documented in clocksync as
+ill-defined when one sample is evenly spread (`clocksync/src/clocksync/stats.py`), which is the muscle design (4-hourly
+grid over 24 h). Fisher-Lee was adopted after the JS value was seen, so the muscle pass is labelled post hoc.
+- Adipose (GSE104674, 48 biopsies / 12 men, vs ZT): JS 0.888, Fisher-Lee 0.822, within-subject-permutation p 0.001 for
+  both; median error after the common offset 1.11 h.
+- Muscle (GSE108539, 57 / 10, 13-gene refit of the GTEx waveform): JS -0.854 (p 1.00); Fisher-Lee 0.576 (p 0.001);
+  resultant 0.775; median error 1.30 h; common offset -0.63 h; per-subject Fisher-Lee median 0.80, positive in 10 of 10.
+  Sensitivity (ARNTL row dropped from the published waveform): same conclusions (FL 0.585, error 1.25 h).
+- Hospital-window subsets (muscle): Spearman of the tangent coordinate with clock time 0.885 (08-18 h, n 29, 3 times)
+  and 0.798 (09-17 h, n 20, 2 times), direction correct; estimated window width unreliable (14.7 h vs 9.6 h).
+- Reference: V25.5 error 1.1 h, offset -2.2 h; GTEx single tissue 2.6 h.
+<!-- src: paper/exploratory/A113_living_time/output/a113_summary.csv; a113_windows.csv -->
+
+**H130.1 not supported (p 0.054).** Internal minus wall time against age, cohort as stratum, 54 subjects (V25.5 42 women,
+GSE104674 12 men; 33-93 y): -0.339 h per decade, one-sided permutation p 0.054 (null SD 0.20 h per decade). Per cohort
+(descriptive): V25.5 -0.31 h per decade (Spearman -0.20), adipose -0.67 (-0.28). Direction as the epidemiology and as
+A94 (0.2-0.5 h per decade), not significant.
+<!-- src: paper/exploratory/A113_living_time/output/a130_summary.csv -->

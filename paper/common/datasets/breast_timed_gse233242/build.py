@@ -13,7 +13,7 @@ Choices (as legacy): approximate counts = TPM x transcript length, rescaled per 
 clock-gene counts rounded; depth = n_reads. Compartments `normal` and `tumour` (both form the host), donor =
 patient id (Table S1). One patient is spelled W006063 in GEO and W006053 in Table S1: excluded in the primary run
 (`join_typo=False`), joined in the sensitivity (`join_typo=True`). Donors table: `resection_h` (h), `resection_time`,
-`subtype` (GEO). The time of resection is a recorded hospital time (08-18 h window), not a circadian time.
+`age` (y; SI Table S1, added by `add_age.py`, A130), `subtype` (GEO). The time of resection is a recorded hospital time (08-18 h window), not a circadian time.
 """
 
 from __future__ import annotations
@@ -43,6 +43,6 @@ def build(n_reads: float = 30e6, join_typo: bool = False) -> tuple[pd.DataFrame,
     cnt.index = range(len(key))
     pb = cs.from_bulk(cnt, key, donor="patient", compartment="compartment",
                       depth=pd.Series(float(n_reads), index=cnt.index))
-    donors = t.set_index("patient_id")[["resection_h", "resection_time", "subtype_geo"]].rename(
+    donors = t.set_index("patient_id")[["resection_h", "age", "resection_time", "subtype_geo"]].rename(
         columns={"subtype_geo": "subtype"})
     return pb, donors
