@@ -404,3 +404,29 @@ V25.5 (breast surgery, 42 patients) is the only living-hospital validation of pe
   descriptive is dropped: sex is fully confounded with cohort. V25.5 ages are added in its builder from Table S1.
 - **A131 dropped (infeasible).** Public GTEx dictionaries define `SMCENTER` only as a code (B1, C1, D1); no locations;
   and fast deaths with time of death come from effectively two centres (B1 128, C1 115).
+
+**WP3 note (2026-10-24, written after the scout, before scoring).** Scout: `paper/exploratory/WP3_scout/output/scout_wp3.csv`
+(designs and counts; no statistic, informativeness not computed). Fixed choices:
+- **A111 primary, Manella 2021 (GSE159135):** liver, WAT and lung only (the other tissues were qPCR); 4 arms (Alb-Cre
+  controls and hepatocyte Bmal1 KO "BLKO", ad libitum / daytime feeding) x 12 ZT x 2 mice. Labels `<ZT><A|B>` are
+  assumed to be the same mouse across tissues (not stated by the authors). Host for liver: WAT + lung (minimum host 2
+  tissues). Informativeness: liver shift >= 3 h relative to WAT and lung. Depth = sum over the authors' retained genes
+  (pre-filtered 3' counts).
+- **A111 replication, Xin 2021:** TPM pseudo-counts (x 30 M, no length correction); liver, heart, kidney, VAT; ZT24 folded
+  to 0 and kept as separate mice; the kidney-only mouse `N24_5` enters kidney only. Mouse pairing across series assumed.
+- **H111.3 = A129 primary (merged).** Manella BLKO vs Alb-Cre within ad libitum (24 vs 24 mice): liver coupling to the
+  WAT + lung host, d* < 0 one-sided, condition labels permuted within ZT (1,000). Specificity companion on the same
+  permutations: WAT coupling to lung and lung to WAT (hosts without the knockout liver), BLKO minus Alb-Cre, reported
+  with intervals; specific if the liver drop exceeds both companions'. Daytime-feeding arms descriptive. Arntl mRNA is
+  not a knockout readout in these 3' data (still detected).
+- **Expression QC:** a gene failing the median-count >= 5 rule is dropped in that tissue and dataset (CIART in Manella
+  liver; CIART and NPAS2 in Greenwell liver); tissues are kept.
+- **A112, Greenwell 2019 (GSE118967):** primary contrast arrhythmic (AR) vs ad libitum (LB); the partly adapted arm (DR)
+  and night-restricted (NR) descriptive. The rhythmicity-call truth check uses the paper's supplementary tables if public,
+  otherwise it is dropped.
+- **Clock-loss readouts (addition, descriptive):** Manella has 3 pairs only, so instead of the A132b pair statistics:
+  liver offset to the WAT + lung host, BLKO vs Alb-Cre, untimed and timed. Further descriptive sets: VIP-Cre Bmal1 KO
+  (GSE296764; SCN-specific knockout, SCN + liver + heart, CT0 / CT12 only, 6-8 mice per arm): liver-heart coupling and
+  offset, knockout vs wild type, as a mouse analogue of the brain-dead question; whole-body Bmal1 KO (Jouffe 2022,
+  GSE150102, single ZT12): coupling only. Other candidates (Koronowski 2019, Welz 2019, liver-only sets) are
+  single-tissue and not used.
