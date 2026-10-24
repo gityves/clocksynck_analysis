@@ -33,6 +33,24 @@ AD skin) keep their sign. Per-cohort cancer tumour-minus-normal coupling changes
 - **On hold:** Figure 4 brain panels.
 - Evidence: results_preliminary.md, WP0 item 8.
 
+### Q9 (2026-10-24): direction after WP0-WP4 (step back)
+Proposals (see the chat summary of 2026-10-24; each would be registered or written into the plan once agreed):
+- (a) Figure 3 claim: from "a self-sustained peripheral network" to "organs stay coupled clocks when cues are disrupted
+  (Hardy 4); perturbation acts in two separable ways: a shared displacement that keeps the relations (ventilated, not
+  brain dead) and a loss of the relations (brain dead)". Drop the mechanism row of WP2 from the main text.
+- (b) Figure 1: add the genetic positive control (A129: knockout liver decouples, specific) and the living cohorts
+  (A113, with the post hoc estimator stated); drop "cue/locked split validated in mouse" (A112 failed).
+- (c) Method: make "pull vs order" (signed pole-deviation Spearman and shrink ratio) a registered clocksync readout,
+  validated on the A133 simulation grid before use.
+- (d) Process: every registration states the attainable minimum p and the null-free ceiling of each statistic
+  (H111.1 and A133 set unreachable thresholds).
+- (e) Next tests, in order: A136 drug vs brain death within organ donors (glucocorticoid-response score), an external
+  brain-dead / multi-organ replication, A134-A135 (running), then WP5-WP8 with WP5 reframed by A134.
+- (f) Journal: the disease positive for Cell rests on cancer (being reframed) and the anchor-robust peripheral
+  contrasts; Nature Methods is the stronger fit for the validated method.
+- **Question:** which of (a)-(f) do you agree with?
+- **On hold:** plan rewrite; A136 registration.
+
 ## Answered
 
 ### Q4 (2026-10-23): clocksync change
