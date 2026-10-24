@@ -32,6 +32,22 @@ work, so it was not applied.
 - **Question:** apply it (own commit, only these files)?
 - **On hold:** nothing (no current result affected).
 
+### Q6 (2026-10-24): brain disease contrasts are anchor-dependent (WP0 item 8)
+With an all-LOO host instead of the A17 anchors, brain contrasts (Figure 4: PD, AD, ASCVD, VaD, SCZ ...) change sign in
+1-7 of 9 compartments (block agreement r* 0.42-0.67); the peripheral headline contrasts (ILD, fibrotic lung, T2D, A44,
+AD skin) keep their sign. Per-cohort cancer tumour-minus-normal coupling changes sign in 3 of 9 cohorts (near zero).
+- **Question:** keep the brain disease panels with the anchor dependence stated, move them to Extended Data, or drop?
+- **On hold:** Figure 4 brain panels.
+- Evidence: results_preliminary.md, WP0 item 8.
+
+### Q7 (2026-10-24): what A110 can still say about the SCN
+GTEx organ donors have no brain samples (0 of 301), so the registered SCN test (hypothalamus coupling, Hardy 3-4 vs
+brain-dead donors) is impossible; only fast vs Hardy 3-4 remains (descriptive, being scored). The illness-duration test
+of memory vs maintained coupling (H110.1) is infeasible: the interval is recorded for 16 of 103 Hardy 4 donors.
+- **Question:** accept that GTEx cannot separate SCN loss from donor drugs, or look for another dataset (e.g. a
+  brain-dead vs non-brain-dead ICU cohort with multi-organ or blood time series)?
+- **On hold:** nothing now; the SCN sentence of Figure 3 stays a hypothesis.
+
 ## Answered
 
 ### Q5 (2026-10-23): A132 outcome and the Figure 3 wording
