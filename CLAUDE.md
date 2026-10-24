@@ -47,6 +47,14 @@
 - Data: `/mnt/max8tb/data/CoPhaser_data/cancer_circadian/` (`$SCCC_DATA`), with a `PROVENANCE.md` (URL, date, sha256)
   per source. Self-imposed cap 400 GB. Processed matrices only, no FASTQ mapping.
 - Downloads are untrusted: parse only (`python -I`), never execute.
+- **Long jobs** (> 20 min): always through `RUN_CAP_GB=30 paper/common/run.sh <script.py|notebook|group run.sh> [args]`,
+  detached (`setsid nohup ... > /dev/null 2>&1 &`), never a bare `python`. run.sh caps RAM, writes the log
+  (`paper/results/logs/<name>.log`), a live state file and, at the end, one line in `paper/results/logs/jobs.tsv`
+  (status ok / failed / killed_memory / interrupted, exit code, peak GB). Check with `paper/common/jobs.sh`: it flags
+  failed runs (`!!`), runners that vanished (LOST) and logs silent for > 60 min (SILENT). Never infer success from a
+  queue log or a process list alone. A run killed for memory is rerun with fewer workers (`--jobs 1`), not a higher
+  cap. Scripts should log progress at least every ~15 min so SILENT means stuck. Full figure reruns:
+  `paper/common/m3_rerun.sh [groups...]`.
 - GTEx time of death is controlled access: release derived aggregates only, never per-donor phases.
 - GTEx protected phenotypes (dbGaP phs000424.v8, 189 subject variables: exact age, BMI, T2D, ventilation duration,
   long-term steroids, sepsis, season, medical history; sample attributes) are in `data/Gtex_phenotypes/`. Controlled
