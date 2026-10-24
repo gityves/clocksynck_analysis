@@ -273,3 +273,22 @@ cross-covariance, read coupling and offsets on the remainder ("circular part").
   recovered (one-sided p < 0.05) -> a displacement masked running clocks with kept relations; not recovered with the
   post-mortem cases recovered -> relations lost in brain death (A132b). Folded distance on the circular part reported.
 - Code in `paper/exploratory/A133_axial_decomposition/`; a clocksync function is proposed to the PI only after V133.1.
+
+**A110 note (2026-10-24, written after the scout, before scoring).** Scout:
+`paper/exploratory/A110_mechanism/output/scout_*.csv` (counts and null spreads; subsample smoke outputs deleted unread).
+- **H110.1 infeasible, not scored.** The interval is recorded for 16 of 103 Hardy 4 donors (`DTHCODD` 0.155,
+  `DTHFUCODD` 0.146; Hardy 3 0.30, fast 0.32, Hardy 0 0.85); a median split gives 8 vs 8 donors and no pair with >= 20
+  shared donors. With complete data the median split would have had MDE 0.143. A110 has no primary; memory vs
+  maintained coupling is not testable in GTEx Hardy 4. (Hardy 0 has the interval but carries the A132 displacement.)
+- **H110.2 feasible.** 32 peripheral tissues; 23 with >= 20 Hardy 4 and fast donors (floor 20, as A33); Eraslan
+  stromal-vascular fraction for 8 tissues, 7 at >= 20 donors, so H110.2b is a Spearman over 7 tissues (low power).
+  Retained coupling = Hardy 4 / fast at d* from `Dataset.contrast`. H110.2c descriptive.
+- **H110.3 feasible.** All six genes present; ischaemic time complete for >= 98.8 % of Hardy 4 samples per tissue
+  (median 820 min). Fixed design: cold and heat scores regressed out jointly; donor bootstrap with the fit fixed on the
+  full sample; random sets matched within 0.25 log CPM per gene.
+- **H110.4: the registered contrast is impossible:** GTEx organ donors have no brain samples (0 of 301; 10 Hardy 0
+  donors with hypothalamus in all). The SCN-loss reading cannot be tested on GTEx brain. Registered fallback, descriptive:
+  fast (145 donors with hypothalamus, >= 3 other regions, >= 2 peripheral tissues) vs Hardy 3-4 (78); statistic at d*:
+  hypothalamus minus the median other region, cervical spinal cord excluded.
+- **H110.5 feasible, weak.** Digestive set as registered (7 tissues; beyond the 12 A109 tissues); pairs with >= 20 shared
+  donors in Hardy 4 and fast at equal n (103): 4 within digestive, 40 digestive-to-other; null SD 0.088, MDE 0.218.
