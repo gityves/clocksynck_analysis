@@ -48,6 +48,10 @@ Proposals (see the chat summary of 2026-10-24; each would be registered or writt
   brain-dead / multi-organ replication, A134-A135 (running), then WP5-WP8 with WP5 reframed by A134.
 - (f) Journal: the disease positive for Cell rests on cancer (being reframed) and the anchor-robust peripheral
   contrasts; Nature Methods is the stronger fit for the validated method.
+  Correction (2026-10-24, PI comment): the psoriatic local-clock delay is the strongest pre-specified disease positive
+  (archive: A54 H54.2 held-out -0.93 h, p 0.004; A78 core minus systemic cues -1.97 h, p 0.0002; A81b GTEx cue set
+  -1.69 h, p 0.0003; other skin diseases -0.75 h, p 0.22). It is a delay (lesional clock later), not an advance. Open:
+  trait vs state and treatment specificity (WP6) -> proposed to run WP6 before WP5.
 - **Question:** which of (a)-(f) do you agree with?
 - **On hold:** plan rewrite; A136 registration.
 
