@@ -29,7 +29,8 @@ With an all-LOO host instead of the A17 anchors, brain contrasts (Figure 4: PD, 
 1-7 of 9 compartments (block agreement r* 0.42-0.67); the peripheral headline contrasts (ILD, fibrotic lung, T2D, A44,
 AD skin) keep their sign. Per-cohort cancer tumour-minus-normal coupling changes sign in 3 of 9 cohorts (near zero).
 - **Question:** keep the brain disease panels with the anchor dependence stated, move them to Extended Data, or drop?
-- **PI (2026-10-24):** decide evidence- and literature-driven whether one compartment has a good reason to be the brain reference (covariance, clock strength, literature). -> A135 (registered before any brain contrast is recomputed); still open.
+- **PI (2026-10-24):** decide evidence- and literature-driven whether one compartment has a good reason to be the brain reference (covariance, clock strength, literature). -> A135 (registered before any brain contrast is recomputed).
+- **A135 result (2026-10-24):** no compartment family qualifies (excitatory neurons first in 2 of 5 control sets; rule 4 of 5). By the registered rule the brain disease panels go to Extended Data with the anchor dependence stated. Confirm, or keep open?
 - **On hold:** Figure 4 brain panels.
 - Evidence: results_preliminary.md, WP0 item 8.
 

@@ -379,3 +379,14 @@ Deviations: genes failing QC (CIART, and CLOCK absent from Manella lung knockout
 a dataset (`Dataset` takes one gene set); two-tissue companion contrasts use a local engine on `clocksync._core.host`,
 verified identical to the public contrast for the liver. Builder docstring of `greenwell2019` cites the wrong journal
 (Cell Reports 2019, PMID 30995463).
+
+## A135 (2026-10-24): brain reference compartment, control donors only: no single reference
+Five independent control sets (PsychAD MSSM 254 donors, HBCC 92, RADC 26; SEA-AD DLPFC 41; Parkinson 22). Rank sum of
+clock strength, gate share and centrality per compartment; first-ranked family per set: excitatory neurons in 2 of 5
+(MSSM, HBCC; gate 1.0), astrocytes 1 (RADC; gate share 0.43), inhibitory neurons 1 (SEA-AD), vascular 1 (Parkinson).
+No family reaches the registered 2/3 (4 of 5). Post hoc, neurons merged: 3 of 5, still below. The subsample check gave
+the same decision with different winners: first rank is not stable. Registered consequence: no brain reference is
+justified; brain disease panels go to Extended Data with their anchor dependence (WP0 item 8); part 2 not run.
+<!-- src: paper/exploratory/A135_brain_reference/output/a135_decision.csv; a135_ranks.csv; a135_criteria.csv -->
+Choices beyond the registration: >= 15 control donors per compartment and >= 15 shared donors per pair (20 left the
+Parkinson gate without pairs); nested control sets collapsed to the largest per cohort.
