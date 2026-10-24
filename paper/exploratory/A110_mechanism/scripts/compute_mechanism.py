@@ -384,6 +384,7 @@ def scout_h5_equal_n(sz, out, rng, sub, seed):
                pairs_within_ge20_both=len(wi), pairs_cross_ge20_both=len(cr))
     if wi and cr:
         nul = h5_null(h4, fast, stat, sz["n_perm"], rng)
+        nul = nul[np.isfinite(nul)]
         sd = float(np.std(nul, ddof=1))
         row.update(null_sd=sd, null_q05=float(np.quantile(nul, 0.05)), mde_80pct=Z_MDE * sd, n_perm=len(nul))
     pd.DataFrame([row]).to_csv(out / "scout_h5_equal_n.csv", index=False)
@@ -603,7 +604,7 @@ def score_h3(T, M, rng, sz, out, seed):
 
     c_raw = C_of(T, h4, idx)
     set_resid(real)
-    c_res = C_of(T, h4, idx)
+    c_res = C_of(T, h4, idx, "resid")
     obs = c_raw - c_res
     boot = []
     for _ in range(sz["n_boot"]):
@@ -753,8 +754,8 @@ def score_h5(sz, out, seed, sub):
     mean = lambda pairs, D: float(np.nanmean([P.pair_C(a, b, D) for a, b in pairs]))  # noqa: E731
     p = ST.perm_p(nul, obs, "greater")
     row = dict(n_each=len(h4), pairs_within=len(wi), pairs_cross=len(cr), diff_h4_minus_fast=float(obs), p_greater=p,
-               null_sd=float(np.std(nul, ddof=1)), mde_80pct=Z_MDE * float(np.std(nul, ddof=1)), n_perm=len(nul),
-               within_h4=mean(wi, h4), cross_h4=mean(cr, h4), within_fast=mean(wi, fast), cross_fast=mean(cr, fast),
+               null_sd=float(np.nanstd(nul, ddof=1)), mde_80pct=Z_MDE * float(np.nanstd(nul, ddof=1)), n_perm=len(nul),
+               n_perm_finite=int(np.isfinite(nul).sum()), within_h4=mean(wi, h4), cross_h4=mean(cr, h4), within_fast=mean(wi, fast), cross_fast=mean(cr, fast),
                excluded=bool(not (p < 0.05 and obs > 0)))
     pd.DataFrame([row]).to_csv(out / "a110_h5.csv", index=False)
     print(pd.DataFrame([row]).round(4).T.to_string(), flush=True)
