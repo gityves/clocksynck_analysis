@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Run a paper step with a RAM cap (the machine is shared): a script (`python`, env `sccc`) or a notebook (executed in
-# place with papermill).
+# Run a paper step with a RAM cap (the machine is shared): a script (`python`, env `sccc`), a notebook (executed in
+# place with papermill) or a group's `run.sh` (log `logs/m3_<group>.log`).
 #   [RUN_CAP_GB=30] paper/common/run.sh paper/results/figure_1/scripts/method/compute_gtex_benchmark.py [script args...]
 # Log: paper/results/logs/<name>.log. Memory (PSS, so pages shared between joblib workers count once) is summed
 # over the whole process tree (papermill starts the kernel in its own session, and joblib workers under it); on
@@ -17,8 +17,13 @@ tree() {  # pid and all its descendants
     while (n > 0) { p = q[n--]; m = split(kids[p], c, " "); for (j = 1; j <= m; j++) { print c[j]; q[++n] = c[j] } } }'
 }
 
-if [[ $step == *.ipynb ]]; then cmd=(papermill -k sccc --cwd "$(dirname "$step")" "$step" "$step"); else cmd=(python -u "$step" "$@"); fi
-setsid conda run --no-capture-output -n sccc "${cmd[@]}" > "$log" 2>&1 < /dev/null &
+if [[ $step == *.sh ]]; then  # a group's run.sh (it picks the sccc python itself); log named after its folder
+  log="$repo/paper/results/logs/m3_$(basename "$(dirname "$step")").log"
+  setsid bash "$step" "$@" > "$log" 2>&1 < /dev/null &
+else
+  if [[ $step == *.ipynb ]]; then cmd=(papermill -k sccc --cwd "$(dirname "$step")" "$step" "$step"); else cmd=(python -u "$step" "$@"); fi
+  setsid conda run --no-capture-output -n sccc "${cmd[@]}" > "$log" 2>&1 < /dev/null &
+fi
 pid=$!
 while kill -0 "$pid" 2>/dev/null; do
   pids=$(tree "$pid" | sort -u | tr '\n' ',' | sed 's/,$//')
