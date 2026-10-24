@@ -48,6 +48,19 @@ of memory vs maintained coupling (H110.1) is infeasible: the interval is recorde
   brain-dead vs non-brain-dead ICU cohort with multi-organ or blood time series)?
 - **On hold:** nothing now; the SCN sentence of Figure 3 stays a hypothesis.
 
+### Q8 (2026-10-24): what the cancer "coherence loss" means (WP0 item 2)
+A86/A87's lower share, coherence and alignment in malignant cells are not a depth effect (malignant pseudobulks are
+deeper; a 4-fold shallower normal epithelium keeps coherence 0.68 vs malignant 0.23). But per-cell D is equal in
+malignant and normal cells (3.89 vs 3.90), which rejects scrambled gene phases within cells (simulated 0.42). A87 also
+shows 3-fold higher off-plane (non-clock) variance of the clock genes across tumours, with clock-plane variance kept.
+- **Proposal:** restate the main cancer claim as "malignant cells keep a coherent clock in each cell; across tumours,
+  clock-gene expression is dominated by non-clock variation that breaks the shared-phase structure", after a test:
+  (a) A87 coherence within patients across cells (or clones), (b) coherence after removing the copy-number-explained
+  part of each clock gene (WP5 H114 dosage). Register as an amendment before scoring.
+- **Question:** agree with testing this before WP5, and with the possible restatement of the Figure 5 claim?
+- **On hold:** the Figure 5 cancer narrative; WP5 (A114) framing. The A86/A87 numbers themselves stand.
+- Evidence: results_preliminary.md, WP0 item 2 (second and third parts).
+
 ## Answered
 
 ### Q5 (2026-10-23): A132 outcome and the Figure 3 wording

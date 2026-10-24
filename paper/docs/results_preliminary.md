@@ -286,3 +286,29 @@ n 298 a folded distance near the observed 0.72 h (f about 0.2-0.44: 0.78-0.58 h)
 the same kind: the relations between organ clocks themselves differ (or a displacement with tissue-specific directions
 plus a common pull, not simulated jointly).
 <!-- src: paper/exploratory/A133_axial_decomposition/output/v133_grid.csv; paper/exploratory/A132_brain_death/output/a132_groups.csv; a132b_rho_difference.csv -->
+
+### 2026-10-24, WP0 item 2 (third part): the malignant coherence gap is not depth; per-cell D sees no loss
+Same 79 patients. **Depth:** malignant pseudobulks are deeper than normal epithelium, not shallower (clock UMI per cell
+4.31 vs 2.29; cells per patient 732 vs 751), so depth cannot explain their lower readouts. Thinning the normal epithelium
+(20 seeds) lowered it further (391 cells, 2.10 UMI per cell; about a quarter of the malignant pseudobulk counts): share
+0.102 (SD 0.028; full depth 0.212, malignant 0.084), coherence 0.680 (0.082; malignant 0.228), alignment 0.676 (0.029;
+malignant 0.273). The thinning was not depth-matched (the agent's reading "depth explains the share gap" is withdrawn:
+the thinned normal is far shallower than the malignant compartment). Coherence and alignment survive a 4-fold
+shallower normal pseudobulk: **the A87 coherence and alignment gaps are not a depth effect.**
+**Per-cell D:** malignant 3.89, normal 3.90 on the same patients (thinned normal 4.54, SD 2.75).
+<!-- src: paper/exploratory/WP0_integrity/output/malignant_downsample.csv -->
+
+Simulation calibrated to the normal epithelium (B 0.7, H 2, sd_off 4 h; share 0.208, coherence 0.772, alignment 0.617,
+D 4.0 within 1 SE of the real values; coupling 0.114 vs 0.325 and lambda 2.07 vs 3.18 not reached). Malignant
+compartment at real depth, coherent / uniformly random gene phases / 3 h gene-phase jitter: share 0.40 / 0.054 / 0.21;
+coherence 0.84 / 0.30 / 0.58; D 4.70 / 0.42 / 2.85. Real malignant: share 0.084, coherence 0.228, D 3.89.
+<!-- src: paper/exploratory/WP0_integrity/output/sim_calibration.csv; incoherence_sim_calibrated.csv -->
+
+**Reading (lead).** The pseudobulk readouts sit at the scrambled-gene-phase scenario, per-cell D at the coherent one;
+no simulated scenario fits both. Scrambled gene phases within malignant cells are rejected by D. A87 itself shows the
+other component: off-plane variance of the clock genes across tumours is about 3-fold higher (d_log_off +1.16
+[0.89, 1.79]), clock-plane variance is not lower (d_log_plane +0.30 [-0.27, 0.94]). Candidate reconciliation, not yet
+tested: malignant cells keep a coherent clock within each cell, while across tumours clock-gene expression carries large
+non-clock variation (copy number, oncogenic programmes) that hides the shared phase structure. This would restate the
+A86/A87 claim from "gene coherence lost" to "clock intact in cells, between-tumour clock-gene variation dominated by
+non-clock sources". Question to the PI (Q8). Cancer lambda, R and d_R stay out of the text.
