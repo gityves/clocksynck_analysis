@@ -24,21 +24,25 @@ confirmation); Fig 5 fibrotic-lung T cells (A5 free-fit 0.45).
 - **Question:** drop, recompute on the anchored estimator, or keep with the readout named, per panel?
 - **On hold:** recomputation of those panels.
 
+### Q6 (2026-10-24): brain disease contrasts are anchor-dependent (WP0 item 8)
+With an all-LOO host instead of the A17 anchors, brain contrasts (Figure 4: PD, AD, ASCVD, VaD, SCZ ...) change sign in
+1-7 of 9 compartments (block agreement r* 0.42-0.67); the peripheral headline contrasts (ILD, fibrotic lung, T2D, A44,
+AD skin) keep their sign. Per-cohort cancer tumour-minus-normal coupling changes sign in 3 of 9 cohorts (near zero).
+- **Question:** keep the brain disease panels with the anchor dependence stated, move them to Extended Data, or drop?
+- **PI (2026-10-24):** decide evidence- and literature-driven whether one compartment has a good reason to be the brain reference (covariance, clock strength, literature). -> A135 (registered before any brain contrast is recomputed); still open.
+- **On hold:** Figure 4 brain panels.
+- Evidence: results_preliminary.md, WP0 item 8.
+
+## Answered
+
 ### Q4 (2026-10-23): clocksync change
 `clocksync.genes.gene_columns` returns -1 silently for a missing symbol (indexing the last column; the A85 bug).
 Proposed: `missing="ignore"|"warn"|"raise"` and an all-absent guard
 (`paper/exploratory/WP0_integrity/output/gene_audit/proposed_fix.diff`, with a test). clocksync holds your uncommitted
 work, so it was not applied.
 - **Question:** apply it (own commit, only these files)?
+- **Answer (PI, 2026-10-24):** apply it. Done: clocksync 0a288ac (`genes.py` and a new test only; default behaviour kept, `missing="raise"` used in `paper/common/gtex.py` and `natexp_common`).
 - **On hold:** nothing (no current result affected).
-
-### Q6 (2026-10-24): brain disease contrasts are anchor-dependent (WP0 item 8)
-With an all-LOO host instead of the A17 anchors, brain contrasts (Figure 4: PD, AD, ASCVD, VaD, SCZ ...) change sign in
-1-7 of 9 compartments (block agreement r* 0.42-0.67); the peripheral headline contrasts (ILD, fibrotic lung, T2D, A44,
-AD skin) keep their sign. Per-cohort cancer tumour-minus-normal coupling changes sign in 3 of 9 cohorts (near zero).
-- **Question:** keep the brain disease panels with the anchor dependence stated, move them to Extended Data, or drop?
-- **On hold:** Figure 4 brain panels.
-- Evidence: results_preliminary.md, WP0 item 8.
 
 ### Q7 (2026-10-24): what A110 can still say about the SCN
 GTEx organ donors have no brain samples (0 of 301), so the registered SCN test (hypothalamus coupling, Hardy 3-4 vs
@@ -46,6 +50,7 @@ brain-dead donors) is impossible; only fast vs Hardy 3-4 remains (descriptive, b
 of memory vs maintained coupling (H110.1) is infeasible: the interval is recorded for 16 of 103 Hardy 4 donors.
 - **Question:** accept that GTEx cannot separate SCN loss from donor drugs, or look for another dataset (e.g. a
   brain-dead vs non-brain-dead ICU cohort with multi-organ or blood time series)?
+- **Answer (PI, 2026-10-24):** accept that GTEx gives no statistically robust SCN result; the SCN reading stays a hypothesis.
 - **On hold:** nothing now; the SCN sentence of Figure 3 stays a hypothesis.
 
 ### Q8 (2026-10-24): what the cancer "coherence loss" means (WP0 item 2)
@@ -58,10 +63,9 @@ shows 3-fold higher off-plane (non-clock) variance of the clock genes across tum
   (a) A87 coherence within patients across cells (or clones), (b) coherence after removing the copy-number-explained
   part of each clock gene (WP5 H114 dosage). Register as an amendment before scoring.
 - **Question:** agree with testing this before WP5, and with the possible restatement of the Figure 5 claim?
+- **Answer (PI, 2026-10-24):** agreed -> A134.
 - **On hold:** the Figure 5 cancer narrative; WP5 (A114) framing. The A86/A87 numbers themselves stand.
 - Evidence: results_preliminary.md, WP0 item 2 (second and third parts).
-
-## Answered
 
 ### Q5 (2026-10-23): A132 outcome and the Figure 3 wording
 Within ventilated (Hardy 0) donors, the push of pair phases toward 0 / 12 h is seen in both brain-dead organ donors and

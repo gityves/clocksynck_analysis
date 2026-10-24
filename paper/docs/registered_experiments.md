@@ -430,3 +430,46 @@ V25.5 (breast surgery, 42 patients) is the only living-hospital validation of pe
   offset, knockout vs wild type, as a mouse analogue of the brain-dead question; whole-body Bmal1 KO (Jouffe 2022,
   GSE150102, single ZT12): coupling only. Other candidates (Koronowski 2019, Welz 2019, liver-only sets) are
   single-tissue and not used.
+
+## A134 (2026-10-24, written after WP0 item 2 and the PI's answer to Q8, before scoring): is the malignant "coherence loss" non-clock variation across tumours?
+
+WP0 item 2: malignant pseudobulks are deeper than normal epithelium, yet A87 coherence is lower (0.23 vs 0.78) while
+per-cell D is equal (3.89 vs 3.90) and off-plane clock-gene variance across tumours is about 3-fold higher. Candidate:
+each malignant cell keeps a coherent clock; across tumours, clock-gene expression carries large non-clock variation
+that hides the shared phase structure. Same 79 patients (A87 single-cell set). Secondary; the Figure 5 statement
+depends on it (PI, Q8). Code: `paper/exploratory/A134_cancer_coherence/`.
+- **H134.1 (primary of A134): copy number.** Per patient and clock gene, the copy-number state of the gene's locus in
+  malignant cells (the inference used by `compute_cancer_split.py --cnv`, or author annotations; fixed in the scout
+  note). Regress each clock gene's between-patient malignant pseudobulk (log, centred within study x stratum) on its
+  own copy-number state, recompute A87 coherence on the residuals. Statistic: coherence gain (adjusted minus raw) in
+  malignant cells minus the gain in normal epithelium given the same regression (specificity companion; normal
+  epithelium's own copy number is expected near neutral), patient bootstrap (1,000), one-sided > 0.
+- **H134.2 (secondary): non-clock programmes.** Same as H134.1 with patient-level malignant scores of proliferation
+  (A24 cycling fraction), MYC targets and hypoxia (MSigDB hallmark sets, fixed versions in the scout note) instead of
+  copy number. One-sided > 0.
+- **D134.3 (descriptive): tumour-specific gene-phase relations.** Per-cell D with the common GTEx gene phases vs with
+  patient-specific gene phases fitted on half of the patient's cells and evaluated on the other half (cross-fit),
+  malignant vs normal.
+- Reading: H134.1 or H134.2 passes -> restate Figure 5 as "malignant cells keep a coherent clock; tumour-to-tumour
+  variation from copy number / oncogenic programmes breaks the shared phase structure"; both fail -> the A87 statement
+  stands with the per-cell D caveat, the reconciliation stays open. Feasibility (scout): copy-number state for >= 40
+  patients and >= 10 of 14 clock-gene loci.
+
+## A135 (2026-10-24, written after WP0 item 8 showed the brain contrasts are anchor-dependent; PI request, Q6): which brain compartment, if any, should carry the host?
+
+The disease contrasts under A17 anchors and all-LOO hosts have been seen (WP0 item 8). The choice of reference is
+therefore made only from control donors and literature, with the rule fixed here, before any contrast is recomputed.
+Datasets: the brain sets of WP0 item 8 (snRNA-seq, compartments as in A17). Code: `paper/exploratory/A135_brain_reference/`.
+- **Criteria per compartment, control donors only:** (1) clock strength: Poisson-corrected clock-plane share against
+  its permuted-acrophase null; (2) gate: share of other compartments with which the model-free cross gate passes;
+  (3) centrality: mean pairwise coherence (Poisson-corrected |complex correlation|, as A109 C) with the other
+  compartments; (4) stability: each of (1)-(3) per dataset.
+- **Rule.** Rank compartments within each dataset by the sum of ranks of (1)-(3). A compartment family (e.g. excitatory
+  neurons, astrocytes) is the reference if it ranks first in >= 2/3 of the datasets and passes the gate with >= 80 % of
+  the others in each; ties -> the family with the larger median (3). Otherwise no single reference is justified and the
+  brain panels are reported with their anchor dependence (Extended Data).
+- **Literature (recorded, not used by the rule).** Neurons carry the brain host in the archive (02, 04, A18 3.5);
+  astrocyte clocks can drive SCN timekeeping (Brancaccio et al. 2017, 2019; verify before citing).
+- **Then:** recompute the brain disease contrasts with the chosen reference (single-family host, leave-one-out for its
+  own members); report per contrast the sign agreement with the A17-anchored and all-LOO values. Descriptive; the
+  disease verdicts of A17 are not re-tested.

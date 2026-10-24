@@ -49,7 +49,7 @@ def read_legacy(path, donor="donor_id", compartment="cell_type", extra=()) -> pd
     """Convert a legacy `pseudobulk.h5ad` (X = summed counts of a 68-gene panel; obs donor_id, cell_type, n_cells,
     depth) into the standard table. `extra`: further obs columns kept."""
     a = ad.read_h5ad(path)
-    cols = gene_columns(a.var_names, GENES)
+    cols = gene_columns(a.var_names, GENES, missing="raise")
     X = a.X.toarray() if sp.issparse(a.X) else np.asarray(a.X)
     t = pd.DataFrame({"donor": a.obs[donor].astype(str).to_numpy(),
                       "compartment": a.obs[compartment].astype(str).to_numpy(),

@@ -46,7 +46,7 @@ def load(tissues=None, hardy=FAST, genes="clock", min_donors: int = 0, depth: st
         idx = np.flatnonzero(keep)
         names = list(cs.gtex().genes) if genes == "clock" else list(genes) if genes != "all" else list(a.var_names)
         from clocksync.genes import gene_columns
-        cols = gene_columns(a.var_names, names)
+        cols = gene_columns(a.var_names, names, missing="raise")
         Xa = a.X[idx]
         tot = np.asarray(Xa.sum(1)).ravel()
         X = Xa[:, cols]
