@@ -266,3 +266,23 @@ A17 table exactly. All-LOO host: every compartment, the target left out (`Datase
 - Not covered: skin_ssc skin T and endometriosis lymphocyte (boundary), A87 malignant (no donor contrast), Figure 4
   age-slope forest (A46/A47), A22-confirmed anchors. Readout per row: `sign_change`, `r`, `r_star`.
 <!-- src: paper/exploratory/WP0_integrity/output/anchor_robustness/anchor_robustness.csv -->
+
+### 2026-10-24, A133 V133.1: simulation gate FAILS; A133 stops, the method is unchanged
+Circular-part estimator (rank-1 Takagi fit of the pseudo-covariance subtracted from the Hermitian cross-covariance),
+100 reps per cell, A109 generative model (fast-death offsets, ventilated amplitudes and noise). Gate (n 79):
+(i) rho with truth at f 0.5 = 0.646 (< 0.8), and raw is not worse for a common-direction displacement (raw 0.663);
+(ii) agreement with raw at f 0 = 0.941 (< 0.95); (iii) concentrated host phases, f 0: 0.782-0.808 (< 0.9; raw 0.856+).
+At n 79 the raw estimator itself reaches only 0.88 with no displacement; the axial fit adds variance (about -0.05).
+The decomposition helps only for per-tissue displacement directions (f 0.44: raw 0.36 vs circular 0.67 at n 79; 0.37 vs
+0.90 at n 298). Registered consequence: no circular-part estimator in clocksync, H133.1 not run.
+<!-- src: paper/exploratory/A133_axial_decomposition/output/v133_gate.csv; v133_grid.csv -->
+
+**Post hoc reading of A132/A132b against the same simulations (raw estimator, R 0).** A shared displacement along one
+common direction keeps the order of the offsets and pulls them toward 0 / 12 h: at f 0.44, n 79, rho 0.70 (SD 0.12) and
+folded distance 0.71 h; observed in ventilated post-mortem cases (n 79): rho 0.68, 0.77 h, i.e. running clocks with the
+fast-death relations plus a shared displacement of about this size. No cell reproduces brain-dead organ donors: at
+n 298 a folded distance near the observed 0.72 h (f about 0.2-0.44: 0.78-0.58 h) goes with rho 0.90-0.95, and even f
+0.8 keeps rho 0.55 (folded 0.32 h); observed rho 0.095. Their loss of order is therefore not a larger displacement of
+the same kind: the relations between organ clocks themselves differ (or a displacement with tissue-specific directions
+plus a common pull, not simulated jointly).
+<!-- src: paper/exploratory/A133_axial_decomposition/output/v133_grid.csv; paper/exploratory/A132_brain_death/output/a132_groups.csv; a132b_rho_difference.csv -->
