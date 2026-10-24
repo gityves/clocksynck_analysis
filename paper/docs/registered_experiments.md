@@ -382,3 +382,25 @@ V25.5 (breast surgery, 42 patients) is the only living-hospital validation of pe
 - Descriptive: women minus men, same estimand, by age above or below 50.
 
 **A131, sun time within time zones (scout, exploratory).** Human chronotype follows sun time within a time zone (Roenneberg et al. 2007; verify). GTEx samples carry a collection-centre code (`SMCENTER`). Scout whether public GTEx documentation maps the codes to locations, and whether the donor's place of death is near the centre (OPO catchment). If yes: centre longitude offset from its time-zone meridian against the donor's host phase minus time of death (fast deaths; A93 H93.3 machinery), centre as the unit, descriptive with interval. Centres differ in procedures, so any trend is a candidate, not a finding. Aggregates per centre only.
+
+**WP4 note (2026-10-24, written after the scout, before scoring).** Scout: `paper/exploratory/WP4_scout/output/scout_wp4.csv`,
+`gtex_window_counts.csv` (aggregates; no hypothesis statistic computed).
+- **A113 datasets: two independent new cohorts.** Perrin 2018 (GSE108539), Loizides-Mangold 2017 (lipidomics on the same
+  biopsies) and Smith 2024 (same cohort summary; matrix not public, not requested) are one Geneva cohort.
+  - *Muscle, GSE108539:* 10 subjects (9 M / 1 F), 6 biopsies 4-hourly over 24 h (one subject 3), hourly isocaloric
+    meals; public matrix log2 edgeR RPKM. Fixed: exon layer, array-type input (as GSE39445), 13 clock genes (ARNTL
+    absent from the public matrix; the projector uses the 13 present genes, weights of the 14-gene projector without
+    ARNTL); subject-level permutation; the 3-biopsy subject kept.
+  - *Adipose, GSE104674:* 12 men (6 lean, 6 T2D), 4 biopsies within 20 h (ZT 15:30, 0:15, 5:45, 11:15), raw counts, 14
+    genes. Fixed: scored against ZT (the common offset absorbs the unknown wake-up clock time); lean and T2D pooled,
+    permutation within subject group; the internal-minus-wall offset is not available for adipose.
+  - H113.1 "pass in >= 2 datasets" therefore requires both cohorts to pass; V25.5 is the prior validation, not counted.
+- **A123 feasible.** 244 fast deaths with time of death, 111 died 08-18 h; 40 of 48 tissues have >= 20 window donors
+  (the 8 benchmark tissues 79-98; whole blood 99, included by the registered >= 20 rule). Truth (ii): CHIRAL's per-tissue
+  tables are not local (only on a Drive link); re-derived by harmonic regression of the clock genes on CHIRAL's
+  per-sample CT (`sample_metadata.txt`, commit 1f78a9a), as `compute_chiral_age.py`; no download.
+- **A130 feasible.** Pool V25.5 (42 women, 33-93 y, per-subject age from PNAS SI Table S1) and GSE104674 (12 men,
+  40-71 y): 54 subjects, range 60 y; cohort as stratum. Muscle has no per-subject age and is excluded. The sex
+  descriptive is dropped: sex is fully confounded with cohort. V25.5 ages are added in its builder from Table S1.
+- **A131 dropped (infeasible).** Public GTEx dictionaries define `SMCENTER` only as a code (B1, C1, D1); no locations;
+  and fast deaths with time of death come from effectively two centres (B1 128, C1 115).
