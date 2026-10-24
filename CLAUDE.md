@@ -55,6 +55,8 @@
   queue log or a process list alone. A run killed for memory is rerun with fewer workers (`--jobs 1`), not a higher
   cap. Scripts should log progress at least every ~15 min so SILENT means stuck. Full figure reruns:
   `paper/common/m3_rerun.sh [groups...]`.
+  While jobs run, keep `paper/common/watch_jobs.sh [silent_min] [extra PIDs]` running as a background command: it
+  exits (waking the agent) when a run fails, is killed, is lost, goes silent, or when nothing is running any more.
 - GTEx time of death is controlled access: release derived aggregates only, never per-donor phases.
 - GTEx protected phenotypes (dbGaP phs000424.v8, 189 subject variables: exact age, BMI, T2D, ventilation duration,
   long-term steroids, sepsis, season, medical history; sample attributes) are in `data/Gtex_phenotypes/`. Controlled
