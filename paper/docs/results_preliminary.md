@@ -247,3 +247,22 @@ lost. Same pole is uninformative (most fast-death pairs lie within 6 h of 0). Ti
 its value under uniform times (about 0.10 at n = 79, 0.05 at n = 298); a concentration of host phases alone would not
 pull offsets toward 0 / 12 h (it rescales E[z_a conj z_b] without changing its phase).
 <!-- src: paper/exploratory/A132_brain_death/output/a132b_shrinkage.csv -->
+
+### 2026-10-24, WP0 item 8: anchor robustness (block agreement r*, all-LOO host contrasts)
+265 target x contrast rows (Figures 4-5), A17 learned anchors (pre-A22 snapshot); the anchored contrasts recompute the
+A17 table exactly. All-LOO host: every compartment, the target left out (`Dataset(anchors=all)`). 200 permutations
+(registered 1,000), 100 bootstraps. r* undefined with < 4 anchors (raw r reported as a lower bound). Helpers in
+`paper/common/anchor_robustness.py` (tests pass); no clocksync change needed.
+- **Primary targets: no sign change in the headline contrasts.** Anchored -> all-LOO: ILD (Natri) lung T -0.452 ->
+  -0.458 (r* 0.92); HLCA fibrotic lung T -0.140 -> -0.173 (r* 1.00); T2D islet beta -0.397 -> -0.318 (r* 1.00); A44
+  liver hepatocyte -0.290 -> -0.272 (r 0.86); AD skin T -0.302 -> -0.294 (r 0.75); A45 gut T -0.062 -> -0.040; DCM heart
+  fibroblast -0.035 -> -0.017; CKD kidney T 0.766 -> 0.787.
+- **Sign changes: 60 of 265, mostly near zero.** Endometriosis stromal +0.024 -> -0.073 (SE 0.15; 3 anchors).
+  Brain (Figure 4): r* 0.42-0.67 and 1-7 of 9 compartments change sign per contrast (PD_mssm 7, ASCVD_hbcc 6, VaD_mssm
+  5; `pd` 15 of 34, r* 0.53): **the brain host is anchor-dependent; brain disease contrasts are not anchor-robust.**
+  Cancer per-cohort tumour-minus-normal epithelial coupling (9 of 21 cohorts estimable): 3 sign changes (ERP149257,
+  GSE181294 near zero; GSE270680 +0.062 -> -0.538, r 0.20); the per-cohort anchored host is weak in several cohorts
+  (r 0.05-0.49).
+- Not covered: skin_ssc skin T and endometriosis lymphocyte (boundary), A87 malignant (no donor contrast), Figure 4
+  age-slope forest (A46/A47), A22-confirmed anchors. Readout per row: `sign_change`, `r`, `r_star`.
+<!-- src: paper/exploratory/WP0_integrity/output/anchor_robustness/anchor_robustness.csv -->
