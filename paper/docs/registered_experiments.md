@@ -473,3 +473,21 @@ Datasets: the brain sets of WP0 item 8 (snRNA-seq, compartments as in A17). Code
 - **Then:** recompute the brain disease contrasts with the chosen reference (single-family host, leave-one-out for its
   own members); report per contrast the sign agreement with the A17-anchored and all-LOO values. Descriptive; the
   disease verdicts of A17 are not re-tested.
+
+**A134 note (2026-10-24, written after the scout, before scoring).** Scout: `paper/exploratory/A134_cancer_coherence/output/scout_*.csv`
+(raw A87 coherence reproduced: malignant 0.228, normal 0.782; no observed gain computed).
+- **Copy number:** no locus-level state is stored or annotated, so it is derived: per patient and clock-gene locus, the
+  mean over malignant cells of the inferCNV-like profile of `cancer_common.cnv` (log1p CP10k minus the other patients'
+  normal epithelium of the cohort, clipped at +-3, 101-gene running mean in genome order, own gene excluded, nearest
+  expressed gene if the locus is unexpressed, <= 392 kb). Continuous score, stratum-centred, primary (no gain / loss
+  cut). >= 50 malignant cells: all 79 patients, 14 of 14 loci. Expression-derived and relative: stated as inferred copy
+  number. Normal epithelium: the same score of its own cells (companion, near neutral).
+- **Estimator:** per gene, OLS on its own-locus score; A87 coherence recomputed on the residuals with the Poisson
+  diagonal kept. Gain = adjusted minus raw. Statistic: malignant gain minus normal gain, patient bootstrap (1,000) for
+  the interval; p from 1,000 permutations of whole-patient copy-number rows across patients; one-sided > 0. Null SD
+  0.042, MDE 0.104 (the gap to explain is 0.55).
+- **H134.2:** MSigDB Hallmark v2024.1 (MYC_TARGETS_V1, HYPOXIA without RORA; identical to v2026.1 for these sets);
+  score = set minus expression-matched controls (`cells_cancer.scores`) on malignant cells from whole-transcriptome
+  counts; cycling = Seurat S or G2M phase call (A24 definition) on malignant cells. The three scores enter one joint
+  regression per gene; same statistic and nulls as H134.1. Not independent of H134.1 (shared neighbourhood genes).
+- **D134.3:** the 64 patients with >= 100 cells in both groups (halves >= 50).
