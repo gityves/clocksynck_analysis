@@ -12,7 +12,7 @@ def parser(doc: str) -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description=(doc or "").split("\n")[0])
     ap.add_argument("--subsample", type=int, default=None, help="check on N random donors per dataset")
     ap.add_argument("--seed", type=int, default=0)
-    ap.add_argument("--jobs", type=int, default=1, help="parallel jobs (at most 4 on the shared machine)")
+    ap.add_argument("--jobs", type=int, default=1, help="parallel jobs (at most 8 workers in total on the shared machine)")
     return ap
 
 

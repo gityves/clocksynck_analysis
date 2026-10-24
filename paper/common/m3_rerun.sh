@@ -2,7 +2,9 @@
 # M3 full reruns (provisory_plan_paper.md, migration step M3): every figure group's run.sh without --subsample, one
 # group at a time (each group uses up to 4 workers), RAM-capped by common/run.sh. The current outputs are copied first
 # to $SCCC_DATA/m3_snapshot_backup/<date>/ so the archive-snapshot comparison stays possible.
-#   nohup paper/common/m3_rerun.sh > paper/results/logs/m3_queue.log 2>&1 &
+#   nohup paper/common/m3_rerun.sh [groups...] > paper/results/logs/m3_queue.log 2>&1 &
+# M3_JOBS=J passes --jobs J to every script (overrides the run.sh defaults); M3_AFTER=PID waits for that process to end
+# first (two lanes can then share the machine without overlapping a running group).
 # Per-group logs: paper/results/logs/m3_<group>.log; queue log lists start, end and exit status per group (137 =
 # killed for memory); every group is also in logs/jobs.tsv (`paper/common/jobs.sh`).
 set -u
@@ -29,9 +31,11 @@ groups=(
   extended_data/scripts/simulations
 )
 [ ${#groups_arg[@]} -gt 0 ] && groups=("${groups_arg[@]}")
+if [ -n "${M3_AFTER:-}" ]; then while kill -0 "$M3_AFTER" 2>/dev/null; do sleep 60; done; fi
+extra=(); [ -n "${M3_JOBS:-}" ] && extra=(--jobs "$M3_JOBS")
 for g in "${groups[@]}"; do
   echo "$(date '+%F %T') start $g"
-  RUN_CAP_GB=${RUN_CAP_GB:-30} paper/common/run.sh "paper/results/$g/run.sh"; rc=$?
+  RUN_CAP_GB=${RUN_CAP_GB:-30} paper/common/run.sh "paper/results/$g/run.sh" "${extra[@]}"; rc=$?
   echo "$(date '+%F %T') end $g exit $rc"
 done
 echo "$(date '+%F %T') queue done"

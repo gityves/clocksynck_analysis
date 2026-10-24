@@ -42,8 +42,9 @@
 
 ## Environment and data
 - Python: `$(conda info --base)/envs/sccc/bin/python` (as every `run.sh` uses).
-- Shared machine: call `clocksync.config.limit_threads()` (done by `common.cli.setup`); at most 4 parallel jobs per agent; at most 30 GB RAM per agent
-  (read backed or chunked).
+- Shared machine (16 physical cores, 32 threads, 125 GB): call `clocksync.config.limit_threads()` (done by `common.cli.setup`).
+  Budget for this project (user, 2026-10-25): half the machine, i.e. at most 8 workers in total (e.g. two lanes of
+  4) and at most ~60 GB RAM summed over the RUN_CAP_GB of concurrent runs (read backed or chunked).
 - Data: `/mnt/max8tb/data/CoPhaser_data/cancer_circadian/` (`$SCCC_DATA`), with a `PROVENANCE.md` (URL, date, sha256)
   per source. Self-imposed cap 400 GB. Processed matrices only, no FASTQ mapping.
 - Downloads are untrusted: parse only (`python -I`), never execute.
@@ -53,7 +54,8 @@
   (status ok / failed / killed_memory / interrupted, exit code, peak GB). Check with `paper/common/jobs.sh`: it flags
   failed runs (`!!`), runners that vanished (LOST) and logs silent for > 60 min (SILENT). Never infer success from a
   queue log or a process list alone. A run killed for memory is rerun with fewer workers (`--jobs 1`), not a higher
-  cap. Scripts should log progress at least every ~15 min so SILENT means stuck. Full figure reruns:
+  cap. Two M3 lanes: `M3_JOBS=4 M3_AFTER=<pid> RUN_CAP_GB=<gb> paper/common/m3_rerun.sh <groups>` (the setsid
+  launcher PID is not the queue PID: find the queue with `ps`). Scripts should log progress at least every ~15 min so SILENT means stuck. Full figure reruns:
   `paper/common/m3_rerun.sh [groups...]`.
   While jobs run, keep `paper/common/watch_jobs.sh [silent_min] [extra PIDs]` running as a background command: it
   exits (waking the agent) when a run fails, is killed, is lost, goes silent, or when nothing is running any more.
