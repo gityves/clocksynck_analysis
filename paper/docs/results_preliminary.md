@@ -405,3 +405,20 @@ Parkinson gate without pairs); nested control sets collapsed to the largest per 
   oncogenic programmes do not; most of the gap remains unexplained. The registered restatement ("tumour-to-tumour
   variation breaks the shared phase structure") is supported only for that small part (PI, Q8 follow-up).
 <!-- src: paper/exploratory/A134_cancer_coherence/output/a134_h1_h2.csv; a134_h1_h2_gene_effects.csv; a134_d134_3.csv -->
+
+## A123 (2026-10-24): the GTEx organ map from working-hours deaths only: H123.1-3 pass
+Fast deaths (Hardy 1-2) who died 08-18 h: 111 donors, 40 tissues with >= 20 window donors; untimed estimates against
+truth (i) (cosinor on recorded time of all fast deaths, complex SVD) and truth (ii) (re-derived from CHIRAL's per-sample
+times); 10,000 tissue permutations, 200 bootstraps.
+- **H123.1 PASS:** tissue offsets vs truth (i): circular correlation 0.945 [0.907, 0.972], permutation p < 0.001, median
+  error 0.35 h (truth (ii): 0.831 [0.683, 0.924], 39 tissues). CHIRAL run on the same window donors: -0.165 (p 0.84).
+- **H123.2 PASS:** relative amplitudes vs truth (i): Pearson (log2) 0.976 [0.956, 0.987] (truth (ii) 0.938; CHIRAL
+  0.928).
+- **H123.3 PASS:** donor ordering within the window, tangent coordinate with the hospital prior vs recorded time:
+  Spearman 0.613 [0.476, 0.723], 111 donors, direction correct (the curvature-resolved flip without prior gives -0.613);
+  estimated window width 15.3 h vs true 10.2 h (overestimated, as in A113). CHIRAL consensus: circular correlation
+  0.30, median error 3.7 h.
+- Sensitivity, the all-donor GTEx waveform instead of the cross-fitted one: unchanged (offsets 0.945, amplitudes 0.970).
+Reading: the CHIRAL-style organ map (offsets, amplitudes, donor order) is recovered from working-hours deaths alone,
+where CHIRAL itself fails on offsets. Figure 1 panel qualifies ("main if passes").
+<!-- src: paper/exploratory/A123_working_hours/output/tests.csv; donor_time.csv; organ_map.csv -->
