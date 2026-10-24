@@ -18,5 +18,6 @@ for f in "$logs"/jobs/*.state; do
     "$(sed -n 's/^pss_gb=//p' "$f")" "$(sed -n 's/^peak_gb=//p' "$f")" "$(sed -n 's/^cap_gb=//p' "$f")" "$age" "$flag"
 done
 echo "== finished (last $n)"
-[ -f "$logs/jobs.tsv" ] && tail -n "$n" "$logs/jobs.tsv" | grep -v '^start' | \
+if [ -f "$logs/jobs.tsv" ]; then tail -n "$n" "$logs/jobs.tsv" | grep -v '^start' | \
   awk -F'\t' '{m = ($3 == "ok") ? "  " : "!!"; printf "%s %s  %-13s exit %-4s peak %s GB  %ss  %s %s\n", m, $2, $3, $4, $5, $6, $8, $9}'
+else echo "(no runs recorded yet)"; fi
