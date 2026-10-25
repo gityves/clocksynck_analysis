@@ -63,6 +63,8 @@ Proposals (see the chat summary of 2026-10-24; each would be registered or writt
   (Ananthasubramaniam 2025) may have been misled by its method, and many papers used CYCLOPS 2.0 although it works only
   when samples cover the whole day. Determine whether anything can be estimated in tumours, or whether the variance
   between malignant cells and patients is too large. -> WP5 to be redesigned around this (proposal in chat, to register).
+  Follow-up (PI, 2026-10-25): (c) agreed: pull vs order becomes a clocksync readout, validated on the A133 grid first.
+  Both WP5 (redesigned) and WP6 will run; cancer first (A138). Literature agents may start now.
 - **On hold:** plan rewrite; A136 registration.
 
 ## Answered
