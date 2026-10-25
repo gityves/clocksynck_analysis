@@ -16,7 +16,10 @@ Outputs: `paper/results/figure_1/output/windows/` (`.../subsample/`). GTEx rows 
 ## Checks
 | readout | here | legacy | note |
 |---|---|---|---|
-| window check GTEx 08-18 h: ratio, observed / predicted | 0.764, 1.37 [1.06, 1.77] (100 boots) | 0.764, 1.37 [1.05, 1.80] | other windows and HLCA (0.521, 1.15) identical point estimates |
+| window check GTEx 08-18 h: ratio, observed / predicted | 0.764, 1.37 [1.05, 1.80] (M3, 500 boots) | 0.764, 1.37 [1.05, 1.80] | other windows and HLCA (0.521, 1.15) identical point estimates |
+| A25 V25.1 acceptance (M3, 50 replicates per cell) | PASS (n 40, coupling 0.8, w 6/9/12 h: axis error 0.34/0.27/0.40 h, flip 0.91/1.00/1.00) | FAIL at w 6 h (flip 0.69) | different generator (`clocksync.simulate` counts); see results_preliminary 2026-10-25 |
+| A25 V25.2 (M3) | median axis error 1.26 h, flip 0.78, 18 windows: PASS | PASS | |
+| A25 R25 T1 / T2 / T3 (M3) | 13 living cohorts: p 0.019 PASS / p 0.011 PASS / p 0.173 not supported | 17: 0.010 / 0.001 / 0.214 | cohorts with < 3 anchors not estimable |
 | A25 GTEx all donors: c_axis12, c_curv, r, w, lambda, kappa, shift | 11.30, 23.30, 0.67, 20.16, 1.90, 0.389, -0.98 | 11.30, 23.30, 0.67, 20.20, 1.91, 0.389, -0.98 | `host_cov` reproduces the model's Sigma_f |
 | A40 full-day frame F, c_curv, r_axis | 6.56, 23.68, 0.52 | 6.56, 23.68, 0.52 | |
 | A40 m = 5 (12 windows): centre errors, flips | identical; flips 11/12; median Fisher-Lee r 0.552, median abs Spearman 1.0 | r 0.516; 11/12; 1.0 | offsets read on one full host (legacy: leave-one-out per tissue); primary (1) passes here (> 0.5), narrowly as legacy |
@@ -35,7 +38,7 @@ Outputs: `paper/results/figure_1/output/windows/` (`.../subsample/`). GTEx rows 
 
 ## Not ported / not rerun
 - V26.1 and R26 (corrected cohorts: `spread_multiplicity` has `compute_r26_cohorts.py`).
-- Run only on subsamples: V25.1 grid, R25 cohorts with bootstraps (T1-T3 on 8 cohorts at 20 draws are not interpretable), V25.2 / V26.2 / V26.3 full, A40 sizes 3, 4, 6.
+- Before M3 (2026-10-25, 5.6 h, all parts full) run only on subsamples: V25.1 grid, R25 cohorts with bootstraps, A40 sizes 3, 4, 6.
 
 ## API gaps
 `Dataset.fit` for two compartments (frame shift and states; V25.3 / V25.5 / A28 E4 use a local estimator); host covariance Sigma_f (`Fit.host` has posterior means only); `Dataset.fit` with 2 anchors; array / state-level `Dataset` input; a per-sample state accessor.

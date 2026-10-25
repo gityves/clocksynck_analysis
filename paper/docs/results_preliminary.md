@@ -422,3 +422,20 @@ times); 10,000 tissue permutations, 200 bootstraps.
 Reading: the CHIRAL-style organ map (offsets, amplitudes, donor order) is recovered from working-hours deaths alone,
 where CHIRAL itself fails on offsets. Figure 1 panel qualifies ("main if passes").
 <!-- src: paper/exploratory/A123_working_hours/output/tests.csv; donor_time.csv; organ_map.csv -->
+
+### 2026-10-25, M3 windows: A25 at full size; V25.1 acceptance now passes (archive: fails at 6 h windows)
+
+First full run of the migrated A25 (`results/figure_1/scripts/windows/compute_internal_time.py`; the archive port ran
+V25.1 and R25 on subsamples only).
+- **V25.1 (simulation) PASS** at the registered acceptance (n = 40, coupling 0.8, w <= 12 h): axis error 0.34 / 0.27 /
+  0.40 h and flip correct 0.91 / 1.00 / 1.00 at w = 6 / 9 / 12 h (archive: 0.53 / 0.38 / 0.40 h, flip 0.69 / 0.85 /
+  0.99, failing at 6 h). Not a like-for-like replication: the port simulates counts with `clocksync.simulate` (archive:
+  simulated states) and rebuilds Sigma_f from posterior host means plus covariance; the archive's estimated widths were
+  biased upwards (w_est 15-16 h at true 6-12 h, coupling 0.8, n = 40; here 5.5-11.8 h). Which change removes the bias
+  is not isolated. Quote V25.1 from this run with that note, or not at all.
+- **V25.2 PASS** as in the archive: median |axis error| 1.26 h, flip correct 0.78 over 18 windows with r < 0.6.
+- **R25 T1 PASS, T2 PASS, T3 not supported**, as in the archive, on 13 interpretable living cohorts (archive 17; cohorts
+  with < 3 anchors are not estimable): T1 mean axis 10.97 h, V test p 0.019 (archive 11.01 h, p 0.010); T2 11 of 13 in
+  07-19 h, p 0.011 (archive 15 of 17, p 0.001); T3 r living 0.268 vs deceased 0.332, p 0.173 (archive p 0.214).
+- Window check (GTEx 08-18 h vs others) at 500 bootstraps: observed / predicted 1.37 [1.05, 1.80] (archive [1.05, 1.80]).
+<!-- src: paper/results/figure_1/output/windows/internal_time_{sim_summary,tests}.csv; window_check.csv; logs/m3_windows.log (V25.2 line) -->
