@@ -16,7 +16,8 @@ resections, compartments = sample type x class; stratum = 10x chemistry; one glo
 Pooling (m4_summary): per comparison, DerSimonian-Laird over gated cohorts with SE = bootstrap interval width / 3.92,
 pan-cancer and per cancer type; BH-FDR over comparisons within a quantity and family.
 
-    python compute_cohort_pipeline.py [--subsample N] [--variants main cnv] [--studies S ...] [--boot B]
+    python compute_cohort_pipeline.py [--subsample N] [--variants main cnv] [--studies S ...] [--boot B] [--jobs J]
+`--jobs J`: cohorts fitted in parallel (each cohort has its own seed, so the outputs do not depend on J).
 `--subsample N`: max(N, 12) random patients per cohort, three small cohorts, fewer resamples.
 Outputs (paper/results/figure_5/output/cancer_pipeline/studies/): <study>[_cnv]_{gate,estimates,e5,e4,contrasts,micro}.csv and
 summary_{main,cnv}_{gate,e5,e4_genes}.csv, summary_{family}_{contrasts,meta,meta_by_cancer}.csv
@@ -31,6 +32,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
+from joblib import Parallel, delayed  # noqa: E402
 from scipy.stats import norm  # noqa: E402
 
 import clocksync as cs  # noqa: E402
@@ -49,6 +51,13 @@ def micro_pairs(comps) -> list[tuple[str, str]]:
     pairs = [(c, "adjacent_normal:" + c.split(":", 1)[1]) for c in comps if c.startswith("tumour:")]
     pairs += [("tumour:epithelial_nonmalignant", "adjacent_normal:epithelial")]
     return [(k, l) for k, l in pairs if k in comps and l in comps]
+
+
+def safe_run(study: str, cnv: bool, out: Path, a) -> None:
+    try:
+        run_study(study, cnv, out, a)
+    except Exception as e:  # a failing cohort is reported, the run goes on
+        print(study, "cnv" if cnv else "main", "FAILED:", type(e).__name__, e, flush=True)
 
 
 def run_study(study: str, cnv: bool, out: Path, a) -> None:
@@ -178,13 +187,7 @@ def main(argv=None):
     for variant in a.variants:
         cnv = variant == "cnv"
         studies = a.studies or (list(QUICK) if run["quick"] else (b.CNV_STUDIES if cnv else b.STUDIES))
-        for s in studies:
-            if cnv and s not in b.CNV_STUDIES:
-                continue
-            try:
-                run_study(s, cnv, out, a)
-            except Exception as e:  # a failing cohort is reported, the run goes on
-                print(s, variant, "FAILED:", type(e).__name__, e, flush=True)
+        Parallel(n_jobs=a.jobs)(delayed(safe_run)(s, cnv, out, a) for s in studies if not cnv or s in b.CNV_STUDIES)
         summarise(out, "_cnv" if cnv else "")
 
 
