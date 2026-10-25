@@ -35,6 +35,14 @@ Outputs: `paper/results/figure_5/output/lung_breaks/` (`.../subsample/` for chec
 | A18-3.1 thinning: DCM mural / endothelial / fibroblast, diff after thinning | 0.128, 0.153, -0.043 | 0.132, 0.154, -0.029 | ILD (Natri) EC capillary, ciliated: 0.674, 0.424 vs 0.615, 0.423; p_thinned 0.010 / 0.035 / 0.657 vs 0.010 / 0.025 / 0.761 (200 permutations); the fibrotic increases survive thinning |
 | A18-3.3 / 3.4 PD Braak and HBCC | run (`a18_pd_*`, `a18_hbcc.csv`); HBCC BD inhibitory CGE half A: d -0.258, p 0.025 | d -0.263, p 0.015 | PD: DMV contrasts 1-4 vs 0 all non-estimable for glutamatergic / GABAergic (1-3 donors); OPC d -0.376 (p 0.16) |
 
+## M3 full run (2026-10-25)
+`run.sh --jobs 4`, 18 min, peak 0.7 GB. Every table equals the archive paper outputs (`outputs/paper/figure_6_lung_breaks`)
+byte for byte or to 1e-9 (A6, A7, A13, A98, A18 follow-ups), except `modules.csv`: the d and d* values are identical, p now
+uses 2,000 label permutations (archive 200; ILD module mean / minus stroma / named minus rest, d: p 0.011, 0.012, 0.015; legacy
+0.011, 0.012, 0.010; HLCA fibrotic 0.041, 0.51, 0.23; legacy 0.042, 0.50, 0.24), and the islets T2D and AD skin (lesional,
+non-lesional) targets are new rows. `a7_scores.csv` (per-donor activation scores) is not written here.
+<!-- src: figure_5/output/lung_breaks/modules.csv; archive outputs/paper/figure_6_lung_breaks/; legacy p from the Checks table above -->
+
 ## Deviations
 - **Estimator.** A5 and A6 (pre-A17) used a separate reference fit per group / donor set; here the A17 learned anchors and `Dataset.contrast`
   (pooled host), or the anchored fit of each donor set. Results are therefore read as A17-style, not as the original numbers.
