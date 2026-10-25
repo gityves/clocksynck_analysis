@@ -81,7 +81,7 @@ skin endothelial (`gene_rhythms` refits the host without each anchor, `max_iter=
 iterations (also breast_hbca endothelial); a non-converged EM path depends on rounding, so the two codes stop at
 different points (loading differs by 0.19, log-likelihood -167.350 vs -167.339). Every converged host agrees to 3e-8.
 Not isolated: the A39 rows n = 45 / 25 (median R 0.199 / 0.237, third decimal) and `a31_window_E1` (0.006); the
-A39 verdict is unchanged. Open: `gene_rhythms` should report non-converged held-out hosts (API gap below).
+A39 verdict is unchanged. `gene_rhythms` now lists such hosts in `.attrs["hosts_not_converged"]` with a RuntimeWarning (clocksync, 2026-10-25).
 
 ## Deviations
 - **Gene panel.** The legacy tables kept the genes expressed in the 7 A27 tissues; here the genome tables are cut to the genes expressed (median CPM >= 5) in any matched
@@ -121,8 +121,6 @@ A39 verdict is unchanged. Open: `gene_rhythms` should report non-converged held-
 - `compute_atlas_gene_rhythms_modes.py`: `covariate_table`, `predict_all` (covariate modes, composition, single-cell z); `compute_blood_gtex_arms.py`: `frame_rot` and the cross-fit.
 
 ## API gaps
-- `Dataset.gene_rhythms` does not report the convergence of its leave-one-anchor-out hosts; a class read on a
-  non-converged host is rounding-dependent (M3, skin_ganier endothelial).
 - `Dataset.gene_rhythms(covariates=..., composition=True)`: the covariate (age, sex, log depth, log cells, PCs) and composition fits of the A27 grid.
 - `Dataset.gene_rhythms` / `Fit`: expose the frame shift (host frame to the mean-anchor frame) and a way to fit an arbitrary score (not a count gene) on the host, and a null with permutation across strata.
 - `Dataset.timed_loadings(hours)` and a known-host `on_host` (coupling to the known time, the A21 / A36 truths).
