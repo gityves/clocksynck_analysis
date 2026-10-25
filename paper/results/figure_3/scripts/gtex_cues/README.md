@@ -100,7 +100,7 @@ Every script runs with `--subsample`. Full point estimates against `legacy/desyn
 `run.sh --jobs 4`, 1.0 h, peak 3.3 GB. Every table of the archive outputs (`outputs/paper/figure_S07_gtex_covariates_cues`)
 is reproduced to 1e-6 (A46, A47, A81, A81b, A90, A93, D1-D7; D4 to 0.006 h). First full runs, against
 `legacy/desync/validation/paired_damping/output/`: A101 bootstraps (500) and A101b (200) equal the legacy intervals (H101b lower
-bound -0.0117, FAIL, as legacy); A102.3 (age), A102.6 (targets), A102b A101 and A100 summaries identical. A102.4 (counts)
+bound -0.0117, FAIL, as legacy); `a102_age_summary` (A102.3), `a102_targets_summary`, A102b A101 and A100 summaries identical. A102.4 (counts)
 differs as A102b A101b above (equal-n draws seeded by a different tissue list): pooled / matched total log ratio -0.737 /
 -0.136 (legacy -0.706 / +0.029), 26 / 23 tissues (legacy 27 / 22). A102b A91 clock excess +41.0 % (legacy +42.5 %).
 <!-- src: figure_3/output/gtex_cues/{a101_summary,a101b_summary,a102_*_summary,a102b_*_summary}.csv; legacy desync/validation/paired_damping/output/ -->
