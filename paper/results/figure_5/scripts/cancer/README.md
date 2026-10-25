@@ -42,7 +42,11 @@ The single-cell cohort pipeline (gate, E1-E3, H1-H3, own rhythm E5, gene loading
 ## Checks
 Every script runs with `--subsample` (patients per cohort; minutes). Full point estimates against the legacy output files
 (`legacy/desync/validation/paired_damping/output/`, `legacy/desync/common_output/`) with the full resample sizes except the
-last row:
+last row.
+
+**M3 full rerun (2026-10-24/25, `run.sh`, 2.5 h, peak 1.1 GB):** the 48 tables that were archive copies came out
+sha256-identical; A17, A18.3 and the A24 quartile tables are new full-size runs (rows marked M3 below). The C2-C4 tables,
+`cycling_gates.csv` and `decision.csv` (`compute_cycling_cophaser.py`, not in `run.sh`) remain archive copies.
 
 | readout | result here | legacy | note |
 |---|---|---|---|
@@ -59,8 +63,11 @@ last row:
 | A97 H97.1 delay (79 patients) | identical: delta -0.430 h, p 0.311, \|c_m\| 0.273 vs null q95 0.246 (uninformative) | | |
 | A97 H97.2 | -0.1022, p 0.002 (PASS) | -0.0951, p 0.007 (PASS) | the Hallmark G2M list: here MSigDB v2024.1 from `$SCCC_DATA/reference`, the legacy run used v2026.1; with v2026.1 (`SCCC_HALLMARK_GMT=...`) every row is identical |
 | A97 purity companion, purity score, survival pooled HR, breast ER | identical | | HR 0.976 [0.904, 1.055] per SD (9 cancers) |
-| A17 cancer coupling, psi, V, n (SRP273482, learned and fixed anchors) | identical to the printed digits | | point estimates only; the bootstrap (500, host refitted) was not run in full |
-| A18.3 copy-number coupling, ERP149257 (malignant 0.2556, normal epithelium 0.1922, non-malignant 0.2128) | identical | | point estimates only |
+| A17 cancer coupling, psi, V, n (SRP273482, learned and fixed anchors) | identical to the printed digits | | |
+| A17 pooled tumour minus adjacent-normal epithelium (M3, 500 bootstraps, 21 cohorts gated under both rules) | fixed -0.162 [-0.342, 0.017], learned -0.161 [-0.343, 0.020], 9 studies (7 negative) | -0.16 (-0.35 to 0.02) | other classes include 0 under both rules |
+| A18.3 copy-number coupling, ERP149257 (malignant 0.2556, normal epithelium 0.1922, non-malignant 0.2128) | identical | | |
+| A18.3 pooled malignant minus adjacent-normal epithelium (M3) | -0.094 [-0.299, 0.110], 8 studies | -0.09 (-0.30 to 0.11) | malignant minus non-malignant tumour epithelium -0.080 [-0.288, 0.128], 7 |
+| A24 cancer, `--definition quartile` (M3), tumour epithelium | cycling -0.55 h [-1.45, 0.35] (5 studies); S -0.45 [-1.31, 0.41] (6); G2M -0.92 [-1.75, -0.08] (4) | cycling -0.49 (-1.18 to 0.19), 7; S -0.47 (-1.27 to 0.32), 8; G2M -0.72 (-1.47 to 0.04), 5 | studies lost to the 3-anchor rule; the G2M interval now excludes 0 on 4 studies (a sensitivity part, not the registered cycling readout, which is unchanged) |
 | A17 anchors of the 21 cancer cohorts, learned and fixed rule | identical to the frozen table (21 of 21, both rules) | | frozen table written before any anchored coupling |
 | A24 cancer, pooled y5 of cycling tumour epithelium (h) | -0.49 [-1.02, 0.03], 7 studies | -0.35 [-0.83, 0.13], 10 | verdict (interval includes 0) the same; studies lost to the 3-anchor rule (see deviations) |
 | A24 tumour minus normal, cycling | -0.17 [-4.0, 3.7], 2 studies | -1.39 [-4.6, 1.8], 2 | uninformative in both |
@@ -88,7 +95,7 @@ last row:
 - **A24 cancer.** `Dataset.fit` needs 3 anchors after removing the epithelial compartments (the registration: 2), so the rows of
   studies with fewer than 3 anchors are not estimable here (7 rows), 7 rows have fewer than 6 patients, and 41 of the 60 study x part rows are
   estimable here against 64 of 69 in the legacy run. The host is refitted in every bootstrap replicate
-  (legacy: fixed). The quartile definition (`--definition quartile`) runs on the subsample only; its legacy file is `a24_cancer_pooled_quartile.csv`.
+  (legacy: fixed). The quartile definition (`--definition quartile`) was run in full in M3 (see check table); its legacy file is `a24_cancer_pooled_quartile.csv`.
 - **Cycling follow-ups.** The states and the joint model are those of `cancer_pipeline/_shared.py` (`Dataset.study`); the
   cell-cycle fits (`data/cells_cancer_cycle`) are the CoPhaser outputs and are not recomputed. Bootstrap sizes 40 here (legacy 200). With `--subsample` the cycling scripts use 3 small studies (cophaser: `--subsample 40`; at 12 patients no contrast is estimable) and the cophaser script pools them without the gate table.
 - **A85.** The legacy gene matching bug (see check table); the pooled estimate is therefore a new result and is not the registered
