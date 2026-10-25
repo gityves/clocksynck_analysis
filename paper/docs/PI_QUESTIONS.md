@@ -58,6 +58,11 @@ Proposals (see the chat summary of 2026-10-24; each would be registered or writt
   -1.69 h, p 0.0003; other skin diseases -0.75 h, p 0.22). It is a delay (lesional clock later), not an advance. Open:
   trait vs state and treatment specificity (WP6) -> proposed to run WP6 before WP5.
 - **Question:** which of (a)-(f) do you agree with?
+- **Answer so far (PI, 2026-10-25):** (a) agreed; (b) agreed; (c) asked what "pull vs order" means (explained in chat,
+  decision pending); (d) agreed (in the spirit of stating power); (e) cancer is a priority for the literature: CoFE
+  (Ananthasubramaniam 2025) may have been misled by its method, and many papers used CYCLOPS 2.0 although it works only
+  when samples cover the whole day. Determine whether anything can be estimated in tumours, or whether the variance
+  between malignant cells and patients is too large. -> WP5 to be redesigned around this (proposal in chat, to register).
 - **On hold:** plan rewrite; A136 registration.
 
 ## Answered
