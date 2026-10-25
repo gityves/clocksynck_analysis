@@ -49,7 +49,20 @@ estimates do not depend on it), against `outputs/studies/` of the legacy run:
 | both | contrast intervals | differ by up to 4 h (60 vs 500 resamples) | |
 | both | E4 gene loadings | computed; no legacy output at the pipeline level (E4 was used by the cycling follow-ups only) | |
 
-The pooled meta-analysis (`summary_*`) was run on these two cohorts only; the 72 full fits (500 resamples) were not rerun.
+**M3 full run (2026-10-25, 72 cohort fits with 500 resamples, 6.6 h serial, peak 0.2 GB)** against the legacy
+`outputs/studies/summary_*`:
+
+| readout | result | legacy |
+|---|---|---|
+| gate, cohorts passing (main / cnv) | 21 / 13 | 21 / 13 |
+| pooled H1-H3 (`summary_{main,cnv}_meta`, 40 rows each): k per comparison | identical | |
+| pooled log amplitude ratio | max difference 0.0007 (main), 0.0083 (cnv) | |
+| pooled offset difference (h) | max difference 0.108 (main), 0.062 (cnv); no sign change | weights 1/SE^2 from the bootstrap intervals (other draws) |
+| BH q < 0.05 | the same 7 (main) and 7 (cnv) comparisons, all log amplitude ratios: malignant above T/NK and B/plasma, below fibroblast, endothelial, mural (e.g. main tumour epithelium vs tumour fibroblast -0.648 [-0.912, -0.383], q < 0.001) | same 7 + 7 |
+| microenvironment pooled (16 rows each) | none with q < 0.05; offsets within 0.09 h | none |
+| E5 own rhythm, gated cohorts (main, 21 compartment types) | identical (15 with own rhythm, coupling_clock difference 0) | |
+
+Not ported: the legacy `summary_sigma_axis.csv` (`d1_sigma_axis.py`).
 
 ## Deviations
 - **Gate.** `Dataset.gate` (same estimator, checked identical above); the gate table stores `n_donors` instead of
@@ -62,7 +75,8 @@ The pooled meta-analysis (`summary_*`) was run on these two cohorts only; the 72
   A24 cancer arm, the cycling follow-ups T1-T3, C1-C4 and C2b, A85, A84 TCGA arm and the A17 anchors of the 21 cancer cohorts in
   `cancer`; A18 part 2 for cancer (per-cell dispersion, `cancer_split.py`) in `backbone`; A23 cancer arm (R23.4) in
   `spread_multiplicity`. Per-cell inputs: `data/cells_cancer`, `data/cells_cancer_cycle`.
-- **Full run.** The 72 fits with 500 resamples (hours) were not rerun; the check above is the point estimates of two cohorts. The
+- **Full run.** Made in M3 (2026-10-25; check table above). `--jobs J` fits cohorts in parallel (each cohort has its own
+  seed; subsample outputs byte-identical to the serial run). Before M3 the
   pipeline was run end to end on three cohorts (`run.sh --subsample 12`, 2026-10-22): per-cohort tables for the main and the
   copy-number variants (`gate`, `estimates`, `e5`, `e4`, `contrasts`, `micro`) and every `summary_*` table are written; two of
   the three cohorts (GSE132465, GSE181919) fail the gate at 12 patients and are reported as such, SRP273482 passes (pairing p 0.020,
