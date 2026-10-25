@@ -564,3 +564,13 @@ genes median acrophase error <= 2 h at n = 300); if not, Q2 stops and the simula
 Order: Q3 and Q1 (existing data and code), then Q2 after the simulator gate. Holm over H138.1-H138.7 within A138.
 Reading: H138.2 / H138.3 / H138.6 / H138.7 pass -> the published tumour orderings and clock structures are not evidence
 of tumour clocks; H138.1 / H138.4 / H138.5 then state what is estimable (or that nothing is, at these designs).
+
+**A138 note (2026-10-25, before any A138 readout): the Li et al. 2024 design in the tumour-coefficients arm.** Checked in
+the PNAS text (PMC10873596): healthy samples were not added to fill hours; the luminal A tumours (TCGA 193, Manchester 18)
+were "projected ... onto the eigengene space computed from the noncancerous samples" (GTEx breast 167, TCGA normal 106,
+26 timed Manchester normals), with tumour status as a covariate; tumour phases were not validated against times
+(only the 26 timed normals, CorrFisher 0.69). The arm therefore simulates: healthy reference ordered with CYCLOPS 2.0
+(GTEx-like coverage), tumours projected onto its eigengene space with a tumour covariate, tumour clock coefficients
+differing from healthy as specified. H138.7 is unchanged (tumour acrophase error > 3 h). Other CYCLOPS tumour orderings
+found: Anafi 2017 (HCC, projected on normal-liver eigenvectors after seeded ordering failed), Schwartz 2023 (PDAC, no
+projection, coverage presumed 06-18 h), both from the same group (`literature.md` section 6).
