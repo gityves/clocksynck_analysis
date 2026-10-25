@@ -23,6 +23,15 @@ restricted to the clock genes (PI, 2026-10-25). The TCGA tumour clock-gene acrop
 8 h late) are read against this error.
 <!-- src: paper/results/figure_1/output/method/gtex_benchmark/{genes,summary}.csv (M3 run 2026-10-25) -->
 
+CoFE's tumour core clock (their Fig 2D, consensus over the 11 TCGA cancers; the authors: "arranged ... in the expected
+order", "like in a healthy functional clock"). Lead's reading of the published image (approximate, low resolution; exact
+values in their S3 Table, not yet read): ARNTL near 17 h, with PER2, PER3, TEF, CRY2, BHLHE40, NR1D2, CLOCK, RORA within
+about 3 h of it; DBP near 7 h, NR1D1 near 10 h. In healthy human tissue (GTEx reference waveform, `cs.gtex()`) PER2,
+PER3, TEF, DBP and NR1D2 peak 9.3-14.2 h from ARNTL (ARNTL 21.0 h; PER3 9.7, TEF 9.2, DBP 8.5, PER2 11.7, NR1D2 6.8 h).
+The PI recalls DBP peaking with BMAL1 in a CoFE figure (Fig 1?); in Fig 2D as read here DBP is about 10 h from ARNTL,
+but the E-box / D-box targets PER2, PER3 and TEF sit with ARNTL instead of opposite it. To be confirmed from S3 Table
+before any statement.
+
 ## Q1. Does the malignant clock carry an estimable, host-coupled signal? (single cell, gate-passing cohorts)
 - **H138.1:** pooled anchored coupling of the malignant compartment (copy-number-called malignant cells where available,
   else tumour epithelium) > 0: lower bound of the 95 % patient-bootstrap interval > 0 (DerSimonian-Laird over cohorts,
@@ -59,7 +68,8 @@ leading non-clock principal components of each TCGA cancer). Arms:
 - **D138.3 (TCGA, descriptive):** per cancer, agreement between the genome-wide CoFE ordering and the clock-gene-only
   ordering (circular correlation), and the clock-gene acrophase order of each against the GTEx healthy reference
   (`benchmark/tcga.py` `GTEX_MATCH`); which published deviations (NR1D2 +8 h, TEF, BHLHE40, PER2) survive the clock-only
-  ordering.
+  ordering; the ARNTL-to-target acrophase differences (DBP, TEF, PER2, PER3, NR1D1, NR1D2) against GTEx, and in the
+  simulation the same differences when the truth is a healthy clock (does genome-wide CoFE pull targets toward ARNTL?).
 - **D138.2 (descriptive):** where each TCGA cancer falls on the simulation map (CV curve depth, phase coverage, gene
   rhythmic fraction), and the same for CYCLOPS 2.0 on the TCGA cancers where it runs; recovery error with known truth
   in every arm (mean absolute error, `evaluate.py`).
