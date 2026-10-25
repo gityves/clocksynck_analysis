@@ -49,13 +49,18 @@ All data are public GEO series.
 ## Checks
 Every script runs with `--subsample 12` (12 random patients per series, 50 resamples; 23 min for the folder, the A54 step dominating because of the pseudo-clock control on all genes). `compute_sc_status.py` ran with `--subsample 20 --n-perm 8 --n-boot 8` (18 units; 3.5 min) and `compute_cues_gtex.py` with
 `--subsample 12` (13 min, mostly reading the all-gene series). Full point
-estimates against `legacy/desync/validation/paired_damping/output/`, with the full resample sizes except where listed:
+estimates against `legacy/desync/validation/paired_damping/output/`, with the full resample sizes except where listed.
+
+**M3 full rerun (2026-10-25, `run.sh --jobs 4`, 1.9 h, peak 34.1 GB in `compute_replication.py`):** every point estimate
+equals the archive copy; 17 tables sha256-identical, the A54 pooled, A78 and A81b H81.3 tables differ only in swap p
+(registered 10,000 swaps instead of 1,000 / 2,000; no verdict changes); A58 now at its registered 2,000 swaps and 500
+bootstraps (rows marked M3):
 
 | readout | result here | legacy | note |
 |---|---|---|---|
 | A54 held-out: n pairs, r, offset, LOGO max, genes negative, composition split | 129, 0.1556, -0.9324 h, -0.6225 h, 9, -0.944 / -0.624 h | identical | H54.1 FAIL, H54.2 PASS, H54.3 FAIL as legacy |
-| A54 held-out p (swap r, offset) | 0.107, 0.0060 | 0.107, 0.0042 | 1,000 swaps here, 10,000 legacy |
-| A54 discovery: n pairs, r, offset, LOGO max, genes negative | 465, 0.3585, -1.4994 h, -0.9272 h, 12 | identical | H54.1-3 PASS; swap p at the 1,000-swap floor (0.001, legacy 1e-4) |
+| A54 held-out p (swap r, offset), M3 | 0.107, 0.0042 (two-sided 0.0080) | 0.107, 0.0042 | 10,000 swaps (the subsample check used 1,000: 0.107, 0.0060) |
+| A54 discovery: n pairs, r, offset, LOGO max, genes negative | 465, 0.3585, -1.4994 h, -0.9272 h, 12 | identical | H54.1-3 PASS; M3: swap p 1e-4 at the 10,000-swap floor, as legacy |
 | A54 per series (16 series: gate p, r, se, offset) | identical | | same random stream (gate, bootstrap and pseudo draws in the legacy order) |
 | A56 H56.1 IL-17 high - low (n 594, 15 series), p | -0.0278 h, 0.472 | identical | FAIL; IFN-gamma -0.2444 h, 0.191 also identical |
 | A73 H73.1 proliferation, differentiation loss | -0.1839 h, 0.263; -0.0014 h, 0.507 | identical | FAIL |
@@ -64,12 +69,12 @@ estimates against `legacy/desync/validation/paired_damping/output/`, with the fu
 | A57 H57.1 responders - non-responders (74 / 31), p | -2.2773 h, 0.0425 | identical | PASS; median split, placebo PASI50, GSE201827 rows identical |
 | A74 H74.1 proliferation reduction within responders, p | -3.7501 h, 0.0155 | identical | PASS; IL-17, IFN-gamma, differentiation and all-patient rows identical |
 | A73 treatment (descriptive) GSE117468 all / treated, GSE201827 | -4.0512 h (p 0.0005), -3.5244 h (0.0080), -0.4431 h (0.335) | -4.0512, -3.5244, -0.4431 h (0.0005, 0.0085, 0.324) | estimates identical; p differ by Monte Carlo (the legacy stream continues from the dose permutations) |
-| A78 H78.1 core minus systemic (15 series, 594 pairs), p | -1.9712 h, 0.0005 (2,000 swaps) | -1.9712 h, 0.0002 | PASS; core minus epidermal output -0.8645 h identical; the 80 reference genes and amplitudes identical |
+| A78 H78.1 core minus systemic (15 series, 594 pairs), p | -1.9712 h, 0.0002 (M3, 10,000 swaps) | -1.9712 h, 0.0002 | PASS; core minus epidermal output -0.8645 h identical; the 80 reference genes and amplitudes identical |
 | A58 gate (31 units, 14 compartments): clock share, p pairing, p acrophase | 0.0957, 0.0050, 0.0199 | identical | `Dataset.gate`, same seed |
-| A58 H58.1 statistic (circular mean of L - N offsets over 7 classes), keratinocyte minus stromal-vascular, minus immune | -0.616 h, -1.273 h, +1.520 h (point estimates, full data) | -0.612 h, -1.357 h, +1.354 h | H58.1 FAIL as legacy (legacy p 0.317); estimator differs in the second digit (Deviations, free-host estimator); swaps and bootstraps not rerun in full |
+| A58 H58.1 statistic (circular mean of L - N offsets over 7 classes), keratinocyte minus stromal-vascular, minus immune | -0.616 h, p 0.313 (M3, 2,000 swaps); -1.273 h [-7.23, 4.22]; +1.520 h [-9.69, 13.02] (500 unit bootstraps) | -0.612 h, p 0.317; -1.357 h; +1.354 h | H58.1 FAIL as legacy; estimator differs in the second digit (Deviations, free-host estimator) |
 | A58 per class L - N offset (T, endothelial, fibroblast, keratinocyte, melanocyte, mural, myeloid), h | -3.04, -0.82, +0.80, -0.75, -0.62, +1.60, -1.49 | -2.93, -0.83, +0.78, -0.84, -0.60, +1.59, -1.46 | log amplitude ratios 1.19, 0.17, 0.25, 0.01, -0.26, 0.24, 1.53 vs 1.17, 0.19, 0.29, -0.02, -0.28, 0.23, 1.50 |
 | A81b H81.2 (11 subjects, 14 core / 30 cue genes): core, cue, core minus cue, p upper, interval, subjects core > cue | 1.935 h, 0.434 h, 1.5007 h, 0.0838, [-1.169, 3.200], 8 | identical | FAIL; 10,000 subject bootstraps, same stream |
-| A81b H81.3 (15 series, 594 pairs): core minus cue, p lower; core minus locked | -1.6891 h, 0.0010 (1,000 swaps); -1.1669 h | -1.6891 h, 0.0003 (10,000); -1.1669 h | PASS; the legacy swap stream is reproduced (p within Monte Carlo) |
+| A81b H81.3 (15 series, 594 pairs): core minus cue, p lower; core minus locked | -1.6891 h, 0.0003 (M3, 10,000 swaps); -1.1669 h, p two-sided 0.093 | -1.6891 h, 0.0003 (10,000); -1.1669 h | PASS; the legacy swap stream is reproduced |
 
 ## Deviations
 - **Resample sizes in the checks.** A54 used 1,000 (not 10,000) swaps and A78 2,000 swaps; point estimates do not depend
@@ -128,4 +133,4 @@ estimates against `legacy/desync/validation/paired_damping/output/`, with the fu
 ## Open items
 A80 (treatment, TCGA) belongs to `cancer`; A72 (mouse timed skin) to `species`. The A82, A84 and A88 follow-ups of
 the cue reference, the single-cell follow-ups (A60, A61, A63-A66, A69), A53 H53.1 (TAURUS) and A68 (GTEx skin) are in
-`psoriasis_details`. Not rerun in full: the A58 swaps (2,000) and bootstraps (500), the A81b H81.3 swaps at 10,000.
+`psoriasis_details`.
