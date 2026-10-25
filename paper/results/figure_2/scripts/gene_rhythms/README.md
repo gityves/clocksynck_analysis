@@ -70,8 +70,18 @@ host permutations, 200 for A31; bootstrap of H50.2 and the A35 / A32 bootstraps 
 | A30 on the modes, 1,188 class x scope x truth x mode rows | fasting + feeding, pooled: p 0.40-1.00 in none, basic, pcs | p 0.42-1.00 (`classes.csv`) | median abs difference of p 0.0015; gene counts n differ in 216 rows (panel); no excess in any mode |
 | A32 GTEx whole blood arms (primary L-N): timed p, peaks (timed, untimed), d [CI] | 0.46, 8.68 h, 9.12 h, 0.44 h [-5.52, 6.59] | 0.459, 8.70, 9.13, 0.43 [-5.62, 6.51] | FAIL (uninformative: no timed rhythm), as legacy; oracle, cross-fit, own-clock and ventilated arms in `a32_arms.csv` (16 rows, same columns as the legacy `results.csv`) |
 
-Not rerun in full: the H50.2 donor bootstrap (200 replicates, about 1 h with 4 jobs; a 2-replicate run checks the code), the
-A35 and A32 bootstraps at the full size in the check run (the point estimates are identical).
+**M3 full rerun (2026-10-25, `run.sh --jobs 4`, 54 min, peak 13.3 GB).** Against the archive copies: 33 tables identical or
+within 1e-9, A31 sensitivity (`sens_RPC`) and the H50.2 bootstrap new. The H50.2 donor bootstrap (200 replicates):
+pooled lung R 0.462, bootstrap median 0.465 [0.310, 0.564], 3.0 % of replicates reach HLCA alone (0.560): H50.2 fails, as
+legacy. The atlas tables (`atlas_{classes,peratlas,pooled,primary}`; `modes_peratlas` 168 of 1,080 rows, `modes_composition` 3 of 213) moved in the skin_ganier rows (plus two muscle v3 covariate-mode rows by < 0.007 h, not isolated): A31b
+primary pooled followers R 0.435, null 95 % 0.430, p 0.078 (archive copy 0.436, 0.430, 0.059; fails on rise / fall as
+before); 3 genes change rhythmic class in `atlas_classes`. Cause (checked, full `compute_atlas_gene_rhythms.py` with the
+clocksync before the EM speed-up 09d0142 reproduces the archive copies to 2e-15): the leave-one-anchor-out host of
+skin endothelial (`gene_rhythms` refits the host without each anchor, `max_iter=3000`) does not converge in 3,000
+iterations (also breast_hbca endothelial); a non-converged EM path depends on rounding, so the two codes stop at
+different points (loading differs by 0.19, log-likelihood -167.350 vs -167.339). Every converged host agrees to 3e-8.
+Not isolated: the A39 rows n = 45 / 25 (median R 0.199 / 0.237, third decimal) and `a31_window_E1` (0.006); the
+A39 verdict is unchanged. Open: `gene_rhythms` should report non-converged held-out hosts (API gap below).
 
 ## Deviations
 - **Gene panel.** The legacy tables kept the genes expressed in the 7 A27 tissues; here the genome tables are cut to the genes expressed (median CPM >= 5) in any matched
@@ -111,6 +121,8 @@ A35 and A32 bootstraps at the full size in the check run (the point estimates ar
 - `compute_atlas_gene_rhythms_modes.py`: `covariate_table`, `predict_all` (covariate modes, composition, single-cell z); `compute_blood_gtex_arms.py`: `frame_rot` and the cross-fit.
 
 ## API gaps
+- `Dataset.gene_rhythms` does not report the convergence of its leave-one-anchor-out hosts; a class read on a
+  non-converged host is rounding-dependent (M3, skin_ganier endothelial).
 - `Dataset.gene_rhythms(covariates=..., composition=True)`: the covariate (age, sex, log depth, log cells, PCs) and composition fits of the A27 grid.
 - `Dataset.gene_rhythms` / `Fit`: expose the frame shift (host frame to the mean-anchor frame) and a way to fit an arbitrary score (not a count gene) on the host, and a null with permutation across strata.
 - `Dataset.timed_loadings(hours)` and a known-host `on_host` (coupling to the known time, the A21 / A36 truths).
