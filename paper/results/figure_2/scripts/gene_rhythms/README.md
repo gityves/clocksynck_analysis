@@ -81,7 +81,7 @@ skin endothelial (`gene_rhythms` refits the host without each anchor, `max_iter=
 iterations (also breast_hbca endothelial); a non-converged EM path depends on rounding, so the two codes stop at
 different points (loading differs by 0.19, log-likelihood -167.350 vs -167.339). Every converged host agrees to 3e-8.
 Not isolated: the A39 rows n = 45 / 25 (median R 0.199 / 0.237, third decimal) and `a31_window_E1` (0.006); the
-A39 verdict is unchanged. `gene_rhythms` now lists such hosts in `.attrs["hosts_not_converged"]` with a RuntimeWarning (clocksync, 2026-10-25).
+A39 verdict is unchanged. Rule adopted after this check (PI, 2026-10-25; a robustness rule, not chosen on the outcome): `gene_rhythms` refits a host that has not converged in 3,000 EM maps with 100,000, and a compartment whose host still has not converged is not estimable (no rows, `.attrs["hosts_not_converged"]`, RuntimeWarning). Both hosts above converge on the retry (skin endothelial in 55,859 maps, log-likelihood -167.320; breast_hbca endothelial in 4,766). The group is rerun with the rule (M3b, below).
 
 ## Deviations
 - **Gene panel.** The legacy tables kept the genes expressed in the 7 A27 tissues; here the genome tables are cut to the genes expressed (median CPM >= 5) in any matched
