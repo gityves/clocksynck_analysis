@@ -574,3 +574,42 @@ were "projected ... onto the eigengene space computed from the noncancerous samp
 differing from healthy as specified. H138.7 is unchanged (tumour acrophase error > 3 h). Other CYCLOPS tumour orderings
 found: Anafi 2017 (HCC, projected on normal-liver eigenvectors after seeded ordering failed), Schwartz 2023 (PDAC, no
 projection, coverage presumed 06-18 h), both from the same group (`literature.md` section 6).
+
+**A138 note 2 (2026-10-25, before any A138 readout; PI discussion of the CYCLOPS projection).** (i) `clocksync` enters
+every Q2 arm (fairness: the same simulated data, its anchored fit with the stroma-like compartments as anchors where the
+arm has compartments, else reported as not applicable). (ii) The tumour-coefficients arm is split into a global change
+(tumour clock amplitude x 0.5 and phase +3 h for all genes: clocksync's free z absorbs it, CYCLOPS projection does not
+by construction) and gene-specific shifts (PER2, PER3, TEF, NR1D2 +6 h: violate clocksync's conserved waveform too;
+clocksync's gate share and, if A139 passes, its gene refit are reported). (iii) The healthy reference is sampled with
+GTEx-like coverage, tumours 08-18 h; CYCLOPS 2.0 is run with the tumour covariate's offset and scale free (as Li et al.)
+and fixed to the healthy values. Rationale: with free tumour means, the mean of window-sampled tumours is not the
+centre of the healthy circle, so tumour phases and magnitudes depend on tumour coverage; with fixed means, tumour and
+healthy mesors are assumed equal. H138.7 is read for both variants.
+
+## A139 (2026-10-25, method; written before any simulation of it; PI request): can clock-gene acrophases be refitted under hospital hours?
+
+Motivation: `clocksync` fixes the 14-gene GTEx waveform (relative amplitudes and acrophases) because with all loadings
+free and partial-day sampling the loadings are identified only up to a 2 x 2 linear map (anisotropic, unknown host
+covariance). Fixing the other genes pins that map, so one gene's loading is identified by its regression on the host
+built without it. Never simulated under hospital hours (archive: A28 refitted with times of death; A31 window check:
+follower genes R 0.91-0.96 with 3 consecutive ZTs, 0.15-0.33 with 2). Code: `paper/exploratory/A139_waveform_refit/`.
+Simulator: `clocksync.simulate` (GTEx waveform, human depth), 4 anchor compartments (coupling 0.8-1.0) and one target
+compartment, `gene_shift_h` for shifted genes; windows 24 h, 08-18 h, 10-16 h; n in {40, 80, 200}; 100 replicates per
+cell. Scenarios: S0 no shift; S1 one target gene +6 h (PER2); S3 three target genes +6 h (PER2, TEF, NR1D2); SW the same
+three shifted in every compartment (waveform itself wrong).
+Estimators: (E-a) target-compartment gene refit: each clock gene of the target regressed on the anchored host
+(`gene_rhythms` machinery), deviation = arg(c_g) - arg(z_target) - psi_g; (E-b) iterative leave-one-gene-out waveform
+refit for SW: host fitted on 13 genes over all compartments, the left-out gene's loading regressed on it, all genes in
+turn, repeated until the loadings change < 0.1 h (max 10 rounds). A gene is flagged when the 95 % donor-bootstrap
+interval (200) of its deviation excludes 0.
+- **V139.1 (refit, primary; 08-18 h, n = 80):** E-a in S1 and S3, E-b in SW: median absolute error of the refitted
+  deviation <= 1.5 h for shifted genes and <= 1.0 h for unshifted genes. Pass -> the refit becomes a clocksync option
+  (`refit_genes`), with the flag.
+- **V139.2 (flag, fallback):** S0: per-gene false flag rate <= 0.05 (each gene, binomial upper bound); S1/S3/SW: power to
+  flag a 6 h shift >= 0.8. V139.1 fails and V139.2 passes -> clocksync flags misfitting genes and refits the compartment
+  without them (genes dropped, waveform otherwise fixed). Both fail -> the conserved waveform stays an untestable
+  assumption, stated as such.
+- **D139.3 (descriptive):** all cells of the grid (window x n), the gate's clock share under S3 / SW, and the bias of
+  the compartment's z when shifted genes are not dropped.
+Order: run before A138's Q2 (its clocksync arm uses the outcome). Compute: 14-gene fits, minutes per cell, run when the
+M3 lanes free workers.
