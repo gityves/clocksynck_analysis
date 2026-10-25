@@ -37,7 +37,7 @@ are registered in `docs/registered_experiments.md` and added here when their scr
 | A28 | `results/extended_data/scripts/gate/compute_extended_clock.py`, `results/extended_data/scripts/gate/compute_extended_e4.py`, `results/extended_data/scripts/gate/compute_gene_screen.py`, `results/extended_data/scripts/gate/compute_sheep_reference_primary.py` |
 | A29 | archive only: `figure_S08_gene_rhythms/compute_bulk_clock.py` |
 | A30 | archive only: `figure_S08_gene_rhythms/compute_antiphase.py`, `figure_S08_gene_rhythms/compute_antiphase_modes.py` |
-| A31 | `results/figure_1/scripts/method/compute_celltype_truth.py`, `results/figure_2/scripts/gene_rhythms/compute_celltype_truth.py` |
+| A31 | `results/figure_1/scripts/method/compute_celltype_truth.py` (the `gene_rhythms` copy was removed 2026-10-25: identical estimates) |
 | A31b | `results/figure_2/scripts/gene_rhythms/compute_atlas_gene_rhythms.py`, `results/figure_2/scripts/gene_rhythms/compute_atlas_gene_rhythms_modes.py`, `results/figure_2/scripts/gene_rhythms/compute_donor_curve.py`, `results/figure_2/scripts/gene_rhythms/compute_gene_map.py`, `results/figure_2/scripts/gene_rhythms/compute_gtex_truth.py`; archive only: `figure_S08_gene_rhythms/compute_antiphase.py`, `figure_S08_gene_rhythms/compute_antiphase_modes.py` |
 | A32 | `results/figure_2/scripts/gene_rhythms/compute_blood_clock.py`; archive only: `figure_S08_gene_rhythms/compute_blood_gtex_arms.py` |
 | A33 | `results/figure_3/scripts/cues_lost/compute_ventilator_gc.py`, `results/figure_3/scripts/cues_lost/compute_ventilator_tissues.py` |

@@ -7,7 +7,5 @@ PY=${PY:-$(conda info --base)/envs/sccc/bin/python}
 "$PY" compute_atlas_gene_rhythms.py "$@"               # A27 part 1, A31b
 "$PY" compute_donor_curve.py --jobs 3 "$@"             # A39
 "$PY" compute_gene_map.py --jobs 4 "$@"                # A50 (--n-boot 200 by default in a full run)
-"$PY" compute_celltype_truth.py "$@"                   # A31 primary and E1 windows
-"$PY" compute_celltype_truth.py --arms C-DC R-PC --tag sens_RPC --no-window "$@"
 "$PY" compute_blood_clock.py "$@"                      # A32, A35
 "$PY" compute_atlas_gene_rhythms_modes.py --jobs 3 "$@"   # A27 / A31b covariate modes, composition, z > 2

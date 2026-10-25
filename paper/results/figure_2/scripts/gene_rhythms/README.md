@@ -29,7 +29,6 @@ anchors_a31b.csv            A17 learned / fixed anchors re-run on the A31b atlas
 | `compute_donor_curve.py` | A39 (pre-registered) | HLCA lung donors subsampled to 25, 45, 100 (10 draws, seed 39) and 200: median R vs the median null 95 % at n = 45 | `gonogo_new/scripts/a39_subsample.py` |
 | `compute_gene_map.py` | A50: H50.1-H50.4 (pre-registered) | pooled normal adult lung (HLCA + 21 datasets, 372 donors) and DLPFC (452 donors): R vs GTEx Lung / BA9 / Cortex (50 permutations), pooled vs HLCA alone with a donor bootstrap (`--n-boot`), split-half replication of the gene phases per class (HLCA vs others, PsychAD vs others), the map (class x gene: amplitude, phase, se, p, q) | `gene_map/scripts/{pool,fit,score_gm,boot,h503}.py` |
 | `compute_bulk_clock.py` | A29 (pre-registered) | B = lam_host x sum s a exp(i delta) of 12 matched units (19 with sensitivities) vs the timed GTEx tissue gain: Spearman of absolute values (>= 0.5, p < 0.05), phase agreement, loss to misalignment, family shares | `bulk_clock/scripts/{gtex_gain,predict,score}.py` |
-| `compute_celltype_truth.py` | A31 (pre-registered; E1 windows post hoc) | mouse colon chrono-atlas, 12 classes: untimed gene phases vs the timed cosinor on ZT, pooled follower R vs its host-permutation null; sensitivity arms C-DC + R-PC; host refitted on 3 or 2 consecutive ZTs | `celltype_truth/scripts/{build,score,window}.py` |
 | `compute_blood_clock.py` | A32 (pre-registered), A35 (pre-registered) | marker-score rhythms in GTEx whole blood (timed vs untimed on the host of 14 tissues) and in living blood (GSE39445); blood's own 14-gene clock vs clock time (arms a, b, c, c+b, c+b_w, subject bootstrap), per-gene cosinor raw and composition-adjusted | `blood_composition/scripts/{blood_comp,external}.py`, `blood_clock/scripts/blood_clock.py` |
 
 A27 part 2 (ventilator cases, glucocorticoid axis, D4-D9) is in `gtex_cues`; the A27 ventilator-as-atlas diagnostic D4 is not ported (below).
@@ -39,7 +38,7 @@ A27 part 2 (ventilator cases, glucocorticoid axis, D4-D9) is in `gtex_cues`; the
 complex loading as `c_re`, `c_im`), `null_<atlas>.csv.gz` (scored genes); `antiphase_{classes,class_sizes,replication,genes}[_pb]`;
 `a39_{draws_scores,summary}.csv`; `h50_{scores,sets,boot,boot_summary,h503_lung,h503_dlpfc,h503_*_summary}.csv`,
 `map_<fit>.csv.gz`, `map_counts.csv`; `a29_{gtex_gains,units,compartments,families,readouts}.csv`;
-`a31_{scores,hosts,genes,window_E1}_<tag>.csv`; `a32_{gtex,external,external_vs_gtex}.csv`, `a35_{arms,per_block,genes,phases}.csv`, `a35_verdict.txt`.
+`a32_{gtex,external,external_vs_gtex}.csv`, `a35_{arms,per_block,genes,phases}.csv`, `a35_verdict.txt`.
 Column names follow the legacy files, except `R` (legacy `R_err`), `offset_h` (legacy `R_rot_h`) in the atlas tables of `h50_scores`.
 
 ## Checks
@@ -60,8 +59,8 @@ host permutations, 200 for A31; bootstrap of H50.2 and the A35 / A32 bootstraps 
 | A50 H50.4: DLPFC pooled vs BA9, R (p) | 0.538 (0.039) | 0.538 (0.020) | PsychAD 0.551 vs 0.553; other collections 0.482 vs 0.482; Cortex 0.131 vs 0.129 |
 | A50 H50.3: classes replicating (lung; DLPFC) | 15 / 17; 7 / 8 | 15 / 17; 7 / 8 | all pass; same donors per set (372, 172, 452) |
 | A29 primary Spearman(abs B, abs g), 12 units | 0.119 (p 0.36) | 0.168 (p 0.30) | fails in both; donors per unit identical, abs g within 3 %, lam_host 0-12 % lower; phase R 0.877 vs 0.898 |
-| A31 pooled followers (n 33): R, offset, A; all rhythmic (n 2,673) | 0.982, 0.2 h, 0.98; 0.987 | 0.98, 0.2 h, 0.98; 0.99 | null 95 % 0.64 vs 0.82 (deviation: within-arm null); p 0.005 in both; 12 classes |
-| A31 E1 windows, median R followers: 3 ZTs, 2 ZTs | 0.936, 0.259 | 0.937, 0.271 | |
+| A31 pooled followers (n 33, removed copy, see below): R, offset, A; all rhythmic (n 2,673) | 0.982, 0.2 h, 0.98; 0.987 | 0.98, 0.2 h, 0.98; 0.99 | null 95 % 0.64 vs 0.82 (deviation: within-arm null); p 0.005 in both; 12 classes |
+| A31 E1 windows, median R followers (removed copy): 3 ZTs, 2 ZTs | 0.936, 0.259 | 0.937, 0.271 | |
 | A35 arms b, c, c+b (rho with clock time) and (b)-(a) R, rho | 0.220, 0.309, 0.331; +0.034, +0.137 | identical | bootstrap 20 replicates in the check, intervals not compared |
 | A32 external (GSE39445): L-N amplitude, peak, p; neutrophil peak | 0.454, 2.667 h, 2e-22; 15.08 h | identical | peak interval [1.44, 3.77] identical (500 bootstraps) |
 | A32 GTEx whole blood (212 donors): L-N timed p, untimed p and peak | 0.459, 0.001, 8.9 h | 0.46, 0.001, 9.1 h | neutrophil timed p 0.085 in both |
@@ -83,6 +82,12 @@ different points (loading differs by 0.19, log-likelihood -167.350 vs -167.339).
 Not isolated: the A39 rows n = 45 / 25 (median R 0.199 / 0.237, third decimal) and `a31_window_E1` (0.006); the
 A39 verdict is unchanged. Rule adopted after this check (PI, 2026-10-25; a robustness rule, not chosen on the outcome): `gene_rhythms` refits a host that has not converged in 3,000 EM maps with 100,000, and a compartment whose host still has not converged is not estimable (no rows, `.attrs["hosts_not_converged"]`, RuntimeWarning). Both hosts above converge on the retry (skin endothelial in 55,859 maps, log-likelihood -167.320; breast_hbca endothelial in 4,766). The group is rerun with the rule (M3b, below).
 
+**A31 deduplicated (2026-10-25).** A31 (mouse colon cell types against known ZT) was computed here and in
+`figure_1/scripts/method/compute_celltype_truth.py`. On the M3 outputs the two copies give identical estimates (R, offset, A, n,
+within 3 h, rise / fall to 1e-12; every gene row identical); only the permutation nulls differ (pooled followers null 95 %
+0.64 here vs 0.78 in `method`, p 0.005 in both). The copy here was removed; A31 lives in `method` (figure 1).
+<!-- src: figure_1/output/method/celltype_truth_scores_primary.csv vs figure_2/output/gene_rhythms/a31_scores_primary.csv (M3 run, 2026-10-25) -->
+
 ## Deviations
 - **Gene panel.** The legacy tables kept the genes expressed in the 7 A27 tissues; here the genome tables are cut to the genes expressed (median CPM >= 5) in any matched
   GTEx tissue of the three truths (a few hundred more genes), which changes the gene counts by 1-3 per set.
@@ -90,7 +95,7 @@ A39 verdict is unchanged. Rule adopted after this check (PI, 2026-10-25; a robus
   classes and strata equal the legacy ones. The lung rule of `lung_hlca_genome` (A4 classes, stratum assay | study) is that of A31b.
   The builder `data/_atlas/census.py` raises a pandas 3 read-only-array error; `_shared._patch_census` replaces `sum_groups_sparse`
   at run time with a one-line corrected copy (needs a fix in `data/_atlas/census.py`, line 248: `.to_numpy().copy()`).
-- **Null.** `gene_rhythms` permutes host states within stratum. The legacy A27 / A31b / A39 / A50 nulls were the same; the A31 null permuted animals across arms (here within arm).
+- **Null.** `gene_rhythms` permutes host states within stratum. The legacy A27 / A31b / A39 / A50 nulls were the same.
 - **Covariates and composition.** `compute_atlas_gene_rhythms.py` runs `mode none`; the `basic` / `pcs` fits and the composition term
   are done by the local covariate regression of `compute_atlas_gene_rhythms_modes.py` (`covariate_table`, `predict_all`), because `gene_rhythms` has no covariates.
   Null 50 permutations; the legacy GTEx split-half ceiling (`compare.py`) is not computed.

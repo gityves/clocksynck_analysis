@@ -47,8 +47,28 @@ orderings or times are written (the legacy cached them locally). `--subsample N`
 | A37 host phase: JS rho, R, median error | 0.505, 0.706, 1.95 h | identical | |
 | TimeTeller, CYCLOPS, CYCLOPS anchoring | run on `--subsample` (timeteller n = 24, 3 tissues; cyclops muscle, W = R = 30: skill window 0.19, pooled 0.12) | not compared | |
 
-Not rerun: COFE genome-wide and CYCLOPS draws, TimeTeller at full n, benchmark bootstraps and coverage, CCD, TCGA COFE on the 11 cancers, the CYCLOPS
-anchoring at n = 80 and the breast case.
+The table above is the subsample check; the full run is below.
+
+## M3 full run (2026-10-25)
+`run.sh --jobs 4`, 21.3 h, peak 5.4 GB. Against the archive outputs (`outputs/paper/figure_1_method`, `fig1_method/`):
+- **A31, A36, A37:** `celltype_truth_{scores,hosts}_*` and `skin_truth_*` equal the archive to 1e-9 (A31 pooled followers R 0.982,
+  null 95 % 0.780, p 0.005; A37 difference +0.44 [0.09, 0.75] h, FAIL on the CI clause as before). A36 (first full run here):
+  readout 1 R 0.987, Fisher-Lee 0.980, median error 0.39 h; readout 2 R 0.972, Fisher-Lee 0.912, 0.46 h; readout 3 Fisher-Lee
+  0.177, p 0.195 (the subsample check had 0.198 at 500 permutations); gate passes (clock share 0.52, p 0.005). E1 windows: R
+  identical to 1e-4; `amp_spearman` differs by up to 0.07 in four 2-ZT rows with R < 0.26 (near-degenerate fits).
+- **A31 duplicate removed:** the `gene_rhythms` copy gave identical estimates and genes; its null differed (0.64 vs 0.78); A31 is
+  computed only here now.
+- **TCGA COFE (11 cancers):** orderings and CV curves equal the legacy to 1e-14; an interior CV minimum in all 11.
+- **GTEx benchmark, n = 80, median absolute tissue log2 amplitude / offset error (full; window):** clocksync 0.162 / 0.18 h;
+  0.161 / 0.36 h (legacy 0.169 / 0.18; 0.159 / 0.36); timed oracle, TimeTeller and COFE on the clock genes equal the legacy within
+  0.002; CHIRAL 0.180 / 0.62; 0.134 / 0.40 (legacy 0.170 / 0.65; 0.131 / 0.48, restarts unstable as above). COFE
+  genome-wide (3 draws) 0.268 / 0.96; 0.420 / 1.15 (legacy 0.314 / 1.09; 0.241 / 1.18). CYCLOPS full day 0.189 / 1.01 h vs legacy
+  0.181 / 0.44 h: draws 0 and 2 agree to 0.2 h, draw 1 lands in another ordering (median offset error 0.45 vs -0.03 h per tissue,
+  up to 4.9 h apart), so CYCLOPS is not reproducible run to run at n = 80 even on the whole day; window 0.144 / 1.11 (legacy
+  0.144 / 1.11). New here: n = 10, 20, 40 (`n` column) and `summary.csv`.
+- **CYCLOPS anchoring:** skill <= 0.11 in every tissue and condition (legacy <= 0.10); per-condition errors (sample and gene) equal the legacy within 0.01 h in
+  7 of 15 conditions, the others move by up to 1.4 h (CYCLOPS run-to-run). Breast case: GTEx breast skill 0.07.
+<!-- src: figure_1/output/method/{celltype_truth_scores_primary,celltype_truth_window_E1,baboon_readouts,baboon_gate,skin_truth_summary,tcga_cofe_meta}.csv, gtex_benchmark/tissues.csv, cyclops_anchoring/{scores,breast_summary}.csv; legacy outputs/paper/fig1_method/{gtex,anchoring,tcga} -->
 
 ## Deviations
 - **Pooled null (A31).** Animals are permuted within arm (legacy: over all animals), so the null 95 % quantile is slightly lower (0.78 vs 0.82); p identical.
