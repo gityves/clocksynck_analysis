@@ -96,6 +96,15 @@ Every script runs with `--subsample`. Full point estimates against `legacy/desyn
 | D6 clock outputs: n, retained, phase kept, amp_rel | 35, 0.657, 0.571, 0.882 (p 0.001) | 35, 0.657, 0.571, 0.882 | host arm identical; heat shock 9, 0.556, 0.444; all rhythmic 4,568, 0.173 |
 | D6c in-plane fraction (fast, vent), pull h | 0.074, 0.382; 15.18, 17.69 h | 0.073, 0.381; 15.08, 17.67 h | null 0.766 / 0.639 vs 0.809 / 0.590 (200 random scores) |
 
+## M3 full run (2026-10-26)
+`run.sh --jobs 4`, 1.0 h, peak 3.3 GB. Every table of the archive outputs (`outputs/paper/figure_S07_gtex_covariates_cues`)
+is reproduced to 1e-6 (A46, A47, A81, A81b, A90, A93, D1-D7; D4 to 0.006 h). First full runs, against
+`legacy/desync/validation/paired_damping/output/`: A101 bootstraps (500) and A101b (200) equal the legacy intervals (H101b lower
+bound -0.0117, FAIL, as legacy); A102.3 (age), A102.6 (targets), A102b A101 and A100 summaries identical. A102.4 (counts)
+differs as A102b A101b above (equal-n draws seeded by a different tissue list): pooled / matched total log ratio -0.737 /
+-0.136 (legacy -0.706 / +0.029), 26 / 23 tissues (legacy 27 / 22). A102b A91 clock excess +41.0 % (legacy +42.5 %).
+<!-- src: figure_3/output/gtex_cues/{a101_summary,a101b_summary,a102_*_summary,a102b_*_summary}.csv; legacy desync/validation/paired_damping/output/ -->
+
 ## Deviations
 - The selection table of the legacy is split over three files (A81b 11 tissues, A84 7 added, A89 8 added); here one 26-tissue table (same code, same halves) and the A81b file is its 11-tissue subset.
 - A101: as in the legacy, the 14 core genes are appended to the output genes, so core clock genes that A91 called clock-following count twice (kept for equivalence).

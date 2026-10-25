@@ -48,6 +48,15 @@ Every script runs with `--subsample` (A21: reduces bootstraps and permutations o
 
 Not rerun in full: A21 bootstraps (500; 20 in the check), A34 bootstrap (`--n-boot 100`; point estimates only), A36 gate (now `compute_baboon_stability.py`).
 
+## M3 full run (2026-10-25)
+`run.sh --jobs 4`, 1.4 h, peak 1.6 GB. A34, A36, A40, A41 tables equal the archive outputs (`outputs/paper/figure_S12_species`)
+to 1e-9 (`a34_primary` / `a34_offsets` gain the bootstrap columns: primary r -0.199, 95 % interval [-0.47, 0.07], 100
+bootstraps). A21 first full run here, against `legacy/desync/21_colon_injury/output/`: R21.1 identical; R21.2 Spearman d* /
+log z2 / log psi 0.964 / 0.583 / 0.483 (legacy 0.964 / 0.600 / 0.434); R21.3 all four immune verdicts indeterminate (as legacy);
+R21.4 epithelial shift untimed -8.70 h [-10.47, -6.58], timed -9.40 [-11.40, -7.16] (legacy -8.70 [-10.49, -6.68], -9.40
+[-11.40, -7.16]; 500 bootstraps); MDE fibroblast 0.62 (legacy 0.68), colonocyte and T infinite in both.
+<!-- src: figure_1/output/species/{a21_r212_recovery,a21_r213_immune,a21_r214_phase,a21_mde,a34_primary}.csv; legacy desync/21_colon_injury/output/ -->
+
 ## Deviations
 - **A21 timed truths** use a local known-host regression (`known_host`, the `on_host` formulas); the contrast uses `Dataset.contrast` with random permutations (1000) within ZT blocks instead of the exact 1296 labellings; untimed immune-family intervals use the mean of the members' bounds (draws not exposed).
 - **A34** needs `mixed_strata=True` (124 animals span several BioProjects); per-tissue gates by `gate(targets, hosts)` (`--tissue-gates`), per-study gates not run.
