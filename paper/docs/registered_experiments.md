@@ -613,3 +613,13 @@ interval (200) of its deviation excludes 0.
   the compartment's z when shifted genes are not dropped.
 Order: run before A138's Q2 (its clocksync arm uses the outcome). Compute: 14-gene fits, minutes per cell, run when the
 M3 lanes free workers.
+
+**A139 note (2026-10-25, before any A139 run).** Estimator E-a is clocksync's existing E4, `Dataset.gene_loadings`
+(per gene, free loading on the host of the other compartments; `dev_h` against the conserved waveform; weighted
+likelihood-ratio test of conserved vs free with a residual-permutation null). It was pre-registered in the archive
+cancer plan (2026-10-03) and used in the cancer pipeline (`summary_*_e4_genes`, descriptive), the cycling follow-ups
+(C3 half-life gradient; per-gene hi - lo timing, e.g. PER3 -2.1 h, no gene passes FDR) and A24-related checks. Its
+only validation was a null calibration (0 of 40 false positives, "low power", archive ANALYSIS_PLAN); its accuracy and
+power for known gene shifts under hospital hours were never simulated. A139 therefore also scores E4's likelihood-ratio
+test as a flag (false-flag rate in S0, power in S1 / S3) next to the bootstrap flag; until A139 is scored, every E4
+readout is unvalidated and is not quoted as a gene-specific finding.
