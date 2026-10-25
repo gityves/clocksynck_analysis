@@ -65,6 +65,9 @@ Proposals (see the chat summary of 2026-10-24; each would be registered or writt
   between malignant cells and patients is too large. -> WP5 to be redesigned around this (proposal in chat, to register).
   Follow-up (PI, 2026-10-25): (c) agreed: pull vs order becomes a clocksync readout, validated on the A133 grid first.
   Both WP5 (redesigned) and WP6 will run; cancer first (A138). Literature agents may start now.
+  A138 choices (PI, 2026-10-25): thresholds left to the lead (20 % / 50 %); CYCLOPS 2.0 tested both plain and with the
+  healthy whole-day anchoring of Li et al. 2024 (assumes tumour = healthy Fourier coefficients); the CoFE authors were
+  already told their tumour clock is wrong (no email needed). A138 registered (0162cc2).
 - **On hold:** plan rewrite; A136 registration.
 
 ## Answered
