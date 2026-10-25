@@ -49,6 +49,14 @@ full permutation numbers except the last row:
 | H106.2 cross gate VCT+SCT (13) | p 0.507 / 0.131, clock_cov 8.404 | identical | |
 | H106.2 ambient check | p_pairing 0.280, clock_cov 1.824, ratio 4.61 (< 5) | 0.357, 1.992, ratio 4.22 (< 5) | soup share differs, see Deviations; same verdict |
 
+## M3 full run (2026-10-25)
+`run.sh --jobs 4`, 1.9 h, peak 0.7 GB. A106, A107, A107b, A108 trajectories and A108c timed halves equal the archive outputs
+(`outputs/paper/figure_3_embryo`) byte for byte; `a108_timed.csv` to 5e-6 h. First full runs here: the A108 window gates at
+the pre-registered 1,000 permutations (clock share 0.0480, 0.0439, 0.0505, 0.0516; p_acrophase 0.634, 0.552, 0.332, 0.083, as
+legacy; no window passes) and the A108c lineage gates (104 rows, 33 testable; identical to the legacy
+`a108c_lineage_gates.csv` in every column including p, 0 difference; one passes: Mesoderm E15.0-E18.75).
+<!-- src: figure_2/output/embryo/{a108_gates,a108c_lineage_gates}.csv; legacy desync/validation/natural_experiments/output/a108c_lineage_gates.csv -->
+
 ## Deviations
 - **Majority assay (data).** The standard tables apply the legacy majority-assay rule over all compartments of a donor; the
   legacy `fetal` scripts applied it over the compartments of each call (macrophages alone, fibroblast/stromal alone).
