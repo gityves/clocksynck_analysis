@@ -15,6 +15,14 @@ Checked citations:
 - **CYCLOPS (Anafi 2017):** ">250 samples are required"; "It requires data from the entire periodic cycle to form an
   ellipse"; seeded ordering of hepatocellular carcinoma "was not able to generate a quality ordering".
 
+Our GTEx benchmark (timed truth, n = 80; CoFE as published genome-wide in 3 draws, CoFE on the clock genes only in 10):
+median absolute per-gene acrophase error 3.10 h (full day) / 3.30 h (08-18 h window) genome-wide vs 1.53 / 2.30 h on
+the clock genes only; tissue amplitude error 0.258 / 0.395 vs 0.115 / 0.116; failure rate 0.19 / 0.62 vs 0.24 / 0.14.
+Genome-wide CoFE recovers core-clock acrophases poorly even when samples cover the whole day, and does better when
+restricted to the clock genes (PI, 2026-10-25). The TCGA tumour clock-gene acrophases CoFE reports (e.g. NR1D2 about
+8 h late) are read against this error.
+<!-- src: paper/results/figure_1/output/method/gtex_benchmark/{genes,summary}.csv (M3 run 2026-10-25) -->
+
 ## Q1. Does the malignant clock carry an estimable, host-coupled signal? (single cell, gate-passing cohorts)
 - **H138.1:** pooled anchored coupling of the malignant compartment (copy-number-called malignant cells where available,
   else tumour epithelium) > 0: lower bound of the 95 % patient-bootstrap interval > 0 (DerSimonian-Laird over cohorts,
@@ -43,6 +51,15 @@ leading non-clock principal components of each TCGA cancer). Arms:
 - **H138.3 (uncoupled inference):** in the coupled-tumour arm (window 08-18 h, patient SD 2 h, n = 300), the
   tumour-minus-normal predicted-time difference is indistinguishable from uniform (Rayleigh p > 0.05) in > 50 % of
   replicates. Pass means CoFE's "no fixed timing relationship" does not follow from its readout.
+- **H138.6 (genome vs clock genes):** in the full-day and window arms (n = 300, patient SD 2 h), the median per-gene
+  acrophase error of the clock genes is larger with CoFE genome-wide than with CoFE on the clock genes only (paired over
+  replicates, one-sided Wilcoxon p < 0.05), replicating the GTEx benchmark on tumour-like structure; and in the null and
+  window arms, the share of clock genes whose acrophase deviates >= 8 h from the truth (the size of CoFE's NR1D2 shift)
+  under genome-wide CoFE is reported.
+- **D138.3 (TCGA, descriptive):** per cancer, agreement between the genome-wide CoFE ordering and the clock-gene-only
+  ordering (circular correlation), and the clock-gene acrophase order of each against the GTEx healthy reference
+  (`benchmark/tcga.py` `GTEX_MATCH`); which published deviations (NR1D2 +8 h, TEF, BHLHE40, PER2) survive the clock-only
+  ordering.
 - **D138.2 (descriptive):** where each TCGA cancer falls on the simulation map (CV curve depth, phase coverage, gene
   rhythmic fraction), and the same for CYCLOPS 2.0 on the TCGA cancers where it runs; recovery error with known truth
   in every arm (mean absolute error, `evaluate.py`).
