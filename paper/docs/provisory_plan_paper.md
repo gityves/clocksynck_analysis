@@ -231,6 +231,9 @@ V25.5 (breast surgery, 42 patients) is the only living-hospital validation of pe
 
 ## WP5. Why malignant cells lose clock coherence (A114)
 
+**Superseded (2026-10-25, PI, Q9 e):** replaced by A138 (what can be estimated about the clock in tumours; CoFE /
+CYCLOPS orderings tested by simulation), registered in `registered_experiments.md`; run before WP6.
+
 A86, A87 and A97 show that malignant cells keep amplitude but lose gene coherence, more so in proliferative tumours. A114 asks whether oncogenic transcription, copy number or proliferation itself explains it, and whether proliferating normal cells lose coherence too. In bulk tumours, proliferation rises with purity, and a mixture of incoherent malignant cells with coherent stroma becomes less coherent as purity rises, so every bulk coherence contrast is adjusted for purity.
 
 *Base code:* A87 and A97 `results/figure_5/scripts/cancer/{compute_decomposition,compute_proliferation,compute_delay}.py`, A24 `.../cancer/compute_cycling_a24.py`, A86 `.../cancer/compute_malignant_gate.py`; builders `common/datasets/{tcga_paired,cancer_sc,cells_cancer,cells_cancer_cycle,colon_chrono}`; A21 `results/figure_1/scripts/species/compute_colon_injury.py`.

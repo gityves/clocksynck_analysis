@@ -491,3 +491,76 @@ Datasets: the brain sets of WP0 item 8 (snRNA-seq, compartments as in A17). Code
   counts; cycling = Seurat S or G2M phase call (A24 definition) on malignant cells. The three scores enter one joint
   regression per gene; same statistic and nulls as H134.1. Not independent of H134.1 (shared neighbourhood genes).
 - **D134.3:** the 64 patients with >= 100 cells in both groups (halves >= 50).
+
+## A138 (2026-10-25, replaces WP5 / A114; written after A52, A83, A86, A87, A97, A134 and the GTEx method benchmark were scored, before any A138 readout; PI, Q9 e): what can be estimated about the clock in tumours?
+
+Motivation: published untimed orderings of tumours (CoFE, Ananthasubramaniam et al., PLoS Biol 2025, 11 TCGA
+adenocarcinomas; CYCLOPS / CYCLOPS 2.0 applications) may reflect the method rather than tumour clocks. CoFE's validity
+signal is an interior minimum of its cross-validation curve; it reports that tumour clocks "do not have a fixed timing
+relationship with clocks in healthy tissue", and its consensus tumour core clock places PER2, PER3, TEF and NR1D2 near
+ARNTL (Fig 2D, lead's reading of the image), where healthy tissue has them 9-14 h apart (GTEx reference). CYCLOPS
+requires ">250 samples" and "data from the entire periodic cycle" (Anafi 2017). Our GTEx benchmark (n = 80): CoFE
+genome-wide per-gene acrophase error 3.10 h / 3.30 h (full day / 08-18 h) vs 1.53 / 2.30 h on the clock genes only;
+CoFE flags its ordering as valid in all 11 TCGA cancers and in every GTEx run, including the 08-18 h windows. Sources and
+quotes: `paper/exploratory/A138_cancer_estimability/{literature,inventory,A138_draft}.md`. A failed test is reported as
+"not estimable at this design", never as "decoupled". Code: `paper/exploratory/A138_cancer_estimability/`.
+
+**Q1. Does the malignant clock carry an estimable host-coupled signal? (single cell, gate-passing cohorts)**
+- **H138.1:** pooled anchored coupling of the malignant compartment (copy-number-called malignant cells where available,
+  else tumour epithelium; learned A17 anchors) > 0: lower bound of the 95 % patient-bootstrap interval (1,000) > 0,
+  DerSimonian-Laird over cohorts as A17.
+- **D138.1 (descriptive):** per cohort, the malignant clock-plane variance split into host-coupled (c^2 of the anchored
+  fit), patient-specific (psi minus the Poisson expectation), between cells within patient (per-cell dispersion on the
+  same variance scale) and Poisson; the same for normal epithelium and stroma of the same patients (specificity
+  companion). Estimand of interest: patient-specific share, malignant minus normal epithelium.
+
+**Q2. When do untimed orderings report a clock that is not there? (simulation, then TCGA placement)**
+Simulator: genome-wide log-expression, p = 2,000 genes: the 15 CoFE clock genes at GTEx waveforms plus 15 % rhythmic
+followers (GTEx gene phases), and non-clock structure from TCGA BRCA (782 tumours; the cancer of Li et al. 2024): its
+leading non-clock principal components (purity, proliferation, subtype, copy-number blocks) with their variances. Arms
+(50 replicates per cell; n in {100, 300, 500}):
+- null: no clock (clock genes at mesor) plus the non-clock structure;
+- window: intact clock, samples 08-18 h;
+- full: intact clock over 24 h, patient phase SD in {0, 2, 4 h};
+- coupled: each patient's tumour clock = own normal-tissue clock + common offset + patient SD in {0, 2, 4 h}, sampled
+  08-18 h, tumour and normal ordered as in CoFE;
+- tumour coefficients: tumour clock-gene amplitudes and phases differ from healthy (amplitude x 0.5, PER/TEF/NR1D2
+  phases shifted 6 h), with whole-day healthy samples added as in Li et al. 2024 (CYCLOPS 2.0 with dataset and tumour
+  covariates).
+Methods: CoFE as published (genome-wide, CV, 5 restarts), CoFE on the clock genes only, CYCLOPS 2.0 with default seeds
+(without healthy samples, and with them in the tumour-coefficients arm). Check before any scoring (simulator gate): in the
+full arm without heterogeneity, CoFE and CYCLOPS recover the truth to within their published GTEx-like error (CoFE clock
+genes median acrophase error <= 2 h at n = 300); if not, Q2 stops and the simulator is fixed first.
+- **H138.2 (false validity):** null arm, n = 300: CoFE reports an interior CV minimum in > 20 % of replicates
+  (one-sided exact binomial test against 0.20, p < 0.05: pass at >= 16 of 50; smallest attainable p 1e-35; power
+  0.85 at a true rate of 0.38). Also reported: window arm; CYCLOPS 2.0's own fit statistic (fixed from its output
+  in a dated note before scoring) in the same arms.
+- **H138.3 (uncoupled inference):** coupled arm, patient SD 2 h, n = 300: the tumour-minus-normal predicted-time
+  difference passes as uniform (Rayleigh p > 0.05) in > 50 % of replicates (one-sided exact binomial against 0.50: pass at >= 32 of 50; smallest
+  attainable p 9e-16).
+  Pass: CoFE's "no fixed timing relationship" does not follow from its readout.
+- **H138.6 (genome vs clock genes):** full and window arms, n = 300, patient SD 2 h: median per-gene acrophase error of
+  the clock genes larger with CoFE genome-wide than with CoFE on the clock genes only (paired over replicates, one-sided
+  Wilcoxon p < 0.05).
+- **H138.7 (healthy anchoring):** tumour-coefficients arm, n = 300: CYCLOPS 2.0 with healthy whole-day samples recovers
+  the tumour clock-gene acrophases with median error > 3 h (one-sided, replicate bootstrap lower bound > 3 h), i.e. the
+  healthy-coefficient assumption biases tumour readouts toward the healthy clock.
+- **D138.2 / D138.3 (descriptive, TCGA):** where each of the 11 TCGA cancers falls on the simulation map (CV depth,
+  phase coverage, rhythmic fraction); per cancer, agreement of the genome-wide and clock-only CoFE orderings; ARNTL-to-
+  target acrophase differences (DBP, TEF, PER2, PER3, NR1D1, NR1D2) against GTEx, and the same differences in the
+  simulation when the truth is a healthy clock (does genome-wide CoFE pull targets toward ARNTL?); share of clock genes
+  shifted >= 8 h under the null and window arms.
+
+**Q3. Does the malignant clock follow the patient's own normal tissue? (paired designs)**
+- **H138.4:** TCGA paired tumour-normal (10 cancers, 517 patients): circular correlation of the tumour clock state with
+  the same patient's normal state exceeds that with normals permuted across patients within cancer (10,000
+  permutations, pooled over cancers, one-sided p < 0.05; smallest attainable p 1e-4). Gate: the cancer's normals pass
+  the clock gate. Specificity companion on the same permutations: expression-matched pseudo-clock gene sets (A52 rule).
+- **H138.5:** single cell, malignant (or tumour epithelium) vs adjacent-normal epithelium of the same patient,
+  host-referenced states, cohorts with >= 6 paired patients; same permutation scheme; companion: tumour stroma vs
+  adjacent stroma.
+- **Power (before scoring, dated note):** null SD and MDE of the H138.1, H138.4 and H138.5 statistics at their designs.
+
+Order: Q3 and Q1 (existing data and code), then Q2 after the simulator gate. Holm over H138.1-H138.7 within A138.
+Reading: H138.2 / H138.3 / H138.6 / H138.7 pass -> the published tumour orderings and clock structures are not evidence
+of tumour clocks; H138.1 / H138.4 / H138.5 then state what is estimable (or that nothing is, at these designs).
