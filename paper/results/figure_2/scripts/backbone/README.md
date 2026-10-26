@@ -65,6 +65,17 @@ estimators, anchor flags), `family_medians.csv` (variant, estimator, family, med
 
 Subsample check of `compute_cancer_split.py` (WP0 item 2, 2026-10-23): the archive's stored subsample `a18_cancer_groups.csv` came from an earlier script version that drew each permuted plane and its splits interleaved; only `D_null` (and the columns derived from it) differ, D is deterministic. The draw order here is the one of the archive's full run: a copy of the current archive script and this one give byte-identical outputs at `--subsample 12 --seed 0`, and the archive full run in this order (snapshot `a18_cancer_groups.csv`) matches the legacy `vm_cnv_groups.csv` (2,249 groups, D_null to 7e-13); the migrated full run is left to M3. `D_null` is a mean over 10 permuted planes and is noisy per group (the two orders differ by up to 144 per group, same mean); read it pooled.
 
+## M3 full run (2026-10-26)
+`run.sh --jobs 4`, 1.1 h, peak 3.4 GB (first full `run.sh`). Against the archive outputs (`outputs/paper/figure_3_backbone`):
+family medians and couplings to 1e-5, cancer split and its contrasts, HBCC, PD DMV and Braak to 1e-9; thinning identical with
+the thinned intervals now filled (NaN in the archive). A104 GTEx: periphery rho 0.734 [0.621, 0.798], brain -0.115 (200
+bootstraps). Per-cell split, all 9 targets (229 rows; the archive copy held 5), against `legacy/desync/common_output/`: D
+identical (4e-15), eligible flags identical; R median absolute difference 0.003 (up to 0.25 in a few small groups; host refitted
+per group, deviation 1). Per-cell contrasts with full bootstraps (100 rows): d_R interval excludes 0 in 5 (legacy 4), d log
+lambda in 5 (4), d_D in 6 (2); the d_R changes are at the boundary (HLCA fibrotic fibroblast lower bound +0.003 vs -0.001, AD
+MSSM astrocyte 0.000 vs -0.013, AD MSSM OPC upper +0.004 vs -0.083). A18 per-cell readouts are exploratory; no verdict changes.
+<!-- src: figure_2/output/backbone/{a18_cell_split,a18_cell_split_contrasts,a18_thinning,a104_gtex}.csv; legacy desync/common_output/a18_cell_split*.csv -->
+
 ## Deviations
 1. **Host in the per-cell rho.** The legacy held the pooled anchored host fixed and took s = 2 psi c / (1 - c) of the group's
    donors. `Dataset.contrast` reports only c and ratios per group, not z2, psi, V, so here the host is refitted on each
@@ -73,7 +84,7 @@ Subsample check of `compute_cancer_split.py` (WP0 item 2, 2026-10-23): the archi
 2. **Seeds.** One seed (0) for all targets (this reproduces the legacy D exactly); bootstrap draws differ by Monte Carlo.
 3. **Family medians** include the Tabula Sapiens fit in variant `all` (as the legacy PLAN note: 267 compartments) and
    exclude it in `no_tabula`.
-4. **Not rerun:** bootstraps of the per-cell contrasts (full 100 draws take hours per target), the full `run.sh`.
+4. **Bootstraps of the per-cell contrasts** were first run in full in M3 (above).
 5. **Braak groups (A18 part 3 item 3).** `Dataset.contrast` fits one host on the donors of the two groups it compares, so the stage-0
    coupling and the other stage's coupling are read on the host of stages 0 and that stage (legacy: the host of all donors, fixed;
    jackknife SE, a deviation of the original already). The SE here is the donor-bootstrap SD of `Dataset.contrast` (host fixed within
