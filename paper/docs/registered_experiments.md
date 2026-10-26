@@ -668,3 +668,41 @@ readout (PI, 2026-10-26): (i) gate and candidate anchor compartments (A17 rules)
 (myeloid and CD8+ T fractions) and antigen presentation (myeloid) vs T-cell recognition along the host phase within the
 daytime window (human daytime ~ mouse CT16-CT22 after the 12 h shift); with daytime sampling only, the expectation is a
 small change; the readout is its direction.
+
+**A140 Q2 readouts (dated note 2026-10-26, after the data inventory `paper/exploratory/A140_dip_cyclops/inventory_GSE266919.md`
+and before any clock readout on GSE266919).** Mouse directions read from the preprint figures (no tables available):
+from CT16 to CT22, immune fractions (S1H) CD4+ T about 48 -> 52 %, CD8+ T about 13 -> 17 %, Macro/Mono about 11 -> 6 %;
+Macro/Mono antigen-presentation score (5F) high -> about neutral; T-cell interferon-response and effector scores (5C) rise.
+After the 12 h shift, CT16 -> CT22 is human CT4 -> CT10 (late morning to late afternoon). The mouse fractions change
+monotonically over CT4-CT22 (CD4+ T 26 -> 52 %), so the mouse "rhythm" may itself be a trend.
+- **Data and units.** Compartments = the five deposited objects (CD4_T, CD8_T, myeloid, B, NK); no stromal, vascular or
+  epithelial compartment exists. Unit = biopsy (sample). Pseudobulk = raw UMI sums per sample x compartment, kept at
+  >= 20 cells. Primary set: the 44 Pre-treatment samples (one per patient), strata = biopsy site (breast vs other).
+  Sensitivity: all 78 samples, strata = Group x site, patient as permutation block where the call supports it
+  (descriptive).
+- **(i) Gate and anchors.** `Dataset.gate(n_perm=1000)`, pass at p < 0.05. Anchors by the A17 learned rule
+  (`host_identity/anchor_rule.py`, frozen learning tables, target study zhang2025, tissue breast). From the learning
+  table alone (no GSE266919 data read): myeloid ranks first (pooled 0.202, lower 0.136) and lymphocyte qualifies (0.091,
+  lower 0.027), so all five compartments are candidate anchors, subject to the target's own pair confirmation. The
+  fixed rule gives no anchor. The host is therefore an immune host, not comparable with A17's stromal-host couplings.
+  Reported: per-compartment leave-one-out coupling, `stability` (identified at >= 0.8) and `free_agreement`. Gate
+  failed or host unstable: (iii) is not estimable.
+  <!-- src: paper/results/extended_data/output/host_identity/a17_anchor_families.csv (target organ_breast, all tissues) -->
+- **(ii) Published pipeline.** Run after the Q1 simulator gate passes, on the CD4_T, CD8_T and myeloid pseudobulks of the
+  primary set. Table S5 is unavailable, so two seeds are used: the CYCLOPS 2.0 default gene selection (500 genes), and
+  the same plus the 14 GTEx clock genes. Readouts 1-4 of the draft (cross-type circular r, DIP coverage, acrophase
+  concentration, clock-gene order), plus the DIP and the clocksync host phase compared (circular r). Paired Pre - Post
+  host phase within the 32 patients with both is descriptive (treatment confounds DIP bins).
+- **(iii) Directional replication.** Host phase per sample from `Dataset.host()`. Its orientation (larger = later) is
+  checked on a simulated timed cohort before scoring. The phase is unwrapped around the circular mean (within +/- 12 h).
+  Per readout: OLS slope on host phase (per h) with one intercept per stratum; 95 % CI by 1,000 sample bootstraps with
+  host refit; p from 1,000 within-stratum permutations of the host phase (the specificity companion: an arbitrary phase
+  with the same spread). Predicted signs (mouse CT16 -> CT22):
+  - **P140.1:** CD8_T fraction of all deposited immune cells, logit, slope > 0.
+  - **P140.2:** myeloid fraction, logit, slope < 0.
+  - **P140.3:** myeloid antigen-presentation score, slope < 0. The score is the mean z-scored log CPM of HLA-DRA,
+    HLA-DRB1, HLA-DPA1, HLA-DPB1, HLA-DQA1, HLA-DQB1, CD74, CIITA, HLA-A, HLA-B, HLA-C, B2M, TAP1, TAP2, TAPBP, PSMB8 and
+    PSMB9 (class II and class I sub-scores descriptive).
+  Holm over P140.1-P140.3, one-sided in the predicted direction. "Same direction" = point estimate of the predicted
+  sign; "replicated" = Holm-adjusted p < 0.05. Descriptive: CD4_T fraction (> 0), T-cell interferon-response and
+  recognition genes (CD3D, CD3E, LCK, TRBC1), and the same readouts on the DIP of (ii) for comparison.
