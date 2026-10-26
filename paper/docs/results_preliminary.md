@@ -454,3 +454,29 @@ V25.1 and R25 on subsamples only).
   07-19 h, p 0.011 (archive 15 of 17, p 0.001); T3 r living 0.268 vs deceased 0.332, p 0.173 (archive p 0.214).
 - Window check (GTEx 08-18 h vs others) at 500 bootstraps: observed / predicted 1.37 [1.05, 1.80] (archive [1.05, 1.80]).
 <!-- src: paper/results/figure_1/output/windows/internal_time_{sim_summary,tests}.csv; window_check.csv; logs/m3_windows.log (V25.2 line) -->
+
+## A140 Q2 (i), (iii) (scored 2026-10-26): GSE266919 immune compartments do not pass the gate; P140.1-3 not estimable
+
+Scored as fixed in the dated note (`registered_experiments.md`, A140 Q2 readouts; commit ff64bdd). Five compartments
+(B, CD4_T, CD8_T, NK, myeloid), pseudobulks kept at >= 20 cells. Primary set: 43 of the 44 Pre-treatment samples (one has
+no compartment with >= 20 cells). Sensitivity set: 77 of 78 samples.
+- **Gate fails in both sets.**
+  - The shared covariance between compartments of a biopsy is real (pairing p 0.001 in both).
+  - It is not clock-shaped (acrophase p 0.459 primary, 0.540 all-78). The clock share is 0.025 against a null mean of
+    0.028 (all-78: 0.025 vs 0.031).
+  - Per CLAUDE.md, the failed gate is uninformative, not "decoupled": couplings are withheld, and P140.1-P140.3
+    (composition and antigen presentation along the host phase) are not estimable.
+- **Anchors.** The learned rule kept all five compartments (status ok); the fixed rule gives none. Pooled family scores
+  at tissue scope were myeloid 0.199 (lower 0.113) and lymphocyte 0.123 (lower 0.040). The note quoted the organ_breast
+  all-tissue table (0.202 / 0.091), so the scores differ, but the anchor outcome is the same.
+- **Host.** Stability 1.000 (median similarity 0.980). The host is well identified but is not a clock: the dominant
+  shared state of the immune compartments within a biopsy is non-clock.
+- **Orientation check** (simulated timed cohort, 5 seeds): a larger host phase is later. R(phase - t) is 0.984-0.989,
+  against 0.025-0.188 for R(phase + t).
+- **Reading (descriptive, not a test of H140.1).** This is the situation H140.1 describes: strong shared non-clock
+  variation across immune compartments of the same sample. On these data, cross-type concordance of an ordering that
+  is not gated for clock shape can arise from it.
+- **Process note.** During development the readout code path ran once on the primary set forced past the gate (40
+  bootstraps, 100 permutations), as a code check. Its numbers were not kept or read into any decision.
+- **Next.** Part (ii) (the published pipeline) waits for the Q1 simulator gate.
+<!-- src: paper/exploratory/A140_dip_cyclops/output/q2/{part_i_summary,part_iii_readouts,orientation,primary_families}.csv -->
