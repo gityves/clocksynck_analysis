@@ -82,6 +82,19 @@ different points (loading differs by 0.19, log-likelihood -167.350 vs -167.339).
 Not isolated: the A39 rows n = 45 / 25 (median R 0.199 / 0.237, third decimal) and `a31_window_E1` (0.006); the
 A39 verdict is unchanged. Rule adopted after this check (PI, 2026-10-25; a robustness rule, not chosen on the outcome): `gene_rhythms` refits a host that has not converged in 3,000 EM maps with 100,000, and a compartment whose host still has not converged is not estimable (no rows, `.attrs["hosts_not_converged"]`, RuntimeWarning). Both hosts above converge on the retry (skin endothelial in 55,859 maps, log-likelihood -167.320; breast_hbca endothelial in 4,766). The group is rerun with the rule (M3b, below).
 
+**M3b rerun with the convergence rule (2026-10-26, `run.sh --jobs 4`, 45 min, peak 12.2 GB; A31 no longer here).**
+Against the first M3 outputs and the archive copies, only the rows touched by the two retried hosts move: `atlas_peratlas`
+23 of 108 rows (skin_ganier and breast_hbca), `atlas_classes` 2 of 71, `modes_peratlas` 228 of 1,080, `modes_composition` 6
+of 213; every other table is identical or within 1e-9 (A32 to 1e-14, H50 to 5e-10). A31b primary pooled followers: R 0.436,
+null 95 % 0.430, p 0.059; rise / fall 0.455 (p 0.75): fails on rise / fall, as the archive copy (0.436, 0.430, 0.059;
+0.455). A39: n = 45 median R 0.199 vs median null 95 % 0.296, 3 / 10 draws pass (primary fails, as before); n = 100 0.282,
+5 / 10; n = 200 0.560; n = 25 infeasible. In one A39 lung draw seven compartments stay non-converged after the retry and are
+left out (not estimable). The A39 subsamples also hit saturated designs (no more pseudobulks than design columns), where `se` was 0
+and every gene got p = 0; clocksync e1b6658 makes such a compartment not estimable. `compute_donor_curve.py` is rerun with it
+(queued after lane C); the n = 25, 10-donor-class row (`n25_md10`, descriptive) is the one that moved here (median R 0.248,
+4 / 10 pass; first M3 0.237, 3 / 10).
+<!-- src: figure_2/output/gene_rhythms/{atlas_primary,atlas_peratlas,atlas_classes,modes_peratlas,modes_composition,a39_summary}.csv (M3b, 2026-10-26) vs scratchpad gr_m3a/ and m3_snapshot_backup/2026-10-24 -->
+
 **A31 deduplicated (2026-10-25).** A31 (mouse colon cell types against known ZT) was computed here and in
 `figure_1/scripts/method/compute_celltype_truth.py`. On the M3 outputs the two copies give identical estimates (R, offset, A, n,
 within 3 h, rise / fall to 1e-12; every gene row identical); only the permutation nulls differ (pooled followers null 95 %
