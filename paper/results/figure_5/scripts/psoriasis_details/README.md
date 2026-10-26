@@ -85,6 +85,34 @@ and only reduce resamples). Full point estimates against `legacy/desync/validati
 | A84 matched sets (core minus cue, h): IBD, TCGA | -0.363, -0.826 | -0.363, -0.759 | TCGA as above |
 | A88 surgical minus outpatient (12 / 23 units), diff, p lower | 0.6435, 0.997 (0.190, 1.112) | 0.6435, 0.998 (0.189, 1.123) | FAIL as legacy; aggregates only |
 
+## M3 full run (2026-10-26)
+`run.sh --jobs 4` (2026-10-24/25: A53 to A84 up to `compute_cues_diseases`, then killed for memory at 30.6 GB after 3 h 24 min); `compute_cues_matched.py` and
+`compute_cue_context.py` rerun with `--jobs 1` (17 and 9 min, peak 6.9 / 6.1 GB; `logs/jobs.tsv`). Against the archive copies
+(`outputs/paper/figure_S09_psoriasis_details`, reduced resampling) and the legacy full runs:
+- **Point estimates identical** to the archive copies in every table (offsets, correlations, gate shares, couplings; `a60_*_coupling` within 2e-7). Resamples
+  now at their registered sizes: A59 and A62 / A79 / A82 / A84 swaps 10,000, A60 / A61 / A65 / A69 bootstraps 500 (A61 without GSE278330 200), A63 / A65
+  permutations 1,000, A66 300, A53 H53.1 2,000 swaps and 200 pseudo-clock sets.
+- **No registered verdict changes.** H53.2 FAIL (psoriasis r 0.3611, pseudo q05 -0.2450; `a53_skin_pooled.csv`), H53.1 FAIL (stat 0.2194, p_swap 0.8286;
+  `a53_taurus_verdict.csv`, first full run, legacy 0.2196 / 0.8276), H55.1 FAIL / H55.2 PASS (offset -0.3510 h, p 0.0297; `a55_ibd_pooled.csv`), H59 FAIL
+  (offset -0.3873 h, p 0.0638; `a59_all_pooled.csv`), H62.1 FAIL (p 0.1617; `a62_layers.csv`), H63.1 FAIL (p 0.3097; `a63_verdict.csv`), H65.1 / H65.2 FAIL
+  (p_dG 0.3027, p_dE 0.5534; `a65_verdict.csv`), H67.1 PASS, H68 FAIL, H76.1 FAIL, H77.1 FAIL, H79.1 PASS (p_lower 0.2214; `a79_verdict.csv`), H82 and H84 no
+  offset (Holm p 1.0; `a82_summary.csv`, `a84_summary.csv`), H88 FAIL (diff 0.6435 h, p 0.9976; `a88_verdict.csv`), A61 reading undetermined (all units,
+  composition -0.4866 h) / state mix (without GSE278330, -0.9735 h; `a61_*_verdict.csv`, `a61_*_prediction.csv`).
+- **p values** equal the legacy full runs where the swap size is the same (A59, A62, A82, A84, A88: identical; A55 UC 0.0451 vs legacy 0.0481, Monte Carlo)
+  and the text of the archive RESULTS (A59 p 0.064, A63 p 0.31, A65 p 0.30 / 0.55).
+- **One sensitivity row changes side of 0.05:** A59 without mycosis fungoides, offset p 0.0480 (archive copy, PASS) -> 0.0539 (FAIL; `a59_no_mf_pooled.csv`;
+  legacy 0.0539). Descriptive discoid lupus (`a59_cutaneous_lupus_discoid_pooled.csv`) variance p 0.0559 -> 0.0360, H59.1 still FAIL.
+- **Bootstrap intervals widen** with 500 resamples (the archive copies used 10 to 30): A65 dG [-3.7936, 1.1781] -> [-10.7782, 6.4399]; A63 d4 - d1 over all
+  donors [0.4606, 2.2343] -> [-0.2842, 2.1585]; A60 full predicted delay [0.0340, 5.2128] -> [-2.1043, 5.4183] (composition stays above 0: lower bound
+  0.6692); A64 healthy kc_d4 vs dermal lower bound 0.9936 -> -0.9689. The registered readouts of A63 and A65 are the swap p, not these intervals; the legacy
+  full-run intervals agree with the new ones.
+- **A66 volar** (4 donors) remains not estimable (`a66_sites.csv`, n_boot 0); the legacy run had estimates.
+- **TCGA pooled core minus cue** differs from the legacy full run (A82 -0.2369 vs -0.1831 h, A84 -0.8256 vs -0.7589 h; `a82_tcga_verdict.csv`,
+  `a84_tcga_verdict.csv`); per-cancer rows are identical to legacy, no decision depends on it (p_two 0.9189 / 0.9925).
+- New tables without archive copy: `a53_taurus_{classes,counts,nulls,verdict}.csv`.
+<!-- src: figure_5/output/psoriasis_details/*.csv (M3, 2026-10-24/26) vs m3_snapshot_backup/2026-10-24 and legacy/desync/validation/paired_damping/output -->
+The Checks table above (subsample figures) and the Open item "not rerun in full" are superseded by this run.
+
 ## Deviations
 - **Resample sizes in the checks.** A53 and A59 used 1,000 swaps, A55 10,000, A62 and A79 2,000 (code defaults: pre-registered); the A55 offset p at 1,000 swaps (0.045 for all gut) was 2.8 Monte Carlo SE from the 10,000-swap value (0.030), so it was rerun at 10,000.
 - **A53 pipeline.** `clocksync.paired` pools all cohorts together and tests r > 0; A53 pools per disease and tests r < 0
