@@ -14,7 +14,8 @@ Reading (A26): if V26.1 and V26.2 pass, per-cohort centres are interpreted for i
 V26.1 is not ported: `Dataset` takes counts, not Chen's arrays), so A25's cohort-level reading stands.
 
     python compute_r26_cohorts.py [--subsample N] [--jobs 4] [--g gtex chen]
-`--subsample N`: eight cohorts, N donors each, 20 bootstraps.
+`--subsample N`: eight cohorts, N donors each, 20 bootstraps. Each cohort's uncorrected and corrected reads are separate tasks
+(`--jobs` up to 3 x cohorts; joblib prints progress).
 Outputs: paper/results/extended_data/output/simulations/r26_{cohorts,tests_<g>,t4}.csv
 Legacy: legacy/desync/common/a26_nontemporal.py (apply step; common_output/a26_cohorts.csv, a26_tests_{gtex,chen}.csv, a26_t4.csv)
 """
@@ -65,20 +66,20 @@ def read(ds, e, n_boot, seed):
 
 
 def one(entry, klass, g, src, n_boot, subsample, seed):
+    """One read of one cohort: uncorrected (`src` "none") or corrected with g (`src` "gtex" / "chen"). Reads are separate tasks so
+    that a slow cohort's three reads run in parallel; seeds as in a joint read, so the rows do not depend on the split."""
     limit_threads(1)
     try:
         pb, donors, anc, rule = CI.cohort(entry, subsample, seed)
         if anc is None:
-            return [dict(entry=entry, klass=klass, g="none", status="no anchors"), dict(entry=entry, klass=klass, g=src, status="no anchors")]
+            return [dict(entry=entry, klass=klass, g=src, status="no anchors")]
         ds = cs.Dataset(pb, anchors=anc, name=entry)
-        e0, _ = T.host_estimate(ds, anc)
-        rows = [dict(entry=entry, klass=klass, g="none", rule=rule, n=len(ds.donor_ids), n_anchors=len(anc), status="ok") | read(ds, e0, n_boot, seed)]
-        y = NT.gene_centred(log_expr(ds.table[GENES], ds.table.depth.to_numpy(float)).to_numpy())
-        s = NT.donor_score(y, ds.data.group, ds.data.resection, ds.waveform, g)
-        dsc = cs.Dataset(NT.correct_counts(ds, s, seed), anchors=anc, name=entry)
-        e1, _ = T.host_estimate(dsc, anc)
-        rows.append(dict(entry=entry, klass=klass, g=src, rule=rule, n=len(dsc.donor_ids), n_anchors=len(anc), status="ok") | read(dsc, e1, n_boot, seed))
-        return rows
+        if src != "none":
+            y = NT.gene_centred(log_expr(ds.table[GENES], ds.table.depth.to_numpy(float)).to_numpy())
+            s = NT.donor_score(y, ds.data.group, ds.data.resection, ds.waveform, g)
+            ds = cs.Dataset(NT.correct_counts(ds, s, seed), anchors=anc, name=entry)
+        e, _ = T.host_estimate(ds, anc)
+        return [dict(entry=entry, klass=klass, g=src, rule=rule, n=len(ds.donor_ids), n_anchors=len(anc), status="ok") | read(ds, e, n_boot, seed)]
     except Exception as ex:
         return [dict(entry=entry, klass=klass, g=src, status=f"error: {type(ex).__name__}: {ex}")]
 
@@ -101,13 +102,10 @@ def main(argv=None):
         todo = [t for t in todo if t[0] in ("skin_ad", "kidney_sc", "heart", "lung_natri_control", "islets", "ckd_sc", "psychad_mssm", "lung_hlca|hospital")]
     sub = args.subsample
     gs = {src: learn(src, sub, args.seed) for src in args.g}
-    allrows = []
-    for src, g in gs.items():
-        res = Parallel(n_jobs=args.jobs)(delayed(one)(e, k, g, src, run["n_boot"], sub, args.seed) for e, k in todo)
-        rows = pd.DataFrame([r for rr in res for r in rr])
-        allrows.append(rows)
-    D = pd.concat(allrows, ignore_index=True)
-    D = D[~((D.g == "none") & D.duplicated(["entry", "g"]))].reset_index(drop=True)  # the uncorrected rows are the same for every g
+    tasks = [(e, k, None, "none") for e, k in todo] + [(e, k, g, src) for src, g in gs.items() for e, k in todo]
+    res = Parallel(n_jobs=args.jobs, verbose=10)(delayed(one)(e, k, g, src, run["n_boot"], sub, args.seed)
+                                                 for e, k, g, src in tasks)
+    D = pd.DataFrame([r for rr in res for r in rr])
     D.to_csv(out / "r26_cohorts.csv", index=False)
     t4 = []
     for src in args.g:
