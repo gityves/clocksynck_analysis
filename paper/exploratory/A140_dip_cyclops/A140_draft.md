@@ -11,7 +11,13 @@ sample, ordered jointly by CYCLOPS 2.0 with cell type as a covariate. The seed i
 genes" of the same three compartments in their timed mouse tumours, mapped to human orthologs (Table S5, not in the PDF;
 its size and whether it contains core clock genes are unknown). Per sample, the donor internal phase (DIP) is the circular mean of the three
 phases, after iteratively removing cell types more than pi/2 from the mean (up to 5 iterations); a 12 h shift maps mouse to
-human time. Samples are binned into six DIP groups; DiscoRhythm on the binned pseudobulks.
+human time. Samples are binned into six DIP groups; DiscoRhythm on the binned pseudobulks. No healthy reference, projection,
+GTEx or timed human sample is mentioned (Li et al. 2024 state their projection explicitly): the reading here is a free fit
+on the 228 tumour pseudobulks, the cell-type covariate's offsets learned from the cohort itself. Data: GEO GSE266919
+(whether the 76 samples are 76 patients or repeated biopsies of fewer patients is to be checked).
+Internal consistency: the DIP is read as clock time (daytime immune activation, link to morning immunotherapy), which needs
+immune clocks to follow the host; then DIPs should cluster in surgical hours. If immune clocks in tumours were instead
+desynchronised from the host, a spread DIP would be possible but would no longer be clock time.
 
 ## Claims, and why each can arise without a clock (lead's reading of the figures)
 1. **Cross-compartment concordance** (S8B: circular r 0.81 myeloid-CD8, 0.80 myeloid-CD4, 0.92 CD8-CD4). The three
