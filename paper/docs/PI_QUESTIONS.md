@@ -18,6 +18,13 @@ PsychAD excitatory neurons gamma 0.125, OPC 0.145). Lung AT1 and NK/ILC fits mos
 - **On hold:** any use of the A19 age readouts (neuron gamma) in figures or text; the erratum. M3 of resilience runs as is.
 - Evidence: `results/extended_data/scripts/calibration/README.md` (M3 full run), `output/calibration/age_acceptance_*.csv`.
 - **Answer (PI, 2026-10-26), part (a):** investigate. Diagnostic `paper/exploratory/A19_acceptance_check/check_null.py` (post hoc, real ages not read). Part (b) open.
+- **Diagnostic result (2026-10-26):** the simulated null is too narrow in brain (SD ratio permutation / simulation
+  1.10-1.28; 8-13 % outside its 95 %) and off-centre in the lung atlas (AT1 locked amplitude t median 1.84 vs 0.17; 34 %
+  outside); the age fit is degenerate (own noise at floor) in 78-84 % of AT1 and NK/ILC permutations
+  (`paper/exploratory/A19_acceptance_check/README.md`). Proposal for (b): add a within-stratum permutation null to
+  `Dataset.covariate` (`null="permutation"`, default; refit per permutation; fits with own noise at the floor reported as
+  not estimable for gamma), rerun the acceptance with it, then re-read A19 part 2 on the real ages as an erratum. Needs
+  your go (clocksync change).
 
 ### Q2 (2026-10-23): figure-table numbers used against their archive verdict (WP0 item 1)
 - A104 rho +0.73 quoted as support; H104.1 predicted rho < 0 (archive: not supported; H104.2 not replicated).
