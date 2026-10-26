@@ -623,3 +623,48 @@ only validation was a null calibration (0 of 40 false positives, "low power", ar
 power for known gene shifts under hospital hours were never simulated. A139 therefore also scores E4's likelihood-ratio
 test as a flag (false-flag rate in S0, power in S1 / S3) next to the bootstrap flag; until A139 is scored, every E4
 readout is unvalidated and is not quoted as a gene-specific finding.
+
+## A140 (2026-10-26; written after reading the preprint's Fig 7 and Fig S8 and after A17 (cancer) was scored, before any A140 run; PI, 2026-10-26): does a CYCLOPS 2.0 donor internal phase across immune compartments report a clock that is not there?
+
+Complements A138 Q2 (bulk tumours). Target: the multi-compartment design of the bioRxiv preprint "Circadian misalignment
+underlies immune escape in breast cancer" (doi 10.64898/2026.05.26.726543; archive `literature/circadian_breast_cancer{,_supp}.pdf`):
+TNBC scRNA-seq (Zhang et al., Cancer Cell 2025, GEO GSE266919, 76 samples), pseudobulks of CD4+ T, CD8+ T and myeloid
+cells ordered jointly by CYCLOPS 2.0 with cell type as a covariate (free fit on the cohort: no healthy reference or
+projection is described), seed = union of mouse immune "strongly correlated circadian genes" (Table S5, not available),
+donor internal phase (DIP) = circular mean of the three phases after iterative removal of phases > pi/2 from the mean,
+12 h mouse-to-human shift, six DIP bins, DiscoRhythm. Claims read as possible artefacts (S8B cross-type circular r
+0.80-0.92; S8C DIPs over about three quarters of the cycle for surgical samples; S8D acrophases of thousands of rhythmic
+genes in one sector; S8E/F clock genes in primate order) and the reasons are in `paper/exploratory/A140_dip_cyclops/A140_draft.md`.
+Code: `paper/exploratory/A140_dip_cyclops/`. A failed clocksync gate is reported as not estimable, never as decoupled.
+
+**Q1. Simulation of the design.** 76 patients x 3 compartments (CD4-like, CD8-like, myeloid-like) at single-cell
+pseudobulk depth (`clocksync.simulate`); p = 2,000 genes: clock genes at GTEx waveforms, rhythmic followers (GTEx gene
+phases), and a non-clock patient factor (K in {1, 3} shared axes loading on 10-30 % of genes, variance calibrated to the
+leading non-clock principal components of our gate-passing tumour immune pseudobulks). Sampling 08-18 h unless stated.
+Arms: A coupled clock (one patient clock shared by the three compartments, coupling 0.8) plus the factor; B no clock
+(clock genes at mesor) plus the factor; C independent clocks (each compartment its own phase, uniform over patients)
+plus the factor; D arm A sampled over 24 h (positive control). Seed grid: 50, 150, 500, 1,500 genes, the genes most
+correlated with the factor and the clock in a simulated timed reference, with and without the core clock genes; 50
+replicates per cell. Pipeline as published (CYCLOPS 2.0 with the cell-type covariate, DIP with the pi/2 rule, six bins,
+cosinor on bin means, p < 0.05). Same data through `clocksync` (free host on the three compartments, gate).
+Simulator gate (before scoring): in arm D at seed 1,500, CYCLOPS phases reach circular correlation >= 0.7 with the truth;
+if not, Q1 stops and the pipeline is fixed first.
+- **H140.1 (false concordance):** arm B, seed 500, K = 1: median cross-compartment circular r of the CYCLOPS phases
+  >= 0.5 in more than 50 % of replicates (one-sided exact binomial against 0.5, p < 0.05: pass at >= 32 of 50).
+- **H140.2 (false rhythms):** arm B, seed 500, K = 1: >= 500 rhythmic genes called per compartment in more than 50 % of
+  replicates (same test).
+- **H140.3 (clocksync specificity and sensitivity):** gate passes in <= 10 % of replicates in arm B and in arm C
+  (one-sided exact binomial against 0.10 in each, p < 0.05: pass at <= 1 of 50), and in >= 80 % in arm A (exact binomial
+  against 0.80 not rejected downward at p < 0.05: pass at >= 35 of 50).
+- **Descriptive:** DIP coverage (share of the circle, Rayleigh R), acrophase concentration of the called genes (Rayleigh
+  R) and clock-gene order (A138 `GTEX_MATCH`) per arm, over the whole seed grid and K = 3.
+Holm over H140.1-H140.3. Reading: H140.1 and H140.2 pass -> the preprint's concordance and rhythm counts are expected
+without a clock at its design; H140.3 states whether clocksync separates the arms.
+
+**Q2. The preprint's cohort (GSE266919).** Data: processed matrices from GEO (PROVENANCE.md). Readouts, fixed in a dated
+note after the data inventory (samples per patient, compartments, cell counts, available metadata) and before any clock
+readout (PI, 2026-10-26): (i) gate and candidate anchor compartments (A17 rules); (ii) the published pipeline and
+`clocksync` on the same pseudobulks; (iii) directional replication of the preprint's mouse findings on TME composition
+(myeloid and CD8+ T fractions) and antigen presentation (myeloid) vs T-cell recognition along the host phase within the
+daytime window (human daytime ~ mouse CT16-CT22 after the 12 h shift); with daytime sampling only, the expectation is a
+small change; the readout is its direction.
