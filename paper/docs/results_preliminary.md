@@ -7,6 +7,26 @@ archive section they correct.
 
 ## Errata to the archive
 
+### 2026-10-26, PI Q10: A19 part 2 re-read with a within-stratum age permutation null (corrects archive RESULTS "A19 Part 2, Secondary")
+
+The archive validated `Dataset.covariate` with a simulated null. At the real count tables it is miscalibrated: null
+rejection reached 0.220, with 14 of 24 cells above the registered 0.07 (PI_QUESTIONS Q10). With the permutation null
+(clocksync 613e224, the default), null rejection is 0.015-0.080, with one cell above 0.07 (expected about 1.7 by Monte
+Carlo error at 200 draws). A19 part 2 re-read on the real ages:
+- **Primaries unchanged.** H19.1 gamma -0.035 per decade (SE 0.072, p 0.630; archive -0.03, 0.07, 0.64). H19.2
+  +0.004 (SE 0.040, p 0.922; archive -0.004, 0.036, 0.92). Both are not supported.
+- **Secondary, neuron own noise.**
+  - Pooled neuron gamma -0.116 (SE 0.054, p 0.031; 5 studies, 22 compartments; archive -0.12, SE 0.05, p 0.013,
+    4 studies). The port has no design check, so six compartments the legacy check excluded enter.
+  - The archive's "each per-compartment p <= 0.01" no longer holds. Of the six PsychAD compartments it names, MSSM
+    excitatory (0.010) and MSSM CGE (0.005) remain. HBCC excitatory (0.020), HBCC MGE (0.015), MSSM MGE (0.025) and HBCC
+    other (0.090) do not. Bias-corrected gamma keeps its sign and size (-0.16 to -0.25).
+  - Read: the decrease of neuron own noise with age is nominal (p 0.031 uncorrected), a secondary, in the same direction
+    in both PsychAD cohorts.
+- **Calibration caveat.** Planted locked-amplitude effects are not recovered in the lung atlas, where fits sit at the
+  coupling boundary (`calibration/README.md`). Lung age readouts stay descriptive.
+<!-- src: paper/results/figure_4/output/resilience/a19_age_{pooled,compartments}.csv; paper/results/extended_data/output/calibration/age_acceptance_summary.csv (permutation null, 2026-10-26) -->
+
 ### 2026-10-26, M3: A20 R20.4 and A23 R23.1 intervals at the boundary (corrects archive RESULTS "R20.4" and "R23.1")
 
 The full M3 rerun of `figure_4/scripts/spread_multiplicity` reproduces the A20 / A23 inputs exactly (y1-y3 of 230 rows to

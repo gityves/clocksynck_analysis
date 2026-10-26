@@ -72,7 +72,18 @@ stability on 20 cohorts and the 100-replicate power curve (hours).
   the coupling boundary in most null draws (coupling >= 0.999 in 72 % and 86 %; full-data picks 0.675 and 0.045), which
   the legacy model-based simulation (null rejection 0.025-0.08) never produced. Not yet established whether this is the
   count-level design, an issue of `Dataset.covariate` on age subsets, or both (PI_QUESTIONS Q10).
-<!-- src: extended_data/output/calibration/{small_n_summary,anchored_sim_summary,orpheus_cells_pooled,age_acceptance_summary,age_acceptance_runs}.csv (M3, 2026-10-26); legacy outputs/v12_anchored/summary.csv, desync/20_age/output/acceptance_summary.csv -->
+- **A19 acceptance with the permutation null (2026-10-26, PI Q10 (b); clocksync 613e224, `--null permutation`, the default;
+  simulated-null run kept as `age_acceptance_*_simulated.csv`):** null rejection 0.015-0.080 over the 24 cells (6 compartments x
+  4 estimands; simulated null 0-0.220, 14 cells above 0.07). One cell exceeds 0.07: lung NK/ILC coupling slope 0.080. With 200
+  draws per cell, about 1.7 of 24 cells are expected above 0.07 under exact calibration, so the null holds within Monte Carlo
+  error. Read strictly, the per-cell rule still misses by that one cell. Bias-corrected null medians are near 0 (lung AT1
+  locked amplitude -0.002, simulated +0.055).
+  Planted effects:
+  - Brain: recovered within 25 % for locked amplitude (-0.115, -0.101, -0.101 for -0.1 per decade) and for neuron gamma
+    (+0.170, +0.176 for +0.15), not for OPC gamma (-0.043).
+  - Lung atlas: locked amplitude is not recovered (AT1 -0.035, NK/ILC +0.008, multiciliated -0.059; the fits sit at the
+    coupling boundary).
+<!-- src: extended_data/output/calibration/{small_n_summary,anchored_sim_summary,orpheus_cells_pooled,age_acceptance_summary,age_acceptance_runs}.csv (M3, 2026-10-26; age_acceptance_* permutation null, *_simulated the first run); legacy outputs/v12_anchored/summary.csv, desync/20_age/output/acceptance_summary.csv -->
 
 ## Deviations
 - **A10 estimator.** The legacy small-n calibration used the pre-A17 free-host fit (`Study.fit`, one host from all compartments, no small-sample

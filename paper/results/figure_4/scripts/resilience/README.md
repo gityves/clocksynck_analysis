@@ -82,7 +82,16 @@ gain 13 columns (per-arm z2, psi, V and bootstrap SEs of `Dataset.contrast`). Fi
 - **A19 part 2, age** (`a19_age_{registry,compartments,pooled}.csv`; legacy `20_age/output/pooled.csv`, `age_compartments.csv`). 86 compartments of 14 eligible fits, same 86 as legacy; raw locked amplitude and drift identical, gamma identical except 6 unstable
   rows (max 0.136). The pool has no design check (Deviations), so it has more compartments than legacy: H19.1 gamma -0.027 (SE 0.072, p 0.706; legacy -0.032, 0.070, 0.642; 10 vs 9 studies, 86 vs 50 compartments);
   H19.2 +0.002 (SE 0.040, p 0.962; legacy -0.004, 0.036, 0.919); neuron gamma -0.104 (SE 0.077, p 0.173; legacy -0.124, 0.050, 0.013, 16 compartments), because 6 compartments dropped by the legacy design check enter.
-  Per-compartment p < 0.05: gamma 14 of 82 (legacy 15 of 83), locked amplitude 3 of 86 (3), drift 7 of 86 (3). These numbers use the simulated null of the archive A19 note (kept as `a19_age_*_simulated.csv`); after PI Q10 the null is a within-stratum age permutation (clocksync 613e224) and A19 part 2 is rerun with it (section below when scored). Reproduction check only, not a finding.
+  Per-compartment p < 0.05: gamma 14 of 82 (legacy 15 of 83), locked amplitude 3 of 86 (3), drift 7 of 86 (3). These numbers use the simulated null of the archive A19 note (kept as `a19_age_*_simulated.csv`); after PI Q10 the null is a within-stratum age permutation (clocksync 613e224) and A19 part 2 is rerun with it. Reproduction check only, not a finding.
+- **A19 part 2 with the permutation null** (2026-10-26, `compute_age.py`, `a19_age_*.csv`).
+  - 86 compartments; 4 have own noise at its floor, so gamma is not estimable there.
+  - H19.1 gamma -0.035 (SE 0.072, p 0.630; 10 studies, 82 compartments).
+  - H19.2 +0.004 (SE 0.040, p 0.922). Both primaries are null, as in the archive.
+  - Neuron gamma -0.116 (SE 0.054, p 0.031; 5 studies, 22 compartments).
+  - Per-compartment p < 0.05: gamma 9 of 80, locked amplitude 4 of 86, drift 8 of 86, coupling slope 2 of 86.
+  - Of the six PsychAD neuron compartments the archive gives at p <= 0.01, two remain (MSSM excitatory 0.010, CGE 0.005).
+    Erratum in `docs/results_preliminary.md`.
+  <!-- src: paper/results/figure_4/output/resilience/a19_age_{pooled,compartments}.csv -->
   <!-- src: figure_4/output/resilience/a19_age_*.csv vs legacy/desync/20_age/output/ -->
 
 ## Deviations

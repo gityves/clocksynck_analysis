@@ -30,6 +30,10 @@ PsychAD excitatory neurons gamma 0.125, OPC 0.145). Lung AT1 and NK/ILC fits mos
   acceptance with it, then A19 part 2 on the real ages (erratum to follow). Note: the M3 port of A19 part 2 has no design
   check, so even under the simulated null the archive's neuron gamma secondary is not reproduced (-0.104, SE 0.077,
   p 0.173 vs -0.124, p 0.013; six compartments the legacy check excluded enter; `resilience/README.md`).
+- **Result (2026-10-26):** with the permutation null the acceptance holds within Monte Carlo error (null rejection
+  0.015-0.080; one cell of 24 at 0.080). A19 primaries are unchanged (null). Neuron gamma -0.116 (SE 0.054, p 0.031),
+  with 2 of the 6 archive compartments at p <= 0.01. Erratum written (`results_preliminary.md`). The hold on the neuron
+  gamma readout is lifted; it is a nominal secondary. Closed unless you object.
 
 ### Q2 (2026-10-23): figure-table numbers used against their archive verdict (WP0 item 1)
 - A104 rho +0.73 quoted as support; H104.1 predicted rho < 0 (archive: not supported; H104.2 not replicated).
