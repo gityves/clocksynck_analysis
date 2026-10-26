@@ -17,6 +17,7 @@ PsychAD excitatory neurons gamma 0.125, OPC 0.145). Lung AT1 and NK/ILC fits mos
   erratum to the archive?
 - **On hold:** any use of the A19 age readouts (neuron gamma) in figures or text; the erratum. M3 of resilience runs as is.
 - Evidence: `results/extended_data/scripts/calibration/README.md` (M3 full run), `output/calibration/age_acceptance_*.csv`.
+- **Answer (PI, 2026-10-26), part (a):** investigate. Diagnostic `paper/exploratory/A19_acceptance_check/check_null.py` (post hoc, real ages not read). Part (b) open.
 
 ### Q2 (2026-10-23): figure-table numbers used against their archive verdict (WP0 item 1)
 - A104 rho +0.73 quoted as support; H104.1 predicted rho < 0 (archive: not supported; H104.2 not replicated).
