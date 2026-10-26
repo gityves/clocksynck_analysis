@@ -55,6 +55,14 @@ against `legacy/desync/validation/natural_experiments/output/` with the full per
 | A106 fetal coupling (5 compartments) | c 0, 0.091, 0.191, 0.342, 0.424; p 1, 0.269, 0.316, 0.021, 0.041 | c identical; p 1, 0.248, 0.307, 0.010, 0.043 | Monte Carlo |
 | GTEx reference (50 subsets x 2 cohorts) | pass 1.00 (fast), 0.84 (ventilator); every subset p identical | identical | |
 
+## M3 full run (2026-10-26)
+`run.sh --jobs 4`, 29 min, peak 0.7 GB. Against the archive copies (`outputs/paper/figure_S11_natural_experiments`): gates,
+GTEx reference and A105b identical; every point estimate and p within 2e-5 (A105 contrasts, A105c pooled, A106 fetal and
+A107 organ couplings: p, p_less, p_star, p_offset, p_coupling identical); bootstrap interval bounds within 0.005.
+`a105_arms`, `a105_imv_contrast`, `a105_delorey_lung_imv` and `a105c_pooled` gain 13 columns (per-arm z2, psi, V and
+bootstrap SEs of `Dataset.contrast`); the shared columns agree to 1e-10. No verdict changes.
+<!-- src: figure_4/output/natural_experiments/*.csv (M3, 2026-10-26) vs m3_snapshot_backup/2026-10-24 -->
+
 ## Deviations
 - **D1 per-arm coupling.** The legacy `per_arm` fitted each arm on its own two-anchor host (endothelial, fibroblast).
   `Dataset.fit` needs >= 3 anchors, so `a105_arms.csv` reads both arms on the pooled host with `Dataset.contrast` (c per arm,
