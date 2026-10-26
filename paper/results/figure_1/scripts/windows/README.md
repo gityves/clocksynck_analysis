@@ -19,7 +19,7 @@ Outputs: `paper/results/figure_1/output/windows/` (`.../subsample/`). GTEx rows 
 | window check GTEx 08-18 h: ratio, observed / predicted | 0.764, 1.37 [1.05, 1.80] (M3, 500 boots) | 0.764, 1.37 [1.05, 1.80] | other windows and HLCA (0.521, 1.15) identical point estimates |
 | A25 V25.1 acceptance (M3, 50 replicates per cell) | PASS (n 40, coupling 0.8, w 6/9/12 h: axis error 0.34/0.27/0.40 h, flip 0.91/1.00/1.00) | FAIL at w 6 h (flip 0.69) | different generator (`clocksync.simulate` counts); see results_preliminary 2026-10-25 |
 | A25 V25.2 (M3) | median axis error 1.26 h, flip 0.78, 18 windows: PASS | PASS | |
-| A25 R25 T1 / T2 / T3 (M3; superseded: cancer cohorts from the CNV-split tables, 8 not loaded; rerun 2026-10-26 with `cnv=False`) | 13 living cohorts: p 0.019 PASS / p 0.011 PASS / p 0.173 not supported | 17: 0.010 / 0.001 / 0.214 | cohorts with < 3 anchors not estimable |
+| A25 R25 T1 / T2 / T3 (M3, cancer main tables, rerun 2026-10-26) | 17 living cohorts: p 0.0014 PASS / 14 of 17, p 0.006 PASS / p 0.176 not supported | 17: 0.010 / 0.001 / 0.214 | all 50 cohorts fit; anchor sets as legacy |
 | A25 GTEx all donors: c_axis12, c_curv, r, w, lambda, kappa, shift | 11.30, 23.30, 0.67, 20.16, 1.90, 0.389, -0.98 | 11.30, 23.30, 0.67, 20.20, 1.91, 0.389, -0.98 | `host_cov` reproduces the model's Sigma_f |
 | A40 full-day frame F, c_curv, r_axis | 6.56, 23.68, 0.52 | 6.56, 23.68, 0.52 | |
 | A40 m = 5 (12 windows): centre errors, flips | identical; flips 11/12; median Fisher-Lee r 0.552, median abs Spearman 1.0 | r 0.516; 11/12; 1.0 | offsets read on one full host (legacy: leave-one-out per tissue); primary (1) passes here (> 0.5), narrowly as legacy |
@@ -29,6 +29,9 @@ Outputs: `paper/results/figure_1/output/windows/` (`.../subsample/`). GTEx rows 
 | A28-related E2 etc. | see figure_S03 | | |
 
 ## Deviations
+- **Cohort n (R25).** `n` is every donor of the cohort table, and the donor bootstrap draws from all of them; legacy counted and
+  resampled the donors with at least one anchor compartment (25 of 50 cohorts differ, e.g. GSE178341 60 vs 34). Donors without an anchor
+  do not enter the host; in the bootstrap they only vary the number of host donors per replicate.
 - Sigma_f is rebuilt (`host_cov`) from posterior host means plus mean posterior covariance; the 12 h flip, frame and bootstrap as A25 (bootstrap rebuilds a `Dataset` per draw).
 - A26 correction acts on counts (binomial thinning), not on states.
 - V25.1 uses `clocksync.simulate` counts (legacy simulated states). Defaults: 50 replicates; windows' tissues >= 8 donors, >= 20 donors.

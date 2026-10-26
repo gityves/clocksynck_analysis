@@ -469,13 +469,16 @@ V25.1 and R25 on subsamples only).
   biased upwards (w_est 15-16 h at true 6-12 h, coupling 0.8, n = 40; here 5.5-11.8 h). Which change removes the bias
   is not isolated. Quote V25.1 from this run with that note, or not at all.
 - **V25.2 PASS** as in the archive: median |axis error| 1.26 h, flip correct 0.78 over 18 windows with r < 0.6.
-- **[Superseded 2026-10-26: the cancer cohorts were read from the copy-number-split tables, not legacy's main tables;
-  8 failed to load. Rerun with the main tables running; see the 2026-10-26 entry when scored.]**
-- **R25 T1 PASS, T2 PASS, T3 not supported**, as in the archive, on 13 interpretable living cohorts (archive 17; cohorts
-  with < 3 anchors are not estimable): T1 mean axis 10.97 h, V test p 0.019 (archive 11.01 h, p 0.010); T2 11 of 13 in
-  07-19 h, p 0.011 (archive 15 of 17, p 0.001); T3 r living 0.268 vs deceased 0.332, p 0.173 (archive p 0.214).
+- **R25 T1 PASS, T2 PASS, T3 not supported**, as in the archive. Corrected 2026-10-26: the first M3 read used the
+  copy-number-split cancer tables and lost 8 cohorts; rerun with legacy's main tables. All 50 cohorts fit, with 17
+  interpretable living cohorts (archive 17).
+  - T1: mean axis 11.33 h, R 0.804, V test p 0.0014 (archive 11.01 h, p 0.010).
+  - T2: 14 of 17 in 07-19 h, p 0.006 (archive 15 of 17, p 0.001).
+  - T3: r living 0.275 (32 cohorts) vs deceased 0.332 (11), p 0.176 (archive p 0.214).
+  - Anchor sets equal legacy in all 50 cohorts. Reported n counts every donor of the table; legacy counted donors with at
+    least one anchor compartment (25 of 50 differ). Windows README, Deviations.
 - Window check (GTEx 08-18 h vs others) at 500 bootstraps: observed / predicted 1.37 [1.05, 1.80] (archive [1.05, 1.80]).
-<!-- src: paper/results/figure_1/output/windows/internal_time_{sim_summary,tests}.csv; window_check.csv; logs/m3_windows.log (V25.2 line) -->
+<!-- src: paper/results/figure_1/output/windows/internal_time_{sim_summary,tests,cohorts}.csv (cohorts: rerun 2026-10-26 22:24); window_check.csv; logs/m3_windows.log (V25.2 line) -->
 
 ## A140 Q2 (i), (iii) (scored 2026-10-26): GSE266919 immune compartments do not pass the gate; P140.1-3 not estimable
 
