@@ -27,6 +27,21 @@ Outputs: `paper/results/extended_data/output/gate/` (`.../subsample/`). Helper m
 | A41 4c: JS r of sheep offsets vs human d_t (21 tissues), one-sided p; human / baboon reference | -0.199 (p 0.81) / -0.456 (p 0.99) | -0.194 (0.80) / -0.378 (0.96) | A34 primary fails with both references; baboon waveform refit here |
 | gate power (subsample 60 donors, 5 healthy fits, 5 injections) | runs; not comparable | |
 
+## M3 full run (2026-10-26)
+`run.sh --jobs 4`, 64 min, peak 1.3 GB. Against the archive copies (`outputs/paper/figure_S03_gate`): every table identical
+or within 2e-8, except 5 of 17,404 `gene_screen_genes` rows whose I^2 flips 0 / 1 (genes in one tissue, I^2 undefined).
+First full runs:
+- **Gate power** (100 injections; `gate_power.csv`) against the legacy `common_output/a17_gatepower.csv`: every reading
+  unchanged (blood OneK1K and adipose indeterminate, 0.64 / 0.56 vs 0.72 / 0.64; AIDA, bone marrow, ileum, spleen,
+  jejunum low power; thoracic lymph node shared, not clock-shaped, 0.81 vs 0.88). Immune |z| 0.929 here vs 0.991 (A17
+  estimator). Target sets differ by one each: SSc control skin (legacy, 0.24, low power) is not in the healthy fits here;
+  IA lung is new (0.15, low power).
+- **A41 windows** (`baboon_reference_summary.csv`) against the legacy `validation/baboon/output/a41_summary.csv`: m = 5 /
+  6 median LOO r_FL human 0.552 / 0.557 (legacy 0.516 / 0.546), baboon 0.475 / 0.577 (0.456 / 0.561); baboon better in
+  6 of 12 at both m (as legacy). A41 readouts 1 and the truth check identical; offsets vs timed (human-waveform truth)
+  r_FL 0.755 (legacy 0.719; one full host per window here, legacy leave-one-out).
+<!-- src: extended_data/output/gate/{gate_power,baboon_reference_summary,baboon_reference_readouts,gene_screen_genes}.csv (M3, 2026-10-26) -->
+
 ## Deviations
 - Selection half regenerated (seed 0 over all fast-death subjects); the gene screen is rerun in `compute_gene_screen.py` (identical to the legacy table).
 - A17 step 6: couplings are point estimates (no bootstrap), gate with the free host and 500 permutations; ileum (no GTEx entry) not rerun.
