@@ -51,6 +51,24 @@ columns plus `d_star`, `p_star`, `status`), `a22_{null,diagnostic,flags,sim}.csv
 | A22 Part 1 diagnostic, 4 contrasts, both rules (34 rows) | e_case, delta identical (0.0); same flags | | same seeds |
 | A22 V17.1 null (22 contrasts x 20 splits), V17.3 simulation | not rerun (checked on the subsample only) | 1.6 % dropped of 2,180 | long run: about 440 coherence jobs |
 
+## M3 full run (2026-10-26)
+`run.sh --jobs 4`, 55 min, peak 0.7 GB. Against the legacy full outputs (`legacy/desync/common_output/`) and the archive
+A22 section: `a22_diagnostic` (189 rows) identical (max difference 0.0; no anchor dropped under either rule), `a22_flags`
+(109 rows) identical except p* (Monte Carlo, max 0.064): the same five anchors are dropped (ild_natri capillary EC +0.614,
+endometriosis endothelium +0.405, pd DMV neurons -0.467, SCZ_hbcc OPC -0.371, BD_hbcc oligodendrocytes -0.284; only
+endometriosis falls to 2 anchors), as in the archive. `a17_identity` grows from 10 (subsample) to 68 rows; the 22 learned
+and 13 fixed fits shared with legacy agree in agreement-free-vs-anchored to 2.2e-6 (tabula_sapiens: 0.404 vs 0.390), stability
+differs by up to 0.04 apart from tabula_sapiens (0.400 vs 0.745; cold starts): organ_colon (learned) is now 0.795, below the
+0.8 limit (legacy 0.835), so 2 learned fits (organ_colon, tabula_sapiens) are flagged unstable instead of 1. `a22_null`:
+35 of 2,180 split x anchor dropped (1.6 %, as in the archive; limit 5 %); endometriosis and ia_crohn draw other pseudo-splits
+(the legacy label order was unsorted; 9 vs 6 and 1 vs 4 dropped), the other 20 contrasts are identical. `a22_sim` (V17.3):
+detected 114 / 132 at s = 0 (86 %, archive 86 %) and 51 / 132 at s = 0.5 (39 %, archive 42 %); legacy seeds came from
+`hash(name)`, here from the contrast index. The 2026-10-23 empty-stratum erratum does not apply: no A22 table has an empty
+stratum. `a18_modules` within 8e-10; the other tables identical to the pre-M3 copies. No verdict changes.
+<!-- src: extended_data/output/host_identity/{a17_identity,a22_diagnostic,a22_flags,a22_null,a22_sim}.csv vs
+legacy/desync/common_output/{a17_unified_healthy,a22_diagnostic,a22_flags,a22_null,a22_sim}.csv (M3, 2026-10-26) -->
+The Checks rows "A22 V17.1 null not rerun" and the stability row (60 refits) are superseded by this section.
+
 ## Deviations
 - **Contrast tables** are the standard tables restricted to the labelled donors and to the compartments of the frozen anchor
   table. Seven Parkinson compartments and one each in skin_ssc, skin_ad_nonlesional and Tabula Sapiens have no pair and are

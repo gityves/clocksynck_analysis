@@ -67,6 +67,24 @@ output files (full permutation numbers, bootstrap 200 where a bootstrap is neede
 | A45 learned anchors (full, 1,000 permutations): anchors; T-cell c, d, d*; companion | fibroblast, endothelial, mural (as fixed rule); 0.112 -> 0.050, d -0.062, d* -0.092; -0.139, p 0.27 | identical anchors; 0.112 -> 0.050, -0.062, -0.092; -0.139 (p 0.25) | identical |
 | A101 core genes (500 bootstraps): D_core pooled / matched / fast | 0.027 [-0.081, 0.131] / 0.051 [-0.069, 0.129] / -0.005 [-0.208, 0.083]; pooled - matched -0.024 [-0.108, 0.099] | 0.080 / 0.087 / 0.031 | all intervals include 0 in both; tissue set (18 here, A91 set there) and covariate coding differ |
 
+## M3 full run (2026-10-26)
+`run.sh --jobs 4`, 2 h 15 min, peak 3.3 GB (`logs/jobs.tsv`). Every table that existed before M3 (`a19_procurement*`, `a44_*`, `a45_*`, `a48_*`,
+`a94_*`, `a99_*`, `a101_*`) equals its pre-M3 archive copy (point estimates within 1e-9; a few procurement intervals and `p_offset` differ by Monte Carlo); contrast tables
+gain 13 columns (per-arm z2, psi, V and bootstrap SEs of `Dataset.contrast`). First full runs of two parts, against the legacy full runs and the archive verdicts:
+- **A17 contrasts, 36 targets** (`a17_{gates,contrast,contrast_companion}.csv`; legacy `common_output/a17_contrast.csv`, `a17_unified_contrast.csv`). 657 rows (legacy 640); 639 matched on
+  target x compartment x rule; 18 new rows (lung_ipf_hlca 8 rows with no case donors, skin_ad_nonlesional fixed rule 10 rows, gate now passes with p_acrophase 0.046 against 0.054). On the 608 rows ok in both:
+  c_control, c_case, d, d* identical (max difference 2.6e-9); `p_pairing` identical; permutation p median |difference| 0.014 (90th percentile 0.051, max 0.34); `p_star` median 0.010; bootstrap
+  interval width 0.98 x legacy (median). p crosses 0.05 in 11 of 580 rows (6 learned, 5 fixed; 7 with both p between 0.039 and 0.056; ild_natri EC_venous fixed 0.083 -> 0.002, hlca_fibrotic fibroblast fixed 0.042 -> 0.117);
+  p* in 5 of 307 learned rows; the bootstrap interval excludes 0 in only one run in 16 rows (200 against 500 replicates), among them HLCA fibrotic T (now excludes 0) and islet beta (now includes 0). Archive readings: Natri T 0.45 -> 0.00 (p 0.001; legacy 0.009),
+  HLCA T 0.14 -> 0.00 (p 0.029; d* -0.171, p* 0.016), T2D beta p 0.040 with d* p 0.176 (not supported), PD DMV p 0.010, CKD T p 0.136, endometriosis stroma p 0.886: unchanged, no verdict changes.
+  The ckd_sc permutation-p discrepancy persists (podocyte 0.242, proximal tubule 0.438, collecting duct 0.239 against 0.538, 0.711, 0.505; d identical) and is not specific to kidney: 22 further rows with |dp| > 0.1 in hlca_fibrotic, lung_ipf_hlca, ia_crohn, ild_natri, dcm; unexplained. Gates of ibd_crohn* are empty in `a17_gates.csv` (no anchor).
+  <!-- src: figure_4/output/resilience/a17_*.csv vs legacy/desync/common_output/a17_contrast.csv, a17_unified_contrast.csv -->
+- **A19 part 2, age** (`a19_age_{registry,compartments,pooled}.csv`; legacy `20_age/output/pooled.csv`, `age_compartments.csv`). 86 compartments of 14 eligible fits, same 86 as legacy; raw locked amplitude and drift identical, gamma identical except 6 unstable
+  rows (max 0.136). The pool has no design check (Deviations), so it has more compartments than legacy: H19.1 gamma -0.027 (SE 0.072, p 0.706; legacy -0.032, 0.070, 0.642; 10 vs 9 studies, 86 vs 50 compartments);
+  H19.2 +0.002 (SE 0.040, p 0.962; legacy -0.004, 0.036, 0.919); neuron gamma -0.104 (SE 0.077, p 0.173; legacy -0.124, 0.050, 0.013, 16 compartments), because 6 compartments dropped by the legacy design check enter.
+  Per-compartment p < 0.05: gamma 14 of 82 (legacy 15 of 83), locked amplitude 3 of 86 (3), drift 7 of 86 (3). These numbers use the simulated null of the archive A19 note (kept as `a19_age_*_simulated.csv`); after PI Q10 the null is a within-stratum age permutation (clocksync 613e224) and A19 part 2 is rerun with it (section below when scored). Reproduction check only, not a finding.
+  <!-- src: figure_4/output/resilience/a19_age_*.csv vs legacy/desync/20_age/output/ -->
+
 ## Deviations
 - **Specificity companion (A17 contrasts).** A17 and the 36 original contrasts had no common companion; the companion
   here is the mean d of the fixed-rule anchors of the table (stromal-vascular, neurons in brain), chosen after the

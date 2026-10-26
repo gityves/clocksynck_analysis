@@ -5,7 +5,9 @@ Pre-registered in docs/PLAN_internal_desync.md (archive) (A19 part 2 and the A19
 run time): healthy A17 fits whose gate passes, with anchors (learned; fixed as fallback, flagged), >= 30 donors with an
 age spanning >= 30 years. Per compartment on the anchored host (leave-one-out for anchors), x = (age - median) / 10:
 locked amplitude Re(w/z), phase drift Im(w/z) (h per decade), own noise gamma, coupling slope, each minus its median
-under a null simulated at the real design (`_c`) with that null's two-sided p (`_p`; the primary p of the A19 note);
+under the null (`_c`) with that null's two-sided p (`_p`). Null: ages permuted among the compartment's donors within
+stratum (`Dataset.covariate` default since clocksync 613e224; PI Q10, 2026-10-26: the A19 note's simulated null is
+anti-conservative at real designs, `extended_data/scripts/calibration/README.md`); `--null simulated` reproduces the archive;
 donor bootstrap SE. Pooling: one value per fit and family (mean over the fit's eligible compartments, mean SE; the two
 SEA-AD fits are one study), DerSimonian-Laird across fits.
   H19.1: pooled gamma over all compartments > 0 (two-sided p from the pooled z).
@@ -14,7 +16,7 @@ SEA-AD fits are one study), DerSimonian-Laird across fits.
 Holm over the two. Secondary: drift, gamma and locked amplitude per family; neurons minus glia (brain, retina); both
 primaries without brain.
 
-    python compute_age.py [--subsample N] [--seed S] [--jobs 4]
+    python compute_age.py [--subsample N] [--seed S] [--jobs 4] [--null permutation|simulated]
 Outputs (paper/results/figure_4/output/resilience/): a19_age_registry.csv, a19_age_compartments.csv, a19_age_pooled.csv
 Legacy: legacy/desync/20_age/scripts/{age_fit,ages,pool}.py. Donor age: the builders' `age` column (exact years or bin
 midpoints, as legacy `ages.py`). Aggregates only (no controlled-access data).
@@ -99,7 +101,7 @@ def one_fit(row, run, subsample, seed, min_age):
     if not g.passes:
         return reg, None
     x = age / 10.0
-    cov = ds.covariate(x, n_null=run["n_null"], seed=seed)
+    cov = ds.covariate(x, n_null=run["n_null"], seed=seed, null=run["null"])
     if "error" in cov:
         cov = cov[cov["error"].isna()]
     cov = cov.apply(pd.to_numeric, errors="coerce")
@@ -164,8 +166,10 @@ def pool_all(df: pd.DataFrame) -> pd.DataFrame:
 def main(argv=None):
     ap = cli.parser(__doc__)
     ap.add_argument("--only", nargs="+", default=None, help="healthy fits (default: all 34)")
+    ap.add_argument("--null", choices=("permutation", "simulated"), default="permutation",
+                    help="null of `Dataset.covariate` (simulated: the archive A19 note)")
     args = ap.parse_args(argv)
-    run = cli.setup(args)
+    run = cli.setup(args) | dict(null=args.null)
     out = out_dir(FOLDER, run["quick"])
     min_age = min(MIN_AGE_DONORS, args.subsample // 2) if args.subsample else MIN_AGE_DONORS
     tg = sh.targets("healthy")

@@ -5,15 +5,16 @@ primary p from a null simulated at each compartment's real design, estimates cen
 `psychad_mssm` and `lung_hlca` (healthy donors, ages, strata, learned anchors, as `resilience/compute_age.py`), for the compartments
 with the highest, median and lowest anchored coupling, `Dataset.covariate` is run on:
   1. null (w = 0, gamma = 0): the donors' ages are permuted within stratum (the real clock data stay, so the design, host and noise are real and
-     there is no association with the covariate); rejection rate of every estimand at alpha 0.05 (`_p` from the package's simulated null,
-     `--n-null`); acceptance <= 0.07.
+     there is no association with the covariate); rejection rate of every estimand at alpha 0.05 (`_p` from the package's null, `--n-null`;
+     `--null permutation` (default since clocksync 613e224, PI Q10 2026-10-26) or `simulated` (the archive A19 note; fails here));
+     acceptance <= 0.07.
   2. planted Re(w/z) = -0.1 per decade and gamma = +0.15 per decade: on the permuted ages, the compartment's clock plane is changed by
      binomial thinning of its counts (`clocksync.simulate.thin_clock`): host-locked part + w x z f_t with w/z = -0.1, own noise raised to
      psi exp(gamma (x - x_min)) by adding N(0, psi (exp(gamma (x - x_min)) - 1)) in the plane; z, psi from the known-host regression on the
      fit's host (local). Acceptance: median estimate (centred, `_c`) within 25 % of the truth; power = rejection rate.
 Estimands: locked_amp, drift_h, gamma, coupling_slope (`Dataset.covariate`).
 
-    python compute_age_acceptance.py [--subsample N] [--n-sim 200] [--n-null 200] [--jobs 4]
+    python compute_age_acceptance.py [--subsample N] [--n-sim 200] [--n-null 200] [--null permutation|simulated] [--tag T] [--jobs 4]
 `--subsample N`: N donors per design (`min_age` N / 2), 3 simulations, 20 null draws.
 Outputs: paper/results/extended_data/output/calibration/age_acceptance_{runs,summary}.csv
 Legacy: legacy/desync/20_age/scripts/acceptance.py (outputs: desync/20_age/output/acceptance_summary.csv).
@@ -103,7 +104,7 @@ def plant(ds, host, k, x, rng, w_ratio, gamma):
     return t
 
 
-def one(name, k, scenario, sim, n_null, subsample, seed, min_age):
+def one(name, k, scenario, sim, n_null, subsample, seed, min_age, null="permutation"):
     limit_threads(1)
     warnings.simplefilter("ignore")
     pb, donors, age, anc = design(name, subsample, seed)
@@ -114,7 +115,7 @@ def one(name, k, scenario, sim, n_null, subsample, seed, min_age):
     if scenario == "planted":
         host = ds.fit(n_boot=0, gate=False).host
         ds = cs.Dataset(plant(ds, host, k, x, rng, PLANT["locked_amp"], PLANT["gamma"]), anchors=anc, donors=donors, name=name)
-    r = ds.covariate(x, targets=[k], center=False, n_null=n_null, seed=sim)
+    r = ds.covariate(x, targets=[k], center=False, n_null=n_null, seed=sim, null=null)
     if "error" in r:
         return None
     r = r.apply(pd.to_numeric, errors="coerce").iloc[0]
@@ -128,6 +129,8 @@ def main(argv=None):
     ap = cli.parser(__doc__)
     ap.add_argument("--n-sim", type=int, default=200)
     ap.add_argument("--n-null", type=int, default=None)
+    ap.add_argument("--null", choices=("permutation", "simulated"), default="permutation")
+    ap.add_argument("--tag", default="", help="suffix of the output files (e.g. _simulated)")
     args = ap.parse_args(argv)
     run = cli.setup(args)
     out = out_dir(FOLDER, run["quick"])
@@ -139,10 +142,10 @@ def main(argv=None):
         pb, donors, age, anc = design(name, args.subsample, args.seed)
         ks, c = picks(cs.Dataset(pb, anchors=anc, donors=donors), age, min_age)
         print(name, "donors with age", len(age), "picked", {k: round(float(c[k]), 3) for k in ks}, flush=True)
-        jobs += [(name, k, sc, s, n_null, args.subsample, args.seed, min_age) for k in ks for sc in ("null", "planted") for s in range(n_sim)]
+        jobs += [(name, k, sc, s, n_null, args.subsample, args.seed, min_age, args.null) for k in ks for sc in ("null", "planted") for s in range(n_sim)]
     rows = [r for r in Parallel(n_jobs=args.jobs)(delayed(one)(*j) for j in jobs) if r]
     df = pd.DataFrame(rows)
-    df.to_csv(out / "age_acceptance_runs.csv", index=False)
+    df.to_csv(out / f"age_acceptance_runs{args.tag}.csv", index=False)
     summ = []
     for (n, k, sc), g in df.groupby(["design", "compartment", "scenario"]):
         r = dict(design=n, compartment=k, scenario=sc, n=len(g), coupling=g.coupling.median())
@@ -150,7 +153,7 @@ def main(argv=None):
             r |= {f"{e}_median": g[e].median(), f"{e}_c_median": g[f"{e}_c"].median(), f"{e}_reject": float((g[f"{e}_p"] < 0.05).mean())}
         summ.append(r)
     s = pd.DataFrame(summ)
-    s.to_csv(out / "age_acceptance_summary.csv", index=False)
+    s.to_csv(out / f"age_acceptance_summary{args.tag}.csv", index=False)
     pd.set_option("display.width", 250)
     print(s.round(3).to_string(index=False))
 
