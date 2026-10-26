@@ -90,9 +90,9 @@ null 95 % 0.430, p 0.059; rise / fall 0.455 (p 0.75): fails on rise / fall, as t
 0.455). A39: n = 45 median R 0.199 vs median null 95 % 0.296, 3 / 10 draws pass (primary fails, as before); n = 100 0.282,
 5 / 10; n = 200 0.560; n = 25 infeasible. In one A39 lung draw seven compartments stay non-converged after the retry and are
 left out (not estimable). The A39 subsamples also hit saturated designs (no more pseudobulks than design columns), where `se` was 0
-and every gene got p = 0; clocksync e1b6658 makes such a compartment not estimable. `compute_donor_curve.py` is rerun with it
-(queued after lane C); the n = 25, 10-donor-class row (`n25_md10`, descriptive) is the one that moved here (median R 0.248,
-4 / 10 pass; first M3 0.237, 3 / 10).
+and every gene got p = 0; clocksync e1b6658 makes such a compartment not estimable. `compute_donor_curve.py` was rerun with it (2026-10-26, 6 min, no
+divide-by-zero warning left): n = 25, 45, 100, 200 rows identical to M3b; only the descriptive `n25_md10` row moves (median
+genes 93.5, median R 0.278 vs null 95 % 0.298, 3 / 10 pass; M3b 96.5, 0.248, 4 / 10; first M3 0.237, 3 / 10).
 <!-- src: figure_2/output/gene_rhythms/{atlas_primary,atlas_peratlas,atlas_classes,modes_peratlas,modes_composition,a39_summary}.csv (M3b, 2026-10-26) vs scratchpad gr_m3a/ and m3_snapshot_backup/2026-10-24 -->
 
 **A31 deduplicated (2026-10-25).** A31 (mouse colon cell types against known ZT) was computed here and in
