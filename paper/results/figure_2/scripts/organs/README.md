@@ -68,6 +68,16 @@ Full point estimates against `legacy/desync/**/output/` (full data, bootstraps r
 Not rerun in full: the bootstraps (01, A103, A33), the ventilator cohort of 01, the r* of sheep and baboon (`Dataset.agreement`
 with 50 splits x 200 bootstraps is serial: hours) and A103.3. Their subsample runs completed (sheep 200 animals, baboon 12 animals).
 
+**M3 full rerun (2026-10-26, `run.sh --jobs 4`, 12.2 h, peak 1.5 GB; comparison `paper/results/logs/organs_m3_compare.md`):** no
+registered verdict changes (A103 H103.1-3, A42 R1-R3, A3 Chen, Aim 1 rank gains as archive). The four `a103_gtex_*` tables equal the
+legacy full run to < 1e-6 including bootstrap bounds. The pre-M3 subsample outputs (5-10 bootstraps) had broken three archive
+statements; the full run restores them: H103.1 donor slope -0.0314 per h [-0.1101, 0.0520] (no PER1/PER2 -0.0416 [-0.1372, 0.0400]),
+0 of 18 IEG intervals exclude 0, pooled sex amplitude (fast) 0.001 [SE 0.058]. Moved, verdict intact: Chen adjusted log2 amplitude
+-0.514 [-0.926, -0.092], p 0.006 (archive -0.50, p 0.01); ventilator untimed coupling over the 25 common tissues 0.513 vs 0.679 fast
+(archive 0.54 vs 0.70; leave-one-out host, Deviations). Not produced: walltime hosts and the `*_full` r* files
+(`compute_species_rstar_full.py` is not in run.sh). The `a33_*` files in the output folder are stale copies of the cues_lost group.
+<!-- src: paper/results/figure_2/output/organs/a103_gtex_delay.csv, tissues.csv, chen_age_adj-ph-rin-pmi_pooled.csv, covariates_pooled.csv -->
+
 ## Deviations
 - **Untimed coupling in 01.** The legacy coupling came from the free host of all tissues (`factor.fit`); `Dataset.fit` reads an anchor on its
   leave-one-out host (as the A104 example). Amplitude and offset (read on the full host) are unchanged.
@@ -83,6 +93,8 @@ with 50 splits x 200 bootstraps is serial: hours) and A103.3. Their subsample ru
   coupling given a supplied host) needs a public coupling-on-a-given-host call (API gaps). Bootstrap: `--n-boot` (100 by default, not run in full).
 - **A42 sensitivity "no stratum centring"** (point estimate only in the legacy) is not ported: `Dataset.agreement` always centres on the modal stratum.
 - **A3 projector.** `paired.projector` centres over genes; the legacy centred each region over samples only (differences of 0.01-0.02 in the ratios).
+- **R2 offsets (`r2_couplings.csv`).** `offset_h` is read in the package frame (mean-anchor), the legacy in its own reference frame:
+  a near-constant shift per species (baboon +0.88 h, sheep -0.45 h); couplings identical to 9e-12. No archive verdict uses the offset.
 - **Brain tissues in the ventilator cohort.** Fewer than 4 brain tissues have >= 40 ventilated donors: no brain-periphery row (as legacy); A103 D4 not run.
 
 ## Local helpers (not in clocksync), `_shared.py` unless noted
