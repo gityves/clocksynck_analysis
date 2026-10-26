@@ -80,7 +80,8 @@ def gtex(quick: bool):
     sm = o["Broad cell type"].str.contains("smooth muscle")
     tis = o["Tissue Site Detail"]
     f = pd.DataFrame(dict(sv=sv.groupby(tis).mean(), sv_smooth=(sv | sm).groupby(tis).mean(), nuclei=tis.value_counts()))
-    t = pd.read_csv(group_out("organs") / ("subsample" if quick else "") / "tissues.csv").set_index("tissue")
+    t = pd.read_csv(group_out("organs") / ("subsample" if quick else "") / "tissues.csv")
+    t = t[t.cohort == "fast"].set_index("tissue")  # the organs table holds both cohorts; step 7 reads fast deaths
     f = f.join(t[["donors", "phase_dep_sd", "coupling", "abs_amp"]], how="left")
     rows = []
     for c in ("sv", "sv_smooth"):

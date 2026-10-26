@@ -48,6 +48,16 @@ estimates (no bootstrap, 200 gate permutations) against `legacy/desync/common_ou
   MDE and gate power (`power.mde`, `power.gate_power` are in the package but belong to figure 5 and figure_S03), waveform
   sensitivity (A17 step 6) is in `gate/compute_waveform_sensitivity.py`.
 - **A17 step 7** (`compute_step7_confirmations.py`): Tabula Sapiens anchor x anchor pairs: excess 0.189 vs 0.042 (diff 0.147 [-0.012, 0.356], 513 pairs, 15 anchor pairs) against legacy 0.184 / 0.041 (0.144 [-0.011, 0.344]); GTEx bulk vs Eraslan snRNA stromal-vascular fraction over 8 tissues: Spearman with `phase_dep_sd` -0.952 (p 0.000), with coupling +0.762 (p 0.028), partial given amplitude -0.940 / +0.701; identical to the legacy tables. Bootstrap over compartments (pair table, not donors).
+
+**M3 full run (2026-10-26, `run.sh --jobs 4`, 2.8 h, peak 2.2 GB; comparison `paper/results/logs/atlas_fits_m3_compare.md`):**
+- Gates: 34 of 34 targets as legacy (24 pass), no flips.
+- Healthy fits: 478 estimated rows, coupling within 1.6e-6 of legacy, status, boundary and anchor identical; only bootstrap
+  intervals differ (new stream; lower bound > 0 flips in 9 boundary rows, none in a registered verdict).
+- The consumers compared earlier (host_identity, resilience, spread_multiplicity) are therefore unaffected.
+- Fix: the organs table now holds both GTEx cohorts, and step 7 had joined both (16 rows; sv vs coupling +0.527).
+  It now reads the fast cohort (rerun 15:35): the GTEx table equals legacy exactly.
+- Tabula step 7 unchanged: 0.189 vs 0.042, diff 0.147 [-0.012, 0.356].
+<!-- src: paper/results/figure_2/output/atlas_fits/{a17_healthy_gates,a17_healthy_fits,a17_step7_gtex,a17_step7_tabula}.csv -->
 - **Seeds.** The gate uses seed = position of the target in the registry (as the legacy coherence step), the bootstrap
   seed 0; the legacy bootstrap seeds were job indices, so intervals agree up to Monte Carlo error only.
 - **Full run.** Not rerun here (500 bootstraps on 34 datasets takes hours: about 0.8 s per bootstrap and compartment).
