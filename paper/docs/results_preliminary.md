@@ -7,6 +7,21 @@ archive section they correct.
 
 ## Errata to the archive
 
+### 2026-10-26, M3: A20 R20.4 and A23 R23.1 intervals at the boundary (corrects archive RESULTS "R20.4" and "R23.1")
+
+The full M3 rerun of `figure_4/scripts/spread_multiplicity` reproduces the A20 / A23 inputs exactly (y1-y3 of 230 rows to
+5e-11; y4 of 194 rows) but refits the host in every bootstrap replicate (SEs 4-5 % larger for y1-y3, 11 % for y4). Three
+archive statements rest on intervals that now reach 0:
+- R20.4 "neurons are lower in every brain disease class": neurodegeneration x neuron d* -0.069 (-0.138 to +0.001) and
+  metabolic x neuron -0.087 (-0.186 to +0.003) include 0; psychiatric x neuron -0.104 (-0.204 to -0.018) still excludes it.
+  Point estimates within 0.004 of the archive. Read: neurons lower in psychiatric contrasts; in neurodegeneration and
+  metabolic disease the same direction at the boundary.
+- R23.1: neurodegeneration myeloid -0.57 h (-1.12 to +0.001) and glia +0.40 h (-0.002 to 0.88) now touch 0 (archive
+  -0.64 and +0.43 h with intervals excluding 0); metabolic x neuron +1.08 h (+0.004 to 2.63) is the only interval
+  excluding 0.
+No pre-registered primary changes (R20.1-R20.3 resilience calls unchanged; R23.2 epithelium unchanged).
+<!-- src: paper/results/figure_4/output/spread_multiplicity/{a20_cells,a20_readouts,a23_cells}.csv (M3, 2026-10-26) -->
+
 ### 2026-10-23, WP0 item 7: A22 V17.2 coherence values (corrects archive RESULTS "V17.2, A21 colon", line 1262)
 
 The legacy V17.2 coherences were computed on a pseudobulk table whose empty `stratum` column was read as NaN, so pair

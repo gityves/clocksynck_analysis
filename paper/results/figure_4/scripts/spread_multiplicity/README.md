@@ -42,6 +42,33 @@ Every script runs with `--subsample` (donors per contrast, 20 bootstraps, short 
 | A23 R23.4 per study (ERP149257, GSE132465, GSE181294, GSE270680, GSE281736, GSE326201) | -0.75, 11.17, 0.00, 3.60, -2.23, -6.12 h | -1.47, 6.67, 0.21, 2.86, -2.23, -6.75 h | GSE281736 identical; the others differ by the bootstrap draws and the host (see deviations) |
 | multiplicity (subsample only) | runs; counts depend on the sample | | the full counts need the full figure_5 table (legacy: 307 tests) |
 
+## M3 full run (2026-10-26)
+`run.sh --jobs 4` (spread inputs, hierarchy) 1 h 31 min, peak 3.3 GB; it stopped at `compute_multiplicity.py` because
+`resilience/a17_contrast.csv` did not exist yet. `compute_multiplicity.py` (5 s) and `compute_phase_cancer.py --jobs 4` (10 min,
+0.7 GB) were run after the resilience M3 run. Against the legacy full outputs (`legacy/desync/common_output/`): y1, y2, y3 of the 230
+A20 rows identical (max difference 5e-11), y4 of the 194 matched A23 rows identical; bootstrap SEs 4-5 % larger for y1-y3 (median
+ratio 1.045 / 1.054 / 1.041) and 11 % larger for y4 (1.115), host refitted in each replicate. The pooled class x family medians are
+within 0.016 (y1); the registered readouts R20.1-R20.3 are unchanged (resilient flags: glia, myeloid True; endothelial, neuron False).
+Multiplicity: the learned-rule set is 307 tests in 32 targets (legacy 307); p < 0.05 for 25 (d) and 28 (d*) against 27; BH q < 0.05: 0;
+one primary (islets_t2d beta) passes Holm (p 0.040; legacy 0.050). Spread decomposition identical to the legacy table.
+<!-- src: figure_4/output/spread_multiplicity/{a20_inputs,a20_readouts,a20_cells,a23_rows,multiplicity_summary,multiplicity_spread}.csv, resilience/a17_contrast.csv (M3, 2026-10-26) vs legacy common_output -->
+
+**Changes against the archive text** (no verdict of a pre-registered primary reverses):
+- **R20.3 / R20.4, neurons.** neurodegeneration x neuron -0.069 [-0.138, +0.001] (archive -0.07 [-0.14, -0.005]) and metabolic x neuron
+  -0.087 [-0.186, +0.003] (archive -0.09 [-0.19, -0.002]) now include 0; psychiatric x neuron -0.104 [-0.204, -0.018] still excludes it.
+  The R20.4 table has one row. Point estimates differ by <= 0.004.
+- **R23.1.** neurodegeneration myeloid -0.57 h [-1.12, +0.001] and glia +0.40 h [-0.002, 0.88] now touch 0 (archive -0.64 [-1.11, -0.16],
+  +0.43 [0.06, 0.85]); metabolic x neuron +1.08 h [+0.004, 2.63] is the only interval excluding 0. Lymphocyte rows shrink to +0.23 h
+  (fibrosis) from +1.40 h.
+- **Calls.** A20 lfsr < 0.05: d* 35 (archive 39), slope 45 (48), noise 77 (56); A23: 17 of 198 (34 of 200). The cell-specific d* part is 36 (29).
+- **R23.3.** y4 identical; p_offset inflamed myeloid 0.064 (archive 0.03), all-cases myeloid 0.046 (0.03).
+- **R23.4.** 6 studies estimable, 4 in the pool: -1.04 h [-5.11, 3.03] (MDE 5.8 h) against +0.54 h [-2.06, 3.14] over 8; null stated with its
+  interval in both. GSE131907 and GSE178341 are not estimable here (deviations below); GSE132465 +11.17 h, SE 4.23 (excluded).
+- **A22.** 4 anchors dropped as in `host_identity`; endometriosis:endothelium (d* +0.405, p* 0.023) is flagged but `drop` is False in
+  `a22_flags.csv` because dropping it would leave 2 anchors; the contrast then has no confirmed anchor set and is left out of A23, as the
+  legacy "no anchor (A22)".
+<!-- src: a20_readouts.csv, a20_cells.csv, a23_cells.csv, a23_rows.csv, a23_ibd.csv, a23_cancer.csv, a22_flags.csv vs legacy common_output -->
+
 ## Deviations
 - **Bootstrap SE.** `Dataset.contrast` bootstraps d only. `_shared.boot_se` draws donors within groups, renames repeats `<id>.<j>`
   and rebuilds the Dataset (projection, host) in every replicate; the legacy bootstrap kept host and V0 fixed. SEs agree within 5 % (check table).
