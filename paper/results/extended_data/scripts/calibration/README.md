@@ -53,6 +53,27 @@ genes). Point estimates against `legacy/` outputs:
 Not rerun in full: the A19 acceptance simulations, the A10 draws (40 subsets x 4 sizes x 3 sets x 200 bootstraps: hours), the V12 coverage (1,200 cohorts x 200 bootstraps), identity
 stability on 20 cohorts and the 100-replicate power curve (hours).
 
+## M3 full run (2026-10-26)
+`run.sh --jobs 4`, 14.0 h, peak 3.1 GB. First full runs of A10, V12 and the A19 acceptance here.
+- **Unchanged against the archive copies:** V14 ORPHEUS bias identical; V11 von Mises within 7e-12.
+- **V12 (full: identity on 20 cohorts, coverage with 200 bootstraps, 100-replicate power)** equals the legacy
+  `outputs/v12_anchored/summary.csv` in every row: identity 1.0 / 0.0 / 1.0 / 1.0; coverage 0.96, 0.95, 0.92, 0.94 at
+  c = 0.3 and 0.6, and 0.885 / 0.875 at c = 0.9 (below the 0.9 criterion, as legacy; bias <= 0.035); rejection at s = 1
+  0.07; MDE 0.738.
+- **A10 (40 subsets x n 8, 10, 12, 15, 200 bootstraps):** smallest n meeting gate pass >= 0.9, coverage >= 0.85 and
+  median error <= 0.15 in both heart and kidney: 15 (heart meets the rule only at 15: error 0.120, coverage 0.896;
+  kidney from 10). The archive rule (15) stands. Lung (multi-study): gate pass 0.14-0.45 at n 8-15.
+- **A19 3b (full bootstraps):** pooled relative change of excitatory D, AD minus control, -1.9 % (-23.3 to +19.4)
+  (archive -2 %, -23 to +19).
+- **A19 acceptance (200 simulations x 200 null draws, count-level null: real tables, ages permuted within stratum):
+  fails the registered null criterion (rejection <= 0.07).** Cells above 0.07 (of 6 compartments): locked amplitude 4,
+  drift 1, gamma 4, coupling slope 5. Largest: lung AT1 locked amplitude 0.220; multiciliated gamma 0.155, locked
+  amplitude 0.145; PsychAD OPC gamma 0.145; excitatory neurons gamma 0.125, drift 0.105. Lung AT1 and NK/ILC fits sit at
+  the coupling boundary in most null draws (coupling >= 0.999 in 72 % and 86 %; full-data picks 0.675 and 0.045), which
+  the legacy model-based simulation (null rejection 0.025-0.08) never produced. Not yet established whether this is the
+  count-level design, an issue of `Dataset.covariate` on age subsets, or both (PI_QUESTIONS Q10).
+<!-- src: extended_data/output/calibration/{small_n_summary,anchored_sim_summary,orpheus_cells_pooled,age_acceptance_summary,age_acceptance_runs}.csv (M3, 2026-10-26); legacy outputs/v12_anchored/summary.csv, desync/20_age/output/acceptance_summary.csv -->
+
 ## Deviations
 - **A10 estimator.** The legacy small-n calibration used the pre-A17 free-host fit (`Study.fit`, one host from all compartments, no small-sample
   correction of |z|^2 and psi). `Dataset.fit` with every compartment an anchor reads each compartment on the host of the others with the A17

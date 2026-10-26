@@ -6,6 +6,18 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 
 ## Open
 
+### Q10 (2026-10-26): the A19 age model fails its null calibration in the first full count-level run
+The archive validated `Dataset.covariate` (A19 part 2) with a model-based simulation (null rejection 0.025-0.08). The
+migrated acceptance (M3 full run) keeps the real count tables and permutes ages within stratum: rejection at alpha 0.05
+exceeds the registered 0.07 in 4 of 6 compartments for locked amplitude and for gamma (lung AT1 locked amplitude 0.220;
+PsychAD excitatory neurons gamma 0.125, OPC 0.145). Lung AT1 and NK/ILC fits mostly sit at coupling 1 on the age subset.
+- **Question:** (a) may I investigate (boundary fits on age subsets; the package's simulated null against the permutation
+  null), and (b) if the count-level failure holds, should A19 part 2 (H19.1-2 nulls, the neuron gamma secondary, p <= 0.01
+  per compartment against the simulated null) be re-read with a permutation p (ages permuted within stratum), as an
+  erratum to the archive?
+- **On hold:** any use of the A19 age readouts (neuron gamma) in figures or text; the erratum. M3 of resilience runs as is.
+- Evidence: `results/extended_data/scripts/calibration/README.md` (M3 full run), `output/calibration/age_acceptance_*.csv`.
+
 ### Q2 (2026-10-23): figure-table numbers used against their archive verdict (WP0 item 1)
 - A104 rho +0.73 quoted as support; H104.1 predicted rho < 0 (archive: not supported; H104.2 not replicated).
 - A54 psoriasis "replicated in discovery and held-out": the delay replicates (H54.2) but H54.1 and H54.3 fail.
