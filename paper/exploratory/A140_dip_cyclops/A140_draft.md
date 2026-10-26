@@ -74,5 +74,8 @@ A17). Breast/TNBC data: not in our inventory; Zhang et al. 2025 to be checked fo
 
 ## Open choices for the PI
 1. Thresholds of H140.1-H140.3, and whether the seed-500 cell is the right primary.
+I trust you on the thresholds
 2. Whether Q2 stays descriptive.
+For Q2 if possible download directly the same cohort they used. In this cohort it would be interesting to see if we have a compartement that can be used as an anchor and if we can replicate some of their mouse findings on the TME composition and on the antigen presentation (of course with only the day (matching roughly their CT 16, 22), we are not expecting much change, but we could see if it goes in the same direction)
 3. Whether to ask the authors for Table S5 (outward-facing: draft only).
+This might be not so nice, asking them material while suggesting they are wrong, but might do it in the future
