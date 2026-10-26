@@ -69,7 +69,7 @@ Subsample check of `compute_cancer_split.py` (WP0 item 2, 2026-10-23): the archi
 `run.sh --jobs 4`, 1.1 h, peak 3.4 GB (first full `run.sh`). Against the archive outputs (`outputs/paper/figure_3_backbone`):
 family medians and couplings to 1e-5, cancer split and its contrasts, HBCC, PD DMV and Braak to 1e-9; thinning identical with
 the thinned intervals now filled (NaN in the archive). A104 GTEx: periphery rho 0.734 [0.621, 0.798], brain -0.115 (200
-bootstraps). Per-cell split, all 9 targets (229 rows; the archive copy held 5), against `legacy/desync/common_output/`: D
+bootstraps). Per-cell split, all 9 targets (229 rows; the archive copy held 45), against `legacy/desync/common_output/`: D
 identical (4e-15), eligible flags identical; R median absolute difference 0.003 (up to 0.25 in a few small groups; host refitted
 per group, deviation 1). Per-cell contrasts with full bootstraps (100 rows): d_R interval excludes 0 in 5 (legacy 4), d log
 lambda in 5 (4), d_D in 6 (2); the d_R changes are at the boundary (HLCA fibrotic fibroblast lower bound +0.003 vs -0.001, AD
