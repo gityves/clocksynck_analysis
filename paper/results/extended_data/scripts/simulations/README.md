@@ -25,6 +25,18 @@ New builders: `data/colon_prepub` (pre-publication mouse colon h5ad, 8 animals x
 `data/INDEX_natexp_cancer.md`. Both agree exactly with the legacy V13 pseudobulks (counts, depth, n_cells; 195 colon rows after the >= 30 cells and 75 % presence
 rules, 53 skin rows).
 
+**M3 full run (2026-10-26; comparison `paper/results/logs/simulations_m3_compare.md`).**
+- V17.2 colon (`a22_colon_confirm.csv`): byte-identical to the archive snapshot; lymphatic EC not dropped (delta -0.399, SE
+  0.164), fails as archive.
+- V16 and V18 pass as archive. The full run reads the M3 `spread_multiplicity` inputs (V18 225 rows, the frozen table 237),
+  so rows are not like-for-like with legacy. V16 planted fibrosis x lymphocyte called 0.851 (archive 0.89); null calls for
+  y2 0.023. V18 planted epithelial coverage 1.00 / 0.98.
+- V13 colon: anchored mean error +0.108, Spearman vs truth 0.958 (free corrected +0.121, 0.928); skin as archive.
+- R26: the first full run (2026-10-26, 16 workers, 3.8 h) read the cancer cohorts from the copy-number-split tables, through
+  the A25 loader. 8 studies failed to load and the others differed from legacy. The loader is fixed (`cnv=False`, the main
+  tables, as legacy) and R26 is rerun with A25 (section to follow).
+<!-- src: paper/results/extended_data/output/simulations/{a22_colon_confirm,v16_summary,v18_summary,v13_colon_summary}.csv -->
+
 ## Checks (subsample runs; point estimates against `legacy/` outputs)
 | readout | here | legacy | note |
 |---|---|---|---|

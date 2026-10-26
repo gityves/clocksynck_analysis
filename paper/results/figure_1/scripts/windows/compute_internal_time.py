@@ -177,7 +177,7 @@ def cohort(entry: str, subsample, seed):
     """(pseudobulk, donors, anchors, rule, name) of one entry (`name|part`: case / control / hospital / anytime)."""
     name, _, part = entry.partition("|")
     if name.startswith("cancer_"):
-        pb, donors = data.load("cancer_sc", study=name.removeprefix("cancer_"))
+        pb, donors = data.load("cancer_sc", study=name.removeprefix("cancer_"), cnv=False)  # main table, as legacy A25 (`anchors.table_of`)
         lab = None
     else:
         row = sh.targets().loc[name]
