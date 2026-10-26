@@ -25,6 +25,11 @@ PsychAD excitatory neurons gamma 0.125, OPC 0.145). Lung AT1 and NK/ILC fits mos
   `Dataset.covariate` (`null="permutation"`, default; refit per permutation; fits with own noise at the floor reported as
   not estimable for gamma), rerun the acceptance with it, then re-read A19 part 2 on the real ages as an erratum. Needs
   your go (clocksync change).
+- **Answer (PI, 2026-10-26), part (b):** add the within-stratum covariate shuffle. Done: clocksync 613e224
+  (`Dataset.covariate(null="permutation")`, default; gamma not estimable when own noise is at its bound). Running: the
+  acceptance with it, then A19 part 2 on the real ages (erratum to follow). Note: the M3 port of A19 part 2 has no design
+  check, so even under the simulated null the archive's neuron gamma secondary is not reproduced (-0.104, SE 0.077,
+  p 0.173 vs -0.124, p 0.013; six compartments the legacy check excluded enter; `resilience/README.md`).
 
 ### Q2 (2026-10-23): figure-table numbers used against their archive verdict (WP0 item 1)
 - A104 rho +0.73 quoted as support; H104.1 predicted rho < 0 (archive: not supported; H104.2 not replicated).
