@@ -43,7 +43,7 @@
 ## Environment and data
 - Python: `$(conda info --base)/envs/sccc/bin/python` (as every `run.sh` uses).
 - Shared machine (16 physical cores, 32 threads, 125 GB): call `clocksync.config.limit_threads()` (done by `common.cli.setup`).
-  Budget for this project (user, 2026-10-26): at most 12 workers in total (three lanes of 4) and at most ~90 GB RAM
+  Budget for this project (user, 2026-10-26): at most 16 workers in total (four lanes of 4) and at most ~120 GB RAM
   summed over the RUN_CAP_GB of concurrent runs (read backed or chunked).
 - Data: `/mnt/max8tb/data/CoPhaser_data/cancer_circadian/` (`$SCCC_DATA`), with a `PROVENANCE.md` (URL, date, sha256)
   per source. Self-imposed cap 400 GB. Processed matrices only, no FASTQ mapping.
