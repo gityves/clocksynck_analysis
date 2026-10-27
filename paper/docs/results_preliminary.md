@@ -612,3 +612,19 @@ without core clock genes.
   cross-compartment concordance, no clock recovery) and cannot start when there is none. clocksync's gate keeps
   sensitivity when the factor is small (20 / 20) and loses it at full factor size (24 / 50).
 <!-- src: paper/exploratory/A140_dip_cyclops/output/q1rev/gate/D_K1_r*.csv, D_K1_s0.5_r*.csv, D_K1_s0_r*.csv (columns truth_r_median, dip_truth_r, cc_median, n_rhy_min, gate_pass, status); paper/results/logs/q1_run.log, q1_run_rev_gate_s1.log -->
+
+### 2026-10-27, PI Q3 follow-up: the A21 colon shift without the decoupling anchor (Figure 1 panel restored)
+
+Re-estimation, not a new hypothesis. A22 V17.2 failed because the rule did not drop lymphatic EC, known to decouple after
+DSS (coherence 0.448 -> 0.048), so the R-DC host included a decoupled anchor. R21.4 recomputed as in M3 with anchors
+fibroblast, smooth muscle, pericyte and endothelial only (500 animal bootstraps):
+- Epithelial mean shift R-DC minus C-DC: untimed -8.95 h [-10.87, -7.04] vs known time -9.03 h [-11.03, -7.09];
+  difference 0.08 h. With lymphatic EC as anchor (M3): -8.70 h vs -9.40 h. The R21.4 acceptance (within 3 h, both
+  intervals excluding 0) is met either way.
+- Per epithelial class, untimed vs known time: colonocyte -7.44 vs -7.72 h; secretory -9.12 vs -8.74 h; stem -10.27 vs
+  -10.66 h.
+- Lymphatic EC as a target: -1.02 h [-8.10, 4.38] (known time +1.48 h); no shift detectable.
+- Reading: the blind recovery of the epithelial shift does not depend on the decoupled anchor. The Figure 1 panel is
+  restored (PI, 2026-10-27) with the anchors stated: set by hand from prior knowledge, because the automatic rule
+  failed V17.2. It is a known-answer check of the readout, not of the anchor rule.
+<!-- src: paper/exploratory/WP0_integrity/output/a21_shift_without_lymphatic.csv; paper/results/figure_1/output/species/a21_r214_phase.csv (M3) -->
