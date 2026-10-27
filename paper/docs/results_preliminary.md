@@ -654,3 +654,25 @@ blocks per comparison; 200 donor bootstraps.
     consistent with meal timing (PI hypothesis) but not shown to be meal timing: GTEx has no meal times, and the block
     includes smooth-muscle layers.
 <!-- src: paper/exploratory/A142_organ_blocks/output/{tests,targets,reference_summary}.csv -->
+
+## A144 part 2 (D144.2, descriptive; 2026-10-27): per-cell amplitude vs within-sample synchrony as carriers of coupling: inconclusive
+
+33 eligible healthy or control compartments (AD_mssm 7, AD_radc 5, SEA-AD DLPFC 6, HLCA fibrotic controls 5, HLCA lung
+5, PD controls 5; none dropped). Coupling c from each group's anchored refit, reproducing the A18 rho to 6.5e-16.
+logit(c) ~ log lambda + log R + target, 1,000 bootstraps of compartments within target:
+
+| coefficient | estimate [95 %] |
+|---|---|
+| beta_lambda (per-cell amplitude) | 1.15 [0.46, 2.08] |
+| beta_R (within-sample synchrony) | 1.88 [0.75, 2.83] |
+| beta_R - beta_lambda | 0.73 [-0.48, 1.90] |
+| beta_rho (mechanical reference, logit(c) ~ log rho + target) | 1.69 [0.89, 2.47] |
+
+- Both coefficients are positive, as the shared log rho term forces.
+- Synchrony's coefficient exceeds per-cell amplitude's, but the interval of the difference includes 0. So the
+  population view is not shown.
+- The theory's signature, a per-cell amplitude coefficient below the mechanical reference, is not shown either:
+  beta_lambda 1.15 vs beta_rho 1.69, overlapping intervals.
+- At 33 rows, mostly brain, this cannot separate the explanations.
+- Caveat: HLCA fibrotic controls and HLCA lung may share donors (not checked).
+<!-- src: paper/exploratory/A144_strong_clocks/output/{d144_2_coefficients,d144_2_rows}.csv -->
