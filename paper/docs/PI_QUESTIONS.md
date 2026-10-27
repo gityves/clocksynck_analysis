@@ -27,6 +27,7 @@ Two choices of the run may cause the failure, so the gate does not yet show that
 - **On hold:** A140 Q1 scoring and Q2 (ii) (the published pipeline on GSE266919).
 - Evidence: `paper/exploratory/A140_dip_cyclops/README.md` (Q1), `output/q1/{simulator_gate,diag_summary}.csv`, `results_preliminary.md` (A140 Q1).
 
+- **Answer (PI, 2026-10-27):** (b) revise and rerun: a dated revision registered before any rerun (80 CYCLOPS models; factor calibrated on genome-wide pseudobulks of gate-passing tumour immune compartments; factor size as a grid); gate, then H140.1-3 only if it passes.
 ### Q10 (2026-10-26): the A19 age model fails its null calibration in the first full count-level run
 The archive validated `Dataset.covariate` (A19 part 2) with a model-based simulation (null rejection 0.025-0.08). The
 migrated acceptance (M3 full run) keeps the real count tables and permutes ages within stratum: rejection at alpha 0.05
@@ -56,6 +57,7 @@ PsychAD excitatory neurons gamma 0.125, OPC 0.145). Lung AT1 and NK/ILC fits mos
   with 2 of the 6 archive compartments at p <= 0.01. Erratum written (`results_preliminary.md`). The hold on the neuron
   gamma readout is lifted; it is a nominal secondary. Closed unless you object.
 
+- **Answer (PI, 2026-10-27):** closed; the neuron gamma result goes in the main text as a nominal, uncorrected secondary (with the erratum).
 ### Q2 (2026-10-23): figure-table numbers used against their archive verdict (WP0 item 1)
 - A104 rho +0.73 quoted as support; H104.1 predicted rho < 0 (archive: not supported; H104.2 not replicated).
 - A54 psoriasis "replicated in discovery and held-out": the delay replicates (H54.2) but H54.1 and H54.3 fail.
@@ -65,6 +67,7 @@ PsychAD excitatory neurons gamma 0.125, OPC 0.145). Lung AT1 and NK/ILC fits mos
 - **Question:** remove, restate or keep each claim (with the verdict stated)?
 - **On hold:** edits of the Figure 1, 2 and 5 tables.
 
+- **Answer (PI, 2026-10-27):** go through each claim with the proposed text before editing.
 ### Q3 (2026-10-23): panels not on the anchored A17+ estimator (WP0 item 4)
 13 of 30 figure-table rows flagged (`paper/exploratory/WP0_integrity/output/estimator_consistency.csv`). By design
 (the text must name the readout): r* (A103, A42), A104, A85 index, A92/A93 coherence C, A33 tissue host. Needing a
@@ -74,6 +77,7 @@ confirmation); Fig 5 fibrotic-lung T cells (A5 free-fit 0.45).
 - **Question:** drop, recompute on the anchored estimator, or keep with the readout named, per panel?
 - **On hold:** recomputation of those panels.
 
+- **Answer (PI, 2026-10-27):** lead's default per panel: by-design rows kept with the readout named; GTEx departures, neuron/retina and fibrotic-lung T cells recomputed on the anchored estimator; A20 'damping' and A21 colon dropped; COVID A105 to Extended Data with '2 anchors' stated.
 ### Q6 (2026-10-24): brain disease contrasts are anchor-dependent (WP0 item 8)
 With an all-LOO host instead of the A17 anchors, brain contrasts (Figure 4: PD, AD, ASCVD, VaD, SCZ ...) change sign in
 1-7 of 9 compartments (block agreement r* 0.42-0.67); the peripheral headline contrasts (ILD, fibrotic lung, T2D, A44,
@@ -88,6 +92,12 @@ AD skin) keep their sign. Per-cohort cancer tumour-minus-normal coupling changes
 - **On hold:** Figure 4 brain panels.
 - Evidence: results_preliminary.md, WP0 item 8.
 
+- **Answer (PI, 2026-10-27):** brain donors die at any hour, so the brain cohorts likely cover the full cycle and the
+  inferred amplitudes and phases are close to absolute. Compare them with the GTEx and simulation amplitudes to check
+  whether the amplitude and phase spread is large enough for the model's estimates to be stable. If not, nothing can be
+  said. If yes, describe first which compartments agree, and which should agree or are noise-driven. If they are not
+  noise-driven, the PI may request the time-of-death fields to learn what follows it. -> to be registered (descriptive
+  amendment) before any brain readout.
 ### Q9 (2026-10-24): direction after WP0-WP4 (step back)
 Proposals (see the chat summary of 2026-10-24; each would be registered or written into the plan once agreed):
 - (a) Figure 3 claim: from "a self-sustained peripheral network" to "organs stay coupled clocks when cues are disrupted
@@ -122,6 +132,7 @@ Proposals (see the chat summary of 2026-10-24; each would be registered or writt
 
 ## Answered
 
+- **Answer (PI, 2026-10-27):** (f) journal decided after WP6. Plan rewrite and A136 registration: write both now as drafts for review.
 ### Q4 (2026-10-23): clocksync change
 `clocksync.genes.gene_columns` returns -1 silently for a missing symbol (indexing the last column; the A85 bug).
 Proposed: `missing="ignore"|"warn"|"raise"` and an all-absent guard
