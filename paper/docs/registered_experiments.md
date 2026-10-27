@@ -1125,3 +1125,58 @@ see the drop (0.967 -> 0.676 in clocksync)?
 structure; an explicit test of clock presence). A failed one is removed from the method's claims. D145.1 sets how
 "coupling" is presented: as a readout clocksync makes explicit, not one only it can compute, unless the data say
 otherwise. Code: `paper/exploratory/A145_two_step/`.
+
+## A146 (2026-10-27, written before any readout; PI request): does the tumour microenvironment follow the time-of-day programs of the mouse TNBC atlas in human breast cancer?
+
+**Source of the predictions.** Preprint "Circadian misalignment underlies immune escape in breast cancer" (bioRxiv
+10.64898/2026.05.26.726543; archive `literature/circadian_breast_cancer.pdf`), 4T1 mouse tumours at CT4/10/16/22. Its
+human arm (CYCLOPS on immune pseudobulks of TNBC) is questioned in A140 and not used. Mouse acrophases are taken from
+its main text and mapped to human wall time by activity onset: mouse CT12 = human 07:00, so human h = mouse CT - 5 h
+(the preprint uses a 12 h shift in CT; this is the same mapping expressed in wall time).
+
+**Family:** secondary, own Holm over the A146 hypotheses (PI, 2026-10-27). Part 1 below; later parts (TNBC single
+cell, pan-cancer) are registered separately before their data are read.
+
+**Known at registration.** GSE233242 (Li et al. 2024): 42 patients (primary join; builder `breast_timed_gse233242`),
+tumour and adjacent-normal bulk TPM, recorded resection times 08-18 h; V25.5 per-patient internal time `est_day`
+(`figure_1/output/windows/v25_5_patients.csv`; Spearman with recorded time 0.56, MAE 1.12 h). Archive D8: a
+glucocorticoid score was read against these times (not one of the programs below). No program below has been
+computed on these data.
+
+### Part 1: GSE233242 (bulk, recorded and internal time)
+
+**Programs** (tumour libraries; score = mean z of log2(TPM + 1) over the genes, z across patients; human orthologs of
+the genes named in the preprint), with mouse acrophase -> predicted human acrophase:
+| program | genes | mouse CT | human h |
+|---|---|---|---|
+| P1 proliferation (cancer epithelium) | MKI67 CCNB1 CENPA TOP2A AURKB PCNA MCM2 BUB1B BRCA2 MRE11 | 1.5 | 20.5 |
+| P2 MHC-I antigen presentation (cancer epithelium) | B2M PSMB8 TAPBP TAP1 HLA-A HLA-B HLA-C | 22 | 17 |
+| P3 interferon response | STAT1 IRF1 IFNGR1 IFNGR2 IFNAR2 STAT3 | 22 | 17 |
+| P4 T-cell activation (residual on T abundance) | TCF7 LEF1 RUNX3 BCL6 | 18 | 13 |
+| P5 myeloid antigen presentation (residual on myeloid abundance) | CIITA HLA-DRA HLA-DRB1 CD74 | 18 | 13 |
+| P6 phagocytosis (residual on myeloid abundance) | DNM2 CDC42 SYK FCGR1A FCGR2A | 18 | 13 |
+| P7 T-cell abundance | CD3D CD3E CD2 TRAC | 16 | 11 |
+| P8 myeloid abundance | CD68 CD14 CSF1R LYZ | 4 | 23 |
+| P9 PD-L1 | CD274 | 22 | 17 |
+| P10 PD-1 (residual on T abundance) | PDCD1 | 4 | 23 |
+Residual = residual of the program score on the abundance score (OLS over patients), re-z-scored. Genes absent from
+the matrix are dropped and listed; a program with fewer than half of its genes is not scored.
+
+**Statistic.** Per program k, OLS over patients of the score on cos(2 pi (t - h_k) / 24); t_k = t statistic of the
+slope (positive = the predicted timing). Omnibus S = mean of t_k over the scored programs. Null: patient times
+permuted (10,000; the same permutation for every program), p = (1 + #{S_null >= S}) / 10,001, one-sided.
+- **H146.1 (primary of part 1):** S > 0 with t = internal time (`est_day`).
+- **H146.2:** S > 0 with t = recorded resection time.
+- **Holm** over H146.1-2 within part 1 (and over the whole A146 family once later parts are scored).
+- **D146.1 (descriptive):** per-program t_k and permutation p for both times; S(internal) - S(recorded) with a patient
+  bootstrap (2,000); the same omnibus in adjacent-normal libraries (programs P2-P10; P1 descriptive); S as a function
+  of the mapping offset (human h = CT - 5 h +- 0, 2, 4, 6 h), shown, not tested.
+**Power (stated before scoring):** a single program at n = 42 needs |r| about 0.40 (one-sided 0.05, 80 %). The omnibus
+null SD is measured from the permutations and its MDE reported with the result. Small-sample, bulk data: a fail is
+"not detected at this design".
+**Caveats fixed in advance:** bulk mixes composition and expression (residual scores address immune programs only
+partly); the window covers about 10 h, so a program whose predicted peak lies outside it is read mainly through its
+slope; the internal time comes from the same libraries' clock genes (the programs exclude them).
+**Reading.** H146.1 pass: human breast tumours show the predicted time-of-day organisation against internal time; a
+larger S for internal than recorded time supports a clock rather than a scheduling origin. Fail: not detected; the
+single-cell part (TNBC) is then registered with its own power before running.
