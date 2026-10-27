@@ -79,6 +79,7 @@ def main():
     ap.add_argument("--jobs", type=int, default=1, help="parallel replicates (workers = jobs x threads, at most 16)")
     ap.add_argument("--threads", type=int, default=1, help="Julia workers per CYCLOPS fit")
     ap.add_argument("--reps", type=int, default=50)
+    ap.add_argument("--scales", default="1", help="gate: factor scales (revision: 1, 0.5, 0.25, 0)")
     ap.add_argument("--arms", default="BCAD", help="grid: arm order")
     args = ap.parse_args()
     t0 = time.time()
@@ -86,7 +87,7 @@ def main():
     if args.step == "timing":
         tasks = [("timing", a, 1, r, [(500, False)], 99, True, 1.0) for a in "ABCD" for r in range(2)]
     elif args.step == "gate":
-        tasks = [("gate", "D", 1, r, [(1500, False)], 1500, True, 1.0) for r in range(args.reps)]
+        tasks = [("gate", "D", 1, r, [(1500, False)], 1500, True, float(sc)) for sc in args.scales.split(",") for r in range(args.reps)]
     elif args.step == "primary":
         tasks = [("primary", "B", 1, r, [(500, False)], 500, True, 1.0) for r in range(args.reps)]
         tasks += [("primary", a, 1, r, [], 500, False, 1.0) for a in "AC" for r in range(args.reps)]

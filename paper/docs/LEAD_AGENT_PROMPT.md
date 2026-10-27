@@ -36,9 +36,14 @@ it learned is on disk.
   - A140 Q1 revision, simulator gate (`paper/exploratory/A140_dip_cyclops/q1_run.py --step gate --jobs 10 --reps 50
     --scales 1,0.5,0.25,0`; run.sh PID 1671361, started 05:38, expected about 09:30-10:00, log
     `paper/results/logs/q1_run.log`).
-  - A Sonnet subagent owns it and will score H140.1-3 at scale 1 only if the gate passes there.
-  - If the subagent is gone, finish it yourself: read the "Q1 revision" section of `A140_dip_cyclops/README.md`, score
-    with `q1_score.py`, and verify against `output/q1/`.
+  - Since 08:30 it runs without an agent: `paper/exploratory/A140_dip_cyclops/q1rev_chain.sh` (PID 1889802, log
+    `paper/results/logs/a140_chain.log`) waits for the gate and scores it into `output/q1rev/simulator_gate.csv`. If
+    the gate passes at scale 1, it runs the primaries (`--step primary`, 10 workers) and scores them into
+    `output/q1rev/primary_scores.csv`.
+  - The gate is slow: about 75 min per 80-model fit per worker, so about 25 h for the four scales; scale 1 runs first.
+  - Pass the chain's PID to `watch_jobs.sh`.
+  - When the chain ends, read its log, verify the scores against `output/q1rev/`, and record them. If the chain stops on a
+    failure, follow its log message.
 - **Registered, not yet scored.**
   - A138: cancer estimability. Order Q3, Q1, then Q2 after its simulator gate; write the power notes first.
   - A139: refitting clock-gene acrophases under hospital hours (method simulation).

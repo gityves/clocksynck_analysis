@@ -1,4 +1,4 @@
-"""A140 Q1: simulator gate, H140.1-H140.3 with Holm, and the descriptive grid summary (reads output/q1/*/*.csv).
+"""A140 Q1 (and its revision, `A140_OUT=q1rev A140_CALIB=1 A140_N_MODELS=80`): simulator gate, H140.1-H140.3 with Holm, and the descriptive grid summary (reads output/q1/*/*.csv).
 
     python q1_score.py gate        simulator gate (arm D, seed 1,500 without core clock genes; with core genes alongside)
     python q1_score.py primary     H140.1-3, exact binomial thresholds, Holm over the three -> output/q1/primary_scores.csv
@@ -13,7 +13,8 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-OUT = Path(__file__).resolve().parent / "output" / "q1"
+import os
+OUT = Path(__file__).resolve().parent / "output" / os.environ.get("A140_OUT", "q1")
 
 
 def read(step: str) -> pd.DataFrame:
@@ -24,9 +25,11 @@ def read(step: str) -> pd.DataFrame:
 def gate():
     d = read("gate")
     rows = []
-    for core, g in d.groupby("core"):
+    if "factor_scale" not in d:
+        d["factor_scale"] = 1.0
+    for (sc, core), g in d.groupby(["factor_scale", "core"]):
         g = g[g.status == "ok"]
-        rows.append(dict(core=core, n_ok=len(g), n_total=int((d.core == core).sum()), median_truth_r=g.truth_r_median.median(),
+        rows.append(dict(factor_scale=sc, core=core, n_ok=len(g), n_total=int(((d.core == core) & (d.factor_scale == sc)).sum()), median_truth_r=g.truth_r_median.median(),
                          share_ge_0_7=(g.truth_r_median >= 0.7).mean(), median_dip_truth_r=g.dip_truth_r.median(),
                          min_truth_r=g.truth_r_median.min()))
     t = pd.DataFrame(rows)

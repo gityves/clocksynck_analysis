@@ -11,6 +11,7 @@ variance of the leading non-clock principal components of real immune pseudobulk
 """
 from __future__ import annotations
 
+import os
 import shutil
 import tempfile
 from pathlib import Path
@@ -25,7 +26,8 @@ from clocksync.waveform import Waveform
 HERE = Path(__file__).resolve().parent
 PAPER = HERE.parents[1]
 Q2 = HERE / "output" / "q2"
-OUT = HERE / "output" / "q1"
+OUT = HERE / "output" / os.environ.get("A140_OUT", "q1")  # q1 revision: A140_OUT=q1rev
+CALIB = HERE / "output" / "q1" / "tumour_immune_genome" / "calibration_lambda.csv"  # used when A140_CALIB=1
 COMPS = ["CD4_T", "CD8_T", "myeloid"]
 N_PATIENTS, P_GENES = 76, 2000
 COUPLING = 0.8
@@ -94,6 +96,8 @@ def build_panel() -> dict:
     Y = np.vstack(rows)
     s = np.linalg.svd(Y, compute_uv=False)
     lam = s ** 2 / (len(Y) - 1)
+    if os.environ.get("A140_CALIB") == "1":  # revision: eigenvalues of the tumour immune genome-wide calibration
+        lam = np.concatenate([pd.read_csv(CALIB).lam.to_numpy(), lam[3:5]])
     return dict(genes=panel, n_clock=len(clock), n_follow=len(fol), amp=amp, psi=psi, mesor=mesor, depth=depth,
                 lam=lam[:5], lam_total=float((Y ** 2).sum() / (len(Y) - 1)), n_rows=len(Y))
 
