@@ -8,7 +8,7 @@ The agent runs nine work packages (WP0-WP8) that close the paper's main weakness
 
 **Confirmatory family.** Five hypotheses carry the headline claims and are tested with Holm's correction over the five (family-wise alpha 0.05, each one-sided as registered): H109.1 and H109.2 (Figure 3: organs coupled without cues, and the coupling is clock rotation, not a shared displacement), H114.1 (cancer: MYC beyond proliferation, purity-adjusted), H115.1 and H116.1 (psoriasis: trait component, and reversal specific to treatment). Every other hypothesis is secondary (own alpha 0.05, labelled secondary in the text) or descriptive. Report both the raw and the Holm-adjusted p of the five. The registration of each of the five states its membership in the family.
 
-**Out of scope (do not attempt):** brain-bank times of death (HBCC, AMP-PD), the circadiomics left-ventricle request, ICU temperature records, Synapse or dbGaP datasets not already held (Ruzicka 2024, AMP RA, ImmuNexUT), and any wet-lab or animal experiment. GTEx protected phenotypes already held under phs000424 may be used, aggregates only, as in A46-A99.
+**Out of scope (do not attempt):** brain-bank times of death (HBCC, AMP-PD) unless A141 finds a brain contrast that is not noise-driven (then the PI decides on a request), the circadiomics left-ventricle request, ICU temperature records, Synapse or dbGaP datasets not already held (Ruzicka 2024, AMP RA, ImmuNexUT), and any wet-lab or animal experiment. GTEx protected phenotypes already held under phs000424 may be used, aggregates only, as in A46-A99.
 
 ## Repository and migration (read before any work package)
 
@@ -39,6 +39,7 @@ Groups per figure (`common.paths.GROUPS`): figure_1 `method`, `windows`, `specie
 
 - **M2, subsample equivalence (2026-10-23).** Every migrated compute script run with its README's `--subsample N` and compared with the archive's subsample outputs (same seeds). Result per group: see the table at the end of this section. A script listed as failing or differing must be fixed (or its difference explained in its group README) before it is used in a work package.
 - **M3, full reruns, per figure, on demand.** Before a figure's numbers go into text, rerun its groups in full (`run.sh` without `--subsample`, registered permutation and bootstrap sizes, `paper/common/run.sh` for RAM caps) and compare point estimates with the archive snapshot (`ARCHIVE_SNAPSHOT.tsv`; READMEs give the expected values). Record agreement or explained differences in the group README; a full rerun replaces the snapshot files (delete the snapshot rows of rerun files). Symlink the input tables the figure reads (`$SCCC_DATA/pseudobulk/*.parquet`, GTEx aggregates) into `results/<figure>/data/`. Long runs (> 20 min) are documented scripts, launched in the background, at most 4 parallel jobs.
+- **[Draft 2026-10-27, PI review]** **M3 done (2026-10-24 to 2026-10-27).** Every group rerun in full and compared with its archive snapshot (`paper/results/logs/*_m3_compare.md`; group READMEs). No registered primary changed. Errata: A19 part 2 (permutation null; neuron gamma nominal), A20 R20.4 / A23 R23.1 intervals at the boundary; fixed during M3: A25/R26 cancer cohorts (main tables), A17 step 7 GTEx join. Snapshots removed (backups in the session scratchpad).
 - **M4, cut the data dependency on the archive.** For each dataset a work package uses, save the standard table once (`common.data.save(name, *build_module.from_legacy())`, or `build()` from raw files) so later runs read `$SCCC_DATA/pseudobulk/` only. When every used dataset is saved, `from_legacy()` paths are dead code for this repository.
 - **M5, before public release (user's call).** Remove amendment ids from user-facing docstrings, delete `paper/common/migration/`, delete per-donor scratch (none migrated), choose licence.
 
@@ -46,6 +47,8 @@ Groups per figure (`common.paths.GROUPS`): figure_1 `method`, `windows`, `specie
 
 - **Registration.** Write each amendment in `paper/docs/registered_experiments.md` (dated, hypothesis ids, estimand, null, pass rule, data rule, power or MDE) and commit it before scoring. The work-package texts below are drafts of those amendments: copy them, complete the data-dependent parts after the scout (labelled "written after the scout, before scoring"), and commit. Results and run notes go to `paper/docs/results_preliminary.md` with a `src:` pointer to the output table; corrections of archive results (WP0) go there under "Errata to the archive", never into the archive.
 - **Code.** New analyses in `paper/exploratory/<A1xx_slug>/scripts/`, following the conventions of the migrated groups (docstring with amendment, hypotheses, estimand, null, outputs; `common.cli.parser`; `--subsample` check first; seeds fixed). Use the public clocksync API; extend clocksync (with a test) when a tool is generally useful, otherwise a helper in `paper/common/`. Do not edit a migrated group for a new hypothesis; import its helpers or copy what is needed.
+- **[Draft 2026-10-27, PI review]** **Power.** Every registration states the attainable minimum p and the null-free ceiling of each statistic, plus the MDE (PI, Q9 d).
+- **[Draft 2026-10-27, PI review]** **Pull vs order.** The signed pole-deviation Spearman and the shrink ratio (A132b) become a clocksync readout, validated on the A133 simulation grid before any use (PI, Q9 c).
 - **Base code.** Each work package names the migrated scripts it builds on ("Base code"). `paper/docs/AMENDMENT_INDEX.md` maps any other archive amendment to its script.
 
 ### M2 result per group
@@ -388,6 +391,8 @@ Rationale: tumour incoherence grows with proliferation (A97); each luteal phase 
 
 Run in this order; packages on the same line can run in parallel. Each outcome changes the figures as listed.
 
+**[Draft 2026-10-27, PI review]** **Current order (after WP0-WP4, M3 and the PI answers of 2026-10-25/27):** (i) cancer: A138 (Q3, Q1, then Q2 after its simulator gate), A139, A140 (Q1 revision running; Q2 (ii) after it); (ii) brain: A141 (running; decides whether the Figure 4 brain panels are readable); (iii) Q3 recomputations on the anchored estimator (GTEx departures, neuron/retina, fibrotic-lung T cells); (iv) A136 (drug vs brain death in organ donors, draft) and the pull-vs-order readout; (v) WP6 (psoriasis); (vi) journal decided after WP6 (PI, Q9 f); WP7-WP8 as capacity allows.
+
 1. **WP0** (integrity; item 2 first resolves the `compute_cancer_split.py` null difference of M2) and **WP1** (A109, coupling nulls; A109b Tabula Sapiens).
 2. **WP2** (A110, mechanism), only if H109.1 and H109.2 pass; **WP3** (A111-A112 feeding, A129 scout) and **WP4** (A113 living humans; A123 GTEx working-hours donors; A130 chronotype; A131 scout) in parallel.
 3. **WP5** (A114, cancer) and **WP6** (A115-A116, psoriasis).
@@ -426,14 +431,14 @@ Run in this order; packages on the same line can run in parallel. Each outcome c
 
 **One sentence:** human organs keep internal time with each other rather than with the clock on the wall; this coupling survives the loss of daily cues, chronic disease and age, and breaks only locally, in three distinct ways.
 
-**Working title:** *The human body keeps internal time: organs stay coupled when the day is lost, and clocks break locally in disease.* Target: Cell, with a presubmission enquiry.
+**Working title:** *The human body keeps internal time: organs stay coupled when the day is lost, and clocks break locally in disease.* Target: **[Draft 2026-10-27, PI review]** decided after WP6 (Cell needs the psoriasis positive confirmed by WP6; Nature Methods otherwise; PI, Q9 f).
 
 1. **The problem.** Human clocks are read from time-stamped samples, and almost no human tissue has them. Existing untimed methods order samples and fail when sampling is confined to working hours (benchmark).
 2. **The idea, validated.** Read relations rather than times: how each organ or cell type follows the shared clock state of the same person. These relations are identified without times; they match known time across species and perturbations, and they survive working-hours sampling: the GTEx organ map is recovered from deaths between 08:00 and 18:00, and patients operated in the morning or afternoon are placed correctly (Figure 1).
 3. **Organisation in health.** Each person carries an internal time that departs from clock time by hours. Organs and cell types follow it on a stromal-vascular backbone; the brain is partly separate, in humans and sheep; immune cells take relatively more of their timing from body-wide signals; strong clocks are the coupled ones; in the mouse embryo the shared clock appears late, mesenchyme first (Figure 2).
-4. **When daily cues are lost, the body keeps its own time.** In ventilated and slowly dying patients organs lose wall time but stay coupled; if WP1-WP2 pass, they hold as a self-sustained peripheral network that free-runs away from wall time. Rhythmic genes and drug targets follow internal time, so clock-time dosing stops tracking them in hospital, while a biopsy can estimate internal time (Figure 3).
+4. **When daily cues are lost, the body keeps its own time.** **[Draft 2026-10-27, PI review]** In ventilated and slowly dying patients (Hardy 4) organs lose wall time but stay coupled clocks. Perturbation acts in two separable ways: a shared displacement that keeps the relations (ventilated, not brain dead) and a loss of the relations (brain dead; A132b, post hoc; A136 tests whether donor-management drugs explain it) (PI, Q9 a). Rhythmic genes and drug targets follow internal time, so clock-time dosing stops tracking them in hospital, while a biopsy can estimate internal time (Figure 3).
 5. **Chronic conditions rarely move it.** Across about 20 disease contrasts, ageing to 70, sex and body mass, coupling holds within stated detection limits; same-time paired designs exclude hidden tissue-wide damping; the reported age dampening of rhythms reflects how donors died (Figure 4).
-6. **Where clocks break, they break locally.** Malignant cells keep amplitude but lose coherence, growing with proliferation; psoriatic plaques run their core clock behind on-time systemic cues, a delay that shrinks with clinical response and is partly explained by keratinocyte differentiation; fibrotic-lung T cells lose relative amplitude, if the procurement check allows (Figure 5).
+6. **Where clocks break, they break locally.** **[Draft 2026-10-27, PI review]** Malignant cells keep amplitude but lose coherence (what can be estimated in tumours at all is A138; published tumour orderings are tested in A138 / A140); psoriatic plaques run their core clock behind on-time systemic cues, a delay that shrinks with clinical response and is partly explained by keratinocyte differentiation; fibrotic-lung T cells lose relative amplitude, if the procurement check allows (Figure 5).
 7. **Discussion.** Internal time as a measurable clinical variable; a tissue readout of circadian disruption to test night work, breast cancer and social jetlag where epidemiology places them (WP8); a peripheral network that holds without cues; limits (observational, GTEx frame, post-mortem states, ages above 70, donor numbers per cell type).
 
 ## Figures
@@ -451,7 +456,8 @@ Five main figures plus a graphical abstract. Each figure states one claim; its t
 | Breast surgery: per-patient internal time vs recorded resection time (1.1 h) | V25.5 | Per-patient ordering in a living hospital cohort | main |
 | Timed truths: baboon (offsets: median error 0.455 h; peripheral 0.383, neural 0.497) <!-- src: figure_1/output/species/a36_readouts.csv -->, regenerating mouse colon (9 h shift recovered blind), mouse at three ages, living skin layers | A36, A21, A48, A37 | Relations match known time across species, ages and a perturbation | main (baboon, colon); ED (rest) |
 | Feeding control: daytime feeding desynchronises the liver, detected untimed | **new** A111 | The method sees a known desynchrony between organs (addition, not required) | main if passes |
-| Living timed muscle and adipose cohorts | **new** A113 | Internal time estimated in living people beyond one cohort | main if passes, else ED |
+| Living timed muscle and adipose cohorts (post hoc estimator stated) | A113 | Internal time estimated in living people beyond one cohort | main (**[Draft 2026-10-27, PI review]** PI, Q9 b) |
+| Genetic positive control: knockout liver decouples, specifically | A129 | The method detects a known break (positive control) | main (**[Draft 2026-10-27, PI review]** PI, Q9 b) |
 | Working-hours windows in baboon; human vs baboon reference | A40, A41 | Robust to window width and to the species of the reference | ED |
 
 ### Figure 2. In health, organs and cell types follow a shared internal time built on a stromal-vascular backbone, with the brain partly separate
@@ -473,13 +479,16 @@ Five main figures plus a graphical abstract. Each figure states one claim; its t
 
 ### Figure 3. When daily cues are lost, organs lose wall time but stay coupled to each other
 
+**[Draft 2026-10-27, PI review]** Claim (PI, Q9 a): organs stay coupled clocks when cues are disrupted (Hardy 4); perturbation acts as a shared displacement that keeps the relations (ventilated) or as a loss of the relations (brain dead). The WP2 mechanism row leaves the main text.
+
 | content | source | how it supports the claim | main or ED |
 | --- | --- | --- | --- |
 | Fast, intermediate, slow and ventilated deaths: wall-time alignment falls, inter-organ coherence holds, against clock-specific nulls; organ phase relations preserved | A93; **new** A109 (H109.1, H109.2), A109b Tabula Sapiens | The core observation, with its controls and an independent cohort | main |
 | A step, not a drift: no decay with ventilation days; no reset at intubation | A46, A92, A95 | Rules out a slow free-run and a common reset | main |
 | Liver, muscle and adrenal loosen; the brain leaves the body | A33, A93 | Which organs depend on behavioural cues | main |
-| Circularity and displacement simulations; decay with ventilation days; strong-clock, stroma and hub signatures; temperature, SCN and feeding excluded | **new** A109 H109.2, A110 | Mechanism: a self-sustained peripheral network | main if passes |
-| Rhythmic genes follow internal time (liver 2,691 vs 0); cue/locked split validated in mouse | A91, A102; **new** A112 | Gene rhythms follow the body's clock, not the clock on the wall | main |
+| Circularity and displacement simulations; decay with ventilation days; strong-clock, stroma and hub signatures; temperature, SCN and feeding excluded | **new** A109 H109.2, A110 | Mechanism: a self-sustained peripheral network | ED (**[Draft 2026-10-27, PI review]** PI, Q9 a) |
+| Displacement with order kept (ventilated) vs loss of order (brain dead): pull vs order | A132b (post hoc); **new** A136 | Two separable modes of perturbation | main if A136 and the pull-vs-order validation pass, else ED |
+| Rhythmic genes follow internal time (liver 2,691 vs 0) (**[Draft 2026-10-27, PI review]** 'cue/locked split validated in mouse' dropped: A112 failed; PI, Q9 b) | A91, A102 | Gene rhythms follow the body's clock, not the clock on the wall | main |
 | Drug targets lose their wall-time rhythm in hospital; internal time estimable from a biopsy | A100, A102, V25.5; **new** A113 | Translational consequence | main |
 | Glucocorticoid axis in ventilated donors | A27 | Part of the shared state, small part of the coupling | ED |
 
