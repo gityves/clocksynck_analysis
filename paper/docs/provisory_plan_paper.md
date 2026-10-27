@@ -445,11 +445,11 @@ Five main figures plus a graphical abstract. Each figure states one claim; its t
 | content | source | how it supports the claim | main or ED |
 | --- | --- | --- | --- |
 | Concept: one sample per person, compartments, shared host state, coupling, relative amplitude, offset | schematic | Defines the readouts and why they need no times | main |
-| Benchmark vs COFE, CYCLOPS, CHIRAL, TimeTeller: organ offsets r 0.91 / 0.88, whole day and 08-18 h; donor-count sweep | benchmark (Fig. 3 code) | The only untimed method that recovers organ offsets, also in working hours | main |
+| Benchmark vs COFE, CYCLOPS, CHIRAL, TimeTeller: organ offsets r 0.934 / 0.900 (n 80), whole day and 08-18 h; donor-count sweep <!-- src: archive outputs/paper/fig1_method/gtex/sweep_summary.csv --> | benchmark (Fig. 3 code) | The only untimed method that recovers organ offsets, also in working hours | main |
 | GTEx organ map (CHIRAL-style offsets, amplitudes, donor order) from 08-18 h deaths only | **new** A123 | The published organ map is recovered without any donor outside working hours | main if passes |
 | Heart surgery patients, morning vs afternoon | Jia et al. 2024 heart samples | Living patients sampled in working hours are placed correctly on the internal day | main |
 | Breast surgery: per-patient internal time vs recorded resection time (1.1 h) | V25.5 | Per-patient ordering in a living hospital cohort | main |
-| Timed truths: baboon (offsets 0.5 h), regenerating mouse colon (9 h shift recovered blind), mouse at three ages, living skin layers | A36, A21, A48, A37 | Relations match known time across species, ages and a perturbation | main (baboon, colon); ED (rest) |
+| Timed truths: baboon (offsets: median error 0.455 h; peripheral 0.383, neural 0.497) <!-- src: figure_1/output/species/a36_readouts.csv -->, regenerating mouse colon (9 h shift recovered blind), mouse at three ages, living skin layers | A36, A21, A48, A37 | Relations match known time across species, ages and a perturbation | main (baboon, colon); ED (rest) |
 | Feeding control: daytime feeding desynchronises the liver, detected untimed | **new** A111 | The method sees a known desynchrony between organs (addition, not required) | main if passes |
 | Living timed muscle and adipose cohorts | **new** A113 | Internal time estimated in living people beyond one cohort | main if passes, else ED |
 | Working-hours windows in baboon; human vs baboon reference | A40, A41 | Robust to window width and to the species of the reference | ED |
@@ -461,11 +461,11 @@ Five main figures plus a graphical abstract. Each figure states one claim; its t
 | Donors' shared departure from time of death (hours); organs follow it with unequal gains | 01\_gtex\_organs | Each person carries an internal time distinct from clock time | main |
 | Brain vs periphery r\* 0.64, robust to collection delay, death type and PER1/PER2 | A103 | The brain is partly separate, not by artefact | main |
 | Sheep r\* 0.63; brain couples less in sheep and baboon | A42 | The brain-periphery split is conserved | main |
-| Anchored coupling by cell family across about 30 healthy atlases | A17 unified | Stromal-vascular backbone; parenchyma lower; lymphocytes barely coupled | main |
+| Anchored coupling by cell family across 22 healthy atlases (17 studies, 14 tissues) <!-- src: legacy/desync/common_output/a17_unified_healthy.csv --> | A17 unified | Stromal-vascular backbone; parenchyma lower; lymphocytes barely coupled | main |
 | Healthy mouse colon against known time (stroma high, T and B near 0) | A21 R21.1 | The ranking holds against a timed truth | main |
 | Immune cells lean more on body-wide cues (index 0.18 vs 0.10, p 0.002) | A85 corrected; **new** A122 | Explains why immune cells barely follow the tissue clock | main if passes, else ED |
-| Strong clocks are the coupled ones (rho +0.73 GTEx; sheep, baboon) | A104 | The organisation tracks clock strength | main |
-| Mouse embryo: shared clock from E15, mesenchyme first, aligned to the mother's day | A108, A108b, A108c; **new** A121 (A120 if data exist) | The backbone is built late in gestation, consistent with known late emergence | main (exploratory label) if passes, else ED |
+| Clock strength and coupling: pre-registered H104.1 (rho < 0) not supported; observed GTEx rho +0.73 (post hoc: stronger clocks are more coupled); H104.2 not replicated (sheep, baboon) | A104 | Post hoc reading, labelled as such | main |
+| Mouse embryo: shared clock only late in gestation (E15-E18.75: H108.1 R 0.52, p 0.016, n 16; clock-shape gate borderline, p 0.08); earlier windows not clock-shaped; mesenchyme first, aligned to the mother's day | A108, A108b, A108c; **new** A121 (A120 if data exist) | The backbone is built late in gestation, consistent with known late emergence | main (exploratory label) if passes, else ED |
 | Neurons carry the brain host, glia less; retina | 02, 04, A18 3.5 | The brain's backbone is neuronal | ED |
 | Age: small phase advance in the periphery; prefrontal amplitude loss above 60 | A94, A3; **new** A117 if feasible | Ageing changes timing, not organisation, in the periphery | ED |
 | Internal time follows chronotype epidemiology: earlier with age, women earlier | A94, A99 (post hoc); **new** A130 replication | A known-answer test of internal time in health | main if A130 passes, else ED |
@@ -503,7 +503,7 @@ Five main figures plus a graphical abstract. Each figure states one claim; its t
 | Decomposition: amplitude kept, coherence lost, partly misaligned | A87 | Defines the cancer break as incoherence | main |
 | Incoherence grows with proliferation (purity-adjusted); MYC, copy-number and proliferating-normal controls | A97; **new** A114 (H114.0-H114.3) | Links the break to tumour biology | main |
 | A tissue without its own clock reads as a break | **new** A111 H111.3, A129 | Genetic control of the break readout | main if passes, else limitation |
-| Psoriatic lesions run about 1-1.5 h late, discovery and held-out | A54 | A replicated local delay | main |
+| Lesional clocks run late: -1.50 h in discovery (H54.1-3 pass) and -0.93 h in held-out series (H54.2, p 0.004); held-out H54.1 (variance) and H54.3 (genes) not met | A54 | The delay replicates | main |
 | Core clock delayed while systemic cues are on time (skin set and independent GTEx set) | A78, A81b | The delay is in the local clock, not in its inputs | main |
 | The delay shrinks with treatment and clinical response; placebo pooling; trait vs state | A56, A57, A74; **new** A115, A116 | The delay follows disease activity | main |
 | Keratinocyte clock advances with differentiation; the lesional state mix explains part of the delay | A64, A67, A72, A69 | A cellular explanation for part of the delay | main (one panel) |

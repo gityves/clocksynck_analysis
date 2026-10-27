@@ -68,6 +68,9 @@ PsychAD excitatory neurons gamma 0.125, OPC 0.145). Lung AT1 and NK/ILC fits mos
 - **On hold:** edits of the Figure 1, 2 and 5 tables.
 
 - **Answer (PI, 2026-10-27):** go through each claim with the proposed text before editing.
+  Item by item (PI, 2026-10-27): A104 restated as not supported (post hoc positive rho labelled); embryo restated with the
+  borderline gate; psoriasis 'the delay replicates' with H54.1/H54.3 not met; numbers from the tables (0.934 / 0.900; 0.455 h;
+  22 atlases, 17 studies, 14 tissues). Applied to the figure tables of `provisory_plan_paper.md`.
 ### Q3 (2026-10-23): panels not on the anchored A17+ estimator (WP0 item 4)
 13 of 30 figure-table rows flagged (`paper/exploratory/WP0_integrity/output/estimator_consistency.csv`). By design
 (the text must name the readout): r* (A103, A42), A104, A85 index, A92/A93 coherence C, A33 tissue host. Needing a
