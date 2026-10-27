@@ -16,6 +16,7 @@ A141 (registered after your Q6 answer):
 - **On hold:** nothing else. The brain panels stay in Extended Data with the result stated.
 - Evidence: `results_preliminary.md` (A141).
 
+## Answered
 ### Q11 (2026-10-27): A140 Q1 simulator gate fails; rerun with the published CYCLOPS settings and a cleaner factor calibration?
 The registered gate (arm D, whole-day sampling, CYCLOPS circular correlation with truth >= 0.7, seed 1,500) fails: median
 0.067, 0 of 50 at >= 0.7. In the same replicates the clocksync gate passes 43 of 50, and the three CYCLOPS compartment phases
@@ -143,7 +144,6 @@ Proposals (see the chat summary of 2026-10-24; each would be registered or writt
   already told their tumour clock is wrong (no email needed). A138 registered (0162cc2).
 - **On hold:** plan rewrite; A136 registration.
 
-## Answered
 
 - **Answer (PI, 2026-10-27):** (f) journal decided after WP6. Plan rewrite and A136 registration: write both now as drafts for review.
 ### Q4 (2026-10-23): clocksync change
