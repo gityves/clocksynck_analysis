@@ -956,3 +956,57 @@ Data rule:
   have a score. The brain is then represented only by regions that meet that threshold, if any.
 
 Other parts are unchanged. A code fix that does not change any statistic: verdicts of H143.2-3 are set after Holm.
+
+## A144 (2026-10-27, written before any readout below; PI request): why are strong clocks the coupled ones?
+
+Motivation (PI, 2026-10-27): oscillator theory predicts that low-amplitude clocks entrain more easily, but A104 found
+the opposite (GTEx periphery rho(A, c) +0.734 over 27 tissues; brain -0.115). Three explanations:
+1. **Algebraic and noise sharing:** c = s / (s + u) and A = sqrt(s + u), with s = z2 V the locked and u = 2 psi the
+   unlocked variance, estimated from the same donors.
+2. **Tissue amplitude is a population amplitude:** synchrony of cells within the sample, which body-wide signals
+   maintain, raises both amplitude and coupling.
+3. **Cue exposure:** the tissue's input, rather than its oscillators' rigidity.
+
+**Known at registration:** A104 (above); A18 part 2 per-cell readouts (`figure_2/output/backbone/a18_cell_split.csv`,
+not read against coupling); the eligible-row counts of that table. Code: `paper/exploratory/A144_strong_clocks/`.
+
+**Part 1, GTEx (explanation 1).** A104 design: fast deaths, the 27 peripheral tissues with >= 40 donors, all tissues
+anchors, leave-one-out host, `Dataset.fit`.
+- 100 random splits of the donors into halves H1 and H2 (seed 144). In each half, per tissue: c, A, s and u.
+- Cross-half rho: mean of Spearman(A_H1, c_H2) and Spearman(A_H2, c_H1). Same-half rho: mean of Spearman(A_H1, c_H1)
+  and Spearman(A_H2, c_H2). Each is averaged over the splits.
+- **H144.1:** cross-half rho > 0.
+  - Null: tissue labels of A permuted against c within each split, the same permutation in all splits (10,000).
+  - One-sided p, smallest attainable 1e-4.
+  - Pass: the amplitude-coupling association is not noise shared within the same donors.
+- **D144.1 (descriptive):**
+  - same-half minus cross-half rho (the noise-shared part), with its spread over splits;
+  - the SD over tissues of log s and of log u, full sample: which part varies more;
+  - Spearman of log s and of log u with c.
+
+  Reading: if log s varies more than log u, strong clocks are strong by their shared part (explanations 2-3). The
+  algebraic share is stated, not removed.
+
+**Part 2, single cell (explanations 2 vs theory), descriptive (D144.2).**
+- **Why only descriptive:**
+  - The A18 per-cell amplitude lambda and within-sample synchrony R satisfy lambda R = rho, with rho^2 = s / (1 - R_W^2),
+    built from the same fit as c. A regression of c on log lambda and log R therefore carries an equal mechanical
+    coefficient on both through log rho.
+  - The split between them is set by the within-sample dispersion D, which is computed without the host.
+  - The informative estimand is the coefficient difference beta_R - beta_lambda in logit(c) ~ log lambda + log R +
+    target. Population view: > 0 (synchrony, not per-cell amplitude, carries coupling). Theory, at fixed synchrony:
+    beta_lambda < 0, so also > 0. The two differ in the sign of beta_lambda - beta_rho, where rho is the
+    mechanical-only reference. Both coefficients are reported.
+  - Eligible rows are few, mostly brain: about 40 healthy or control rows.
+- **Data:** `a18_cell_split.csv` rows with `eligible` True in control groups (and `lung_hlca` "all").
+  - MSSM controls are counted once (AD_mssm control; age_mssm dropped).
+  - c is the coupling of the same group's anchored fit (A18's host refitted per group, frozen learned anchors),
+    recomputed with the A18 loaders.
+- **Statistic:** OLS with target fixed effects; 1,000 bootstraps of compartments within target. Reported: beta_lambda,
+  beta_R, beta_R - beta_lambda with 95 % intervals. No pass / fail.
+
+**Reading:**
+- Part 1 pass with log s dominating: the strong-clock association is real and lies in the shared part. That is
+  consistent with population synchrony or cue input, not with single-oscillator rigidity, which these data do not test
+  directly.
+- Part 1 fail: the A104 association is noise shared within donors, and the Figure 2 row is dropped.
