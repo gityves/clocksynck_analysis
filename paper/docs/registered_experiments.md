@@ -1180,3 +1180,10 @@ slope; the internal time comes from the same libraries' clock genes (the program
 **Reading.** H146.1 pass: human breast tumours show the predicted time-of-day organisation against internal time; a
 larger S for internal than recorded time supports a clock rather than a scheduling origin. Fail: not detected; the
 single-cell part (TNBC) is then registered with its own power before running.
+
+**A146 note 1 (2026-10-27, after part 1 and before any part 2 readout).** The planned part 2 (TNBC, Zhang et al. 2025,
+GSE266919) is not estimable: the deposit holds only immune objects (44 patients, 78 samples; no epithelial, fibroblast,
+endothelial or mural cells), so no stromal host or internal time can be built, and the immune-only gate failed (A140
+Q2). No recorded times. Blind inventory: `paper/exploratory/A146_tme_time/output/part2_prep_*.csv`. Part 2 is
+re-planned on the on-disk single-cell cancer cohorts with a stromal host (pan-cancer, breast where present) and will be
+registered after its own blind inventory and power.
