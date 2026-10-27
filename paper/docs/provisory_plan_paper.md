@@ -458,15 +458,15 @@ Five main figures plus a graphical abstract. Each figure states one claim; its t
 
 | content | source | how it supports the claim | main or ED |
 | --- | --- | --- | --- |
-| Donors' shared departure from time of death (hours); organs follow it with unequal gains | 01\_gtex\_organs | Each person carries an internal time distinct from clock time | main |
+| Donors' shared departure from time of death (hours); organs follow it with unequal gains (**Q3: recompute on the anchored estimator**) | 01\_gtex\_organs | Each person carries an internal time distinct from clock time | main |
 | Brain vs periphery r\* 0.64, robust to collection delay, death type and PER1/PER2 | A103 | The brain is partly separate, not by artefact | main |
 | Sheep r\* 0.63; brain couples less in sheep and baboon | A42 | The brain-periphery split is conserved | main |
 | Anchored coupling by cell family across 22 healthy atlases (17 studies, 14 tissues) <!-- src: legacy/desync/common_output/a17_unified_healthy.csv --> | A17 unified | Stromal-vascular backbone; parenchyma lower; lymphocytes barely coupled | main |
-| Healthy mouse colon against known time (stroma high, T and B near 0) | A21 R21.1 | The ranking holds against a timed truth | main |
+| ~~Healthy mouse colon against known time (stroma high, T and B near 0)~~ dropped (PI Q3, 2026-10-27: an anchor decouples, V17.2 fails) | A21 R21.1 | | dropped |
 | Immune cells lean more on body-wide cues (index 0.18 vs 0.10, p 0.002) | A85 corrected; **new** A122 | Explains why immune cells barely follow the tissue clock | main if passes, else ED |
 | Clock strength and coupling: pre-registered H104.1 (rho < 0) not supported; observed GTEx rho +0.73 (post hoc: stronger clocks are more coupled); H104.2 not replicated (sheep, baboon) | A104 | Post hoc reading, labelled as such | main |
 | Mouse embryo: shared clock only late in gestation (E15-E18.75: H108.1 R 0.52, p 0.016, n 16; clock-shape gate borderline, p 0.08); earlier windows not clock-shaped; mesenchyme first, aligned to the mother's day | A108, A108b, A108c; **new** A121 (A120 if data exist) | The backbone is built late in gestation, consistent with known late emergence | main (exploratory label) if passes, else ED |
-| Neurons carry the brain host, glia less; retina | 02, 04, A18 3.5 | The brain's backbone is neuronal | ED |
+| Neurons carry the brain host, glia less; retina (**Q3: recompute on the anchored estimator**) | 02, 04, A18 3.5 | The brain's backbone is neuronal | ED |
 | Age: small phase advance in the periphery; prefrontal amplitude loss above 60 | A94, A3; **new** A117 if feasible | Ageing changes timing, not organisation, in the periphery | ED |
 | Internal time follows chronotype epidemiology: earlier with age, women earlier | A94, A99 (post hoc); **new** A130 replication | A known-answer test of internal time in health | main if A130 passes, else ED |
 | Gene-rhythm maps per cell type, lung and prefrontal cortex | A50 | Resource | ED |
@@ -488,11 +488,12 @@ Five main figures plus a graphical abstract. Each figure states one claim; its t
 | content | source | how it supports the claim | main or ED |
 | --- | --- | --- | --- |
 | Forest plot of all disease contrasts with MDEs (coupling d\*) | A17-A22 | Nulls are quantified, not just non-significant | main |
-| Hierarchical pooling by disease class and cell family; neurodegeneration margins | A20, A22 | Resilience holds when cohorts are pooled | main |
+| Hierarchical pooling by disease class and cell family; neurodegeneration margins (the A20 'damping' reading is dropped, PI Q3) | A20, A22 | Resilience holds when cohorts are pooled | main |
 | Paired same-time designs: no tissue-wide damping in tumours, inflamed gut, skin | V52, A52, A53 | Rules out losses invisible to a host-referenced readout | main |
 | Ageing to 70, sex, BMI, T2D, ventilation dose | A46, A47, A94, A99 | The main covariates leave the network intact | main |
+| Age (A19, permutation null): primaries null; neuron own noise falls with age, -0.116 per decade (p 0.031, nominal secondary, uncorrected) <!-- src: figure_4/output/resilience/a19_age_pooled.csv --> | A19 (erratum 2026-10-26) | Bounded age effect; one nominal neuron signal | main (PI Q10) |
 | CHIRAL's age dampening reproduced, then explained by death type | A101b, A102b; WP0 robustness | Corrects a published reading with the same data | main |
-| COVID-19 decedents keep organ clocks and endothelial sharing | A105, A105b | Resilience under severe acute inflammation | main |
+| COVID-19 decedents keep organ clocks and endothelial sharing (2 fixed anchors; no A22 confirmation) | A105, A105b | Resilience under severe acute inflammation | ED (PI Q3) |
 | Fatty liver: liver-wide loss carried by procurement; inflamed gut stroma intact | A43, A44, A96, A45 | Apparent breaks traced to design | ED |
 
 ### Figure 5. Where clocks break, they break locally, in distinct ways
@@ -508,7 +509,7 @@ Five main figures plus a graphical abstract. Each figure states one claim; its t
 | The delay shrinks with treatment and clinical response; placebo pooling; trait vs state | A56, A57, A74; **new** A115, A116 | The delay follows disease activity | main |
 | Keratinocyte clock advances with differentiation; the lesional state mix explains part of the delay | A64, A67, A72, A69 | A cellular explanation for part of the delay | main (one panel) |
 | Specific to psoriasis (atopic dermatitis, other skin diseases, gut) | A59, A79, A82 | Not a generic inflammation effect | ED |
-| Fibrotic-lung T cells lose relative amplitude, two cohorts | A98; **new** A118, A119 | A third mode, if procurement is resolved | main if A119 passes, else ED |
+| Fibrotic-lung T cells lose relative amplitude, two cohorts (**Q3: recompute on the anchored estimator**; A5 free fit 0.45) | A98; **new** A118, A119 | A third mode, if procurement is resolved | main if A119 passes, else ED |
 | Taxonomy: incoherent, damped, desynchronised, delayed | schematic | Summarises the modes of breakage | main |
 | Per-cell synchrony vs coherence in malignant cells | WP0 item 2 | Reconciles the two cancer readouts | ED |
 
