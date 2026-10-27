@@ -92,6 +92,7 @@ confirmation); Fig 5 fibrotic-lung T cells (A5 free-fit 0.45).
 - **On hold:** recomputation of those panels.
 
 - **Answer (PI, 2026-10-27):** lead's default per panel: by-design rows kept with the readout named; GTEx departures, neuron/retina and fibrotic-lung T cells recomputed on the anchored estimator; A20 'damping' and A21 colon dropped; COVID A105 to Extended Data with '2 anchors' stated.
+- **Done (2026-10-27):** neuron/retina and fibrotic-lung T cells recomputed (results_preliminary.md, "WP0 / PI Q3"). PI (2026-10-27): GTEx departures kept with the timed readout named (no anchored version); neuron panel restated in ED (retina under both rules; cortex anchor-defined), message 'the brain's backbone is neuronal' dropped.
 ### Q6 (2026-10-24): brain disease contrasts are anchor-dependent (WP0 item 8)
 With an all-LOO host instead of the A17 anchors, brain contrasts (Figure 4: PD, AD, ASCVD, VaD, SCZ ...) change sign in
 1-7 of 9 compartments (block agreement r* 0.42-0.67); the peripheral headline contrasts (ILD, fibrotic lung, T2D, A44,

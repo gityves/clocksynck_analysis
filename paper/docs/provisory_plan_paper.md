@@ -391,7 +391,7 @@ Rationale: tumour incoherence grows with proliferation (A97); each luteal phase 
 
 Run in this order; packages on the same line can run in parallel. Each outcome changes the figures as listed.
 
-**[Draft 2026-10-27, PI review]** **Current order (after WP0-WP4, M3 and the PI answers of 2026-10-25/27):** (i) cancer: A138 (Q3, Q1, then Q2 after its simulator gate), A139, A140 (Q1 revision running; Q2 (ii) after it); (ii) brain: A141 (running; decides whether the Figure 4 brain panels are readable); (iii) Q3 recomputations on the anchored estimator (GTEx departures, neuron/retina, fibrotic-lung T cells); (iv) A136 (drug vs brain death in organ donors, draft) and the pull-vs-order readout; (v) WP6 (psoriasis); (vi) journal decided after WP6 (PI, Q9 f); WP7-WP8 as capacity allows.
+**[Draft 2026-10-27, PI review]** **Current order (after WP0-WP4, M3 and the PI answers of 2026-10-25/27):** (i) cancer: A138 (Q3, Q1, then Q2 after its simulator gate), A139, A140 (Q1 revision running; Q2 (ii) after it); (ii) brain: A141 (running; decides whether the Figure 4 brain panels are readable); (iii) Q3 recomputations on the anchored estimator (done 2026-10-27; GTEx departures kept with the timed readout named); (iv) A136 (drug vs brain death in organ donors, draft) and the pull-vs-order readout; (v) WP6 (psoriasis); (vi) journal decided after WP6 (PI, Q9 f); WP7-WP8 as capacity allows.
 
 1. **WP0** (integrity; item 2 first resolves the `compute_cancer_split.py` null difference of M2) and **WP1** (A109, coupling nulls; A109b Tabula Sapiens).
 2. **WP2** (A110, mechanism), only if H109.1 and H109.2 pass; **WP3** (A111-A112 feeding, A129 scout) and **WP4** (A113 living humans; A123 GTEx working-hours donors; A130 chronotype; A131 scout) in parallel.
@@ -464,7 +464,7 @@ Five main figures plus a graphical abstract. Each figure states one claim; its t
 
 | content | source | how it supports the claim | main or ED |
 | --- | --- | --- | --- |
-| Donors' shared departure from time of death (hours); organs follow it with unequal gains (**Q3: recompute on the anchored estimator**) | 01\_gtex\_organs | Each person carries an internal time distinct from clock time | main |
+| Donors' shared departure from time of death (hours); organs follow it with unequal gains (readout named: timed, against recorded time of death, not the host-referenced estimator; PI Q3, 2026-10-27) | 01\_gtex\_organs | Each person carries an internal time distinct from clock time | main |
 | Brain vs periphery r\* 0.64, robust to collection delay, death type and PER1/PER2 | A103 | The brain is partly separate, not by artefact | main |
 | Sheep r\* 0.63; brain couples less in sheep and baboon | A42 | The brain-periphery split is conserved | main |
 | Anchored coupling by cell family across 22 healthy atlases (17 studies, 14 tissues) <!-- src: legacy/desync/common_output/a17_unified_healthy.csv --> | A17 unified | Stromal-vascular backbone; parenchyma lower; lymphocytes barely coupled | main |
@@ -472,7 +472,7 @@ Five main figures plus a graphical abstract. Each figure states one claim; its t
 | Immune cells lean more on body-wide cues (index 0.18 vs 0.10, p 0.002) | A85 corrected; **new** A122 | Explains why immune cells barely follow the tissue clock | main if passes, else ED |
 | Clock strength and coupling: pre-registered H104.1 (rho < 0) not supported; observed GTEx rho +0.73 (post hoc: stronger clocks are more coupled); H104.2 not replicated (sheep, baboon) | A104 | Post hoc reading, labelled as such | main |
 | Mouse embryo: shared clock only late in gestation (E15-E18.75: H108.1 R 0.52, p 0.016, n 16; clock-shape gate borderline, p 0.08); earlier windows not clock-shaped; mesenchyme first, aligned to the mother's day | A108, A108b, A108c; **new** A121 (A120 if data exist) | The backbone is built late in gestation, consistent with known late emergence | main (exploratory label) if passes, else ED |
-| Neurons carry the brain host, glia less; retina (**Q3: recompute on the anchored estimator**) | 02, 04, A18 3.5 | The brain's backbone is neuronal | ED |
+| Retina: neurons couple more than glia under both A17 rules (+0.29 [0.17, 0.39] learned); cortex: the neuron-glia difference follows the anchors (shown under both rules; Q3 recomputed 2026-10-27) | 02, 04, A18 3.5, Q3 | Neuronal dominance is anchor-defined in cortex (A135, A141) | ED |
 | Age: small phase advance in the periphery; prefrontal amplitude loss above 60 | A94, A3; **new** A117 if feasible | Ageing changes timing, not organisation, in the periphery | ED |
 | Internal time follows chronotype epidemiology: earlier with age, women earlier | A94, A99 (post hoc); **new** A130 replication | A known-answer test of internal time in health | main if A130 passes, else ED |
 | Gene-rhythm maps per cell type, lung and prefrontal cortex | A50 | Resource | ED |
@@ -518,7 +518,7 @@ Five main figures plus a graphical abstract. Each figure states one claim; its t
 | The delay shrinks with treatment and clinical response; placebo pooling; trait vs state | A56, A57, A74; **new** A115, A116 | The delay follows disease activity | main |
 | Keratinocyte clock advances with differentiation; the lesional state mix explains part of the delay | A64, A67, A72, A69 | A cellular explanation for part of the delay | main (one panel) |
 | Specific to psoriasis (atopic dermatitis, other skin diseases, gut) | A59, A79, A82 | Not a generic inflammation effect | ED |
-| Fibrotic-lung T cells lose relative amplitude, two cohorts (**Q3: recompute on the anchored estimator**; A5 free fit 0.45) | A98; **new** A118, A119 | A third mode, if procurement is resolved | main if A119 passes, else ED |
+| Fibrotic-lung T cells lose relative amplitude, two cohorts (Q3 recomputed 2026-10-27 on the A22-confirmed anchors: |z| to 0 in both; HLCA -0.66 [-0.97, -0.13], Natri -0.34 [-1.19, 0.20]; fibroblast companion unchanged) | A98; **new** A118, A119 | A third mode, if procurement is resolved | main if A119 passes, else ED |
 | Taxonomy: incoherent, damped, desynchronised, delayed | schematic | Summarises the modes of breakage | main |
 | Per-cell synchrony vs coherence in malignant cells | WP0 item 2 | Reconciles the two cancer readouts | ED |
 

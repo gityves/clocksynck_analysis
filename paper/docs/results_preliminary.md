@@ -552,3 +552,43 @@ The observed sign changes between the A17 and all-LOO hosts, recomputed here, eq
 - **Choices beyond the registration** (README): state-level simulator, because `simulate` takes a scalar depth;
   per-contrast simulations; controls = the contrast with the most controls.
 <!-- src: paper/exploratory/A141_brain_stability/output/{step1_coverage,step1_gtex,step2_summary,step4_summary}.csv, step3/step3_summary.csv -->
+
+## WP0 / PI Q3 (2026-10-27): figure panels recomputed on the anchored estimator
+
+Re-estimation with the current estimator, not a new hypothesis (`paper/exploratory/WP0_integrity/scripts/q3_anchored.py`;
+targets read on their host, an anchor on the leave-one-out host of the other anchors). Gates as in
+`a17_healthy_gates.csv` (all six pass).
+- **GTEx organ departures (Figure 2, main): not recomputed.** The panel is timed: residuals against the recorded time of
+  death, with no host, so it has no anchored version. PI (2026-10-27): keep it, with the readout named "timed, against
+  recorded time of death, not the host-referenced estimator".
+- **Neurons vs glia (Figure 2, ED), neuron-minus-glia mean coupling, 500 donor bootstraps, both frozen A17 rules:**
+
+  | atlas (donors) | learned rule: anchors | learned | fixed (neuronal) rule |
+  |---|---|---|---|
+  | PsychAD HBCC (145) | OPC, astro, oligo, microglia | -0.111 [-0.250, 0.048] | 0.634 [0.528, 0.706] |
+  | PsychAD MSSM (257) | OPC, astro, oligo, microglia | -0.155 [-0.231, 0.063] | 0.681 [0.610, 0.737] |
+  | SEA-AD DLPFC (44) | OPC, astro, oligo, microglia, vascular | 0.102 [-0.017, 0.281] | 0.466 [0.311, 0.604] |
+  | SEA-AD MTG (47) | OPC, astro, oligo, microglia, vascular | -0.003 [-0.129, 0.283] | 0.460 [0.303, 0.586] |
+  | PD atlas controls (24) | 6 neuron + 5 microglia | 0.684 [-0.029, 0.727] | 0.675 [0.331, 0.726] |
+  | retina (95) | 7 neuron + Mueller, astrocyte | 0.286 [0.167, 0.394] | 0.299 [0.176, 0.403] |
+
+  - **Reading:** in the four cortical atlases the difference follows the anchors: -0.16 to +0.10 (every interval
+    includes 0) under glial anchors, +0.46 to +0.68 under neuronal ones. "Neurons carry the brain host" holds only under
+    neuronal anchors (consistent with A135, A141: no principled brain reference).
+  - In the retina, neurons exceed glia under both rules, including when Mueller cells and astrocytes are anchors (archive
+    A2, free fit: +0.17 [0.04, 0.35]).
+  - PI (2026-10-27): the panel is restated and kept in ED (retina under both rules; cortex anchor-defined, shown under
+    both rules). The message "the brain's backbone is neuronal" is dropped.
+- **Fibrotic-lung T cells (Figure 5), A98 decomposition on the A22-confirmed anchors** (Natri: lung:EC_capillary
+  dropped; HLCA: no drop, so identical to the M3 A98 table), 200 bootstraps, case minus control:
+  - **HLCA fibrotic:** relative amplitude |z| 0.659 -> 0.000, diff -0.659 [-0.965, -0.126] (contributes). Coupling
+    -0.147 [-0.276, 0.014]; own noise psi -0.225 [-0.329, 0.074].
+  - **Natri ILD:** |z| 0.344 -> 0.000, diff -0.344 [-1.194, 0.197] (no change). Coupling -0.434 [-0.715, 0.174]. The
+    control T fit is at the boundary after the anchor drop (M3, with the capillary anchor: |z| 0.360, diff -0.360
+    [-1.259, 0.202]).
+  - **Fibroblast specificity companion (same draws):** no change in either cohort (|z| diff 0.003 Natri, 0.163 HLCA;
+    every interval includes 0).
+  - **Reading:** in both cohorts the case T-cell loading on the host plane goes to the zero boundary. The interval
+    excludes 0 in HLCA only. The panel stands as "loss of relative amplitude, interval excluding 0 in one of two
+    cohorts", still conditional on A119 (procurement) for the main text. The A5 free-fit 0.45 is replaced.
+<!-- src: paper/exploratory/WP0_integrity/output/q3_anchored/{panel2_neuron_glia,panel2_fits,panel3_differences,panel3_groups,panel3_anchors}.csv; paper/results/figure_5/output/lung_breaks/decomposition_differences.csv (M3); paper/results/logs/q3_anchored.log -->
