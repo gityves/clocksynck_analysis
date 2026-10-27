@@ -127,3 +127,54 @@ whether the calibration (below) overstates the shared factor.
   required at >= 35 as well; Holm over (p1, p2, p3).
 - The data seeds are arbitrary (base seed 1500 for the gate step); loadings are shared by the arms of one replicate.
 - The `timing` outputs were produced with equal-width DIP bins (their `n_rhy_*` are not meaningful); timings are unaffected.
+
+## Q1 revision (2026-10-27)
+
+Registered in `paper/docs/registered_experiments.md` (A140, "Q1 revision"). Code: `build_tumour_immune_genome.py`,
+`calibrate_factor.py`; `q1_lib.py`, `q1_run.py` and `q1_score.py` read three environment variables
+(`A140_OUT=q1rev`, `A140_CALIB=1`, `A140_N_MODELS=80`) and `q1_run.py --step gate --scales`; `q1rev_chain.sh` (lead) scores the
+gate and runs the primaries only if the gate passes at scale 1. Outputs (git-ignored): `output/q1/tumour_immune_genome/`
+(calibration), `output/q1rev/` (simulations). **Status at writing: the simulator gate run is still in progress (22 of 200
+fit files at 08:43 on 2026-10-27); nothing is scored; H140.1-3 not scored.**
+
+**Genome-wide pseudobulks.** 21 gate-passing A17 cohorts attempted; same units, majority chemistry, marker labels and >= 50-cell
+rule as the main `cancer_sc` tables (`cnv=False`), restricted to the main table's (patient, compartment) pairs. Where a cohort has
+both compartments the built rows equal the main table's; SRP273482 has 7 T_NK and no myeloid pseudobulk, SRP335254 none.
+<!-- src: output/q1/tumour_immune_genome/build_check.csv; paper/results/logs/jobs.tsv (build: first run --jobs 4 killed_memory at 33.8 GB, rerun --jobs 1 ok, peak 13.7 GB, 438 s) -->
+
+**Calibration (19 cohorts with >= 5 samples per compartment; median over cohorts; median 12,098 genes per cohort, 15 T_NK and
+15 myeloid pseudobulks).** Leading eigenvalues, ln CPM units, per pair of rows stacked:
+
+| k | before Poisson correction | after | old (GSE266919, 10 models) |
+|---|---|---|---|
+| 1 | 411.5 | 411.4 | 78.7 |
+| 2 | 243.7 | 243.6 | 50.6 |
+| 3 | 195.3 | 195.2 | 47.8 |
+
+The Poisson correction removes at most 0.1 of an eigenvalue (the noise spreads over about 12,000 genes; median total Poisson
+variance 589.6 of a total 2,152.6), so the registered correction does not matter at this gene count. The factor is about 5 times larger
+in variance than the one of the failed run. The simulator panel and loadings are otherwise unchanged (`panel.npz` in `output/q1rev`
+holds lam 411.4, 243.6, 195.2).
+<!-- src: output/q1/tumour_immune_genome/calibration_table.csv, calibration_cohorts.csv, calibration_lambda.csv; output/q1rev/panel.npz -->
+
+**Cost check (2 replicates x arms A-D, 80 models, 8 fits in parallel, 1 Julia worker each).** One CYCLOPS fit 4,075 s on average
+(2,732-5,888), one clocksync gate 3.3 s. One gate cell of 50 replicates = 50 x 4,075 s / 16 workers = 3.5 h < 6 h, so the
+registered reduction to 30 replicates does not apply: **50 replicates for the gate**. At the 10 workers allowed here it takes 5.7 h
+per scale (observed about 75 min per fit with 10 workers).
+<!-- src: output/q1rev/timing/*.csv (fit_s, gate_s); paper/results/logs/q1_run_rev_timing.log -->
+
+**Run.** `q1_run.py --step gate --jobs 10 --reps 50 --scales 1,0.5,0.25,0` (one queue, scale 1 first; log `paper/results/logs/q1_run.log`),
+started 05:38. First six scale-1 fits: median truth r 0.05-0.21 (interim look, not the result).
+
+### Choices not in the registration
+- log CPM = ln((count + 0.5)/depth), depth = genome-wide UMI of the pseudobulk; genes with mean count >= 5 in both compartments.
+- Host plane = the two leading sample-space principal components of the 14 clock genes' centred ln CPM, per compartment; each
+  gene is made orthogonal to it.
+- Poisson variance by Monte Carlo (200 draws) from the compartment's pooled fraction, degrees of freedom n_c - 3 per compartment.
+- PCA on the two compartments' rows stacked (each centred and projected separately), Lanczos on the gene covariance.
+- Clock genes found under old symbols (BMAL1, C1orf51) in GSE294300 and GSE181294. Cohorts with < 5 samples in a compartment
+  skipped (SRP273482, SRP335254): 19 of 21 cohorts calibrate.
+- The cohort-level compartment rule of the main tables is imposed through the main table's (patient, compartment) pairs.
+- Scale 0 is queued last and a crash is to be reported as "not run". The per-scale gate scoring groups by `factor_scale`.
+- The timing step first failed (8 workers built `panel.npz` at the same time, EOFError), was rerun once the panel existed.
+- Note: `paper/results/logs/q1_run.log` is overwritten by each run; the failed run's log is kept as `q1_run_v1.log` (timing log of the revision: `q1_run_rev_timing.log`).
