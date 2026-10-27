@@ -522,3 +522,33 @@ observable, but CYCLOPS orders the samples along the non-clock factor.
   clock that clocksync detects, and its compartments agree because they share the factor. Whether that holds at the
   template's 80 models and a cleaner calibration is PI_QUESTIONS Q11.
 <!-- src: paper/exploratory/A140_dip_cyclops/output/q1/{simulator_gate,diag_summary}.csv, gate/D_K1_r*.csv -->
+
+## A141 (scored 2026-10-27): brain contrast stability against noise; 4 of 12 contrasts are anchor-dependent beyond noise
+
+Descriptive, as registered (PI, Q6). Brain contrast sets of WP0 item 8 (12 contrasts, 5 cohorts, A17 learned anchors).
+The observed sign changes between the A17 and all-LOO hosts, recomputed here, equal the WP0 table.
+- **Step 1, coverage:** the host phases cover the full day in most sets. Rayleigh R is within the uniform-sampling
+  simulation range for MSSM (controls 0.027), HBCC (0.052), SEA-AD (0.063) and PD-atlas controls (0.071). It is above the
+  range for RADC controls (0.195, n 26) and for PD-atlas all donors (0.149). GTEx fast brain: R 0.048 (13 tissues). No
+  Rayleigh p is below 0.12.
+- **Step 2, amplitude:** the median compartment amplitude is 0.558 (69 compartments) against the GTEx brain-region
+  range 0.438-0.668 (median 0.576). Only 13 of 69 fall inside the range (29 above, 27 below), and cohort medians run from
+  0.325 (RADC) to 0.760 (HBCC). Same scale on average, broad across compartments.
+- **Step 3, decision:**
+  - 8 of 12 contrasts are noise-driven, so not estimable at this design: AD, DLBD and SCZ (MSSM), BD and SCZ (HBCC),
+    AD and DM (RADC), AD (SEA-AD).
+  - 4 of 12 are not: PD_mssm (7 flips vs simulated 95th percentile 3), VaD_mssm (5 vs 4), ASCVD_hbcc (6 vs 3), and the
+    PD atlas (15 of 34 vs 5).
+- **Step 4, map** (agreement = same sign and |delta d| <= pooled SE): PD_mssm 0 of 9, VaD_mssm 3 of 9, ASCVD_hbcc 1 of 9,
+  PD atlas 13 of 34. Expectations hold only partly. PsychAD neuron classes agree in 0-2 of 4. PD-atlas astrocytes and
+  oligodendrocytes agree in 5 of 10, neurons in 2 of 8.
+- **Reading:**
+  - The simulation draws only sampling noise around one fitted host with uniform phases. "Not noise-driven" therefore
+    means the anchored and all-LOO hosts differ by more than sampling noise: a structural anchor dependence (consistent
+    with A135, no unique brain reference), not by itself a disease effect.
+  - The noise-driven contrasts cannot be read. The other four depend on which compartments define the brain host.
+  - Brain disease panels stay in Extended Data with this stated.
+  - Per the registration, a time-of-death request is drafted for the PI to decide (outward-facing; not sent).
+- **Choices beyond the registration** (README): state-level simulator, because `simulate` takes a scalar depth;
+  per-contrast simulations; controls = the contrast with the most controls.
+<!-- src: paper/exploratory/A141_brain_stability/output/{step1_coverage,step1_gtex,step2_summary,step4_summary}.csv, step3/step3_summary.csv -->
