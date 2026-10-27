@@ -804,3 +804,17 @@ GSE233242, 42 patients, 10 programs (AURKB absent; P1 on 9 genes), 10,000 time p
   follow internal time (descriptive). Caveat: `est_day` is a noisy per-patient estimate (Spearman 0.56 with recorded
   time, MAE 1.1 h), which attenuates any internal-time association.
 <!-- src: paper/exploratory/A146_tme_time/output/{part1_programs,part1_tests,part1_per_program,part1_offset_sweep,part1_internal_vs_recorded}.csv -->
+
+## A146 part 2 (scored 2026-10-27): pan-cancer single cell, programs against internal time: not detected
+16 gate-passing cohorts, 213 scored patients (226 timed), 10,000 within-cohort time permutations.
+- **H146.3 FAIL:** omnibus S 0.528, p 0.092, Holm (H146.1-3) 0.184; null SD 0.395, MDE 1.00. Per program all |t| < 2
+  (largest: T-cell activation in T/NK 1.83, PD-L1 in malignant 1.31, T fraction 1.04; proliferation -0.94).
+- A146 Holm over the three: H146.1 0.55, **H146.2 0.0018 (pass)**, H146.3 0.18.
+- **Descriptive:** clock-keeping cancers (PRAD, LIHC; 25 patients) S -0.33; non-keeping (COAD, 13) -0.08; breast
+  (ERP130387, 11) -0.48; all far below their MDEs (1.0-1.15). Offset sweep: S peaks at 0 to +2 h (0.53), no offset
+  significant.
+- **Reading:** across cancers the predicted organisation is not detected against internal time; an effect as large as
+  the recorded-time effect in breast (1.34) would have been detected. Together with part 1, the time-of-day signal of
+  the tumour microenvironment, where seen, follows the hospital clock, not the tumour's internal time. Without recorded
+  times outside GSE233242, part 2 cannot test the recorded-time reading.
+<!-- src: paper/exploratory/A146_tme_time/output/{part2_tests,part2_per_program,part2_per_cohort,part2_subsets,part2_offset_sweep}.csv -->
