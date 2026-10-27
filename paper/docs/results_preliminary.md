@@ -784,3 +784,23 @@ Regenerated nulls equal the committed power nulls (mean, SD, q95, estimable flag
   variation is dominated by patient-specific sources. It contradicts "no fixed timing relationship with healthy tissue"
   (CoFE, Li et al. 2024) at bulk level.
 <!-- src: paper/exploratory/A138_cancer_estimability/output/score/{tests,per_unit,holm,d138_1,d138_1_contrast}.csv -->
+
+## A146 part 1 (scored 2026-10-27): breast tumour programs follow recorded surgery time in the predicted direction, not internal time
+GSE233242, 42 patients, 10 programs (AURKB absent; P1 on 9 genes), 10,000 time permutations, seed 146.
+- **H146.1 FAIL (internal time):** omnibus S -0.056, p 0.55 (null SD 0.437, MDE 1.09).
+- **H146.2 PASS (recorded resection time):** S 1.339, p 0.0006, Holm 0.0012 (null SD 0.381, MDE 0.94). Strongest:
+  T-cell activation residual (P4) t 3.48 (p 0.0011), PD-1 residual (P10) 3.22 (0.0014), MHC-I (P2) 2.15 (0.018).
+- **Internal minus recorded (D146.1):** -1.39 [-2.40, -0.47] (2,000 patient bootstraps): recorded time explains the
+  programs better, the opposite of the registered clock reading.
+- **Mapping offset (shown, not tested):** recorded-time S peaks at the registered mapping (offset 0: 1.34; -2 h: 1.28;
+  +-6 h: +-0.44); internal-time S stays between -0.29 and 0.29 at every offset.
+- **Adjacent normal (descriptive, P2-P10):** internal time S 1.03 (p 0.007; interferon t 2.90, phagocytosis 2.14,
+  MHC-I 1.93); recorded time 0.64 (p 0.028; MHC-I 3.53).
+- **Reading:** in tumours, the time-of-day pattern predicted from the mouse atlas is present against the hospital
+  clock but not against the tumour's internal (clock-gene) time; the H146.1 MDE was below the H146.2 effect, so this
+  is not only power. Candidate origins (not tested): procedural or scheduling covariates that track the hour of surgery
+  (pre-operative fasting duration, anaesthesia, case order), or wall-time systemic cues acting on immune programs
+  independently of the tumour clock (A85: immune cells lean on body-wide cues). In adjacent normal tissue the programs
+  follow internal time (descriptive). Caveat: `est_day` is a noisy per-patient estimate (Spearman 0.56 with recorded
+  time, MAE 1.1 h), which attenuates any internal-time association.
+<!-- src: paper/exploratory/A146_tme_time/output/{part1_programs,part1_tests,part1_per_program,part1_offset_sweep,part1_internal_vs_recorded}.csv -->
