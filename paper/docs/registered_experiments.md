@@ -946,3 +946,13 @@ coverage is reported; < 50 % coverage of brain samples makes H143.1-2 not estima
     separate", with the hypothalamus panel if H143.3 passes.
   - H143.2 passes, or H143.1 fails: the brain claim is restated as "not separable from brain processing" and moves to
     Extended Data.
+
+**A143 note 1 (2026-10-27, after a 150-donor check run, before the full run; H143.1 gave no estimate in the check).**
+Data rule:
+- The autolysis score (SMATSSCR) is present for 15 % of fast-death brain samples (84 % peripheral), against 80 % / 89 %
+  for RIN, centre and isolation batch. Brain tissues are mostly not scored.
+- H143.1 therefore adjusts for RIN, ischaemic time, Hardy 2 vs 1 and centre, the same model in every tissue.
+- The registered model with autolysis is reported as a descriptive sensitivity in the tissues where >= 70 % of samples
+  have a score. The brain is then represented only by regions that meet that threshold, if any.
+
+Other parts are unchanged. A code fix that does not change any statistic: verdicts of H143.2-3 are set after Holm.
