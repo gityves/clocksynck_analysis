@@ -34,7 +34,18 @@ rules, 53 skin rows).
 - V13 colon: anchored mean error +0.108, Spearman vs truth 0.958 (free corrected +0.121, 0.928); skin as archive.
 - R26: the first full run (2026-10-26, 16 workers, 3.8 h) read the cancer cohorts from the copy-number-split tables, through
   the A25 loader. 8 studies failed to load and the others differed from legacy. The loader is fixed (`cnv=False`, the main
-  tables, as legacy) and R26 is rerun with A25 (section to follow).
+  tables, as legacy) and R26 is rerun with A25.
+- R26 rerun (2026-10-27, 8 workers, 5.3 h): all 150 reads ok (50 cohorts x uncorrected, g_GTEx, g_Chen). The uncorrected rows
+  equal `windows/internal_time_cohorts.csv` exactly. Interpretable living cohorts: 18 (g_GTEx) and 19 (g_Chen), as legacy.
+  | test | g_GTEx | g_Chen |
+  |---|---|---|
+  | T1 | accept, p 0.0016 (legacy 0.0068) | accept, p 0.0003 (legacy 0.0009) |
+  | T2 | 12 of 18, p 0.119 (legacy 11, 0.240) | 13 of 19, p 0.084 (legacy 12, 0.180) |
+  | T3 | p 0.014 (legacy 0.058) | p 0.005 (legacy 0.009) |
+  | T4 | 0.715 -> 0.749 (legacy 0.731 -> 0.795) | 0.715 -> 0.860 (legacy 0.731 -> 0.840) |
+  T4 rises in both, as legacy (the expected fall does not occur). A26 stays rejected (V26.1, V26.3), so R26 is not
+  interpreted.
+<!-- src: paper/results/extended_data/output/simulations/r26_{cohorts,tests_gtex,tests_chen,t4}.csv; legacy common_output/a26_tests_{gtex,chen}.csv, a26_t4.csv -->
 <!-- src: paper/results/extended_data/output/simulations/{a22_colon_confirm,v16_summary,v18_summary,v13_colon_summary}.csv -->
 
 ## Checks (subsample runs; point estimates against `legacy/` outputs)
