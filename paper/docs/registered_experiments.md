@@ -623,6 +623,16 @@ down), is not estimable and leaves the pool; applied identically to the observed
 uses its own permutations (its patients differ from the primary's), so it is not "on the same permutations"; it is
 descriptive. (iv) The H138.4 pseudo-clock companion is computed only at scoring (it is an observed quantity).
 
+**A138 note 5 (2026-10-27, after the power step and before any observed A138 statistic; PI decisions).**
+(i) **H138.1 decision rule calibrated.** The power simulation shows that the registered rule (pooled lower bound > 0)
+passes in 4 of 30 null replicates (false-positive rate 0.133; coupling is bounded at 0, so the pooled estimate is
+biased upward: mean 0.030 at c = 0). New rule: H138.1 passes if the observed pooled coupling exceeds 0.083, the 95th
+percentile of the simulated null pooled estimate (`output/power/h138_1_sim.csv`, c = 0). One-sided p = share of the
+30 null replicates whose pooled estimate is >= the observed value, (1 + k) / 31 (smallest attainable 0.032). The
+registered lower-bound rule is reported next to it. MDE about 0.2 under either rule.
+(ii) **H138.5 is descriptive** (MDE 0.677 against a null of 0.443 ± 0.092): reported with its detection limit, out of
+the A138 Holm family. Holm runs over the remaining confirmatory A138 hypotheses (H138.1-H138.4, H138.6, H138.7).
+
 ## A139 (2026-10-25, method; written before any simulation of it; PI request): can clock-gene acrophases be refitted under hospital hours?
 
 Motivation: `clocksync` fixes the 14-gene GTEx waveform (relative amplitudes and acrophases) because with all loadings
