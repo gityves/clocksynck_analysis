@@ -894,3 +894,55 @@ None of the r* values below have been computed. Code: `paper/exploratory/A142_or
   - endocrine and adipose (Adipose - Subcutaneous, Adipose - Visceral, Adrenal Gland, Thyroid, Pituitary).
 - **Figure consequence:** the Figure 2 brain-periphery row cites H142.1. A digestive departure, if found, becomes a
   Figure 2 row (main if it passes, else not shown).
+
+## A143 (2026-10-27, written before any readout below; PI request): is the brain-periphery split a processing artefact, and does the hypothalamus follow the body?
+
+Motivation (PI, 2026-10-27): A103 excluded collection delay, death type and acute PER1/PER2 induction. It did not
+exclude a per-donor technical factor shared by the brain samples, which are collected and processed together, apart
+from the other tissues (for example RNA quality, autolysis, nucleic-acid isolation batch). Baboon does not show the split
+(r* 0.97, 12 animals; raw brain-periphery correlation 0.46); sheep does (0.63).
+
+**Known at registration:**
+- A103 (r* 0.64 base; 0.64 adjusted for ischaemic time and Hardy);
+- A110 H110.4 (slow vs fast deaths: the hypothalamus keeps its coupling to the peripheral host while the other brain
+  regions lose it, difference 0.208, p 0.002, descriptive);
+- the batch structure, counts only: per donor a median 8 brain samples in 4 isolation batches (SMNABTCH) and 20
+  peripheral samples in 7;
+- the join coverage: 85 % of fast-death samples have v8 sample attributes.
+
+No departure has been read against batch or quality. Code: `paper/exploratory/A143_brain_artefact/`. Same cohort,
+departures and r* as A103 base and A142 (14-gene plane, fast deaths, tissues with >= 40 donors). Sample attributes from
+`paper/data/Gtex_phenotypes` (controlled access: aggregates only). Samples without attributes are dropped from H143.1-2;
+coverage is reported; < 50 % coverage of brain samples makes H143.1-2 not estimable.
+
+- **H143.1 (quality adjustment).**
+  - Per tissue, departures regressed on RIN (SMRIN), autolysis score (SMATSSCR, as a factor), ischaemic time, Hardy 2 vs
+    1 and collection centre (SMCENTER) where it varies. Residuals plus intercept, as A103 `adjust`.
+  - r* recomputed with 200 donor bootstraps.
+  - Pass (split not explained by sample quality): adjusted r* < 1 with bootstrap upper bound < 1.
+  - Also reported: the change from base r* on the same samples.
+- **H143.2 (isolation batch carries a departure).** For each pair of brain regions:
+  - the correlation over donors of the two standardised departures, separately in donors whose two samples share an
+    isolation batch and in donors where they do not;
+  - statistic: same-batch minus different-batch correlation, averaged over region pairs with >= 10 donors in each class,
+    weighted by the harmonic mean of the two counts;
+  - null: within each region pair, same / different labels permuted across donors (2,000 permutations);
+  - one-sided p, smallest attainable 1/2001.
+  - A pass is evidence for a batch-borne departure, so an artefact. The same is computed for peripheral pairs as a
+    reference (descriptive).
+  - Power: null SD and 95th percentile.
+- **H143.3 (the hypothalamus follows the body more than the other brain regions; fast deaths).**
+  - Per brain region k: alignment ratio = [r(k, P) / sqrt(rel_P)] / [r(k, B_-k) / sqrt(rel_B-k)]. Here P is the
+    peripheral score, B_-k the score of the other brain regions, and rel their split-half reliabilities. The region's own
+    noise cancels in the ratio.
+  - Statistic: hypothalamus ratio minus the median ratio of the other 12 regions, with 1,000 donor bootstraps.
+  - Pass: one-sided bootstrap p (share of replicates <= 0) < 0.05.
+  - Reading: a technical factor shared by all brain samples predicts equal ratios; a pass means at least one region
+    departs differently, as biology would allow.
+  - Descriptive: every region's ratio, and the same in Hardy 3-4 deaths.
+- **Decision rule:** Holm over H143.1-3.
+- **Reading rules:**
+  - H143.1 and H143.3 pass, H143.2 fails: the split is not explained by quality or batch; Figure 2 keeps "partly
+    separate", with the hypothalamus panel if H143.3 passes.
+  - H143.2 passes, or H143.1 fails: the brain claim is restated as "not separable from brain processing" and moves to
+    Extended Data.
