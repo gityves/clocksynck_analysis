@@ -1187,3 +1187,31 @@ endothelial or mural cells), so no stromal host or internal time can be built, a
 Q2). No recorded times. Blind inventory: `paper/exploratory/A146_tme_time/output/part2_prep_*.csv`. Part 2 is
 re-planned on the on-disk single-cell cancer cohorts with a stromal host (pan-cancer, breast where present) and will be
 registered after its own blind inventory and power.
+
+## A121 (2026-10-27, written before any readout below; PI request to bring the embryo into Figure 2): the embryo clock against the known timing of fetal clock emergence
+
+Transcribed from the WP7 plan (`provisory_plan_paper.md`, A121), with the published reference fixed here.
+**Known at registration:** A108 (Qiu 2024 mouse embryo atlas: shared clock only late in gestation, E15-E18.75, H108.1
+R 0.52, p 0.016, n 16; gate borderline p 0.08), A108b, A108c (per-trajectory amplitude, phase and p per gestational
+half, `figure_2/output/embryo/a108c_timed_halves.csv`; cardiomyocytes not rhythmic in either half, p 0.22 and 0.28).
+The pooled host statistic R per half (H121.1) has not been computed. Code base: `figure_2/scripts/embryo/`.
+**Published reference (checked 2026-10-27):** fetoplacental PER2::LUC rhythms in utero emerge during pregnancy and
+stabilise around E15.5 with peaks at dusk to early night (bioRxiv 10.1101/2023.06.30.547166; later version
+10.64898/2025.12.17.695051). Reference interval: ZT12-ZT14 (lights-on ZT0). No cell-autonomous oscillation in E10
+hearts, clear at E18 (Umemura et al. 2017; verify before citing).
+- **H121.1 (onset within the window):** alignment with clock time is stronger in E17.0-E18.75 than in E15.0-E16.75.
+  Per half: the H108.1 statistic R (8 embryos each, batch intercepts, host refitted per half). Statistic R(late) minus
+  R(early); null: clock times permuted within batch in both halves (10,000); one-sided p < 0.05. Secondary: the same
+  per lineage (hepatocytes, mesenchyme), descriptive.
+- **H121.2 (phase against the known fetal timing):** the common offset of the embryo host (host phase minus clock
+  time) is converted to mouse ZT with a human-to-mouse frame offset calibrated on the timed mouse datasets that use the
+  same orthologue projection (A21 colon, A48 mouse ages, A72 mouse skin): inverse-variance weighted circular mean of
+  the per-dataset offsets, SE by bootstrap over datasets and samples. The light schedule is not recorded: predicted ZT
+  of the embryo clock peak reported for lights-on at 06:00, 07:00 and 08:00. Pass if, under lights-on 07:00, the 95 %
+  interval of the predicted peak ZT (offset SE and embryo host SE combined) overlaps ZT12-ZT14. Uninformative (reported
+  descriptively) if the calibrated offset's SE exceeds 1.5 h or the datasets disagree by more than 3 h.
+- **Heart, stated in advance:** "consistent with" the heart literature, not "replicates".
+- **Family:** secondary; Holm over H121.1-2.
+- **Reading:** H121.1 passes and H121.2 passes (or is uninformative): Figure 2 embryo panel, labelled exploratory,
+  framed as consistent with and extending known late emergence. H121.1 or H121.2 fails: the embryo goes to Extended
+  Data.
