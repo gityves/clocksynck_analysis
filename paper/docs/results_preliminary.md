@@ -730,3 +730,27 @@ GTEx fast deaths, 27 peripheral tissues, 100 random donor halves.
   - Fit failures: 20 of 2,550 cohort fits (2, 2, 4, 4 and 8 from c = 0 to 0.5), all a resampled SRP273482 without
     the normal fibroblast anchor; those cohorts leave that replicate's pool. 16 cohorts per pool.
 <!-- src: paper/exploratory/A138_cancer_estimability/output/power/{power_summary,h138_1_sim,h138_1_sim_cohorts}.csv -->
+
+## A115 (scored 2026-10-27, descriptive): uninvolved psoriatic skin already runs its core clock late against healthy skin
+Healthy rows added from the raw files with the original builders; the rebuilt lesional and uninvolved rows equal the
+processed ones exactly in all 4 series (acceptance passed, nothing dropped). 185 uninvolved vs 138 healthy samples.
+- **D115.1 (uninvolved minus healthy core-cue offset, pooled):** -1.806 h [-3.811, -0.689] (2,000 bootstraps);
+  one-sided permutation p 0.0084 (10,000). Pooled offsets: uninvolved -0.099 h, healthy +1.706 h. Coherence 0.389
+  (uninvolved) and 0.585 (healthy). Permutation null SD 0.768 h (MDE 1.91 h; registered blind estimate 2.19-2.89 h).
+  Registered reading rule: "a trait component of at least about 0.7 h".
+- **Per series:** all 4 negative, none alone below p 0.05: GSE13355 -1.52 h (p 0.058), GSE121212 -4.73 (0.076),
+  GSE201827 -0.64 (0.31), GSE268958 -1.92 (0.087).
+- **Leave one series out (post hoc):** -1.33 to -2.53 h, p 0.008-0.048 (2,000 permutations).
+- **Atopic dermatitis (GSE121212, 21 vs 38):** -0.43 h [-9.36, 8.70], p 0.42, MDE 6.9 h. Uninformative.
+- **Keratinocyte differentiation score** (DIFF minus BASAL; Hedges g, uninvolved minus healthy): psoriasis pooled
+  +0.47 [0.24, 0.70], all 4 series positive; atopic dermatitis -0.08 [-0.61, 0.44].
+- **Caveats:**
+  - Healthy controls are different persons, possibly sampled at other body sites or in other batches. The
+    permutation assumes the two groups are exchangeable within a series, which such differences would break; site and
+    batch were not checked.
+  - The trait estimate (1.8 h) exceeds the within-group lesional-minus-uninvolved estimate on 15 series (1.05 h; paired
+    estimator 1.70 h). Different series and estimator, but the size is surprising and needs the site / batch check
+    before it is read as biology.
+  - Uninvolved skin is also more differentiated than healthy skin (g 0.47), so the clock delay and the keratinocyte
+    state co-occur; the transit model would predict that, but it is not tested here.
+<!-- src: paper/exploratory/A115_A116_psoriasis/output/{a115_acceptance,a115_d115_1,a115_atopic,a115_keratinocyte,a115_loso}.csv -->
