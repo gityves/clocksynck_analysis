@@ -628,3 +628,29 @@ fibroblast, smooth muscle, pericyte and endothelial only (500 animal bootstraps)
   restored (PI, 2026-10-27) with the anchors stated: set by hand from prior knowledge, because the automatic rule
   failed V17.2. It is a known-answer check of the readout, not of the anchor rule.
 <!-- src: paper/exploratory/WP0_integrity/output/a21_shift_without_lymphatic.csv; paper/results/figure_1/output/species/a21_r214_phase.csv (M3) -->
+
+## A142 (scored 2026-10-27): the brain split is brain-specific; digestive organs carry a smaller departure of their own
+
+GTEx v10 fast deaths, 14-gene plane, A103 statistic generalised to any tissue block; 1,000 random size-matched peripheral
+blocks per comparison; 200 donor bootstraps.
+- **H142.1 PASS (Holm p 0.002).** Brain vs periphery r* 0.639 [0.530, 0.728], 205 donors. Random 13-tissue peripheral
+  blocks: median 0.978, 5th percentile 0.936, SD 0.025. One-sided p 0.001 (the floor). Same without PER1/PER2 (0.585)
+  and after ischaemic-time and Hardy adjustment (0.640), each p 0.001. The brain separates far more than any group of
+  peripheral organs.
+- **H142.2 PASS (Holm p 0.028).** Digestive (7 tissues) vs the other 20 peripheral tissues: r* 0.883 [0.819, 0.971],
+  160 donors. Random 7-tissue blocks: median 0.970, 5th percentile 0.900. One-sided p 0.028.
+  - Sensitivities: adjusted 0.884 (p 0.031); without PER1/PER2 0.896 (p 0.056).
+  - The digestive departure is real but about a third the size of the brain's (1 - r*: 0.12 vs 0.36).
+- **Descriptive blocks:**
+  - Food-exposed (stomach, transverse colon, oesophageal mucosa, liver; 107 donors): r* 0.922, p 0.31. Too few tissues
+    and donors to read: its reference SD is 0.11, and its bootstrap upper bound is undefined.
+  - Cardiovascular 0.975 (p 0.57) and endocrine/adipose 0.964 (p 0.47): at the reference.
+- **Deviation (data rule, not registered):** reference blocks with an undefined r* (low-donor tissues) were dropped:
+  0 of 1,000 at k = 7 and 13, 15 at k = 4, 0 at k = 5 (base plane).
+- **Reading:**
+  - At tissue level, the brain's partly separate internal time is specific to the brain. The A143 processing checks
+    are running.
+  - Digestive organs depart from the rest of the body as a group, more than an arbitrary organ group does. This is
+    consistent with meal timing (PI hypothesis) but not shown to be meal timing: GTEx has no meal times, and the block
+    includes smooth-muscle layers.
+<!-- src: paper/exploratory/A142_organ_blocks/output/{tests,targets,reference_summary}.csv -->
