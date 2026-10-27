@@ -843,3 +843,54 @@ therefore informed by the benchmark; what is new is the 40-tissue design. Code: 
   after (W). Detached `run.sh` job, at most 16 workers and the RAM budget.
 - **Figure consequence:** Figure 1 organ-map panel = A123 with all methods (design W main, design F in ED or as a second
   column).
+
+## A142 (2026-10-27, written before any comparator below was computed; PI request): is the brain-periphery split specific to the brain, and do digestive organs carry a departure of their own?
+
+Motivation (PI, 2026-10-27): r* < 1 for the brain says little if any group of organs gives r* < 1 against the rest.
+The PI also expects the digestive organs to depart from the body's internal time, because the time of the last meal
+resets their clocks and is partly decoupled from internal time. **Known at registration:**
+- brain vs periphery r* 0.64 [0.56, 0.73] (A103 base);
+- the archive factor model of the departures (01 GTEx organs): outside the brain, 2 factors fit hardly better than 1
+  (held-out 0.349 vs 0.337), and all peripheral tissues, including liver and gut, load on one factor. That model was
+  not a test of a digestive block.
+
+None of the r* values below have been computed. Code: `paper/exploratory/A142_organ_blocks/`.
+
+- **Data and statistic, as A103 base** (`results/figure_2/scripts/organs/compute_brain_artefact.py`):
+  - GTEx v10 fast deaths (Hardy 1-2), tissues with >= 40 donors: 13 brain regions, 27 peripheral tissues, 244 donors.
+  - Per-sample linear phase departures from the timed fit of the 14-gene plane, standardised per tissue.
+  - A block score is the donor's mean departure over the block's tissues (>= 2 tissues).
+  - r = correlation over donors of block A vs block B scores. r* = r / sqrt(rel_A rel_B), with split-half
+    (Spearman-Brown) reliabilities over 50 random tissue splits.
+  - The statistic is the same function generalised from "Brain*" to any tissue set.
+- **Blocks:**
+  - brain = the 13 brain regions, against the 27 peripheral tissues (A103 base);
+  - digestive = Stomach, Colon - Transverse, Colon - Sigmoid, Esophagus - Gastroesophageal Junction, Esophagus -
+    Muscularis, Esophagus - Mucosa, Liver (7; pancreas and small intestine have < 40 donors), against the other 20
+    peripheral tissues.
+- **Reference distribution:** 1,000 random blocks of k peripheral tissues, each against the remaining 27 - k peripheral
+  tissues, with k = 13 for the brain comparison and k = 7 for the digestive one (seed 142). This is what an arbitrary
+  group of peripheral organs gives.
+- **H142.1 (brain specificity):** brain r* is below the k = 13 reference.
+  - One-sided p = (1 + #{reference r* <= brain r*}) / 1,001 (smallest attainable 0.001).
+- **H142.2 (digestive departure, the PI's hypothesis):** digestive r* is below the k = 7 reference, with the same
+  p definition.
+  - Also reported: 200-replicate donor-bootstrap interval of the digestive r*.
+- **Decision rule:** Holm over H142.1-2, alpha 0.05. Power is stated as the reference's 5th percentile (the largest r*
+  that could pass) and its SD.
+- **Reading rules:**
+  - H142.1 pass: the brain separates more than an arbitrary organ group, so "partly separate" is brain-specific
+    (at tissue level, in GTEx).
+  - H142.1 fail: the brain's r* is what any organ group gives, and the Figure 2 brain claim is dropped or restated.
+  - H142.2 pass: digestive organs carry a shared departure of their own (consistent with meal timing; not shown to be
+    meal timing). H142.2 fail: no digestive departure beyond what any organ group shows at this design.
+- **Sensitivities (descriptive), on both blocks and on their references:**
+  - the plane without PER1/PER2;
+  - departures adjusted for ischaemic time and Hardy class (the A103 `adjust`).
+- **Descriptive blocks**, each against the rest of the periphery with its own size-matched reference:
+  - food-exposed epithelium and liver (Stomach, Colon - Transverse, Esophagus - Mucosa, Liver);
+  - cardiovascular (Artery - Aorta, Artery - Coronary, Artery - Tibial, Heart - Atrial Appendage, Heart - Left
+    Ventricle);
+  - endocrine and adipose (Adipose - Subcutaneous, Adipose - Visceral, Adrenal Gland, Thyroid, Pituitary).
+- **Figure consequence:** the Figure 2 brain-periphery row cites H142.1. A digestive departure, if found, becomes a
+  Figure 2 row (main if it passes, else not shown).
