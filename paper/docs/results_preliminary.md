@@ -676,3 +676,41 @@ logit(c) ~ log lambda + log R + target, 1,000 bootstraps of compartments within 
 - At 33 rows, mostly brain, this cannot separate the explanations.
 - Caveat: HLCA fibrotic controls and HLCA lung may share donors (not checked).
 <!-- src: paper/exploratory/A144_strong_clocks/output/{d144_2_coefficients,d144_2_rows}.csv -->
+
+## A143 (scored 2026-10-27): the brain split is not explained by sample quality or isolation batch; no hypothalamus exception
+
+GTEx v10 fast deaths, A103 base statistic; v8 sample attributes for 80 % of brain and 89 % of peripheral samples (note 1:
+no autolysis term).
+- **H143.1 PASS.** r* 0.627 [0.550, 0.712] after adjusting every tissue for RIN, ischaemic time, Hardy and centre. On the
+  same samples without adjustment: 0.621 [0.514, 0.723]. Quality does not move the split. The autolysis sensitivity is
+  not estimable: only 2 brain regions are scored, so the brain reliability is undefined.
+- **H143.2 FAIL (no brain-specific batch effect detected; Holm p 0.38).**
+  - Brain-region pairs from the same isolation batch correlate 0.039 more than pairs from different batches (30 pairs,
+    p 0.19; null SD 0.044, q95 0.070).
+  - Peripheral pairs show the same excess, detected with more pairs: 0.040 (155 pairs, p 0.0035).
+  - Reading: isolation batch carries a small shared departure in every tissue, of the same size in brain and periphery.
+    It is not brain-specific, and an excess above about 0.07 in brain pairs is excluded at this power.
+- **H143.3 FAIL.** Hypothalamus alignment ratio 0.582 vs the median of the other regions (about 0.66); difference
+  -0.082 [-0.248, 0.152], p 0.74.
+  - Other regions span 0.37 (frontal cortex BA9) to 0.81 (hippocampus); the spinal cord is at 1.18 and follows the body.
+    Whether this spread exceeds noise was not tested.
+  - Hardy 3-4 ratios (descriptive) are noisy (-0.83 to 1.59).
+  - The A110 slow-death observation is a different estimand and stands as descriptive.
+- **Reading (registered rule):** H143.1 passes and H143.2 fails, so the split is not explained by sample quality or by
+  isolation batch. The brain claim keeps "partly separate" in Figure 2, with A142 (brain-specific) and A143 cited. No
+  hypothalamus panel. Not excluded: brain-only processing steps without a recorded variable (dissection protocol).
+<!-- src: paper/exploratory/A143_brain_artefact/output/{coverage,h143_1,h143_2,h143_2_pairs,h143_3_regions,tests}.csv -->
+
+## A144 part 1 (scored 2026-10-27): the strong-clock association is not shared noise; it lies in the shared part
+
+GTEx fast deaths, 27 peripheral tissues, 100 random donor halves.
+- **H144.1 PASS.** Amplitude from one half against coupling from the other: cross-half rho 0.690 (5-95 % over splits
+  0.645-0.732). Within the same half: 0.718. Permutation null mean -0.001, SD 0.184; p 1e-4 (the floor). Noise shared
+  within donors accounts for 0.028 of the association (5-95 %: -0.015 to 0.088).
+- **D144.1.**
+  - Across tissues, log locked variance varies about 3-fold more than log unlocked variance (SD 1.02 vs 0.38).
+  - Coupling follows the locked part (rho 0.86), not the unlocked part (-0.08).
+- **Reading:** strong peripheral clocks are strong by the part they share with the body. This is consistent with cell
+  synchrony maintained by body-wide signals, or with stronger cue input, rather than single-oscillator rigidity, which
+  these data do not test (part 2 was inconclusive). The Figure 2 row stays, worded this way.
+<!-- src: paper/exploratory/A144_strong_clocks/output/{h144_1,d144_1_components,splits}.csv -->
