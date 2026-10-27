@@ -818,3 +818,18 @@ GSE233242, 42 patients, 10 programs (AURKB absent; P1 on 9 genes), 10,000 time p
   the tumour microenvironment, where seen, follows the hospital clock, not the tumour's internal time. Without recorded
   times outside GSE233242, part 2 cannot test the recorded-time reading.
 <!-- src: paper/exploratory/A146_tme_time/output/{part2_tests,part2_per_program,part2_per_cohort,part2_subsets,part2_offset_sweep}.csv -->
+
+## A121 (scored 2026-10-27): embryo clock onset not shown within the late window (H121.1 fail); phase uninformative (H121.2)
+Qiu 2024 mouse embryo atlas, host as H108.1 (late-window statistic reproduces H108.1: R 0.516).
+- **H121.1 FAIL:** R(E15.0-16.75) 0.392 (p 0.41), R(E17.0-18.75) 0.594 (p 0.081); difference 0.202, one-sided p 0.226
+  (10,000 within-batch permutations), Holm 0.45. 8 embryos per half: underpowered for a moderate rise.
+- **Lineages (secondary, descriptive, uncorrected):** hepatocytes 0.375 -> 0.766 (late p 0.008; difference p 0.048);
+  mesoderm 0.157 -> 0.655 (difference p 0.022).
+- **H121.2 UNINFORMATIVE (registered rule):** calibrated frame offset 21.54 h (SE 0.30 h) from 11 timed mouse datasets
+  (A21, A48, A72), but the datasets disagree by 3.07 h (> 3 h; A48 aged, the noisiest, against A72 GSE190032). The
+  embryo offset itself has SE 3.29 h (16 embryos), so a 95 % interval spans about 13 h. Deviation: the registration
+  did not define "the embryo clock peak"; three definitions were computed (`h121.csv`, column `definition`) and they
+  disagree on overlap with ZT12-14, which does not matter under the uninformative verdict but must be fixed before any
+  rerun.
+- **Registered reading:** H121.1 fails, so the embryo panel goes to Extended Data (PI to confirm, below).
+<!-- src: paper/exploratory/A121_embryo_timing/output/{h121,frame_offsets,lineages,embryo_offset_boot}.csv -->
