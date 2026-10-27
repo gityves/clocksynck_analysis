@@ -755,3 +755,32 @@ processed ones exactly in all 4 series (acceptance passed, nothing dropped). 185
   - Uninvolved skin is also more differentiated than healthy skin (g 0.47), so the clock delay and the keratinocyte
     state co-occur; the transit model would predict that, but it is not tested here.
 <!-- src: paper/exploratory/A115_A116_psoriasis/output/{a115_acceptance,a115_d115_1,a115_atopic,a115_keratinocyte,a115_loso}.csv -->
+
+## A138 Q3 and Q1 (scored 2026-10-27): tumour clocks follow their own patient's normal tissue (H138.4 pass); malignant host coupling not shown (H138.1 fail)
+Regenerated nulls equal the committed power nulls (mean, SD, q95, estimable flags).
+- **H138.4 PASS** (TCGA, 517 tumour-normal pairs, 10 gated cancers): pooled Poisson-corrected |correlation| of tumour
+  and own-patient normal clock states 0.365; pairing null 0.122 ± 0.021 (q95 0.157); p 1e-4 (the floor). Pseudo-clock
+  companion (200 expression-matched gene sets): median 0.194, q95 0.261, none reaches 0.365, so the pairing signal is
+  clock-specific. Per cancer: BLCA 0.52, LIHC 0.49, LUAD 0.49, PRAD 0.43, KIRC 0.43, BRCA 0.32, THCA 0.30, KIRP 0.29,
+  COAD 0.21, UCEC 0.08; p < 0.01 in 7 of 10 (COAD 0.19, KIRP 0.072, UCEC 0.87).
+- **H138.5 (descriptive):** malignant vs adjacent-normal epithelium after removing the stromal host, 52 patients, 6
+  cohorts: 0.583, null 0.443 ± 0.092, p 0.069; below the MDE (0.677). Not detected at this power. Fibroblast companion
+  (1 cohort, 6 patients): 0.240, p 0.87, uninformative. GSE131907 excluded by note 4 (ii).
+- **H138.1 FAIL** (note 5 rule): pooled anchored coupling of malignant cells 0.076 [0.014, 0.139] (DerSimonian-Laird,
+  17 cohorts, 225 patients, tau2 0), below the calibrated threshold 0.083; p 3/31 = 0.097. The registered lower-bound
+  rule would pass (0.014 > 0): the case note 5 was written for. 15 of 17 cohorts have a lower bound of 0. The power
+  simulation used the design count (270 patients); fewer patients were fitted (225), which widens the true null, so
+  the threshold is if anything lenient. Reading: malignant host coupling, if present, is below about 0.2 (MDE).
+- **Holm (provisional; Q2 unscored):** H138.4 adjusted 2e-4 (over the scored two) or 6e-4 (family of 6, unscored taken
+  as not smaller); H138.1 0.097 or 0.48.
+- **D138.1 (descriptive):** median shares of the clock-plane variance (host-coupled z2V, patient-specific 2psi,
+  Poisson): malignant 0.18 / 0.79 / 0.08 (17 cohorts); normal epithelium 0.34 / 0.49 / 0.20 (9); stroma 0.53 / 0.27 /
+  0.18. Patient-specific share malignant minus normal epithelium, 7 cohorts with both: mean +0.195, positive in 6 of 7.
+  The between-cell part has no registered estimator (the A18 per-group D was reused, 11 of 17 cohorts, very noisy) and
+  is not read.
+- **Reading (Q8 tension):** the clock state of a tumour keeps a patient-specific relation to the same patient's normal
+  tissue, yet malignant cells carry little variance coupled to the stromal host and most of their clock variance is
+  patient-specific. This matches suggestion 5 of the status note: malignant clocks are not gone; their between-tumour
+  variation is dominated by patient-specific sources. It contradicts "no fixed timing relationship with healthy tissue"
+  (CoFE, Li et al. 2024) at bulk level.
+<!-- src: paper/exploratory/A138_cancer_estimability/output/score/{tests,per_unit,holm,d138_1,d138_1_contrast}.csv -->
