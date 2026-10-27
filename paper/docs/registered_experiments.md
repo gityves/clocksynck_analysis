@@ -706,3 +706,49 @@ monotonically over CT4-CT22 (CD4+ T 26 -> 52 %), so the mouse "rhythm" may itsel
   Holm over P140.1-P140.3, one-sided in the predicted direction. "Same direction" = point estimate of the predicted
   sign; "replicated" = Holm-adjusted p < 0.05. Descriptive: CD4_T fraction (> 0), T-cell interferon-response and
   recognition genes (CD3D, CD3E, LCK, TRBC1), and the same readouts on the DIP of (ii) for comparison.
+
+**A140 Q1 revision (2026-10-27, after the simulator gate failed and before any rerun; PI, Q11 (b)).** The registered gate
+failed (CYCLOPS truth r median 0.067, 0 of 50; clocksync gate 43 of 50; `results_preliminary.md`). Two run choices may
+cause it, so the simulator is revised before anything is rerun. Everything else in Q1 is unchanged: arms, H140.1-3,
+thresholds and Holm.
+- **CYCLOPS:** the template's 80 models per fit (the failed run used 10).
+- **Factor calibration:** genome-wide pseudobulks (all genes, raw UMI sums, >= 50 cells) of the tumour T_NK and tumour
+  myeloid compartments of the 21 gate-passing A17 cancer cohorts (`cancer_sc`, main tables, `cnv=False`). Per
+  compartment and cohort, log CPM is centred within cohort. The non-clock factor is the leading principal components
+  after removing the projection on the 14 clock genes' host plane. Their eigenvalues are corrected for Poisson noise
+  (expected sampling variance of log CPM subtracted per gene before the PCA). The median over cohorts sets the factor
+  sd at scale 1.
+- **Factor size as a grid:** scales 0, 0.25, 0.5 and 1 of the calibrated sd. Scale 1 is the primary.
+  - Scale 0 runs only if the CYCLOPS port completes on it; a crash is reported as "not run".
+  - The simulator gate is evaluated per scale (arm D, seed 1,500, 50 replicates, median circular r >= 0.7).
+  - H140.1-3 are scored at scale 1 only if the gate passes there.
+  - If it fails at scale 1 but passes at a smaller scale, H140.1-3 are not scored. Reported instead: the largest scale
+    at which CYCLOPS recovers the clock, against the calibrated tumour-immune factor size (descriptive).
+- **Cost check before the full run:** 2 replicates at 80 models. If one gate cell (50 replicates) would exceed 6 h on
+  16 workers, replicates drop to 30 per cell for the gate only. H140.1-3 keep 50 (thresholds as registered).
+
+## A141 (2026-10-27, written after WP0 item 8 and A135, before any readout below; PI, Q6): are the brain disease contrasts stable enough to read, given that brain donors die at any hour?
+
+Brain donors (PsychAD MSSM / HBCC, SEA-AD, PD atlas, RADC) die at any hour. A host fitted on them should then cover the
+full cycle, so compartment amplitudes and phases are close to absolute. The question is whether the anchor dependence of
+the brain contrasts (WP0 item 8: 1-7 of 9 compartments change sign between the A17 anchors and the all-LOO host; r*
+0.42-0.67) is what noise alone produces at these amplitudes and donor numbers. Descriptive; no disease hypothesis. Data:
+the brain contrast sets of WP0 item 8. Code: `paper/exploratory/A141_brain_stability/`. A failed gate is uninformative.
+- **Step 1, coverage.** Per cohort (control donors, then all donors): Rayleigh R of the host phases and the host spread.
+  Reference: the same statistics in GTEx fast-death brain tissues (timed, any hour) and in simulations with uniform
+  24 h sampling. "Full cycle" = R within the 95 % range of the uniform-sampling simulation at the cohort's n.
+- **Step 2, absolute amplitude.** Per compartment: host-referenced log amplitude plus the host amplitude, compared with
+  the timed GTEx brain-region amplitudes (`organs/tissues.csv`, fast cohort, brain tissues). Same scale = within the
+  range of the GTEx brain regions. Reported, not tested.
+- **Step 3, stability by simulation (decision).** Per cohort, 200 simulations (`clocksync.simulate`) at the fitted
+  amplitudes, phases and own noise of every compartment, the cohort's donor numbers per group, uniform 24 h sampling, and
+  no case effect. Each is refitted with the A17 anchors and with the all-LOO host, at the contrast's design.
+  - Statistic: the number of compartments whose case-minus-control d changes sign between the two hosts.
+  - Noise-driven: the observed count is <= the 95th percentile of the simulated counts. Then nothing can be said about
+    that contrast's compartments (reported as not estimable at this design). Otherwise: not noise-driven.
+- **Step 4, descriptive map (only for contrasts not noise-driven).** Which compartments agree in sign and size across
+  the two hosts, read against expectations fixed now:
+  - expected to agree: the neuron classes among themselves, and astrocytes with oligodendrocytes;
+  - expected noise-driven: compartments with the lowest coupling or < 20 donors per group.
+  If some contrast is not noise-driven, the lead drafts a request for time-of-death fields to the PI (outward-facing:
+  PI decides).
