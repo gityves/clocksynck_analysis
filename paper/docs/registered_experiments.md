@@ -1243,3 +1243,14 @@ are cohort-level (SRP329496 mixes ovarian and breast).
 **Reading:** a pass shows the predicted organisation against internal time across cancers (which part 1 did not find
 in bulk breast); a fail with S below its MDE says the internal-time association is absent or below about 1 S unit
 across cancers, consistent with part 1.
+
+**A145 note 1 (2026-10-27, after the simulator check and a 2-replicate code check, before the full run; no H145
+verdict read).** (i) Shared factor fixed by the registered check (`output/simulator_check.csv`): the A140 factor takes
+0.22 (scale 1) and 0.066 (scale 0.5) of the clock-plane variance; the matching simulator values are shared_sd 0.207
+(arm S_large, used for H145.2 and arm N) and 0.103 (arm S_small, descriptive); the literal 0.5 / 1.0 were labels of the
+A140 sizes. (ii) Technical choices (as `scripts/lib.py`): psi = z2 V (1 - c) / (2c); offsets {0, 3, 6, 9, 12} h and
+amplitudes assigned to targets by a per-replicate permutation shared across arms; orderer phase reflected to the clock
+plane's rotation sense, offsets relative to the anchors' circular mean; orderers see the 56 clock-gene x anchor
+features; CYCLOPS with the template hyperparameters (80 models; not reduced, the published pipeline is what is
+tested); a failed two-step fit is excluded from the pairing with a sensitivity counting it as a clocksync win.
+(iii) D145.2 (real data) was computed in the code check; it is reported from the full run unchanged.
