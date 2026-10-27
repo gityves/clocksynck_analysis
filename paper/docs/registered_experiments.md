@@ -1215,3 +1215,31 @@ hearts, clear at E18 (Umemura et al. 2017; verify before citing).
 - **Reading:** H121.1 passes and H121.2 passes (or is uninformative): Figure 2 embryo panel, labelled exploratory,
   framed as consistent with and extending known late emergence. H121.1 or H121.2 fails: the embryo goes to Extended
   Data.
+
+### A146 part 2 (2026-10-27, written after the blind preparation and before any program-time readout): pan-cancer single cell, programs against internal time within compartments
+
+**Known at registration** (blind preparation, `paper/exploratory/A146_tme_time/output/part2pc_prep_*.csv`; no program
+score was related to any time): 43 on-disk cohorts (`cancer_sc`), 576 tumour patients; stromal host in 23 cohorts, gate
+passes in 17; A25 internal times (hospital prior) for 270 patients; circular SD of times median 3.0 h in gate-passing
+cohorts. Pool = gate-passing cohorts with >= 6 timed patients: 16 cohorts, 226 timed patients (malignant programs 166
+patients in 13 cohorts; immune programs 212 in 14). Omnibus null (2,000 within-cohort time permutations): SD 0.398,
+q95 0.658, MDE 0.99 (S units). Part 1 result known (tumour programs follow recorded time, not internal time).
+**Design (as the preparation script `part2pc_prep.py`, frozen):** same 10 programs and predicted human acrophases as
+part 1, scored within compartment (P1, P2, P3, P9 in malignant cells, CNV call where available, else tumour
+epithelium; P4, P10 in T_NK; P5, P6 in myeloid; P7, P8 as log fractions of T_NK and myeloid cells among all tumour
+cells, >= 100 cells); gene score = mean within-cohort z of log2(CPM + 1); residual programs as in part 1; >= 50 cells
+per compartment, >= 6 patients per cohort x program. Statistic per program: slope t of the stacked OLS of the
+within-cohort z-scored score on the within-cohort-centred cos(2 pi (t - h_k)/24), t = per-patient internal time;
+S = mean of the 10 t values.
+- **H146.3:** S > 0. Null: times permuted within cohort (10,000, seed 146), one-sided p. Holm over H146.1-3 (A146
+  family, secondary).
+- **D146.2 (descriptive):** per program and per cohort t values; omnibus with P9 also in myeloid; the clock-keeping
+  subset (3 cohorts, 31 timed patients: PRAD, LIHC, LUAD) and the non-keeping subset (2 COAD cohorts, 13 patients),
+  not powered (|r| 0.49-0.66 per program); the breast cohorts (ERP130387, SRP273482; 17 timed patients); the mapping
+  offset sweep (+-2, 4, 6 h).
+**Caveats fixed in advance:** no recorded times, so the internal-versus-recorded question of part 1 cannot be asked;
+P7 and P8 depend on each cohort's cell capture (CD45-sorted samples are already excluded by the builder); cancer labels
+are cohort-level (SRP329496 mixes ovarian and breast).
+**Reading:** a pass shows the predicted organisation against internal time across cancers (which part 1 did not find
+in bulk breast); a fail with S below its MDE says the internal-time association is absent or below about 1 S unit
+across cancers, consistent with part 1.
