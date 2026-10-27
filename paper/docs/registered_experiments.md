@@ -764,6 +764,13 @@ thresholds and Holm.
 - **Cost check before the full run:** 2 replicates at 80 models. If one gate cell (50 replicates) would exceed 6 h on
   16 workers, replicates drop to 30 per cell for the gate only. H140.1-3 keep 50 (thresholds as registered).
 
+**A140 Q1 revision note (2026-10-27 13:20, POST HOC: written after the scale-1 gate was seen; PI decision).** Scale 1
+fails (50 of 50 replicates: median truth r 0.060, 0 of 50 >= 0.7), so H140.1-3 are not scored, as registered. The
+remaining queue (scales 0.5, 0.25, 0 at 50 replicates, about 16 h) is stopped. Scale 0 (no factor) runs next with 20
+replicates: it separates a factor-driven failure from a failure of the CYCLOPS pipeline at this pseudobulk design. Scale
+0.25 runs (20 replicates) only if scale 0 passes. The 13 finished scale-0.5 replicates are reported as descriptive.
+Gate rule per scale unchanged (median truth r >= 0.7).
+
 ## A141 (2026-10-27, written after WP0 item 8 and A135, before any readout below; PI, Q6): are the brain disease contrasts stable enough to read, given that brain donors die at any hour?
 
 Brain donors (PsychAD MSSM / HBCC, SEA-AD, PD atlas, RADC) die at any hour. A host fitted on them should then cover the
