@@ -1010,3 +1010,52 @@ anchors, leave-one-out host, `Dataset.fit`.
   consistent with population synchrony or cue input, not with single-oscillator rigidity, which these data do not test
   directly.
 - Part 1 fail: the A104 association is noise shared within donors, and the Figure 2 row is dropped.
+
+## A115 (2026-10-27, written before any readout on healthy skin; PI decision): trait component of the psoriatic delay, descriptive
+
+**Status: descriptive (PI, 2026-10-27).** H115.1 leaves the confirmatory family: the design cannot detect a plausible
+trait effect (power below). Reported with its detection limit, no pass / fail wording beyond the interval.
+
+**Known at registration** (blind preparation, `paper/exploratory/A115_A116_psoriasis/output/`; no clock statistic was
+computed on healthy samples):
+- Series with healthy controls from other persons (raw files on disk; the processed matrices hold lesional and
+  uninvolved rows only): psoriasis GSE13355 (58 pairs, 64 healthy), GSE121212 (27, 38), GSE201827 (65, 17),
+  GSE268958 (35, 19); atopic dermatitis GSE121212 (21, 38). GSE66511 (12, 12) failed the A54 gate and is excluded.
+  `a115_inventory.csv`.
+- Estimand check (15 gated A54 series, 594 pairs): the paired A78/A81b estimator gives lesional minus uninvolved
+  -1.703 h (archive -1.689); the within-group estimator used here gives -1.045 h (14 of 15 series negative; coherence
+  0.22 lesional, 0.41 uninvolved). The A78 systemic set is unusable within group (group offsets -6.5 and -3.2 h).
+  `estimand_check_pooled.csv`.
+- Null from random splits of uninvolved samples, pooled over the 4 psoriasis series: SD 0.882 h at full group sizes
+  (with replacement), 1.163 h for the proportional split; MDE (one-sided 0.05, 80 %) 2.19-2.89 h. Power at a true
+  -1.0 h: 0.22-0.31. Smallest attainable p 1e-4 (10,000 permutations). Atopic dermatitis: SD 4.5-6.5 h.
+  `a115_null_pooled.csv`, `power_table.csv`.
+
+**Data rule.** Per series, the healthy columns are added from the raw file on disk (`a115_inventory.csv`,
+`healthy_source`), processed exactly as that series' builder processes its lesional and uninvolved rows (same platform,
+gene mapping, scale and depth). Acceptance check before reading healthy rows: the rebuilt uninvolved rows reproduce
+the processed ones (per-gene correlation > 0.99, or exact equality), else that series is dropped and reported.
+Uninvolved = patients with a lesional-uninvolved pair, one sample per patient (as A54); healthy = one sample per person.
+
+**Estimand.** Per series, one projector for the uninvolved and healthy rows together (`_lib.states_for`, GTEx core
+waveform; GTEx cue set A81b restricted to the genes present). Group offset = arg E[c_core c_cue*] over the group's
+samples (`S.ccorr`). Pooled offset per group = arg of the A54-weighted sum of the series' complex group statistics;
+D115.1 = uninvolved minus healthy, in hours (wrapped).
+
+**Reported (D115.1, primary descriptive):** D115.1 with a 95 % bootstrap interval (samples resampled within group and
+series, 2,000), and the one-sided group-label permutation p within series (10,000), stated with MDE 2.19 h.
+Reading rule: a negative estimate whose interval excludes 0 is "a trait component of at least ...", anything else is
+"not detected; effects below about 2.2 h not excluded". Per-series values are shown.
+**Descriptive:** the same for atopic dermatitis (GSE121212, one series); the keratinocyte differentiation score (A61
+sets) uninvolved minus healthy, per series and pooled (standardised mean difference); coherence per group.
+No systemic-set sensitivity (unusable within group, above).
+
+## A116 (2026-10-27; PI decision): not registered as a new test
+
+The only GEO series meeting the placebo rule (>= 10 placebo patients with lesional and uninvolved biopsies at both
+visits) are GSE117468 (22 placebo, 83 treated) and GSE201827 (22, 33): the data on which A56 already reported the
+treated-minus-placebo contrast post hoc (-0.50 h). A test registered now on these data adds no evidence. Arm-label null
+SD 0.864 h, MDE 2.15 h; PASI75 within treated (GSE117468, 72 vs 11) MDE 5.64 h (`a116_null.csv`). Near misses
+(GSE136757 9, GSE252029 8, GSE283313 8 placebo patients) have uninvolved biopsies at baseline only.
+**Decision:** H116.1 and H116.2 are withdrawn; H116.1 leaves the confirmatory family. The A56 interaction stays post
+hoc and is reported with the 2.15 h detection limit; the response analysis (A57) stays descriptive.
