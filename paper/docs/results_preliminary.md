@@ -592,3 +592,23 @@ targets read on their host, an anchor on the leave-one-out host of the other anc
     excludes 0 in HLCA only. The panel stands as "loss of relative amplitude, interval excluding 0 in one of two
     cohorts", still conditional on A119 (procurement) for the main text. The A5 free-fit 0.45 is replaced.
 <!-- src: paper/exploratory/WP0_integrity/output/q3_anchored/{panel2_neuron_glia,panel2_fits,panel3_differences,panel3_groups,panel3_anchors}.csv; paper/results/figure_5/output/lung_breaks/decomposition_differences.csv (M3); paper/results/logs/q3_anchored.log -->
+
+## A140 Q1 revised simulator gate (2026-10-27): fails at full factor; CYCLOPS cannot start without the factor
+
+Revision as registered (Q11 (b), 80 CYCLOPS models, factor calibrated on gate-passing tumour immune pseudobulks) and the
+post hoc stop note (2b680e7). Arm D (one clock, three compartments, coupling 0.8, whole day), K = 1, seed 1,500 genes
+without core clock genes.
+- **Factor scale 1 (50 replicates): FAILS.** CYCLOPS phase vs truth, median circular r 0.060 (q90 0.178, max 0.273);
+  0 of 50 >= 0.7. DIP vs truth 0.072. Cross-compartment concordance median 0.967; median rhythmic genes called per
+  compartment 536. clocksync gate passes 24 of 50 (below the 35 of 50 H140.3 asks for in arm A; descriptive).
+- **Scale 0.5 (14 replicates, interrupted queue; descriptive):** median 0.079 (max 0.204), concordance 0.979; gate 11 of 14.
+- **Scale 0 (20 replicates):** every CYCLOPS fit fails (20 of 20, status error). Cause, reproduced on replicate 0:
+  `SVDReduceDimensions` finds no eigengene above `eigen_contr_var` (0.05) among the seed genes (`findlast` returns
+  nothing; Julia `MethodError`), i.e. without the factor no seed-gene principal component carries 5 % of the variance.
+  clocksync gate passes 20 of 20.
+- **Consequence (registered):** scale 0.25 runs only if scale 0 passes, so it does not run; H140.1-3 are not scored.
+  Whether to try the registered core-clock seed is a design change after a result (PI).
+- **Reading:** at this design CYCLOPS 2.0 orders the samples along the shared non-clock factor when there is one (high
+  cross-compartment concordance, no clock recovery) and cannot start when there is none. clocksync's gate keeps
+  sensitivity when the factor is small (20 / 20) and loses it at full factor size (24 / 50).
+<!-- src: paper/exploratory/A140_dip_cyclops/output/q1rev/gate/D_K1_r*.csv, D_K1_s0.5_r*.csv, D_K1_s0_r*.csv (columns truth_r_median, dip_truth_r, cc_median, n_rhy_min, gate_pass, status); paper/results/logs/q1_run.log, q1_run_rev_gate_s1.log -->
