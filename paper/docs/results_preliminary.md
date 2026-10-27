@@ -505,3 +505,20 @@ no compartment with >= 20 cells). Sensitivity set: 77 of 78 samples.
   bootstraps, 100 permutations), as a code check. Its numbers were not kept or read into any decision.
 - **Next.** Part (ii) (the published pipeline) waits for the Q1 simulator gate.
 <!-- src: paper/exploratory/A140_dip_cyclops/output/q2/{part_i_summary,part_iii_readouts,orientation,primary_families}.csv -->
+
+## A140 Q1 simulator gate (2026-10-27): FAILS; Q1 stops, H140.1-3 not scored
+
+Arm D (one clock shared by three compartments, coupling 0.8, whole-day sampling), K = 1 non-clock factor, seed 1,500 genes
+without core clock genes, 50 replicates. CYCLOPS 2.0 (port `common/benchmark/cyclops.py`, cell-type covariate, 10 models per
+fit) phases against the true time: median circular correlation 0.067 (min 0.004), 0 of 50 at >= 0.7 (registered gate). The
+three compartment phases agree with each other: median signed circular r 0.973, some replicates reflected at -0.99. The
+DIP covers a median 0.29 of the circle. The clocksync gate on the same data passes in 43 of 50 replicates. The clock is
+observable, but CYCLOPS orders the samples along the non-clock factor.
+- **Deviations that may cause the failure:** 10 instead of 80 CYCLOPS models per fit (cost), and the factor calibrated on
+  GSE266919 Pre samples (not gate-passing; eigenvalues 78.7, 50.6, 47.8 include Poisson noise).
+- **Post hoc diagnostic** (8 replicates per scale, factor sd scaled): 0.1 gives median truth r 0.30 (1 of 8 >= 0.7); 0.25
+  gives 0.16; 0.5 gives 0.16. Without the factor, CYCLOPS failed in its Julia code (8 of 8).
+- **Reading:** this is not a test of H140.1-3. At this factor size the published pipeline does not recover a coupled
+  clock that clocksync detects, and its compartments agree because they share the factor. Whether that holds at the
+  template's 80 models and a cleaner calibration is PI_QUESTIONS Q11.
+<!-- src: paper/exploratory/A140_dip_cyclops/output/q1/{simulator_gate,diag_summary}.csv, gate/D_K1_r*.csv -->

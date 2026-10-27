@@ -6,6 +6,27 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 
 ## Open
 
+### Q11 (2026-10-27): A140 Q1 simulator gate fails; rerun with the published CYCLOPS settings and a cleaner factor calibration?
+The registered gate (arm D, whole-day sampling, CYCLOPS circular correlation with truth >= 0.7, seed 1,500) fails: median
+0.067, 0 of 50 at >= 0.7. In the same replicates the clocksync gate passes 43 of 50, and the three CYCLOPS compartment phases
+agree with each other (median |r| about 0.97) while ignoring the clock: CYCLOPS follows the shared non-clock factor. Per the
+registration Q1 stops; H140.1-3 are not scored.
+Two choices of the run may cause the failure, so the gate does not yet show that the published pipeline cannot work:
+- CYCLOPS was trained with 10 models per fit instead of the template's 80, for cost: 80 models take about 80
+  worker-minutes per fit, about 4-5 h on 16 workers for the 50 gate replicates.
+- The non-clock factor was calibrated on the GSE266919 Pre samples, because the A17 tables hold clock genes only. These
+  samples fail the gate, and their leading eigenvalues include Poisson noise, so the factor may be overstated.
+  Post hoc diagnostic (8 replicates): factor scaled to 0.1 gives median truth r 0.30 (1 of 8 >= 0.7); without the
+  factor, CYCLOPS crashed in its Julia code.
+- **Question:**
+  - (a) Accept the stop: report "the published pipeline does not recover a coupled clock at this factor size", as
+    descriptive.
+  - (b) Or register a revision before any rerun: 80 models, the factor calibrated on gate-passing tumour immune
+    pseudobulks with all genes (needs those pseudobulks built), and the factor size as a grid. The gate is then rerun,
+    and H140.1-3 only if it passes.
+- **On hold:** A140 Q1 scoring and Q2 (ii) (the published pipeline on GSE266919).
+- Evidence: `paper/exploratory/A140_dip_cyclops/README.md` (Q1), `output/q1/{simulator_gate,diag_summary}.csv`, `results_preliminary.md` (A140 Q1).
+
 ### Q10 (2026-10-26): the A19 age model fails its null calibration in the first full count-level run
 The archive validated `Dataset.covariate` (A19 part 2) with a model-based simulation (null rejection 0.025-0.08). The
 migrated acceptance (M3 full run) keeps the real count tables and permutes ages within stratum: rejection at alpha 0.05
