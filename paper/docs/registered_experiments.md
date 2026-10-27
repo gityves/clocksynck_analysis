@@ -586,6 +586,35 @@ and fixed to the healthy values. Rationale: with free tumour means, the mean of 
 centre of the healthy circle, so tumour phases and magnitudes depend on tumour coverage; with fixed means, tumour and
 healthy mesors are assumed equal. H138.7 is read for both variants.
 
+**A138 note 3 (2026-10-27, new lead; before any A138 readout or power computation): operational statistics of H138.1,
+H138.4, H138.5 and the power step.** Known at registration (stated, not new): the A52 per-cancer tumour-normal
+correlation `corr` (archive "up to 0.52"); H138.4 adds the pairing null, not a new readout.
+- **H138.4 statistic.** Per cancer, states of tumour and normal on one projector (`clocksync.paired.cohort_states`,
+  counts with depth), centred within sample type; per-cancer statistic = Poisson-corrected |complex correlation|
+  (`clocksync.paired.cross`, `corr`). Pooled = mean over the gated cancers (normals pass `reference_gate`, A52), weights
+  n_pairs. Null: normals' rows permuted across patients within cancer (pairing broken, both marginals kept), 10,000
+  permutations, same weights; p = (1 + #null >= obs) / 10,001. Specificity companion on the same permutations: 200
+  expression-matched pseudo-clock gene sets (A52 rule, `pseudo_waveforms`); reported as the pseudo-set pooled statistic's
+  95th percentile next to the clock value (descriptive, not a pass condition).
+- **H138.5 statistic.** Units: patients with malignant (copy-number-called, else tumour epithelium) and adjacent-normal
+  epithelium and a stromal host (`cancer_sc.paired_epithelium`, main tables, `cnv=False` except for the malignant call).
+  Host = the patient's stromal compartments (`Dataset.host()` on the stromal anchors of the cohort). "Host-referenced
+  state" = the residual of the compartment's state after its complex least-squares regression on the host over patients
+  (removes the shared host component). Statistic: |complex correlation| of the malignant and normal-epithelium residuals
+  (Poisson-corrected as `cross`), per cohort with >= 6 paired patients, pooled with weights n. Null: normal residuals
+  permuted across patients within cohort (10,000). Companion on the same permutations: tumour vs adjacent fibroblasts,
+  host = the remaining stromal compartments; descriptive.
+- **H138.1** unchanged (anchored coupling of the malignant compartment, learned A17 anchors, 1,000 patient bootstraps,
+  DerSimonian-Laird).
+- **Power step (written to `paper/exploratory/A138_cancer_estimability/output/power/` and recorded before scoring).**
+  H138.4/H138.5: the permutation null distribution on the real data (no observed statistic computed); reported: null
+  mean, SD, 95th percentile, smallest attainable p (1/10,001), MDE = null 95th percentile + 0.84 x null SD (normal
+  approximation; one-sided 0.05, power 0.8). H138.1: `clocksync.simulate` at the observed design of each Q1 cohort
+  (patients, malignant and host depth), true coupling c in {0, 0.1, 0.2, 0.3, 0.5}, 100 replicates, 200 bootstraps;
+  MDE = smallest c with pooled lower bound > 0 in >= 80 % of replicates; false-positive rate at c = 0 reported.
+  If an MDE exceeds the largest grid value, the hypothesis is reported as "underpowered at this design" alongside its
+  verdict.
+
 ## A139 (2026-10-25, method; written before any simulation of it; PI request): can clock-gene acrophases be refitted under hospital hours?
 
 Motivation: `clocksync` fixes the 14-gene GTEx waveform (relative amplitudes and acrophases) because with all loadings
