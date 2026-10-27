@@ -714,3 +714,19 @@ GTEx fast deaths, 27 peripheral tissues, 100 random donor halves.
   synchrony maintained by body-wide signals, or with stronger cue input, rather than single-oscillator rigidity, which
   these data do not test (part 2 was inconclusive). The Figure 2 row stays, worded this way.
 <!-- src: paper/exploratory/A144_strong_clocks/output/{h144_1,d144_1_components,splits}.csv -->
+
+## A138 power step (2026-10-27, before any observed A138 statistic): H138.4 powered, H138.5 weak, H138.1 test anti-conservative
+- **H138.4** (TCGA, 517 tumour-normal pairs, 10 gated cancers): null 0.122 ± 0.021 (q95 0.157), MDE 0.174, smallest p
+  1e-4. Powered.
+- **H138.5** (single cell, 52 paired patients, 6 cohorts): null 0.443 ± 0.092 (q95 0.600), MDE 0.677, smallest p 1e-4.
+  Detectable only near the null's upper range. Fibroblast companion (ERP149257 only): null 0.526 ± 0.219, MDE 1.05,
+  so uninformative.
+- **H138.1** (`clocksync.simulate` at the observed designs of the Q1 cohorts; 30 replicates per c, 100 bootstraps per
+  fit, note 4): share of replicates whose pooled lower bound > 0 is 0.133 at c = 0, 0.667 at 0.1, 1.000 at 0.2, 0.3
+  and 0.5. MDE 0.2 (registered rule: >= 24 of 30).
+  - **The registered test is anti-conservative:** 4 of 30 null replicates pass (false-positive rate 0.133; exact 95 %
+    interval about 0.04-0.31) against a nominal 0.05. The pooled estimate at c = 0 is biased upward (mean 0.030, q95
+    0.083), as expected for a coupling bounded at 0; 100 rather than 1,000 bootstraps may add to it.
+  - Fit failures: 20 of 2,550 cohort fits (2, 2, 4, 4 and 8 from c = 0 to 0.5), all a resampled SRP273482 without
+    the normal fibroblast anchor; those cohorts leave that replicate's pool. 16 cohorts per pool.
+<!-- src: paper/exploratory/A138_cancer_estimability/output/power/{power_summary,h138_1_sim,h138_1_sim_cohorts}.csv -->
