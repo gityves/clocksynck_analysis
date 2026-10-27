@@ -796,3 +796,50 @@ the brain contrast sets of WP0 item 8. Code: `paper/exploratory/A141_brain_stabi
   - expected noise-driven: compartments with the lowest coupling or < 20 donors per group.
   If some contrast is not noise-driven, the lead drafts a request for time-of-death fields to the PI (outward-facing:
   PI decides).
+
+## A123b (2026-10-27, written before any run of the added methods on the A123 design; PI request): every benchmark method on the full working-hours organ map
+
+Motivation (PI, 2026-10-27): Figure 1 keeps one organ-map panel, A123 (40 tissues, 111 working-hours donors), and drops
+the 8-tissue benchmark row; the method comparison moves onto the A123 design. **Known at registration:** A123 (clocksync
+offsets vs truth (i) 0.945; CHIRAL -0.165 on the same donors) and the 8-tissue benchmark at n = 80 (`gtex_benchmark/
+summary.csv`: in the window design, offset r clocksync 0.900, CHIRAL 0.350, CoFE clock genes 0.289, CoFE genome-wide
+0.099, CYCLOPS -0.495, TimeTeller 0.644, timed oracle 0.165; failure rates up to 0.62). The prediction below is
+therefore informed by the benchmark; what is new is the 40-tissue design. Code: `paper/exploratory/A123_working_hours/`.
+
+- **Designs.** (W) the A123 design: GTEx v10 fast deaths (Hardy 1-2) who died 08-18 h, the 40 tissues with >= 20 such
+  donors, all window samples (no draws). (F, descriptive) the same 40 tissues with all fast deaths (whole day).
+- **Methods, run as in `results/figure_1/scripts/method/compute_gtex_benchmark.py` (`run_order`, default settings):**
+  - CoFE genome-wide (`cofe_filter`, 5 restarts) and CoFE on the clock genes;
+  - CYCLOPS 2.0 with its human seed genes and template hyperparameters;
+  - CHIRAL (as A123);
+  - TimeTeller trained on recorded times, 5-fold out-of-fold over all fast deaths (a supervised reference, not untimed);
+  - the timed oracle (per-tissue cosinor on the recorded times of the design's own donors, rank-1 complex SVD);
+  - clocksync as A123. In (W): waveform cross-fitted on fast deaths outside the window. In (F) no donor is left out, so
+    the GTEx waveform is used (A123 sensitivity: unchanged results); stated as a mild advantage.
+- **From orderings to the organ map (as A123 did for CHIRAL).**
+  - Each method orders each tissue's samples separately.
+  - Donor times are a consensus: every tissue is aligned (rotation, reflection) to the reference tissue on shared donors,
+    then averaged on the circle. The reference is Muscle - Skeletal, or the tissue with the most donors whose fit
+    succeeded if Muscle fails.
+  - Per tissue: clock-gene cosinor on the consensus times, rank-1 complex SVD, giving offsets and log2 relative
+    amplitudes.
+  - A failed fit (error, or all phases missing) drops that tissue for that method; the failure rate is reported.
+- **Readouts against truth (i) and (ii), the A123 `compare` (10,000 tissue permutations, 200 tissue bootstraps):**
+  - offset circular correlation and median absolute error;
+  - log2 amplitude Pearson;
+  - for the orderings, donor order: |circular correlation| of the consensus times with recorded time, best rotation and
+    reflection (favourable to them), and median absolute error.
+- **H123.4 (secondary, design W, truth (i)):** clocksync's offset circular correlation exceeds that of each untimed
+  ordering method other than CHIRAL (CHIRAL's value is already known): CoFE genome-wide, CoFE clock genes, CYCLOPS 2.0.
+  - Statistic: difference in circular correlation, paired tissue bootstrap (2,000 resamples of the tissues both methods
+    estimate).
+  - One-sided p is the share of resamples with difference <= 0 (smallest attainable p 1/2001). Holm over the three.
+  - A method with estimates in < 20 tissues is "not estimable" for this comparison.
+  - Pass per method at Holm-adjusted p < 0.05.
+- **Descriptive:** the same readouts in design F; TimeTeller and the oracle as references; per-method runtime and failure
+  rate.
+- **Compute.** CoFE genome-wide and CYCLOPS take about 30 min per tissue fit at n = 80 (4 threads). (W) is about 80 such
+  fits, roughly 11 h on 12 workers, and runs first. (F) has up to 244 donors per tissue, about 2-3x longer, and runs
+  after (W). Detached `run.sh` job, at most 16 workers and the RAM budget.
+- **Figure consequence:** Figure 1 organ-map panel = A123 with all methods (design W main, design F in ED or as a second
+  column).
