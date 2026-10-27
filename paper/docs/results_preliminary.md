@@ -747,7 +747,8 @@ processed ones exactly in all 4 series (acceptance passed, nothing dropped). 185
 - **Caveats:**
   - Healthy controls are different persons, possibly sampled at other body sites or in other batches. The
     permutation assumes the two groups are exchangeable within a series, which such differences would break; site and
-    batch were not checked.
+    batch cannot be checked: none of the 4 series records body site, batch or
+    processing date in GEO (only GSE268958 records sex).
   - The trait estimate (1.8 h) exceeds the within-group lesional-minus-uninvolved estimate on 15 series (1.05 h; paired
     estimator 1.70 h). Different series and estimator, but the size is surprising and needs the site / batch check
     before it is read as biology.
