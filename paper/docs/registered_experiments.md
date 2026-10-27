@@ -615,6 +615,14 @@ correlation `corr` (archive "up to 0.52"); H138.4 adds the pairing null, not a n
   If an MDE exceeds the largest grid value, the hypothesis is reported as "underpowered at this design" alongside its
   verdict.
 
+**A138 note 4 (2026-10-27, after the H138.4/H138.5 null distributions and before any observed statistic or H138.1
+simulation).** (i) H138.1 power simulation reduced for cost (registered design: about 31 h at 4 workers): 30 replicates
+per c, 100 bootstraps per fit (about 5 h); MDE rule unchanged (>= 24 of 30). (ii) H138.5 data rule: a cohort whose
+Poisson-corrected residual variance is <= 0 in either compartment, or whose null mean exceeds 1 (the correction has broken
+down), is not estimable and leaves the pool; applied identically to the observed data. (iii) The fibroblast companion
+uses its own permutations (its patients differ from the primary's), so it is not "on the same permutations"; it is
+descriptive. (iv) The H138.4 pseudo-clock companion is computed only at scoring (it is an observed quantity).
+
 ## A139 (2026-10-25, method; written before any simulation of it; PI request): can clock-gene acrophases be refitted under hospital hours?
 
 Motivation: `clocksync` fixes the 14-gene GTEx waveform (relative amplitudes and acrophases) because with all loadings
