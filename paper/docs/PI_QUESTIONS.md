@@ -6,6 +6,16 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 
 ## Open
 
+### Q12 (2026-10-27): request brain time-of-death fields? (A141)
+A141 (registered after your Q6 answer):
+- 8 of 12 brain contrasts are noise-driven, so not estimable.
+- 4 are anchor-dependent beyond noise: PD_mssm, VaD_mssm, ASCVD_hbcc and the PD atlas.
+- Your Q6 answer foresaw a time-of-death request in this case. A draft (not sent) covers PsychAD on Synapse and the PD
+  atlas on AMP PD, plus optionally ROSMAP: `paper/exploratory/A141_brain_stability/drafts/tod_request_draft.md`.
+- **Question:** send the request(s), edit them, or not request?
+- **On hold:** nothing else. The brain panels stay in Extended Data with the result stated.
+- Evidence: `results_preliminary.md` (A141).
+
 ### Q11 (2026-10-27): A140 Q1 simulator gate fails; rerun with the published CYCLOPS settings and a cleaner factor calibration?
 The registered gate (arm D, whole-day sampling, CYCLOPS circular correlation with truth >= 0.7, seed 1,500) fails: median
 0.067, 0 of 50 at >= 0.7. In the same replicates the clocksync gate passes 43 of 50, and the three CYCLOPS compartment phases
