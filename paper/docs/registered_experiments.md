@@ -1069,3 +1069,59 @@ SD 0.864 h, MDE 2.15 h; PASI75 within treated (GSE117468, 72 vs 11) MDE 5.64 h (
 (GSE136757 9, GSE252029 8, GSE283313 8 placebo patients) have uninvolved biopsies at baseline only.
 **Decision:** H116.1 and H116.2 are withdrawn; H116.1 leaves the confirmatory family. The A56 interaction stays post
 hoc and is reported with the 2.15 h detection limit; the response analysis (A57) stays descriptive.
+
+## A145 (2026-10-27, written before any readout; PI request): what is specific to clocksync against two-step orderers?
+
+**Question (PI, 2026-10-27).** CHIRAL fits a shared donor phase assuming every tissue follows it; CYCLOPS and CoFE
+order samples. Any orderer can be used in two steps: (1) order donors on the anchor compartments, (2) regress each
+target compartment on the inferred phase. That two-step pipeline yields offsets, relative amplitudes and a coupling
+proxy. Which clocksync readouts does it reproduce, and where does clocksync differ? No clocksync advantage is assumed;
+the method description will state only what this amendment supports.
+
+**Known at registration:** A123 (working hours: clocksync organ offsets r 0.945, CHIRAL -0.165); A140 Q1 (CYCLOPS
+orders by a shared non-clock factor; cannot start without it at 1,500 seed genes); A123b running (phase recovery
+only, no coupling). No two-step coupling has been computed anywhere in the project.
+
+**Simulator.** `clocksync.simulate`, GTEx 14-gene waveform, n = 100 donors, depth and tau at the defaults, 4 anchor
+compartments (coupled, psi chosen for c = 0.9) and 5 targets with true coupling c in {0, 0.25, 0.5, 0.75, 1.0} (psi
+set from c; c = 0 is `coupled=False`), true offsets spread over 0-12 h, relative amplitudes in {0.5, 1}. 30 replicates
+per arm (seed 145).
+- **Arm F (full day):** window 0-24 h, shared_sd 0.
+- **Arm W (working hours):** window 8-18 h, jitter 1 h, shared_sd 0.
+- **Arm S (shared non-clock factor):** full day, shared_sd in {0.5, 1.0} (the A140 sizes on the log scale, matched by
+  the share of clock-plane variance it takes; the value is fixed by a check on simulated data before any method runs).
+- **Arm N (no clock):** amplitude 0, shared_sd 1.0.
+
+**Methods.**
+- **clocksync:** `Dataset.fit`, the 4 anchors, leave-one-out host; gate reported; coupling c, offset, relative
+  amplitude per target.
+- **Two-step, for CHIRAL, CYCLOPS 2.0 (clock-gene seed) and CoFE (clock genes):** step 1, the orderer on the donor x
+  (gene, anchor) matrix of log2 normalised counts (concatenated anchors, as a multi-tissue CHIRAL input); step 2, per
+  target, the same clock-plane state as clocksync (same projector, depth and Poisson variance) regressed on (cos, sin)
+  of the inferred phase over donors: coupling proxy = explained variance / (total minus mean Poisson variance), clipped
+  to [0, 1]; offset = arg of the complex coefficient; relative amplitude = its modulus over the anchors' mean.
+- **Timed oracle:** step 2 on the true times (upper reference).
+A failed orderer fit is data (counted as failure, not dropped).
+
+**Readouts per method and arm:** Spearman(estimated c, true c) over targets, pooled over replicates; mean absolute
+coupling error; circular correlation of offsets with truth; in arm N, the share of targets with c > 0.2 (false
+coupling) and, for clocksync, the gate pass rate.
+
+**Hypotheses (secondary family A145, Holm over the three; each against the best two-step method of that arm):**
+- **H145.1 (working hours):** clocksync mean absolute coupling error < that of the best two-step method. Paired over
+  replicates, one-sided sign test, p < 0.05 (smallest attainable 9e-10 at 30 replicates).
+- **H145.2 (shared non-clock factor, shared_sd 1.0):** the same comparison as H145.1 in arm S.
+- **H145.3 (no clock):** clocksync's false-claim rate, counting a target as claimed only if the gate passes and
+  c > 0.2, is lower than the best two-step method's false-coupling rate. One-sided exact McNemar-type test over
+  targets x replicates, p < 0.05.
+**Descriptive D145.1 (arm F):** all readouts. Expected: two-step methods reproduce coupling, offsets and amplitudes on
+full-day data. If they do, the paper states that coupling is recoverable by a two-step orderer pipeline when sampling
+covers the day, and clocksync's specificity is limited to what H145.1-3 support.
+**Descriptive D145.2 (real known answer):** A129 hepatocyte Bmal1 knockout vs control (timed mouse, full day): liver
+coupling to the host of the other tissues, clocksync vs the three two-step pipelines vs the timed oracle; does each
+see the drop (0.967 -> 0.676 in clocksync)?
+
+**Reading.** Each passed H145 is a stated property of the method (partial coverage; robustness to shared non-clock
+structure; an explicit test of clock presence). A failed one is removed from the method's claims. D145.1 sets how
+"coupling" is presented: as a readout clocksync makes explicit, not one only it can compute, unless the data say
+otherwise. Code: `paper/exploratory/A145_two_step/`.
