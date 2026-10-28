@@ -1694,3 +1694,40 @@ clock, while the review's isolated rank-1 test was calibrated (0.040, 0.051). A1
   anchor readout in clocksync. Every anchored result is then rerun in roadmap phase 3, and A123 in phase 8. The PI
   confirms (Q13, 0.4). Otherwise the current readout stays, with the measured bias stated in METHOD.
 Code: `paper/exploratory/A155_anchor_self_inclusion/`.
+
+## A124 (2026-10-28, written before any download of GSE106800; roadmap 6.1, from WP8): does the readout detect misalignment imposed on human muscle?
+
+**Why:** the review asks for a pre-specified human perturbation positive. A simulated night shift is a within-subject,
+imposed misalignment.
+**Data:** Wefers et al. 2018, GSE106800. 14 healthy men, crossover: a control protocol, and a protocol with the
+behavioural (sleep, activity, meal) cycle shifted by 12 h. Vastus lateralis biopsies at 2 clock times per condition
+(Methods 08:00 and 20:00; Results 07:00 and 19:00, an unexplained discrepancy). Affymetrix HuGene 2.1 ST, public series
+matrix (47 arrays after the authors' QC). Only the processed matrix is used.
+- **Data rule:** fixed in a dated note after the inventory and before any clock readout: probe-to-gene mapping, the
+  arrays per subject, and subjects with all 4 biopsies.
+- **Estimator (the A115 / A78 estimator, A53 array convention):**
+  - log2 intensity, equal gene weights;
+  - core state = GTEx 14-gene waveform; cue state and locked state = the A81b sets (`figure_3/output/gtex_cues/a81b_sets.csv`)
+    restricted to the genes present;
+  - one projector per gene set over all arrays, states centred within subject;
+  - per condition, the core-cue offset = arg E[c_core c_cue*] over that condition's arrays (`S.ccorr`); the core-locked
+    offset likewise.
+- **H124.1 (primary):** the core-cue offset changes between control and misalignment.
+  - Statistic: |Δ| (h, wrapped) = |offset(misaligned) − offset(control)|.
+  - Null: condition labels swapped within subject (all 2^n assignments if n <= 16, else 10,000).
+  - Two-sided p < 0.05.
+- **H124.2 (specificity, same permutations):** |Δ core-cue| − |Δ core-locked| > 0, one-sided p < 0.05.
+- Holm over H124.1-2.
+- **MDE:** from the null distribution of |Δ|, reported.
+- **Descriptive:**
+  - Δ core-cue and Δ core-locked with bootstrap intervals (subjects resampled, 2,000);
+  - the core-state difference between the two biopsy times per condition (does the muscle core clock follow the shifted
+    behaviour?);
+  - the same for the cue state;
+  - coherence per condition.
+- **Reading:**
+  - H124.1 passes -> the readout detects imposed misalignment in human tissue (the human perturbation positive), and
+    the WP8 cue analyses (A126-A127) can become claims.
+  - H124.1 fails -> "not detected at n = 14, MDE ...". A126-A127 stay descriptive.
+  - H124.2 fails with H124.1 passing -> the change is not specific to cue-driven genes.
+Code: `paper/exploratory/A124_night_shift/`.
