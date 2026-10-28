@@ -1254,3 +1254,27 @@ plane's rotation sense, offsets relative to the anchors' circular mean; orderers
 features; CYCLOPS with the template hyperparameters (80 models; not reduced, the published pipeline is what is
 tested); a failed two-step fit is excluded from the pairing with a sensitivity counting it as a clocksync win.
 (iii) D145.2 (real data) was computed in the code check; it is reported from the full run unchanged.
+
+## A147 (2026-10-28, method; written before any simulation of it; PI decision Q9 c): validation of the pull-versus-order readout
+
+**Readouts (as A132b, made general).** Against a reference group (fast deaths), for every compartment pair with >= 20
+shared donors in both groups: the signed deviation of the pair phase arg E[z_a conj z_b] from its nearest pole (0 or
+12 h). *Order* = Spearman of the group's against the reference's signed deviations over pairs (null: tissue labels
+permuted in the group, 1,000). *Shrink ratio* = median of group / reference deviation over same-pole pairs with
+|reference deviation| >= 1 h (1 = no pull, 0 = full pull). Known at registration: A132b values (ventilated post-mortem
+order 0.649, ratio 0.58; organ donors 0.257 / 0.40 at n 79, 0.095 / -0.01 at n 298; Hardy 4 0.788 / 0.77) and the A133
+grid (raw Fisher-Lee rho 0.70 at displacement fraction 0.44, n 79).
+**Simulator:** the A133 generative model (`paper/exploratory/A133_axial_decomposition/scripts/compute_v133_sims.py`:
+fast-death offsets, ventilated amplitudes and noise, 12 tissues), 200 replicates per cell, n in {79, 298}:
+- pull arms: common-direction displacement fraction f in {0, 0.2, 0.44, 0.8}, offsets intact;
+- loss arms: a share q in {0.25, 0.5, 1} of tissues get offsets redrawn uniformly (relations lost), f in {0, 0.44}.
+- **V147.1 (order separates loss from pull):** AUC of *order* between the pull arm f = 0.44 and the loss arm q = 0.5,
+  f = 0 is >= 0.9 at n 79; and at f = 0.8 with offsets intact, order stays above the q = 0.5 median in >= 80 % of
+  replicates.
+- **V147.2 (shrink ratio tracks the pull):** median ratio at f = 0 within [0.85, 1.15], and Spearman of the cell
+  medians with f over the pull arms <= -0.9, at both n.
+- **Pass both:** a clocksync readout (`pull_order`, with a unit test) is added, and the Figure 3 "two modes of
+  perturbation" panel uses it with its validation; the A132b group values are reported as computed by the validated
+  readout (data unchanged, still post hoc). **Fail:** the readout stays descriptive in Extended Data.
+**D147 (descriptive):** all cells: order and ratio distributions, and the order null false-positive rate in the loss arm
+q = 1. Code: `paper/exploratory/A147_pull_order/`.
