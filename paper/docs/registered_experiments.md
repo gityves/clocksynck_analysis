@@ -1791,3 +1791,29 @@ Code: `paper/exploratory/A156_forced_desynchrony/`.
   sensitivity. This is fixed before the readout, unlike in A124.
 - **Cosinor (descriptive):** recorded clock time, 24 h period. BB0264 day-1 point 7 (no time) is dropped from the
   cosinor only.
+
+## A109 / A138 note (2026-10-28, roadmap 5.1-5.2, written after the independent review and before any responsive-gene readout): second specificity companion for H109.1 and H138.4
+
+**Why:** the pseudo-clock pool excludes glucocorticoid and immediate-early genes (review C2). A shared acute or GC pulse
+across organs (ventilated donors), or across the two samples of one surgery (TCGA), is therefore not in the null.
+`clocksync` now provides responsive-gene pseudo sets (expression-matched draws from GC targets and immediate-early
+genes, `pseudo_waveforms(kind="responsive")`) and `drop_genes`. These readouts are secondary. They do not change the
+registered verdicts, and they qualify the readings.
+- **H109.1-R:**
+  - In ventilated donors, C_clock exceeds the median of 200 responsive-gene sets carrying the GTEx waveform loadings.
+    One-sided add-one p < 0.05.
+  - Sensitivity: H109.1 with PER1 and PER2 dropped, against the registered matched pseudo-clock null.
+- **H138.4-R:** tumour-normal pairing statistic vs 200 responsive-gene sets, with the same rule. Plus:
+  - (i) PER1/PER2-free pairing vs the matched pseudo null;
+  - (ii) an immediate-early positive-control set (FOS, FOSB, JUN, EGR1, ATF3, IER2, DUSP1, NR4A1), whose pairing
+    shows how strongly shared surgery stress pairs the two samples;
+  - (iii) the pairing null permuted within cancer x tissue source site (and within plate where annotated) instead of
+    within cancer.
+- Holm over H109.1-R and H138.4-R (secondary family).
+- **Responsive pool:** small (about 27 genes present per dataset), so responsive sets overlap heavily. The overlap (mean
+  Jaccard) is reported.
+- **Reading:**
+  - C_clock (pairing) above the responsive sets -> the shared state is not a GC or immediate-early response.
+  - Not above -> "clock-gene-shaped shared state, not separable from a shared acute response".
+  - A drop in the H138.4 pairing under TSS/plate stratification -> part of the pairing is batch.
+Code: the A109 and A138 script folders (new `*_responsive.py`).
