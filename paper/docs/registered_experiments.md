@@ -1430,3 +1430,27 @@ patient (same cells and labels, recomputed from the counts), 200 expression-matc
 weights; 95th percentile of the pooled sets. (v) Bootstrap (D149.1, D149.2): patients resampled within cohort,
 statistic recomputed, excess = statistic - the unresampled null mean; I^2 from the per-cancer excess and its bootstrap
 SE. (vi) Seed stream 149.
+
+**A146 note 2 (2026-10-28; PI request; written after part 1 was scored and before any of the quantities below was
+computed): origin of the recorded-time pattern in GSE233242 tumours.** Systemic cue tied to a shared wake time vs
+procedural or scheduling confounds. Data and programs as part 1 (42 patients, tumour TPM, recorded resection time
+08-18 h; GEO records only age and subtype). Secondary family "A146 checks", Holm over H146.4-H146.5; the rest is
+descriptive. Permutations: the part 1 stream (seed 146, 10,000).
+- **H146.4 (systemic glucocorticoid cue, positive control of the wall-time reading):** glucocorticoid-response score
+  (mean z of log2 TPM+1: TSC22D3, FKBP5, DDIT4, ZBTB16, KLF9; PER1 left out, it is a clock gene of the internal-time
+  estimate) falls with recorded time (cortisol peaks after waking and declines over the day): t of the slope < 0,
+  one-sided permutation p. Normal tissue: descriptive.
+- **H146.5 (scheduling):** the part 1 omnibus S against recorded time with every program residualised on age and
+  subtype (dummies) stays > 0 (same permutations). Descriptive: Spearman of age, Kruskal-Wallis of subtype, and
+  Spearman of the T-cell and myeloid abundance scores (P7, P8) with resection hour.
+- **D146.2 (handling):** immediate-early score (FOS, FOSB, JUN, EGR1, ATF3, IER2) and hypoxia score (VEGFA, SLC2A1,
+  PGK1, CA9, ADM, BNIP3) against resection hour (t, permutation p); S with programs residualised on both.
+- **D146.3 (trend vs predicted phases):** observed S against S with the 10 predicted hours shuffled among programs
+  (10,000 random assignments): a generic monotone trend scores under any assignment, the predicted structure only
+  under the registered one. Plus S restricted to the immune-cell programs (P4-P8, P10) and to the others (P1-P3, P9).
+- **Reading:** H146.4 pass and H146.5 pass: a wall-time systemic cue is present in the same samples and scheduling by
+  age or subtype does not explain the pattern, consistent with a shared-wake-time systemic cue (fasting is not
+  separated: it is also tied to the hour). H146.4 fail: the positive control for a wall-time systemic signal is
+  absent (power stated), weakening that reading. H146.5 fail: scheduling explains part. D146.2 large: handling
+  artefact candidate. D146.3 shuffled assignments reaching the observed S: a generic trend, not the predicted phases.
+Code: `paper/exploratory/A146_tme_time/scripts/checks_part1.py`.
