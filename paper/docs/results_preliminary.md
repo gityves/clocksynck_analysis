@@ -1036,3 +1036,19 @@ Spearman 0.998, max difference 0.009 (467 rows differ in depth / cell counts bet
   Lung epithelial coupling is sensitive to ambient correction. Coverage: 5 of 24 gate-passing atlases. Brought to the PI
   before any Figure 2 wording change (registered).
 <!-- src: paper/exploratory/A150_atlas_specificity/output/{h150_1,per_family,per_compartment,d150_2,reproduction}.csv -->
+
+## A151 (scored 2026-10-28, secondary): tumour fibroblasts pair strongly with the patient's normal fibroblasts; clock specificity not determinable (correction breakdown in the pseudo sets)
+- **H151.1 PASS:** tumour vs own adjacent-normal fibroblasts, 98 patients / 17 cohorts: 0.860 vs null 0.504 +- 0.058
+  (MDE 0.650), p 1e-4, Holm 2e-4. Colorectal 0.864 (42, p 2e-4), lung 0.929 (24, p 1e-4). Endothelial companion: 0.984
+  vs 0.521 (103 / 15, p 1e-4); liver 0.837, lung 0.842.
+- **H151.2 FAIL:** 200 pseudo-clock sets pooled: median 1.013, q95 1.693; p 0.77. **Not interpretable as "non-clock"**:
+  the Poisson-corrected |correlation| exceeds 1 in 25 % of per-cohort pseudo values (up to 46 % in a cohort) and in
+  several clock values (e.g. 1.22, 1.06), i.e. the variance correction breaks down at fibroblast pseudobulk depths for
+  expression-matched genes, and the pooled pseudo distribution is driven by these values. The A149 / A138 estimability
+  rule (null mean <= 1) does not catch this for the pseudo sets.
+- **Reading:** a strong patient-specific pairing of tumour and normal-tissue stroma exists (fibroblasts and
+  endothelium); whether it is clock-specific cannot be decided with this statistic. A bounded comparison (e.g.
+  uncorrected |correlation| for clock and pseudo sets alike, or pseudo sets matched on depth-normalised counts and
+  Poisson-corrected variance) would be post hoc and needs PI approval. The same breakdown may have inflated the A149
+  pseudo-clock values (median 0.579); this is checked before A149's reading is used in text.
+<!-- src: paper/exploratory/A151_fibroblast_pairing/output/{tests,pooled,per_cohort,pseudo,power_nulls,units}.csv -->
