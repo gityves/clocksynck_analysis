@@ -833,3 +833,20 @@ Qiu 2024 mouse embryo atlas, host as H108.1 (late-window statistic reproduces H1
   rerun.
 - **Registered reading:** H121.1 fails, so the embryo panel goes to Extended Data (PI to confirm, below).
 <!-- src: paper/exploratory/A121_embryo_timing/output/{h121,frame_offsets,lineages,embryo_offset_boot}.csv -->
+
+## A139 (scored 2026-10-28, primary cell 08-18 h, n = 80, 100 replicates): gene-timing refit and flags fail; the E4 likelihood-ratio flag nearly calibrated
+Deviation (allowed by the registration's ordering note): the full grid (about 90 h) was not run; the primary cell
+decides V139.1 and V139.2, the rest of D139.3 is not computed (run stopped after the 400 primary tasks; cache kept).
+Implementation choices listed in `scripts/` docstrings (E-b simultaneous update with gauge fixing, bootstrap capped
+at 3 rounds; target coupling 0.8, offset +3 h).
+- **V139.1 FAIL.** Median absolute error, shifted / unshifted genes (limits 1.5 / 1.0 h): S1 (one gene +6 h, E-a)
+  1.05 / 0.89 h (passes); S3 (three genes, E-a) 1.88 / 1.12 h (fails both); SW (waveform wrong in every compartment,
+  E-b) 1.71 / 0.71 h (fails shifted). Against the gene-centred truth E4 can read: 0.77-1.00 h shifted.
+- **V139.2 FAIL.** False flags in S0 (no shift): bootstrap flag up to 0.15 per gene (E-a; 13 of 14 genes above the
+  bound) and 0.54 (E-b); power to flag a 6 h shift: S1 1.00, S3 0.67 (minimum gene), SW 0.99.
+- **E4 likelihood-ratio flag (descriptive):** false-flag rate 0.06 in S0 (95 % upper bound 0.115), power 1.00 in S1,
+  S3 and SW.
+- **Reading (registered):** both fail, so the conserved waveform stays an assumption, stated as such, and no per-gene
+  timing result is quoted as gene-specific. The likelihood-ratio flag is close to calibrated and fully powered here;
+  a future registered check could adopt it (not done now). No failed fits.
+<!-- src: paper/exploratory/A139_waveform_refit/output/{v139,d139_3,gene_level,failures}.csv -->
