@@ -1574,3 +1574,20 @@ strata and A17 learned anchors unchanged. A tissue enters if >= 15 donors have b
 - **Reading (PI):** pass -> residency carries lymphocyte coupling in heart / breast. A positive but non-significant
   difference stays descriptive. A negative difference (circulating > resident) in heart would point to intravascular
   cells following the body's clock. Secondary family. Code: `paper/exploratory/A152_lymphocyte_residency/`.
+
+## A17 note: anchors relearned after the class-rule fix (2026-10-28, PI; dated data-rule fix, before any refit under the new tables is read)
+
+**Why:** commits 281bb26 and 588d37d fixed the cell-class rules: case-insensitive "T cell" / "B cell" put mast, goblet,
+tuft, myofibroblast and club cells into T_other / B / heart lymphocyte. New classes were added at the same time: heart
+mast / adipocyte / mesothelial, and melanocyte. Several classes also changed content, for example colon:T_other
+16,444 -> 3,388 cells and ileum:T_other 24,091 -> 6,244. The frozen learned anchors of `common/anchors_a17.csv` were
+computed on the contaminated classes. A first patch added the new compartments as non-anchors and kept every frozen
+flag. That contradicts the learned rule, which selects whole families (an independent review found ia:mast unflagged
+while myeloid is an anchor family there). The patch is discarded, unread: no fit made under it was looked at.
+**Rule (unchanged code):** `extended_data/scripts/host_identity/compute_coherence.py` then `compute_anchors.py` are
+rerun on the fixed tables. The learning set, family scores, leave-one-study-out selection and the "< 3 -> no anchor"
+rule are as registered in A17 step 2. The relearned table replaces `common/anchors_a17.csv`, and the pre-fix table is
+kept as `common/anchors_a17_pre_classfix.csv`. The fixed stromal-vascular rule is unchanged apart from compartments that
+appear or disappear. Every result anchored on the A17 table is then rerun and reported old vs new, verdict changes
+first: the A17 healthy fits, the family summary, A150, the Figure 4 contrasts, A152 heart, cue_units (A85 / A122), and
+Tabula Sapiens rebuilt. The old values stay in the docs as superseded.
