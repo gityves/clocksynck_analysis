@@ -1348,3 +1348,39 @@ pool genes present.
   tested and does not explain the shared clock-gene state or the tumour-normal pairing. H109.1 can be worded "a
   clock-gene-shaped shared state, not a GC or immediate-early response"; "running clocks" still rests on H109.2.
 <!-- src: paper/exploratory/A109_coupling_nulls/output/responsive/{h109_1_responsive,reproduction_check,jaccard_responsive_sets}.csv; paper/exploratory/A138_cancer_estimability/output/responsive/{h138_4_responsive,holm_responsive,stratified_null,per_cancer}.csv -->
+
+## A157, A158 and the V25.5 prior baseline (scored 2026-10-28)
+
+**A157: V157.1 FAILS at the boundary.** Errors were calibrated first: median error 1.31 h for muscle, 1.11 h for adipose.
+500 replicates per design.
+- **Muscle:** JS median 0.33 [5-95 %: -0.83, 0.87], JS < 0 in 37.2 %. Fisher-Lee 0.71 [0.59, 0.80], > 0.5 in 99.6 %.
+  The muscle criteria pass.
+- **Adipose:** JS < 0 in exactly 5.0 % (25 of 500), against the registered "< 5 %". This part fails, so V157.1 fails.
+- **Reading, as registered:** muscle goes to Extended Data as a registered fail. The simulation shows the mechanism:
+  JS is unstable on the evenly spread muscle grid, and the observed -0.854 lies inside its range.
+- **Choices beyond the registration:** sample noise SD 1 h; the muscle waveform is GTEx without ARNTL, since the 13-gene
+  refit needs time of death.
+
+**A158: the gap is not estimator bias.**
+- **Registration correction (lead):** A129 / D145.2 are on Manella 2021 (hepatocyte Bmal1 KO, timed). The registration
+  wrongly named `jouffe2022_bmal1ko`, a whole-body KO sampled at one ZT, so the Manella design was simulated.
+- **Bias:** both estimators shrink the true change by about 9 % (slopes 0.91 and 0.92, bias +0.02 to +0.05). In
+  simulation clocksync's change is <= the oracle's (gap <= 0.014).
+- **The observed values** correspond to true changes of -0.32 to -0.33 (clocksync) and -0.20 (oracle).
+- **Anchor and truncation:** the liver as anchor has no effect (coupling is read on the leave-one-out host), and no KO
+  fit reaches the z2 floor.
+- **Reading:** the larger real-data clocksync drop (-0.293 vs -0.186) comes from the data, not from estimator bias. For
+  example, the control coupling differs: clocksync 0.969 vs oracle 0.934. Methods sentence: "both estimators are
+  conservative by about 9 % in simulation".
+
+**V25.5 prior-only baseline (42 patients, median absolute error):**
+
+| predictor | error (h) |
+|---|---|
+| method, error-minimising offset (as published) | 1.07 |
+| method, circular mean set to 13:00 (no truth) | 1.42 |
+| always 13:00 | 2.10 |
+| best constant (uses truth) | 1.67 |
+
+The recorded-hour SD is 2.17 h. The method beats even the oracle-favoured constant.
+<!-- src: paper/exploratory/A157_js_grid/output/a157_summary.csv; A158_bmal1_bias/output/{a158_bias,a158_reproduce}.csv; A25_prior_baseline/output/prior_baseline.csv -->
