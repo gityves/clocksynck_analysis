@@ -1315,3 +1315,40 @@ has not been computed).
 - **Reading:** pass: the bulk tumour-normal match is carried mainly by non-malignant cells, and Figure 5 says so.
   Fail with D near 0 and the MDE small: the match does not depend on purity, so malignant cells contribute to it.
   Fail with a large MDE: not estimable at this design.
+
+## A148 (2026-10-28, written after A115 was scored and before any decomposition readout; PI request): how much of the psoriatic clock delay does the keratinocyte state mix explain, step by step?
+
+**Known at registration:** A115 (uninvolved minus healthy core-cue offset -1.81 h; uninvolved more differentiated,
+Hedges g +0.47); the paired lesional delay (A78: -1.70 h core-cue, core -1.43 h); archive A61/A69 (single-cell state
+mix predicts -0.20 to -0.36 h with healthy phases, up to -0.5 to -1.0 h with coarse states); A63/A64 (healthy
+keratinocyte clock advances along differentiation: cycling ~0, basal +0.6 h, most differentiated +1.4-1.6 h). No
+deconvolution of the A115 bulk data has been done.
+**Data:** the four A115 psoriasis series with healthy controls (`skin_lesional/processed_a115/`, lesional rows from the
+original processed matrices), one sample per person per group.
+**Estimator.**
+1. Per sample, keratinocyte state shares by non-negative least squares on CPM: reference profiles = the A63/A65 bin
+   pseudobulks (kc_cycling, kc_d1-d4; `pseudobulk_bins_both.csv`, healthy donors) plus non-keratinocyte references
+   (fibroblast, endothelial, immune, melanocyte) from the same single-cell sources; genes = the 500 most bin-variable
+   genes excluding clock, cue and locked genes. Shares renormalised within keratinocytes.
+2. Composition-only predicted keratinocyte clock state of a group, as A69: sum_k g_k z_k, g_k = mean share of bin k x
+   the bin's clock-gene gain (A60 projector), z_k = the A63 healthy per-bin complex phase and amplitude.
+3. Predicted step offset between groups A and B: arg(sum g_k^A z_k / sum g_k^B z_k) in hours; per series, pooled with
+   the A54 weights (arg of the weighted sum of unit complex ratios).
+4. Interval: 2,000 resamples of samples within group and series, each paired with a draw from the A63 donor bootstrap
+   (500 draws, recycled).
+**Acceptance check (before reading any predicted offset):** the deconvolved lesional-minus-uninvolved shares move as in
+single cell (A61): cycling share up and most-differentiated share down, pooled. If not, A148 stops (deconvolution not
+valid) and is reported as such.
+- **H148.1:** predicted lesional-minus-uninvolved offset < 0 (composition predicts a delay); one-sided, interval upper
+  bound < 0.
+- **H148.2:** predicted uninvolved-minus-healthy offset > 0 (composition predicts an advance, opposite to the observed
+  -1.81 h); one-sided, interval lower bound > 0.
+- **D148 (descriptive):** share explained per step, predicted / observed (observed: A115 within-group offsets on the
+  same samples, lesional-uninvolved and uninvolved-healthy), residual = observed minus predicted; per-series values;
+  shares per bin per group.
+- **Family:** secondary; Holm over H148.1-2.
+- **Reading:** H148.1 and H148.2 pass: the state mix explains part of the lesional step but cannot explain the
+  uninvolved shift (wrong sign), which then needs another cause (site or batch of the healthy controls, or a trait
+  mechanism outside keratinocyte differentiation). H148.2 fails with a negative prediction: the uninvolved shift is
+  partly a differentiation effect, contrary to the transit model's sign.
+Code: `paper/exploratory/A148_psoriasis_decomposition/`.
