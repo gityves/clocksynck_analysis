@@ -6,6 +6,16 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 
 ## Open
 
+### Q14 (2026-10-28): COARSE ordering choices (bone marrow, muscle)
+The data audit found three ordering choices in the shared COARSE rules. They are not bugs of the "T cell" kind:
+- "granulocyte monocyte progenitor cell" (21,500 cells) goes to `monocyte`;
+- "mesenchymal stem cell" (28,275) and "skeletal muscle satellite stem cell" (13,531) go to `progenitor`, because
+  progenitor comes before fibroblast_stromal and muscle.
+- **Question:** keep them, or move GMP to progenitor and the two stem labels to fibroblast_stromal / muscle?
+- **Default:** keep (the archive A9 choice). Changing them would rebuild organ_bone_marrow and organ_muscle and
+  relearn their anchors.
+- **On hold:** nothing. If you change them, I rebuild before phase 3.
+
 ### Q13 (2026-10-28): roadmap phase 0 decisions (ROADMAP_2026-10-28.md)
 I am going ahead with phases 1, 2 and 4 (code, data integrity, simulations) and the phase 6 scouts. None of them
 depends on the answers below. The defaults in brackets apply when phase 3 starts, unless you say otherwise.

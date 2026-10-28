@@ -41,7 +41,8 @@ def one(name: str) -> dict:
     limit_threads(1)
     warnings.filterwarnings("ignore")
     try:
-        old, _ = data.load(name, allow_stale=True)
+        prev = PSEUDOBULK / "pre_stamp" / f"{name}.parquet"  # a rerun compares with the table before the first stamp
+        old = pd.read_parquet(prev) if prev.exists() else data.load(name, allow_stale=True)[0]
         pb, donors = data._builder(name).build()
         a, b = summary(old), summary(pb)
         d = a.join(b, how="outer", lsuffix="_old", rsuffix="_new").fillna(0)
@@ -72,8 +73,8 @@ def main(argv=None):
     C.to_csv(LOG / "rebuild_and_stamp.csv", index=False)
     S = pd.DataFrame([{k: v for k, v in r.items() if k != "trace"} for r in res])
     with open(LOG / "rebuild_and_stamp.md", "w") as fh:
-        fh.write("# Rebuild and stamp (roadmap 2.1)\n\n" + S.to_markdown(index=False) + "\n\n")
-        fh.write("## Changed compartments\n\n" + (C.to_markdown(index=False) if len(C) else "none") + "\n\n")
+        fh.write("# Rebuild and stamp (roadmap 2.1)\n\n```\n" + S.to_string(index=False) + "\n```\n\n")
+        fh.write("## Changed compartments\n\n" + ("```\n" + C.to_string(index=False) + "\n```" if len(C) else "none") + "\n\n")
         for r in res:
             if "trace" in r:
                 fh.write(f"## {r['name']} failed\n\n```\n{r['trace']}\n```\n\n")

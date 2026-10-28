@@ -1195,3 +1195,29 @@ Truth (iii) is noisy. The estimate's gap to it is mostly truth noise plus one ti
 - **Reading:** against the disjoint truth, the offsets sit near what truth (iii) noise allows. The amplitudes (0.965)
   are robust. For the Figure 1 legend: show both truths, the noise ceiling and the Whole Blood outlier.
 <!-- src: paper/exploratory/A123_working_hours/output/a123c/diag/{bootstrap_truth,split_half,residuals,construction_checks}.csv -->
+
+### 2026-10-28, roadmap phases 1-2: code and data integrity (no result changes)
+
+- **clocksync (commit e89defd in clocksync/):** every addition is opt-in.
+  - flagged and uncorrected ccorr;
+  - responsive-gene pseudo sets and `drop_genes`;
+  - debiased z2 / coupling with `boundary_type`;
+  - per-arm host gate in `contrast`;
+  - bootstrap failure counts;
+  - Hartung-Knapp `meta`;
+  - lymphatic excluded from `suggest_anchors`;
+  - below-paper-setting warnings.
+  A regression check shows the defaults bit-identical on gate, fit, contrast, coherence, paired, ccorr, meta and
+  pseudo_waveforms. 47 tests pass.
+- **Rule-version stamp:** stored tables carry it (`data.save`). `load` refuses stale tables and warns on legacy
+  fallbacks.
+- **Legacy audit:** 27 legacy-loaded A17 datasets. Only kidney_sc carried the "T cell" trap: 103 mast cells went to
+  kidney:T (0.9 %). It is rebuilt.
+- **Other rule fixes:** a COARSE substring trap was fixed: "basophil" matched "basophilic erythroblast". No compartment
+  changes, because those cells do not reach the table thresholds.
+- **Rebuild and stamp:** all 48 A17 tables were rebuilt under the current rules and stamped. No compartment changed
+  beyond the fixes above (`results/logs/rebuild_and_stamp.md`), so the relearned anchors stand.
+- **Tabula Sapiens:** unchanged under the new rules (the mast / goblet / tuft labels never reached 5 donors).
+- **A22 stratum artefact:** besides V17.2, which was already recomputed, no cited coherence was uncentred.
+- **Open, PI:** COARSE ordering choices remain: "granulocyte monocyte progenitor cell" goes to monocyte, and
+  "mesenchymal stem cell" and "satellite stem cell" go to progenitor (Q14).
