@@ -1221,3 +1221,16 @@ Truth (iii) is noisy. The estimate's gap to it is mostly truth noise plus one ti
 - **A22 stratum artefact:** besides V17.2, which was already recomputed, no cited coherence was uncentred.
 - **Open, PI:** COARSE ordering choices remain: "granulocyte monocyte progenitor cell" goes to monocyte, and
   "mesenchymal stem cell" and "satellite stem cell" go to progenitor (Q14).
+
+### 2026-10-28, A147 post hoc: reference group at the real fast-death size (244)
+
+Same simulator and seeds, with the reference group drawn at n 244 instead of the group's n.
+- **The shrink ratio at f = 0 is no longer biased:** n 79 gives 0.892, inside [0.85, 1.15] (registered run 0.809). n 298
+  gives 0.911.
+- **The order criterion V147.1b now misses at n 79:** 0.755 vs >= 0.80 (registered run 0.805, a pass). AUC 0.985 still
+  passes.
+- **Overall:** still FAIL (V147.1 fails at n 79).
+- **Reading:** both n-79 criteria sit near their thresholds, so the run-to-run Monte Carlo noise at 200 replicates
+  decides them. The readout works at n 298 under either reference size. Extended Data, as already decided, with this
+  sensitivity stated.
+<!-- src: paper/exploratory/A147_pull_order/output/posthoc_nref244/v147.csv; output/v147.csv -->
