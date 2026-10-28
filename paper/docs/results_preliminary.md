@@ -935,3 +935,13 @@ H148.1-2 not scored.
   uninvolved skin is more differentiated than healthy (g +0.47), which the transit model predicts would run ahead,
   not 1.8 h behind.
 <!-- src: paper/exploratory/A148_psoriasis_decomposition/output/{acceptance,shares,genes_selected,acceptance_posthoc}.csv -->
+
+## Erratum to the A138 H138.8 reading (2026-10-28)
+The H138.8 reading said the shared tumour-normal component "does not run through the tumour stroma". That reads a
+failed test (H138.1: malignant coupling to the in-sample stromal host 0.076 [0.014, 0.139], MDE about 0.2) as a
+negative, which the statistics rule excludes. Corrected reading: the bulk match is carried in part by malignant cells
+(H138.8); whether it runs through the tumour stroma is not resolved at the single-cell designs. The sizes are not in
+conflict: a Poisson-corrected state correlation of 0.365 corresponds to about 0.13 of shared clock variance (0.365^2,
+back-of-envelope, different models and samples), inside the H138.1 interval and near the descriptive malignant
+host-coupled share (0.18, D138.1); H138.5 points the same way (0.58 vs null 0.44, p 0.069). The H138.1 and H138.5
+designs are underpowered for an effect of that size. Follow-up: pooled paired tumour/normal single-cell cohorts (A149).
