@@ -850,3 +850,18 @@ at 3 rounds; target coupling 0.8, offset +3 h).
   timing result is quoted as gene-specific. The likelihood-ratio flag is close to calibrated and fully powered here;
   a future registered check could adopt it (not done now). No failed fits.
 <!-- src: paper/exploratory/A139_waveform_refit/output/{v139,d139_3,gene_level,failures}.csv -->
+
+## A147 (scored 2026-10-28): pull-versus-order readout: order validated, shrink ratio biased at n 79 (overall FAIL)
+A133 generative model, 200 replicates per cell, seed 147, 0 failures.
+- **V147.1 PASS (order separates loss from pull, n 79):** AUC 0.977 between pull f 0.44 and loss q 0.5 (n 298: 1.000);
+  at f 0.8, 0.805 of replicates keep order above the loss median (n 298: 0.960). Order null calibrated: false-positive
+  rate 0.050-0.065 in the full-loss arm.
+- **V147.2 FAIL:** the shrink ratio falls monotonically with the pull (Spearman of cell medians with f -1.0 at both n;
+  medians 0.81, 0.65, 0.45, 0.14 at f 0, 0.2, 0.44, 0.8, n 79), but with no pull it reads 0.809 at n 79 (limit
+  [0.85, 1.15]; n 298: 0.929): biased low by noise in the reference deviations.
+- **Registered consequence:** the readout stays descriptive (Extended Data); not added to clocksync.
+- **Implementation choice that matters (not specified in the registration):** the simulated reference had the group's
+  n (79). The real fast-death reference is larger (244 in A132b), which would reduce the bias. A rerun with the real
+  reference size would be post hoc; parked for the PI. A draft `pull_order` function and tests are in
+  `paper/exploratory/A147_pull_order/scripts/`.
+<!-- src: paper/exploratory/A147_pull_order/output/{v147,d147,failures}.csv -->
