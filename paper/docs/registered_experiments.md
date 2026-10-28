@@ -1536,3 +1536,12 @@ Code: `paper/exploratory/A151_fibroblast_pairing/`.
 **A151 note 1 (2026-10-28, power step; nulls only).** Fibroblast pairs: 98 patients in 17 cohorts (colorectal 42 / 7,
 lung 24 / 3, others < 12 per type); null 0.504 +- 0.058, q95 0.601, MDE 0.650 (detectable excess about 0.15).
 Endothelial companion: 103 patients / 15 cohorts, null 0.521 +- 0.068, MDE 0.695. Scoring follows A150.
+
+**A149 note 5 / A151 note 2 (2026-10-28, POST HOC: written after H149.1 and H151.2 were scored; PI decision).** The
+Poisson-corrected |correlation| exceeds 1 for many pseudo-clock sets at stromal pseudobulk depths (A151), which makes
+the registered specificity comparison uninterpretable. Post hoc bounded comparison: the uncorrected |complex
+correlation| of the centred states, |sum za conj(zb)| / sqrt(sum |za|^2 sum |zb|^2), for the clock waveform and for the
+same 200 pseudo-clock sets per cohort (same seeds, patients and genome tables as the registered companions), pooled
+with the same weights; p = (1 + #{pseudo >= clock}) / 201. Applied to A149 S1 (malignant vs adjacent-normal epithelium)
+and A151 (fibroblasts; endothelial descriptive). Per-cohort clock and pseudo values are saved, with the share of
+corrected values above 1. Reported as post hoc; the registered verdicts stay as scored.
