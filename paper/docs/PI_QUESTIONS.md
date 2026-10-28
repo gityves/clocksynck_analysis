@@ -23,7 +23,10 @@ depends on the answers below. The defaults in brackets apply when phase 3 starts
   [default: Δc as main, raw c in the supplement]
 - **0.2 Eligibility rule for disease primaries:** a compartment enters only if its control Δc exceeds the pseudo q95 and
   the MDE on d* is <= 0.2, registered as A153 before the contrasts are rerun. [default: adopt]
-- **0.4 Anchor self-inclusion (C7):** decided after the simulation of roadmap 1.5. I will put its result here.
+- **0.4 Anchor self-inclusion (C7): A155 meets the decision rule.** Anchor amplitudes are inflated by 9-20 % with 3-4
+  anchors (4-6 % with 6), while offsets (<= 0.06 h), coupling (already leave-one-out) and the A123 map (r unchanged) are
+  unaffected. Proposal: leave-one-out becomes clocksync's anchor amplitude and offset readout (opt-in now, default
+  after your OK), and Figure 2 amplitude panels are rerun in phase 3. [default: adopt]
 - **0.6 Parked items:**
   - A136: register now? [default: I draft the registration for your review, not scored]
   - A147 reference-size sensitivity: [default: run, labelled post hoc, 2 min]

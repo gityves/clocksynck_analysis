@@ -1384,3 +1384,25 @@ pool genes present.
 
 The recorded-hour SD is 2.17 h. The method beats even the oracle-favoured constant.
 <!-- src: paper/exploratory/A157_js_grid/output/a157_summary.csv; A158_bmal1_bias/output/{a158_bias,a158_reproduce}.csv; A25_prior_baseline/output/prior_baseline.csv -->
+
+## A155 (scored 2026-10-28): reading anchors on a host that contains them inflates anchor amplitude at 3-4 anchors (decision rule met); offsets and the A123 map unaffected
+
+200 replicates per cell. Readout (a) is the current full host; readout (b) is the leave-one-out host for anchors.
+- **Amplitude:** the anchor amplitude bias under (a) (mean absolute, % of |z|) depends on the number of anchors:
+
+  | anchors | bulk | single cell |
+  |---|---|---|
+  | 3 | 13.0-13.6 % | 18.2-19.6 % |
+  | 4 | 9.0-9.1 % | 12.1-14.5 % |
+  | 6 | 3.6-3.9 % | 4.6-5.8 % |
+  | 10 | 1.5-1.9 % | 1.7-2.5 % |
+
+- **Offset:** bias <= 0.06 h everywhere.
+- **A123-like design** (40 anchors, n 111): offset r 0.9824 under both readouts (change -3e-6); amplitude r 0.9927 (change
+  -1e-6).
+- **Decision rule (registered):** met, since amplitude bias exceeds 5 % at typical designs (m 3-6). Leave-one-out becomes
+  the anchor amplitude and offset readout in clocksync, pending PI confirmation (Q13, 0.4).
+  - Coupling is already read on the leave-one-out host, so coupling results are unaffected.
+  - Affected: anchor relative amplitudes (Figure 2 amplitude panels, anchor-vs-target amplitude comparisons).
+  - A123 needs no rerun.
+<!-- src: paper/exploratory/A155_anchor_self_inclusion/output/{decision,summary_a123like,summary_bias}.csv -->
