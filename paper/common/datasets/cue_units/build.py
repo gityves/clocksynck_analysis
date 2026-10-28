@@ -33,8 +33,8 @@ ATLASES = ["lung_hlca", "breast_kumar", "breast_hbca", "colon_crc", "heart_globa
 MIN_CELLS, MIN_UNITS = 20, 20
 COARSE = (  # legacy/desync/common/run_atlas.py
     ("Treg", r"regulatory T"), ("CD4_T", r"CD4-positive"), ("CD8_T", r"CD8-positive"),
-    ("T_other", r"T cell|thymocyte"), ("NK", r"natural killer"), ("ILC", r"innate lymphoid"),
-    ("plasma", r"plasma cell|plasmablast"), ("B", r"B cell"), ("monocyte", r"monocyte"),
+    ("T_other", r"(?-i:\bT cell)|thymocyte"), ("NK", r"natural killer"), ("ILC", r"innate lymphoid"),
+    ("plasma", r"plasma cell|plasmablast"), ("B", r"(?-i:\bB cell)"), ("monocyte", r"monocyte"),
     ("macrophage_DC", r"macrophage|dendritic|phagocyte|Langerhans|microglial|myeloid cell|myeloid leukocyte"),
     ("mast", r"mast cell"), ("granulocyte", r"neutrophil|basophil|granulocyte"),
     ("progenitor", r"progenitor cell$|stem cell$|precursor|myeloid progenitor"), ("erythroid", r"erythro"),

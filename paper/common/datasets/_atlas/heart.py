@@ -25,7 +25,7 @@ CLASSES = (
     ("endothelial", r"endothelial|endocardial"),
     ("mural", r"pericyte|smooth muscle|mural"),
     ("myeloid", r"myeloid|macrophage|monocyte|dendritic"),
-    ("lymphocyte", r"lymphocyte|T cell|natural killer"),
+    ("lymphocyte", r"lymphocyte|(?-i:\bT cell)|natural killer"),
     ("neuron", r"neuron"),
 )
 LV = "heart left ventricle"
