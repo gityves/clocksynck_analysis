@@ -1295,3 +1295,23 @@ which motivates the control but does not enter it. Gene matching on `feature_nam
 - **Family:** secondary; Holm over H122.1-2.
 - **Reading:** both pass: Figure 2 panel, "immune cells take relatively more of their timing from body-wide signals".
   Otherwise Extended Data, described as a consequence of low host coupling.
+
+**A138 note 6 (2026-10-28; PI request; written after H138.1 and H138.4 were scored and before any purity readout):
+H138.8, does the tumour-normal clock match come from the non-malignant fraction?** Motivation: H138.4 passed (pooled
+0.365) while malignant host coupling was not shown (H138.1, 0.076) and malignant clock variance is mostly
+patient-specific (D138.1). If the bulk match comes from stroma and immune cells, it should weaken with tumour purity.
+Secondary, outside the A138 confirmatory family (registered after seeing H138.1/H138.4; the purity association itself
+has not been computed).
+- **Purity:** PanCanAtlas ABSOLUTE purity of the tumour aliquot (public GDC PanCanAtlas supplement, downloaded and
+  parsed only, PROVENANCE.md); fallback where missing: none (pairs without a call are dropped and counted). Sensitivity:
+  ESTIMATE-derived purity computed from the same counts (Yoshihara 2013 gene sets and formula), descriptive.
+- **Statistic:** within each H138.4 cancer, pairs split at the cancer's median purity; the H138.4 statistic
+  (`clocksync.paired.cross` on one projector per cancer, as note 3) computed separately in the low- and high-purity
+  halves; D = pooled(low) - pooled(high), pooled over cancers with weights n_pairs, cancers with >= 10 pairs per half.
+- **H138.8:** D > 0. Null: purity labels permuted within cancer (10,000), one-sided p = (1 + #{D_null >= D}) / 10,001.
+- **Descriptive:** per-cancer D; pair-level association (Spearman of purity with the pair's contribution
+  Re(z_T conj z_N e^{-i theta_c}) / (sd_T sd_N), theta_c the cancer's pooled phase); the ESTIMATE sensitivity; the
+  null SD and MDE of D, reported with the result.
+- **Reading:** pass: the bulk tumour-normal match is carried mainly by non-malignant cells, and Figure 5 says so.
+  Fail with D near 0 and the MDE small: the match does not depend on purity, so malignant cells contribute to it.
+  Fail with a large MDE: not estimable at this design.
