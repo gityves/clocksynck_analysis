@@ -1845,3 +1845,34 @@ true coupling lowered from its Alb-Cre value to values {0.5, 0.6, 0.7, 0.8} x co
   the liver being an anchor or not, and of the KO liver's lower amplitude on the truncation (z2 floor).
 - **Descriptive:** the true change at which each estimator reproduces the observed values.
 - **Reading:** states which estimator is biased and why. It is a sentence in Methods, not a test.
+
+## A159 (2026-10-28, written after A150 and A155 were scored and before any pseudo-gene fit of the atlases below; roadmap 3.3, Q13 defaults 0.1-0.2): clock-specific coupling for every healthy atlas, the reported Δc readout, and the eligibility table for disease primaries
+
+**Why:** A150 found that raw coupling is not clock-pure (pseudo-clock mean 0.249 vs clock 0.404, 5 atlases), and that
+lymphocyte, myeloid and mural coupling is not clock-specific. Under the Q13 defaults, the paper reports Δc = c − pseudo
+median, and disease primaries are restricted to compartments with clock-specific coupling in controls (0.2).
+**Data:** every gate-passing healthy A17 atlas, and the control arm of every Figure 4 contrast, for which a genome-wide
+table at the A17 rows can be built from data on disk (`atlas_wg`, Census group pseudobulks, `_atlas/genome.py`).
+- **Row check:** before any readout, the clock-gene columns of the genome-wide table must reproduce the A17 table rows
+  exactly (donors, compartments, counts). Atlases that fail or cannot be built are listed and not covered.
+- **Anchors:** the relearned A17 table (2026-10-28). Code: current clocksync, `anchor_readout="loo"` (Q13 0.4 default).
+- **Fits:** per atlas, 200 expression-matched pseudo-clock waveforms and 200 responsive-gene waveforms
+  (`pseudo_waveforms(kind="matched"|"responsive")`, matched on mean log fraction over the atlas rows). Each gets the full
+  anchored fit (`fit(gate=False)`, point estimates), as A150 part 1.
+- **H159.1 (replication of H150.1 on new atlases):** over the covered atlases not in A150, the mean anchored coupling
+  under the clock waveform exceeds the same mean under the matched sets (set j pooled across atlases), with
+  p = (1 + #{pseudo >= clock}) / 201.
+- **H159.2:** over the same atlases, the pooled stromal-vascular coupling (families fibroblast_stromal and endothelial,
+  compartment mean) exceeds its matched-pseudo q95, by the same rule.
+- Holm over H159.1-2.
+- **D159.1 (the deliverable table):** per atlas x compartment:
+  - c_clock, the matched median and q95, the responsive median and q95;
+  - Δc = c_clock − matched median;
+  - flag `clock_specific` = c_clock > matched q95 AND c_clock > responsive q95.
+  For contrast control arms, the same per compartment. Per family: median Δc, and the share of clock-specific
+  compartments.
+- **Reading:**
+  - H159.1-2 pass -> the A150 result generalises, and Figure 2 reports Δc with families ranked on it.
+  - D159.1 is the eligibility table that A153 (disease contrasts) uses: a compartment enters as a primary only if
+    clock-specific in the control arm, and the MDE on d* is <= 0.2.
+Code: `paper/exploratory/A159_specific_coupling/`.
