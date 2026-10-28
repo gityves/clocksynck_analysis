@@ -879,3 +879,29 @@ A85 reproduced exactly (immune 0.182, structural 0.095, difference +0.087, p 0.0
   gene set in classes with a small host loading). The Figure 2 immune panel is dropped. A146's reading no longer
   cites A85 as support for "immune cells lean on body-wide cues".
 <!-- src: paper/exploratory/A122_cue_controls/output/{reproduction,h122,per_atlas,depth,composition,pseudo}.csv -->
+
+## A145 (scored 2026-10-28): two-step orderer pipelines recover coupling nearly as well as clocksync; no registered advantage survives Holm
+Simulation (14 clock genes, 100 donors, 4 anchors, 5 targets with c 0-1), 30 replicates per arm, 0 orderer failures;
+CYCLOPS with the 80-model template. Coupling MAE per method (clocksync / CHIRAL / CYCLOPS / CoFE / timed oracle):
+| arm | clocksync | CHIRAL | CYCLOPS | CoFE | oracle |
+|---|---|---|---|---|---|
+| F full day | 0.044 | 0.046 | 0.055 | 0.047 | 0.034 |
+| W 08-18 h | 0.060 | 0.097 | 0.074 | 0.206 | 0.048 |
+| S_small (shared factor 0.066 of plane variance) | 0.117 | 0.115 | 0.122 | 0.117 | 0.086 |
+| S_large (0.22) | 0.239 | 0.234 | 0.278 | 0.258 | 0.174 |
+- **H145.1 (working hours) FAIL after Holm:** clocksync 0.060 vs best two-step (CYCLOPS) 0.074; clocksync better in
+  21 of 30 replicates, sign-test p 0.021, Holm 0.064. Offsets in W: median error 0.14 h (clocksync) vs 0.25-0.34 h.
+- **H145.2 (shared factor) FAIL:** 0.239 vs CHIRAL 0.234 (13 of 30), p 0.82.
+- **H145.3 (no clock) FAIL:** clocksync's gate passed in 0.133 of no-clock replicates (4 of 30), and its false-claim
+  share (gate pass and c > 0.2) was 0.127 of targets, against CoFE two-step 0.06 (CHIRAL 0.10, CYCLOPS 0.15); p 0.99.
+- **D145.1 (full day):** all pipelines equivalent (Spearman with true c 0.96-0.98; offset circular r 0.998).
+- **D145.2 (real known answer, Bmal1 liver):** every pipeline sees the coupling drop; clocksync -0.293 (A111 reference
+  -0.291), timed oracle -0.186, CYCLOPS -0.137, CHIRAL -0.101, CoFE -0.092.
+- **Reading (registered):** coupling, offsets and amplitudes are recoverable by a two-step orderer pipeline when
+  sampling covers the day, and nearly so under working hours in this clock-gene-only simulation; clocksync's
+  specificity claims H145.1-3 are not supported (H145.1 nominal only). Two cautions for the method text: (i) the gate
+  passed 4 of 30 times with a shared non-clock factor and no clock (nominal 0.05; binomial p about 0.06), the same
+  sensitivity A140 showed in the other direction; (ii) here orderers see only clock genes, while A123/A140 show that
+  genome-scale orderers fail under working hours or with strong non-clock structure, so the advantage on real data
+  rests on A123 (CHIRAL r -0.17 vs 0.945) and A140, not on A145.
+<!-- src: paper/exploratory/A145_two_step/output/{h145,d145_1,d145_2,failures}.csv -->
