@@ -865,3 +865,17 @@ A133 generative model, 200 replicates per cell, seed 147, 0 failures.
   reference size would be post hoc; parked for the PI. A draft `pull_order` function and tests are in
   `paper/exploratory/A147_pull_order/scripts/`.
 <!-- src: paper/exploratory/A147_pull_order/output/{v147,d147,failures}.csv -->
+
+## A122 (scored 2026-10-28): the A85 immune cue-following excess is not specific to cue genes (H122.1, H122.2 fail)
+A85 reproduced exactly (immune 0.182, structural 0.095, difference +0.087, p 0.002; 70 classes, 9 atlases).
+- **H122.1 FAIL:** with the locked set the immune-minus-structural difference is +0.080 (immune 0.217, structural
+  0.137); cue minus locked +0.007 [-0.090, 0.098], p 0.44 (atlas bootstrap), Holm 0.55.
+- **H122.2 FAIL:** 200 expression-matched pseudo-cue sets give immune-minus-structural differences with median 0.072,
+  95th percentile 0.114 (observed 0.087), p 0.27, Holm 0.55.
+- **Descriptive:** the cue difference is positive in all 8 atlases with both classes; cue minus locked is positive in
+  5, negative in 3. The index falls with pseudobulk depth across classes (Spearman -0.31 for both sets); adjusting for
+  depth reduces the immune coefficient from 0.128 to 0.106 (cue) and 0.098 to 0.072 (locked).
+- **Registered consequence:** Extended Data, described as a consequence of low host coupling (the index rises for any
+  gene set in classes with a small host loading). The Figure 2 immune panel is dropped. A146's reading no longer
+  cites A85 as support for "immune cells lean on body-wide cues".
+<!-- src: paper/exploratory/A122_cue_controls/output/{reproduction,h122,per_atlas,depth,composition,pseudo}.csv -->
