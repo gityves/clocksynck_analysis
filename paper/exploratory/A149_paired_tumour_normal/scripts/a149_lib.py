@@ -35,10 +35,10 @@ SEED = 149
 MIN_PAIRED, MIN_HOST = 4, 5
 MAL, NORM, EPI = q.MAL, q.NORM, q.EPI
 STROMA = q.STROMA
-NEW = {"GSE164789": "lung", "GSE229253": "lung", "GSE333596": "lung", "GSE153935": "lung", "GSE310916": "lung",
-       "GSE200972": "lung", "GSE117570": "lung", "GSE206785": "gastric", "GSE150290": "gastric", "GSE167297": "gastric",
+NEW = {"GSE164789": "lung", "GSE229253": "lung", "GSE153935": "lung", "GSE310916": "lung",
+       "GSE200972": "lung", "GSE117570": "lung", "GSE150290": "gastric", "GSE167297": "gastric",
        "GSE199654": "esophageal", "GSE160269": "esophageal", "GSE178481": "kidney", "GSE242299": "kidney",
-       "GSE282701": "liver", "GSE242889": "liver", "GSE290298": "liver", "GSE293189": "bladder", "GSE144240": "skin",
+       "GSE282701": "liver", "GSE242889": "liver", "GSE293189": "bladder", "GSE144240": "skin",
        "GSE193337": "prostate", "GSE176031": "prostate"}
 CANCER_ALIAS = {"lung cancer": "lung", "colorectal cancer": "colorectal", "breast cancer": "breast",
                 "esophageal cancer": "esophageal", "bladder cancer": "bladder", "liver/biliary cancer": "liver",

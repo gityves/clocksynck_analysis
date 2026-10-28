@@ -1454,3 +1454,14 @@ descriptive. Permutations: the part 1 stream (seed 146, 10,000).
   absent (power stated), weakening that reading. H146.5 fail: scheduling explains part. D146.2 large: handling
   artefact candidate. D146.3 shuffled assignments reaching the observed S: a generic trend, not the predicted phases.
 Code: `paper/exploratory/A146_tme_time/scripts/checks_part1.py`.
+
+**A149 note 3 (2026-10-28, after the cohort builds and before any A149 statistic or null): build outcomes.**
+Dropped by the note 1 integer rule: GSE206785 and GSE290298 (log-normalised matrices only). Dropped as a data rule:
+GSE333596 (S1/S3 tumour and normal libraries are not separable; for the remaining A/B libraries GEO does not state
+whether A and B are different patients or two regions of one patient, so the patient unit is not identifiable).
+Kept with their builder notes: GSE199654 has 8 pairs (not 13: the authors' epithelial matrix holds 59 adjacent-normal
+cells); GSE293189 8 pairs (paragangliomas "other"); GSE178481 tumour thrombus "other" and one treated patient
+excluded by the treatment rule; GSE160269 CD45- libraries only enter (the builder drops CD45+-sorted samples).
+Several cohorts (GSE242299, GSE176031, GSE153935, GSE293189) sit largely below the unchanged median UMI >= 1,500
+sample rule and may contribute few or no patients. Build scripts:
+`paper/exploratory/A149_paired_tumour_normal/scripts/build_geo_a149_part{1,2}.py`.
