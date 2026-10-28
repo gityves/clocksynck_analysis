@@ -1278,3 +1278,20 @@ fast-death offsets, ventilated amplitudes and noise, 12 tissues), 200 replicates
   readout (data unchanged, still post hoc). **Fail:** the readout stays descriptive in Extended Data.
 **D147 (descriptive):** all cells: order and ratio distributions, and the order null false-positive rate in the loss arm
 q = 1. Code: `paper/exploratory/A147_pull_order/`.
+
+## A122 (2026-10-28, written before any readout below; transcribed from the WP7 plan): controls for the corrected A85 immune cue-following result
+
+**Known at registration:** A85 corrected: immune cue-following index 0.182 vs structural 0.095, difference +0.087,
+one-sided p 0.002 (`paper/results/figure_5/output/cancer/`). Immune classes have a small host loading, so the index
+|b| / (|a| + |b|) can rise mechanically. A146 (2026-10-27) suggests tumour immune programs follow the hospital clock,
+which motivates the control but does not enter it. Gene matching on `feature_name`.
+- **H122.1 (locked-set control, primary):** rerun A85 with the A81b locked set in place of the cue set. Statistic:
+  (immune minus structural, cue index) minus (immune minus structural, locked index), pooled over atlases as A85.
+  Pass: > 0, one-sided p < 0.05 (atlas bootstrap, 2,000).
+- **H122.2 (pseudo-cue sets):** 200 expression-matched random 40-gene sets (excluding clock, cue and locked genes).
+  Pass: the observed immune-minus-structural difference exceeds their 95th percentile (smallest attainable 1/201).
+- **Descriptive:** sign of the difference in each atlas; within atlas, the class index against log pseudobulk depth
+  and the difference after adjusting for depth; variance of the cue state's own expression by class.
+- **Family:** secondary; Holm over H122.1-2.
+- **Reading:** both pass: Figure 2 panel, "immune cells take relatively more of their timing from body-wide signals".
+  Otherwise Extended Data, described as a consequence of low host coupling.
