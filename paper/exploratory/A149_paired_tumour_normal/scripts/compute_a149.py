@@ -133,7 +133,8 @@ def pseudo_one(r, n_pseudo):
     nrm = G[G.compartment == L.NORM]
     genes = [c for c in G.columns if c not in ("donor", "compartment", "stratum", "depth")]
     frac = nrm[genes].div(nrm.depth, axis=0)
-    lm = np.log(frac.mean() + 1e-12)[nrm[genes].mean() >= 1]
+    wg = list(L.q.WF.genes)
+    lm = np.log(frac.mean() + 1e-12)[(nrm[genes].mean() >= 1) | frac.columns.isin(wg)]  # pool filter; clock genes kept
     rng = np.random.default_rng([L.SEED, 44, sum(map(ord, r["study"]))])
     out = []
     for w in pseudo_waveforms(lm, n_pseudo, rng, L.q.WF):

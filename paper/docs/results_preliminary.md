@@ -985,3 +985,28 @@ failed except CoFE clock genes in 1 W tissue.
   while clocksync keeps it (0.945) and beats the supervised TimeTeller and the timed oracle on the window donors. The
   distinctive property of the method on real data is partial-day coverage, not coupling estimation as such.
 <!-- src: paper/exploratory/A123_working_hours/output/a123b/{h123_4,tests,donor_order,runtime}.csv -->
+
+## A149 (scored 2026-10-28, secondary): single-cell tumour / normal pairing exists but is not clock-specific; malignant cells covary with the tumour stroma, specificity not tested
+27 cohorts (18 existing, 9 new), 190 paired patients for S1; S2 61 (9 cohorts), S3 51 (7). Nulls equal the power step.
+- **H149.1 nominal pass, not clock-specific:** malignant vs own adjacent-normal epithelium 0.534, null 0.446 +- 0.042
+  (q95 0.517), p 0.022, Holm 0.044. Registered companion: 200 expression-matched pseudo-clock sets give median 0.579,
+  q95 0.767; the clock statistic is below their median. By the registered rule the pairing is not read as
+  clock-specific: tumour and normal epithelium of a patient share structure in any matched gene set at least as much as
+  in clock genes (shared processing, ambient RNA, genotype or patient state). Contrast with TCGA bulk, where the clock
+  exceeded every pseudo-clock set (H138.4).
+- **H149.2 FAIL:** after removing the tumour stromal host, 0.550 vs null 0.539 (MDE 0.768), p 0.45.
+- **H149.3 PASS (no specificity control registered):** malignant vs tumour stromal host 0.607, null 0.410, p 0.0077,
+  Holm 0.023; companion normal epithelium vs the same host 0.666 (null 0.421, p 0.0018). The malignant and normal
+  epithelial clocks covary with the tumour stroma of the same patient about equally. Without a pseudo-clock control,
+  and with H149.1 showing strong non-clock sharing within patients, this is not evidence of clock coupling.
+- **D149.1 / D149.2 (descriptive):** retained share 0.07; per cancer S1 excess lung +0.22 (42 patients, p 0.004),
+  colorectal +0.09 (82, p 0.087), gastric -0.02 (21), liver +0.01 (14); S3 lung +0.23 (p 0.045), colorectal +0.13
+  (p 0.17); I^2 0 for S1-S3 (4 or 2 cancer types); keeping minus at-null S1 +0.05. **Method flaw:** the patient
+  bootstrap intervals of the excess do not contain their point estimates (e.g. S1 0.088 [0.133, 0.540]):
+  resampling with replacement duplicates patients and inflates |correlation|. These intervals and the retained-share
+  interval are invalid and not reported further.
+- **Reading:** the single-cell pairing between a patient's malignant and normal epithelium is real but carried by
+  non-clock structure; the clock-specific tumour-normal match remains a bulk TCGA result (H138.4). Whether it runs
+  through the stroma cannot be settled with these designs: H149.3 needs a pseudo-clock control before reading.
+  Cancer types do not differ detectably; lung shows the largest pairing.
+<!-- src: paper/exploratory/A149_paired_tumour_normal/output/score/{tests,pooled,per_cohort,pseudo_companion,d149_1,d149_2_heterogeneity}.csv; output/units.csv; output/power/nulls.csv -->

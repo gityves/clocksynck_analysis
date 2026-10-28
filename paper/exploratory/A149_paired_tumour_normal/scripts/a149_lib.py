@@ -22,6 +22,7 @@ sys.path.insert(0, str(PAPER / "exploratory" / "A138_cancer_estimability" / "scr
 sys.path.insert(0, str(PAPER / "common" / "datasets"))
 import q3_lib as q  # noqa: E402
 from clocksync import stats as S  # noqa: E402
+from clocksync.genes import canonical  # noqa: E402
 from clocksync.paired import projector, states  # noqa: E402
 
 from cancer_common import studies as ST  # noqa: E402
@@ -124,7 +125,8 @@ def genome_epithelium(study: str, mal: str, pts: list) -> pd.DataFrame:
             strat[k] = chem
     keys = sorted(sums)
     G = pd.DataFrame(np.vstack([sums[k] for k in keys]), columns=genes)
-    G = G.T.groupby(level=0).sum().T  # duplicated symbols summed
+    G.columns = [canonical(str(g)) for g in G.columns]
+    G = G.T.groupby(level=0).sum().T  # aliases and duplicated symbols summed
     meta = pd.DataFrame({"donor": [k[0] for k in keys], "compartment": [k[1] for k in keys],
                          "stratum": [strat[k] for k in keys], "depth": [depth[k] for k in keys]})
     return pd.concat([meta, G.reset_index(drop=True)], axis=1)
