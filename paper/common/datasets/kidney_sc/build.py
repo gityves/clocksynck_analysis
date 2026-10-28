@@ -4,7 +4,7 @@ Source: CELLxGENE Census KPMP single-cell dataset, raw input $SCCC_DATA/atlas/kp
 Legacy builder replaced: desync/11_kidney/scripts/kidney.py (`kgroups`, `labels`, `block`, `ckd`, `healthy`).
 A17 targets: `kidney_sc` (healthy fit: control donors, classes with >= 20 of them) and `ckd_sc` (donor column `ckd_sc`).
 
-Choices: classes `CLASSES` (case-insensitive, first match), compartment `kidney:<class>`; majority assay; stratum =
+Choices: classes `CLASSES` (case-insensitive except the T pattern, first match), compartment `kidney:<class>`; majority assay; stratum =
 assay | `dataSource` (KPMP / UMICH processing site, donor-constant); pseudobulks >= 20 cells; donors = Census disease
 "normal" (control) and "chronic kidney disease" (case); one table for both (the healthy table is its control part).
 """
@@ -24,7 +24,7 @@ CLASSES = (
     ("podocyte", r"podocyte|parietal epithelial"), ("endothelial", r"endothelial"),
     ("myeloid", r"macrophage|monocyte|dendritic|mononuclear phagocyte"),
     ("interstitial", r"interstitial fibroblast|^kidney interstitial cell$"), ("pericyte", r"pericyte"),
-    ("T", r"T cell"), ("B", r"^B cell$"),
+    ("T", r"(?-i:\bT cell)"), ("B", r"^B cell$"),  # case-sensitive: "mast cell" is not a T cell
 )
 SPEC = O.Spec(C.ATLAS / DS, DS, "kidney", CLASSES)
 REF = "kidney:endothelial"

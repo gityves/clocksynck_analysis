@@ -28,7 +28,7 @@ COARSE = (
     ("T_other", r"(?-i:\bT cell)|thymocyte|T-helper|T follicular"), ("NK", r"natural killer"), ("ILC", r"innate lymphoid"),
     ("plasma", r"plasma cell|plasmablast"), ("B", r"(?-i:\bB cell)"), ("monocyte", r"monocyte"),
     ("macrophage_DC", r"macrophage|dendritic|phagocyte|Langerhans|microglial|myeloid cell|myeloid leukocyte"),
-    ("mast", r"mast cell"), ("granulocyte", r"neutrophil|basophil|granulocyte"),
+    ("mast", r"mast cell"), ("granulocyte", r"neutrophil|\bbasophil\b|granulocyte"),
     ("progenitor", r"progenitor cell$|stem cell$|precursor|myeloid progenitor"), ("erythroid", r"erythro"),
     ("endothelial", r"endothelial"),
     ("mural_smooth_muscle", r"pericyte|smooth muscle|mural|myometrial|myoid"),
