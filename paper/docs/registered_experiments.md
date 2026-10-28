@@ -1777,3 +1777,17 @@ Code: `paper/exploratory/A124_night_shift/`.
   - H156.1 fails -> not detected, with the MDE.
   - The timed descriptive states whether the readout tracks the known displacement either way.
 Code: `paper/exploratory/A156_forced_desynchrony/`.
+
+**A156 data rule (dated note 2026-10-28, after the blind inventory `exploratory/A156_forced_desynchrony/inventory.md` and before any clock readout):**
+- **Data:** GSE48113 has 287 arrays from 22 subjects; 21 have both days.
+- **Primary set:** subjects with >= 5 arrays on each day (19 subjects); 10,000 random within-subject day swaps.
+  Sensitivities: the 15 subjects with 7 + 7 arrays (exact test), and all 21.
+- **Day labels:** samples are assigned by the recorded day field. BB0121's day-1 point 7 is labelled "out of phase" but
+  stays day 1, as recorded.
+- **Probe mapping:** non-control probes whose symbol maps to the gene; mean of the log2 values present. A gene with all
+  probes missing in an array is imputed with its mean within that subject-day; the frequency is reported.
+- **Gene names:** the inventory showed that `clocksync.genes.canonical` misses the old platform names known from A124.
+  The primary therefore uses canonical plus the 8 A124 aliases (core 14, cue 39, locked 38); canonical alone is a
+  sensitivity. This is fixed before the readout, unlike in A124.
+- **Cosinor (descriptive):** recorded clock time, 24 h period. BB0264 day-1 point 7 (no time) is dropped from the
+  cosinor only.
