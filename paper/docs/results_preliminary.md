@@ -1101,3 +1101,50 @@ cue_units (own COARSE copy; to check). Not affected: lung_hlca / Natri (author a
 (case-sensitive). Examples: colon_crc goblet 16,142 + tuft 2,845 + mast 3,834 cells in colon:T_other; Kong colon and
 ileum epithelial goblet / tuft and stromal myofibroblasts in T_other. The archive A17 run has the same mapping (A17
 reproduces it exactly). Fix and reruns brought to the PI.
+
+## A123c (scored 2026-10-28): against a truth from out-of-window donors only, H123.5 fails (offsets 0.679), H123.6 passes (amplitudes 0.965)
+
+Truth (iii): cosinor on recorded time of the fast deaths who died outside 08-18 h, complex SVD as truth (i).
+- 133 truth donors and 111 test donors, disjoint (asserted).
+- 39 of 40 A123 tissues have >= 20 truth donors; Kidney - Cortex (19) is dropped.
+- The A123 clocksync estimate is regenerated in memory and matches `organ_map.csv` to 4 decimals.
+
+**Hypotheses:**
+- **H123.5 FAIL.** Offsets vs truth (iii): circular correlation 0.679 [0.467, 0.839], tissue-permutation p 1e-4 (the
+  floor), median error 0.58 h. The point estimate is below the registered 0.7; the p criterion alone passes.
+- **H123.6 PASS.** log2 relative amplitudes vs truth (iii): Pearson 0.965 [0.948, 0.980], p 1e-4.
+
+**Descriptive** (offset r [interval]; amplitude Pearson):
+- **The truths agree imperfectly:** truth (i) vs truth (iii) 0.821 [0.657, 0.925]; amplitude 0.978. Truth (iii) rests
+  on night deaths only (a 14 h arc, 133 donors).
+- **Other methods vs truth (iii):**
+  - the timed oracle on the window donors' recorded times: 0.491 [0.168, 0.736] (p 8e-4);
+  - CHIRAL 0.023;
+  - CoFE genome-wide -0.109;
+  - CoFE clock -0.326 (38 tissues);
+  - CYCLOPS -0.227.
+  clocksync stays well above every untimed orderer, and above the timed oracle of the same donors.
+- **Split sensitivity:** donors split once, seed 123, 65 / 68. The waveform comes from half 1, clocksync is refitted, and
+  the truth comes from half 2.
+  - At >= 20 half-2 donors (35 tissues): 0.776 [0.632, 0.879]. The stored estimate gives 0.775.
+  - At >= 10 (the same 39 tissues as H123.5): 0.804 [0.684, 0.896]. The stored estimate gives 0.807.
+  - Unexplained, not yet checked: the same estimate agrees better with the half-2 truth (68 donors) than with the full
+    truth (iii) (133 donors).
+- **Prior-only baseline, per-donor hour on the 111 window donors** (median absolute error):
+  - clocksync 1.73 h with the error-minimising common offset, 2.09 h with the circular mean set to 13:00 (uses no truth);
+  - always 13:00: 2.62 h;
+  - best constant: 2.37 h (it uses the truth).
+
+**Choices beyond the registration** (README):
+- The truth (iii) DESeq2 size factors come from out-of-window samples only.
+- `compare` uses its hard-coded 1,000 tissue bootstraps.
+- The split is by donor, greedy within tissue.
+- The >= 10 half-2 variant and the best-constant baseline were added.
+
+**Reading (PI to decide):**
+- Amplitudes hold against a disjoint truth.
+- Offsets fall just below the registered threshold, with a wide interval.
+- The ceiling set by truth (iii)'s own noise is unknown, since truth (i) vs truth (iii) is only 0.821.
+- This removes or reframes a main-figure claim (Figure 1 organ map), so it is raised with the PI before any wording
+  changes.
+<!-- src: paper/exploratory/A123_working_hours/output/a123c/{tests.csv,truth_iii.csv,README.md}; logs/compute_truth_iii.log -->
