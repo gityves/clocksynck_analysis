@@ -1476,3 +1476,37 @@ S1 0.446 +- 0.042, 0.517, 0.552; S2 0.539 +- 0.092, 0.691, 0.768; S3 0.410 +- 0.
 (>= 12 patients): S1 colorectal 82, lung 42, gastric 21, liver 14 (MDE 0.57-1.02); S2 and S3 colorectal and lung
 only. D149.2 classes: keeping 71 (S1), at null 82 (colorectal only). H149.1 is powered for an excess of about 0.11
 over its null; H149.2 / H149.3 only for about 0.2-0.23, and the per-cancer estimates are descriptive at best.
+
+## A150 (2026-10-28, written after A149 was scored and before any quantity below was computed; PI request): is the healthy single-cell coupling of Figure 2 clock-specific, and is it inflated by ambient RNA?
+
+**Motivation.** A149: within-patient pairing between compartments was matched or exceeded by expression-matched
+pseudo-clock gene sets, so pairing in single-cell data can be carried by non-clock structure. The Figure 2 atlases
+have faced the gate (permuted acrophases of the clock genes, shuffled pairings), not expression-matched non-clock genes;
+ambient RNA would add clock-shaped shared covariance that the gate cannot reject. **Known at registration:** the A17
+healthy fits (`results/figure_2/output/atlas_fits/a17_healthy_fits.csv`); A109 organ-level pseudo-clock excess (GTEx
+0.463 vs 0.154). No pseudo-clock or ambient readout of any atlas has been computed.
+**Data:** the gate-passing A17 healthy atlases with a genome-wide twin (same rows, `_atlas/genome.py` `CLOCK_TWIN`):
+lung_hlca, organ_breast, organ_muscle, organ_colon, and heart if `heart_global_genome` reproduces the A17 `heart` rows
+(checked before any readout; else left out). organ_adipose fails the gate. The other 19 gate-passing atlases have no
+genome-wide table and are not covered (stated as a limitation). Anchors and rows: the A17 learned rule, unchanged.
+**Part 1, pseudo-clock control.**
+- Per atlas, 200 expression-matched pseudo-clock waveforms (`clocksync.paired.pseudo_waveforms`, matched on mean log
+  fraction over all rows of the atlas, clock-like genes excluded); for each, the full A17 anchored fit (host and targets
+  on the pseudo genes, `Dataset(..., waveform=w).fit(gate=False)`, point estimates).
+- **H150.1:** the mean anchored coupling over all compartments of all covered atlases with the clock waveform exceeds the
+  same mean under the pseudo sets (set j pooled across atlases as set j): p = (1 + #{pseudo >= clock}) / 201, floor
+  0.005; pass at p < 0.05.
+- **D150.1:** per compartment and per cell family (the Figure 2 family classes, `backbone/compute_family_summary.py`):
+  clock coupling, pseudo median and q95, excess = clock minus pseudo median. A family whose clock coupling is below its
+  pseudo q95 is "not clock-specific at this design".
+**Part 2, ambient RNA (marker-based over-correction, SoupX-like).**
+- Soup profile of a donor s_d = its summed counts over all compartments, as fractions. For compartment k, exclusion genes
+  N_k = the 30 non-clock genes with the largest ratio of atlas-level soup fraction to k's atlas-level fraction (soup
+  fraction >= 1e-5). Contamination rho_dk = sum_{g in N_k} x_dkg / (depth_dk sum_{g in N_k} s_dg), capped at 0.5: an upper
+  bound, since true expression of N_k in k also counts.
+- Corrected clock counts x' = max(x - rho depth s, 0), depth' = depth (1 - rho); the A17 learned-rule fit is redone.
+- **D150.2 (descriptive, reading pre-specified):** per compartment and family: median rho, coupling before and after,
+  change; Spearman of compartment couplings before vs after. Reading: median |change| < 0.05 in every family and the
+  family order unchanged -> ambient RNA does not drive the backbone; otherwise the affected families are named.
+- **Family and reading:** secondary; H150.1 alone is tested. H150.1 fail or a family below its pseudo q95 is brought to
+  the PI before any Figure 2 wording changes. Code: `paper/exploratory/A150_atlas_specificity/`.
