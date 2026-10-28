@@ -6,6 +6,12 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
 
 ## 2026-10-28
 
+- **A123c diagnostic: truth (iii) is too noisy to test offsets at 0.7 (explains the fail).** Split-half truth
+  reliability 0.54, so the ceiling for a perfect estimate is about 0.83. The estimate disattenuated is 0.73-0.81. Whole
+  Blood alone (truth (iii) R2 0.028) moves r from 0.679 to 0.754. The 0.807 split was a 95th-percentile draw.
+  - *Follow-up:* a Figure 1 legend with both truths and the ceiling. A future working-hours test needs a truth with
+    reliability > 0.9 (all-day donors, or a second cohort).
+  - *Source:* `A123_working_hours/output/a123c/diag/split_half.csv`.
 - **A123c: the Figure 1 offsets miss the bar against a donor-disjoint truth (unexpected).** Offsets r 0.679
   [0.467, 0.839] vs truth (iii) (H123.5 fail, threshold 0.7); amplitudes 0.965 (H123.6 pass). Truth (i) vs truth (iii) is
   only 0.821. A truth built from half the donors gives 0.807 on the same tissues, which is better than the full truth.

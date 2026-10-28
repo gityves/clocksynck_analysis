@@ -9,7 +9,7 @@ all 66 pairs (all have >= 20 shared donors), 1,000 label permutations.
              f in {0, 0.44}.
 Verdicts V147.1 (AUC and f = 0.8 vs loss q = 0.5 f = 0 median) and V147.2 (ratio at f = 0, Spearman with f).
 
-    python compute_v147.py [--subsample 1] [--seed 147] [--jobs 4]
+    python compute_v147.py [--subsample 1] [--seed 147] [--jobs 4] [--n-ref 244 (post hoc, PI Q13)]
 Outputs: output/d147.csv (cells), output/reps147.csv (replicates), output/v147.csv (verdicts), output/failures.csv.
 """
 
@@ -51,14 +51,14 @@ def cov(Z, M):
     return H.cross_moments(Z, M)[0]
 
 
-def run_cell(k, cell, n_rep, n_perm, seed):
+def run_cell(k, cell, n_rep, n_perm, seed, n_ref=None):
     a, V, phi = S.design()
     T = len(a)
     rng = np.random.default_rng(np.random.SeedSequence([seed, 147, k]))
     rows, fails = [], []
     for rep in range(n_rep):
         try:
-            Zr, Mr = S.simulate(cell["n"], 0.0, 0.0, "common", a, V, phi, rng)
+            Zr, Mr = S.simulate(n_ref or cell["n"], 0.0, 0.0, "common", a, V, phi, rng)
             ph = phi.copy()
             m = int(round(cell["q"] * T))
             if m:
@@ -128,14 +128,19 @@ def describe(reps):
 
 def main(argv=None):
     ap = cli.parser(__doc__)
+    ap.add_argument("--n-ref", type=int, default=None,
+                    help="post hoc sensitivity: reference-group size (default: the group's n); outputs in output/posthoc_nref<N>/")
     ap.set_defaults(seed=SEED)
     args = ap.parse_args(argv)
     run = cli.setup(args)
     out = exploratory_dir(FOLDER, run["quick"])
+    if args.n_ref:
+        out = out / f"posthoc_nref{args.n_ref}"
+        out.mkdir(exist_ok=True)
     n_rep, n_perm = (10, 100) if run["quick"] else (200, 1000)
     t0 = time.time()
     cl = cells()
-    res = Parallel(n_jobs=min(args.jobs, 4), verbose=5)(delayed(run_cell)(k, c, n_rep, n_perm, args.seed) for k, c in enumerate(cl))
+    res = Parallel(n_jobs=min(args.jobs, 4), verbose=5)(delayed(run_cell)(k, c, n_rep, n_perm, args.seed, args.n_ref) for k, c in enumerate(cl))
     reps = pd.DataFrame([r for rows, _ in res for r in rows])
     fails = pd.DataFrame([f for _, fl in res for f in fl], columns=["arm", "q", "f", "n", "rep", "reason"])
     reps.to_csv(out / "reps147.csv", index=False)

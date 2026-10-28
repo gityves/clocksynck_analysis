@@ -1175,3 +1175,23 @@ Truth (iii): cosinor on recorded time of the fast deaths who died outside 08-18 
 - **Status:** no fit has been rerun (PI hold). The relearn is repeated after the roadmap phase 2 legacy-table audit if
   any table changes.
 <!-- src: paper/common/anchors_a17.csv vs anchors_a17_pre_classfix.csv; paper/results/logs/anchor_relearn_diff.md; paper/results/extended_data/output/host_identity/a17_anchor_families.csv -->
+
+### 2026-10-28, A123c post hoc diagnostic (descriptive; the H123.5 verdict stands)
+
+Truth (iii) is noisy. The estimate's gap to it is mostly truth noise plus one tissue.
+- **Noise ceiling:**
+  - Split-half reliability of truth (iii) (200 donor splits): r between half truths, median 0.544 [0.317, 0.714].
+    Spearman-Brown full-truth reliability 0.695, which gives a ceiling of about 0.83 for a perfect estimate. A
+    bootstrap proxy gives 0.93.
+  - The estimate's r disattenuated for truth noise only is 0.73-0.81. Truth (i) vs truth (iii) disattenuated is
+    0.88-0.99.
+  - These are descriptive estimates (linear attenuation applied to circular r).
+- **The favourable split:** the registered split result (0.807) is a favourable draw. Over 400 random half truths,
+  r(estimate, half) has median 0.596 and only 5 % are >= 0.807. Construction checks found no bug: the reference tissue,
+  centring set and size factors are immaterial.
+- **Whole Blood drives the gap.** Estimate minus truth (iii) is +3.78 h, while estimate minus truth (i) is +0.52 h.
+  Whole Blood's truth (iii) cosinor R2 is the weakest of 39 (0.028, median 0.156), and leaving it out gives r 0.754.
+  Next: Testis (+2.73 h), Stomach (-2.46 h, 21 donors) and Breast (-2.24 h).
+- **Reading:** against the disjoint truth, the offsets sit near what truth (iii) noise allows. The amplitudes (0.965)
+  are robust. For the Figure 1 legend: show both truths, the noise ceiling and the Whole Blood outlier.
+<!-- src: paper/exploratory/A123_working_hours/output/a123c/diag/{bootstrap_truth,split_half,residuals,construction_checks}.csv -->
