@@ -1322,3 +1322,29 @@ core -0.932 h.
   responsive and matched non-clock genes. The delay sits in the core clock, not in the cue plane. One gene (NR1D1)
   carries about a third of the core shift; this is stated.
 <!-- src: paper/exploratory/psoriasis_robustness_2026-10-28/output/{reproduction,leave_one_gene_out*,random_subsets_summary,pseudo_sets_summary,platform_coverage}.csv -->
+
+## A109 / A138 note scored (2026-10-28): H109.1-R and H138.4-R pass; the shared states are not a GC or immediate-early response
+
+The registered statistics reproduce to 1e-9 (H109.1) and exactly (H138.4). Responsive-gene sets: 200 per test, 28 of 29
+pool genes present.
+- **H109.1-R PASS** (Holm 0.0099). Ventilated C_clock 0.463 vs responsive median 0.214, q95 0.257, p 0.005 (the floor).
+  Fast deaths 0.609 vs 0.197; Hardy 3 0.449 vs 0.275; Hardy 4 0.413 vs 0.198, each p 0.005.
+- **H138.4-R PASS** (Holm 0.0099). Pairing 0.365 vs responsive median 0.252, q95 0.310, p 0.005. Per cancer, the
+  responsive median exceeds the pairing in THCA and UCEC, and the responsive q95 exceeds it in COAD, LUAD and PRAD.
+- **PER1/PER2-free:** unchanged. Ventilated C 0.463 (vs matched q95 0.171); H138.4 pairing 0.367 (vs matched q95
+  0.261; permutation p 1e-4).
+- **Immediate-early control (H138.4):** the pooled IEG-set pairing is 0.232, not distinguishable from the matched null
+  (p 0.19). Shared surgery stress pairs the two samples only weakly.
+- **Stratified pairing nulls** (10,000):
+  - within cancer x TSS: null mean 0.129, q95 0.166;
+  - within cancer x tumour plate: mean 0.122;
+  - within cancer x normal plate: mean 0.127;
+  - observed 0.365, p 1e-4 in each.
+  Batch contributes at most +0.008 to the null mean. Per cancer, COAD (p 0.11-0.30), KIRP (0.08-0.10) and UCEC
+  (0.82-0.94) do not pass under stratification.
+- **Caveat:** the responsive sets overlap heavily (Jaccard 0.79 in GTEx, 0.91 in TCGA; KIRC and LIHC 1.0). The responsive
+  null is narrow in gene content.
+- **Reading:** the review's main alternative for Figure 3 and Figure 5 (a shared GC / acute-stress pulse, or batch) is
+  tested and does not explain the shared clock-gene state or the tumour-normal pairing. H109.1 can be worded "a
+  clock-gene-shaped shared state, not a GC or immediate-early response"; "running clocks" still rests on H109.2.
+<!-- src: paper/exploratory/A109_coupling_nulls/output/responsive/{h109_1_responsive,reproduction_check,jaccard_responsive_sets}.csv; paper/exploratory/A138_cancer_estimability/output/responsive/{h138_4_responsive,holm_responsive,stratified_null,per_cancer}.csv -->

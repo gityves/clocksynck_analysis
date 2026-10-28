@@ -6,6 +6,12 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
 
 ## 2026-10-28
 
+- **H109.1 and H138.4 survive the review's main alternative (strong).** Against responsive (GC / immediate-early) gene
+  sets: ventilated C 0.463 vs q95 0.257, and tumour-normal pairing 0.365 vs q95 0.310 (both Holm 0.0099).
+  PER1/PER2-free and TSS/plate-stratified nulls change nothing (stratified null mean at most 0.129).
+  - *Caveat:* the responsive pool is small (Jaccard 0.79-0.91).
+  - *Follow-up:* the Figure 3 / Figure 5 wording can drop the shared-stress caveat.
+  - *Source:* `A138_cancer_estimability/output/responsive/holm_responsive.csv`.
 - **Psoriasis core delay is robust and specific (strong, reassuring after A156).** Leave-one-gene-out and 80 % subsets
   keep it 100 % negative. 0 of 600 responsive or matched pseudo sets reach the core offset (-1.43 h; pseudo
   2.5-97.5 % about [-0.6, 0.6]). NR1D1 alone carries +0.54 h of it.
