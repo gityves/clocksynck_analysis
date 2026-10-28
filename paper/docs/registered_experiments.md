@@ -1417,3 +1417,16 @@ GSE201347, GSE185344, GSE202642, GSE210347 (re-compiled, overlaps). Copy-number 
 to `$SCCC_DATA/cnv_a149/` so that the cohort set of the frozen A83-A138 analyses (`CNV_STUDIES`) is unchanged.
 Cancer classes for D149.2: lung, liver, kidney, prostate, thyroid, breast = TCGA clock-keeping; colorectal, bladder =
 at null; gastric, oesophageal, skin, pancreatic, head and neck, ampullary = not in the contrast.
+
+**A149 note 2 (2026-10-28, before any A149 statistic or null was computed): operational choices.**
+(i) Host = stromal compartments of the tumour sample only (`tumour:` fibroblast / endothelial / mural): learned A17
+anchors among them where >= 2, else all of them (the `q3_lib.stromal_anchors` fallback would also admit adjacent-normal
+stroma, which is not the "tumour stromal host" of H149.2/H149.3). (ii) Estimability per cohort and statistic as A138
+note 4 (ii) (corrected variances > 0, null mean <= 1); H149.2/H149.3 need >= 5 patients with a host (`Dataset.host`).
+(iii) Existing cohorts use the stored `cancer_sc` tables (as A138); new cohorts are built from counts with
+`cancer_sc.build`. (iv) Pseudo-clock companion of H149.1: genome-wide sums of the two epithelial compartments per
+patient (same cells and labels, recomputed from the counts), 200 expression-matched sets per cohort
+(`clocksync.paired.pseudo_waveforms`, matched on the cohort's normal epithelium), pooled per set with the H149.1
+weights; 95th percentile of the pooled sets. (v) Bootstrap (D149.1, D149.2): patients resampled within cohort,
+statistic recomputed, excess = statistic - the unresampled null mean; I^2 from the per-cancer excess and its bootstrap
+SE. (vi) Seed stream 149.
