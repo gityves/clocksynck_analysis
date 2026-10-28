@@ -905,3 +905,18 @@ CYCLOPS with the 80-model template. Coupling MAE per method (clocksync / CHIRAL 
   genome-scale orderers fail under working hours or with strong non-clock structure, so the advantage on real data
   rests on A123 (CHIRAL r -0.17 vs 0.945) and A140, not on A145.
 <!-- src: paper/exploratory/A145_two_step/output/{h145,d145_1,d145_2,failures}.csv -->
+
+## A138 H138.8 (scored 2026-10-28, secondary): the tumour-normal clock match does not depend on tumour purity
+PanCanAtlas ABSOLUTE purity (475 of 517 pairs called); H138.4 reproduced (0.3647) before splitting.
+- **H138.8 FAIL:** low- minus high-purity match D +0.025 (pooled low 0.427, high 0.402; 8 cancers, 221 / 213 pairs),
+  p 0.35; null SD 0.065, MDE 0.16 (less than half the H138.4 statistic). BLCA and UCEC dropped (< 10 pairs per half).
+- **Per cancer:** mixed signs (PRAD +0.33, KIRC +0.19; LIHC -0.19, THCA -0.15, LUAD -0.11; others within +-0.05).
+  Pair-level Spearman of purity with the pair contribution -0.32 to +0.15, all p >= 0.19.
+- **ESTIMATE sensitivity (descriptive):** D -0.029, p 0.67 (ESTIMATE vs ABSOLUTE purity Spearman 0.38-0.80).
+- **Reading (registered, "fail with D near 0 and the MDE small"):** the bulk match is not carried mainly by the
+  non-malignant fraction; malignant cells contribute to it. With H138.1 (weak coupling to the stromal host) this points
+  to a patient-specific component shared by malignant and normal tissue that does not run through the tumour stroma
+  (e.g. the systemic state or time of surgery shared by both samples), consistent in direction with H138.5 (0.58 vs
+  null 0.44, p 0.069). Caveat: the purity range within a cancer is moderate (median split), and ESTIMATE was
+  re-implemented (R package unavailable).
+<!-- src: paper/exploratory/A138_cancer_estimability/output/h138_8/{tests,per_cancer,pair_level,estimate_sensitivity,h138_4_reproduction}.csv -->
