@@ -1010,3 +1010,29 @@ failed except CoFE clock genes in 1 W tissue.
   through the stroma cannot be settled with these designs: H149.3 needs a pseudo-clock control before reading.
   Cancer types do not differ detectably; lung shows the largest pairing.
 <!-- src: paper/exploratory/A149_paired_tumour_normal/output/score/{tests,pooled,per_cohort,pseudo_companion,d149_1,d149_2_heterogeneity}.csv; output/units.csv; output/power/nulls.csv -->
+
+## A150 (scored 2026-10-28, secondary): Figure 2 atlas coupling is clock-specific overall and for the stromal-vascular and epithelial families; myeloid, lymphocyte and mural are not distinguishable from pseudo-clocks; ambient over-correction lowers lung epithelium
+5 gate-passing atlases with genome-wide twins (lung_hlca, heart, organ_breast, organ_muscle, organ_colon), 52
+compartments, A17 learned anchors. Reproduction of A17 couplings on the genome tables: exact in 4 atlases; lung_hlca
+Spearman 0.998, max difference 0.009 (467 rows differ in depth / cell counts between the genome and clock builds).
+- **H150.1 PASS:** mean coupling 0.404 vs 200 pseudo-clock sets mean 0.249, q95 0.316, max 0.381; p 0.005 (floor).
+  Per atlas: heart 0.596, muscle 0.606, breast 0.459, lung 0.356, colon 0.203. 45 of 52 compartments have positive
+  excess, 13 exceed their own pseudo q95.
+- **D150.1 (family median coupling, clock vs pseudo median / q95):** fibroblast-stromal 0.670 vs 0.305 / 0.494;
+  endothelial 0.511 vs 0.176 / 0.342; epithelial 0.517 vs 0.267 / 0.420; "other" 0.727 vs 0.410 / 0.653 (all above
+  q95). Below q95 ("not clock-specific at this design"): mural 0.613 vs 0.412 / 0.647; myeloid 0.271 vs 0.168 / 0.299;
+  lymphocyte 0.094 vs 0.087 / 0.237; parenchyma and neuron (one compartment each, wide q95).
+- **D150.2 (ambient over-correction):** median contamination 0.030 (muscle 0.141). Couplings before vs after Spearman
+  0.943 (lung 0.849, others >= 0.94). Family median change: epithelial -0.195 (driven by lung: AT1 0.680 -> 0.485,
+  basal 0.376 -> 0.123, multiciliated 0.403 -> 0.121, secretory 0.571 -> 0.309; breast and colon epithelium unchanged),
+  mural -0.061, neuron -0.059, myeloid -0.056, endothelial -0.045, fibroblast-stromal -0.033, lymphocyte -0.014.
+  Family order: epithelial falls from 4th to 7th; the rest keeps its order. By the registered reading ambient RNA is
+  not excluded for the epithelial family (and marginally mural / myeloid). Caveat: the correction is an upper bound,
+  and lung basal and secretory cells have median contamination 0, so their drop comes through the host (anchors
+  corrected), not their own counts.
+- **Reading:** the stromal-vascular backbone (fibroblasts, endothelium) is clock-specific and robust to ambient
+  over-correction. The low end (myeloid, lymphocytes) is not clock-specific: their small couplings are at the level
+  matched non-clock genes reach, which fits "barely coupled" but means their coupling values carry no clock information.
+  Lung epithelial coupling is sensitive to ambient correction. Coverage: 5 of 24 gate-passing atlases. Brought to the PI
+  before any Figure 2 wording change (registered).
+<!-- src: paper/exploratory/A150_atlas_specificity/output/{h150_1,per_family,per_compartment,d150_2,reproduction}.csv -->
