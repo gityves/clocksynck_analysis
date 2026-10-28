@@ -1356,3 +1356,48 @@ Code: `paper/exploratory/A148_psoriasis_decomposition/`.
 **A148 note 1 (2026-10-28, PI decision):** A148 is closed after its acceptance check failed; the post hoc gene-set
 variant is not registered. The psoriasis differentiation argument rests on the single-cell results (A61, A63, A69)
 and the A115 differentiation descriptive.
+
+## A149 (2026-10-28, written after A138 H138.1/H138.4/H138.5/H138.8 were scored and before any A149 readout; PI request): does the malignant clock follow the patient's own normal epithelium in single cells, and does the link run through the tumour stroma? Paired tumour / adjacent-normal cohorts pooled, per cancer type.
+
+**Known at registration:** H138.4 (TCGA bulk, tumour vs own normal 0.365, null 0.122; per cancer BLCA 0.52 to UCEC
+0.08); H138.8 (no purity dependence, D +0.025, MDE 0.16); H138.5 (malignant vs adjacent-normal epithelium after
+removing the stromal host, 52 patients, 6 cohorts with >= 6 pairs: 0.583, null 0.443 +- 0.092, p 0.069, MDE 0.677);
+H138.1 (malignant coupling to the in-sample stromal host 0.076 [0.014, 0.139], MDE about 0.2); A87 (alignment of
+malignant vs normal epithelium to the stromal host 0.27 vs 0.64, 79 patients); erratum of 2026-10-28 (0.365^2 = 0.13
+shared variance, back-of-envelope). Counted today, no statistic computed: the 43 `cancer_sc` cohorts hold 137
+patients with tumour (malignant or tumour) epithelium and adjacent-normal epithelium in 25 cohorts, 85 of them with a
+tumour stromal compartment. The unreferenced single-cell pairing (H149.1) has not been computed on any cohort.
+**Data:** the `cancer_sc` cohorts plus new public cohorts with tumour and adjacent-normal samples of the same patients
+(search list `paper/exploratory/A149_paired_tumour_normal/candidates.md`; the cohorts added are fixed in a dated note
+before any readout), processed counts only, built with the unchanged `cancer_sc` rules (patient = donor, untreated,
+not CD45-sorted, median UMI >= 1,500, majority chemistry, marker compartments, >= 50 cells per pseudobulk). Copy-number
+calls for new cohorts with `cancer_common.studies.calls`; malignant compartment as A138 (`q3_lib.study_table`: called
+malignant cells where >= 5 patients are called, else tumour epithelium). Eligible cohort: >= 4 paired patients (the
+A138 limit of 6 is lowered for pooling; per-cohort centring and permutation keep the null exact).
+**States:** per cohort, tumour and adjacent-normal epithelium on one projector (`clocksync.paired.projector`, A138
+`sc_pair`), centred within cohort x chemistry; Poisson-corrected |complex correlation| (`corr_stat`); pooled =
+mean over cohorts weighted by paired patients; null = rows of the second compartment permuted across patients within
+cohort (10,000; the same permutation indices for the pooled and per-cancer statistics); one-sided p, floor 1e-4.
+- **H149.1 (single-cell, purity-free H138.4):** malignant vs own adjacent-normal epithelium, unreferenced states, >
+  null. Specificity companion: 200 expression-matched pseudo-clock gene sets (A52 rule); the clock statistic is read
+  as clock-specific only if it exceeds their 95th percentile.
+- **H149.2 (beyond the tumour stroma):** the same after removing the patient's tumour stromal host from both states
+  (H138.5 statistic, host = `q3_lib.stromal_anchors`), patients with a host, > null.
+- **H149.3 (through the tumour stroma):** malignant vs the patient's tumour stromal host state, > null (host rows
+  permuted within cohort). Companion: adjacent-normal epithelium vs the same host (expected positive; reported).
+- **D149.1 (descriptive):** retained share = (S2 - null mean 2) / (S1 - null mean 1) on the patients with a host, with
+  a 2,000-draw patient bootstrap (within cohort) interval.
+- **D149.2 (descriptive, PI: cancers need not behave alike):** per cancer type with >= 12 paired patients over its
+  cohorts: S1, S2, S3, null mean / SD, p, excess over null with bootstrap interval; I^2 of the excess across cancer
+  types. Pre-specified contrast: cancers whose tumours keep a clock-shaped signal in TCGA (A83: kidney, liver, lung,
+  thyroid, prostate, breast) minus those at null (colorectal, bladder, endometrial, ovarian), excess difference with
+  bootstrap interval; other types are reported but not in the contrast.
+- **Power (before scoring, dated note):** null mean / SD and MDE of S1-S3 on the final data (permutations only, no
+  observed statistic), as the A138 power step.
+- **Family:** secondary (outside the confirmatory family and the A138 family); Holm over H149.1-H149.3.
+- **Reading:** H149.1 pass: the malignant clock follows the patient's own normal tissue in single cells, without
+  stromal admixture (time of surgery and patient-specific clock traits are not separated: both are "the body").
+  Then D149.1 near 1 with H149.2 pass: the link does not run through the tumour stroma; D149.1 near 0 with H149.3
+  pass: it runs through the stroma; intermediate: both. Any failed test is "not detected at this design" with its MDE,
+  never "uncoupled". D149.2 states where cancers differ; no cancer-type claim is confirmatory.
+Code: `paper/exploratory/A149_paired_tumour_normal/`.
