@@ -1088,3 +1088,16 @@ lymphocyte pseudobulks exactly. 1,000 within-donor label swaps; minimum p 0.001.
 - **Reading:** residency does not confer coupling (consistent with archive A6 in healthy lung); in breast,
   circulating-like T cells couple at least as much as resident-like ones. Heart is uninformative at its depth.
 <!-- src: paper/exploratory/A152_lymphocyte_residency/output/{h1521,perm_summary,states_summary,fits_observed,lung_repro_check,part2_repro_check,repro_a17,gates}.csv -->
+
+**A152 mast diagnostic (2026-10-28, POST HOC, descriptive)** (`A152_lymphocyte_residency/output/mast_diagnostic.csv`):
+heart:lymphocyte A17 0.556 (38 donors; mast share median 0.28) -> without mast cells 0.328 (36, boundary), heart:mast
+alone 0.509 (26 donors). breast:T_other 0.089 (mast share 0.09) -> 0.070; breast:mast 9 donors, not estimable.
+**Class-mapping audit (2026-10-28, lead):** `_atlas/organ.py` COARSE is matched case-insensitively (`census.classify`,
+default) with `T_other = "T cell|thymocyte"` before the epithelial, mast and fibroblast patterns, so Census labels
+containing "...t cell" are classed as T_other: mast cells, goblet cells, tuft cells, myofibroblast cells and "alveolar
+type 1 fibroblast cell". `heart.py` has the same issue (`lymphocyte|T cell|natural killer`, mast cells). Affected
+builders: organs.py (organ_* atlases), kong.py, genome.py, immune_aging.py, heldout.py, heart.py, and possibly
+cue_units (own COARSE copy; to check). Not affected: lung_hlca / Natri (author annotations), Tabula Sapiens
+(case-sensitive). Examples: colon_crc goblet 16,142 + tuft 2,845 + mast 3,834 cells in colon:T_other; Kong colon and
+ileum epithelial goblet / tuft and stromal myofibroblasts in T_other. The archive A17 run has the same mapping (A17
+reproduces it exactly). Fix and reruns brought to the PI.
