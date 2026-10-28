@@ -1148,3 +1148,8 @@ Truth (iii): cosinor on recorded time of the fast deaths who died outside 08-18 
 - This removes or reframes a main-figure claim (Figure 1 organ map), so it is raised with the PI before any wording
   changes.
 <!-- src: paper/exploratory/A123_working_hours/output/a123c/{tests.csv,truth_iii.csv,README.md}; logs/compute_truth_iii.log -->
+- **PI decision (2026-10-28):** (a) the Figure 1 panel is kept with the verdict as scored. It shows amplitudes confirmed
+  against the disjoint truth, offsets 0.68 (below the registered 0.7) but above every untimed orderer and the timed
+  oracle, and both truths. (b) A post hoc descriptive diagnostic is added: per-tissue residuals, the bootstrap noise
+  ceiling of truth (iii), and the split-half distribution (`output/a123c/diag/`). Class-fix reruns are held after the
+  anchor relearn until roadmap phases 1-2 are done.
