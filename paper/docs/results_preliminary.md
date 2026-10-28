@@ -1266,3 +1266,35 @@ consistent with a damped, not shifted, muscle clock under acute misalignment (de
 **Tool gap:** `clocksync.genes.canonical` lacks common old platform names. Adding them is roadmap 8.4; it changes gene
 coverage for array datasets and needs a regression check.
 <!-- src: paper/exploratory/A124_night_shift/output/{tests,mde,descriptive_deltas,descriptive_time_state_difference,sensitivity_12_subjects}.csv; output/alias_sensitivity/tests.csv -->
+
+## A156 (scored 2026-10-28): forced desynchrony in human blood, core-cue change not detected (H156.1, H156.2 fail; MDE 13.1 h)
+
+GSE48113: 19 subjects with >= 5 arrays per day, 259 arrays, 10,000 within-subject day swaps. Genes mapped with
+canonical plus the 8 A124 aliases (core 14/14, cue 39/40, locked 38/40).
+
+**Hypotheses:**
+- **H156.1 FAIL.** |circular mean Δ core-cue| 4.80 h (D4 minus D1 -4.80 h, bootstrap [-13.5, 4.4]), p 0.365, Holm
+  0.731.
+- **H156.2 FAIL.** |mean Δ core-cue| − |mean Δ core-locked| = 3.04 h, p 0.468.
+- **MDE:** 13.1 h (null circular SD 4.69 h).
+
+**Sensitivities** (none pass):
+- 7 + 7 subjects (exact): 4.96 h, p 0.70.
+- All 21 subjects: 2.40 h, p 0.49.
+- Canonical names only: 0.37 h, p 0.97. The untimed offset moves by 4.4 h with the mapping of 5 cue genes.
+
+**Timed descriptive (cosinor on clock time, D4 minus D1):**
+- The blood core state stays near the central clock: -1.36 h [-4.7, 5.7], resultant 0.27.
+- The cue state shifts with the displaced behaviour: -6.85 h [-11.1, -2.8].
+- Per-subject coherence is low (|mean z| core-cue 0.19 on D1, 0.21 on D4).
+- The untimed Δ core-cue does not track the timed core-minus-cue change: circular r 0.04 [-0.57, 0.64].
+
+**Imputation:** 1,708 gene-array cells were imputed within the subject-day. In 40 subject-day-gene cases the gene was
+missing in every array; these fell back to the same-day mean over subjects, a step not in the data rule (stated).
+
+**Reading:** not detected. At 7 blood samples per subject-day the per-subject core-cue offset is too noisy (MDE 13 h),
+and it depends on a handful of cue genes. The timed analysis shows the expected biology: cue genes follow behaviour and
+the core clock stays. The untimed per-subject core-cue readout cannot resolve it in blood arrays. With A124, two
+registered human perturbation tests are now uninformative for power. The core-cue estimator is reliable only where
+clock and cue signals are strong (psoriasis skin, GTEx), which is stated as a limitation.
+<!-- src: paper/exploratory/A156_forced_desynchrony/output/{tests,mde,sensitivities,descriptive_deltas,descriptive_timed,coherence_per_day}.csv -->

@@ -6,6 +6,14 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
 
 ## 2026-10-28
 
+- **A156: the untimed core-cue readout fails in timed human blood under forced desynchrony (unexpected weakness).**
+  The timed cosinor shows the biology: cue genes follow the displaced sleep (-6.85 h [-11.1, -2.8]) and the core clock
+  stays (-1.36 h). The untimed per-subject core-cue offset does not track it: r 0.04 against the timed change, MDE
+  13 h. It moves 4.4 h with the mapping of 5 cue genes.
+  - *Why notable:* the core-cue estimator carries the psoriasis claim. It is fragile at low signal (blood, 7 samples).
+  - *Follow-up:* a host-referenced or timed-aware readout for perturbation designs. Check the psoriasis core-cue
+    estimate's sensitivity to the cue-gene set (leave-one-gene-out).
+  - *Source:* `A156_forced_desynchrony/output/descriptive_timed.csv`.
 - **A124: no human perturbation positive from the simulated night shift (MDE 7.3 h, n = 11).** H124.1 |Δ core-cue|
   3.35 h, p 0.21. Descriptive: the muscle core clock keeps its 07->19 h direction under a 12 h behavioural shift but
   loses half its amplitude (3.20 -> 1.67), consistent with damping rather than shifting. H124.2 flips with the mapping of
