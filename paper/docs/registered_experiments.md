@@ -1646,3 +1646,51 @@ without it.
   when seeded with the core clock genes.
 Code: `A140_CORE=1` in `q1_run.py` / `q1_score.py`; outputs `output/q1rev/{gate,primary}_core/`,
 `simulator_gate_core.csv`, `primary_scores_core.csv`.
+
+## A154 (2026-10-28, method; written before any simulation of it; roadmap 4.1, review S1): gate calibration under shared non-clock structure
+
+**Why:** every "not estimable" in the paper rests on the gate. A145 arm N gave a gate pass in 4 of 30 runs without a
+clock, while the review's isolated rank-1 test was calibrated (0.040, 0.051). A140 showed gate sensitivity falling from
+20 of 20 to 24 of 50 at full factor size.
+**Simulator:** `clocksync.simulate`, current code and defaults of the paper (gate n_perm 1,000).
+- **Designs** (8): donors n in {30, 100} x compartments K in {4, 8} x depth in {single-cell pseudobulk (median A17 clock
+  UMI per compartment), bulk}.
+- **Arms per design:**
+  - N0: no clock, no factor.
+  - N1: no clock, plus a shared non-clock donor factor. Rank in {1, 3}; loading on 10 % or 30 % of genes, with clock
+    genes eligible; size scale in {0.25, 0.5, 1, 2} x the A140 Q1 calibration (gate-passing tumour immune eigenvalues).
+  - P: one coupled clock with c in {0.3, 0.6, 0.9}, without a factor and with the factor at scale 1, rank 1, 30 %.
+- **Replicates:** 200 per cell, seed 154.
+- **Readouts:**
+  - (i) gate pass rate;
+  - (ii) under a global null (two arms with the same c = 0.6), uniformity of the contrast p (KS, and the share
+    < 0.05);
+  - (iii) coverage of the 95 % bootstrap interval of c in arm P without a factor;
+  - (iv) coverage of the boundary lower bound when the fit is at the boundary.
+- **V154.1:** gate pass rate in N0 <= 0.075 in every design (one-sided exact binomial against 0.05 not rejected at
+  p < 0.01).
+- **V154.2:** the share of contrast p < 0.05 under the global null is <= 0.075 in every design.
+- **V154.3:** coverage of the 95 % interval of c >= 0.90 in every design and every c.
+- **Descriptive:** the N1 map (pass rate vs rank, loading and size), and P sensitivity with vs without the factor.
+- **Reading:** V154.1 fails -> the gate is anti-conservative and every gate-based claim needs a calibrated threshold.
+  Large N1 pass rates at realistic sizes -> a passed gate does not by itself show a clock; claims lean on the
+  pseudo-clock companions. Loss of P sensitivity with the factor -> "not estimable" is worded as "clock not separable
+  from shared non-clock structure", not "no clock". Code: `paper/exploratory/A154_gate_calibration/`.
+
+## A155 (2026-10-28, method; written before any simulation of it; roadmap 1.5, review C7): bias from reading anchors on a host that contains them
+
+**Why:** `Dataset` reads an anchor's amplitude |z| and offset arg z on the full host, which includes the anchor itself
+(`dataset.py` ~323). The anchor's own noise then enters its regressor. In A123 every tissue is an anchor.
+**Simulator:** `clocksync.simulate`, known per-compartment amplitude, offset and coupling.
+- **Designs:**
+  - anchors m in {3, 4, 6, 10} plus 4 non-anchor targets, n in {30, 100}, depth single-cell and bulk;
+  - an A123-like all-anchor design: 40 compartments, n 111, GTEx bulk depth, amplitudes and offsets from A123 truth (i).
+- **Replicates:** 200, seed 155.
+- **Readouts:** for anchors, bias and RMSE of log |z|, arg z (h) and c under (a) the current full host and (b) a
+  leave-one-out host; non-anchors as reference. For the A123-like design, the circular correlation of offsets and the
+  Pearson of log2 amplitudes against truth, under (a) and (b).
+- **Decision rule (method):** if under (a) the anchor bias exceeds 5 % in |z| or 0.25 h in offset, or the A123-like
+  offset r changes by > 0.02 between (a) and (b), at A17-typical designs (m 3-6, n 30-100), leave-one-out becomes the
+  anchor readout in clocksync. Every anchored result is then rerun in roadmap phase 3, and A123 in phase 8. The PI
+  confirms (Q13, 0.4). Otherwise the current readout stays, with the measured bias stated in METHOD.
+Code: `paper/exploratory/A155_anchor_self_inclusion/`.
