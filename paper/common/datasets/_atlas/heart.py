@@ -27,6 +27,9 @@ CLASSES = (
     ("myeloid", r"myeloid|macrophage|monocyte|dendritic"),
     ("lymphocyte", r"lymphocyte|(?-i:\bT cell)|natural killer"),
     ("neuron", r"neuron"),
+    ("mast", r"mast cell"),
+    ("adipocyte", r"adipocyte"),
+    ("mesothelial", r"mesothelial"),
 )
 LV = "heart left ventricle"
 DISEASE = {"heart_dcm": ("reichart2022_dcm", "dilated cardiomyopathy", "dcm"),

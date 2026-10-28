@@ -25,19 +25,19 @@ import census as C
 # Census-wide cell classes (`desync/common/run_atlas.py::COARSE`; first matching pattern on the Census cell_type)
 COARSE = (
     ("Treg", r"regulatory T"), ("CD4_T", r"CD4-positive"), ("CD8_T", r"CD8-positive"),
-    ("T_other", r"(?-i:\bT cell)|thymocyte"), ("NK", r"natural killer"), ("ILC", r"innate lymphoid"),
+    ("T_other", r"(?-i:\bT cell)|thymocyte|T-helper|T follicular"), ("NK", r"natural killer"), ("ILC", r"innate lymphoid"),
     ("plasma", r"plasma cell|plasmablast"), ("B", r"(?-i:\bB cell)"), ("monocyte", r"monocyte"),
     ("macrophage_DC", r"macrophage|dendritic|phagocyte|Langerhans|microglial|myeloid cell|myeloid leukocyte"),
     ("mast", r"mast cell"), ("granulocyte", r"neutrophil|basophil|granulocyte"),
     ("progenitor", r"progenitor cell$|stem cell$|precursor|myeloid progenitor"), ("erythroid", r"erythro"),
     ("endothelial", r"endothelial"),
     ("mural_smooth_muscle", r"pericyte|smooth muscle|mural|myometrial|myoid"),
-    ("fibroblast_stromal", r"fibroblast|stromal|mesenchymal|stellate|adventitial|connective|tendon|keratocyte"),
-    ("muscle", r"muscle cell|myocyte|satellite"), ("adipocyte", r"adipocyte"),
-    ("glia_neuron", r"glial|Schwann|neuron|Mueller"),
+    ("fibroblast_stromal", r"fibroblast|stromal|mesenchymal|stellate|adventitial|connective|tendon|keratocyte|trabecular meshwork"),
+    ("muscle", r"muscle cell|myocyte|satellite"), ("adipocyte", r"adipocyte"), ("melanocyte", r"melanocyte"),
+    ("glia_neuron", r"glial|Schwann|neuron|Mueller|astrocyte|oligodendrocyte"),
     ("epithelial", r"epitheli|enterocyte|goblet|basal cell|club|ciliated|alveolar|hepatocyte|cholangiocyte|acinar|"
                    r"duct|luminal|urothelial|keratinocyte|tuft|paneth|enteroendocrine|enterochromaffin|ionocyte|"
-                   r"pancreatic|transit amplifying|crypt|secret|sebocyte|serous|mucus|salivary|mesothelial"),
+                   r"pancreatic|transit amplifying|crypt|secret|sebocyte|serous|mucus|salivary|mesothelial|colonocyte|mucous|foveolar"),
 )
 
 
