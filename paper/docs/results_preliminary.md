@@ -1052,3 +1052,17 @@ Spearman 0.998, max difference 0.009 (467 rows differ in depth / cell counts bet
   Poisson-corrected variance) would be post hoc and needs PI approval. The same breakdown may have inflated the A149
   pseudo-clock values (median 0.579); this is checked before A149's reading is used in text.
 <!-- src: paper/exploratory/A151_fibroblast_pairing/output/{tests,pooled,per_cohort,pseudo,power_nulls,units}.csv -->
+
+## A149 note 5 / A151 note 2 (scored 2026-10-28, POST HOC): with the bounded statistic, tumour stroma follows the patient's normal stroma clock-specifically; malignant-normal epithelium pairing stays non-specific
+Uncorrected |complex correlation| (cannot exceed 1), clock vs the same 200 pseudo-clock sets per cohort, n-weighted.
+- **Fibroblasts (98 patients, 17 cohorts):** clock 0.699 vs pseudo median 0.458, q95 0.542; no pseudo set reaches the
+  clock value, p 0.005 (floor).
+- **Endothelium (103, 15):** clock 0.701 vs 0.432 / 0.527, p 0.005 (floor).
+- **Malignant vs adjacent-normal epithelium (190, 27):** clock 0.433 vs 0.394 / 0.461, p 0.17: not clock-specific,
+  as the registered companion (the corrected pseudo values exceeded 1 in 14 % of per-cohort sets, 25-31 % for stroma).
+- **Reading (post hoc):** tumour fibroblasts and endothelium keep a clock-specific, patient-specific relation to the
+  same patient's normal-tissue stroma, the single-cell stromal counterpart of TCGA H138.4; malignant epithelium shows
+  patient-level sharing with normal epithelium that matched non-clock genes reproduce. Methods note: the
+  Poisson-corrected |correlation| needs a bound or a breakdown check whenever it is compared with pseudo-clock sets at
+  low depth; the registered A151 H151.2 verdict (fail) stands as scored and is superseded in reading by this check.
+<!-- src: paper/exploratory/A151_fibroblast_pairing/output/{posthoc_pooled,posthoc_per_cohort}.csv -->
