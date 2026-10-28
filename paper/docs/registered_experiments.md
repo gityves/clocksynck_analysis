@@ -1545,3 +1545,32 @@ same 200 pseudo-clock sets per cohort (same seeds, patients and genome tables as
 with the same weights; p = (1 + #{pseudo >= clock}) / 201. Applied to A149 S1 (malignant vs adjacent-normal epithelium)
 and A151 (fibroblasts; endothelial descriptive). Per-cohort clock and pseudo values are saved, with the share of
 corrected values above 1. Reported as post hoc; the registered verdicts stay as scored.
+
+## A152 (2026-10-28, written after A150 and before any residency split of heart or breast; PI request): is lymphocyte coupling carried by tissue-resident rather than circulating cells?
+
+**Known at registration:** A150 per compartment: lymphocyte coupling heart 0.556, breast CD4 / CD8 T 0.442 / 0.456,
+plasma 0.810, lung T 0.159, B 0.100, colon mostly 0. Archive A6 (pre-clocksync estimator, A4 class rules; healthy HLCA,
+198 donors): resident-like 0.61 [0.35, 1.00] vs circulating-like 1.00 (boundary), difference -0.39 [-0.63, 0.00]; fibrotic
+lung the reverse in direction. The A6 values are not comparable with the A17 lung T value (0.159); the reason is not
+established. Blood atlases fail the gate.
+**Residency state per cell (A6 rule, unchanged):** x = log1p(1e4 count / total UMI); score = mean x of CD69, ITGAE,
+CXCR6 minus mean x of SELL, CCR7, KLF2, S1PR1; tertiles within block (study x assay x suspension type), ties at random;
+resident-like and circulating-like tertiles kept, intermediate dropped.
+**Part 1, lung (HLCA healthy, existing `hlca_tstates` builder):** mode "state" (T class replaced by
+`lung:T_resident_like`, `lung:T_circulating_like`, >= 20 cells), A17 learned anchors of lung_hlca, current estimator.
+D152.0 (reconciliation, descriptive): mode "T" under the A17 setup vs A17 lung:T; then the A6 split under the A17 setup.
+**Part 2, heart (heart_global) and breast (breast_kumar):** per-cell marker counts streamed from CELLxGENE Census
+(release 2025-11-08, as the pseudobulks) for the T / NK-containing classes (heart: `lymphocyte`, `natural killer cell`;
+breast: every T-cell, NK T and NK class); cells scored as above; the lymphocyte classes of the A17 table are replaced by
+`<tissue>:lymph_resident_like` and `<tissue>:lymph_circulating_like` pseudobulks (>= 20 cells); other classes, donors,
+strata and A17 learned anchors unchanged. A tissue enters if >= 15 donors have both states.
+- **H152.1:** pooled over the part 2 tissues that enter, resident-like minus circulating-like coupling > 0. Statistic:
+  mean over tissues of c_res - c_circ (A17 fit, point estimates). Null: within each donor the two state labels swapped
+  at random (1,000 permutations, refit), one-sided p; MDE from the null. Pass at p < 0.05.
+- **D152.1 (descriptive):** per tissue (lung, heart, breast): c_res, c_circ, difference with the permutation p, relative
+  amplitudes, pseudobulk depth per state (low depth can push either estimate to the boundary), resident-like share of
+  lymphocytes per donor; the CD8-only split where >= 15 donors.
+- **Specificity:** genome-wide state pseudobulks do not exist; only the gate is applied (stated limitation).
+- **Reading (PI):** pass -> residency carries lymphocyte coupling in heart / breast. A positive but non-significant
+  difference stays descriptive. A negative difference (circulating > resident) in heart would point to intravascular
+  cells following the body's clock. Secondary family. Code: `paper/exploratory/A152_lymphocyte_residency/`.
