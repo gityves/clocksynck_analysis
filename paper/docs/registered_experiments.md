@@ -1510,3 +1510,25 @@ genome-wide table and are not covered (stated as a limitation). Anchors and rows
   family order unchanged -> ambient RNA does not drive the backbone; otherwise the affected families are named.
 - **Family and reading:** secondary; H150.1 alone is tested. H150.1 fail or a family below its pseudo q95 is brought to
   the PI before any Figure 2 wording changes. Code: `paper/exploratory/A150_atlas_specificity/`.
+
+## A151 (2026-10-28, written before any fibroblast pairing readout; PI request; run after A150): do tumour fibroblasts follow the patient's own normal-tissue fibroblasts, clock-specifically?
+
+**Known at registration:** tumour fibroblasts keep a clock-shaped signal (A86 clock share about 0.46-0.50; D138.1 stroma
+host-coupled share 0.53); H138.5 fibroblast companion (1 cohort, 6 patients: 0.240, p 0.87, uninformative); A149
+(epithelial pairing within patients matched or exceeded by pseudo-clock sets; H149.1 not clock-specific). No tumour vs
+adjacent-normal fibroblast pairing has been computed on the A149 cohort set.
+**Data and states:** the A149 cohort set and tables (notes 1-3), compartments `tumour:fibroblast` and
+`adjacent_normal:fibroblast`, patients with both; cohorts with >= 4 such patients. States, centring, Poisson-corrected
+|complex correlation|, n-weighted pooling, within-cohort permutation null (10,000) and estimability as A149 S1.
+- **H151.1:** pooled tumour vs own adjacent-normal fibroblast pairing > null (one-sided, floor 1e-4).
+- **H151.2 (clock specificity):** the pooled clock statistic exceeds the pooled statistic of 200 expression-matched
+  pseudo-clock sets (A149 note 2 (iv), genome-wide sums of the two fibroblast compartments, matched on the cohort's
+  adjacent-normal fibroblasts): p = (1 + #{pseudo >= clock}) / 201, floor 0.005.
+- **Companion (descriptive):** the same for endothelial cells (`tumour:endothelial` vs `adjacent_normal:endothelial`).
+- **Power (before scoring, dated note):** units and null of H151.1 from permutations only.
+- **D151.1 (descriptive):** per cancer type with >= 12 patients: statistic, null mean, p. No bootstrap intervals (the
+  A149 patient bootstrap is invalid for |correlation|).
+- **Family:** secondary; Holm over H151.1-H151.2. **Reading:** both pass -> tumour stroma keeps a clock-specific,
+  patient-specific relation to the patient's normal-tissue stroma (the stromal counterpart of H138.4). H151.1 pass and
+  H151.2 fail -> pairing carried by non-clock structure, as A149. H151.1 fail -> not detected at this design (MDE).
+Code: `paper/exploratory/A151_fibroblast_pairing/`.
