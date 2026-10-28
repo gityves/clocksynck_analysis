@@ -945,3 +945,23 @@ conflict: a Poisson-corrected state correlation of 0.365 corresponds to about 0.
 back-of-envelope, different models and samples), inside the H138.1 interval and near the descriptive malignant
 host-coupled share (0.18, D138.1); H138.5 points the same way (0.58 vs null 0.44, p 0.069). The H138.1 and H138.5
 designs are underpowered for an effect of that size. Follow-up: pooled paired tumour/normal single-cell cohorts (A149).
+
+## A146 note 2 checks (scored 2026-10-28, secondary family "A146 checks"): the breast recorded-time pattern is not scheduling, handling or a generic trend; the glucocorticoid control is in direction but not detected
+GSE233242, 42 tumours, part 1 permutation stream.
+- **H146.4 FAIL (glucocorticoid score falls with resection hour):** t -1.61, one-sided p 0.054, Holm 0.054 (null SD
+  1.02 in t units; Spearman -0.22). In the predicted direction, not detected. Normal tissue (descriptive): t +0.98.
+- **H146.5 PASS (scheduling):** S with programs residualised on age and subtype 1.234 (unadjusted 1.339), p 0.0005,
+  Holm 0.001. Resection hour is not associated with age (Spearman 0.18, p 0.25), subtype (Kruskal-Wallis p 0.27;
+  Luminal A 28, TNBC 9, Luminal B 3, HER2 2), T-cell abundance (0.14, p 0.37) or myeloid abundance (0.19, p 0.22).
+- **D146.2 (handling):** immediate-early score t -0.29, hypoxia score t +1.04 (CA9 absent); S after residualising on
+  both 1.403, p 0.0004.
+- **D146.3 (trend vs predicted phases):** with the 10 predicted hours shuffled among programs, S averages 0.342 (q95
+  1.126); 0.97 % of shuffles reach the registered 1.339, so the predicted phase structure, not a common trend, carries
+  the score. Immune-cell programs S 1.354 (p 0.0027); the other programs S 1.318 (p 0.025; proliferation t 1.03,
+  MHC-I 2.15, interferon 1.15, PD-L1 0.94): not confined to immune cells.
+- **Reading (registered):** scheduling by age or subtype, the handling markers and a generic monotone trend do not
+  explain the pattern. The glucocorticoid positive control is in the predicted direction but not detected (p 0.054),
+  so the shared-wake-time systemic-cue reading is neither confirmed nor excluded; fasting duration remains confounded
+  with the hour. Programs of tumour-intrinsic as well as immune origin follow the hour. Replication in a second cohort
+  with recorded resection times remains the decisive step.
+<!-- src: paper/exploratory/A146_tme_time/output/{checks_tests,checks_descriptive}.csv -->
