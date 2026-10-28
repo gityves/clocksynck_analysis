@@ -1591,3 +1591,58 @@ kept as `common/anchors_a17_pre_classfix.csv`. The fixed stromal-vascular rule i
 appear or disappear. Every result anchored on the A17 table is then rerun and reported old vs new, verdict changes
 first: the A17 healthy fits, the family summary, A150, the Figure 4 contrasts, A152 heart, cue_units (A85 / A122), and
 Tabula Sapiens rebuilt. The old values stay in the docs as superseded.
+
+## A123c (2026-10-28, written before any truth is computed from out-of-window donors alone; PI request after the independent review): the working-hours organ map against a truth that shares no donor with the test
+
+**Why:** the review of 2026-10-28 (C9) noted that truth (i) is a cosinor on all fast deaths, so it includes the 111
+window donors whose untimed estimates are tested. After the addendum, the method's real-data advantage rests on A123,
+so the overlap is removed.
+**Known at registration:** A123 H123.1-3 (offsets r 0.945 vs truth (i), amplitudes 0.976, donor Spearman 0.613); A123b
+(CoFE genome -0.283, CoFE clock -0.417, CYCLOPS -0.296, CHIRAL -0.165 vs truth (i) in the window design). No truth from
+out-of-window donors has been computed.
+- **Truth (iii).** GTEx v10 fast deaths (Hardy 1-2) who died outside 08-18 h. Per-tissue cosinor on recorded time,
+  reduced by rank-1 complex SVD (A123 truth (i) code, same reference tissue and centring), for the A123 tissues with
+  >= 20 such donors. Tissues below that are dropped and counted. The truth and test donor sets are disjoint.
+- **Estimates:** the stored A123 clocksync estimates, unchanged. Their waveform was cross-fitted on the out-of-window
+  donors, which overlap with the truth (iii) donors (stated).
+- **Sensitivity (split):** the out-of-window donors are split at random into two halves (seed 123, stratified by tissue
+  count). Half 1 gives the waveform, clocksync is refitted on the window donors, and the estimates are scored against a
+  truth (iii) built from half 2 only.
+- **H123.5:** offsets vs truth (iii), circular correlation > 0.7 and tissue-permutation p < 0.05 (A123 `compare`,
+  10,000 permutations, 200 tissue bootstraps).
+- **H123.6:** log2 relative amplitudes vs truth (iii), Pearson > 0.7.
+- Each passes on its own, as H123.1-2 did.
+- **Descriptive:**
+  - truth (i) vs truth (iii) agreement;
+  - the A123b orderers (CHIRAL, CoFE genome and clock, CYCLOPS) and the timed oracle vs truth (iii), from their
+    stored consensus estimates;
+  - the split sensitivity;
+  - a prior-only baseline for donor timing: median absolute error of the A123 tangent-coordinate hour on the 111 window
+    donors vs always predicting the window centre (13:00), after the same common offset.
+- **Reading:** H123.5-6 pass -> the A123 organ map does not depend on the test donors entering the truth. A fail would
+  remove or reframe the Figure 1 panel (PI decision).
+Code: `paper/exploratory/A123_working_hours/scripts/compute_truth_iii.py`.
+
+## A140 Q1 note 2 (2026-10-28, a design change after a result, approved by the PI after the independent review): the registered core-clock seed
+
+**Why:** the review addendum notes that every Q1 CYCLOPS run so far used the seed without the 14 core clock genes.
+CYCLOPS is normally seeded with clock-informed genes, so the failure is open to a straw-man charge. The registered seed
+grid includes the core-clock variant ("with and without the core clock genes"), but the simulator gate was only run
+without it.
+**Known at registration:** the revised gate without core genes:
+- at scale 1, CYCLOPS vs truth median 0.060, 0 of 50 >= 0.7;
+- at scale 0, every CYCLOPS fit fails to start;
+- clocksync gate 24 of 50 at scale 1 and 20 of 20 at scale 0;
+- on the GTEx window design (A123b), CYCLOPS with its human seed: offsets -0.296.
+- **Gate with core genes:** arm D, K = 1, factor scale 1, seed 1,500 = the 14 core clock genes plus the top 1,486 others
+  (`q1_lib.seed_set(core=True)`), 80 models, calibrated factor (revision settings), 50 replicates. The worlds are the
+  same as the gate without core genes (base seed 1500), so the comparison is paired. Pass: median CYCLOPS-vs-truth
+  circular correlation >= 0.7 (as registered).
+- **Descriptive:** scale 0 with the core seed, 20 replicates. Does CYCLOPS start and recover the clock when there is no
+  factor?
+- **If the scale-1 gate passes:** H140.1-3 are run and scored as registered (arm B, K = 1, seed 500 with core genes; the
+  clocksync gate in arms A, B, C; exact binomial thresholds; Holm over the three).
+- **If it fails:** H140.1-3 are not scored. Reading: at this design CYCLOPS 2.0 does not recover a coupled clock even
+  when seeded with the core clock genes.
+Code: `A140_CORE=1` in `q1_run.py` / `q1_score.py`; outputs `output/q1rev/{gate,primary}_core/`,
+`simulator_gate_core.csv`, `primary_scores_core.csv`.

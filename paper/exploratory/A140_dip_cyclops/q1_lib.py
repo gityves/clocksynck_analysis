@@ -41,6 +41,8 @@ ARM_INDEX = {a: i for i, a in enumerate("ABCD")}
 SEED_SIZES = (50, 150, 500, 1500)
 import os
 N_MODELS = int(os.environ.get("A140_N_MODELS", 10))  # CYCLOPS train_n_models: 10 (template 80; cost, see README)
+CORE = os.environ.get("A140_CORE") == "1"  # 2026-10-28 note: gate / primary with the core-clock seed; outputs <step>_core/
+SUFFIX = "_core" if CORE else ""
 SEED_MTH_GENE = 1000  # CYCLOPS expression cutoff rank: half of the 2,000 genes (template 10,000 of ~20,000)
 CLOCK = list(cs.gtex().genes)
 

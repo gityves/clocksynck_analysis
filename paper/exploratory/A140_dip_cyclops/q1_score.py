@@ -15,10 +15,11 @@ from scipy import stats
 
 import os
 OUT = Path(__file__).resolve().parent / "output" / os.environ.get("A140_OUT", "q1")
+SUFFIX = "_core" if os.environ.get("A140_CORE") == "1" else ""  # 2026-10-28 note: core-clock seed
 
 
 def read(step: str) -> pd.DataFrame:
-    fs = sorted((OUT / step).glob("*.csv"))
+    fs = sorted((OUT / (step + SUFFIX)).glob("*.csv"))
     return pd.concat([pd.read_csv(f) for f in fs], ignore_index=True)
 
 
@@ -34,7 +35,7 @@ def gate():
                          min_truth_r=g.truth_r_median.min()))
     t = pd.DataFrame(rows)
     t["gate_passes"] = t.median_truth_r >= 0.7
-    t.to_csv(OUT / "simulator_gate.csv", index=False)
+    t.to_csv(OUT / f"simulator_gate{SUFFIX}.csv", index=False)
     print(t.to_string())
 
 
@@ -72,10 +73,10 @@ def primary():
                  passes=bool(xB <= 1 and xC <= 1 and xA >= 35 and adj[2] < 0.05))]
     t = pd.DataFrame(rows)
     t["extra"] = ["", "", f"p_B {pB:.4g}, p_C {pC:.4g}, A: P(X<=x|0.8) {pA:.4g}"]
-    t.to_csv(OUT / "primary_scores.csv", index=False)
+    t.to_csv(OUT / f"primary_scores{SUFFIX}.csv", index=False)
     desc = b[["cc_median", "cc_cd4_cd8", "cc_cd4_myel", "cc_cd8_myel", "n_rhy_cd4", "n_rhy_cd8", "n_rhy_myel", "n_rhy_min",
               "dip_R", "dip_cover", "acro_R_mean", "clock_order_R", "n_bins"]].describe().T
-    desc.to_csv(OUT / "primary_arm_B_descriptive.csv")
+    desc.to_csv(OUT / f"primary_arm_B_descriptive{SUFFIX}.csv")
     print(t.to_string())
     print(desc.to_string())
 

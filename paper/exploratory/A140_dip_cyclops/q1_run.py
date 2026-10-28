@@ -35,7 +35,7 @@ def task(step: str, arm: str, K: int, rep: int, combos: list, base_seed: int, th
          scale: float = 1.0):
     from clocksync.config import limit_threads
     limit_threads(1)
-    out = Q.OUT / step
+    out = Q.OUT / (step + Q.SUFFIX)
     out.mkdir(parents=True, exist_ok=True)
     f = out / (f"{arm}_K{K}_r{rep:03d}.csv" if scale == 1.0 else f"{arm}_K{K}_s{scale:g}_r{rep:03d}.csv")
     if f.exists():
@@ -87,9 +87,9 @@ def main():
     if args.step == "timing":
         tasks = [("timing", a, 1, r, [(500, False)], 99, True, 1.0) for a in "ABCD" for r in range(2)]
     elif args.step == "gate":
-        tasks = [("gate", "D", 1, r, [(1500, False)], 1500, True, float(sc)) for sc in args.scales.split(",") for r in range(args.reps)]
+        tasks = [("gate", "D", 1, r, [(1500, Q.CORE)], 1500, True, float(sc)) for sc in args.scales.split(",") for r in range(args.reps)]
     elif args.step == "primary":
-        tasks = [("primary", "B", 1, r, [(500, False)], 500, True, 1.0) for r in range(args.reps)]
+        tasks = [("primary", "B", 1, r, [(500, Q.CORE)], 500, True, 1.0) for r in range(args.reps)]
         tasks += [("primary", a, 1, r, [], 500, False, 1.0) for a in "AC" for r in range(args.reps)]
     elif args.step == "diag":  # post hoc diagnostic: arm D, seed 1,500, factor sd scaled (not registered)
         tasks = [("diag", "D", 1, r, [(1500, False)], 1500, True, sc) for sc in SCALES for r in range(args.reps)]
