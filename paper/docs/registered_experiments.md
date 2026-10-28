@@ -1352,3 +1352,7 @@ valid) and is reported as such.
   mechanism outside keratinocyte differentiation). H148.2 fails with a negative prediction: the uninvolved shift is
   partly a differentiation effect, contrary to the transit model's sign.
 Code: `paper/exploratory/A148_psoriasis_decomposition/`.
+
+**A148 note 1 (2026-10-28, PI decision):** A148 is closed after its acceptance check failed; the post hoc gene-set
+variant is not registered. The psoriasis differentiation argument rests on the single-cell results (A61, A63, A69)
+and the A115 differentiation descriptive.
