@@ -1731,3 +1731,14 @@ matrix (47 arrays after the authors' QC). Only the processed matrix is used.
   - H124.1 fails -> "not detected at n = 14, MDE ...". A126-A127 stay descriptive.
   - H124.2 fails with H124.1 passing -> the change is not specific to cue-driven genes.
 Code: `paper/exploratory/A124_night_shift/`.
+
+**A124 data rule (dated note 2026-10-28, after the blind inventory `exploratory/A124_night_shift/inventory.md` and before any clock readout):**
+- **Arrays and subjects:** the public series matrix has 47 arrays from 12 subjects, not 14.
+  - 11 subjects have all 4 biopsies and form the primary set. The exact test has 2^11 = 2,048 assignments, so the
+    smallest p is 4.9e-4.
+  - RAS9 lacks the misaligned evening array and is descriptive only.
+- **Biopsy times:** as recorded, 07:00 and 19:00.
+- **Probe mapping:** main-category probe sets whose gene_assignment lists the symbol; probe sets listing the symbol
+  alone, where they exist; mean of log2 per gene. NR1D1 is kept through its two THRA;NR1D1 read-through probe sets.
+- **Gene names:** mapped with the project's canonical alias table (`clocksync.genes.canonical`), as everywhere else.
+  Expected coverage: core 14 / 14, cue 40 / 40, locked 39 / 40 (CLUHP3 absent).
