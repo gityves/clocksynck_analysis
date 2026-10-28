@@ -965,3 +965,23 @@ GSE233242, 42 tumours, part 1 permutation stream.
   with the hour. Programs of tumour-intrinsic as well as immune origin follow the hour. Replication in a second cohort
   with recorded resection times remains the decisive step.
 <!-- src: paper/exploratory/A146_tme_time/output/{checks_tests,checks_descriptive}.csv -->
+
+## A123b (scored 2026-10-28): on the 40-tissue organ map, untimed orderers fail in working hours and recover with the whole day; clocksync holds in both
+GTEx v10 fast deaths, 40 tissues; W = 111 donors who died 08-18 h, F = all fast deaths (up to 244 donors). No method
+failed except CoFE clock genes in 1 W tissue.
+- **H123.4 PASS (W, truth (i)), all three:** clocksync offset circular r 0.945 vs CoFE genome-wide -0.283 (difference
+  1.23 [0.88, 1.48]), CoFE clock genes -0.417 (1.36 [0.95, 1.69], 39 tissues), CYCLOPS 2.0 -0.296 (1.24 [0.81,
+  1.67]); each one-sided p 0.0005 (floor), Holm 0.0015. CHIRAL (known): -0.165.
+- **Offsets, circular r vs truth (i), W / F; median absolute error W:** clocksync 0.945 / 0.966, 0.35 h; TimeTeller
+  (supervised) 0.754 / 0.950, 0.50 h; timed oracle 0.738 / (F is truth (i) itself), 0.61 h; CHIRAL -0.165 / 0.877,
+  1.18 h; CoFE clock genes -0.417 / 0.856, 1.36 h; CoFE genome-wide -0.283 / 0.139, 1.41 h; CYCLOPS -0.296 / 0.115,
+  1.83 h. Truth (ii) gives the same ranking (clocksync W 0.831).
+- **Donor order (consensus |circular r| with recorded time, best rotation and reflection), W / F:** CYCLOPS 0.47 /
+  0.50, TimeTeller 0.46 / 0.25, CoFE clock 0.32 / 0.22, CHIRAL 0.30 / 0.16, CoFE genome-wide 0.06 / 0.09 (clocksync
+  donor order in A123: Spearman 0.613 within the window).
+- **Reading:** the real-data counterpart of A145. With whole-day sampling, two-step orderers built on clock genes
+  (CHIRAL, CoFE clock genes) recover the organ map nearly as well as clocksync (0.86-0.88 vs 0.97), as A145 found on
+  idealised data; genome-wide CoFE and CYCLOPS do not. In working hours every orderer loses the map (r <= -0.17),
+  while clocksync keeps it (0.945) and beats the supervised TimeTeller and the timed oracle on the window donors. The
+  distinctive property of the method on real data is partial-day coverage, not coupling estimation as such.
+<!-- src: paper/exploratory/A123_working_hours/output/a123b/{h123_4,tests,donor_order,runtime}.csv -->
