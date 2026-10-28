@@ -920,3 +920,18 @@ PanCanAtlas ABSOLUTE purity (475 of 517 pairs called); H138.4 reproduced (0.3647
   null 0.44, p 0.069). Caveat: the purity range within a cancer is moderate (median split), and ESTIMATE was
   re-implemented (R package unavailable).
 <!-- src: paper/exploratory/A138_cancer_estimability/output/h138_8/{tests,per_cancer,pair_level,estimate_sensitivity,h138_4_reproduction}.csv -->
+
+## A148 (2026-10-28): stopped at the registered acceptance check (bulk deconvolution not valid)
+The deconvolved lesional-minus-uninvolved keratinocyte shares did not move as in single cell: cycling -0.020
+[-0.050, 0.011], most differentiated -0.019 [-0.045, 0.005] (3 series; GSE13355 is gene-centred log2, so CPM is
+undefined and it was excluded; 4-series sensitivity with imputed levels also fails). Deconvolution quality was poor:
+immune share 0 everywhere, 46-82 % of the squared signal unexplained, because the registered gene set (most variable
+across the five keratinocyte bins) carries almost no non-keratinocyte markers. No predicted offset was computed;
+H148.1-2 not scored.
+- **Post hoc diagnostic (not registered):** with genes variable across all nine references, the direction is right
+  but weak (cycling +0.019 [-0.012, 0.050], most differentiated -0.020 [-0.042, 0.002]). Not used.
+- **Reading:** bulk microarray / RNA-seq deconvolution into keratinocyte states is too fragile here to decompose the
+  delay. The differentiation argument rests on the single-cell results (A61, A63, A69) and on the A115 descriptive:
+  uninvolved skin is more differentiated than healthy (g +0.47), which the transit model predicts would run ahead,
+  not 1.8 h behind.
+<!-- src: paper/exploratory/A148_psoriasis_decomposition/output/{acceptance,shares,genes_selected,acceptance_posthoc}.csv -->
