@@ -1742,3 +1742,38 @@ Code: `paper/exploratory/A124_night_shift/`.
   alone, where they exist; mean of log2 per gene. NR1D1 is kept through its two THRA;NR1D1 read-through probe sets.
 - **Gene names:** mapped with the project's canonical alias table (`clocksync.genes.canonical`), as everywhere else.
   Expected coverage: core 14 / 14, cue 40 / 40, locked 39 / 40 (CLUHP3 absent).
+
+## A156 (2026-10-28, written after A124 was scored and before any download of GSE48113; roadmap 6.2): forced desynchrony in human blood, a timed within-subject misalignment
+
+**Why:** A124 (muscle, 2 biopsy times per condition) had MDE 7.3 h and did not detect a change. GSE48113 (Archer et al.
+2014, forced desynchrony on 28 h days) samples blood 7 times on day 1 (sleep aligned with the central clock) and on day 4
+(sleep displaced by about 12 h) in 22 subjects. It is the largest timed within-person misalignment series found.
+**Known at registration:**
+- Archer 2014 reports far fewer rhythmic transcripts relative to the melatonin phase on day 4, and a reduced amplitude
+  of rhythmic genes.
+- A124: the muscle core clock keeps its direction under a behavioural shift and loses amplitude.
+- No GSE48113 data have been read.
+- **Data rule:** a dated note after a blind inventory (subjects with both days, samples per day, sample clock times or
+  hours since wake, probe mapping), before any clock readout. Only the processed series matrix is used.
+- **Estimator (A124 / A115, A53 array convention):** core, cue (A81b) and locked (A81b) states. One projector per set
+  over all arrays. States centred within subject x day. Per subject and day, core-cue offset = arg Σ c_core c_cue*
+  over that subject-day's samples; core-locked likewise.
+- **H156.1 (primary):** the core-cue offset changes from day 1 to day 4.
+  - Statistic: |circular mean of Δ_i| in hours, unweighted, where Δ_i = offset(D4) − offset(D1) per subject.
+  - Null: day labels swapped within subject (10,000 random assignments, or exact if n <= 16).
+  - Two-sided p < 0.05.
+- **H156.2 (specificity, same permutations):** |mean Δ core-cue| − |mean Δ core-locked| > 0, one-sided.
+- Holm over H156.1-2. The MDE is reported from the null, defined as in A124.
+- **Descriptive (timed):**
+  - per subject and day, the core-state phase against sample time (a cosinor on the 7 samples), the change from D1 to
+    D4, and the same for the cue state. Does the blood core clock follow the displaced sleep, or stay with the central
+    clock?
+  - the untimed Δ core-cue against the timed core-minus-cue phase change (circular correlation over subjects): a check
+    of the untimed readout against timing;
+  - coherence per day.
+- **Reading:**
+  - H156.1 passes -> the untimed core-cue readout detects imposed misalignment in human tissue, a perturbation positive
+    (blood).
+  - H156.1 fails -> not detected, with the MDE.
+  - The timed descriptive states whether the readout tracks the known displacement either way.
+Code: `paper/exploratory/A156_forced_desynchrony/`.
