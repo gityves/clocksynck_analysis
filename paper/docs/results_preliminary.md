@@ -1066,3 +1066,25 @@ Uncorrected |complex correlation| (cannot exceed 1), clock vs the same 200 pseud
   Poisson-corrected |correlation| needs a bound or a breakdown check whenever it is compared with pseudo-clock sets at
   low depth; the registered A151 H151.2 verdict (fail) stands as scored and is superseded in reading by this check.
 <!-- src: paper/exploratory/A151_fibroblast_pairing/output/{posthoc_pooled,posthoc_per_cohort}.csv -->
+
+## A152 (scored 2026-10-28, secondary): residency does not carry lymphocyte coupling; the A17 lymphocyte classes include mast cells
+A6 residency rule; A17 setup reproduced exactly (max |difference| 8e-17); per-cell Census sums reproduce the atlas
+lymphocyte pseudobulks exactly. 1,000 within-donor label swaps; minimum p 0.001.
+- **H152.1 FAIL:** heart + breast mean resident-like minus circulating-like coupling -0.092; null 0.004 +- 0.085, q95
+  0.148, MDE 0.220; p 0.86.
+- **Per tissue (c_res / c_circ, difference, p):** lung 0.091 / 0.077, +0.013, p 0.32 (95 donors with both, MDE 0.085);
+  heart 0.043 / 0.106, -0.063, p 0.66 (23 donors, LV nuclei, about 40 cells and 50k UMI per pseudobulk, both at the
+  boundary, MDE 0.317); breast 0.427 / 0.549, -0.122, p 0.90 (111 donors). CD8 only: lung 0.029 / 0.000 (p 0.15),
+  breast 0.251 / 0.453 (p 0.74). Resident-like share per donor 0.48-0.52. All split tables pass the gate. Sensitivities
+  (both-state donors only; tertiles on analysed cells) keep the signs.
+- **D152.0 (lung reconciliation):** A17 lung:T is 0.153 on the clock table (the 0.159 quoted in the registration is the
+  A150 genome-twin value); T as one class from the state builder 0.142-0.145; the split 0.091 / 0.077. Under the current
+  estimator lung T cells are weakly coupled whichever way they are cut; the archive A6 values (0.61 / 1.00) do not
+  reproduce.
+- **Finding (class mapping):** the A17 class regex assigns Census "mast cell" to `heart:lymphocyte` and
+  `breast:T_other` ("t cell" inside "mast cell"). Heart atlas: 2,927 mast cells against 16,636 lymphocytes and 4,302
+  NK cells. The A17 heart lymphocyte coupling (0.556) therefore mixes mast cells (tissue-resident) with lymphocytes; the
+  residency split, which excludes mast cells, gives 0.04-0.11 in heart. Mast-cell diagnostic running (post hoc).
+- **Reading:** residency does not confer coupling (consistent with archive A6 in healthy lung); in breast,
+  circulating-like T cells couple at least as much as resident-like ones. Heart is uninformative at its depth.
+<!-- src: paper/exploratory/A152_lymphocyte_residency/output/{h1521,perm_summary,states_summary,fits_observed,lung_repro_check,part2_repro_check,repro_a17,gates}.csv -->
