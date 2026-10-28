@@ -1532,3 +1532,7 @@ adjacent-normal fibroblast pairing has been computed on the A149 cohort set.
   patient-specific relation to the patient's normal-tissue stroma (the stromal counterpart of H138.4). H151.1 pass and
   H151.2 fail -> pairing carried by non-clock structure, as A149. H151.1 fail -> not detected at this design (MDE).
 Code: `paper/exploratory/A151_fibroblast_pairing/`.
+
+**A151 note 1 (2026-10-28, power step; nulls only).** Fibroblast pairs: 98 patients in 17 cohorts (colorectal 42 / 7,
+lung 24 / 3, others < 12 per type); null 0.504 +- 0.058, q95 0.601, MDE 0.650 (detectable excess about 0.15).
+Endothelial companion: 103 patients / 15 cohorts, null 0.521 +- 0.068, MDE 0.695. Scoring follows A150.
