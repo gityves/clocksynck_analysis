@@ -1298,3 +1298,8 @@ the core clock stays. The untimed per-subject core-cue readout cannot resolve it
 registered human perturbation tests are now uninformative for power. The core-cue estimator is reliable only where
 clock and cue signals are strong (psoriasis skin, GTEx), which is stated as a limitation.
 <!-- src: paper/exploratory/A156_forced_desynchrony/output/{tests,mde,sensitivities,descriptive_deltas,descriptive_timed,coherence_per_day}.csv -->
+
+### 2026-10-28, roadmap 6.3 (GTEx long-term steroid users): infeasible, not registered
+
+Aggregate counts of `MHSTRDLT` = yes by Hardy: H0 8, H1 0, H2 6, H3 4, H4 6. That is 24 users in total and 6 among fast
+deaths. Below any matched design (>= 15 per arm, as in A132 D132.3). Dropped; no clock readout was done.
