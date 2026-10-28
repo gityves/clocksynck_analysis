@@ -1153,3 +1153,25 @@ Truth (iii): cosinor on recorded time of the fast deaths who died outside 08-18 
   oracle, and both truths. (b) A post hoc descriptive diagnostic is added: per-tissue residuals, the bootstrap noise
   ceiling of truth (iii), and the split-half distribution (`output/a123c/diag/`). Class-fix reruns are held after the
   anchor relearn until roadmap phases 1-2 are done.
+
+## A17 note (2026-10-28): anchors relearned on the class-fixed tables (provisional until roadmap phase 2)
+
+`compute_coherence.py` then `compute_anchors.py` were rerun on the class-fixed tables, with the unchanged rule.
+- **New compartments in the learning:** the 28 dataset/compartment pairs the fix created
+  (`common/class_fix_new_compartments.csv`), through `Target(new_classes=True)`. A first attempt with every table
+  compartment was discarded: it added compartments the original A17 excluded on purpose in 22 targets.
+- **Check:** on the pre-fix coherence outputs, the code reproduces the frozen table 70/70 for both rules.
+- **Changes:** 12 of 70 targets changed, and 3 of 301 target x family rows changed learned status. Learned flag changes,
+  verified against the two tables:
+  - `ia_lung`: the lymphocyte family is no longer learned (B, CD4_T, CD8_T, ILC, NK and T_other removed), and ia:mast is
+    added (myeloid family).
+  - `organ_colon`: colon:endothelial is removed and colon:macrophage_DC is added. The endothelial family goes from
+    learned to not learned, and the myeloid family from not learned to learned.
+  - New learned anchors: heart:adipocyte in dcm and dcm_healthy.
+  - kong_colon / kong_ileum T_other keep their learned flag after the relearn.
+- **Fixed rule:** unchanged everywhere.
+- **Tabula Sapiens:** rebuilt under the current rules, with no change in rows or cells.
+- **Cancer anchor rows** (214) are carried over unchanged: their tables do not use the atlas class rules.
+- **Status:** no fit has been rerun (PI hold). The relearn is repeated after the roadmap phase 2 legacy-table audit if
+  any table changes.
+<!-- src: paper/common/anchors_a17.csv vs anchors_a17_pre_classfix.csv; paper/results/logs/anchor_relearn_diff.md; paper/results/extended_data/output/host_identity/a17_anchor_families.csv -->

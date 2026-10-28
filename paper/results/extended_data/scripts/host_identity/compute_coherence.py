@@ -38,7 +38,7 @@ def one(name: str, i: int, subsample, seed: int, n_perm_gate: int, n_perm: int, 
     limit_threads(1)
     warnings.filterwarnings("ignore")
     try:
-        T = Target(name, subsample, seed)
+        T = Target(name, subsample, seed, new_classes=True)
         ds = T.dataset(anchors=None)
         out = dict(name=name)
         if T.kind == "healthy":

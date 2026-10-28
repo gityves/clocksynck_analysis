@@ -49,12 +49,17 @@ def compartments(name: str) -> list:
 class Target:
     """One A17 target: standard table restricted to the fit's donors and compartments."""
 
-    def __init__(self, name: str, subsample: int | None = None, seed: int = 0):
+    def __init__(self, name: str, subsample: int | None = None, seed: int = 0, new_classes: bool = False):
         r = registry().loc[name]
         self.name, self.kind, self.row = name, r.kind, r
         self.study, self.tissue, self.ref = r.study, r.tissue, r.ref
         pb, donors = data.load(r.dataset)
+        # new_classes: the anchor learning (compute_coherence) also reads the compartments that the class-rule fix added
+        # to the table (common/class_fix_new_compartments.csv); elsewhere the anchor table defines the compartments
         comps = compartments(name)
+        if new_classes:
+            add = pd.read_csv(ANCHOR_TABLE.with_name("class_fix_new_compartments.csv"))
+            comps = comps + [c for c in add.loc[add.dataset == r.dataset, "compartment"] if c not in comps]
         if r.kind == "healthy":
             keep = donors.index[donors["healthy"].astype(bool)] if "healthy" in donors else donors.index
             lab = None
