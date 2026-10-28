@@ -6,6 +6,22 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 
 ## Open
 
+### Q13 (2026-10-28): roadmap phase 0 decisions (ROADMAP_2026-10-28.md)
+I am going ahead with phases 1, 2 and 4 (code, data integrity, simulations) and the phase 6 scouts. None of them
+depends on the answers below. The defaults in brackets apply when phase 3 starts, unless you say otherwise.
+- **0.1 Reported coupling readout:** excess over the pseudo-clock median (Δc, with pseudo q95), or raw c?
+  [default: Δc as main, raw c in the supplement]
+- **0.2 Eligibility rule for disease primaries:** a compartment enters only if its control Δc exceeds the pseudo q95 and
+  the MDE on d* is <= 0.2, registered as A153 before the contrasts are rerun. [default: adopt]
+- **0.4 Anchor self-inclusion (C7):** decided after the simulation of roadmap 1.5. I will put its result here.
+- **0.6 Parked items:**
+  - A136: register now? [default: I draft the registration for your review, not scored]
+  - A147 reference-size sensitivity: [default: run, labelled post hoc, 2 min]
+  - A139 grid: [default: skip]
+  - A138 Q2 simulator: [default: option (b), fix the clock signal-to-noise with a dated note]
+  - Q12 and A119: yours (outward-facing / procurement).
+- **On hold:** phase 3 onwards (anchors, backbone, A150 extension, disease reruns).
+
 ### Q12 (2026-10-27): request brain time-of-death fields? (A141)
 A141 (registered after your Q6 answer):
 - 8 of 12 brain contrasts are noise-driven, so not estimable.
