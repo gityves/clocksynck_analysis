@@ -1234,3 +1234,35 @@ Same simulator and seeds, with the reference group drawn at n 244 instead of the
   decides them. The readout works at n 298 under either reference size. Extended Data, as already decided, with this
   sensitivity stated.
 <!-- src: paper/exploratory/A147_pull_order/output/posthoc_nref244/v147.csv; output/v147.csv -->
+
+## A124 (scored 2026-10-28): simulated night shift in human muscle, misalignment not detected (H124.1, H124.2 fail; MDE 7.3 h)
+
+GSE106800: 11 complete subjects, 44 arrays, 2,048 exact within-subject label swaps (smallest p 4.9e-4). Gene coverage
+with `clocksync.genes.canonical`: core 14/14, cue 35/40, locked 36/40.
+- **Data-rule error (lead):** the data rule expected 40 / 39, but the canonical table lacks 8 old platform names
+  (FAM46B, MTERFD3, HIST2H2BE, C12orf23, SEPT4, C10orf116, CENPC1, FAM134B). The primary follows the rule as written
+  (canonical); the full-coverage run is a post hoc sensitivity.
+
+**Hypotheses:**
+- **H124.1 FAIL.** |Δ core-cue| = 3.35 h (misaligned minus control -3.35 h, bootstrap [-7.45, 2.01]), p 0.211, Holm
+  0.422.
+- **H124.2 FAIL.** |Δ core-cue| − |Δ core-locked| = -0.43 h, p 0.771. Δ core-locked -3.78 h [-8.57, -0.60].
+- **MDE:** 7.3 h (null circular SD 2.61 h; null q95 of |Δ| 4.76 h).
+
+**Descriptive:**
+- Coherence falls under misalignment: core-cue 0.55 -> 0.40, core-locked 0.71 -> 0.34.
+- **The muscle core clock does not follow the shifted behaviour within the protocol.** The core state moves between
+  07:00 and 19:00 in the same direction in both conditions (cosine 0.91), with about half the amplitude under
+  misalignment (3.20 -> 1.67). The cue state is too noisy for a direction.
+- With all 12 subjects: Δ core-cue -3.37 h.
+- **Post hoc, full gene coverage** (8 platform aliases added; core 14, cue 40, locked 39): H124.1 |Δ| 3.12 h, p 0.140.
+  H124.2 3.01 h, p 0.054, Holm 0.107. Δ core-locked -0.11 h. MDE 5.9 h. Neither passes. H124.2 depends strongly on the
+  mapping of 8 genes.
+
+**Reading:** not detected at n = 11 with two biopsy times per condition (MDE 7.3 h). The design cannot resolve shifts of
+the size expected. Under the registration, A126-A127 stay descriptive. The halved evening-morning core amplitude is
+consistent with a damped, not shifted, muscle clock under acute misalignment (descriptive).
+
+**Tool gap:** `clocksync.genes.canonical` lacks common old platform names. Adding them is roadmap 8.4; it changes gene
+coverage for array datasets and needs a regression check.
+<!-- src: paper/exploratory/A124_night_shift/output/{tests,mde,descriptive_deltas,descriptive_time_state_difference,sensitivity_12_subjects}.csv; output/alias_sensitivity/tests.csv -->

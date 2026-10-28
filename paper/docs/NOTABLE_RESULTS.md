@@ -6,6 +6,13 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
 
 ## 2026-10-28
 
+- **A124: no human perturbation positive from the simulated night shift (MDE 7.3 h, n = 11).** H124.1 |Δ core-cue|
+  3.35 h, p 0.21. Descriptive: the muscle core clock keeps its 07->19 h direction under a 12 h behavioural shift but
+  loses half its amplitude (3.20 -> 1.67), consistent with damping rather than shifting. H124.2 flips with the mapping of
+  8 old gene names (p 0.77 vs 0.054).
+  - *Follow-up:* a better-powered perturbation (timed series: GSE48113 forced desynchrony, blood, 22 subjects x 7
+    times) or GTEx steroid users (roadmap 6.2-6.3).
+  - *Source:* `A124_night_shift/output/tests.csv`.
 - **A123c diagnostic: truth (iii) is too noisy to test offsets at 0.7 (explains the fail).** Split-half truth
   reliability 0.54, so the ceiling for a perfect estimate is about 0.83. The estimate disattenuated is 0.73-0.81. Whole
   Blood alone (truth (iii) R2 0.028) moves r from 0.679 to 0.754. The 0.807 split was a 95th-percentile draw.
