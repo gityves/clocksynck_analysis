@@ -1401,3 +1401,19 @@ cohort (10,000; the same permutation indices for the pooled and per-cancer stati
   pass: it runs through the stroma; intermediate: both. Any failed test is "not detected at this design" with its MDE,
   never "uncoupled". D149.2 states where cancers differ; no cancer-type claim is confirmatory.
 Code: `paper/exploratory/A149_paired_tumour_normal/`.
+
+**A149 note 1 (2026-10-28, before any A149 data were downloaded or read): cohorts added.** From `candidates.md`
+(search of 2026-10-28), the cohorts with a verified count of >= 4 paired patients, droplet or well-based UMI data
+(cells or nuclei), patient and tissue type in the metadata, no stated neoadjuvant treatment and no fraction sorting
+that removes epithelium: GSE164789, GSE229253, GSE333596, GSE153935, GSE310916, GSE200972, GSE117570 (lung);
+GSE206785, GSE150290, GSE167297 (gastric); GSE199654, GSE160269 (oesophageal squamous; GSE199654 is epithelium only
+and enters H149.1 only); GSE178481, GSE242299 (kidney); GSE282701, GSE242889, GSE290298 (liver); GSE293189 (bladder;
+the 2 paragangliomas are dropped, no epithelium of origin); GSE144240 (cutaneous SCC); GSE193337, GSE176031 (prostate).
+Data rules: a cohort whose supplied matrix fails the integer check of the legacy GEO builder (raw UMI) is dropped;
+multiple tumour samples or lesions of a patient are pooled as `cancer_sc` does; GSE164789 keeps all lesion stages
+(AIS / MIA / invasive), malignant cells taken from copy-number calls where called. Not added (unverified pairs or
+format, Seurat-only objects, treated subsets mixed): Joanito 2022, Moorman 2025, OPSCC (CELLxGENE), GSE173950,
+GSE201347, GSE185344, GSE202642, GSE210347 (re-compiled, overlaps). Copy-number calls of the new cohorts are written
+to `$SCCC_DATA/cnv_a149/` so that the cohort set of the frozen A83-A138 analyses (`CNV_STUDIES`) is unchanged.
+Cancer classes for D149.2: lung, liver, kidney, prostate, thyroid, breast = TCGA clock-keeping; colorectal, bladder =
+at null; gastric, oesophageal, skin, pancreatic, head and neck, ampullary = not in the contrast.
