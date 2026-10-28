@@ -1465,3 +1465,14 @@ excluded by the treatment rule; GSE160269 CD45- libraries only enter (the builde
 Several cohorts (GSE242299, GSE176031, GSE153935, GSE293189) sit largely below the unchanged median UMI >= 1,500
 sample rule and may contribute few or no patients. Build scripts:
 `paper/exploratory/A149_paired_tumour_normal/scripts/build_geo_a149_part{1,2}.py`.
+
+**A149 note 4 (2026-10-28, power step; nulls only, no observed statistic computed).** Units (`output/units.csv`):
+S1 190 patients in 27 cohorts (130 from existing cohorts, 60 new: GSE164789 10, GSE229253 9, GSE150290 10, GSE144240
+8, GSE310916 5, GSE282701 5, GSE242889 5, GSE200972 4, GSE167297 4); S2 61 patients / 9 cohorts; S3 51 / 7 estimable.
+Lost to the unchanged builder rules: kidney (no epithelial compartment called in GSE178481 / GSE242299), GSE160269,
+GSE199654, GSE153935, GSE293189, GSE193337, GSE176031 (depth or adjacent-normal epithelium below the cell and patient
+rules); GSE117570 fails in the state computation (ZeroDivisionError; left out). Pooled nulls (mean +- SD, q95, MDE):
+S1 0.446 +- 0.042, 0.517, 0.552; S2 0.539 +- 0.092, 0.691, 0.768; S3 0.410 +- 0.078, 0.542, 0.608. Per cancer type
+(>= 12 patients): S1 colorectal 82, lung 42, gastric 21, liver 14 (MDE 0.57-1.02); S2 and S3 colorectal and lung
+only. D149.2 classes: keeping 71 (S1), at null 82 (colorectal only). H149.1 is powered for an excess of about 0.11
+over its null; H149.2 / H149.3 only for about 0.2-0.23, and the per-cancer estimates are descriptive at best.
