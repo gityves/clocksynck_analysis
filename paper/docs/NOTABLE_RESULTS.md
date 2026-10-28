@@ -6,6 +6,11 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
 
 ## 2026-10-28
 
+- **Psoriasis core delay is robust and specific (strong, reassuring after A156).** Leave-one-gene-out and 80 % subsets
+  keep it 100 % negative. 0 of 600 responsive or matched pseudo sets reach the core offset (-1.43 h; pseudo
+  2.5-97.5 % about [-0.6, 0.6]). NR1D1 alone carries +0.54 h of it.
+  - *Follow-up:* state the NR1D1 dependence; a composition-controlled readout (roadmap 6.9) is still open.
+  - *Source:* `psoriasis_robustness_2026-10-28/output/pseudo_sets_summary.csv`.
 - **A156: the untimed core-cue readout fails in timed human blood under forced desynchrony (unexpected weakness).**
   The timed cosinor shows the biology: cue genes follow the displaced sleep (-6.85 h [-11.1, -2.8]) and the core clock
   stays (-1.36 h). The untimed per-subject core-cue offset does not track it: r 0.04 against the timed change, MDE

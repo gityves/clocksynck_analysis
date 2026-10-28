@@ -1303,3 +1303,22 @@ clock and cue signals are strong (psoriasis skin, GTEx), which is stated as a li
 
 Aggregate counts of `MHSTRDLT` = yes by Hardy: H0 8, H1 0, H2 6, H3 4, H4 6. That is 24 users in total and 6 among fast
 deaths. Below any matched design (>= 15 per arm, as in A132 D132.3). Dropped; no clock readout was done.
+
+### 2026-10-28, psoriasis delay: gene-set robustness (post hoc, descriptive; motivated by A156)
+
+The headlines reproduce exactly (15 gated series): core -1.426 h, cue +0.263 h, core minus cue -1.689 h; A54 held-out
+core -0.932 h.
+- **Leave-one-gene-out:** every estimate stays negative.
+  - Core: range -1.53 to -0.89 h. Only NR1D1 shifts it by more than 0.5 h (+0.54 h; +0.31 h on the held-out series).
+  - Cue genes: core minus cue ranges -1.76 to -1.56 h (largest shift 0.13 h).
+- **Random 80 % subsets** (500 each): core minus cue [-1.89, -1.43] (cue subsets) and [-1.86, -0.98] (core subsets),
+  100 % negative.
+- **Pseudo-gene controls** (200 sets each): pseudo offsets are centred on 0. Responsive-gene sets on the core waveform
+  give [-0.58, 0.40], matched sets [-0.61, 0.59]. 0 of 200 sets in any family reach the core offset. The cue offset
+  (+0.26) sits inside the pseudo range.
+- **Gene names:** the A124 alias names are not core or cue genes in these series (coverage 14 / 14 core, 36-37 / 40
+  cue).
+- **Reading:** unlike in blood (A156), the psoriasis core delay is robust to the gene sets and specific against
+  responsive and matched non-clock genes. The delay sits in the core clock, not in the cue plane. One gene (NR1D1)
+  carries about a third of the core shift; this is stated.
+<!-- src: paper/exploratory/psoriasis_robustness_2026-10-28/output/{reproduction,leave_one_gene_out*,random_subsets_summary,pseudo_sets_summary,platform_coverage}.csv -->
