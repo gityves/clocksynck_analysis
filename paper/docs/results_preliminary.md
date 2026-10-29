@@ -1453,3 +1453,35 @@ family-summary gates seeded by target name.
     compartments with c above about 0.75: heart fibroblast fails at 0.718 (matched q95 0.912).
 - **Consequence:** A153 has no primaries as registered: no control-arm tables, and a flag that is underpowered per
   compartment. A153 is parked until the PI decides (PI_QUESTIONS Q15).
+
+## A160 (scored 2026-10-29): psoriatic delay within keratinocytes — not testable at this design (both MDEs > 1.7 h), descriptive only
+
+Data: GSE173706 (on disk). All-gene pseudobulks were rebuilt from the per-library count matrices using the archived cell
+annotations; the clock-gene counts match the archive. Code and outputs: `exploratory/A160_psoriasis_keratinocyte/`.
+- **Feasibility** (`output/a160_feasibility.csv`):
+  - 10 PN-PP pairs; patient 31170 drops at 132 PN keratinocytes, and 30696 V1/V3 count as two pairs.
+  - 5 of 8 healthy libraries pass.
+  - The keratinocyte variant uses 34 of 40 A81b cue genes (4 absent as old aliases).
+  - Eligible bins: cycling, d2, d3, d4 (8-9 pairs); d1 has 7 pairs and is excluded.
+- **Blind power** (PN plus healthy only, 2,000 draws; `a160_blind_power.csv`):
+  - Keratinocyte null SD 2.17 h (boot) / 2.00 h (split), MDE 5.39 h.
+  - Bins: 1.40 / 1.56 h, MDE 3.88 h.
+  - Neither variant meets the 1.7 h gate, so H160.1-2 have no verdict.
+- **Descriptive readout** (`a160_tests.csv`, `a160_descriptives.csv`, exact swaps 2^10 = 1,024, one-sided p):
+  - Keratinocyte PP − PN core-cue −2.82 h (p 0.014). Without NR1D1 −1.57 h (p 0.22); core alone −2.61 h (p 0.32).
+  - Bins −2.83 h (p 0.10). Without NR1D1 +0.91 h. Per bin (`a160_per_bin.csv`): −7.3, +1.0, −1.8, −5.0 h, bootstrap SE
+    4.9-6.0.
+  - Whole skin on the same 10 pairs: −1.35 h (p 0.058). With all 11 pairs: +0.73 h.
+  - PN − healthy: keratinocyte +3.36 h [−2.72, 8.16]; whole skin −0.68 h [−6.91, 4.96].
+- **Deviations from the registration:**
+  - 10 pairs instead of 11, by the data rule.
+  - The pseudo-pair null resamples, because the pool (15 libraries) is smaller than 2n. The gate uses the larger MDE of
+    the bootstrap and split schemes (the A115 precedent).
+  - The estimand is read as A115's within-group offset (one projector per set over both groups). A first blind run with
+    a between-sample paired correlation (null SD 7.6 h, PN/healthy only) was discarded before any PP statistic was
+    computed.
+- **Reading:** the single-cell series is too small to separate keratinocyte-intrinsic delay from composition. The
+  point estimate is negative and leans on NR1D1, as in bulk. Even the whole-skin pseudobulk of these libraries does not
+  stably reproduce the bulk delay: −1.35 h, and +0.73 h with one more pair. Roadmap 6.9 composition control stays open;
+  it needs a larger paired single-cell cohort (the 2026 AD/psoriasis atlases in the scout, accession unverified) or
+  bulk deconvolution.
