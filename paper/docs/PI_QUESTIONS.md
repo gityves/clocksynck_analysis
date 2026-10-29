@@ -267,3 +267,22 @@ So A153 as registered has an empty primary family. Changing the rule after seein
 
 **Default if no answer:** none. A153 stays parked; this is a design change after a result. Meanwhile I run things that
 do not depend on it (CYCLOPS core seed, A154, 6.9 psoriasis composition scout, lung_hlca genome rebuild).
+
+## Q16 (2026-10-29): fresh tumour-normal stromal pairing (roadmap 7.2) — worth registering on what is available?
+**Scout** (`exploratory/scouts_2026-10-29/a151_fresh_scout.md`, metadata only). Few fresh paired single-cell cohorts with
+stroma exist:
+- Kyushu gastric (16 untreated pairs, verified; Seurat .rds of 18-22 GB, parsed in Python only);
+- Li 2022 ccRCC (up to 12, unverified);
+- OPSCC (≤ 7, unverified);
+- oesophageal GSE173950 (conditional).
+
+That is 16 verified patients and about 45 if the rest hold. Colorectal, liver and breast stay not estimable. The bounded
+statistic flags small cohorts (n 4-11), so a fresh A151 would likely be an underpowered descriptive.
+**Larger alternative (not fresh):** marker-based fibroblast re-annotation of cohorts already in A149/A151 that have 0
+fibroblast pairs: GSE150290 23, GSE199654 13, GSE144240 10, GSE178481 9, GSE242299 8. These have been seen at the
+malignant level but not for fibroblasts.
+**Options:**
+- (a) Register a fresh A151 on Kyushu + ccRCC + OPSCC, as the main-text candidate.
+- (b) Register the re-annotation of the used cohorts, labelled "not fresh".
+- (c) **[default, recommended]** Keep the pairing descriptive in Figure 5 (lead with A97/A127 coherence vs
+  proliferation), and spend no more compute on 7.2.
