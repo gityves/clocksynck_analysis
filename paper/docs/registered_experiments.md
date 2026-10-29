@@ -1991,3 +1991,50 @@ library, all genes, CPM, then the A78 processing.
 - A whole-skin delay with a null keratinocyte offset at adequate MDE → composition is the route.
 
 Code: `paper/exploratory/A160_psoriasis_keratinocyte/`.
+
+## A127 (2026-10-29, written before SCAN-B is downloaded; WP8, roadmap 7.5; H127.3 single-cell part not registered here): breast tumour clock coherence vs proliferation and ER status at scale (SCAN-B)
+
+**Why:** A97 found lower clock-gene coherence in high-proliferation TCGA tumours (H97.2) and lower coherence in
+ER-negative breast tumours (exploratory). SCAN-B (GSE96058, about 3,000 primary breast tumours, RNA-seq, with PAM50, ER
+and follow-up) replicates both at about 3x the TCGA breast size. A124 failed, so cue results stay descriptive (WP8 rule);
+H127.1-2 are not cue results.
+**Data:** GSE96058 processed expression matrix and sample characteristics, public. One sample per patient: technical
+replicates are dropped, keeping the first listed. Only primary tumours with PAM50 and ER recorded.
+- **Data rule:** if the processed matrix is not on a log-FPKM / TPM-like scale that can be converted to the A97 scale (log2
+  CPM-like within cohort), use the published scale with z-scores within cohort, and state it. All 14 clock genes and
+  ≥ 90 % of the G2M set must be present.
+
+**Definitions** (frozen from A97, `figure_5/scripts/cancer/compute_proliferation.py`):
+- proliferation score = mean z of Hallmark G2M genes, clock genes removed;
+- purity proxy = mean z of COL1A1, COL1A2, COL3A1, DCN, LUM, PDGFRB, PTPRC, CD3E, CD14, LYZ, CD74 (high = low purity);
+- coherence = `decompose.components` gene coherence (A87) of the 14 clock genes over a group of tumours.
+
+Tertiles are by rank within stratum.
+
+**Tests:**
+- **H127.1.** Strata: PAM50 subtype × purity-proxy tertile, keeping strata with ≥ 30 tumours.
+  - T = mean over strata of coherence(high proliferation tertile) − coherence(low).
+  - Null: tumour order permuted within stratum, 2,000 times. One-sided p (loss) < 0.05.
+- **H127.2.** Coherence(ER−) − coherence(ER+) within purity-proxy tertile, mean over tertiles; ER labels permuted within
+  tertile, 2,000 times. One-sided p < 0.05.
+  - Sensitivity, not tested: the same within proliferation tertile, to ask whether ER adds anything beyond proliferation.
+- Holm over H127.1-2.
+
+**Specificity companion (same permutations):** 200 expression-matched pseudo-clock sets (14 genes, matched on mean and
+variance, clock and G2M genes excluded; `clocksync` controls). T_pseudo per set.
+- A pass is labelled "clock-specific" only if T is also below the 5th percentile of T_pseudo.
+- Otherwise the result is reported as "coherence loss not specific to the clock".
+
+**Exploratory (pre-specified):**
+- survival as A97: Cox with age, tumour size, node status and PAM50, using the per-tumour off-plane score; overall
+  survival;
+- coherence per PAM50 subtype;
+- the purity-proxy tertile companion as A97.
+
+**Reading:**
+- H127.1 passes, clock-specific → A97 replicates at scale, within subtype and purity; Figure 5 panel.
+- H127.1 passes, not specific → proliferating tumours lose coherence in any co-regulated set; the A97 wording changes to
+  "general transcriptional decoherence".
+- A failure at this size (MDE reported) bounds the A97 effect.
+
+**Code:** `paper/exploratory/A127_scanb/`. Data: `$SCCC_DATA/scanb_gse96058/` with PROVENANCE.md.
