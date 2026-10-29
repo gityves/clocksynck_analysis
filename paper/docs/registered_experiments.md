@@ -2038,3 +2038,68 @@ variance, clock and G2M genes excluded; `clocksync` controls). T_pseudo per set.
 - A failure at this size (MDE reported) bounds the A97 effect.
 
 **Code:** `paper/exploratory/A127_scanb/`. Data: `$SCCC_DATA/scanb_gse96058/` with PROVENANCE.md.
+
+## A126 (2026-10-29, written after a metadata-only scout (`exploratory/scouts_2026-10-29/a126_scout.md`, no clock statistic) and before any clock readout; WP8, roadmap 7.5): breast epithelial clock coherence across the menstrual cycle
+
+**Why:** tumour clock coherence falls with proliferation (A97; replicated at scale in A127). Each luteal phase drives
+breast epithelial proliferation. If physiological proliferation lowers epithelial clock coherence as it does in tumours,
+the clock gives a mechanistic reading of lifetime menstrual cycles as a breast cancer risk factor. Progesterone also
+regulates clock genes directly, so a proliferation control within tissue comes first (H126.0). A124 failed, so all cue
+readouts are descriptive (WP8 rule).
+
+**Definitions** (fixed in the WP8 plan):
+- **luteal score:** mean z of PGR, TNFSF11, WNT4, AREG in HR+ luminal cells (per-donor log CPM pseudobulk; z within
+  study);
+- **proliferation:** the A97 G2M set; cycling cells by the A24 top-quartile rule;
+- **coherence:** A87 `decompose.components` gene coherence of the 14 clock genes over a group of donors;
+- **pseudo-clock companion:** 200 expression-matched 14-gene sets (mean and variance; clock, G2M and luteal genes
+  excluded), the same permutations, as A127. A pass is "clock-specific" only if T is below the pseudo 5th percentile.
+
+**H126.0 (proliferation control; gates the reading of H126.1).**
+- Data: endometrium GSE266265 (60 donors, cycle phase and serum progesterone; per-cell export on disk).
+- Per donor, an epithelial pseudobulk of cycling cells and one of non-cycling cells.
+- Donor eligible with ≥ 30 cycling epithelial cells; the test needs ≥ 15 eligible donors, else infeasible.
+- T0 = coherence(cycling) − coherence(non-cycling) over eligible donors. Null: within-donor label swaps, exact or
+  10,000. One-sided p < 0.05 (loss).
+- Descriptive: endometrial coherence, proliferative minus secretory phase; the same breast test on Kumar + Reed per-cell
+  extractions where ≥ 15 donors reach 30 cycling cells.
+
+**H126.1 (primary).**
+- Data: premenopausal donors pooled, study as stratum:
+  - Kumar HBCA, rebuilt by the authors' `broad_cell_type` so that HR+ luminal (lumhr) is separate;
+  - Reed HBCA, donors aged ≤ 45 (no menopause field);
+  - Murrow GSE198732 premenopausal donors (public raw counts, parsed in Python only).
+- Donor eligible with ≥ 50 HR+ luminal cells.
+- Tertiles of the luteal score within study.
+- T1 = the n-weighted mean over studies of coherence(top tertile) − coherence(bottom), on HR+ luminal pseudobulks.
+- Null: luteal labels permuted within study, 2,000 times. One-sided p < 0.05 (loss).
+- Feasibility: ≥ 10 donors per pooled tertile.
+- **Score validity, checked and reported before any clock reading:**
+  - spread of the score;
+  - Spearman correlation with HR+ cell number (if |ρ| > 0.3, tertiles are cut on the residual after regressing on log cell
+    number);
+  - direction with age (expected to fall).
+
+**H126.3 (obesity).** Over the eligible premenopausal donors with BMI (Kumar, Reed, Murrow), coherence of HR+ luminal
+pseudobulks in BMI ≥ 30 vs < 30. Labels permuted within study, two-sided p < 0.05. Infeasible if there are fewer than
+10 obese donors.
+
+**Multiplicity:** Holm over H126.1 and H126.3. H126.0 is a gate, not part of the family.
+- If H126.0 fails or is infeasible, H126.1 is reported but read as "luteal state, cause open (hormone or proliferation)".
+
+**Descriptive:**
+- luminal progenitor and basal coherence by luteal tertile;
+- HR+ phase relative to the stromal host (A23 y4);
+- core-cue offset vs luteal score (H126.2 of the plan, descriptive here);
+- parity and BRCA carriers (Reed);
+- negative control: Kumar postmenopausal donors split by the same score (no luteal biology expected);
+- Murrow without hormonal-contraception users;
+- GTEx breast, women < 45, aggregates only.
+
+**Reading:**
+- H126.0 passes and H126.1 passes, clock-specific → physiological proliferation lowers epithelial clock coherence as in
+  tumours. This is a Figure 5 panel, linked in the Discussion to menstrual cycles as a risk factor.
+- H126.1 passes without H126.0 → luteal state matters, mechanism open.
+- A failure is reported with its MDE.
+
+**Code:** `paper/exploratory/A126_menstrual/`.
