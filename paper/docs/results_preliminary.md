@@ -1614,3 +1614,15 @@ Data: GSE96058 (`$SCCC_DATA/scanb_gse96058/`, 592 MB, PROVENANCE.md). Code and o
   - Post hoc: platform centring, purity halves, Cox with proliferation.
 - **Reading:** A97 replicates at 3,073 tumours, within subtype and purity, and specific to the clock (H127.1 narrowly).
   This is a candidate Figure 5 panel. LumB tumours are the least coherent, despite being ER+.
+
+## A140 Q1 note 2 (scored 2026-10-29): the CYCLOPS simulator gate also fails with the core-clock seed; H140.1-3 not scored
+
+Gate with core genes (arm D, K = 1, factor scale 1, seed of 1,500 genes including the 14 core genes, 80 models,
+calibrated factor, 50 replicates paired with the no-core gate; `exploratory/A140_dip_cyclops/output/q1rev/simulator_gate_core.csv`):
+- 50 of 50 fits ran.
+- Median CYCLOPS-vs-truth circular correlation 0.058; 0 of 50 ≥ 0.7. Median DIP-vs-truth 0.072. Gate fails.
+
+The no-core gate gave a median of 0.060, so the core seed changes nothing. Per the note, H140.1-3 are not scored.
+**Reading:** at this design, CYCLOPS 2.0 does not recover a coupled clock even when seeded with the core clock genes.
+This removes the straw-man objection to Q1. The registered scale-0 descriptive run (core seed, 20 replicates) was
+launched on 2026-10-29 06:31 (`results/logs/q1_run.log`).
