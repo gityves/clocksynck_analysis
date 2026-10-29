@@ -1536,3 +1536,46 @@ reliability analogue of the flag: NaN when reliability ≤ 2 SE.
   - A149 and A151 were killed for memory at 14 GB with 2 jobs and rerun with 1 job at an 18 GB cap (peaks 13.7 and
     15.8 GB). The cap increase departs from the CLAUDE.md rule (fewer workers, not a higher cap); the summed caps stayed
     ≤ 24 GB.
+
+## Roadmap 7.4 and 4.6 (2026-10-29; descriptive)
+
+**7.4: per-cancer A149 pairing on the bounded statistic**
+(`exploratory/A149_paired_tumour_normal/per_cancer_2026-10-29/output/per_cancer.csv`; same units, seeds and nulls as the
+Phase 5 rescore, and the ALL row reproduces H149.1 bounded).
+- Estimable rule: at least 2 unflagged cohorts and at least 15 patients.
+- S1 (malignant vs own normal):
+
+| cancer | patients in unflagged cohorts (cohorts) | statistic | null q95 | p | MDE |
+|---|---|---|---|---|---|
+| lung | 37 (5) | 0.595 | 0.529 | 0.007 | 0.600 |
+| colorectal | 46 (4) | 0.380 | 0.430 | 0.136 | 0.500 |
+| gastric | 17 (2) | 0.430 | 0.665 | 0.440 | 0.785 |
+
+  - Not estimable: ampullary, breast, pancreatic, skin, thyroid, liver, prostate.
+- None of the three is above its pseudo-clock q95. Lung is 0.595 vs pseudo median 0.515 and q95 0.749.
+- Lung is the only cancer estimable at S2 to S3n: S3 0.609 (p 0.045), S3n 0.678 (p 0.020), S2 0.302 (p 0.78).
+- Reading: the pooled A149 pairing is carried by lung. Colorectal is below its null q95 despite 9 cohorts, because 5 of
+  them are flagged.
+
+**4.6: why the clocksync liver drop under Bmal1 KO (−0.291) exceeds the timed oracle's (−0.186) (A111/A158 design)**
+(`exploratory/A158_bmal1_bias/sim_2026-10-29/output/{calibration_control,mech_summary,gap_conditional}.csv`; 200
+replicates).
+- Real d* is −0.287 [−0.411, −0.118] at common spread (`A111_feeding_controls/output/a111_h111_3.csv`), so host spread
+  does not explain the gap (it changes the drop by 0.004).
+- **Calibration:** a shared per-mouse phase deviation of 0.23 rad (~0.9 h) reproduces the controls (clocksync 0.969,
+  oracle 0.945 vs observed 0.969 / 0.934). This is consistent with the A111 timed-truth host-vs-ZT error of 0.80 h.
+- **Ratios of the clocksync drop to the oracle drop at an oracle drop of −0.186** (observed 1.58):
+
+| mechanism | ratio |
+|---|---|
+| noise-only loss | 1.15 |
+| phase dispersion | 1.13 |
+| n = 12 | 1.25 |
+| amplitude damping (psi fixed) | cannot reach the oracle drop |
+| noise loss plus the KO liver no longer sharing the mouse's own deviation (which the host tracks and ZT cannot) | 1.51 |
+
+- Noise-only is about 1.7 gap-SD from the observation.
+- Reading: the gap is compatible with the estimand difference. Clocksync reads the liver against the mouse's own clock
+  state; the oracle reads it against the external ZT. This is a compatible mechanism, not a tested one.
+- **Post hoc:** the calibration values and the "liver follows ZT" arm were added after run 1 (kept in
+  `run1_without_noise_hj0/`).
