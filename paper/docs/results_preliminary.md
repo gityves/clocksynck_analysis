@@ -1626,3 +1626,9 @@ The no-core gate gave a median of 0.060, so the core seed changes nothing. Per t
 **Reading:** at this design, CYCLOPS 2.0 does not recover a coupled clock even when seeded with the core clock genes.
 This removes the straw-man objection to Q1. The registered scale-0 descriptive run (core seed, 20 replicates) was
 launched on 2026-10-29 06:31 (`results/logs/q1_run.log`).
+- **Scale-0 descriptive, core seed (20 replicates; `output/q1rev/gate_core/D_K1_s0_r*.csv`, `simulator_gate_core.csv`):**
+  - Every CYCLOPS fit fails to start (20 of 20, status error, each after about 68 s). This is the same behaviour as the
+    no-core seed, whose cause was that no seed eigengene reaches 5 % of the variance. For the core seed this cause is
+    assumed, not re-traced.
+  - The clocksync gate passes 20 of 20.
+  - Even 14 core clock genes in the seed do not let CYCLOPS start on a factor-free clock world at this design.
