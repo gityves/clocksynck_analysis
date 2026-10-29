@@ -1485,3 +1485,54 @@ annotations; the clock-gene counts match the archive. Code and outputs: `explora
   stably reproduce the bulk delay: −1.35 h, and +0.73 h with one more pair. Roadmap 6.9 composition control stays open;
   it needs a larger paired single-cell cohort (the 2026 AD/psoriasis atlases in the scout, accession unverified) or
   bulk deconvolution.
+
+## Phase 5 bounded re-scoring (2026-10-29; roadmap 5.3-5.5; descriptive / post hoc, registered verdicts unchanged)
+
+Outputs are in `exploratory/<amendment>/bounded_2026-10-29/output/`. A149, A151 and H138.5 use the bounded
+`stats.ccorr(nan_on_flag)`. A142/A143 r* is a Spearman-Brown disattenuated correlation, not a ccorr, so it gets a
+reliability analogue of the flag: NaN when reliability ≤ 2 SE.
+
+- **A142** (`targets_bounded.csv`):
+  - Brain r* 0.639, reference q05 0.936, p 0.001, reproduced and not flagged.
+  - Breakdown share: 0 of 1000 reference blocks at k = 7 and 13; 7.2 % at k = 4.
+  - On the bounded uncorrected r: brain 0.575 vs reference q05 0.802, p 0.001. Digestive 0.782, p 0.207, so the
+    digestive departure (r* p 0.029) does not hold on r.
+  - The review's r* > 1 in 19 % of k = 13 reference blocks is sampling scatter around a reference median of 0.978.
+  - "Brain departs most" stands.
+- **A143** (`h143_1_bounded.csv`, `h143_3_*_bounded.csv`):
+  - H143.1 adjusted r* 0.627, unchanged.
+  - H143.3 on bounded alternatives (share a_P/(a_P+a_B), r_P, uncorrected ratio): the hypothalamus is 10th of 13 in fast
+    deaths (11th on r_P). Hypothalamus minus the median of the other regions: −0.030 on share (p 0.74). The review's
+    "6th of 13" is the descriptive Hardy 3-4 column.
+  - The hypothalamus stays Discussion-only, with no "follows the body" wording.
+- **A134 H134.1** (`h134_1_bootstrap.csv`):
+  - The null permutes whole-patient copy-number covariate rows, malignant and normal independently, with expression
+    fixed. It tests association against unrelated covariates, not the precision of the gain.
+  - Bootstrap SD 0.102 vs null SD 0.039; a patient-resampled permutation null has SD 0.043 (p 0.035). The wide bootstrap
+    therefore reflects uneven patient leverage of the real association.
+  - Bootstrap p: share ≤ 0 is 0.297, bootstrap-t 0.226, centred 0.118; CI [−0.160, 0.266].
+  - Wording: report the CI with the p. H134.1 stays weak.
+- **A149** (`tests_bounded.csv`, `pseudo_companion_bounded.csv`; flagged units S1 10/27, S2 6/9, S3 4/9):
+  - H149.1 0.534 → 0.490 (17 cohorts, 131 patients), p 0.011, Holm 0.021: still a pass.
+  - H149.2 → 0.213 on 3 cohorts and 28 patients: not informative.
+  - H149.3 0.607 → 0.707 (5 cohorts), p 0.0004, Holm 0.0012: still a pass and stronger.
+  - Pseudo companion: clock 0.490 vs pseudo median 0.445, q95 0.602, p 0.338. Still not clock-specific; the old
+    unbounded pseudo q95 was 4.5e4.
+  - D149.1 retained share is meaningless (−2.97).
+- **A151** (`tests_bounded.csv`; flagged fibroblast 5/17, endothelial 5/15):
+  - H151.1 0.856 (12 cohorts, 65 patients), p 1e-4.
+  - H151.2 bounded pseudo median 0.664, q95 0.906, p 0.141. Not readable: 79 % of fibroblast cohort × pseudo-set values
+    are flagged, so the surviving null is a selected subset.
+  - The endothelial post hoc companion (old p 0.005, uncorrected) is not estimable on the bounded statistic (p 0.099,
+    83 % flagged).
+- **H138.5** (`A138_cancer_estimability/bounded_2026-10-29/output/tests_bounded.csv`):
+  - 0.583 (6 cohorts) → 0.337 on 2 cohorts and 26 patients, p 0.378, MDE 0.611.
+  - Wording: "not estimable at 2 cohorts".
+- **Note:** `nan_on_flag` does not clip, so unflagged units can still exceed 1 (four fibroblast units at 1.01-1.07). Phase
+  8 should decide whether the package clips or reports.
+- **Deviations:**
+  - A142 base plane only, without bootstrap CIs. A143 H143.1 CIs and H143.2 were not recomputed.
+  - A149 has no intervals.
+  - A149 and A151 were killed for memory at 14 GB with 2 jobs and rerun with 1 job at an 18 GB cap (peaks 13.7 and
+    15.8 GB). The cap increase departs from the CLAUDE.md rule (fewer workers, not a higher cap); the summed caps stayed
+    ≤ 24 GB.

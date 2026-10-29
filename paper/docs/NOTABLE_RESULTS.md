@@ -6,6 +6,18 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
 
 ## 2026-10-29
 
+- **Bounded ccorr removes much of the cancer pairing evidence (reframing for Figure 5).**
+  - Kept: H149.1 0.490 (p 0.011) and H149.3 0.707 (p 0.0004).
+  - Not estimable on the bounded statistic: H149.2 (3 cohorts), H151.2, the endothelial pseudo companion, and H138.5
+    (2 cohorts).
+  - The A149 pairing is still not clock-specific (pseudo q95 0.602).
+  - *Follow-up:* the fresh A151 registration on new cohorts (7.2) must use the bounded statistic and enough patients
+    per cohort (flags remove units of n 4-11).
+  - *Source:* `A149_paired_tumour_normal/bounded_2026-10-29/output/`, `A151_fibroblast_pairing/bounded_2026-10-29/output/`.
+- **A134: the permutation p (0.017) and the patient bootstrap disagree (share ≤ 0 is 0.30).** The null tests association
+  against unrelated covariates, not precision. "Copy number explains part of the gap" needs its CI [−0.16, 0.27].
+  - *Source:* `A134_cancer_coherence/bounded_2026-10-29/output/h134_1_bootstrap.csv`.
+
 - **A159: breast plasma cells are clock-specific (c 0.81, Δc 0.50), the only lymphocyte in 13 that is (unexpected).**
   Clock-specific means above both the matched and the responsive pseudo-gene q95. In the 3 covered atlases this holds
   for 3 of 31 compartments, all in breast: endothelial (Δc 0.31), epithelial (0.40) and plasma (0.50). Lymphocyte
