@@ -1632,3 +1632,44 @@ launched on 2026-10-29 06:31 (`results/logs/q1_run.log`).
     assumed, not re-traced.
   - The clocksync gate passes 20 of 20.
   - Even 14 core clock genes in the seed do not let CYCLOPS start on a factor-free clock world at this design.
+
+## A126 (scored 2026-10-29): menstrual-cycle natural experiment — H126.0, H126.1 and H126.3 fail; endometrial coherence collapses in the secretory phase (descriptive)
+
+Code and outputs: `exploratory/A126_menstrual/` (`output/run_h126.log` for the full run).
+- **H126.0 (gate)** (endometrium GSE266265; `output/h126_0_tests.csv`):
+  - Cycling cells are the A24 top quartile of max(S, G2M): 6,568 of 26,270 epithelial cells.
+  - 50 of 60 donors are eligible (≥ 30 cycling cells).
+  - T0 = coherence(cycling) − coherence(non-cycling) = 0.241 − 0.382 = −0.141; null SD 0.111, p 0.103 (10,000
+    within-donor swaps), MDE 0.276. **Fails**, so a breast result would be read as "cause open".
+  - Post hoc sensitivities fail as well:
+    - non-cycling subsampled −0.162 (p 0.12);
+    - G1 comparator −0.093 (p 0.21);
+    - proliferative-phase donors only −0.029 (p 0.47).
+- **Score validity and feasibility, written before any clock statistic** (`output/score_validity.md`, `feasibility.csv`):
+  - 147 eligible premenopausal donors (Kumar 83, Reed 37, Murrow 27); pooled tertiles 50/48/49.
+  - Score Spearman with HR+ cell number 0.079.
+  - The score falls with age (pooled ρ −0.19) and is higher before than after menopause (Kumar +1.42 log2, p 4e-6).
+  - The score behaves as a hormone score.
+- **H126.1** (`output/h126_main_tests.csv`, 2,000 permutations within study): HR+ luminal top − bottom luteal tertile
+  T = +0.029 (null SD 0.135), p 0.575, Holm 1.0, MDE 0.335, pseudo percentile 62.5. **Fails.**
+- **H126.3:** BMI ≥ 30 vs < 30 (61 vs 50) T = −0.052, p 0.766, Holm 1.0, MDE 0.372. **Fails.**
+- **Descriptive** (`h126_descriptive_tests.csv`, `h126_0_endometrium_phase_descriptive.csv`):
+  - luminal progenitor −0.098 (p 0.24); basal +0.048;
+  - Murrow without hormonal-contraception users −0.040;
+  - parity +0.203 (p 0.38); BRCA carriers +0.192 (p 0.60);
+  - postmenopausal negative control uninformative (6 per arm);
+  - HR+ offset to the stromal host by tertile +0.83 / −0.07 / −1.04 h (points only).
+  - **Endometrial epithelial coherence by phase:** proliferative 0.653, periovulatory 0.255, secretory 0.126.
+    Proliferative − secretory is +0.527 (p 0.0005, 28 vs 14).
+- **Deviations:**
+  - Non-cycling = all other epithelial cells (unspecified in the registration).
+  - Not run: the breast H126.0 descriptive (needs a per-cell Census extraction), the core-cue offset vs score (no
+    per-donor estimand defined), and GTEx breast.
+  - Murrow KTB donors excluded (menopause unknown).
+  - Score z within study × menopausal group.
+- **Reading:**
+  - Normal breast epithelial clock coherence does not change with luteal state or obesity, at an MDE of about 0.34.
+  - In endometrium, cycling cells are not detectably less coherent at an MDE of 0.28.
+  - The physiological-proliferation analogue of the tumour result is not supported. A127 (tumours) stands alone.
+  - The large secretory-phase coherence drop in endometrium is unexpected. It is confounded with phase composition of
+    the cells and is not a registered test.

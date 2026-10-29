@@ -6,6 +6,16 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
 
 ## 2026-10-29
 
+- **A126: endometrial epithelial clock coherence collapses from the proliferative (0.653) to the secretory phase
+  (0.126), p 0.0005 (unexpected, descriptive).** Meanwhile the registered tests fail:
+  - H126.0, cycling vs non-cycling −0.141, p 0.10;
+  - H126.1, breast luteal tertile +0.029, p 0.58.
+  - *Why notable:* progesterone may reorganise the endometrial clock. This is a hormone, not proliferation, effect,
+    since cycling cells show no loss.
+  - *Follow-up:* a registered test on an independent endometrium series (Ulrich 2024, Census, 20 donors; phase labels
+    to verify). Check whether the drop is amplitude or coherence (host-referenced coupling with stromal host).
+  - *Source:* `A126_menstrual/output/h126_0_endometrium_phase_descriptive.csv`.
+
 - **A127: SCAN-B replicates the A97 proliferation-coherence loss at 3,073 tumours (strong, a pre-specified positive).**
   - H127.1: T −0.123, Holm 0.0045, within PAM50 × purity, clock-specific at the 2.5th pseudo percentile.
   - H127.2: ER− −0.343, Holm 0.001, 1.5th percentile.
