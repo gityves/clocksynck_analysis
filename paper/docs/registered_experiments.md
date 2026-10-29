@@ -1877,7 +1877,7 @@ table at the A17 rows can be built from data on disk (`atlas_wg`, Census group p
     clock-specific in the control arm, and the MDE on d* is <= 0.2.
 Code: `paper/exploratory/A159_specific_coupling/`.
 
-## A153 (2026-10-29, written before D159.1 exists and before any contrast below is rerun; roadmap 6.4-6.5, Q13 defaults 0.1-0.2): corrected disease contrasts, eligibility-restricted primaries and equivalence tests
+## A153 (2026-10-29, written before any contrast below is rerun and before the lead read D159.1 (computed by the Phase 3 runner on 2026-10-28 21:36; the eligibility rule itself was registered in A159); roadmap 6.4-6.5, Q13 defaults 0.1-0.2): corrected disease contrasts, eligibility-restricted primaries and equivalence tests
 
 **Why:** the review of 2026-10-28 found three problems with the A17 disease contrasts:
 - several were read through a host that failed its gate in one arm (A111 H111.2);
