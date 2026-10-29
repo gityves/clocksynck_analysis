@@ -2103,3 +2103,43 @@ pseudobulks in BMI ≥ 30 vs < 30. Labels permuted within study, two-sided p < 0
 - A failure is reported with its MDE.
 
 **Code:** `paper/exploratory/A126_menstrual/`.
+
+## A161 (2026-10-29, written after a metadata-only scout (`exploratory/scouts_2026-10-29/endometrium_scout.md`) and before any expression of the series below is read): is endometrial clock coherence lower in the secretory phase? (confirmation of the A126 descriptive)
+
+**Why:** in GSE266265, endometrial epithelial clock coherence across donors was 0.653 in the proliferative phase and
+0.126 in the secretory phase (p 0.0005; A126 descriptive, not registered). Cycling cells showed no loss, which points to
+a hormone (progesterone) effect on the clock rather than proliferation. An independent series is needed before any
+claim.
+**Data (primary):** GSE51981 (GPL570, whole endometrium).
+- Phase from the tissue label: proliferative 64 vs secretory 82 (early + mid + late); samples with unknown phase are
+  dropped.
+- **Data rule:** use the processed series-matrix values; if there are none, the GEO SOFT values. No CEL processing in R.
+  Gene = the probe with the highest mean over all samples. All 14 clock genes must be mapped.
+- Patient overlap with GSE6364 / GSE4888 is checked from sample metadata before any readout. An overlapping
+  replication series is dropped.
+
+**Estimand:** A87 coherence (`decompose.components`) of the 14 clock genes over the samples of a phase group, on log2
+values z-scored per gene over all samples (no Poisson term; microarray).
+
+**H161.1:** coherence(secretory) − coherence(proliferative) < 0.
+- Phase labels permuted within endometriosis status (case / control), 10,000 times. One-sided p < 0.05.
+- **Specificity:** 200 matched pseudo-clock 14-gene sets (mean and variance; clock-like genes excluded), the A127
+  variance-matched draw, on observed labels. "Clock-specific" only if T is below the pseudo 5th percentile.
+- MDE = 2.49 × null SD.
+
+**Sensitivities (not tested):**
+- (i) **Composition:** every gene (clock and pseudo) residualised on an epithelial score (mean z of EPCAM, KRT8, KRT18,
+  CDH1) and a stromal score (mean z of VIM, PDGFRB, COL1A1, DCN), fitted over all samples, then the same T.
+- (ii) Controls without endometriosis or pelvic pathology only.
+- (iii) Early vs mid secretory, each against proliferative.
+- (iv) Replication series: GSE6364 (11 vs 26) and GSE141549 (24 vs 43, platform stratum, "medication" samples
+  excluded), the same T and p within each.
+
+**Reading:**
+- H161.1 passes, clock-specific, and survives (i) → the secretory-phase loss of clock coherence replicates in an
+  independent cohort. This is a candidate physiological-perturbation panel: a hormone state that decouples a tissue
+  clock.
+- Passes but not clock-specific → a general secretory transcriptional reorganisation.
+- Fails → the A126 observation is not confirmed (MDE reported).
+
+**Code:** `paper/exploratory/A161_endometrium_phase/`.
