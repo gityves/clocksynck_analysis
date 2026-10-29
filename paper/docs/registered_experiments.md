@@ -1876,3 +1876,73 @@ table at the A17 rows can be built from data on disk (`atlas_wg`, Census group p
   - D159.1 is the eligibility table that A153 (disease contrasts) uses: a compartment enters as a primary only if
     clock-specific in the control arm, and the MDE on d* is <= 0.2.
 Code: `paper/exploratory/A159_specific_coupling/`.
+
+## A153 (2026-10-29, written before D159.1 exists and before any contrast below is rerun; roadmap 6.4-6.5, Q13 defaults 0.1-0.2): corrected disease contrasts, eligibility-restricted primaries and equivalence tests
+
+**Why:** the review of 2026-10-28 found three problems with the A17 disease contrasts:
+- several were read through a host that failed its gate in one arm (A111 H111.2);
+- truncated estimates hid boundary rows (S3);
+- the primaries sat on classes whose coupling is not clock-specific (A150: lymphocyte, myeloid, mural).
+
+As a result, "no change" was never a tested claim. A153 reruns every Figure 4 contrast with the corrected code and
+defines one family of primaries before it is seen. The registered A17 results stay reported as registered.
+**Data:** the 36 targets of the A17 registry (`datasets/_atlas/a17_targets.csv`) at their original labels, blocks and
+rules, rebuilt under the 2026-10-28 class rules (rule-stamped tables).
+**Code:** current clocksync; the relearned A17 anchors (learned rule); `anchor_readout="loo"`; seeds from the target name.
+Permutation and bootstrap counts are those of `compute_contrasts_a17.py`.
+
+**Per target:**
+1. **Gates.** Run the pooled model-free gate, then `contrast(require_host_gate_each_arm=True)`.
+   - If either fails, every row of the target is **not estimable**.
+2. **Estimates per compartment.**
+   - Untruncated, debiased c per arm, d, d* (common spread), p, p*, se_d_star, the boundary type per arm, and the
+     stromal-vascular companion. The companion uses the same permutations as before; neurons stand in for
+     stromal-vascular in brain.
+   - The MDE on d* is computed at 80 % power with `power.mde` (n_rep 100, n_perm 200) at the real design. Damping s
+     scales the host-locked variance by s², so the MDE on d* is c*0 − s*² c*0 / (s*² c*0 + 1 − c*0), where:
+     - c*0 is the compartment's pooled coupling at the common spread;
+     - s* is the damping at which power reaches 0.8, interpolated linearly on the scale grid.
+     - If power does not reach 0.8 at s = 0, the MDE is set to "> max".
+3. **Pseudo-clock companion (descriptive).** Where a genome-wide table exists (as in A159), run the same contrast for 200
+   expression-matched pseudo-clock waveforms (point estimates):
+   - Δc per arm;
+   - the quantile of the clock d* among the pseudo d*.
+
+**Eligibility (the A153 primary family; decided now, applied mechanically).** A compartment of a target is a primary if
+all of the following hold:
+- it is `clock_specific` in that target's control arm in D159.1 (A159);
+- its MDE on d* is ≤ 0.2;
+- the target is estimable.
+
+Targets without a D159.1 control-arm row (no genome-wide table) have no A153 primaries. They are reported with the
+reason. Brain targets go to the Extended Data with the A141 stability result stated; they are not in the family.
+
+**Tests:**
+- **H153.1 (effect).** Run Holm over all A153 primaries of all targets together, on the two-sided p*. An **effect** is
+  a Holm-adjusted p* < 0.05.
+  - The specificity qualifier, reported next to every effect, is the companion p (target minus stromal-vascular) and the
+    pseudo-d* quantile.
+  - An effect whose companion p ≥ 0.05 is labelled "not target-specific".
+- **H153.2 (equivalence, TOST).** A primary without an effect is **equivalent** (an estimable null) if its 90 % interval
+  d* ± 1.645·se_d_star lies within ±0.15. Otherwise it is **inconclusive**.
+- **H153.3 (pooled family equivalence).** Run this for each of the families fibroblast_stromal and endothelial,
+  separately:
+  - Per target, take the inverse-variance mean of its A153-primary compartments in the family, with SE equal to their
+    mean se_d_star (no credit for correlation).
+  - Pool over targets with `meta(method="hk")`.
+  - The family is equivalent if the 90 % HK interval lies within ±0.15, and shows an effect if the 95 % interval
+    excludes 0.
+  - This needs at least 3 targets; otherwise it is reported as not estimable.
+
+**Readout:**
+- one row per target × compartment, with class (not estimable / not eligible / effect / equivalent / inconclusive) and
+  the reason;
+- a summary of each class per disease;
+- a comparison with the A17 registered verdicts, with changed verdicts first.
+
+**Reading:**
+- An effect in H153.1 is the pre-specified disease positive the paper needs.
+- Equivalence (H153.2-3) turns "coupling is preserved in disease" into a tested claim, bounded at |d*| < 0.15.
+- Inconclusive and not-eligible rows are reported as such, never as "unchanged". A failed gate is uninformative.
+
+**Code:** `paper/exploratory/A153_corrected_contrasts/`. Promoted to `figure_4/scripts/resilience/` if Figure 4 uses it.
