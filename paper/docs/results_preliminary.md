@@ -1673,3 +1673,33 @@ Code and outputs: `exploratory/A126_menstrual/` (`output/run_h126.log` for the f
   - The physiological-proliferation analogue of the tumour result is not supported. A127 (tumours) stands alone.
   - The large secretory-phase coherence drop in endometrium is unexpected. It is confounded with phase composition of
     the cells and is not a registered test.
+
+## A161 (scored 2026-10-29): the A126 secretory-phase coherence drop does not replicate in bulk endometrium (H161.1 fails; opposite sign)
+
+Data: GSE51981 (GCRMA series matrix, 148 samples; `$SCCC_DATA/endometrium_gse51981/`, PROVENANCE.md). Code and outputs:
+`exploratory/A161_endometrium_phase/output/a161_results.csv`.
+- **Data rule:** all 14 clock genes mapped (PER1 and NR1D1 probes are multi-symbol). Patient overlap could not be
+  checked from ids. A post hoc all-gene correlation check finds no re-deposited arrays between GSE51981 and GSE6364
+  (`expression_overlap_summary.csv`).
+- **H161.1** (82 secretory vs 64 proliferative, 10,000 permutations within endometriosis status):
+  - Coherence 0.568 vs 0.473, T = +0.096; p(T < 0) 0.987; null SD 0.047; MDE 0.117.
+  - Pseudo percentile 77 (q05 −0.230).
+  - **Fails.** The sign is opposite to the A126 drop of −0.527, and the MDE is well below that.
+- **Sensitivities:** all positive.
+
+| sensitivity | n (S/P) | T |
+|---|---|---|
+| composition-residualised | 82/64 | +0.047 |
+| controls without pathology | 14/20 | +0.388 |
+| early secretory | 30/64 | +0.038 |
+| mid secretory | 50/64 | +0.165 |
+| GSE6364 | 26/11 | +0.141 |
+| GSE141549 (platform stratum) | 43/24 | +0.145 |
+
+- **Deviations:**
+  - GSE6364 holds raw intensities, so log2 with a floor of 1 was used.
+  - GSE141549 values come from the supplementary normalised xlsx.
+  - 4 GSE141549 technical replicates are reported both ways.
+- **Reading:** whole-endometrium clock coherence is not lower in the secretory phase in three independent bulk series.
+  The A126 single-cell drop is not confirmed. It may be specific to epithelium (bulk mixes in stroma) or to GSE266265.
+  It stays a descriptive observation, and the NOTABLE entry is updated.

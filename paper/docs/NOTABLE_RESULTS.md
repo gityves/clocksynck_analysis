@@ -15,6 +15,8 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
   - *Follow-up:* a registered test on an independent endometrium series (Ulrich 2024, Census, 20 donors; phase labels
     to verify). Check whether the drop is amplitude or coherence (host-referenced coupling with stromal host).
   - *Source:* `A126_menstrual/output/h126_0_endometrium_phase_descriptive.csv`.
+  - **Update (A161, same day):** not confirmed in bulk. In GSE51981 secretory coherence is higher (T +0.096, MDE
+    0.117), and also in GSE6364 and GSE141549. The drop is epithelium- or GSE266265-specific at most.
 
 - **A127: SCAN-B replicates the A97 proliferation-coherence loss at 3,073 tumours (strong, a pre-specified positive).**
   - H127.1: T −0.123, Holm 0.0045, within PAM50 × purity, clock-specific at the 2.5th pseudo percentile.
