@@ -1406,3 +1406,50 @@ The recorded-hour SD is 2.17 h. The method beats even the oracle-favoured consta
   - Affected: anchor relative amplitudes (Figure 2 amplitude panels, anchor-vs-target amplitude comparisons).
   - A123 needs no rerun.
 <!-- src: paper/exploratory/A155_anchor_self_inclusion/output/{decision,summary_a123like,summary_bias}.csv -->
+
+## Phase 3 reruns on the relearned anchors, and A159 (scored 2026-10-29): no registered verdict changes; A159 H159.1-2 not scorable, D159.1 descriptive
+
+**Reruns** (17 jobs, all ok; comparison in `results/logs/phase3_compare.md`). Relearned anchors, `anchor_readout="loo"`,
+family-summary gates seeded by target name.
+- **Anchors:** the confirmation relearn differs from the 2026-10-28 table only in organ_bone_marrow (gate fails; no fit
+  uses it). The basophil COARSE fix moved basophilic erythroblasts out of `bone_marrow:granulocyte`, a change
+  `rebuild_and_stamp.md` missed. Table: 736 relearned plus 214 cancer rows; previous table in
+  `common/anchors_a17_pre_phase3.csv`; diff in `results/logs/anchor_relearn_diff.md`.
+- **Registered or pre-specified verdicts:** none changed.
+  - A85 H85 still passes: 0.087 to 0.097 [0.067, 0.143], 71 classes.
+  - A122 H122.1-2 still fail (Holm 0.645 / 0.507).
+  - A152 H152.1 identical (−0.092, p 0.856). A144 D144.2 identical.
+  - A22 V17.1 dropped share 0.0159 (pass); A22 anchor drops 5.
+  - A17 gate-passing healthy atlases: 24 of 34, the same set.
+  - The A17 colon host is now stable (0.795 to 0.915).
+  - WP0 anchor robustness gains sign flips only in ia_crohn (new compartments).
+- **Family medians, learned host** (`figure_2/output/backbone/family_medians.csv`, variant all):
+  - lymphocyte 0.089 to 0.125;
+  - other 0.410 to 0.488;
+  - endothelial 0.549 to 0.526;
+  - parenchyma 0.545 to 0.565.
+  Fixed and free medians moved by at most 0.04. Stroma, vascular and neurons remain above myeloid and lymphocyte under
+  every host; lymphocyte remains last. Ten targets are dropped for failed gates (`family_dropped_targets.csv`).
+- **Anchor readout loo vs full** (A17 fits): median anchor amplitude ratio 0.967 (189 anchor rows). Median offset change
+  0.061 h for anchors and 0.006 h for others. organ_colon moves by up to 10 h because its anchor set changed.
+- **A152:** heart lymphocyte 0.556 (38 donors) to 0.327 (36); `heart:mast` 0.509 (26 donors). The mast diagnostic is now
+  vacuous (no mast cells left in the lymphocyte rows).
+- **Not rerun** (read the anchor table; long or out of scope; listed in `phase3_compare.md` section 4): the Figure 4
+  contrasts (A153), A150, gene rhythms, the cancer anchored scripts and others.
+
+**A159:**
+- **Coverage** (`exploratory/A159_specific_coupling/output/row_check.csv`):
+  - The exact row check passes for heart, organ_breast and organ_colon.
+  - It fails for lung_hlca (467 of 1,321 rows with count differences) and organ_muscle (1 row, 5 counts).
+  - organ_adipose fails its gate.
+  - No Figure 4 control arm has a genome-wide table on disk.
+- **H159.1-2:** not scorable, because all 3 covered atlases are A150 atlases (`h159.csv`). No Holm was run.
+- **D159.1 (descriptive; 31 compartments, 200 matched and 200 responsive sets each, 0 failed fits):**
+  - Mean c_clock 0.387 vs mean matched median 0.227; median Δc 0.132.
+  - Clock-specific: 3 of 31, all in breast — endothelial 0.763, epithelial 0.786, plasma 0.810.
+  - Family median Δc (`d159_families.csv`, covered): endothelial 0.306, fibroblast_stromal 0.233, epithelial 0.192,
+    mural 0.125, myeloid 0.066, lymphocyte 0.015.
+  - The per-compartment pseudo q95 is 0.37-0.92 (`d159_compartments.csv`). The registered flag therefore admits only
+    compartments with c above about 0.75: heart fibroblast fails at 0.718 (matched q95 0.912).
+- **Consequence:** A153 has no primaries as registered: no control-arm tables, and a flag that is underpowered per
+  compartment. A153 is parked until the PI decides (PI_QUESTIONS Q15).

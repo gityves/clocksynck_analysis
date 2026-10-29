@@ -12,7 +12,7 @@ Reading (A17 note): stroma, vascular and neurons above myeloid and lymphocytes u
     python compute_family_summary.py [--subsample N] [--jobs 4] [--only NAME ...]
 Outputs: paper/results/figure_2/output/backbone/family_couplings.csv (one row per healthy fit x compartment),
 family_medians.csv (one row per variant x family x estimator; variant `all` = every healthy fit including the
-Tabula Sapiens confirmation fit, as the legacy medians, `no_tabula` without it).
+Tabula Sapiens confirmation fit, as the legacy medians, `no_tabula` without it), family_dropped_targets.csv (target, reason: gate failed or error).
 Legacy: legacy/desync/common/unified.py (a17_unified_healthy.csv; family medians of the PLAN note).
 """
 
@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import sys
 import warnings
+import zlib
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -41,6 +42,11 @@ from common.paths import out_dir  # noqa: E402
 N_PERM_GATE, N_BOOT_MED = 1000, 2000
 
 
+def gate_seed(name: str) -> int:
+    """Gate seed from a stable hash of the target name (not its registry row, which moves when rows are added)."""
+    return zlib.crc32(name.encode()) % 2**31
+
+
 def anchor_sets(name: str) -> dict:
     a = frozen()
     a = a[a.target == name]
@@ -52,15 +58,16 @@ def anchor_sets(name: str) -> dict:
     return out
 
 
-def one(name: str, i: int, args, n_perm: int) -> pd.DataFrame:
+def one(name: str, args, n_perm: int) -> pd.DataFrame:
     limit_threads(1)
     warnings.filterwarnings("ignore")
     try:
         T = Target(name, args.subsample, args.seed)
         free = T.dataset(anchors=None)
-        g = free.gate(n_perm=n_perm, seed=i)
+        g = free.gate(n_perm=n_perm, seed=gate_seed(name))
         if not g.passes:
-            return pd.DataFrame()
+            return pd.DataFrame([dict(target=name, reason=f"gate failed (p_pairing {g.p_pairing:.3f}, "
+                                                           f"p_acrophase {g.p_acrophase:.3f})")])
         cols = {"free_corrected": free.fit(n_boot=0, gate=g).table.coupling}
         for rule, anc in anchor_sets(name).items():
             anc = [a for a in anc or [] if a in set(T.pb.compartment)]
@@ -72,7 +79,7 @@ def one(name: str, i: int, args, n_perm: int) -> pd.DataFrame:
         return t.assign(target=name, family=t.compartment.map(family), tissue=T.tissue, study=T.study)
     except Exception as e:
         print("FAILED", name, type(e).__name__, e, flush=True)
-        return pd.DataFrame()
+        return pd.DataFrame([dict(target=name, reason=f"error: {type(e).__name__}: {e}")])
 
 
 def medians(t: pd.DataFrame, rng, variant: str = "all") -> pd.DataFrame:
@@ -97,9 +104,15 @@ def main(argv=None):
     run = cli.setup(args)
     out = out_dir(FOLDER_4, run["quick"])
     reg = registry()
-    names = [(i, n) for i, n in enumerate(reg.name) if reg.kind[n] == "healthy" and (args.only is None or n in args.only)]
+    names = [n for n in reg.name if reg.kind[n] == "healthy" and (args.only is None or n in args.only)]
     n_perm = 100 if run["quick"] else N_PERM_GATE
-    t = pd.concat(Parallel(n_jobs=args.jobs)(delayed(one)(n, i, args, n_perm) for i, n in names), ignore_index=True)
+    t = pd.concat(Parallel(n_jobs=args.jobs)(delayed(one)(n, args, n_perm) for n in names), ignore_index=True)
+    if "reason" not in t:
+        t["reason"] = np.nan
+    dropped = t.loc[t.reason.notna(), ["target", "reason"]]
+    dropped.to_csv(out / "family_dropped_targets.csv", index=False)
+    print(f"{len(dropped)} dropped targets (family_dropped_targets.csv)", flush=True)
+    t = t[t.reason.isna()].drop(columns="reason")
     t.to_csv(out / "family_couplings.csv", index=False)
     m = pd.concat([medians(t, np.random.default_rng(args.seed)),
                    medians(t[t.target != "tabula_sapiens"], np.random.default_rng(args.seed), "no_tabula")])

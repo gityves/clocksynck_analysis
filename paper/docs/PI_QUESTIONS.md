@@ -244,3 +244,26 @@ whether the 0 / 12 h push is seen in COVID ventilated patients -> registered as 
   zeitgebers; caveat: drugs in both groups, not only cues. Follow-up: A132 (SCN loss vs ventilation), A110 rewritten
   for Hardy 4 / Hardy 3.
 
+
+## Q15 (2026-10-29): A153 has no primaries as registered — which eligibility rule?
+**Finding (A159, results_preliminary "Phase 3 ... A159"):**
+- No Figure 4 control arm has a genome-wide table on disk.
+- The registered per-compartment flag (c above both pseudo q95) is underpowered: a single compartment's pseudo q95 is
+  0.6-0.9, so only 3 of 31 healthy compartments pass, all in breast. Heart fibroblast at c 0.72 fails.
+
+So A153 as registered has an empty primary family. Changing the rule after seeing D159.1 is a design change (rule d).
+**Options:**
+- (a) **Family-level eligibility from healthy atlases** [recommended]. A family is eligible if its coupling, averaged over
+  compartments and atlases, exceeds the matched and responsive q95 of the same average under pseudo sets (set j pooled,
+  as H150.1 / H159.2). Disease primaries are then the compartments of eligible families with MDE on d* ≤ 0.2.
+  - Uses A150 + A159 atlases (5).
+  - Needs no disease genome tables.
+  - Likely admits stroma and endothelium; immune would be decided by the test.
+- (b) Build genome-wide tables for the non-brain disease datasets (about 18 contrasts; Census/h5ad sources), then apply (a)
+  per control arm, or a per-arm family version of it. This is 1-2 days of builder work and disk, and also makes H159
+  scorable on new atlases. It can follow (a) as a confirmation.
+- (c) Drop eligibility: every estimable compartment with MDE ≤ 0.2 is a primary, and Δc is reported descriptively.
+  Larger Holm family, so less power.
+
+**Default if no answer:** none. A153 stays parked; this is a design change after a result. Meanwhile I run things that
+do not depend on it (CYCLOPS core seed, A154, 6.9 psoriasis composition scout, lung_hlca genome rebuild).

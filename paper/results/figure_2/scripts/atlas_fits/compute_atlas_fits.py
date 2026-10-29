@@ -7,7 +7,7 @@ study out, or the fixed stromal-vascular / neuronal rule), each anchor on the ho
 amplitude and offset with donor-bootstrap intervals (host refitted, default 500). Host identity (agreement, stability) is
 in host_identity. Descriptive. Exploratory-labelled cohorts (Tabula Sapiens: confirmation only) are fitted as in the legacy run.
 
-    python compute_atlas_fits.py [--subsample N] [--jobs 4] [--only NAME ...] [--n-boot B]
+    python compute_atlas_fits.py [--subsample N] [--jobs 4] [--only NAME ...] [--n-boot B] [--anchor-readout {full,loo}]
 Outputs: paper/results/figure_2/output/atlas_fits/a17_healthy_fits.csv (legacy a17_healthy.csv), a17_healthy_gates.csv (legacy
 a17_gates.csv), cohort_table.csv, a17_healthy_hosts_summary.csv (host spread per fit; per-donor states are not written).
 Legacy: legacy/desync/common/run_anchored.py (step healthy), anchors.py (gates).
@@ -63,7 +63,7 @@ def fit_target(name: str, i: int, args, n_boot: int, n_perm: int) -> dict:
                 rows.append(pd.DataFrame([head | dict(status="gate failed" if not g.passes else "no anchor")]))
                 continue
             ds = T.dataset(anchors=anc)
-            fit = ds.fit(n_boot=n_boot, seed=args.seed, gate=g)
+            fit = ds.fit(n_boot=n_boot, seed=args.seed, gate=g, anchor_readout=args.anchor_readout)
             tab = fit.table.reset_index().rename(columns={"rel_amplitude": "amplitude"})
             tab = tab.assign(**head, status="ok")
             rows.append(tab)
@@ -85,6 +85,8 @@ def main(argv=None):
     ap = cli.parser(__doc__)
     ap.add_argument("--only", nargs="*", default=None)
     ap.add_argument("--n-boot", type=int, default=None)
+    ap.add_argument("--anchor-readout", choices=("full", "loo"), default="loo",
+                    help="anchor amplitude and offset read on the full host or leave-one-out (Q13 0.4; coupling is unaffected)")
     ap.add_argument("--n-perm-gate", type=int, default=None)
     args = ap.parse_args(argv)
     run = cli.setup(args)

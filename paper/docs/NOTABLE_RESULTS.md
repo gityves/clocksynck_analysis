@@ -4,6 +4,23 @@ One entry per result: date, amendment, the result in one or two lines with its n
 follow-up I would suggest, and the source file. Newest first. Numbers come from output files. Full write-ups are in
 `results_preliminary.md`.
 
+## 2026-10-29
+
+- **A159: breast plasma cells are clock-specific (c 0.81, Δc 0.50), the only lymphocyte in 13 that is (unexpected).**
+  Clock-specific means above both the matched and the responsive pseudo-gene q95. In the 3 covered atlases this holds
+  for 3 of 31 compartments, all in breast: endothelial (Δc 0.31), epithelial (0.40) and plasma (0.50). Lymphocyte
+  family median Δc is 0.015.
+  - *Why notable:* this cuts against "lymphocytes carry no clock-specific coupling". It may be a resident plasma
+    population, or a breast-specific artefact.
+  - *Follow-up:* check plasma in other atlases once genome tables exist (Q15), and its donor count and depth.
+  - *Source:* `A159_specific_coupling/output/d159_compartments.csv`.
+- **A159: the per-compartment clock-specific flag is underpowered by construction (design problem).** A single
+  compartment's pseudo-gene q95 is 0.37-0.92 (mostly 0.6-0.9), so only compartments with c above about 0.75 can pass. Heart
+  fibroblast (c 0.718 vs matched median 0.579, q95 0.912) fails. Colon endothelial clears the matched q95 (0.472 vs 0.467; median 0.023) but not the responsive q95 (0.736).
+  Fibroblast_stromal family median Δc is 0.233, but share clock-specific is 0. In addition, only 3 atlases are covered,
+  and no disease control arm has a genome-wide table. So A153 has no primaries as registered (Q15).
+  - *Source:* `A159_specific_coupling/output/{d159_compartments,d159_families,row_check,h159}.csv`.
+
 ## 2026-10-28
 
 - **H109.1 and H138.4 survive the review's main alternative (strong).** Against responsive (GC / immediate-early) gene
