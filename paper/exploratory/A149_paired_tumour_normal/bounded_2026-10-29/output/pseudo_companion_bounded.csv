@@ -1,0 +1,2 @@
+n_cohorts,n_sets,pseudo_median,pseudo_q95,clock_statistic_bounded,p_pseudo,clock_specific,share_cohort_set_flagged,share_cohort_set_old_gt1,pseudo_median_unbounded,pseudo_q95_unbounded
+17,200,0.44537399879641015,0.6021955779246929,0.48973855066096666,0.3383084577114428,False,0.40705882352941175,0.10941176470588235,0.5839279471391078,44565.13424504805
