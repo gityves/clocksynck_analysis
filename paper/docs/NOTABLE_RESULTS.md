@@ -6,6 +6,13 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
 
 ## 2026-10-29
 
+- **A154 V154.3: coupling estimates are biased low and their bootstrap intervals undercover when anchors are weakly
+  coupled (method weakness).** Coverage is median 0.83 / 0.74 / 0.35 at c 0.3 / 0.6 / 0.9. In a noise-free check, ĉ for
+  0.3 is 0.084 with weak anchors and 0.288 with precise ones.
+  - The gate is close to calibrated: N0 0.040-0.085, the N1 factor map about 0.07. Contrast p is uniform.
+  - *Follow-up:* A162 simulation at realistic anchor coupling (Q17).
+  - *Source:* `A154_gate_calibration/output/v154_3_coverage.csv`, `diag_nominal_c.csv`.
+
 - **A126: endometrial epithelial clock coherence collapses from the proliferative (0.653) to the secretory phase
   (0.126), p 0.0005 (unexpected, descriptive).** Meanwhile the registered tests fail:
   - H126.0, cycling vs non-cycling −0.141, p 0.10;

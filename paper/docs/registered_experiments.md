@@ -2143,3 +2143,33 @@ values z-scored per gene over all samples (no Poisson term; microarray).
 - Fails → the A126 observation is not confirmed (MDE reported).
 
 **Code:** `paper/exploratory/A161_endometrium_phase/`.
+
+## A162 (2026-10-29, method; written after A154 V154.3 failed and before any simulation below; Q17 default (a)): coverage and bias of c at realistic anchor coupling
+
+**Why:** A154 put every compartment at the same nominal c, so the host was built from weakly coupled anchors. ĉ was then
+biased low and intervals undercovered (V154.3). Real anchors (stromal-vascular) have c about 0.6-0.8. The question is
+whether c and its 95 % bootstrap interval are adequate at the anchor coupling the paper actually uses.
+**Simulator:** as A154 arm P: the same 8 designs, depths, seeds scheme (`SeedSequence([162, design, cell, rep])`), no
+factor, 200 replicates per cell.
+- Anchors: K/2 compartments with c_anchor in {0.6, 0.8}.
+- Targets: K/2 with c_target in {0.1, 0.3, 0.6, 0.9}.
+- Truth c = the nominal value, defined as in A154.
+
+**Readouts:**
+- target coverage of the 95 % interval;
+- median bias;
+- the boundary share;
+- anchor coverage, read on the leave-one-out host (the Q13 0.4 default).
+
+**V162.1:** target coverage ≥ 0.90 in every design and cell with c_anchor = 0.8.
+**V162.2:** the same with c_anchor = 0.6.
+**Descriptive:** bias vs c_anchor, with the A154 cells (c_anchor = c_target) as reference.
+
+**Reading:**
+- V162.1-2 pass → c intervals are reported as they are, with the caveat that they are conditional on a well-coupled
+  anchor host. The A154 failure is stated as the weak-anchor limit.
+- V162.1 passes but V162.2 fails → intervals are reported only where the anchors' estimated c is ≥ 0.8, else as
+  contrasts.
+- V162.1 fails → absolute c is reported without intervals (ranks, Δc, d*), and a correction is developed (Q17 b).
+
+**Code:** `paper/exploratory/A154_gate_calibration/` (`--kinds P162`), output `output/a162/`.
