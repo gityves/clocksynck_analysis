@@ -1579,3 +1579,38 @@ replicates).
   state; the oracle reads it against the external ZT. This is a compatible mechanism, not a tested one.
 - **Post hoc:** the calibration values and the "liver follows ZT" arm were added after run 1 (kept in
   `run1_without_noise_hj0/`).
+
+## A127 (scored 2026-10-29): SCAN-B replicates the loss of tumour clock coherence with proliferation and in ER-negative breast tumours; both pass and are clock-specific
+
+Data: GSE96058 (`$SCCC_DATA/scanb_gse96058/`, 592 MB, PROVENANCE.md). Code and outputs: `exploratory/A127_scanb/`.
+- **Feasibility:**
+  - 3,073 tumours (one per patient, PAM50 and ER recorded).
+  - Scale log2(FPKM + 0.1); 14/14 clock genes, 190/200 G2M, 11/11 purity genes.
+  - All 15 PAM50 × purity strata have ≥ 30 tumours.
+  - ER− = 241, almost all Basal / Her2 / Normal.
+  - Source: `output/feasibility_*.csv`.
+- **Tests** (`output/a127_tests.csv`, 2,000 permutations, Holm over 2):
+  - **H127.1 pass:** high − low proliferation coherence T = −0.123 (null SD 0.046), p 0.0045, Holm 0.0045, MDE 0.114.
+    12 of 15 strata are negative.
+  - **H127.2 pass:** ER− − ER+ T = −0.343, p 0.0005, Holm 0.0010.
+- **Specificity** (`output/a127_specificity.csv`, 200 sets matched on mean and variance): H127.1 at the 2.5th percentile
+  (q05 −0.092) and H127.2 at the 1.5th, so both are clock-specific. H127.1 is close to the line. With mean-only matched
+  sets (clocksync `pseudo_waveforms`) both sit at the 4.0th percentile.
+- **Companion and sensitivities** (`a127_tests.csv`, `a127_sensitivity.csv`):
+  - Low − high purity is +0.254: low-purity tumours are more coherent, the opposite direction (99.5th pseudo
+    percentile), so purity does not produce the proliferation loss.
+  - H127.1 holds with cohort-wide purity tertiles (−0.178, p 0.0005) and with platform centring (−0.123, p 0.006).
+  - Within purity halves: high-purity −0.212 (p 0.004), low-purity −0.102 (p 0.08).
+  - ER within proliferation tertile −0.245 (p 0.003), not tested; ER is confounded with PAM50.
+- **Exploratory** (`a127_coherence_per_pam50.csv`, `a127_survival.csv`):
+  - Coherence by subtype: LumA 0.754, Normal 0.663, Basal 0.538, Her2 0.382, LumB 0.267.
+  - Off-plane score Cox HR 0.94 per SD (0.83-1.07), p 0.35 (2,969 tumours, 272 events): no survival association.
+- **Deviations:**
+  - Log FPKM, so no Poisson term (coherence does not use it).
+  - Purity tertiles for H127.1 are within PAM50 (the registration does not specify; cohort-wide was run as a
+    sensitivity and also passes).
+  - The primary pseudo sets are variance-matched draws (registered "mean and variance"; the API matches mean only).
+  - The off-plane score is relative to the cohort mean (no normals).
+  - Post hoc: platform centring, purity halves, Cox with proliferation.
+- **Reading:** A97 replicates at 3,073 tumours, within subtype and purity, and specific to the clock (H127.1 narrowly).
+  This is a candidate Figure 5 panel. LumB tumours are the least coherent, despite being ER+.

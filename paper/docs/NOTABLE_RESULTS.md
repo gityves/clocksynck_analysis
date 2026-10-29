@@ -6,6 +6,16 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
 
 ## 2026-10-29
 
+- **A127: SCAN-B replicates the A97 proliferation-coherence loss at 3,073 tumours (strong, a pre-specified positive).**
+  - H127.1: T −0.123, Holm 0.0045, within PAM50 × purity, clock-specific at the 2.5th pseudo percentile.
+  - H127.2: ER− −0.343, Holm 0.001, 1.5th percentile.
+  - Low-purity tumours are more coherent, so purity is not the route.
+  - No survival association (HR 0.94, p 0.35).
+  - LumB coherence 0.267 vs LumA 0.754.
+  - *Follow-up:* a within-PAM50 ER contrast (ER is nearly all Basal/Her2); is the LumB vs LumA difference only
+    proliferation?
+  - *Source:* `A127_scanb/output/a127_tests.csv`, `a127_specificity.csv`.
+
 - **Bounded ccorr removes much of the cancer pairing evidence (reframing for Figure 5).**
   - Kept: H149.1 0.490 (p 0.011) and H149.3 0.707 (p 0.0004).
   - Not estimable on the bounded statistic: H149.2 (3 cohorts), H151.2, the endothelial pseudo companion, and H138.5
