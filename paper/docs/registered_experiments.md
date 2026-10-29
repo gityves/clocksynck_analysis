@@ -1946,3 +1946,48 @@ reason. Brain targets go to the Extended Data with the A141 stability result sta
 - Inconclusive and not-eligible rows are reported as such, never as "unchanged". A failed gate is uninformative.
 
 **Code:** `paper/exploratory/A153_corrected_contrasts/`. Promoted to `figure_4/scripts/resilience/` if Figure 4 uses it.
+
+## A160 (2026-10-29, written before any lesional statistic below is computed; roadmap 6.9): is the psoriatic core-cue delay present within keratinocytes (composition-controlled)?
+
+**Why:** the psoriatic delay is read in bulk skin:
+- paired lesional minus uninvolved core-cue offset of −1.70 h (A78);
+- core offset of −1.43 h, robust to gene subsets and 600 pseudo sets (psoriasis robustness, 2026-10-28).
+
+Lesions change cell-type and keratinocyte-state composition. Archive A61/A69 attribute −0.2 to −1.0 h to the state
+mix. A delay read within keratinocyte-only pseudobulks, and within keratinocyte differentiation states, removes these
+two routes.
+**Data:** single-cell psoriasis with paired lesional (PP) and uninvolved (PN) skin of the same patients: GSE173706 (on
+disk; 11 PN-PP pairs, 8 healthy). GSE228421 (5 patients) is added only if it passes the same checks; no other series.
+**Pseudobulk:** cells labelled keratinocyte by the existing annotation (`_skin_sc`, `psoriasis_sc_kc_states`), summed per
+library, all genes, CPM, then the A78 processing.
+- **Composition-controlled variant:** the same per library × A63 differentiation bin (`psoriasis_sc_bins`).
+
+**Estimand:** as A78 (paired, A81b GTEx cue set restricted to genes present, GTEx core waveform; `_cues.py`):
+- the core-cue offset arg E[c_core c_cue*] in PP minus PN, on the 11 pairs, in hours (wrapped);
+- the bin variant uses the inverse-variance (bootstrap) weighted circular mean over eligible bins.
+
+**Feasibility and power, computed blind before any PP statistic.** Only PN and healthy libraries are used:
+- **Data rule:** a library enters with at least 200 keratinocytes, and a library × bin with at least 50. A bin is
+  eligible with at least 8 complete pairs. All core genes and at least 60 % of the cue set must be detected.
+- **Null and MDE:** split PN-vs-PN plus healthy by random assignment into pseudo-pairs, with the same pair count and
+  estimator. Null SD and MDE (one-sided 0.05, 80 % power) per variant.
+- **Gate:** a variant is confirmatory only if its MDE is ≤ 1.7 h (the bulk paired delay). Otherwise it is descriptive,
+  reported with its MDE, and has no pass/fail wording.
+
+**Tests (confirmatory variants only; Holm over those that qualify):**
+- **H160.1:** the keratinocyte-only PP − PN core-cue offset is < 0, by a one-sided exact within-patient label swap
+  (2^11 = 2,048), p < 0.05.
+- **H160.2:** the same for the differentiation-bin variant.
+
+**Descriptive:**
+- the PN − healthy offset (trait, as A115);
+- the whole-skin pseudobulk of the same libraries, giving the bulk-like reference on identical samples;
+- the core offset alone;
+- the NR1D1 leave-out.
+
+**Reading:**
+- H160.1 passes → the delay is within keratinocytes, not cell-type composition.
+- H160.2 passes → it is not differentiation-state mix either.
+- A whole-skin delay with a null keratinocyte offset at adequate MDE → composition is the route.
+
+Code: `paper/exploratory/A160_psoriasis_keratinocyte/`.
