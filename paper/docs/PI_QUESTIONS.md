@@ -286,3 +286,21 @@ malignant level but not for fibroblasts.
 - (b) Register the re-annotation of the used cohorts, labelled "not fresh".
 - (c) **[default, recommended]** Keep the pairing descriptive in Figure 5 (lead with A97/A127 coherence vs
   proliferation), and spend no more compute on 7.2.
+
+## Q17 (2026-10-29): coupling intervals undercover (A154 V154.3 fails) — how to report c?
+**Finding:**
+- With every compartment at the same nominal c, ĉ is biased low (c 0.3 → median 0.09-0.26), and 95 % bootstrap
+  intervals cover in 22 of 24 cells only at 0.00-0.89.
+- A noise-free diagnostic shows the cause is a host built from weakly coupled anchors: with precise anchors ĉ is 0.288
+  for 0.3.
+- Contrasts at a common host stay calibrated (V154.2 passes). Real anchors are the stromal-vascular compartments, with c
+  about 0.6-0.7.
+
+**Options:**
+- (a) **[recommended]** A registered follow-up simulation (A162) at realistic anchor coupling (anchors c 0.6-0.8,
+  targets 0.1-0.9), measuring coverage and bias. If coverage is adequate there, report c with the caveat "conditional on
+  the anchor host".
+- (b) Develop an attenuation correction (host reliability) in clocksync and validate it by simulation (several days).
+- (c) Report c only as ranks and contrasts (Δc, d*), not absolute values with intervals.
+
+**Default if no answer:** (a). I will register and run it.

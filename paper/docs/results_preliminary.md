@@ -1703,3 +1703,38 @@ Data: GSE51981 (GCRMA series matrix, 148 samples; `$SCCC_DATA/endometrium_gse519
 - **Reading:** whole-endometrium clock coherence is not lower in the secretory phase in three independent bulk series.
   The A126 single-cell drop is not confirmed. It may be specific to epithelium (bulk mixes in stroma) or to GSE266265.
   It stays a descriptive observation, and the NOTABLE entry is updated.
+
+## A154 (scored 2026-10-29): gate calibration — V154.1 fails narrowly, V154.2 passes, V154.3 (interval coverage of c) fails
+
+Outputs: `exploratory/A154_gate_calibration/output/` (`summary.csv`, `v154_{1,2,3}_*.csv`, `n1_map.csv`); simulator
+choices are in the README.
+- **V154.1 (N0 gate pass rate ≤ 0.075 in every design): fails in 1 of 8 designs.** n100_K8_single_cell passes 17/200 =
+  0.085 (binomial p 0.024, not < 0.01). The other 7 designs are at 0.040-0.070 (`v154_1_n0.csv`).
+  - Reading per registration: the gate is mildly anti-conservative at K 8, n 100, single-cell depth. Gate claims there
+    need a calibrated threshold.
+- **V154.2 (global-null contrast share p < 0.05 ≤ 0.075): passes** in all 8 designs (0.038-0.058; KS p 0.17-0.94;
+  `v154_2_null.csv`).
+  - A first simulation drew the two arms from independent cohorts. Its share of 0.15-0.215 was a simulation artefact
+    and is kept in `raw/GNULL_v1_two_cohorts_flawed` as a record only.
+- **V154.3 (coverage of the 95 % bootstrap interval of c ≥ 0.90): fails in 22 of 24 cells** (`v154_3_coverage.csv`).
+  - Median coverage: 0.83 at c 0.3, 0.74 at 0.6, 0.35 at 0.9. The worst cell is n100_K4_bulk at c 0.9, coverage 0.00
+    with median estimate 0.82.
+  - Estimates are biased low: at c 0.3 the median is 0.09-0.26.
+  - Only n30_K8_single_cell at c 0.3 and 0.6 passes.
+  - A post hoc diagnostic (`diag_nominal_c.csv`, n 600, no noise) gives ĉ 0.288 for nominal 0.3 with precisely coupled
+    anchors, but 0.084 when the anchors carry the target's own weak coupling, as in the registered P arm where every
+    compartment has the same c.
+  - The bias therefore comes from an imprecise host, built from weakly coupled anchors. It does not shrink with n.
+  - The bootstrap refits the host but does not capture this attenuation, so intervals undercover.
+- **N1 map (descriptive; 40 instead of 200 replicates per cell, for run time; `n1_map.csv`):** pooled pass rate
+  367/5120 = 0.072. Factor settings pool to 0.038-0.100; one cell reaches 0.225 (9/40) and does not recur at
+  neighbouring sizes. A shared non-clock factor at the calibrated sizes does not raise the gate pass rate much above
+  0.05-0.10.
+- **Not run:** the P arm (gate sensitivity with vs without the factor).
+- **Reading:**
+  - "Not estimable" wording stays, with a calibrated threshold where K and n are large.
+  - The N1 map supports a passed gate as evidence of clock-shaped covariance at realistic factor sizes. This rests on 40
+    replicates per cell; claims still lean on the pseudo-clock companions.
+  - Absolute coupling values and their bootstrap intervals are biased low and undercover when anchors are weakly
+    coupled. Contrasts at a common host stay calibrated (V154.2).
+  - The paper should report c intervals as conditional on the estimated host, or correct them (PI_QUESTIONS Q17).
