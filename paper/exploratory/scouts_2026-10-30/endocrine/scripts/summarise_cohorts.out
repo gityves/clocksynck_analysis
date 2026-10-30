@@ -1,0 +1,166 @@
+
+== GSE20181: 62 patients, 176 samples; responder labels in title: Counter({'responder': 110, 'nonresponder': 44, 'not assessable': 22})
+  patients with ('2wk',) 58
+  patients with ('3m',) 60
+  patients with ('pre',) 58
+  patients with ('2wk', '3m') 56
+  patients with ('2wk', 'pre') 58
+  patients with ('3m', 'pre') 56
+  patients with ('2wk', '3m', 'pre') 56
+  C-title example: []
+
+== GSE5462: 58 patients, 116 samples; responder labels in title: Counter({'responder': 74, 'nonresponder': 30, 'not assessable': 12})
+  patients with ('2wk',) 58
+  patients with ('pre',) 58
+  patients with ('2wk', 'pre') 58
+  C-title example: []
+
+== GSE59515: 25 patients, 75 samples; 
+  patients with ('2 wks of letrozole treatment',) 25
+  patients with ('3 months of letrozole treatment',) 25
+  patients with ('pre-treatment',) 25
+  patients with ('2 wks of letrozole treatment', '3 months of letrozole treatment') 25
+  patients with ('2 wks of letrozole treatment', 'pre-treatment') 25
+  patients with ('3 months of letrozole treatment', 'pre-treatment') 25
+  patients with ('2 wks of letrozole treatment', '3 months of letrozole treatment', 'pre-treatment') 25
+  response: [] Counter({'Responder': 17, 'Non-responder': 8})
+
+== GSE55374: 13 patients, 36 samples; Counter({'breat tumor ILC': 18, 'breat tumor IDC': 18})
+  patients with ('2 wk endocrine therapy',) 10
+  patients with ('3 mo endocrine therapy',) 13
+  patients with ('pre-treatment',) 13
+  patients with ('2 wk endocrine therapy', '3 mo endocrine therapy') 10
+  patients with ('2 wk endocrine therapy', 'pre-treatment') 10
+  patients with ('3 mo endocrine therapy', 'pre-treatment') 13
+  patients with ('2 wk endocrine therapy', '3 mo endocrine therapy', 'pre-treatment') 10
+
+== GSE111563: 39 patients, 101 samples; 
+  patients with ('1',) 37
+  patients with ('2',) 25
+  patients with ('4',) 39
+  patients with ('1', '2') 24
+  patients with ('1', '4') 37
+  patients with ('2', '4') 25
+  patients with ('1', '2', '4') 24
+  patient-ID overlap (string) 111563 vs 59515: 0  vs 55374: 0  | 111563 example IDs ['X109', 'X120', 'X139', 'X147', 'X181']  59515 example ['150', '171', '172', '179', '203']
+['type_of_rx', 'pre_or_post_treatment', 'response', 'er_status', 'pgr_status_', 'her_2_status', 'baseline age (years)', 'baseline tumor size (cm)', 'patient id (to identify the 2 chips from the same patient)']
+
+== GSE33658: 11 patients, 22 samples; Counter({('AFG', 'pre'): 6, ('AFG', 'post'): 6, ('AF', 'pre'): 5, ('AF', 'post'): 5})
+  patients with ('post',) 11
+  patients with ('pre',) 11
+  patients with ('post', 'pre') 11
+  arms per patient Counter({'AFG': 6, 'AF': 5})  response Counter({'SD': 4, 'PR': 3, 'PD': 2, 'CR': 2})
+  tp labels Counter({'BL': 86, 'w2': 74, 'W2': 18, 're-analyzed': 17, 'M': 11, 'BL_Redo': 5, 'W2_Redo': 3, 'w2 Redo': 1, 'BL Redo': 1, 'w2_Redo': 1, 'M_Redo': 1})
+
+== GSE87411: 109 patients, 218 samples; 
+  patients with ('BL',) 86
+  patients with ('BL Redo',) 1
+  patients with ('BL_Redo',) 5
+  patients with ('M',) 11
+  patients with ('M_Redo',) 1
+  patients with ('W2',) 18
+  patients with ('W2_Redo',) 3
+  patients with ('re-analyzed',) 17
+  patients with ('w2',) 74
+  patients with ('w2 Redo',) 1
+  patients with ('w2_Redo',) 1
+  patients with ('BL', 'BL Redo') 0
+  patients with ('BL', 'BL_Redo') 0
+  patients with ('BL', 'M') 9
+  patients with ('BL', 'M_Redo') 1
+  patients with ('BL', 'W2') 14
+  patients with ('BL', 'W2_Redo') 1
+  patients with ('BL', 're-analyzed') 0
+  patients with ('BL', 'w2') 59
+  patients with ('BL', 'w2 Redo') 1
+  patients with ('BL', 'w2_Redo') 1
+  patients with ('BL Redo', 'BL_Redo') 0
+  patients with ('BL Redo', 'M') 0
+  patients with ('BL Redo', 'M_Redo') 0
+  patients with ('BL Redo', 'W2') 0
+  patients with ('BL Redo', 'W2_Redo') 0
+  patients with ('BL Redo', 're-analyzed') 0
+  patients with ('BL Redo', 'w2') 1
+  patients with ('BL Redo', 'w2 Redo') 0
+  patients with ('BL Redo', 'w2_Redo') 0
+  patients with ('BL_Redo', 'M') 1
+  patients with ('BL_Redo', 'M_Redo') 0
+  patients with ('BL_Redo', 'W2') 1
+  patients with ('BL_Redo', 'W2_Redo') 2
+  patients with ('BL_Redo', 're-analyzed') 0
+  patients with ('BL_Redo', 'w2') 1
+  patients with ('BL_Redo', 'w2 Redo') 0
+  patients with ('BL_Redo', 'w2_Redo') 0
+  patients with ('M', 'M_Redo') 0
+  patients with ('M', 'W2') 0
+  patients with ('M', 'W2_Redo') 0
+  patients with ('M', 're-analyzed') 1
+  patients with ('M', 'w2') 0
+  patients with ('M', 'w2 Redo') 0
+  patients with ('M', 'w2_Redo') 0
+  patients with ('M_Redo', 'W2') 0
+  patients with ('M_Redo', 'W2_Redo') 0
+  patients with ('M_Redo', 're-analyzed') 0
+  patients with ('M_Redo', 'w2') 0
+  patients with ('M_Redo', 'w2 Redo') 0
+  patients with ('M_Redo', 'w2_Redo') 0
+  patients with ('W2', 'W2_Redo') 0
+  patients with ('W2', 're-analyzed') 3
+  patients with ('W2', 'w2') 0
+  patients with ('W2', 'w2 Redo') 0
+  patients with ('W2', 'w2_Redo') 0
+  patients with ('W2_Redo', 're-analyzed') 0
+  patients with ('W2_Redo', 'w2') 0
+  patients with ('W2_Redo', 'w2 Redo') 0
+  patients with ('W2_Redo', 'w2_Redo') 0
+  patients with ('re-analyzed', 'w2') 13
+  patients with ('re-analyzed', 'w2 Redo') 0
+  patients with ('re-analyzed', 'w2_Redo') 0
+  patients with ('w2', 'w2 Redo') 0
+  patients with ('w2', 'w2_Redo') 0
+  patients with ('w2 Redo', 'w2_Redo') 0
+
+== GSE93204: 46 patients, 118 samples; 
+  patients with ('BL',) 32
+  patients with ('C1D1',) 33
+  patients with ('C1D15',) 28
+  patients with ('C1D15_Redo',) 1
+  patients with ('S',) 1
+  patients with ('Surg',) 23
+  patients with ('BL', 'C1D1') 22
+  patients with ('BL', 'C1D15') 22
+  patients with ('BL', 'C1D15_Redo') 1
+  patients with ('BL', 'S') 1
+  patients with ('BL', 'Surg') 15
+  patients with ('C1D1', 'C1D15') 23
+  patients with ('C1D1', 'C1D15_Redo') 0
+  patients with ('C1D1', 'S') 1
+  patients with ('C1D1', 'Surg') 15
+  patients with ('C1D15', 'C1D15_Redo') 0
+  patients with ('C1D15', 'S') 1
+  patients with ('C1D15', 'Surg') 14
+  patients with ('C1D15_Redo', 'S') 0
+  patients with ('C1D15_Redo', 'Surg') 0
+  patients with ('S', 'Surg') 0
+  patients with ('BL', 'C1D1', 'C1D15') 18
+  patients with ('BL', 'C1D1', 'S') 1
+  patients with ('BL', 'C1D1', 'Surg') 10
+  patients with ('BL', 'C1D15', 'S') 1
+  patients with ('BL', 'C1D15', 'Surg') 10
+  patients with ('C1D1', 'C1D15', 'S') 1
+  patients with ('C1D1', 'C1D15', 'Surg') 10
+  105777 title patterns Counter({'AI.Treated.NB': 157, 'AI.Treated.NS': 157, 'NS [reanalysis]': 56, 'ND [reanalysis]': 56})
+
+== GSE105777: 269 patients, 426 samples; 
+  patients with ('?',) 112
+  patients with ('B',) 157
+  patients with ('S',) 157
+  patients with ('?', 'B') 0
+  patients with ('?', 'S') 0
+  patients with ('B', 'S') 157
+  per group sample counts {'AI.Treated': Counter({'B': 157, 'S': 157}), '?S [reanalysis]': Counter({'?': 56}), '?D [reanalysis]': Counter({'?': 56})}
+  73237 (GPL10558) groups Counter({'untreated': 112}) sampling Counter({'surgery': 56, 'diagnosis': 56, 'after excision': 6, 'after x-ray': 6})
+  title overlap 73237 vs 105777: 0 ['10D', '10S', '11D', '11S', '12D', '12S'] ['10D [reanalysis]', '10S [reanalysis]', '11D [reanalysis]']
+
+GSM overlaps
+  GSE20181 GSE5462 116

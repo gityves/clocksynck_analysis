@@ -1,0 +1,17 @@
+
+GPL10558: genes with >=1 probe 16/16; missing: []; probes/gene {'ARNTL': 2, 'BHLHE40': 2, 'BHLHE41': 1, 'CIART': 1, 'CLOCK': 2, 'CRY1': 2, 'CRY2': 1, 'DBP': 1, 'NPAS2': 1, 'NR1D1': 1, 'NR1D2': 1, 'PER1': 1, 'PER2': 3, 'PER3': 1, 'RORA': 8, 'TEF': 1}
+
+GPL570: genes with >=1 probe 16/16; missing: []; probes/gene {'ARNTL': 2, 'BHLHE40': 3, 'BHLHE41': 4, 'CIART': 1, 'CLOCK': 4, 'CRY1': 1, 'CRY2': 1, 'DBP': 2, 'NPAS2': 5, 'NR1D1': 3, 'NR1D2': 2, 'PER1': 4, 'PER2': 2, 'PER3': 4, 'RORA': 8, 'TEF': 4}
+
+GPL6480: genes with >=1 probe 16/16; missing: []; probes/gene {'ARNTL': 1, 'BHLHE40': 3, 'BHLHE41': 1, 'CIART': 2, 'CLOCK': 2, 'CRY1': 2, 'CRY2': 3, 'DBP': 2, 'NPAS2': 2, 'NR1D1': 2, 'NR1D2': 2, 'PER1': 2, 'PER2': 2, 'PER3': 3, 'RORA': 2, 'TEF': 3}
+
+GPL96: genes with >=1 probe 15/16; missing: ['CIART']; probes/gene {'ARNTL': 2, 'BHLHE40': 3, 'BHLHE41': 1, 'CLOCK': 2, 'CRY1': 1, 'CRY2': 1, 'DBP': 2, 'NPAS2': 5, 'NR1D1': 3, 'NR1D2': 1, 'PER1': 2, 'PER2': 2, 'PER3': 1, 'RORA': 2, 'TEF': 3}
+GSE20181 (GPL96): 22283 probe rows; genes with a row in matrix 15/16; absent from matrix: ['CIART']
+GSE5462 (GPL96): 22283 probe rows; genes with a row in matrix 15/16; absent from matrix: ['CIART']
+GSE59515 (GPL10558): 47323 probe rows; genes with a row in matrix 16/16; absent from matrix: []
+GSE55374 (GPL10558): 47323 probe rows; genes with a row in matrix 16/16; absent from matrix: []
+GSE111563 (GPL10558): 22119 probe rows; genes with a row in matrix 14/16; absent from matrix: ['NR1D1', 'CIART']
+GSE105777 (GPL10558): 47323 probe rows; genes with a row in matrix 16/16; absent from matrix: []
+GSE33658 (GPL570): 54675 probe rows; genes with a row in matrix 16/16; absent from matrix: []
+GSE87411 (GPL6480): 29032 probe rows; genes with a row in matrix 16/16; absent from matrix: []
+GSE93204 (GPL6480): 29284 probe rows; genes with a row in matrix 16/16; absent from matrix: []

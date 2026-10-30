@@ -1,0 +1,14 @@
+GSE87411 patients 109 with base+post 92 with reanalyzed+post 17 with base+post or reanalyzed+post 109
+  other sample characteristics rows: ['rna source: Total RNA from 10 human cell lines: 1_Adenocarci']  treatment/arm field present: False
+  GSE87411 distinct descriptions {'Z1031B'}
+numeric patient-id overlap GSE55374 GSE59515 0 (ID spaces may differ: weak evidence)
+numeric patient-id overlap GSE20181 GSE59515 0 (ID spaces may differ: weak evidence)
+numeric patient-id overlap GSE20181 GSE55374 0 (ID spaces may differ: weak evidence)
+numeric patient-id overlap GSE111563 GSE59515 3 (ID spaces may differ: weak evidence)
+numeric patient-id overlap GSE111563 GSE55374 1 (ID spaces may differ: weak evidence)
+numeric patient-id overlap GSE111563 GSE20181 1 (ID spaces may differ: weak evidence)
+id ranges {'GSE59515': (150, 373), 'GSE55374': (182, 374), 'GSE20181': (2, 69), 'GSE111563': (32, 416)}
+GSE105777 control titles 112 matching GSE73237 GPL10558 titles 112
+GSE73237 GPL10558 extra titles (not in 105777): ['18A', '18B', '1A', '1B', '3A', '3B', '4A', '4B', '5A', '5B', '6A', '6B']
+GSE73237 series summary/design: [['This SuperSeries is composed of the SubSeries listed below.']] [['Refer to individual Series']]
+GSE105777 treated pairs 157 HER2/subtype fields: Counter({'her2: Negative': 270, 'subtype: LumA': 77, 'her2: Positive': 44, 'subtype: LumB': 31, 'subtype: Normal': 3, 'subtype: Her2': 1})
