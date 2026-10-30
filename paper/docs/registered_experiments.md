@@ -2642,3 +2642,38 @@ oestrogen-response scores per time point (to show the treatment acts throughout)
 H169.1 GSE111563 (37 patients, 12 genes): null SD 0.263, MDE 0.653 (underpowered for METABRIC and SCAN-B).
 H169.2 GSE59515 (25 patients, 14 genes): null SD 0.124, MDE 0.307 (about the SCAN-B size).
 <!-- src: paper/exploratory/A169_endocrine_duration/output/power.csv -->
+
+## A170 (2026-10-31, written after a metadata-only scout (`exploratory/scouts_2026-10-31/sc_breast_er/SCOUT.md`, parts 1-2: cell counts per patient and class, ER labels; no expression value read except the two archive rows noted in part 1, which are not from Wu or Pal) and before any expression of Wu 2021 or Pal 2021 is read; PI request 2026-10-31): is the ER− loss of breast-tumour clock coherence carried by the malignant cells themselves?
+
+**Why:** ER− breast tumours have lower bulk clock-gene coherence (A127 SCAN-B, A166 METABRIC, clock-specific), and
+oestrogen deprivation does not reproduce it (A168, A169). Bulk cannot say whether the loss sits in the malignant cells
+or in the microenvironment. Single-cell malignant pseudobulks can.
+**Data** (`$SCCC_DATA/sc_breast_er/`):
+- **Wu 2021** (GSE176078; raw counts, author cell types `celltype_major`): malignant = "Cancer Epithelial". ER from the
+  paper's Supplementary Table 1 (`wu_reconciled.csv`, `final_ER`).
+- **Pal 2021** (GSE161529; 10x matrices of the figshare deposit 17058077; malignant = the authors' `Tum` clusters of the
+  ERTotal, TNBC and HER2 objects, cell names `<sample>_<barcode>`). ER+ = the ER objects; ER− = TNBC (BRCA1 carriers
+  included). HER2+ tumours (ER not reported) are not used.
+- **Units:** one tumour per patient with ≥ 50 malignant cells. Excluded: Pal ER-0319 (ER-low), patient 0114 (one tumour
+  in each arm: both dropped). Expected from the scout: ER+ 22 (Wu 11, Pal 11), ER− 16 (Wu 9, Pal 7).
+
+**Definitions:** malignant pseudobulk = summed raw counts of the patient's malignant cells; y = log((n + 0.5) / depth)
+of the 14 A127 clock genes present (`decompose.logfrac`, depth = total counts of the pseudobulk), centred per gene
+within cohort. Coherence = `a127_lib.coh` (A97 / A127 statistic) over the tumours of an arm.
+**Test:**
+- **H170.1 (primary, one-sided for a loss):** T = coh(ER−) − coh(ER+) on the pooled Wu + Pal malignant pseudobulks;
+  2,000 permutations of ER labels within cohort. Pass: p < 0.05.
+- **Specificity companion:** 200 pseudo-clock sets (A168 construction: mean / SD matched in the pooled malignant
+  pseudobulks; pool without clock-like, G2M, purity-proxy, oestrogen-response or clock genes; genes with ≥ 1 count per
+  1e5 in every unit). "Clock-specific" only if T is below the 5th pseudo percentile.
+**Power, before the test:** null SD of T from the permutations, MDE = 2.49 × SD, next to the bulk ER effects (METABRIC
+−0.165 beyond the null, SCAN-B −0.315).
+**Descriptive (no test):** T per cohort; whole-tumour pseudobulk (all cells) T in the same patients, to show whether the
+bulk effect is visible at this size; Wu CAF and endothelial coherence by ER (patients with ≥ 50 cells of the class);
+without CID3963 (borderline ER-low); without the 4 Pal BRCA1 TNBC.
+**Reading:**
+- Pass, clock-specific → the ER− coherence loss is carried by the malignant cells (cell-intrinsic).
+- Fail with the whole-tumour T also near 0 → the cohort is too small to see the bulk effect; uninformative.
+- Fail with the whole-tumour T negative → the loss is not in the malignant cells: the microenvironment or composition
+  carries it (descriptive only).
+**Code:** `paper/exploratory/A170_sc_breast_er/`.
