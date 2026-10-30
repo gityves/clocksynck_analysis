@@ -210,6 +210,7 @@ for key, normal, tum in (("gse14520", "Non-Tumor", "Tumor"), ("gse36376", "adjac
     mm, XX = L.load(key, OUT); cg = L.clock_genes(XX); YY = L.Yof(XX, cg); mm = mm.assign(pos=np.arange(len(mm)))
     tis = mm.tissue.str.strip()
     if key == "gse14520":
+        mm["patient"] = mm.patient.str.strip().str[:-1]  # 'Individual' = patient id + A (tumour) / B (non-tumour)
         a = mm[tis == normal].drop_duplicates("patient", keep=False).set_index("patient")
         b = mm[tis == tum].drop_duplicates("patient", keep=False).set_index("patient")
         both = a.index.intersection(b.index).sort_values()

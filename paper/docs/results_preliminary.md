@@ -2101,3 +2101,33 @@ One-sided for a loss, 2,000 permutations of ER within cohort; 200 pseudo-clock s
   reproduced in whole-tumour pseudobulks here, so the two scales cannot be reconciled with 38 tumours. Caveats:
   Wu carries the effect (Pal −0.069, with much lower ER+ coherence, 0.148); one-sided p 0.044 with one test.
 <!-- src: paper/exploratory/A170_sc_breast_er/output/{tests,descriptive,power}.csv -->
+
+## A171 (scored 2026-10-31): the proliferation clock-coherence loss replicates in lung adenocarcinoma (H171.1-2 pass; clock-specific in GSE68465) but not in hepatocellular carcinoma (H171.3-4 fail)
+H166.3 statistic (within purity-proxy tertiles, high minus low proliferation tertile), one-sided, 2,000 permutations,
+Holm over four; 200 pseudo-clock sets per series.
+
+| test | tumours | T | p | Holm | MDE | pseudo percentile | verdict |
+|---|---|---|---|---|---|---|---|
+| H171.1 LUAD GSE72094 | 442 | **−0.242** | 0.0005 | **0.002** | 0.167 | 5.5 (q05 −0.250) | pass, not specific (narrowly) |
+| H171.2 LUAD GSE68465 | 443 | **−0.293** | 0.0045 | **0.0135** | 0.304 | 1.0 | pass, clock-specific |
+| H171.3 LIHC GSE14520 | 225 | −0.121 | 0.175 | 0.351 | 0.318 | 14.5 | fail |
+| H171.4 LIHC GSE36376 | 240 | −0.102 | 0.257 | 0.351 | 0.363 | 17.0 | fail |
+
+TCGA with the same statistic (seen, power step): LUAD −0.361, LIHC −0.512.
+- **LUAD, per stratum:** the low-proliferation tertile is coherent in every stratum (0.80-0.81 in GSE72094, 0.61-0.68 in
+  GSE68465); the loss is largest in the least pure stratum (GSE72094 0.802 → 0.376; GSE68465 0.680 → 0.098).
+- **LUAD descriptive:** GSE31210 (226, stage I-II) −0.232, p 0.0035 (MDE 0.194); GSE41271 (183) −0.101, p 0.28 (MDE
+  0.390). Without PER1 and NR1D1 the two tests grow (−0.282, −0.431; p ≤ 0.0025).
+- **LUAD subgroups (GSE72094, descriptive):** no mutation or smoking group differs in coherence. KRAS within
+  proliferation tertile −0.155 (p 0.051), TP53 within purity −0.132 (p 0.062), EGFR and STK11 near 0; ever vs never
+  smokers +0.03 (33 never smokers).
+- **LIHC:** both tests fail although powered for the TCGA value (MDE 0.32-0.36 vs −0.51). GSE63898 −0.143 (p 0.11).
+  Without PER1 and NR1D1, GSE36376 is −0.362 (p 0.013) and GSE14520 −0.213 (p 0.10): the liver signal, if any, is masked
+  by the two sampling-sensitive genes. **HCC tumours are less coherent than their paired non-tumour liver** (GSE14520,
+  213 pairs, −0.327, p 0.0005, MDE 0.134; GSE36376 unpaired −0.143, p 0.084).
+- **Reading:** with breast (A127, A166), lung adenocarcinoma is the second cancer in which proliferating tumours lose
+  clock coherence, in two independent cohorts and three platforms; clock-specific in GSE68465 and just outside the 5 %
+  pseudo line in GSE72094 (5.5th percentile). In HCC the TCGA proliferation loss is not confirmed; HCC tumours instead
+  differ from their own non-tumour liver. Caveats: GSE68465 needs site centring (four sites); HCC series lack CIART
+  (GSE14520) and are HBV-dominated (GSE14520).
+<!-- src: paper/exploratory/A171_luad_lihc/output/{tests,strata,descriptive,power,tcga}.csv -->

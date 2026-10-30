@@ -6,6 +6,19 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
 
 ## 2026-10-31
 
+- **A171: the proliferation clock-coherence loss replicates in lung adenocarcinoma (pre-specified; H171.1-2 pass,
+  Holm 0.002 and 0.0135).** GSE72094 −0.242 (442 tumours), GSE68465 −0.293 (443, clock-specific, 1st pseudo percentile);
+  GSE31210 −0.232 descriptively. Hepatocellular carcinoma does not replicate (−0.12, −0.10; powered for the TCGA −0.51).
+  - *Why notable:* the first cancer beyond breast with an independently replicated, pre-specified clock positive. It
+    makes "proliferating tumours lose clock coherence" a multi-cancer claim.
+  - *Caveats:* GSE72094 is at the 5.5th pseudo percentile (not specific by the 5 % rule). No LUAD driver mutation or
+    smoking group carries the loss. HCC: tumours are less coherent than paired non-tumour liver (−0.327, descriptive).
+  - *Source:* `A171_luad_lihc/output/tests.csv`, `descriptive.csv`.
+
+- **A170: ER− malignant cells lose clock-gene coherence, but not clock-specifically (pre-specified, p 0.044, 12th pseudo
+  percentile).** The whole-tumour pseudobulks of the same 38 patients show no ER effect.
+  - *Source:* `A170_sc_breast_er/output/tests.csv`.
+
 - **A168: two weeks of aromatase inhibition leave breast-tumour clock coherence unchanged (pre-specified; H168.1-3
   fail).** POETIC treated change −0.010 (MDE 0.196) while proliferation (−0.90 SD) and oestrogen response (−0.96 SD)
   fall; GSE20181 and Z1031B point the same way.
