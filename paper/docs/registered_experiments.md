@@ -2517,3 +2517,15 @@ power or contrast output was read): the hepatocyte is a third primary.**
 - **Caveat stated in the reading:** hepatocytes dominate the nuclei (median about 2,000 per patient vs 166 stellate),
   so ambient hepatocyte RNA may enter the other pseudobulks (D150.2 flags the epithelial family); a hepatocyte effect
   shared by the liver-wide companion is read as liver-wide.
+
+**A167 power step (2026-10-30, recorded before the contrast is run):** D2 without living donors, 62 control / 44 case,
+`power.mde` 100 replicates × 200 permutations within study, A153 conversion.
+
+| primary | c0 (pooled) | s* | MDE on d* |
+|---|---|---|---|
+| liver:stellate | 0.753 | 0.528 | 0.293 |
+| liver:endothelial | 0.715 | 0.400 | 0.429 |
+| liver:hepatocyte | 0.561 | 0.459 | 0.349 |
+
+All three exceed 0.2; as registered, no bound is applied and each verdict carries its MDE. A null is "not detected
+(MDE …)". <!-- src: paper/exploratory/A167_liver_fibrosis/output/power.csv -->
