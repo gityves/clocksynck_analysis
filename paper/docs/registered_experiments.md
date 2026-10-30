@@ -2372,3 +2372,25 @@ fold-change in amplitude (exp(MDE/2)) and fold-change in ψ. A non-significant r
 - Nothing detected: the disease clocks of these compartments are not shown to shift by more than about 1-2 h, damp by
   more than about 2-fold, or blur by more than about 3-fold (per-row MDEs).
 **Code:** `paper/exploratory/A165_disease_readouts/`; clocksync `Dataset.contrast` (p_log_z2, p_log_psi).
+
+## A19 note (2026-10-30, roadmap 3.5; written before the rerun below): age effects rerun on the relearned anchors, with MDEs; H19.2 under the family rule
+
+**Why:** the A19 part 2 re-read (2026-10-26, permutation null) predates the relearned anchors (2026-10-28) and reports
+no power. H19.2 contrasts lymphocyte + myeloid with stromal-vascular compartments. Under the A153 family rule
+(note of 2026-10-30), lymphocyte and myeloid are not clock-specific, so a locked-amplitude difference built on them has
+no demonstrated clock content.
+**Rerun:** `figure_4/scripts/resilience/compute_age.py`, unchanged:
+- permutation null;
+- the current rule-stamped tables and relearned learned anchors;
+- `--jobs 4`.
+
+The 2026-10-26 outputs are kept for comparison as `*_2026-10-26.csv`.
+**Additions (descriptive, from the pooled table):**
+- an approximate MDE = 2.80 × pooled SE (80 %, two-sided 0.05) for H19.1, H19.2 and every family secondary, in the
+  estimand's units per decade;
+- **H19.2 is labelled uninformative** whatever its p: its immune arm is not eligible under the family rule. It is
+  reported, never read as "immune clocks do not age differently".
+- The eligible-family readouts, fibroblast_stromal (all5) and endothelial (rowcheck3 sensitivity), are reported
+  per estimand with their MDEs. These are secondaries, not tests.
+
+**Reading:** the H19.1 verdict stands as registered and gains an MDE. "No age effect" is stated only down to that MDE.
