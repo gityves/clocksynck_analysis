@@ -6,6 +6,17 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
 
 ## 2026-10-30
 
+- **A166: the ER-negative breast-tumour clock-coherence loss replicates in METABRIC, clock-specifically (pre-specified).**
+  H166.1 T −0.229, Holm 0.003, 1st pseudo percentile. Within PAM50 × proliferation, T −0.168, Holm 0.047, 2nd
+  percentile. The effect beyond the null mean is about half of SCAN-B's. The proliferation loss does not replicate
+  (p 0.15, underpowered).
+  - *Why notable:* this is the first pre-specified, independently replicated cancer clock positive across two platforms
+    (RNA-seq and microarray). It links ER signalling to tumour clock integrity, beyond subtype and proliferation.
+  - *Caveats:* the within-subtype result is at the Holm line, and with ER_STATUS labels it is not detected.
+  - *Follow-up (PI):* survival or endocrine response (not registered; confounded by indication); a mechanism for ER and
+    clock coherence (ER-target signature in ER+ Basal tumours).
+  - *Source:* `A166_metabric/output/a166_tests.csv`.
+
 - **A164: T2D and obesity are equivalent to no coupling change in the metabolic organs (matched GTEx).** T2D pooled
   module d* +0.019 [−0.021, 0.060] and obesity +0.004 [−0.081, 0.089], both within ±0.15 and powered. No effect.
   - *Why notable:* the first registered, powered equivalence. "Metabolic disease leaves organ clocks coupled to the

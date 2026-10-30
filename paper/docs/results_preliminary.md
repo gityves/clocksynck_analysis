@@ -1929,3 +1929,40 @@ the ψ ratio and its SE.
   - Most rows can only see shifts above 2 h, 2-fold amplitude or 3-fold ψ.
   - The endothelial amplitude increase is a lead for a registered two-sided follow-up, with the host amplitude per arm
     reported.
+
+## A166 (scored 2026-10-30): METABRIC replicates the ER-negative clock-coherence loss (H166.1 pass) and its persistence within PAM50 × proliferation (H166.2 pass, Holm 0.047); both clock-specific; the proliferation loss does not replicate (H166.3 fail)
+
+Outputs: `exploratory/A166_metabric/output/`; choices not in the registration are in the README. Power was written
+before the observed statistics (`power.csv`, 20:21:04; `a166_tests.csv`, 20:21:28). Data: 1,980 METABRIC tumours
+(Illumina HT-12 v3). No clock gene lies within 0.25 of the array floor (`gene_floor.csv`).
+- **Power (MDE = 2.49 × null SD):** H166.1 0.131, H166.2 0.172, H166.3 0.137.
+  - The SCAN-B effects are −0.343, −0.268 and −0.123, so H166.3 was not powered for the SCAN-B size.
+- **H166.1 PASS, clock-specific:** ER− minus ER+ coherence T −0.229 (15 COHORT × purity strata, 1,937 tumours).
+  - p 0.0010, Holm 0.0030.
+  - Pseudo-clock percentile 1.0 (q05 −0.120).
+  - The permutation null is not centred at 0 (mean −0.064; arm sizes differ). The effect beyond the null mean is about
+    −0.165, against −0.315 in SCAN-B (`a127_tests.csv`: T −0.343, null mean −0.028). The replication is about half the
+    discovery size.
+- **H166.2 PASS (Holm 0.047, close to the line), clock-specific:** ER− minus ER+ within PAM50 × proliferation tertile.
+  - T −0.168, p 0.0235, pseudo percentile 2.0 (q05 −0.132). Null mean −0.031.
+  - 8 cells, 520 tumours: Basal × 3, Her2 × 3, Normal tertiles 0 and 2. LumA and LumB have 2-6 ER− tumours per cell
+    and are out.
+  - 5 of 8 cells are negative (Her2 middle −0.424, Normal low −0.434, Her2 high −0.348, Basal low −0.329). Basal high
+    is +0.169, and the Basal ER+ arms have 10-12 tumours (`cells.csv`).
+- **H166.3 FAIL:** high minus low proliferation T −0.057, p 0.148, pseudo percentile 13.0. The MDE (0.137) exceeds the
+  SCAN-B effect (0.123), so the test is not powered for that size.
+- **Sensitivities** (`sensitivity.csv`, not tested):
+  - ER by ER_STATUS: H166.1 −0.176 (p 0.014); H166.2 −0.115 (p 0.236, 6 cells).
+  - Claudin-low as its own stratum: H166.2 −0.196 (p 0.0045, 11 cells).
+  - Without COHORT stratification: H166.1 −0.241 (p 0.0005).
+  - Per COHORT, H166.1: cohorts 1-3 −0.290, −0.352, −0.351 (p 0.039, 0.011, 0.001); cohorts 4-5 −0.075 and −0.077
+    (p 0.43, 0.37; MDE 0.32-0.35).
+- **TCGA BRCA (secondary, descriptive, not independent for ER):**
+  - H166.2 has only one qualifying cell (Basal middle, 44/10): +0.178, MDE 0.40. Uninformative.
+  - H166.3: +0.062 (p 0.86, 9 strata).
+- **Reading:**
+  - The ER-negative clock-coherence loss replicates in an independent cohort and platform, clock-specifically, with a
+    smaller effect than in SCAN-B. It is a pre-specified cancer positive.
+  - Its independence from PAM50 subtype and proliferation also replicates, but only just: Holm 0.047. It is carried by
+    Basal, Her2 and Normal, with small ER+ Basal arms, and with ER_STATUS labels it is not detected (p 0.24).
+  - The proliferation loss (A97, H127.1) does not replicate at this power; it stays a SCAN-B and TCGA result.
