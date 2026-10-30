@@ -2677,3 +2677,8 @@ without CID3963 (borderline ER-low); without the 4 Pal BRCA1 TNBC.
 - Fail with the whole-tumour T negative → the loss is not in the malignant cells: the microenvironment or composition
   carries it (descriptive only).
 **Code:** `paper/exploratory/A170_sc_breast_er/`.
+
+**A170 power step (2026-10-31, recorded before any observed statistic):** 38 malignant pseudobulks (ER+ 22: Wu 11, Pal 11;
+ER− 16: Wu 9, Pal 7), 14 clock genes, 2,000 within-cohort permutations: null mean +0.022, SD 0.155, MDE 0.385 (above the
+SCAN-B effect 0.315: a fail cannot exclude a bulk-sized loss).
+<!-- src: paper/exploratory/A170_sc_breast_er/output/power.csv -->
