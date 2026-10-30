@@ -2601,3 +2601,39 @@ MDE = 2.49 × null SD (`run_a168.py --stage power`).
 The 56 untreated pairs limit H168.1. Data used: POETIC all 157 + 56 pairs; GSE20181 58 pairs, 13 clock genes (no
 CIART; linear MAS5 values log2-transformed); GSE87411 81 BL→2-4 wk pairs (97 with the "re-analyzed" baselines).
 Implementation choices: `paper/exploratory/A168_endocrine/README.md`. <!-- src: paper/exploratory/A168_endocrine/output/{power,sample_counts}.csv -->
+
+## A169 (2026-10-31, written after A168 was scored and before any clock readout of GSE111563, GSE59515 or GSE55374; GSE20181 day 90 is already seen in A168: −0.143, p 0.32; PI request 2026-10-31): does tumour clock coherence fall progressively with the duration of oestrogen deprivation?
+
+**Why:** A168 found no coherence loss after 2 weeks of aromatase inhibition. The ER− loss may need longer deprivation
+to develop (tumours adapt, clones are selected). Edinburgh letrozole series sample the same tumours up to and beyond
+3 months.
+**Data** (`$SCCC_DATA/scout_endocrine/`, GEO series matrices; all ER+, neoadjuvant letrozole; each series was
+submitted in one batch):
+- **GSE111563** (HT-12 v4, probe-filtered matrix; 12 clock genes, no NR1D1 or CIART): time windows tp1 (< 0 d,
+  pre), tp2 (0-120 d), tp4 (> 120 d). 37 patients with tp1 and tp4; 24 with all three.
+- **GSE59515** (HT-12 v4, 14 genes): pre, 2 weeks, 3 months; 25 patients with all three.
+- **GSE55374** (HT-12 v4): 13 patients pre and 3 months (10 with 2 weeks); descriptive.
+- Patient overlap between the three Edinburgh series is unresolved (SCOUT.md): they are never pooled, and H169.1-2 are
+  not independent replications of each other.
+
+**Definitions:** as A168 (`A168_endocrine/scripts/a168_lib.py`: log2, probes averaged per symbol, coherence
+`a127_lib.coh` per time-point group, scores z-scored within series).
+**Tests (one-sided for a loss, 2,000 permutations, time labels permuted within patient; Holm over the two):**
+- **H169.1 (GSE111563):** coh(tp4, > 120 d) − coh(tp1) over the 37 patients with both.
+- **H169.2 (GSE59515):** coh(3 months) − coh(pre) over the 25 patients.
+- **Progression (descriptive, both series):** coherence at each time point on the patients with all three, and the
+  trend slope over the time-point rank (null: the three labels permuted within patient), one-sided p reported.
+
+**Specificity companion:** 200 pseudo-clock sets per series, as A168 (oestrogen-response genes excluded from the pool).
+"Clock-specific" only if T is below the 5th pseudo percentile.
+**Power, before the tests:** MDE = 2.49 × null SD, next to the METABRIC (0.165) and SCAN-B (0.315) ER effects.
+**Sensitivities (descriptive):** without PER1 (and NR1D1 where present); Y residualised on proliferation and purity
+proxy within time point; responders vs non-responders (GSE59515 labels); the change in proliferation and
+oestrogen-response scores per time point (to show the treatment acts throughout).
+**Reading:**
+- Pass, clock-specific → coherence falls with prolonged oestrogen deprivation: the ER− state can be approached by
+  long deprivation, though not by 2 weeks (A168).
+- Fail at these sizes → no progressive loss down to the MDE; with A168, the ER− loss is a stable tumour-type
+  property. Small series: a fail is weak evidence; MDEs are stated.
+
+**Code:** `paper/exploratory/A169_endocrine_duration/` (reuses the A168 library).
