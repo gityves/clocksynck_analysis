@@ -2446,3 +2446,60 @@ confounded by indication.
 - Fail at a powered design → the SCAN-B within-PAM50 result stays post hoc, and the effect is bounded at the MDE.
 - Not specific → the wording changes to "general transcriptional decoherence".
 **Code:** `paper/exploratory/A166_metabric/`.
+
+## A167 (2026-10-30, written before any power or contrast statistic below is computed; NOT BLIND: the same four cohorts were scored in archive A38, A43, A44 and A96; PI request 2026-10-30): advanced liver fibrosis and the stellate and endothelial clocks, without living-donor controls
+
+**Why:** the liver was not in A153/A165. With about 110 patients, the pooled open MASLD cohorts are the largest
+single-cell disease set on disk, and stellate cells (fibroblast_stromal) and endothelial cells are the two families
+eligible for clock readouts (A153 family screen, A150 D150.1). Stellate activation drives MASH fibrosis.
+**Known before writing (archive):**
+- A38 (GSE202379, SAF): hepatocyte coupling 0.68 → 0.54, p 0.195; endothelial 0.89 → 0.65, p 0.075.
+- A43/A44: coupling falls in every class, anchors included, and the host spread narrows; the pooled effect is carried
+  by the 20 GSE289173 living-donor controls and is near null without them. D2 (F3-4 vs F0-2, with the living donors)
+  hepatocyte minus cholangiocyte −0.29 (p 0.007).
+- The stellate and endothelial rows of the 2026-10-26 M3 output (`a44_contrast.csv`) were not read for this note.
+
+**Data:** `data.load("masld_pooled")` (GSE202379, GSE289173, GSE244832, GSE256398; unit = patient). The 20 GSE289173
+living-donor controls are excluded (procurement). Metadata read for this note (no clock statistic):
+
+| | GSE202379 | GSE244832 | GSE256398 | GSE289173 (no living donors) | total |
+|---|---|---|---|---|---|
+| D2 case (F3-4) | 21 | 6 | 7 | 10 | 44 |
+| D2 control (F0-2) | 26 | 9 | 9 | 18 | 62 |
+
+Patients with the compartment (all studies, before exclusion): stellate 112, endothelial 124, hepatocyte 126.
+**Design:** D2, F3-4 (case) vs F0-2 (control). Labels are permuted within study. Anchors as A43/A44
+(endothelial, stellate, macrophage) with `anchor_readout="loo"`, so each anchor is read against the host of the
+others. Pooled gate and host gate in each arm required (`require_host_gate_each_arm=True`); failing either makes the
+contrast not estimable (uninformative, never "decoupled"). 1,000 permutations, 200 bootstrap draws; seed crc32("A167").
+No A22 own-d* anchor drop (anchors are targets here). The A163 correction is not applied (not yet validated).
+**Power step (run first, recorded before the contrast is run):** MDE on d* of stellate and endothelial by
+`power.mde` with the A153 conversion (100 replicates, 200 permutations, within study). No MDE bound is applied
+(as A165); the MDE is reported next to each verdict.
+**Primaries:** liver:stellate and liver:endothelial.
+**Tests:**
+- **H167.1 (coupling):** d* (case minus control at a common host spread), two-sided permutation p, Holm over the 2
+  primaries. Effect if Holm p < 0.05.
+- **H167.2 (mechanism):** phase offset (`offset_diff_h`, internal desynchrony), log z2 ratio (damping) and log ψ
+  ratio (loss of clock structure) of the 2 primaries, two-sided permutation p on the same draws, Holm over the 6.
+  Same per-readout exclusions as A165.
+- **Specificity qualifier (reported, not a gate), same permutations:** each readout of the primary minus the mean of
+  all other estimable liver compartments (leave-self-out, "liver-wide companion"). A liver-wide loss (A44) would leave
+  this near 0. An effect whose companion p ≥ 0.05 is labelled "liver-wide, not compartment-specific".
+- A phase effect also requires the companion phase p < 0.05 (as A165).
+
+**Secondaries (descriptive, no test):**
+- D1 (MASH vs no MASLD / steatosis only), living donors excluded, same readouts;
+- leave-one-study-out of H167.1-2;
+- hepatocyte, cholangiocyte, macrophage, lymphocyte rows (not eligible families);
+- host spread ratio log(V_case / V_control) and gate clock share per arm.
+
+**Power statement:** approximate MDE = 2.80 × bootstrap SE for H167.2 readouts (units as A165). A non-significant
+row is "not detected (MDE …)", never "unchanged".
+**Reading:**
+- H167.1 or H167.2 effect, compartment-specific: advanced fibrosis changes the stellate (or endothelial) clock beyond
+  the rest of the liver. Reported as a non-blind re-read of seen cohorts, to be replicated.
+- Effect but liver-wide: consistent with A44; disease cannot be separated from procurement and host-spread change.
+- Nothing detected: stated down to the MDEs.
+
+**Code:** `paper/exploratory/A167_liver_fibrosis/`.
