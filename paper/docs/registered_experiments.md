@@ -1947,6 +1947,27 @@ reason. Brain targets go to the Extended Data with the A141 stability result sta
 
 **Code:** `paper/exploratory/A153_corrected_contrasts/`. Promoted to `figure_4/scripts/resilience/` if Figure 4 uses it.
 
+**A153 note (2026-10-30, PI Q15 answer (a); a design change made after D159.1 was seen, approved by the PI; written
+before the family statistic below is computed and before any A153 contrast is run).** The per-compartment eligibility
+above is replaced by a family-level rule. Everything else in A153 is unchanged.
+- **Source.** The A159 fits of the 5 healthy atlases with genome-wide tables (lung_hlca, heart, organ_breast,
+  organ_muscle, organ_colon), as on disk: `exploratory/A159_specific_coupling/output/d159_compartments.csv` (c_clock),
+  `pseudo_matched.csv` and `pseudo_responsive.csv` (200 sets each). No refit.
+- **Family.** `family()` of `results/extended_data/scripts/host_identity/anchor_rule.py`, applied to the healthy and the
+  disease compartment names alike.
+- **Statistic.** For family F, C_F = the mean of c_clock over every compartment of F in the 5 atlases (equal weight per
+  compartment). For pseudo set j, C_F,j = the mean of set j's coupling over the same compartments (set j pooled across
+  atlases, as H150.1 / H159.2). Compartments with a failed pseudo fit are dropped from that set's mean.
+- **Eligible family.** C_F > the q95 of C_F,j under the matched sets AND > the q95 under the responsive sets, with
+  at least 3 compartments in at least 2 atlases. p = (1 + #{C_F,j ≥ C_F}) / 201 is reported per kind; no Holm (an
+  eligibility screen, not a test).
+- **A153 primary.** A compartment of an estimable target whose family is eligible, with MDE on d* ≤ 0.2. Brain targets
+  stay out of the family (as above). The D159.1 per-compartment flag is reported next to each row, descriptively.
+- **Sensitivity (descriptive, not used for eligibility).** The same rule on the 3 atlases that passed the A159 exact row
+  check (heart, organ_breast, organ_colon); lung_hlca (467 rows with count differences) and organ_muscle (1 row) did not.
+- **Option (b)** (genome-wide tables for the disease control arms) may follow later as a confirmation (PI); it is not
+  part of A153.
+
 ## A160 (2026-10-29, written before any lesional statistic below is computed; roadmap 6.9): is the psoriatic core-cue delay present within keratinocytes (composition-controlled)?
 
 **Why:** the psoriatic delay is read in bulk skin:

@@ -15,6 +15,7 @@ The data audit found three ordering choices in the shared COARSE rules. They are
 - **Default:** keep (the archive A9 choice). Changing them would rebuild organ_bone_marrow and organ_muscle and
   relearn their anchors.
 - **On hold:** nothing. If you change them, I rebuild before phase 3.
+- **Answer (PI, 2026-10-30):** keep.
 
 ### Q13 (2026-10-28): roadmap phase 0 decisions (ROADMAP_2026-10-28.md)
 I am going ahead with phases 1, 2 and 4 (code, data integrity, simulations) and the phase 6 scouts. None of them
@@ -265,8 +266,8 @@ So A153 as registered has an empty primary family. Changing the rule after seein
 - (c) Drop eligibility: every estimable compartment with MDE ≤ 0.2 is a primary, and Δc is reported descriptively.
   Larger Holm family, so less power.
 
-**Default if no answer:** none. A153 stays parked; this is a design change after a result. Meanwhile I run things that
-do not depend on it (CYCLOPS core seed, A154, 6.9 psoriasis composition scout, lung_hlca genome rebuild).
+**Answer (PI, 2026-10-30):** start with (a); (b) is also good and can follow later if it seems important, after the
+other tests. Confirmed in session on 2026-10-30: register the A153 note with rule (a) and run A153.
 
 ## Q16 (2026-10-29): fresh tumour-normal stromal pairing (roadmap 7.2) — worth registering on what is available?
 **Scout** (`exploratory/scouts_2026-10-29/a151_fresh_scout.md`, metadata only). Few fresh paired single-cell cohorts with
@@ -304,3 +305,8 @@ malignant level but not for fibroblasts.
 - (c) Report c only as ranks and contrasts (Δc, d*), not absolute values with intervals.
 
 **Default if no answer:** (a). I will register and run it.
+
+**Outcome (2026-10-30):** A162 fails (V162.1 19/32 cells, V162.2 16/32; results_preliminary A162). Coverage holds at
+c ≤ 0.3 but not at 0.6-0.9; the estimate is shrunk by a roughly constant factor (0.87-0.92 with anchors at 0.8), as an
+errors-in-variables attenuation by the host's reliability. Per the registered reading, absolute c is reported without
+intervals (ranks, Δc, d*), and a correction is developed (option b): registered as A163.

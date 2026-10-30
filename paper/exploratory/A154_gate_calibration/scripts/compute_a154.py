@@ -8,6 +8,8 @@ Arms and readouts (one task kind each; `--kinds`):
          calibration): gate pass rate (descriptive map).
   P      one coupled clock, c in {0.3, 0.6, 0.9}, without the factor and with it (scale 1, rank 1, 30 %): gate pass rate.
   GNULL  global null: one cohort of 2n donors split in two arms of n, clock c = 0.6 in both, `Dataset.contrast`: p of every non-anchor target (V154.2).
+  P162   A162: anchors at c_anchor in {0.6, 0.8}, targets at c_target in {0.1, 0.3, 0.6, 0.9}, no factor: fit of every compartment (anchors on
+         the leave-one-out host), 95 % interval of c (seeds SeedSequence([162, ...]); use --out output/a162).
   COVER  arm P without factor: `Dataset.fit(gate=False)` 95 % bootstrap interval of c of every non-anchor target
          (V154.3) and the simulation lower bound (`Dataset.lower_bound`) when the fit is at the boundary.
 The first K / 2 compartments are anchors (targets of fit / contrast: the others); the gate uses all compartments (free host).
@@ -49,7 +51,7 @@ LAM = np.array([411.4, 243.6, 195.2])  # A140 Q1 calibration (gate-passing tumou
 LAM_FILE = PAPER / "exploratory" / "A140_dip_cyclops" / "output" / "q1" / "tumour_immune_genome" / "calibration_lambda.csv"
 C_GRID, C_NULL = (0.3, 0.6, 0.9), 0.6
 DESIGNS = [dict(n=n, K=K, depth=d) for n in (30, 100) for K in (4, 8) for d in ("single_cell", "bulk")]
-KINDS = ("N0", "N1", "P", "GNULL", "COVER")
+KINDS = ("N0", "N1", "P", "GNULL", "COVER", "P162")
 
 
 def lam() -> np.ndarray:
@@ -73,6 +75,9 @@ def cell_specs() -> list[dict]:
         out.append(dict(kind="P", cell=f"P_c{c}_fac", c=c, fac=(1, 0.3, 1.0)))
         out.append(dict(kind="COVER", cell=f"COVER_c{c}", c=c, fac=None))
     out.append(dict(kind="GNULL", cell="GNULL", c=C_NULL, fac=None))
+    for ca in (0.6, 0.8):  # A162: anchors at c_anchor, targets at c_target
+        for ct in (0.1, 0.3, 0.6, 0.9):
+            out.append(dict(kind="P162", cell=f"P162_ca{ca}_ct{ct}", c=ct, ca=ca, fac=None))
     return out
 
 
@@ -89,7 +94,7 @@ def loadings(rank: int, load: float, rng: np.random.Generator) -> np.ndarray:
 def simulate(i: int, spec: dict, rep: int, arm: int = 0, n: int | None = None) -> pd.DataFrame:
     """One cohort: long table (donor, compartment, depth, 14 clock genes) at design `i`, cell `spec`."""
     d = DESIGNS[i]
-    key = [SEED, i, [s["cell"] for s in cell_specs()].index(spec["cell"]), rep]
+    key = [162 if spec["kind"] == "P162" else SEED, i, [s["cell"] for s in cell_specs()].index(spec["cell"]), rep]
     if spec["kind"] == "COVER":  # same data as the P arm without factor
         key[2] = [s["cell"] for s in cell_specs()].index(f"P_c{spec['c']}_nofac")
     ss = np.random.SeedSequence(key + [arm])
@@ -98,6 +103,9 @@ def simulate(i: int, spec: dict, rep: int, arm: int = 0, n: int | None = None) -
     clock = spec["c"] is not None
     psi = psi_for(spec["c"] if clock else 0.6, 1.0)
     comps = {f"c{k}": Compartment(z=1.0, psi=psi) for k in range(d["K"])}
+    if spec["kind"] == "P162":
+        comps = {f"c{k}": Compartment(z=1.0, psi=psi_for(spec["ca"] if k < max(d["K"] // 2, 2) else spec["c"], 1.0))
+                 for k in range(d["K"])}
     dp = depth_values.load()[d["depth"]]
     n = d["n"] if n is None else n
     tab, _ = cs.simulate(cs.gtex(), comps, n=n, window_h=WINDOW, jitter_h=JITTER, amplitude=1.0 if clock else 0.0,
@@ -143,6 +151,18 @@ def run(i: int, spec: dict, rep: int) -> list[dict]:
             r = ds.contrast(lab, levels=("control", "case"), targets=targets, n_perm=1000, n_boot=0, seed=rep).table
         return [dict(base, compartment=k, p=r.loc[k, "p"], p_star=r.loc[k, "p_star"], d=r.loc[k, "d"],
                      status=r.loc[k, "status"], s=time.time() - t0) for k in targets]
+    if kind == "P162":  # anchors (leave-one-out host) and targets, same fit
+        ds = dataset(simulate(i, spec, rep), K, anchors=True)
+        na = max(K // 2, 2)
+        # anchors are read (leave-one-out host) only where it exists (>= 3 anchors, K = 8) and in the first 50 replicates (cost)
+        names = [f"c{k}" for k in range(K)] if (K >= 8 and rep < 50) else [f"c{k}" for k in range(na, K)]
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            f = ds.fit(gate=False, targets=names, n_boot=200, seed=rep)
+        return [dict(base, compartment=k, role="anchor" if int(k[1:]) < na else "target",
+                     true_c=spec["ca"] if int(k[1:]) < na else spec["c"], c_anchor=spec["ca"], c_target=spec["c"],
+                     coupling=f.table.loc[k, "coupling"], lo=f.table.loc[k, "coupling_lo"], hi=f.table.loc[k, "coupling_hi"],
+                     boundary=bool(f.table.loc[k, "boundary"]), s=time.time() - t0) for k in names]
     ds = dataset(simulate(i, spec, rep), K, anchors=True)  # COVER
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
@@ -191,7 +211,7 @@ def main():
     tasks = [(i, s["cell"], list(range(r, min(r + args.block, args.first + args.reps))))
              for i in ds for s in cell_specs() if s["kind"] in kinds
              for r in range(args.first, args.first + args.reps, args.block)]
-    prio = {k: j for j, k in enumerate(("N0", "GNULL", "COVER", "N1", "P"))}
+    prio = {k: j for j, k in enumerate(("N0", "GNULL", "COVER", "N1", "P", "P162"))}
     tasks.sort(key=lambda t: (prio[next(s for s in cell_specs() if s["cell"] == t[1])["kind"]],
                               -cost(t[0], next(s for s in cell_specs() if s["cell"] == t[1]))))
     pending = [t for t in tasks if not (args.out / "raw" / t[1].split("_")[0] /

@@ -1726,15 +1726,47 @@ choices are in the README.
     compartment has the same c.
   - The bias therefore comes from an imprecise host, built from weakly coupled anchors. It does not shrink with n.
   - The bootstrap refits the host but does not capture this attenuation, so intervals undercover.
-- **N1 map (descriptive; 40 instead of 200 replicates per cell, for run time; `n1_map.csv`):** pooled pass rate
-  367/5120 = 0.072. Factor settings pool to 0.038-0.100; one cell reaches 0.225 (9/40) and does not recur at
-  neighbouring sizes. A shared non-clock factor at the calibrated sizes does not raise the gate pass rate much above
-  0.05-0.10.
-- **Not run:** the P arm (gate sensitivity with vs without the factor).
+- **N1 map (descriptive; `n1_map.csv`).** Updated 2026-10-30 at the registered 200 replicates per cell (first version: 40).
+  - Pooled pass rate 1,850/25,600 = 0.072 (at 40 replicates: 0.072).
+  - The factor settings pool to 0.053-0.103; the highest is rank 3, 10 % loading, size 2.
+  - The largest single cell is 28/200 = 0.14 (n30_K8_single_cell, rank 3, 30 %, size 0.25); 50 of 128 cells exceed 0.075.
+  - Per design, 0.064-0.082.
+  - So a shared non-clock factor at the calibrated sizes raises the gate pass rate at most to about 0.10-0.14, not
+    to the levels of a clock.
+- **P arm** (gate sensitivity with vs without the factor): 100 of 200 replicates done on 2026-10-29; the other 100 run
+  since 2026-10-30 15:07 (see below when scored).
 - **Reading:**
   - "Not estimable" wording stays, with a calibrated threshold where K and n are large.
-  - The N1 map supports a passed gate as evidence of clock-shaped covariance at realistic factor sizes. This rests on 40
-    replicates per cell; claims still lean on the pseudo-clock companions.
+  - The N1 map (200 replicates per cell) supports a passed gate as evidence of clock-shaped covariance at realistic
+    factor sizes; claims still lean on the pseudo-clock companions.
   - Absolute coupling values and their bootstrap intervals are biased low and undercover when anchors are weakly
     coupled. Contrasts at a common host stay calibrated (V154.2).
   - The paper should report c intervals as conditional on the estimated host, or correct them (PI_QUESTIONS Q17).
+
+## A162 (scored 2026-10-30): coverage of c at realistic anchor coupling — V162.1 and V162.2 fail; c is attenuated by a factor of about 0.9
+
+Outputs: `exploratory/A154_gate_calibration/output/a162/` (`summary.csv`, `target_coverage.csv`, `anchor_coverage.csv`,
+`bias_vs_anchor.csv`); simulation `compute_a154.py --kinds P162` (200 replicates per cell, 8 designs), scoring
+`score_a162.py`. <!-- src: output/a162/summary.csv, target_coverage.csv -->
+- **V162.1 (c_anchor 0.8, target coverage ≥ 0.90 in all 32 cells): fails.** 19 of 32 cells pass; median coverage 0.927,
+  minimum 0.000.
+- **V162.2 (c_anchor 0.6): fails.** 16 of 32 cells pass; median 0.898, minimum 0.000.
+- **Where it fails** (per c_target, cells passing of 8, at c_anchor 0.8 / 0.6):
+  - c_target 0.1: 8 / 8 (coverage 0.94-0.98);
+  - 0.3: 8 / 7;
+  - 0.6: 3 / 1;
+  - 0.9: 0 / 0 (median coverage 0.18 / 0.03).
+- **Bias is multiplicative.** The median estimate over the truth is 0.87-0.92 at c_anchor 0.8 and 0.80-0.88 at 0.6,
+  across all c_target. In absolute terms the median bias is -0.01 at c 0.1 and -0.11 / -0.18 at c 0.9. It is larger with
+  2 anchors (K 4) than with 4 (K 8), and does not shrink with n: n 100 covers worse than n 30, because the interval
+  narrows around a biased value. The boundary share is ≤ 0.01.
+- **Anchors on the leave-one-out host** (K 8, first 50 replicates): coverage 0.24-0.91, median estimate 0.68-0.73 for
+  0.8 and 0.49-0.53 for 0.6 (`anchor_coverage.csv`).
+- **Reading (registered: V162.1 fails):**
+  - Absolute c is reported without intervals: as ranks, Δc and d*.
+  - An attenuation correction is developed (Q17 b).
+  - The pattern fits errors-in-variables: the host is estimated from a few noisy anchors, and every coupling to it is
+    shrunk by the host's reliability. Low couplings (≤ 0.3) are covered because the absolute shrinkage is small; high
+    couplings are not.
+  - Contrasts at a common host remain calibrated (A154 V154.2), and ranks are unaffected by a common multiplicative
+    factor.
