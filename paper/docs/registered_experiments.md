@@ -2588,3 +2588,16 @@ METABRIC ER effect beyond its null mean (about −0.165) and the SCAN-B one (abo
 
 **Not registered here:** outcome or response prediction (PI).
 **Code:** `paper/exploratory/A168_endocrine/`.
+
+**A168 power step (2026-10-31, recorded before any observed statistic is computed):** 2,000 permutations per null;
+MDE = 2.49 × null SD (`run_a168.py --stage power`).
+
+| test | patients | null mean | null SD | MDE | vs METABRIC (0.165) / SCAN-B (0.315) |
+|---|---|---|---|---|---|
+| H168.1 POETIC difference-in-differences | 157 AI / 56 untreated | −0.044 | 0.173 | 0.431 | underpowered for both |
+| H168.2 POETIC treated change | 157 | 0.000 | 0.079 | 0.196 | powered for SCAN-B, not METABRIC |
+| H168.3 GSE20181 | 58 | −0.005 | 0.203 | 0.504 | underpowered for both |
+
+The 56 untreated pairs limit H168.1. Data used: POETIC all 157 + 56 pairs; GSE20181 58 pairs, 13 clock genes (no
+CIART; linear MAS5 values log2-transformed); GSE87411 81 BL→2-4 wk pairs (97 with the "re-analyzed" baselines).
+Implementation choices: `paper/exploratory/A168_endocrine/README.md`. <!-- src: paper/exploratory/A168_endocrine/output/{power,sample_counts}.csv -->
