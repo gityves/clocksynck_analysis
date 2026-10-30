@@ -1920,7 +1920,7 @@ the ψ ratio and its SE.
   not a registered result.
   - z2 is relative to the host, and endothelial and stromal-vascular compartments are among the anchors. A smaller
     host amplitude in the case arm would therefore raise z2.
-  - The per-arm gate clock share is higher in the case arm in 9 of 13 targets (median case − control +0.14;
+  - The per-arm gate clock share is higher in the case arm in 10 of 13 targets (median case − control +0.134;
     `gate_share.csv`), which fits a change of host structure rather than of the endothelium itself.
 - **Reading:** in these single-cell disease cohorts, no phase shift (internal desynchrony), damping or loss of clock
   structure is detected in normal stromal-vascular compartments.
