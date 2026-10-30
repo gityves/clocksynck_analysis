@@ -1809,3 +1809,40 @@ one-sided); specificity comes from the 200 variance-matched pseudo sets of H127.
 - **Reading (post hoc, moderate):** ER-negative tumours have less coherent clocks than ER-positive tumours of the same
   intrinsic subtype and proliferation level. The ER effect of H127.2 is not a PAM50 composition effect, nor only a
   proliferation effect.
+
+## A153 (scored 2026-10-30): corrected disease contrasts — no primaries in either scope (every eligible-family MDE > 0.2); H153.1-3 not scorable
+
+- **Family screen (A153 note, PI Q15 a; `A153_corrected_contrasts/output/family_eligibility.csv`):**
+  - Scope all5 (registered): only **fibroblast_stromal** is eligible. C 0.599 (4 compartments, 4 atlases) vs matched
+    q95 0.473 (p 0.005) and responsive q95 0.524 (p 0.015).
+  - Endothelial fails narrowly: C 0.524 vs matched q95 0.374, but responsive q95 0.537 (p 0.065).
+  - Mural fails on the matched sets (0.548 vs 0.559). Lymphocyte (0.180) and myeloid (0.336) are far from eligible.
+  - Sensitivity rowcheck3 (descriptive): fibroblast_stromal (0.577) and endothelial (0.645) are both eligible.
+- **Targets (`target_status.csv`):** 13 of 18 non-brain targets are estimable. The other five:
+  - lupus: pooled gate failed (p_acrophase 0.624);
+  - skin_ssc: control-arm host gate failed (p_pairing 0.236);
+  - the three ibd_crohn contrasts: no learned anchor set.
+  - The 18 brain targets are not in the family (Extended Data, A141).
+- **Primaries: 0 (all5) and 0 (rowcheck3).** Every eligible-family compartment of an estimable target has an MDE on d*
+  above 0.2 (`readout_*.csv`, `mde_table.csv`):
+  - all5, 13 fibroblast_stromal rows: MDE 0.232 (dcm_healthy heart fibroblast) to 0.671 (islets stellate); 2 do not
+    reach 80 % power ("> max": ckd interstitial, endometriosis_severe stromal).
+  - rowcheck3 adds 19 endothelial rows. The smallest MDE is 0.214 (hlca_fibrotic lung EC_arterial); 6 are "> max".
+  - Classes (192 non-brain rows, each scope): 118 not eligible, 74 not estimable. The 74 are: no anchor 30, failed
+    fit or too few donors 18, both arms at the boundary 10, per-arm gate 9, pooled gate 7.
+- **H153.1-3:** nothing to test. No Holm family; no TOST; H153.3 is "not estimable (< 3 targets)" for both families.
+- **A17 comparison (`a17_comparison_all5.csv`):** 7 of 192 rows change category.
+  - Five skin_ssc rows and ia_crohn ileum glia_neuron go from estimable to not estimable (per-arm gate; both arms at
+    the boundary).
+  - islets_t2d beta, the A17 Holm effect (p 0.040, d* −0.190), is not eligible under A153 (parenchyma family) and has
+    p* 0.189 with the corrected code.
+- **Pseudo-clock companion (registered step 3):** not available; no disease control arm has a genome-wide table.
+- **Run:** stages 1-2 and MDE tiers 1-2 (fibroblast_stromal, endothelial) finished on 2026-10-30. The descriptive tier 3
+  MDEs (86 compartments of ineligible families; they cannot change any class) were stopped by the builder and resumed
+  the same day (`compute_a153.py --tiers 3`).
+- **Reading:** under the corrected code, no disease cohort in the A17 registry can test |Δd*| ≥ 0.2 in a clock-specific
+  family at 80 % power. The best case is dcm_healthy heart fibroblast at 0.23. The paper therefore cannot state "coupling
+  preserved in disease" as a tested claim from these cohorts, nor claim a pre-specified disease effect. The A17
+  islets beta effect does not survive the corrections.
+  - The design limit is the per-arm sample size. A pre-specified disease positive needs either a larger cohort per
+    arm, or a within-person design (roadmap 6.6), or GTEx-scale matched contrasts (A164).

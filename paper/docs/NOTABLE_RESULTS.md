@@ -6,6 +6,14 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
 
 ## 2026-10-30
 
+- **A153: the corrected disease contrasts have no primaries.** No A17 disease cohort reaches MDE ≤ 0.2 on d* in an
+  eligible family. The smallest is 0.232 (dcm_healthy heart fibroblast), and 0.214 for endothelial in the descriptive
+  scope. The A17 islets beta effect does not survive (p* 0.189).
+  - *Why notable:* this is the main obstacle to the "pre-specified disease positive" Cell needs. Per-arm cohort sizes
+    of current single-cell disease atlases are too small for a 0.2 coupling change.
+  - *Follow-up:* within-person designs (6.6) and GTEx matched contrasts (A164); the PI may consider option (b) or larger cohorts.
+  - *Source:* `A153_corrected_contrasts/output/readout_all5.csv`, `mde_table.csv`.
+
 - **A127 post hoc: the ER− clock coherence loss holds within PAM50 subtype and proliferation tertile, clock-specifically
   (post hoc).** Basal −0.379, Her2 −0.305; within subtype × proliferation tertile T −0.268, p 0.0045, below all 200
   pseudo sets.
