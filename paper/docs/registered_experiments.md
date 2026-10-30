@@ -2682,3 +2682,42 @@ without CID3963 (borderline ER-low); without the 4 Pal BRCA1 TNBC.
 ER− 16: Wu 9, Pal 7), 14 clock genes, 2,000 within-cohort permutations: null mean +0.022, SD 0.155, MDE 0.385 (above the
 SCAN-B effect 0.315: a fail cannot exclude a bulk-sized loss).
 <!-- src: paper/exploratory/A170_sc_breast_er/output/power.csv -->
+
+## A171 (2026-10-31, written after a metadata-only scout (`exploratory/scouts_2026-10-31/luad_lihc/SCOUT.md`: sample tables, platform gene coverage, whole-matrix scale; no clock statistic or clock-gene value) and before any clock readout of the series below; TCGA LUAD / LIHC are already seen (A97); PI request 2026-10-31): does tumour clock coherence fall with proliferation in lung adenocarcinoma and hepatocellular carcinoma? Independent replication of the A97 per-cancer losses
+
+**Why:** in TCGA, clock-gene coherence falls from the low to the high proliferation tertile most strongly in LUAD
+(−0.515, 516 tumours) and LIHC (−0.359, 371), more than in BRCA (−0.163), where the loss replicated (A127, A166). These
+per-cancer values were descriptive, unstratified and are already seen; they need independent, pre-specified cohorts.
+**Data** (`$SCCC_DATA/scout_luad_lihc/`, GEO series matrices and platform annotations; primary tumours only):
+- **H171.1 LUAD GSE72094** (Moffitt; GPL15048 custom Affymetrix, log2 as deposited; 442 tumours; 14 clock genes).
+- **H171.2 LUAD GSE68465** (Director's Challenge; GPL96, MAS5 linear → log2; 443 adenocarcinomas; 13 clock genes, no
+  CIART; 4 sites).
+- **H171.3 LIHC GSE14520** (GPL3921 tumours only, 225; log2 as deposited; 13 clock genes, no CIART).
+- **H171.4 LIHC GSE36376** (GPL10558, log2 as deposited; 240 tumours; 14 clock genes).
+- **Descriptive:** GSE31210 (LUAD, 226, stage I-II; MAS5 → log2), GSE41271 (adenocarcinomas only), GSE63898 (LIHC,
+  228); TCGA LUAD and LIHC with the same statistic (not independent).
+**Definitions** (A166 / A168 conventions, `A168_endocrine/scripts/prep_a168.py`): linear matrices (max > 100) → log2
+with the smallest positive value as floor; probes averaged per symbol (a multi-symbol probe counts for each);
+Y = ln 2 × log2 expression of the clock genes present (the waveform restricted to them); proliferation = Hallmark G2M
+mean z, purity proxy = the A97 11-gene mean z, both z-scored within series (GSE68465: within site, and Y centred per
+gene within site before any coherence). Coherence = `a127_lib.coh`.
+**Tests (one-sided for a loss, 2,000 permutations each, Holm over the four):** the H166.3 statistic. Strata = purity-proxy
+tertiles of the series (≥ 30 tumours); within each stratum, proliferation tertiles by rank; T = mean over strata of
+coh(high) − coh(low); null: proliferation scores permuted within stratum.
+**Specificity companion:** 200 pseudo-clock sets per series (A168 construction; pool without clock-like, G2M,
+purity-proxy or clock genes). "Clock-specific" only if T is below the 5th pseudo percentile.
+**Power, before the tests:** MDE = 2.49 × null SD per test, next to the TCGA values with the same statistic (computed in
+the power stage; seen data).
+**Descriptive (no Holm, no claim):**
+- the four statistics in GSE31210, GSE41271, GSE63898 and TCGA LUAD / LIHC;
+- LUAD GSE72094: coherence by KRAS, EGFR, STK11, TP53 mutation and smoking (ever / never): coh(group) − coh(rest)
+  within purity tertile, and within proliferation tertile, with permutation p;
+- LIHC: tumour vs paired non-tumour coherence in GSE14520 (GPL3921, labels swapped within patient) and tumour vs
+  adjacent tissue in GSE36376 (unpaired permutation);
+- each test without PER1 and NR1D1.
+**Reading:**
+- A cancer's tests pass, clock-specific → the proliferation coherence loss replicates in that cancer: with breast, a
+  pan-cancer property of proliferating tumours (Figure 5).
+- Pass, not specific → proliferating tumours lose coherence in co-regulated gene sets in general.
+- Fail at a powered design → the TCGA value of that cancer is not confirmed; bounded at the MDE.
+**Code:** `paper/exploratory/A171_luad_lihc/`.
