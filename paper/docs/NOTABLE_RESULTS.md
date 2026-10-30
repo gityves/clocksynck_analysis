@@ -4,6 +4,23 @@ One entry per result: date, amendment, the result in one or two lines with its n
 follow-up I would suggest, and the source file. Newest first. Numbers come from output files. Full write-ups are in
 `results_preliminary.md`.
 
+## 2026-10-30
+
+- **A127 post hoc: the ER− clock coherence loss holds within PAM50 subtype and proliferation tertile, clock-specifically
+  (post hoc).** Basal −0.379, Her2 −0.305; within subtype × proliferation tertile T −0.268, p 0.0045, below all 200
+  pseudo sets.
+  - *Why notable:* it separates an ER (hormone-receptor) effect on clock coherence from intrinsic subtype and
+    proliferation. It may link to the oestrogen regulation of clock genes.
+  - *Follow-up:* replicate in TCGA BRCA or METABRIC Basal/Her2 (register first), and test whether ER+ Basal tumours
+    have an ER-target signature.
+  - *Source:* `A127_scanb/output/posthoc_er_within_pam50.csv`.
+
+- **A162: the coupling estimate is attenuated by host error (method).** Coverage fails at c ≥ 0.6 even with anchors
+  at 0.8 (V162.1 19/32 cells). The shrinkage (×0.87-0.92) is exactly the errors-in-variables term: the host's
+  posterior error enters psi.
+  - *Follow-up:* A163, a correction that removes |z|² tr S / 2 from psi, validated on fresh seeds.
+  - *Source:* `A154_gate_calibration/output/a162/`.
+
 ## 2026-10-29
 
 - **A154 V154.3: coupling estimates are biased low and their bootstrap intervals undercover when anchors are weakly

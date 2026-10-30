@@ -1794,3 +1794,18 @@ ok, `logs/jobs.tsv`). Old outputs: `$SCCC_DATA/m3_snapshot_backup/2026-10-29/`; 
     (3 anchors, median clock UMI 89): colon R is not quoted.
   - A18 thinning (`lung_breaks/a18_thinning.csv`): dcm_healthy endothelial p_thinned 0.025 → 0.0498.
 - The group READMEs are updated to the new numbers.
+
+## A127 post hoc (2026-10-30, POST HOC; chosen after H127.1-2 were scored): the ER− coherence loss holds within PAM50 subtype
+
+Script `exploratory/A127_scanb/scripts/posthoc_er_within_pam50.py`; outputs `A127_scanb/output/posthoc_er_within_pam50.csv`
+and `_cells.csv`. ER and PAM50 are nearly collinear (ER− tumours: LumA 9 of 1,642, LumB 1 of 728), so only Basal
+(148 ER− / 80 ER+) and Her2 (69 / 198) carry both arms. ER labels are permuted within the cell (2,000 permutations,
+one-sided); specificity comes from the 200 variance-matched pseudo sets of H127.
+- **Within subtype:** T (mean of Basal, Her2) −0.342, p 0.007, MDE 0.39. Basal −0.379, Her2 −0.305. The clock is
+  below every pseudo set but two (1st percentile; pseudo q05 −0.232).
+- **Within subtype × proliferation tertile** (6 cells, ≥ 10 per arm; this controls for Basal ER− tumours being more
+  proliferative, 0.70 vs 0.41): T −0.268, p 0.0045, MDE 0.24. The clock is below every pseudo set (0th percentile;
+  q05 −0.144). All 6 cells are negative (−0.08 to −0.51).
+- **Reading (post hoc, moderate):** ER-negative tumours have less coherent clocks than ER-positive tumours of the same
+  intrinsic subtype and proliferation level. The ER effect of H127.2 is not a PAM50 composition effect, nor only a
+  proliferation effect.
