@@ -2235,6 +2235,29 @@ simulator and its 8 designs, with anchors at c_anchor ∈ {0.6, 0.8} and targets
 
 **Code:** `paper/exploratory/A163_reliability_correction/`; the clocksync change has a test.
 
+**A163 note (2026-10-30, freeze; written before any validation seed (163) is simulated).** The frozen candidate is
+**(i) with a degrees-of-freedom-adjusted host posterior** (`attenuation="df"`):
+- R = 1 − tr S̄ / (tr cov(f̂) + tr S̄), where S̄ is recomputed with the anchors' ψ inflated by m / (m − 1) (m = number
+  of host compartments).
+- c_corrected = q / (qR + 1), with q = c / (1 − c): the exact errors-in-variables correction of ψ, not c / R.
+- The interval is the donor-bootstrap percentile interval, with the host refitted and R recomputed in every replicate.
+- Code: clocksync commit **9db4ed8** (`clocksync._core.host.reliability`, `corrected`;
+  `Dataset.fit(attenuation="df")`). The default readout is unchanged.
+
+Development (A162 seeds, 20 replicates per cell, 64 target cells; `output/dev/summary.csv`, `cells.csv`):
+
+| readout | cells with coverage ≥ 0.90 | minimum coverage | max \|median bias\| |
+|---|---|---|---|
+| raw | 32 | 0.000 | 0.271 |
+| "model" (fitted S) | 49 | 0.425 | 0.165 |
+| "df" | 55 | 0.712 | 0.139 |
+
+- The basic (reverse-percentile) interval of "df" covered worse: 25 of 64 cells.
+- "df" is frozen.
+- Expected weak spots, from development only: c_target 0.9 in n100_K8_bulk (0.71 at c_anchor 0.8) and n30_K4_bulk
+  (0.78 at 0.6), and small-n bias at n30_K4 (−0.10 to −0.14 at c_target 0.6-0.9).
+- The validation runs as registered: `compute_a163.py --mode validate --kind df --reps 200 --eq-reps 100`.
+
 ## A164 (2026-10-30, written before any matched statistic below is computed; roadmap 6.7; A47 and A96 part 1 were scored in the archive and are known: T2D module d* −0.043 [−0.091, 0.004], BMI H47.1 +0.025, p 0.79): do T2D and obesity leave the metabolic organs coupled? Matched design, power and equivalence
 
 **Why:** A47 compared T2D cases with every non-diabetic donor of a cohort, and BMI as a slope. Cases differ from
