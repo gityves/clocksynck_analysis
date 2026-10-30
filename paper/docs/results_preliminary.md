@@ -1736,8 +1736,16 @@ choices are in the README.
   - Per design, 0.064-0.082.
   - So a shared non-clock factor at the calibrated sizes raises the gate pass rate at most to about 0.10-0.14, not
     to the levels of a clock.
-- **P arm** (gate sensitivity with vs without the factor): 100 of 200 replicates done on 2026-10-29; the other 100 run
-  since 2026-10-30 15:07 (see below when scored).
+- **P arm** (descriptive; gate sensitivity with vs without the factor; 200 replicates per cell, completed 2026-10-30;
+  `p_sensitivity.csv`):
+  - Without the factor, the gate passes 0.915-1.0. The only cells below 0.99 are n30_K4 at c 0.3: single cell 0.915,
+    bulk 0.975.
+  - With the calibrated factor (scale 1, rank 1, 30 %), the pass rate falls to 0.26-0.415 in every design and every c,
+    with no trend in c (c 0.9: 0.26-0.41).
+  - V154.1-3 are unchanged: they do not use this arm (`summary.csv`).
+  - As registered, a failed gate in tissues with strong shared non-clock structure is worded "clock not separable from
+    shared non-clock structure", not "no clock". At the calibrated factor size, about two of three real clocks would
+    fail the gate.
 - **Reading:**
   - "Not estimable" wording stays, with a calibrated threshold where K and n are large.
   - The N1 map (200 replicates per cell) supports a passed gate as evidence of clock-shaped covariance at realistic
