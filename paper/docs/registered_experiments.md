@@ -2637,3 +2637,8 @@ oestrogen-response scores per time point (to show the treatment acts throughout)
   property. Small series: a fail is weak evidence; MDEs are stated.
 
 **Code:** `paper/exploratory/A169_endocrine_duration/` (reuses the A168 library).
+
+**A169 power step (2026-10-31, recorded before any observed statistic):** 2,000 permutations; MDE = 2.49 × null SD.
+H169.1 GSE111563 (37 patients, 12 genes): null SD 0.263, MDE 0.653 (underpowered for METABRIC and SCAN-B).
+H169.2 GSE59515 (25 patients, 14 genes): null SD 0.124, MDE 0.307 (about the SCAN-B size).
+<!-- src: paper/exploratory/A169_endocrine_duration/output/power.csv -->
