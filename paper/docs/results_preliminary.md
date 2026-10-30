@@ -1845,9 +1845,13 @@ one-sided); specificity comes from the 200 variance-matched pseudo sets of H127.
   - islets_t2d beta, the A17 Holm effect (p 0.040, d* −0.190), is not eligible under A153 (parenchyma family) and has
     p* 0.189 with the corrected code.
 - **Pseudo-clock companion (registered step 3):** not available; no disease control arm has a genome-wide table.
-- **Run:** stages 1-2 and MDE tiers 1-2 (fibroblast_stromal, endothelial) finished on 2026-10-30. The descriptive tier 3
-  MDEs (86 compartments of ineligible families; they cannot change any class) were stopped by the builder and resumed
-  the same day (`compute_a153.py --tiers 3`).
+- **Run:** stages 1-2 and MDE tiers 1-2 (fibroblast_stromal, endothelial) finished on 2026-10-30. The builder stopped
+  the descriptive tier 3 (86 compartments of ineligible families) and it was resumed and completed the same day
+  (`compute_a153.py --tiers 3`). The rescore leaves every class unchanged (`summary_all5.csv` identical).
+- **All 118 estimable rows (descriptive, `mde_table.csv`):** no compartment of any family has MDE ≤ 0.2. The three
+  smallest are hlca_fibrotic EC_arterial 0.214, dcm_healthy heart fibroblast 0.232 and dcm_healthy heart mural 0.262.
+  - Family medians: epithelial 0.439, fibroblast_stromal 0.456, mural 0.514, parenchyma 0.610, endothelial 0.666.
+  - All 23 lymphocyte rows and 10 of 20 myeloid rows never reach 80 % power.
 - **Reading:** under the corrected code, no disease cohort in the A17 registry can test |Δd*| ≥ 0.2 in a clock-specific
   family at 80 % power. The best case is dcm_healthy heart fibroblast at 0.23. The paper therefore cannot state "coupling
   preserved in disease" as a tested claim from these cohorts, nor claim a pre-specified disease effect. The A17
@@ -1889,3 +1893,39 @@ registration are in the README; the main one is per-tissue matching, since tissu
   donors. This is the first tested equivalence of the project; for T2D the 90 % interval rules out changes beyond about
   0.06. It is a disease negative, not the disease positive Cell needs.
   - The vent obese pancreas row is a descriptive lead only: an increase, single cohort, not corrected.
+
+## A165 (scored 2026-10-30): disease phase, amplitude and noise readouts — no effect (H165.1: 0 of 89; H165.2: 0 of 4); best-powered rows detect about 1-1.5 h or 1.3-1.5-fold
+
+Outputs: `exploratory/A165_disease_readouts/output/` (`summary.csv`, `h1651.csv`, `h1652.csv`, `readout.csv`,
+`gate_share.csv`). The rerun reproduces A153 exactly: maximum absolute difference 0 on d*, p*, offset, p_offset and
+the ψ ratio and its SE.
+- **Primaries:** 13 estimable targets, fibroblast_stromal and endothelial rows. That gives 89 row × readout tests:
+  phase 32, amplitude 32, noise 25. Excluded readouts: 56 for z2 truncated or 0 in an arm, 38 for ψ at the floor, 12
+  not estimable.
+- **H165.1: no effect** (Holm over 89). The smallest Holm p is 0.089, for three rows at the permutation floor (raw p
+  0.001):
+  - ild_natri lung EC_venous phase −1.68 h (companion p 0.057);
+  - dcm heart endothelial amplitude, log z2 +0.64 (companion p 0.064);
+  - myocarditis heart endothelial amplitude, log z2 +1.14 (companion p 0.001).
+- **Approximate MDEs** (2.80 × bootstrap SE; median [min-max] over primaries):
+  - phase 2.20 h [0.94-8.95];
+  - amplitude 2.11-fold [1.28-7.13];
+  - ψ 3.22-fold [1.90-8.40].
+  - A quarter of the phase rows detect ≤ 1.53 h, and a quarter of the amplitude rows ≤ 1.45-fold.
+- **H165.2: not detected** in all 4 one-sided tests (Holm 1.0). Pooled over 13 targets (11 for endothelial ψ):
+  - fibroblast_stromal: log z2 +0.117 [−0.014, 0.248]; log ψ −0.001 [−0.338, 0.337].
+  - endothelial: log z2 **+0.409 [0.027, 0.792]**; log ψ −0.209 [−0.439, 0.020].
+- **Descriptive, against the predicted sign:** diseased endothelium has a *higher* host-locked amplitude relative to
+  its host than control endothelium. The 95 % HK interval excludes 0, but H165.2 was one-sided for damping, so this is
+  not a registered result.
+  - z2 is relative to the host, and endothelial and stromal-vascular compartments are among the anchors. A smaller
+    host amplitude in the case arm would therefore raise z2.
+  - The per-arm gate clock share is higher in the case arm in 9 of 13 targets (median case − control +0.14;
+    `gate_share.csv`), which fits a change of host structure rather than of the endothelium itself.
+- **Reading:** in these single-cell disease cohorts, no phase shift (internal desynchrony), damping or loss of clock
+  structure is detected in normal stromal-vascular compartments.
+  - The best-powered rows rule out shifts larger than about 1-1.5 h and amplitude changes larger than about
+    1.3-1.5-fold.
+  - Most rows can only see shifts above 2 h, 2-fold amplitude or 3-fold ψ.
+  - The endothelial amplitude increase is a lead for a registered two-sided follow-up, with the host amplitude per arm
+    reported.
