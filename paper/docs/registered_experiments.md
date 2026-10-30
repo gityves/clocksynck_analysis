@@ -2721,3 +2721,10 @@ the power stage; seen data).
 - Pass, not specific → proliferating tumours lose coherence in co-regulated gene sets in general.
 - Fail at a powered design → the TCGA value of that cancer is not confirmed; bounded at the MDE.
 **Code:** `paper/exploratory/A171_luad_lihc/`.
+
+**A171 power step (2026-10-31, recorded before any statistic of the four test series):** 2,000 permutations; three
+purity strata in each series. MDE (2.49 × null SD): H171.1 GSE72094 (442 tumours, 14 genes) 0.167; H171.2 GSE68465 (443,
+13) 0.304; H171.3 GSE14520 (225, 13) 0.318; H171.4 GSE36376 (240, 14) 0.363. TCGA with the same statistic (seen data):
+LUAD T −0.361 (516, p 0.0015), LIHC −0.512 (371, p 0.0005). All four tests are powered for the TCGA effect of their
+cancer, H171.4 narrowly for LUAD-sized effects only.
+<!-- src: paper/exploratory/A171_luad_lihc/output/{power,tcga}.csv -->
