@@ -2728,3 +2728,35 @@ purity strata in each series. MDE (2.49 × null SD): H171.1 GSE72094 (442 tumour
 LUAD T −0.361 (516, p 0.0015), LIHC −0.512 (371, p 0.0005). All four tests are powered for the TCGA effect of their
 cancer, H171.4 narrowly for LUAD-sized effects only.
 <!-- src: paper/exploratory/A171_luad_lihc/output/{power,tcga}.csv -->
+
+## A172 (2026-10-31, written after A171 was scored and before any of the TCGA projects below is downloaded; the 11 A97 projects are seen and excluded; PI request 2026-10-31 "work on the different cancer types"): is the proliferation clock-coherence loss a general property of tumours? The unseen TCGA projects
+
+**Why:** proliferating tumours lose clock coherence in breast (A127, A166) and lung adenocarcinoma (A171), not in HCC
+(A171). In the 11 TCGA projects of A97 (seen; `A171_luad_lihc/output/tcga_all.csv`, post hoc) the loss is clear in
+LUAD, LIHC and KIRP and absent in BLCA, KIRC and THCA. The remaining TCGA projects have never been read and form an
+independent pan-cancer test with the same pipeline.
+**Data:** recount3 TCGA (G029; same mirror, scaling and loader as `paper/common/datasets/tcga_paired/build.py`) for every
+TCGA project not among the 11 (ACC, CESC, CHOL, DLBC, ESCA, GBM, HNSC, KICH, LAML, LGG, LUSC, MESO, PAAD, PCPG, READ,
+SARC, SKCM, STAD, TGCT, THYM, UCS, UVM). **Eligible:** ≥ 150 patients with a primary tumour (sample type "Primary Tumor";
+LAML "Primary Blood Derived Cancer - Peripheral Blood"; one per patient, lowest barcode, any histology), counted from the
+metadata before any expression is read. Expected from GDC: CESC, ESCA, GBM, HNSC, LAML, LGG, LUSC, PAAD, PCPG, SARC,
+STAD, TGCT.
+**Definitions (= A171 TCGA arm, `A171_luad_lihc/scripts/run_a171.py` `tcga()`):** Y = log((n + 0.5) / depth) of the 14
+clock genes; proliferation = Hallmark G2M mean z, purity proxy = A97 11 genes mean z of log2 CPM, z-scored within project.
+Statistic per project = H166.3 / H171 (within purity-proxy tertiles of ≥ 30 tumours, coh(high proliferation tertile) −
+coh(low)).
+**Tests (one-sided for a loss, 2,000 permutations; proliferation permuted within stratum):**
+- **H172.1 (primary):** T = unweighted mean of the per-project statistics over the eligible projects; null = the mean of
+  the per-project null draws of the same index.
+- **H172.2:** per eligible project, Holm over the eligible projects.
+**Specificity companion:** per project 200 pseudo-clock sets (A168 construction on log2 CPM; pool without clock-like, G2M,
+purity-proxy or clock genes); pooled pseudo T = mean over projects of the k-th set's T. "Clock-specific" only if T is
+below the 5th pseudo percentile (H172.1; per project for passing H172.2 rows).
+**Power, before the tests:** MDE = 2.49 × null SD for H172.1 and each project.
+**Descriptive:** H172.1 over carcinomas only (CESC, ESCA, HNSC, LUSC, PAAD, STAD); without LAML (no solid stroma: the
+purity proxy is not interpretable); each project without PER1 and NR1D1.
+**Reading:**
+- H172.1 passes, clock-specific → the proliferation coherence loss generalises to unseen tumour types; the per-project
+  rows say where.
+- Fail at a powered design → the loss is cancer-type specific (breast, LUAD), not a general tumour property.
+**Code:** `paper/exploratory/A172_tcga_unseen/`.
