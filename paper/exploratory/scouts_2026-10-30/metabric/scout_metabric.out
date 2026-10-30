@@ -1,0 +1,205 @@
+expr shape genes x samples (20603, 1981) dup symbols 218
+value range 4.55791033184584 14.8794124402054 NaN frac 3.9221511822589334e-07
+sample mean-of-means / sd-of-means (non-z check): 6.708429861423294 0.011366908498664133 gene-mean sd 1.5322585032949785
+clock 14/14 present; missing: []
+G2M(no clock) 200/200 present; missing: []
+purity 11/11 present; missing: []
+alias check: {'BMAL1': False, 'CHRONO': False, 'C1orf51': False}
+clock symbols with >1 row (probe duplicates): []
+G2M symbols with >1 row (probe duplicates): ['BIRC5', 'CDKN2C', 'KPNA2']
+purity symbols with >1 row (probe duplicates): []
+clock genes: n rows, NaN count: {'ARNTL': (1, 0), 'CLOCK': (1, 0), 'NPAS2': (1, 0), 'PER1': (1, 0), 'PER2': (1, 0), 'PER3': (1, 0), 'CRY1': (1, 0), 'CRY2': (1, 0), 'NR1D1': (1, 0), 'NR1D2': (1, 0), 'DBP': (1, 0), 'RORA': (1, 0), 'TEF': (1, 0), 'CIART': (1, 0)}
+cells NaN total 16 samples with NaN 16
+patients 2509 samples 2509 sample types {'Primary': 2509} patients with >1 sample 0
+sample id == patient id for all: True
+cases_mRNA list 1980 expr cols 1980 cols in clinical 1980
+N tumours with expression and clinical: 1980
+
+## ER_IHC
+ER_IHC
+Positve     1498
+Negative     439
+NaN           43
+
+## ER_STATUS
+ER_STATUS
+Positive    1506
+Negative     474
+
+## HER2_SNP6
+HER2_SNP6
+NEUTRAL    1436
+GAIN        438
+LOSS        101
+UNDEF         5
+
+## HER2_STATUS
+HER2_STATUS
+Negative    1733
+Positive     247
+
+## PR_STATUS
+PR_STATUS
+Positive    1040
+Negative     940
+
+## CLAUDIN_SUBTYPE
+CLAUDIN_SUBTYPE
+LumA           700
+LumB           475
+Her2           224
+claudin-low    218
+Basal          209
+Normal         148
+NC               6
+
+## COHORT
+COHORT
+3.0    763
+1.0    521
+2.0    288
+4.0    238
+5.0    170
+
+## THREEGENE
+THREEGENE
+ER+/HER2- Low Prolif     640
+ER+/HER2- High Prolif    617
+ER-/HER2-                309
+NaN                      216
+HER2+                    198
+
+## INTCLUST
+INTCLUST
+8       299
+3       290
+4ER+    260
+10      226
+7       190
+5       190
+9       146
+1       139
+6        85
+4ER-     83
+2        72
+
+## CHEMOTHERAPY
+CHEMOTHERAPY
+NO     1568
+YES     412
+
+## HORMONE_THERAPY
+HORMONE_THERAPY
+YES    1216
+NO      764
+
+## RADIO_THERAPY
+RADIO_THERAPY
+YES    1173
+NO      807
+
+## OS_STATUS
+OS_STATUS
+1:DECEASED    1143
+0:LIVING       837
+
+## VITAL_STATUS
+VITAL_STATUS
+Living                  837
+Died of Disease         646
+Died of Other Causes    496
+NaN                       1
+
+## RFS_STATUS
+RFS_STATUS
+0:Not Recurred    1176
+1:Recurred         803
+NaN                  1
+
+## GRADE
+GRADE
+3.0    952
+2.0    771
+1.0    169
+NaN     88
+
+## CELLULARITY
+CELLULARITY
+High        965
+Moderate    737
+Low         215
+NaN          63
+
+## INFERRED_MENOPAUSAL_STATE
+INFERRED_MENOPAUSAL_STATE
+Post    1556
+Pre      424
+
+## SEX
+SEX
+Female    1980
+OS_MONTHS non-missing 1980 median 116.44999999999999
+RFS_MONTHS non-missing 1980 median 102.066666666667
+AGE_AT_DIAGNOSIS non-missing 1980 median 61.8
+
+## ER_IHC vs ER_STATUS (sample-level)
+ER_STATUS  Negative  Positive
+ER_IHC                       
+NA               17        26
+Negative        384        55
+Positve          73      1425
+
+## PAM50 x ER_IHC
+ER_IHC           NA  Negative  Positve   All
+CLAUDIN_SUBTYPE                             
+Basal             4       172       33   209
+Her2              6       115      103   224
+LumA             10        13      677   700
+LumB              8        11      456   475
+NC                0         0        6     6
+Normal            3        28      117   148
+claudin-low      12       100      106   218
+All              43       439     1498  1980
+
+## PAM50 x COHORT
+COHORT           1.0  2.0  3.0  4.0  5.0   All
+CLAUDIN_SUBTYPE                               
+Basal             37   28   93   33   18   209
+Her2              38   29   90   41   26   224
+LumA             170  104  308   65   53   700
+LumB             129   76  163   67   40   475
+NC                 0    1    3    1    1     6
+Normal            52   10   54   12   20   148
+claudin-low       95   40   52   19   12   218
+All              521  288  763  238  170  1980
+
+## ER_IHC x COHORT
+COHORT    1.0  2.0  3.0  4.0  5.0   All
+ER_IHC                                 
+NA         22    1   13    7    0    43
+Negative   85   81  172   57   44   439
+Positve   414  206  578  174  126  1498
+All       521  288  763  238  170  1980
+
+## ER x HER2_SNP6 (ER-)
+HER2_SNP6  GAIN  LOSS  NEUTRAL  UNDEF
+ER_IHC                               
+NA           12     0       31      0
+Negative    153    24      262      0
+Positve     273    77     1143      5
+
+## OS events (any death) / disease-specific:
+VITAL_STATUS  Died of Disease  Died of Other Causes  Living  NA
+OS_STATUS                                                      
+0:LIVING                    0                     0     837   0
+1:DECEASED                646                   496       0   1
+
+## ER+ x hormone therapy x chemo
+CHEMOTHERAPY               NO  YES
+ER_IHC   HORMONE_THERAPY          
+NA       NO                31    1
+         YES               11    0
+Negative NO               125  213
+         YES               43   58
+Positve  NO               387    7
+         YES              971  133

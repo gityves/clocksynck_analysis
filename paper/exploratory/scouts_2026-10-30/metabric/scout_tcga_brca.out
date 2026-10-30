@@ -1,0 +1,22 @@
+/home/maxine/Documents/paychere/scCircadianOverview/paper/exploratory/scouts_2026-10-30/metabric/scout_tcga_brca.py:6: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  m["patient"] = m["gdc_cases.submitter_id"]
+recount3 BRCA samples 1256 {'Primary Tumor': 1127, 'Solid Tissue Normal': 112, 'Metastatic': 7}
+histology (xml_histological_type) among primaries:
+{'Infiltrating Ductal Carcinoma': 799, 'Infiltrating Lobular Carcinoma': 212, 'Other, specify': 49, 'Mixed Histology (please specify)': 29, 'Mucinous Carcinoma': 17, 'Metaplastic Carcinoma': 13, 'Medullary Carcinoma': 6, nan: 1, 'Infiltrating Carcinoma NOS': 1}
+primary rows 1127 patients 1093 patients with >1 primary aliquot 34
+
+ER (IHC) one primary per patient: {'Positive': 806, 'Negative': 237, 'NA': 48, 'Indeterminate': 2}
+PAM50 (PanCanAtlas SUBTYPE) coverage: {'BRCA_LumA': 499, 'BRCA_LumB': 197, 'BRCA_Basal': 171, 'NA': 112, 'BRCA_Her2': 78, 'BRCA_Normal': 36}
+
+PAM50 x ER IHC
+ER           Indeterminate  NA  Negative  Positive   All
+SUBTYPE                                                 
+BRCA_Basal               0   7       144        20   171
+BRCA_Her2                2   4        46        26    78
+BRCA_LumA                0  19        11       469   499
+BRCA_LumB                0  12         3       182   197
+BRCA_Normal              0   3        13        20    36
+NA                       0   3        20        89   112
+All                      2  48       237       806  1093
+
+ER detection method: {nan: 877, 'manual counting': 42, 'Image Analysis': 30, '% IHC': 17, 'Allred score 0+0 = 0': 15, 'Allred score 5+3 = 8': 15, 'dextran coated charcoal': 13, 'IHC': 6, 'Allred score 5+3=8': 5, 'CAP scoring guideline 2010': 5, 'Allred (Biocare)': 4, 'image cytometry': 4, 'H-SCORE 300': 4, 'allred score 5 + 3 = 8': 4, 'allred score 5+3=8': 4, 'CAP SCORING GUIDELINE 2010': 4, 'H-Score 300': 2, 'H-SCORE 260': 2, 'H-SCORE 190': 2, 'H-SCORE 0': 2, 'Allred 0 = 0+0': 2, 'Immune Stain by GenPath': 1, '>10% STAINING = POSITIVE': 1, 'No value Given': 1, 'IMAGE ANALYSIS': 1, 'Immunohistochemistry': 1, 'ER Positive H-Score 95': 1, 'H-Score-190': 1, 'H-SCORE 280': 1, 'H-SCORE 136': 1, 'H-SCORE 140': 1, 'H-SCORE 180': 1, 'H-Score 150': 1, 'H-SCORE 230': 1, 'H-SCORE 255': 1, 'H-Score 295': 1, 'H-Score 240': 1, 'H-SCORE 295': 1, 'H-Score 200': 1, 'H-Score 280': 1, 'H-Score 140': 1, 'H-Score 270': 1, 'H-Score 0': 1, 'Allred score 3 + 2 = 5': 1, 'Allred score 7 (outside facility)': 1, 'Allred score 4+3=7': 1, 'Allred score 5+3= 8': 1, 'Allred score 5+2 = 7': 1, 'Allred score 3+2 = 5': 1, 'allred score 0 + 0 = 0': 1, 'Allred score 1+1 = 2': 1, 'Allred score = 8': 1, 'Allread score 5+3 = 8': 1, 'Allred 8 = 5+3': 1, 'Allred 7 = 5+2': 1}
