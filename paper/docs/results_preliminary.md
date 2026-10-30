@@ -2072,3 +2072,32 @@ One-sided for a loss, 2,000 permutations (time labels swapped within patient), H
   possible patient overlap between the three Edinburgh series; GSE55374 shows a non-significant fall but is
   underpowered.
 <!-- src: paper/exploratory/A169_endocrine_duration/output/{tests,coherence_tp,progression,treatment_effect_scores,sensitivity}.csv -->
+
+## A170 (scored 2026-10-31): ER− malignant cells have lower clock-gene coherence (H170.1 passes, p 0.044), but not clock-specifically (12th pseudo percentile); the whole-tumour pseudobulks of the same patients show no loss
+One-sided for a loss, 2,000 permutations of ER within cohort; 200 pseudo-clock sets (pool 2,398 genes).
+
+| unit set | ER− / ER+ | coh ER− | coh ER+ | T | p | MDE |
+|---|---|---|---|---|---|---|
+| **H170.1** malignant, Wu + Pal | 16 / 22 | 0.163 | 0.394 | **−0.231** | **0.044** | 0.385 |
+| malignant, Wu only | 9 / 11 | 0.251 | 0.576 | −0.325 | 0.020 | 0.422 |
+| malignant, Pal only | 7 / 11 | 0.080 | 0.148 | −0.069 | 0.232 | 0.369 |
+| whole tumour, same patients | 16 / 22 | 0.225 | 0.181 | +0.044 | 0.650 | 0.473 |
+| whole tumour, all patients | 19 / 25 | 0.276 | 0.127 | +0.149 | 0.781 | 0.478 |
+| Wu CAF | 9 / 9 | 0.692 | 0.432 | +0.260 | 0.931 | 0.446 |
+| Wu endothelial | 9 / 13 | 0.492 | 0.577 | −0.085 | 0.416 | 0.408 |
+| malignant without CID3963 | 16 / 21 | | | −0.253 | 0.033 | 0.368 |
+| malignant without the 4 Pal BRCA1 TNBC | 12 / 22 | | | −0.193 | 0.069 | 0.393 |
+
+- **Specificity:** the pseudo-clock 5th percentile is −0.332; T sits at the 12th percentile. Expression-matched
+  non-clock gene sets lose coherence in ER− malignant cells about as often: by the registered rule this is a
+  "coherence loss not specific to the clock".
+- **Size:** −0.25 beyond the null mean, between the METABRIC (−0.165) and SCAN-B (−0.315) bulk effects; the MDE (0.385)
+  is above both, so the pass is at the edge of the design's power.
+- **Whole tumour:** the same patients' whole-tumour pseudobulks show no loss (+0.044), and Wu CAFs point the other way
+  (+0.260). At this size the bulk ER effect is not visible in single-cell pseudobulks of whole tumours.
+- **Reading (registered rules):** H170.1 passes but is not clock-specific: ER− malignant cells show lower coherence of
+  co-regulated genes in general, the clock included. The registered "cell-intrinsic clock loss" reading needs
+  clock-specificity and is not supported; the bulk positive (A127, A166, clock-specific at n > 1,900) is not
+  reproduced in whole-tumour pseudobulks here, so the two scales cannot be reconciled with 38 tumours. Caveats:
+  Wu carries the effect (Pal −0.069, with much lower ER+ coherence, 0.148); one-sided p 0.044 with one test.
+<!-- src: paper/exploratory/A170_sc_breast_er/output/{tests,descriptive,power}.csv -->
