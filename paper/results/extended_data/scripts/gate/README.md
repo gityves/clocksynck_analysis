@@ -21,7 +21,7 @@ Outputs: `paper/results/extended_data/output/gate/` (`.../subsample/`). Helper m
 | A28 E1 Wcons, Wgen change | +2.41 %, -1.43 % | identical |
 | A28 E2 15 tissues, R (W14 ... gtex_orig) | 0.59-0.60 | 0.60 |
 | A41 genes: shift, R, within 2 h, amp Spearman | 17.0 h, 0.918, 11/14, 0.43 | 17.0, 0.92, 11/14, 0.43 |
-| A17 step 6 (20 fits, 159 compartments): gate verdict unchanged; median abs coupling difference | 20 of 20; 0.026 (r 0.92) | 20 of 20 (gates, `a17_waveform_sens_gates.csv`); 0.026 | |
+| A17 step 6 (20 fits, 161 compartments): gate verdict unchanged; median abs coupling difference | 20 of 20; 0.026 (r 0.927) (rerun on the relearned anchors 2026-10-29; old values in m3_snapshot_backup/2026-10-29) | 20 of 20 (gates, `a17_waveform_sens_gates.csv`); 0.026 | |
 | A28 screen: 17,404 genes; amp, z, phase SD, tissues, n_sig | max difference 4e-15, 1e-14, 9e-13, 0, 0 | | I^2 differs for 123 genes expressed in one tissue (0 vs 1 convention); sets W18 4 genes (BHLHE41, HLF, PPL, ADIRF-AS1), Wcons 14, generous 20 |
 | A28 E4 Spearman: W14, W18, Wcons, Wgen, original | 0.559, 0.582, 0.700, 0.611, 0.558 | 0.559, 0.582, 0.700, 0.578, 0.558 | MAE 1.20, 1.21, 1.01, 1.07 h vs 1.20, 1.21, 1.01, 1.80 h; Wgen differs (cause not traced); no-harm holds for all |
 | A41 4c: JS r of sheep offsets vs human d_t (21 tissues), one-sided p; human / baboon reference | -0.199 (p 0.81) / -0.456 (p 0.99) | -0.194 (0.80) / -0.378 (0.96) | A34 primary fails with both references; baboon waveform refit here |

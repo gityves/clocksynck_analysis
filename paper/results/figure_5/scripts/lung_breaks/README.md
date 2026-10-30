@@ -32,7 +32,7 @@ Outputs: `paper/results/figure_5/output/lung_breaks/` (`.../subsample/` for chec
 | A7 test 1, Natri case - control activation score | -0.300 vs 0.136, diff 0.437, 20 / 44 donors | identical (p 0.001 legacy; here the add-one p is 0.000 by rounding at 10,000 permutations) | |
 | A7 test 2, T coupling high - low activation: HLCA fibrotic, Natri cases | -0.020 [-0.21, 0.33] p 0.32; 0.000 p 1.00 (both halves at the boundary) | +0.178 [-0.73, 0.94] p 0.63; -0.024 p 0.94 | not comparable in value (A17 anchored host, boundary couplings; legacy a separate reference fit); none significant in either, H7 not supported |
 | A7 test 3, healthy HLCA | -0.127 [-0.34, 0.04] p 0.13 | -0.119 [-0.63, 0.48] p 0.83 | |
-| A18-3.1 thinning: DCM mural / endothelial / fibroblast, diff after thinning | 0.128, 0.153, -0.043 | 0.132, 0.154, -0.029 | ILD (Natri) EC capillary, ciliated: 0.674, 0.424 vs 0.615, 0.423; p_thinned 0.010 / 0.035 / 0.657 vs 0.010 / 0.025 / 0.761 (200 permutations); the fibrotic increases survive thinning |
+| A18-3.1 thinning: DCM mural / endothelial / fibroblast, diff after thinning | 0.135, 0.156, -0.065 | 0.132, 0.154, -0.029 | ILD (Natri) EC capillary, ciliated: 0.674, 0.424 vs 0.615, 0.423; p_thinned 0.010 / 0.040 / 0.453 vs 0.010 / 0.025 / 0.761 (200 permutations); the fibrotic increases survive thinning (DCM rows, `dcm`; dcm_healthy endothelial p_thinned 0.0498) (rerun on the relearned anchors 2026-10-29; old values in m3_snapshot_backup/2026-10-29) |
 | A18-3.3 / 3.4 PD Braak and HBCC | run (`a18_pd_*`, `a18_hbcc.csv`); HBCC BD inhibitory CGE half A: d -0.258, p 0.025 | d -0.263, p 0.015 | PD: DMV contrasts 1-4 vs 0 all non-estimable for glutamatergic / GABAergic (1-3 donors); OPC d -0.376 (p 0.16) |
 
 ## M3 full run (2026-10-25)
