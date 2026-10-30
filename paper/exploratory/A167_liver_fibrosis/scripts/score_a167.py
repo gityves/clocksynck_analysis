@@ -36,7 +36,7 @@ def h1671(t: pd.DataFrame, power: pd.DataFrame) -> pd.DataFrame:
     x["p_holm"] = np.nan
     x.loc[ok, "p_holm"] = multipletests(x.loc[ok, "p_star"], method="holm")[1]
     x["class"] = np.where(~ok, "not estimable", np.where(x.p_holm < 0.05, "effect", "not detected"))
-    x["specificity"] = x.p_companion_d_star.map(specific)
+    x["specificity"] = np.where(x["class"] == "effect", x.p_companion_d_star.map(specific), "")  # qualifies effects only
     return x
 
 
@@ -55,7 +55,7 @@ def h1672(t: pd.DataFrame) -> pd.DataFrame:
     x.loc[ok, "p_holm"] = multipletests(x.loc[ok, "p"], method="holm")[1]
     x["class"] = np.where(~ok, "excluded: " + x.reason.where(x.reason != "", "not estimable"),
                           np.where(x.p_holm < 0.05, "effect", "not detected"))
-    x["specificity"] = x.p_companion.map(specific)
+    x["specificity"] = np.where(x["class"] == "effect", x.p_companion.map(specific), "")
     # registered: a phase effect also requires the companion phase p < 0.05
     ph = (x.readout == "phase") & (x["class"] == "effect") & ~(x.p_companion < 0.05)
     x.loc[ph, "class"] = "effect shared with the liver (not internal desynchrony)"
@@ -73,7 +73,7 @@ def main():
         a.to_csv(OUT / "h1671.csv", index=False)
         b.to_csv(OUT / "h1672.csv", index=False)
         summ += [dict(item=f"H167.1 {r.compartment}", value=f"{r['class']} (d* {r.d_star:+.3f}, Holm {r.p_holm:.3g}, "
-                                                           f"MDE {r.mde_dstar:.3f}; {r.specificity})")
+                                                           f"MDE {r.mde_dstar:.3f}{'; ' + r.specificity if r.specificity else ''})")
                  for _, r in a.iterrows()]
         summ.append(dict(item="H167.2 effects", value=int((b["class"] == "effect").sum())))
     sec = []

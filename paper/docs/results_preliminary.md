@@ -1991,3 +1991,30 @@ MDE = 2.80 × pooled SE (80 %, two-sided 0.05), per decade.
 - **Reading:** the relearned anchors change no A19 verdict. Fibroblast/stromal own noise falls nominally with age
   (p 0.056) in the same direction as neurons; neither is a test.
 <!-- src: paper/results/figure_4/output/resilience/a19_age_pooled.csv (2026-10-30 20:36); comparison a19_age_pooled_2026-10-26.csv -->
+
+## A167 (scored 2026-10-30, non-blind re-read): advanced liver fibrosis leaves the stellate, endothelial and hepatocyte clocks without a detectable change (H167.1: 0 of 3; H167.2: 0 of 9)
+Pooled MASLD cohorts, F3-4 (44) vs F0-2 (62), living-donor controls excluded, labels permuted within study. Pooled and
+per-arm gates pass in every analysis (clock share control 0.573, case 0.437).
+- **H167.1 (d*, Holm over 3), none detected:**
+
+  | primary | d* [95 % CI] | p | Holm | MDE |
+  |---|---|---|---|---|
+  | stellate | −0.060 [−0.209, 0.089] | 0.429 | 0.429 | 0.293 |
+  | endothelial | −0.136 [−0.308, 0.035] | 0.144 | 0.288 | 0.429 |
+  | hepatocyte | −0.209 [−0.401, −0.017] | 0.034 | 0.102 | 0.349 |
+
+  Liver-wide companion (each minus all other compartments): stellate +0.009 (p 0.930), endothelial −0.082 (p 0.371),
+  hepatocyte −0.170 (p 0.144).
+- **H167.2 (phase, amplitude, noise; Holm over 9):** no effect (all Holm 1.0). Approximate MDEs: phase 1.5-1.8 h,
+  amplitude 1.4-1.7-fold, ψ 2.4-2.9-fold. Largest estimates: stellate phase −0.88 h (p 0.123), hepatocyte log ψ
+  +0.51 (p 0.118).
+- **Secondaries (descriptive):** D1 (MASH vs none / steatosis, living donors excluded): hepatocyte d* −0.071
+  (p 0.544), endothelial −0.133 (p 0.139), stellate +0.046 (p 0.784). Leave-one-study-out keeps every primary negative
+  (hepatocyte −0.134 to −0.260, endothelial −0.080 to −0.184, stellate −0.026 to −0.156). Host spread barely changes
+  (log V ratio −0.110 to −0.063 for the primaries).
+- **Reading:** without the living-donor controls, advanced fibrosis shows no detectable clock change in stellate,
+  endothelial or hepatocyte compartments, down to MDEs of 0.29-0.43 on d*. The hepatocyte leans negative (nominal
+  p 0.034, every leave-one-out −0.13 to −0.26) and is not separable from the rest of the liver (companion p 0.144):
+  consistent with A44's liver-wide reading, and below the detection limit. Fatty liver stays under resilience, with
+  this bound.
+<!-- src: paper/exploratory/A167_liver_fibrosis/output/{h1671,h1672,secondary,gates,power}.csv -->
