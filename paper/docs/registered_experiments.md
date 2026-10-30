@@ -2394,3 +2394,55 @@ The 2026-10-26 outputs are kept for comparison as `*_2026-10-26.csv`.
   per estimand with their MDEs. These are secondaries, not tests.
 
 **Reading:** the H19.1 verdict stands as registered and gains an MDE. "No age effect" is stated only down to that MDE.
+
+## A166 (2026-10-30, written after a metadata-only scout (`exploratory/scouts_2026-10-30/metabric/SCOUT.md`: counts, gene coverage, no clock statistic) and before any clock readout of METABRIC or of TCGA BRCA within PAM50; PI request 2026-10-30): independent replication of the breast-tumour ER and proliferation coherence losses (METABRIC)
+
+**Why:** in SCAN-B, ER-negative tumours had less coherent clocks (H127.2, T −0.343). After scoring, this held within
+PAM50 subtype × proliferation tertile (A127 post hoc, T −0.268, p 0.0045). The post hoc result needs an independent,
+pre-specified replication before it can be a paper result. TCGA BRCA is not independent for the ER effect: A97 first
+saw it there, exploratorily. METABRIC (about 2,000 tumours, a different platform and country) is the confirmatory cohort.
+**Data:**
+- **METABRIC** (cBioPortal `brca_metabric`, ODbL 1.0; `$SCCC_DATA/metabric/`, PROVENANCE.md).
+  - `data_mrna_illumina_microarray.txt` (Illumina HT-12 v3, log2 intensity), 1,980 tumours with expression.
+  - ER = `ER_IHC` (Positive / Negative; missing out). PAM50 = `CLAUDIN_SUBTYPE` restricted to the A127 five (LumA,
+    LumB, Her2, Basal, Normal); claudin-low and NC are out of the tests.
+  - Stratifier: `COHORT` (5 levels).
+- **TCGA BRCA** (secondary, not independent): recount3 primary tumours, one per patient (first aliquot), log CPM as
+  the repo convention. ER from the GDC XML (`xml_breast_carcinoma_estrogen_receptor_status`), PAM50 from PanCanAtlas
+  (`$SCCC_DATA/tcga/pancan_subtypes/`).
+
+**Definitions (frozen from A127, `exploratory/A127_scanb/scripts/a127_lib.py`):**
+- Y = ln 2 × log2 expression of the 14 clock genes.
+- Proliferation = mean z of Hallmark G2M (clock genes removed); purity proxy = the A97 11-gene mean z.
+- Both scores are z-scored within cohort (METABRIC: within COHORT); tertiles are by rank within the stratum named below.
+- Coherence = A87 `decompose.components` gene coherence over a group of tumours, groups centred.
+
+**Tests (METABRIC, 2,000 permutations each, one-sided for a loss, Holm over the three):**
+- **H166.1 (ER, = H127.2):** coherence(ER−) − coherence(ER+) within COHORT × purity-proxy tertile, mean over strata
+  with ≥ 10 tumours per arm; ER labels permuted within stratum.
+- **H166.2 (ER within PAM50 × proliferation, = the A127 post hoc):** cells PAM50 × proliferation tertile (tertiles
+  within PAM50), with ≥ 10 tumours per ER arm; T = mean over cells; ER labels permuted within cell.
+- **H166.3 (proliferation, = H127.1):** strata PAM50 × purity-proxy tertile with ≥ 30 tumours; T = mean of
+  coherence(high proliferation tertile) − coherence(low); tumour order permuted within stratum.
+
+**Specificity companion (same statistic, observed labels):** 200 pseudo-clock 14-gene sets matched on mean and variance
+in METABRIC (clock and G2M genes excluded; `wf_for` of A127). A pass is "clock-specific" only if T is below the 5th
+percentile of the pseudo T. Otherwise it is "coherence loss not specific to the clock".
+**Power, before the tests:** MDE = 2.49 × SD of each permutation null (one-sided 0.05, 80 %), reported next to the SCAN-B
+effect sizes (H127.2 −0.343, post hoc −0.268, H127.1 −0.123).
+**Sensitivities (descriptive):**
+- ER by `ER_STATUS`;
+- claudin-low included as its own stratum;
+- without COHORT stratification;
+- per COHORT;
+- per-gene mean intensity against the array floor (4.56).
+**TCGA BRCA (secondary, descriptive; not confirmatory for H166.1):** H166.2 and H166.3 with the same rules. Cells with
+< 10 tumours per ER arm are dropped.
+**Not registered here:** survival or endocrine-therapy response. These need PI approval, and endocrine response is
+confounded by indication.
+**Reading:**
+- H166.1-2 pass, clock-specific → the ER effect, and its independence from subtype and proliferation, replicate in an
+  independent cohort and platform. It is a pre-specified cancer positive (Figure 5).
+- Fail at a powered design → the SCAN-B within-PAM50 result stays post hoc, and the effect is bounded at the MDE.
+- Not specific → the wording changes to "general transcriptional decoherence".
+**Code:** `paper/exploratory/A166_metabric/`.
