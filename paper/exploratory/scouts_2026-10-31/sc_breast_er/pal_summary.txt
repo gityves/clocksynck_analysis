@@ -1,0 +1,9 @@
+('BRCA1 pre-neoplastic', 'Total') 4
+('ER+ tumour', 'Involved lymph node') 7
+('ER+ tumour', 'Total') 18
+('HER2+ tumour', 'Total') 6
+('Normal', 'Epithelial') 11
+('Normal', 'Total') 13
+('PR+ tumour', 'Total') 1
+('Triple negative BRCA1 tumour', 'Total') 4
+('Triple negative tumour', 'Total') 4

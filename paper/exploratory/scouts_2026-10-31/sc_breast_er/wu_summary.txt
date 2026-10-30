@@ -1,0 +1,13 @@
+celltype_major
+T-cells              35214
+Cancer Epithelial    24489
+Myeloid               9675
+Endothelial           7605
+CAFs                  6573
+PVL                   5423
+Normal Epithelial     4355
+Plasmablasts          3524
+B-cells               3206
+ER+ 11 patients; median cells {'Cancer Epithelial': 261, 'CAFs': 129, 'Endothelial': 186, 'PVL': 87} n>=50 {'Cancer Epithelial': 9, 'CAFs': 7, 'Endothelial': 10, 'PVL': 8} all three (Cancer,CAF,Endo)>=50: 5
+HER2+ 5 patients; median cells {'Cancer Epithelial': 441, 'CAFs': 185, 'Endothelial': 157, 'PVL': 72} n>=50 {'Cancer Epithelial': 3, 'CAFs': 4, 'Endothelial': 4, 'PVL': 3} all three (Cancer,CAF,Endo)>=50: 2
+TNBC 10 patients; median cells {'Cancer Epithelial': 976, 'CAFs': 209, 'Endothelial': 135, 'PVL': 107} n>=50 {'Cancer Epithelial': 8, 'CAFs': 7, 'Endothelial': 8, 'PVL': 7} all three (Cancer,CAF,Endo)>=50: 4

@@ -1,0 +1,10 @@
+{'tissue', 'clinical_subtype', 'gender'}
+clinical_subtype  subtype
+ER+               ER+        11
+                  TNBC        1
+HER2+             HER2+       3
+HER2+/ER+         HER2+       2
+TNBC              TNBC        9
+dtype: int64
+ER+ 14 pts; median {'Cancer Epithelial': 241, 'CAFs': 132, 'Endothelial': 184} n>=50 {'Cancer Epithelial': 11, 'CAFs': 9, 'Endothelial': 13} all3>=50: 6 all3>=30: 7
+ER- 12 pts; median {'Cancer Epithelial': 853, 'CAFs': 195, 'Endothelial': 135} n>=50 {'Cancer Epithelial': 9, 'CAFs': 9, 'Endothelial': 9} all3>=50: 5 all3>=30: 6
