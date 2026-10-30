@@ -310,3 +310,19 @@ malignant level but not for fibroblasts.
 c ≤ 0.3 but not at 0.6-0.9; the estimate is shrunk by a roughly constant factor (0.87-0.92 with anchors at 0.8), as an
 errors-in-variables attenuation by the host's reliability. Per the registered reading, absolute c is reported without
 intervals (ranks, Δc, d*), and a correction is developed (option b): registered as A163.
+
+## Q18 (2026-10-30): A153 under rule (a) still has no primaries — where should the disease positive come from?
+
+- Rule (a) makes fibroblast_stromal the eligible family (endothelial too in the 3-atlas sensitivity).
+- Every eligible compartment of the 13 estimable disease targets has an MDE on d* > 0.2. The smallest are
+  dcm_healthy heart fibroblast 0.232 and hlca_fibrotic EC_arterial 0.214. So H153.1-3 are not scorable, and the A17
+  islets beta effect does not survive (results_preliminary, A153).
+- **Nothing depending on this is paused.** A164 (GTEx T2D/obesity, matched) runs as registered, and roadmap 6.6
+  (within-person designs) is next in the handoff order.
+- **Options for the PI:**
+  - (i) Relax the MDE bound to 0.25 in a new registration. That would admit only dcm_healthy heart fibroblast; it is
+    post hoc in spirit, so I do not recommend it.
+  - (ii) Option (b) of Q15. It does not change the MDEs.
+  - (iii) Larger single-cell disease cohorts (an outward action: data requests).
+  - (iv) Rely on within-person and GTEx designs for the disease positive.
+- My recommendation is (iv) now, with (iii) as a longer-term ask.
