@@ -1,0 +1,6 @@
+candidate,family,n_paired_patients,n_samples,note
+TAURUS (Thomas 2024),fib / endo (pooled sites),24 / 28; both 24,216,
+"Psoriasis sc (3 GEO series), visits pooled",fib / endo,12 / 20; both 12,66,
+"Psoriasis sc (3 GEO series), same visit",fib / endo,12 / 21; both 12,68,
+Kong 2025 TI stroma (Census),fib / endo,4 / 3; both 3,,
+Kong 2025 colon stroma (Census),fib / endo,2 / 2; both 2,,

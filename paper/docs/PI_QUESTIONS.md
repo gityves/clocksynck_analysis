@@ -326,3 +326,24 @@ intervals (ranks, Δc, d*), and a correction is developed (option b): registered
   - (iii) Larger single-cell disease cohorts (an outward action: data requests).
   - (iv) Rely on within-person and GTEx designs for the disease positive.
 - My recommendation is (iv) now, with (iii) as a longer-term ask.
+
+## Q19 (2026-10-30): within-person designs (roadmap 6.6) — the on-disk paired cohorts are already analysed; acquire Smillie 2019?
+
+- Scout (metadata only, no clock statistic): `exploratory/scouts_2026-10-30/within_person/SCOUT.md`.
+- **On disk, paired, but not blind:**
+  - TAURUS (UC + CD): 29 patients with inflamed and non-inflamed biopsies; 23-24 have both eligible families
+    (fibroblast_stromal and endothelial, >= 50 cells per state). Archive A45 and A53 already read it within patient:
+    stromal coupling 0.80-0.91 in both states, phases unchanged, no amplitude loss. Inflamed vs non-inflamed is also
+    confounded with pre/post treatment (pre 67/37, post 37/63 samples).
+  - Psoriasis single cell (GSE173706, GSE228421): 12 patients with both families in lesional and non-lesional
+    skin; used in A54/A58.
+  - Kong 2025 (Crohn vs normal, same donor): 3-4 donors, too few.
+- **New, independent:** Smillie 2019 UC atlas (18 UC patients with inflamed and adjacent non-inflamed biopsies,
+  12 healthy; 366,650 cells; not on disk, pairing to be verified). Hosted on the Broad Single Cell Portal, which needs
+  a login: an access step for the PI.
+- **Nothing is paused.** I have not registered a TAURUS or psoriasis re-read: any new readout there would be chosen
+  after A45/A53/A54 were seen, so it could only be a secondary.
+- **Options:** (i) acquire Smillie 2019 and register a blind within-patient contrast (stroma and endothelium:
+  d*, phase, z2, psi), with TAURUS as the not-blind secondary; (ii) register the TAURUS readouts as an explicitly
+  non-blind secondary only; (iii) drop 6.6, since gut stroma looks resilient to inflammation (A45).
+- My recommendation is (i).

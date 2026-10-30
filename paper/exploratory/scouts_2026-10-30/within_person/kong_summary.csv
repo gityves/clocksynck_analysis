@@ -1,0 +1,7 @@
+dataset,donors,donors_with_CD_and_normal,tissues,paired_endothelial cell>=50,paired_fibroblast>=50,paired_myofibroblast cell>=50,paired_pericyte>=50,paired_both_families
+Kong TI stroma,40,6,"ileal epithelium,ileum,ileum lamina propria,lamina propria of small intestine,small intestine",3.0,4.0,1.0,1.0,3.0
+Kong colon stroma,34,4,"ascending colon,cecum mucosa,colon,colonic epithelium,descending colon,lamina propria of mucosa of colon,mucosa of sigmoid colon,mucosa of transverse colon,sigmoid colon",2.0,2.0,1.0,0.0,2.0
+Kong ileum immune,42,6,"epithelium of small intestine,ileal epithelium,ileum,ileum lamina propria,lamina propria of small intestine,small intestine",,,,,
+Kong TI epithelium,42,6,"epithelium of small intestine,ileal epithelium,ileum,ileum lamina propria,lamina propria of small intestine,small intestine",,,,,
+Kong colon epithelium,34,4,"ascending colon,caecum epithelium,cecum mucosa,colon,colonic epithelium,descending colon,lamina propria of mucosa of colon,mucosa of sigmoid colon,mucosa of transverse colon,sigmoid colon",,,,,
+Kong colon immune,34,4,"ascending colon,caecum epithelium,cecum mucosa,colon,colonic epithelium,descending colon,lamina propria of mucosa of colon,mucosa of sigmoid colon,mucosa of transverse colon,sigmoid colon",,,,,

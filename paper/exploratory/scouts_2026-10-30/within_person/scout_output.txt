@@ -1,0 +1,91 @@
+TAURUS samples 216 patients 41
+{'UC': 108, 'CD': 96, 'Healthy': 12} {'Inflamed': 104, 'Non_Inflamed': 100, 'Healthy': 12}
+{2: 29, 1: 12} patients by n inflammation levels
+timepoint {'Pre': 104, 'Post': 100} Library {'3 prime v3.1': 164, '3 prime V3': 52} site {'Descending_Colon': 60, 'Rectum': 58, 'Ascending_Colon': 38, 'Terminal_Ileum': 36, 'Sigmoid': 24}
+TAURUS patients with both: 29 per-family (>=50 cells in both states, any sample): {'fibroblast': 23, 'endothelial': 28}
+pooled over sites: {'fibroblast': 24, 'endothelial': 28} both families both states: 24
+patient-sites with both states 37
+samples with n_elig (fib,endo) = {0: 5, 1: 40, 2: 171} by inflammation: {'Healthy': {0: 0, 1: 1, 2: 11}, 'Inflamed': {0: 2, 1: 25, 2: 77}, 'Non_Inflamed': {0: 3, 1: 14, 2: 83}}
+fibroblast median cells/sample by inflammation {'Healthy': 342.5, 'Inflamed': 137.0, 'Non_Inflamed': 366.0}
+endothelial median cells/sample by inflammation {'Healthy': 101.0, 'Inflamed': 252.5, 'Non_Inflamed': 153.0}
+mural median cells/sample by inflammation {'Healthy': 46.0, 'Inflamed': 119.0, 'Non_Inflamed': 104.0}
+epithelial median cells/sample by inflammation {'Healthy': 1852.5, 'Inflamed': 716.5, 'Non_Inflamed': 2128.5}
+T median cells/sample by inflammation {'Healthy': 618.5, 'Inflamed': 1168.5, 'Non_Inflamed': 576.5}
+myeloid median cells/sample by inflammation {'Healthy': 84.0, 'Inflamed': 169.0, 'Non_Inflamed': 75.5}
+pretreatment {False: 112, True: 104} Remission {'Remission': 101, 'Non_Remission': 99, 'None ': 12, 'Not_avail': 4}
+pooled both-families patients by disease {'UC': 12, 'CD': 12}
+sample-level: patients with >=1 inflamed sample and >=1 non-inflamed sample where each has fib & endo >=50: 23
+
+PSORIASIS units 68 per study patients {'GSE173706': 10, 'GSE228421': 5, 'GSE278330': 21}
+all visits pooled patients with both: 30 {'fibroblast': 12, 'endothelial': 20} both fams: 12 by study {'GSE173706': 7, 'GSE228421': 5}
+same visit patients with both: 31 {'fibroblast': 12, 'endothelial': 21} both fams: 12 by study {'GSE173706': 7, 'GSE228421': 5}
+median cells fib/endo/mural by status {'fibroblast': {'lesional': 104.5, 'nonlesional': 35.5}, 'endothelial': {'lesional': 118.5, 'nonlesional': 105.0}, 'mural': {'lesional': 0.0, 'nonlesional': 0.0}}
+
+                                                                                                                           0                                                                                                                                                                          1                                                                                                                            2                                                                                                                            3                                                                                                                                                                                            4                                                                                                                                                                                            5
+dataset                                                                                                       Kong TI stroma                                                                                                                                                          Kong colon stroma                                                                                                            Kong ileum immune                                                                                                           Kong TI epithelium                                                                                                                                                                        Kong colon epithelium                                                                                                                                                                            Kong colon immune
+donors                                                                                                                    40                                                                                                                                                                         34                                                                                                                           42                                                                                                                           42                                                                                                                                                                                           34                                                                                                                                                                                           34
+donors_with_CD_and_normal                                                                                                  6                                                                                                                                                                          4                                                                                                                            6                                                                                                                            6                                                                                                                                                                                            4                                                                                                                                                                                            4
+tissues                        ileal epithelium,ileum,ileum lamina propria,lamina propria of small intestine,small intestine  ascending colon,cecum mucosa,colon,colonic epithelium,descending colon,lamina propria of mucosa of colon,mucosa of sigmoid colon,mucosa of transverse colon,sigmoid colon  epithelium of small intestine,ileal epithelium,ileum,ileum lamina propria,lamina propria of small intestine,small intestine  epithelium of small intestine,ileal epithelium,ileum,ileum lamina propria,lamina propria of small intestine,small intestine  ascending colon,caecum epithelium,cecum mucosa,colon,colonic epithelium,descending colon,lamina propria of mucosa of colon,mucosa of sigmoid colon,mucosa of transverse colon,sigmoid colon  ascending colon,caecum epithelium,cecum mucosa,colon,colonic epithelium,descending colon,lamina propria of mucosa of colon,mucosa of sigmoid colon,mucosa of transverse colon,sigmoid colon
+paired_endothelial cell>=50                                                                                              3.0                                                                                                                                                                        2.0                                                                                                                          NaN                                                                                                                          NaN                                                                                                                                                                                          NaN                                                                                                                                                                                          NaN
+paired_fibroblast>=50                                                                                                    4.0                                                                                                                                                                        2.0                                                                                                                          NaN                                                                                                                          NaN                                                                                                                                                                                          NaN                                                                                                                                                                                          NaN
+paired_myofibroblast cell>=50                                                                                            1.0                                                                                                                                                                        1.0                                                                                                                          NaN                                                                                                                          NaN                                                                                                                                                                                          NaN                                                                                                                                                                                          NaN
+paired_pericyte>=50                                                                                                      1.0                                                                                                                                                                        0.0                                                                                                                          NaN                                                                                                                          NaN                                                                                                                                                                                          NaN                                                                                                                                                                                          NaN
+paired_both_families                                                                                                     3.0                                                                                                                                                                        2.0                                                                                                                          NaN                                                                                                                          NaN                                                                                                                                                                                          NaN                                                                                                                                                                                          NaN
+
+GSE266546 cells 202013 samples 170 patients 85
+Tissue           Source     Histology
+Ascending Colon  Endoscopy  Control      24
+                            Mild         14
+                            Moderate      6
+                            Normal_CD    33
+                            Quiescent    10
+                            Severe        1
+Terminal Ileum   Endoscopy  Control      15
+                            Mild         12
+                            Moderate      3
+                            Normal_CD    24
+                            Quiescent     6
+                            Severe        2
+                 Surgical   Control       5
+                            Mild          5
+                            Normal_CD     1
+                            Quiescent     1
+                            Severe        8
+dtype: int64
+patients with >1 histology category: 29
+patient x tissue with >1 histology: 0
+fibroblast/endothelial cells per sample: median {'fibroblast': 2.0, 'endothelial': 2.0} samples with fib>=50 7 endo>=50 8 of 170
+{'Normal_CD': 58, 'Control': 44, 'Mild': 31, 'Quiescent': 17, 'Severe': 11, 'Moderate': 9}
+
+E-MTAB-16986 individuals 421 {'Healthy': 296, 'CD': 125} {'uninflamed': 349, 'inflamed': 72} samples 732 {'terminal ileum': 362, 'rectum': 275, 'blood': 95}
+ samples per individual: {2: 311, 1: 110}
+E-MTAB-16999 individuals 343 {'Healthy': 232, 'CD': 111} {'uninflamed': 279, 'inflamed': 64} samples 343 {'terminal ileum': 343}
+
+TAURUS timepoint x inflammation
+ inflammation  Inflamed  Non_Inflamed
+timepoint                           
+Post                37            63
+Pre                 67            37 
+Match
+ {'Yes': 177, 'No': 39}
+TAURUS patient structure: patients with both Pre and Post 34
+patients with both states at the same timepoint: 21
+TAURUS healthy donors: 3
+
+PSORIASIS per study fibroblast >=50 samples by status
+ compartment            f   e
+study     status            
+GSE173706 lesional     9   9
+          nonlesional  8   9
+GSE228421 lesional     5   5
+          nonlesional  5   5
+GSE278330 lesional     6  13
+          nonlesional  1   8
+study      status     
+GSE173706  lesional       11
+           nonlesional    11
+GSE228421  lesional        5
+           nonlesional     5
+GSE278330  lesional       20
+           nonlesional    16
+dtype: int64
