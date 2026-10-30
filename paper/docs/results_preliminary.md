@@ -2046,3 +2046,29 @@ One-sided for a loss, 2,000 permutations, Holm over three; 200 pseudo-clock sets
   ER− tumour state than as ongoing ER signalling. Caveats: H168.1 (the causal contrast) is underpowered (MDE 0.43), and
   the sampling effect cannot be separated with only 56 untreated pairs.
 <!-- src: paper/exploratory/A168_endocrine/output/{tests,coherence_groups,sensitivity,treatment_effect_scores}.csv -->
+
+## A169 (scored 2026-10-31): no progressive loss of breast-tumour clock coherence with the duration of letrozole (H169.1-2 fail; 3 months excludes a SCAN-B-sized drop in GSE59515)
+One-sided for a loss, 2,000 permutations (time labels swapped within patient), Holm over two; 200 pseudo-clock sets.
+
+| test | T | p | Holm | MDE | pseudo percentile |
+|---|---|---|---|---|---|
+| H169.1 GSE111563, > 120 d − pre (37 patients, 12 genes) | +0.370 | 0.917 | 0.917 | 0.653 | 93.5 |
+| H169.2 GSE59515, 3 months − pre (25 patients, 14 genes) | −0.049 | 0.340 | 0.681 | 0.307 | 34.5 |
+
+- **The treatment acted throughout** (paired change, SD units): proliferation −0.49 to −1.33, oestrogen-response score
+  −0.75 to −1.69 at every time point of all three series (all p < 0.05); the purity proxy rises (+0.47 to +1.18).
+- **Progression (patients with all three time points, slope per step):** GSE111563 (24) 0.386 → 0.379 → 0.338, slope
+  −0.024 (p 0.43, MDE 0.341); GSE59515 (25) 0.081 → 0.258 → 0.031, slope −0.025 (p 0.40, MDE 0.212); GSE55374 (10)
+  0.394 → 0.480 → 0.221, slope −0.087 (p 0.28, MDE 0.314). No series shows a monotone fall.
+- **H169.1 is positive because of the patients without the middle sample:** over all samples GSE111563 rises 0.294 →
+  0.647, over the complete triplets it is flat (0.386 → 0.338).
+- **Sensitivities (descriptive):** without PER1 (and NR1D1), or residualised on proliferation and purity, T keeps its
+  sign (H169.1 +0.48 to +0.50; H169.2 −0.012 to −0.081, p ≥ 0.33). GSE59515 responders −0.156 (17, p 0.31),
+  non-responders +0.012 (8). GSE55374 3 months − pre −0.178 (13, p 0.21, MDE 0.568).
+- **Reading:** three months of letrozole, which keeps proliferation and oestrogen-response genes suppressed, do not
+  reduce tumour clock coherence: in GSE59515 a drop of the SCAN-B size is excluded (MDE 0.307), and no series shows a
+  progressive trend. With A168 (2 weeks), oestrogen deprivation up to 3-4 months does not reproduce the ER− coherence
+  loss, which is best read as a stable property of the ER− tumour state. Caveats: small series (H169.1 MDE 0.65),
+  possible patient overlap between the three Edinburgh series; GSE55374 shows a non-significant fall but is
+  underpowered.
+<!-- src: paper/exploratory/A169_endocrine_duration/output/{tests,coherence_tp,progression,treatment_effect_scores,sensitivity}.csv -->

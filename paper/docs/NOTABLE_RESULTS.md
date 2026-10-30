@@ -13,9 +13,10 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
     property of the ER− tumour state, not ongoing ER signalling.
   - *Caveats:* the causal difference-in-differences is underpowered (MDE 0.43); the 56 untreated pairs fall in coherence
     (0.680 → 0.289), partly through PER1 / NR1D1, possibly a batch.
-  - *Follow-up (PI):* single-cell ER+ vs ER− malignant cells (is the loss cell-intrinsic?); longer deprivation
-    (GSE111563 > 120 d, descriptive only).
-  - *Source:* `A168_endocrine/output/tests.csv`.
+  - *Follow-up:* longer deprivation tested in A169 (pre-specified, H169.1-2 fail): no fall after 3 months of letrozole
+    (GSE59515 −0.049, MDE 0.307) and no progressive trend in three series. Open: single-cell ER+ vs ER− malignant cells
+    (is the loss cell-intrinsic?).
+  - *Source:* `A168_endocrine/output/tests.csv`, `A169_endocrine_duration/output/tests.csv`.
 
 ## 2026-10-30
 
