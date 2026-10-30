@@ -6,6 +6,14 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
 
 ## 2026-10-30
 
+- **A164: T2D and obesity are equivalent to no coupling change in the metabolic organs (matched GTEx).** T2D pooled
+  module d* +0.019 [−0.021, 0.060] and obesity +0.004 [−0.081, 0.089], both within ±0.15 and powered. No effect.
+  - *Why notable:* the first registered, powered equivalence. "Metabolic disease leaves organ clocks coupled to the
+    body clock" becomes a tested claim.
+  - *Follow-up:* the A165 phase, amplitude and noise readouts could be applied to the same matched design (register
+    first). Vent obese pancreas d* +0.36 is a descriptive lead only.
+  - *Source:* `A164_gtex_metabolic_matched/output/a164_tests_hypotheses.csv`.
+
 - **A153: the corrected disease contrasts have no primaries.** No A17 disease cohort reaches MDE ≤ 0.2 on d* in an
   eligible family. The smallest is 0.232 (dcm_healthy heart fibroblast), and 0.214 for endothelial in the descriptive
   scope. The A17 islets beta effect does not survive (p* 0.189).

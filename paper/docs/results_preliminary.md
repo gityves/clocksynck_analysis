@@ -1854,3 +1854,38 @@ one-sided); specificity comes from the 200 variance-matched pseudo sets of H127.
   islets beta effect does not survive the corrections.
   - The design limit is the per-arm sample size. A pre-specified disease positive needs either a larger cohort per
     arm, or a within-person design (roadmap 6.6), or GTEx-scale matched contrasts (A164).
+
+## A164 (scored 2026-10-30): T2D and obesity leave the metabolic organs coupled — H164.1 and H164.2 pass (equivalence at ±0.15); no effect (H164.3)
+
+Outputs: `exploratory/A164_gtex_metabolic_matched/output/` (aggregates only; GTEx controlled access). Choices not in the
+registration are in the README; the main one is per-tissue matching, since tissue availability differs between donors.
+- **Matching** (`a164_matching.csv`):
+  - T2D, 1:3: 342 matched case-tissues in vent (0 unmatched) and 298 in fast (3 unmatched).
+  - Obesity, 1:1: 415 in vent (31 unmatched) and 208 in fast (44 unmatched).
+  - Fast pancreas has 5 T2D and 3 obese cases, so it is out, as registered. Every other module and companion tissue is
+    eligible.
+- **Balance after matching** (`a164_balance.csv`, SMD, eligible tissues):
+  - T2D: age −0.18 to 0.36; ischaemic time 0.01 to 0.32.
+  - BMI stays unbalanced in T2D (vent 0.15-0.43, fast 0.55-0.74); the BMI-matched sensitivity below addresses it.
+  - Obesity: age −0.17 to 0.04.
+- **Power, written before the tests** (`a164_power.csv`): every pooled design is powered.
+  - T2D module: MDE 0.083, expected 90 % half-width 0.041.
+  - Obesity module: MDE 0.130, half-width 0.085.
+- **H164.1 (T2D) PASS, equivalent.** Pooled module d* +0.019, 90 % interval [−0.021, 0.060], inside ±0.15. Per cohort:
+  vent +0.005, fast +0.026 (`a164_tests.csv`).
+- **H164.2 (obesity) PASS, equivalent.** Pooled module d* +0.004 [−0.081, 0.089]. Per cohort: vent +0.067, fast −0.048.
+- **H164.3: no effect.** Permutation p 0.568 (T2D) and 0.935 (obesity), Holm 1.0. Module minus companion: T2D +0.023
+  (p 0.644), obesity +0.049 (p 0.457).
+- **Sensitivities** (point estimates, pooled module, `a164_sensitivity.csv`):
+  - T2D also matched on BMI: +0.013;
+  - T2D without steroid users: +0.022;
+  - obesity without steroid users: −0.002.
+  - A47 unmatched T2D module: +0.043 (`a164_a47_side_by_side.csv`).
+- **Per tissue (descriptive, `a164_tissues.csv`):** one tissue has p < 0.01, vent obese pancreas: d* +0.363 (higher
+  coupling in obese donors), boot SE 0.095, p_perm < 0.001.
+  - It is uncorrected among 30 tissue rows and is not a registered test.
+  - It is opposite in sign to a loss, and fast pancreas is not estimable.
+- **Reading:** T2D and obesity do not loosen the metabolic organs from the body clock beyond |d*| 0.15 in matched GTEx
+  donors. This is the first tested equivalence of the project; for T2D the 90 % interval rules out changes beyond about
+  0.06. It is a disease negative, not the disease positive Cell needs.
+  - The vent obese pancreas row is a descriptive lead only: an increase, single cohort, not corrected.
