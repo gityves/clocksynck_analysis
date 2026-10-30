@@ -4,6 +4,19 @@ One entry per result: date, amendment, the result in one or two lines with its n
 follow-up I would suggest, and the source file. Newest first. Numbers come from output files. Full write-ups are in
 `results_preliminary.md`.
 
+## 2026-10-31
+
+- **A168: two weeks of aromatase inhibition leave breast-tumour clock coherence unchanged (pre-specified; H168.1-3
+  fail).** POETIC treated change −0.010 (MDE 0.196) while proliferation (−0.90 SD) and oestrogen response (−0.96 SD)
+  fall; GSE20181 and Z1031B point the same way.
+  - *Why notable:* the ER− coherence loss (A127, A166) is not reproduced by acute ER blockade. It reads as a stable
+    property of the ER− tumour state, not ongoing ER signalling.
+  - *Caveats:* the causal difference-in-differences is underpowered (MDE 0.43); the 56 untreated pairs fall in coherence
+    (0.680 → 0.289), partly through PER1 / NR1D1, possibly a batch.
+  - *Follow-up (PI):* single-cell ER+ vs ER− malignant cells (is the loss cell-intrinsic?); longer deprivation
+    (GSE111563 > 120 d, descriptive only).
+  - *Source:* `A168_endocrine/output/tests.csv`.
+
 ## 2026-10-30
 
 - **A166: the ER-negative breast-tumour clock-coherence loss replicates in METABRIC, clock-specifically (pre-specified).**

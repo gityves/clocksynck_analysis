@@ -2018,3 +2018,31 @@ per-arm gates pass in every analysis (clock share control 0.573, case 0.437).
   consistent with A44's liver-wide reading, and below the detection limit. Fatty liver stays under resilience, with
   this bound.
 <!-- src: paper/exploratory/A167_liver_fibrosis/output/{h1671,h1672,secondary,gates,power}.csv -->
+
+## A168 (scored 2026-10-31): two weeks of aromatase inhibition do not reduce breast-tumour clock coherence (H168.1-3 fail); the treatment acted
+One-sided for a loss, 2,000 permutations, Holm over three; 200 pseudo-clock sets per series.
+
+| test | T | p | Holm | MDE | pseudo percentile |
+|---|---|---|---|---|---|
+| H168.1 POETIC, treated change − untreated change (157 / 56) | +0.381 | 0.993 | 1.0 | 0.431 | 97.5 |
+| H168.2 POETIC, treated change (157) | −0.010 | 0.452 | 1.0 | 0.196 | 45.5 |
+| H168.3 GSE20181, day 10-14 − pre (58) | +0.191 | 0.823 | 1.0 | 0.504 | 82.0 |
+
+- **The treatment acted** (paired change, SD units): POETIC AI proliferation −0.90, oestrogen-response score −0.96
+  (both p < 1e-4); untreated −0.11 to +0.26. GSE20181 and GSE87411 alike (proliferation −0.89 to −0.92, oestrogen
+  −0.85 to −1.21).
+- **Coherence per arm × time point (descriptive):** POETIC AI 0.631 → 0.621; untreated 0.680 → 0.289. GSE20181 0.283 →
+  0.474 (day 90: 0.142, a later array batch). GSE87411 0.529 → 0.598 (81 pairs, p 0.75).
+- **H168.1 is positive because the untreated arm falls**, not because the treated arm rises. Without PER1 and NR1D1
+  (sampling-sensitive), H168.1 shrinks to +0.115 and H168.2 is −0.044 (p 0.171, MDE 0.118). The untreated pairs are a
+  separate deposit (GSE73237 reanalysis, submitted a day apart), so a batch difference cannot be excluded.
+- **Sensitivities (descriptive):** residualising on proliferation and purity changes nothing (H168.2 +0.008); no
+  third of the proliferation response shows a loss (+0.08 to +0.12); GSE20181 responders −0.061, non-responders
+  −0.015.
+- **Reading:** short-term oestrogen deprivation, which strongly suppresses proliferation and oestrogen-response genes,
+  leaves tumour clock coherence unchanged in 157 POETIC tumours: a drop of the SCAN-B size (about 0.3) is excluded by
+  H168.2 (MDE 0.196; 0.118 without PER1 and NR1D1), and the two replication cohorts point the same way (no drop). The
+  ER− coherence loss is therefore not reproduced by acute ER blockade: it is better read as a stable property of the
+  ER− tumour state than as ongoing ER signalling. Caveats: H168.1 (the causal contrast) is underpowered (MDE 0.43), and
+  the sampling effect cannot be separated with only 56 untreated pairs.
+<!-- src: paper/exploratory/A168_endocrine/output/{tests,coherence_groups,sensitivity,treatment_effect_scores}.csv -->
