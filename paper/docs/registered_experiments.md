@@ -2234,3 +2234,60 @@ simulator and its 8 designs, with anchors at c_anchor ∈ {0.6, 0.8} and targets
 - Contrasts (d, d*) are not changed by A163: at a common host they stay calibrated (V154.2).
 
 **Code:** `paper/exploratory/A163_reliability_correction/`; the clocksync change has a test.
+
+## A164 (2026-10-30, written before any matched statistic below is computed; roadmap 6.7; A47 and A96 part 1 were scored in the archive and are known: T2D module d* −0.043 [−0.091, 0.004], BMI H47.1 +0.025, p 0.79): do T2D and obesity leave the metabolic organs coupled? Matched design, power and equivalence
+
+**Why:** A47 compared T2D cases with every non-diabetic donor of a cohort, and BMI as a slope. Cases differ from
+controls in age, Hardy class and sex, and "no loss" was not a tested claim. A164 matches on the death circumstances and
+tests equivalence, as A153 does for Figure 4.
+**Data:** GTEx v8 clock-gene pseudobulks of the A47 Datasets: the `fast` (Hardy 1-2) and `vent` (Hardy 0) cohorts of
+`organs/tissues.csv`, always kept separate, with the A47 anchors (all GTEx tissues of the cohort; a target anchor on its
+leave-one-out host). Protected phenotypes (`common/gtex.py`): T2D, BMI, exact age, sex, Hardy class, ischaemic time.
+Controlled access: aggregates only.
+- **Module:** liver, subcutaneous and visceral adipose, pancreas, skeletal muscle (A47 MET).
+- **Companion:** tibial nerve and the two skins (A47 COMP).
+- A tissue enters a cohort's module only with ≥ 10 matched cases (fast pancreas, 5 cases, is out).
+
+**Matching (within cohort, blind to clock data):**
+- **T2D:** each case is matched to up to 3 non-diabetic controls, without replacement.
+  - Exact on sex and Hardy class.
+  - Nearest on age, with a caliper of 5 years, then on ischaemic time.
+  - Unmatched cases are dropped and counted.
+- **Obesity:** BMI ≥ 30 vs 18.5 ≤ BMI < 25, T2D donors excluded. Each obese donor is matched 1:1 to a normal-weight
+  donor in the same way.
+- **Balance** is reported before any clock readout: standardised mean differences of age, ischaemic time and BMI.
+
+**Estimand:** per tissue, d* = c*_case − c*_control at the common host spread (`Dataset.contrast`, untruncated), then:
+- the module mean d*;
+- the module minus companion mean d*;
+- pooled over the two cohorts by inverse variance.
+
+The variance comes from a donor bootstrap that resamples matched sets (500 replicates), with the host refitted.
+Permutations swap labels within matched sets (2,000).
+**Tests:**
+- **H164.1 (T2D, equivalence):** the 90 % interval of the pooled module d* lies within ±0.15 (the A153 bound).
+- **H164.2 (obesity, equivalence):** the same for BMI ≥ 30 vs < 25.
+- **H164.3 (effect):** the two-sided permutation p of the pooled module d*, Holm over T2D and obesity.
+  - A Holm p < 0.05 is an effect.
+  - It is "organ-specific" only if the module-minus-companion p, on the same permutations, is also < 0.05.
+
+**Power, computed before the tests from the matched design only:**
+- MDE = 2.49 × SD of the permutation null of the pooled module d* (80 % power, two-sided 0.05).
+- The expected 90 % half-width = 1.645 × the bootstrap SE.
+
+If the expected half-width exceeds 0.15, the equivalence test is stated "not powered" and reported without a verdict
+word.
+**Sensitivities (descriptive):**
+- T2D additionally matched on BMI (caliper 3);
+- without long-term steroid users;
+- per cohort;
+- per tissue;
+- the A47 unmatched estimates side by side.
+
+**Reading:**
+- H164.1-2 pass → "T2D and obesity do not loosen the metabolic organs from the body clock" becomes a tested
+  equivalence at |d*| < 0.15, on matched donors.
+- An effect in H164.3 that is organ-specific → a disease positive.
+- Not powered → the claim stays at its MDE.
+
+**Code:** `paper/exploratory/A164_gtex_metabolic_matched/` (model: `results/figure_3/scripts/gtex_cues/compute_metabolic.py`).
