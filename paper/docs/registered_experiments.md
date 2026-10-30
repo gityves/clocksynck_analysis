@@ -2194,3 +2194,43 @@ factor, 200 replicates per cell.
 - V162.1 fails → absolute c is reported without intervals (ranks, Δc, d*), and a correction is developed (Q17 b).
 
 **Code:** `paper/exploratory/A154_gate_calibration/` (`--kinds P162`), output `output/a162/`.
+
+## A163 (2026-10-30, method; written after A162 was scored and before any validation simulation below; Q17 option (b), required by the registered A162 reading): a host-reliability correction of c, validated on fresh seeds
+
+**Why:** A162 failed (V162.1 19/32 cells). ĉ is shrunk by a roughly constant factor (0.87-0.92 with anchors at
+0.8, 0.80-0.88 at 0.6) that does not shrink with n, as errors-in-variables attenuation by the reliability of the
+estimated host. Per the A162 reading, absolute c is reported without intervals until a correction is validated.
+**Development (not confirmatory).** Candidate corrections are developed on the A162 seeds
+(`SeedSequence([162, ...])`) and on the A154 cells only. Candidates include:
+- (i) removing the host posterior uncertainty from the residual variance, psi_c = psi − |z|² tr(S̄_u) / 2;
+- (ii) dividing c by the host reliability R = 1 − tr(S̄_u) / V;
+- (iii) a reliability read from the anchors' leave-one-out couplings (Spearman-Brown on the anchor composite);
+- (iv) design-calibrated rescaling by simulation at the real design (`host.simulator`), with the host re-simulated.
+
+The interval is the donor-bootstrap percentile interval of the corrected c (host refitted, the correction applied
+within each replicate). One candidate is frozen: committed to clocksync as an opt-in readout (`coupling_corrected`,
+`coupling_corrected_lo/hi`), with the commit hash recorded in a dated note here before the validation runs. The default
+readout is unchanged.
+**Validation (confirmatory; fresh seeds `SeedSequence([163, design, cell, rep])`, 200 replicates per cell):** the A162
+simulator and its 8 designs, with anchors at c_anchor ∈ {0.6, 0.8} and targets at c_target ∈ {0.1, 0.3, 0.6, 0.9}
+(32 cells per c_anchor), no factor.
+- **V163.1:** coverage of the corrected 95 % interval ≥ 0.90 in every design × c_target cell at c_anchor 0.8.
+- **V163.2:** the same at c_anchor 0.6.
+- **V163.3:** |median bias| of the corrected c ≤ 0.05 in every cell at both c_anchor values.
+- **V163.4 (no inflation where the default is fine):** at c_target 0.1, coverage of the corrected interval ≥ 0.90 in every
+  design (both c_anchor values).
+
+**Descriptive:**
+- the A154 equal-c cells (weak anchors; 100 replicates), as the weak-anchor limit;
+- the anchors' own corrected c on the leave-one-out host;
+- the share of corrected values > 1.
+
+**Reading:**
+- V163.1-4 pass → c is reported corrected, with intervals, conditional on a gate-passing anchored host with c_anchor
+  ≥ 0.6 (Q17 b closed).
+- V163.1 and V163.3 pass at 0.8 only → corrected intervals only where the anchors' corrected c is ≥ 0.8; elsewhere
+  ranks, Δc and d*.
+- Otherwise → c stays reported without intervals (A162 reading), and the correction is not used.
+- Contrasts (d, d*) are not changed by A163: at a common host they stay calibrated (V154.2).
+
+**Code:** `paper/exploratory/A163_reliability_correction/`; the clocksync change has a test.

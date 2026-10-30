@@ -475,6 +475,9 @@ V25.1 and R25 on subsamples only).
   - T1: mean axis 11.33 h, R 0.804, V test p 0.0014 (archive 11.01 h, p 0.010).
   - T2: 14 of 17 in 07-19 h, p 0.006 (archive 15 of 17, p 0.001).
   - T3: r living 0.275 (32 cohorts) vs deceased 0.332 (11), p 0.176 (archive p 0.214).
+  - Rerun on the relearned anchors (2026-10-29): T1 R 0.816, p 0.0011 (PASS); T2 unchanged; T3 deceased r 0.469,
+    p 0.068 (still not supported; the move comes from one cohort, `ia_spleen` deceased). See "M3 rerun of the
+    anchor-dependent groups" below.
   - Anchor sets equal legacy in all 50 cohorts. Reported n counts every donor of the table; legacy counted donors with at
     least one anchor compartment (25 of 50 differ). Windows README, Deviations.
 - Window check (GTEx 08-18 h vs others) at 500 bootstraps: observed / predicted 1.37 [1.05, 1.80] (archive [1.05, 1.80]).
@@ -1770,3 +1773,24 @@ Outputs: `exploratory/A154_gate_calibration/output/a162/` (`summary.csv`, `targe
     couplings are not.
   - Contrasts at a common host remain calibrated (A154 V154.2), and ranks are unaffected by a common multiplicative
     factor.
+
+## M3 rerun of the anchor-dependent groups on the relearned anchors (2026-10-29/30): no registered verdict changes
+
+Groups: figure_5/cancer, figure_2/gene_rhythms, figure_1/windows, figure_5/lung_breaks, extended_data/gate (all exit
+ok, `logs/jobs.tsv`). Old outputs: `$SCCC_DATA/m3_snapshot_backup/2026-10-29/`; full comparison
+`results/logs/m3_rerun_2026-10-29_compare.md` (git-ignored). Figure 4 waits for A153.
+- **Verdicts:** none changed. No file is missing or added. All 34 gates keep pass/fail.
+- **Cancer:** cited readouts (A83-A87, A97) are byte-identical; other values move at bootstrap-noise level (≤ 1e-4).
+  The cancer anchors were already equal to the frozen table.
+- **Moves of cited numbers (verified against the files):**
+  - R25 (`windows/internal_time_tests.csv`): T1 R 0.804 → 0.816, p 0.0014 → 0.0011 (PASS); T3 p 0.176 → 0.068, still
+    not supported.
+  - A31b pooled followers (`gene_rhythms/atlas_primary.csv`): R 0.436 → 0.438, null q95 0.430 → 0.418, p_sign 0.745
+    → 0.824; primary still fails.
+  - Gate (`gate/gate_power_gates.csv`): organ_colon acrophase p 0.006 → 0.043 (still passes); heart clock share
+    0.535 → 0.425.
+  - Post hoc p_R crossings of 0.05 in `atlas_peratlas.csv`: heart LV v3 followers 0.039 → 0.059, adipose v3 non-frame
+    0.059 → 0.039. Colon per-atlas R_err moves strongly (transverse 0.226 → 0.047), because the colon anchors changed
+    (3 anchors, median clock UMI 89): colon R is not quoted.
+  - A18 thinning (`lung_breaks/a18_thinning.csv`): dcm_healthy endothelial p_thinned 0.025 → 0.0498.
+- The group READMEs are updated to the new numbers.
