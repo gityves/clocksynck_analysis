@@ -1,0 +1,12 @@
+n patients 26 in paper not in cells: set() in cells not in paper: set()
+ER paper vs GEO disagreements: []
+HER2/ER label disagreements paper vs metadata subtype:
+           paper_ER_raw paper_subtype_IHC GEO_clinical_subtype metadata_subtype
+orig.ident                                                                     
+CID3586       100% 2-3+         HER2+/ER+            HER2+/ER+            HER2+
+CID3963          30% 1+               ER+                  ER+             TNBC
+CID4066          70% 3+         HER2+/ER+            HER2+/ER+            HER2+
+final_ER
+ER+    14
+ER-    12
+dtype: int64

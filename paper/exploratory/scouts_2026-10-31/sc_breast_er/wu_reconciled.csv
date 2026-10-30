@@ -1,0 +1,27 @@
+orig.ident,paper_ER_raw,paper_PR,paper_HER2_IHC,paper_HER2_ISH,paper_subtype_IHC,treatment,cancer_type,ER_paper,GEO_clinical_subtype,metadata_subtype,ER_GEO,final_label,final_ER,source,Cancer Epithelial,CAFs,Endothelial,PVL,Normal Epithelial
+CID3586,100% 2-3+,100% 2-3+,3+,Amplified (6.8),HER2+/ER+,Naïve,IDC,ER+,HER2+/ER+,HER2+,ER+,HER2+/ER+,ER+,Wu 2021 Suppl Table 1 (Subtype by IHC),0,185,157,21,698
+CID3838,0,0,3+,Amplified (8.91),HER2+,Naïve,IDC,ER-,HER2+,HER2+,ER-,HER2+,ER-,Wu 2021 Suppl Table 1 (Subtype by IHC),0,203,99,158,0
+CID3921,0,0,3+,Amplified (10.46),HER2+,Naïve,IDC,ER-,HER2+,HER2+,ER-,HER2+,ER-,Wu 2021 Suppl Table 1 (Subtype by IHC),441,106,210,72,0
+CID3941,90% 3+,90% 3+,2+,Non-Amplified,ER+,Naïve,IDC,ER+,ER+,ER+,ER+,ER+,ER+,Wu 2021 Suppl Table 1 (Subtype by IHC),196,8,44,25,0
+CID3946,0,0,0,Non-Amplified,TNBC,Naïve,IDC,ER-,TNBC,TNBC,ER-,TNBC,ER-,Wu 2021 Suppl Table 1 (Subtype by IHC),0,167,110,248,0
+CID3948,90% 2-3+,80% 2+,0,Non-Amplified,ER+,Naïve,IDC,ER+,ER+,ER+,ER+,ER+,ER+,Wu 2021 Suppl Table 1 (Subtype by IHC),261,15,85,62,0
+CID3963,30% 1+,0,0,Non-Amplified,ER+,Treated,IDC,ER+,ER+,TNBC,ER+,ER+,ER+,Wu 2021 Suppl Table 1 (Subtype by IHC),222,23,102,28,1
+CID4040,95% 3+,95% 2-3+,0,Non-Amplified,ER+,Naïve,IDC,ER+,ER+,ER+,ER+,ER+,ER+,Wu 2021 Suppl Table 1 (Subtype by IHC),0,129,218,443,0
+CID4066,70% 3+,0,3+,Amplified (7.7),HER2+/ER+,Treated,IDC,ER+,HER2+/ER+,HER2+,ER+,HER2+/ER+,ER+,Wu 2021 Suppl Table 1 (Subtype by IHC),521,923,535,630,270
+CID4067,100% 3+,95% 3+,1+,Non-Amplified,ER+,Naïve,IDC,ER+,ER+,ER+,ER+,ER+,ER+,Wu 2021 Suppl Table 1 (Subtype by IHC),2352,135,186,83,0
+CID4290A,90% 3+,30% 2+,1+,Non-Amplified,ER+,Naïve,IDC,ER+,ER+,ER+,ER+,ER+,ER+,Wu 2021 Suppl Table 1 (Subtype by IHC),4053,280,298,140,18
+CID4398,95% 2+,80% 2+,2+,Non-Amplified,ER+,Treated,IDC,ER+,ER+,ER+,ER+,ER+,ER+,Wu 2021 Suppl Table 1 (Subtype by IHC),0,178,101,87,0
+CID44041,0,0,0,Non-Amplified,TNBC,Naïve,IDC,ER-,TNBC,TNBC,ER-,TNBC,ER-,Wu 2021 Suppl Table 1 (Subtype by IHC),0,681,148,128,151
+CID4461,95% 3+,~5% 3+,2+,Non-Amplified,ER+,Naïve,IDC,ER+,ER+,ER+,ER+,ER+,ER+,Wu 2021 Suppl Table 1 (Subtype by IHC),207,41,182,48,0
+CID4463,100% 2-3+,80% 2-3+,0,Non-Amplified,ER+,Naïve,IDC,ER+,ER+,ER+,ER+,ER+,ER+,Wu 2021 Suppl Table 1 (Subtype by IHC),659,25,79,31,26
+CID4465,0,0,0,Non-Amplified,TNBC,Naïve,IDC,ER-,TNBC,TNBC,ER-,TNBC,ER-,Wu 2021 Suppl Table 1 (Subtype by IHC),124,379,294,317,10
+CID4471,100% 3+,100% 3+,0,Non-Amplified,ER+,Naïve,ILC,ER+,ER+,ER+,ER+,ER+,ER+,Wu 2021 Suppl Table 1 (Subtype by IHC),212,1292,2778,1285,1966
+CID4495,0,0,0,Non-Amplified,TNBC,Naïve,IDC,ER-,TNBC,TNBC,ER-,TNBC,ER-,Wu 2021 Suppl Table 1 (Subtype by IHC),1184,232,184,191,0
+CID44971,0,0,0,Non-Amplified,TNBC,Naïve,IDC,ER-,TNBC,TNBC,ER-,TNBC,ER-,Wu 2021 Suppl Table 1 (Subtype by IHC),894,582,217,91,735
+CID44991,0,0,0,Non-Amplified,TNBC,Naïve,IDC,ER-,TNBC,TNBC,ER-,TNBC,ER-,Wu 2021 Suppl Table 1 (Subtype by IHC),4018,245,41,46,24
+CID4513,0,0,0,Non-Amplified,TNBC,Treated,MBC,ER-,TNBC,TNBC,ER-,TNBC,ER-,Wu 2021 Suppl Table 1 (Subtype by IHC),1058,13,162,82,0
+CID4515,0,0,0,Non-Amplified,TNBC,Naïve,IDC,ER-,TNBC,TNBC,ER-,TNBC,ER-,Wu 2021 Suppl Table 1 (Subtype by IHC),2169,187,122,123,36
+CID45171,0,0,3+,Amplified,HER2+,Naïve,IDC,ER-,HER2+,HER2+,ER-,HER2+,ER-,Wu 2021 Suppl Table 1 (Subtype by IHC),813,32,15,13,0
+CID4523,0,0,1+,Non-Amplified,TNBC,Treated,MBC,ER-,TNBC,TNBC,ER-,TNBC,ER-,Wu 2021 Suppl Table 1 (Subtype by IHC),1167,42,3,10,0
+CID4530N,95% 2+,95% 3+,1+,Non-Amplified,ER+,Naïve,IDC,ER+,ER+,ER+,ER+,ER+,ER+,Wu 2021 Suppl Table 1 (Subtype by IHC),1715,368,1016,469,398
+CID4535,95% 3+,70% 2+,2+,Non-Amplified,ER+,Naïve,ILC,ER+,ER+,ER+,ER+,ER+,ER+,Wu 2021 Suppl Table 1 (Subtype by IHC),2223,102,219,592,22
