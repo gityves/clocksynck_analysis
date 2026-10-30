@@ -2529,3 +2529,62 @@ power or contrast output was read): the hepatocyte is a third primary.**
 
 All three exceed 0.2; as registered, no bound is applied and each verdict carries its MDE. A null is "not detected
 (MDE …)". <!-- src: paper/exploratory/A167_liver_fibrosis/output/power.csv -->
+
+## A168 (2026-10-30, written after a metadata-only scout (`exploratory/scouts_2026-10-30/endocrine/SCOUT.md`: sample tables, probe existence; no clock statistic or clock-gene value) and before any clock readout of these series; PI approval 2026-10-30): does blocking oestrogen signalling reduce breast-tumour clock coherence? Neoadjuvant aromatase-inhibitor pairs
+
+**Why:** ER-negative tumours have less coherent clocks than ER-positive ones (H127.2; replicated in METABRIC, H166.1),
+also within PAM50 × proliferation (A127 post hoc; H166.2, Holm 0.047). Both are between-tumour comparisons. If ER
+signalling sustains the tumour clock, two weeks of oestrogen deprivation should reduce coherence in the same tumours.
+This turns the association into an intervention.
+**Data** (`$SCCC_DATA/scout_endocrine/`, PROVENANCE.md; GEO series matrices as deposited; all tumours ER+):
+- **POETIC, GSE105777** (Illumina HT-12 v4, RSN-normalised): 157 patients with a baseline core biopsy (B) and a
+  surgical sample after 2 weeks of an aromatase inhibitor (S); 56 untreated patients with a diagnostic core (D) and a
+  surgical sample (S). Pairing from the sample titles.
+- **GSE20181** (Edinburgh letrozole, Affymetrix U133A): 58 patients with pre and 10-14-day samples (A, B); day-90 (C)
+  samples are descriptive only (submitted 3.5 years later: batch). Contains GSE5462 (never counted twice).
+- **GSE87411** (Z1031B, Agilent two-colour log ratios to a universal reference; baseline vs 2-4 weeks), descriptive.
+
+**Definitions (frozen from A127 / A166):**
+- Expression on the log2 scale (log2-transformed if the deposited values are linear, i.e. maximum > 100); probes
+  averaged per gene symbol; Y = ln 2 × log2 expression of the 14 A127 clock genes. GSE20181 has no CIART probe and uses
+  the other 13 (its pseudo sets have 13 genes).
+- Coherence = A87 `decompose.components` gene coherence over a group of samples, genes centred within the group
+  (`a127_lib.coh`). Groups: each arm × time point.
+- Proliferation = mean z of Hallmark G2M (clock genes removed); purity proxy = the A97 11-gene mean z; z-scored within
+  series.
+
+**Tests (one-sided for a loss, 2,000 permutations each, Holm over H168.1-3):**
+- **H168.1 (primary, POETIC difference-in-differences):** T = [coh(AI, S) − coh(AI, B)] − [coh(untreated, S) −
+  coh(untreated, D)] < 0. Null: patients reassigned between the two arms at random (sizes 157 / 56 kept), each
+  patient keeping both samples. This removes the core-biopsy-vs-surgery sampling effect, which is shared by both arms.
+- **H168.2 (POETIC, treated change):** coh(AI, S) − coh(AI, B) < 0. Null: the two time labels swapped at random within
+  each treated patient. A pass without H168.1 is read as a sampling effect, not a treatment effect.
+- **H168.3 (replication, GSE20181):** coh(day 10-14) − coh(pre) < 0 over the 58 pairs; time labels swapped within
+  patient. No untreated arm: supports H168.1 in direction only.
+
+**Specificity companion (same statistic, observed labels):** 200 pseudo-clock sets per series matched on mean and SD
+(`a166_lib.pseudo_sets`; pool excludes clock-like, G2M, purity-proxy genes and, new here, the Hallmark oestrogen
+response early and late genes, which the treatment moves directly). A pass is "clock-specific" only if T is below the
+5th percentile of the pseudo T; otherwise "coherence loss not specific to the clock".
+**Power, before the tests:** MDE = 2.49 × SD of each permutation null (one-sided 0.05, 80 %), reported next to the
+METABRIC ER effect beyond its null mean (about −0.165) and the SCAN-B one (about −0.315).
+**Sensitivities (descriptive):**
+- without PER1 and without the immediate-early-responsive PER1, NR1D1 pair (sampling-sensitive genes);
+- Y residualised on proliferation and purity proxy within arm × time point (proliferation falls on AI, and in A127
+  higher proliferation means lower coherence, so the proliferation route predicts a coherence *rise*);
+- POETIC within thirds of the change in proliferation score (a response proxy: no Ki67 in GEO);
+- GSE20181 within responders and non-responders (title labels), and pre vs day 90;
+- GSE87411 baseline vs 2-4 weeks (all pairs, with and without the "re-analyzed" baselines).
+- Change in proliferation, purity proxy and the oestrogen-response score per arm (to show the treatment acted).
+
+**Reading:**
+- H168.1 pass, clock-specific → oestrogen deprivation reduces tumour clock coherence beyond the sampling effect: ER
+  signalling sustains the clock in ER+ tumours, the interventional counterpart of the ER− loss. With H168.3, replicated
+  across platform and drug.
+- H168.1 fail at a powered design → the ER− loss is not reproduced by short-term ER blockade: it is a stable property
+  of the tumour type (or needs longer than 2 weeks), bounded at the MDE.
+- H168.2 pass, H168.1 fail → a sampling effect.
+- Not specific → "general transcriptional decoherence under treatment".
+
+**Not registered here:** outcome or response prediction (PI).
+**Code:** `paper/exploratory/A168_endocrine/`.
