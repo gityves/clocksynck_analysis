@@ -2291,3 +2291,61 @@ word.
 - Not powered → the claim stays at its MDE.
 
 **Code:** `paper/exploratory/A164_gtex_metabolic_matched/` (model: `results/figure_3/scripts/gtex_cues/compute_metabolic.py`).
+
+## A165 (2026-10-30, written after A153 was scored and before any phase, amplitude or noise estimate of its contrasts was looked at; only their bootstrap SEs were read, to judge power; PI request 2026-10-30): do diseases shift, damp or blur the clocks of normal compartments? Phase, amplitude and noise readouts of the A153 contrasts
+
+**Why:** A17 and A153 tested only the coupling c. c mixes the amplitude of the host-locked part (z2) with the
+compartment's own noise around the host (ψ), and it is blind to phase. A153 found no compartment able to detect
+|Δc| ≥ 0.2. Three disease mechanisms are separable in the same fits:
+- **Internal desynchrony:** a compartment no longer on the same internal time as the body's other clocks. This
+  extends the usual peripheral-clock meaning to cell types. Readout: the phase offset of the compartment against the
+  host, arg z, case minus control (`offset_diff_h`).
+- **Damping:** a smaller host-locked amplitude. Readout: log(z2_case / z2_control).
+- **Loss of clock structure:** more clock-gene variance not locked to the host. Readout: log(ψ_case / ψ_control).
+  Expected in malignant cells; in normal cells of diseased tissue it is the less expected and more interesting case.
+
+The bootstrap SEs in the A153 output (fibroblast_stromal and endothelial rows, read before this note) give median
+approximate MDEs of about 2.2 h for phase, about 2-fold for amplitude and about 3-fold for ψ. Phase is the
+best-powered readout.
+**Data and code:** the 13 estimable A153 targets, at the same tables, anchors, seeds, blocks, gates and
+`anchor_readout="loo"`. The contrast is rerun with 1,000 permutations and 200 bootstrap draws (A153 counts). The
+permutation p of the log z2 and log ψ ratios is computed on the same permutation draws as d* and the offset.
+clocksync's `Dataset.contrast` gains the columns `p_log_z2` and `p_log_psi` for this; existing columns are unchanged.
+Brain targets are out (as in A153).
+**Primaries:** every estimable compartment of the fibroblast_stromal and endothelial families. These are the two
+families eligible in either scope of the A153 family screen and clock-specific in A150 D150.1. Unlike A153, no MDE
+bound is applied: no disease-effect size can be anticipated (PI), so the MDE is reported next to every row instead.
+Per readout, a row is excluded when:
+- **phase and z2:** either arm is at the boundary with z2 truncated, or z2 ≤ 0 in either arm;
+- **ψ:** either arm is at the ψ floor.
+
+Other families are reported descriptively with the same readouts, without tests.
+**Tests:**
+- **H165.1 (per compartment, effect).** For each primary row and each of the three readouts, take the two-sided
+  permutation p. Holm runs over all primary rows × readouts together. An effect is a Holm p < 0.05.
+  - **Specificity qualifier** (reported, not a gate), on the same permutations: the readout of the compartment minus
+    the mean of the stromal-vascular companion set (leave-self-out, as in A153).
+  - A phase effect also requires the shift not to be shared by the companion set, because offsets are already
+    relative to the host.
+- **H165.2 (pooled, per family, directional).** These are the two mechanisms with a predicted sign:
+  - damping: pooled log z2 ratio < 0;
+  - loss of clock structure: pooled log ψ ratio > 0.
+
+  Per target, take the inverse-variance mean of its primary rows in the family, with SE equal to their mean bootstrap
+  SE. Pool over targets with `meta(method="hk")`, one-sided at 0.05, Holm over the 4 tests (2 families × 2 readouts).
+  This needs ≥ 3 targets per family, otherwise it is not estimable. Targets sharing a control arm are not independent;
+  this is stated and not adjusted, as in A153.
+- **Phase is not pooled.** Its sign is not predicted, and shifts of opposite sign across diseases would cancel.
+**Power:** approximate MDE = 2.80 × the bootstrap SE per row and readout (80 %, two-sided 0.05), reported in hours,
+fold-change in amplitude (exp(MDE/2)) and fold-change in ψ. A non-significant row is "not detected (MDE …)", never
+"unchanged". No equivalence test is run: no margin is pre-specified for these readouts.
+**Descriptive:**
+- the gate clock share per arm (shared non-clock structure), case minus control, per target;
+- the host spread ratio log(V_case / V_control);
+- all readouts for the non-primary families.
+**Reading:**
+- An H165.1 phase effect that the companion does not share is internal desynchrony of that compartment in disease.
+- An H165.2 ψ effect is a general loss of clock structure in normal stromal-vascular cells of diseased tissue.
+- Nothing detected: the disease clocks of these compartments are not shown to shift by more than about 1-2 h, damp by
+  more than about 2-fold, or blur by more than about 3-fold (per-row MDEs).
+**Code:** `paper/exploratory/A165_disease_readouts/`; clocksync `Dataset.contrast` (p_log_z2, p_log_psi).
