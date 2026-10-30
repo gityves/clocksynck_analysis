@@ -6,7 +6,7 @@ Stage `contrast`: per-arm host gate, contrast with every readout (d*, phase offs
 companion (each readout minus the mean of all other estimable compartments, leave-self-out) on the same permutations,
 for the primary design D2 and the secondaries (D1, leave-one-study-out). Labels are permuted within study.
 
-    python compute_a167.py --stage power|contrast [--subsample N] [--jobs 4]
+    python compute_a167.py --stage power|contrast [--only COMPARTMENT ...] [--subsample N] [--jobs 4]
 Writes output/: power.csv (power stage); contrast_<analysis>.csv, gates.csv, analyses.csv (contrast stage).
 """
 from __future__ import annotations
@@ -32,7 +32,7 @@ import clocksync as cs  # noqa: E402
 OUT = HERE.parent / "output"
 SEED = zlib.crc32(b"A167") % (2 ** 31)
 ANCHORS = ["liver:endothelial", "liver:stellate", "liver:macrophage"]
-PRIMARIES = ["liver:stellate", "liver:endothelial"]
+PRIMARIES = ["liver:stellate", "liver:endothelial", "liver:hepatocyte"]  # hepatocyte: amendment 1
 STUDIES = ("GSE202379", "GSE289173", "GSE244832", "GSE256398")
 MDE_REPS, MDE_PERM, POWER = 100, 200, 0.8
 
@@ -117,6 +117,7 @@ def contrast_one(name, pb, donors, lab, run):
 def main():
     ap = cli.parser(__doc__)
     ap.add_argument("--stage", choices=("power", "contrast"), required=True)
+    ap.add_argument("--only", nargs="+", default=None, help="power stage: these primaries (merged into power.csv)")
     args = ap.parse_args()
     run = cli.setup(args)
     out = OUT / "subsample" if run["quick"] else OUT
@@ -124,11 +125,15 @@ def main():
     pb, donors, des = designs(args.subsample, args.seed)
     if args.stage == "power":
         n_rep, n_perm = (10, 50) if run["quick"] else (MDE_REPS, MDE_PERM)
-        say(f"power: {PRIMARIES}, D2 {des['d2'].value_counts().to_dict()}, reps {n_rep}, perms {n_perm}")
-        res = Parallel(n_jobs=min(args.jobs, len(PRIMARIES)))(
-            delayed(mde_one)(pb, donors, des["d2"], k, n_rep, n_perm) for k in PRIMARIES)
-        pd.DataFrame(res).to_csv(out / "power.csv", index=False)
-        say(pd.DataFrame(res).drop(columns="curve").to_string(index=False))
+        ks = args.only or PRIMARIES
+        say(f"power: {ks}, D2 {des['d2'].value_counts().to_dict()}, reps {n_rep}, perms {n_perm}")
+        res = pd.DataFrame(Parallel(n_jobs=min(args.jobs, len(ks)))(
+            delayed(mde_one)(pb, donors, des["d2"], k, n_rep, n_perm) for k in ks))
+        f = out / "power.csv"
+        if f.exists():
+            res = pd.concat([pd.read_csv(f).query("compartment not in @ks"), res], ignore_index=True)
+        res.to_csv(f, index=False)
+        say(res.drop(columns="curve").to_string(index=False))
         return
     say(f"contrast: {list(des)}, n_perm {run['n_perm']}, n_boot {run['n_boot']}, jobs {args.jobs}")
     res = Parallel(n_jobs=args.jobs, return_as="generator_unordered")(

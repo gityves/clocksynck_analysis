@@ -2503,3 +2503,17 @@ row is "not detected (MDE …)", never "unchanged".
 - Nothing detected: stated down to the MDEs.
 
 **Code:** `paper/exploratory/A167_liver_fibrosis/`.
+
+**A167 amendment 1 (2026-10-30, PI; written while the power step for stellate / endothelial was running, before any
+power or contrast output was read): the hepatocyte is a third primary.**
+- **Why:** the A153 family screen marks "other" not eligible on 2 compartments from 2 atlases (thin data, not a
+  negative); D150.1 put "other" above the pseudo-clock q95; hepatocytes are the liver clock (A129: hepatocyte Bmal1 KO
+  decouples the liver, d* −0.287).
+- **Even less blind** than the stellate / endothelial rows: A38-A44 targeted hepatocytes (D1 without living donors
+  −0.14, p 0.066; D2 with living donors hepatocyte minus cholangiocyte −0.29, p 0.007).
+- **Changes:** primaries liver:stellate, liver:endothelial, liver:hepatocyte. H167.1 Holm over 3; H167.2 Holm over 9.
+  The hepatocyte gets the same power step (MDE on d*) and the same liver-wide companion. Anchors unchanged (the
+  hepatocyte is not an anchor).
+- **Caveat stated in the reading:** hepatocytes dominate the nuclei (median about 2,000 per patient vs 166 stellate),
+  so ambient hepatocyte RNA may enter the other pseudobulks (D150.2 flags the epithelial family); a hepatocyte effect
+  shared by the liver-wide companion is read as liver-wide.
