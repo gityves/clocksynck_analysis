@@ -1966,3 +1966,28 @@ before the observed statistics (`power.csv`, 20:21:04; `a166_tests.csv`, 20:21:2
   - Its independence from PAM50 subtype and proliferation also replicates, but only just: Holm 0.047. It is carried by
     Basal, Her2 and Normal, with small ER+ Basal arms, and with ER_STATUS labels it is not detected (p 0.24).
   - The proliferation loss (A97, H127.1) does not replicate at this power; it stays a SCAN-B and TCGA result.
+
+## A19 rerun (2026-10-30, roadmap 3.5): age effects on the relearned anchors — H19.1 not supported down to an MDE of 0.20 per decade; H19.2 uninformative
+Run as noted in `registered_experiments.md` (A19 note): `compute_age.py --jobs 4`, permutation null, unchanged code.
+MDE = 2.80 × pooled SE (80 %, two-sided 0.05), per decade.
+- **H19.1 own noise (gamma), all compartments:** −0.029 per decade (SE 0.072, p 0.682; 10 studies, 83 compartments).
+  MDE 0.201. 2026-10-26 run: −0.035, SE 0.072, p 0.630, 82 compartments. Not supported; no age effect is stated only
+  down to |gamma| 0.20 per decade. Without brain: −0.009 (SE 0.084, p 0.918), MDE 0.235.
+- **H19.2 immune − stromal-vascular locked amplitude:** +0.000 per decade (SE 0.041, p 0.994; 8 studies, 34
+  compartments), MDE 0.114. **Uninformative** by the note (immune arm not eligible under the family rule); not read as
+  "immune clocks do not age differently".
+- **Eligible-family secondaries (not tests):**
+
+  | family | readout | studies / compartments | estimate | SE | p | MDE |
+  |---|---|---|---|---|---|---|
+  | fibroblast_stromal | gamma | 4 / 5 | −0.251 | 0.131 | 0.056 | 0.368 |
+  | fibroblast_stromal | locked_amp | 4 / 5 | −0.018 | 0.037 | 0.638 | 0.105 |
+  | fibroblast_stromal | drift_h | 4 / 5 | −0.060 | 0.152 | 0.695 | 0.426 |
+  | endothelial (rowcheck3) | gamma | 8 / 9 | −0.045 | 0.134 | 0.736 | 0.376 |
+  | endothelial (rowcheck3) | locked_amp | 8 / 10 | +0.007 | 0.026 | 0.788 | 0.073 |
+  | endothelial (rowcheck3) | drift_h | 8 / 10 | +0.059 | 0.091 | 0.518 | 0.255 |
+
+- **Neuron own-noise secondary:** −0.116 (SE 0.053, p 0.031; 5 studies, 22 compartments), as on 2026-10-26.
+- **Reading:** the relearned anchors change no A19 verdict. Fibroblast/stromal own noise falls nominally with age
+  (p 0.056) in the same direction as neurons; neither is a test.
+<!-- src: paper/results/figure_4/output/resilience/a19_age_pooled.csv (2026-10-30 20:36); comparison a19_age_pooled_2026-10-26.csv -->
