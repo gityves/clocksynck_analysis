@@ -2768,3 +2768,35 @@ samples are metastatic), THYM, UCS, UVM. READ was not among the expected project
 H172.1. MDE (80 %): H172.1 0.087, carcinomas only 0.122; per project 0.175 (LGG) to 0.370 (GBM): CESC 0.259, ESCA 0.278,
 HNSC 0.287, LUSC 0.317, PAAD 0.282, PCPG 0.340, READ 0.318, SARC 0.330, STAD 0.357, TGCT 0.286. For scale, the seen TCGA
 effects are −0.51 to +0.15 (`A171_luad_lihc/output/tcga_all.csv`); the breast / LUAD effects are −0.17 to −0.36.
+
+## A173 (2026-10-31, written after A172 was scored and the gastric / lung-histology scout (metadata only), before any expression value of the series below is read; GSE41271 adenocarcinomas were read in A171 (descriptive, −0.101), its squamous tumours were not; PI request 2026-10-31 "work on the different cancer types"): does the proliferation clock-coherence loss replicate in gastric cancer, and does it follow histology in lung?
+
+**Why:** A172 (unseen TCGA) failed pan-cancer, with STAD the strongest project (−0.305, 2nd pseudo percentile, Holm
+0.18) and the carcinomas leaning negative; LUSC was positive (+0.21) while LUAD is the strongest seen loss (−0.36) and
+replicated in A171. Two follow-ups: (A) is the gastric loss real in independent cohorts; (B) is the lung loss specific to
+adenocarcinoma.
+**Data (scout `scouts_2026-10-31/gastric_lung_histology/`; parsed with the A171 parser, probes averaged per symbol):**
+- Gastric: GSE62254 (ACRG, 300 tumours, GPL570; deposited values are log10-like (0.57-4.41) and are multiplied by log2 10),
+  GSE84437 (Yonsei, 483, GPL6947, linear → log2; NaN cells as in A171 `finish`), GSE15459 (Singapore, 200 arrays, GPL570,
+  linear → log2; all 200 arrays, the authors' 8 exclusions are not identifiable in GEO).
+- Lung: adenocarcinoma and squamous tumours of GSE37745 (106 / 66, GPL570), GSE41271 (183 / 80, GPL6884), GSE30219 (85 /
+  61, GPL570; ADC / SQC labels; other histologies and normals dropped).
+**Scores:** G2M and purity proxy (A171 definitions) z-scored over the tumours of the analysis (gastric: series; lung: the
+ADC + SQC tumours of the series).
+**Tests (one-sided, 2,000 permutations):**
+- **H173.1-3 (gastric):** the H171 statistic (purity-proxy tertile strata ≥ 30, coh(high proliferation tertile) − coh(low);
+  proliferation permuted within stratum) < 0 in GSE62254, GSE84437, GSE15459; Holm over the three.
+- **H173.4 (lung histology):** D = mean over the three lung series of (T_ADC − T_SQC) < 0, where T_h is the H171 statistic
+  within histology h on purity-proxy halves (median split within histology; tertile strata would leave squamous strata
+  below 30). Null: proliferation permuted within histology × half; D from the same permutation. Single test (α 0.05).
+**Specificity companion:** 200 pseudo-clock sets per series (A168 construction; pool without clock-like, G2M, purity or
+clock genes); for H173.4 the same sets give pseudo D. "Clock-specific" only if the observed value is below the 5th pseudo
+percentile; evaluated for passing tests.
+**Power, before the tests:** MDE = 2.49 × null SD per test.
+**Descriptive:** T_ADC and T_SQC per lung series and their means; gastric GSE26253 (FFPE DASL, 432, PER3 missing); each
+test without PER1 and NR1D1; gastric pooled mean of H173.1-3.
+**Reading:**
+- H173.1-3 pass (≥ 2 of 3) → the gastric loss replicates: a third cancer type after breast and lung adenocarcinoma.
+- H173.4 passes → in lung the loss is a property of adenocarcinoma, not of the organ.
+- Failures at a powered design bound the claim to breast and lung adenocarcinoma.
+**Code:** `paper/exploratory/A173_gastric_lung_histology/`.
