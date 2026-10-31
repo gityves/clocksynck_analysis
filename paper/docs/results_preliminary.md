@@ -2167,3 +2167,28 @@ recount3 TCGA, 12 unseen projects with ≥ 150 primary tumours; H166.3 / H171 st
   individually under-powered; "carcinomas only" was a registered descriptive row, not a test. Any histology mixed (STAD,
   ESCA include adeno and squamous).
 <!-- src: paper/exploratory/A172_tcga_unseen/output/{per_project,pooled,power,eligibility}.csv -->
+
+## A173 (scored 2026-10-31): the proliferation clock-coherence loss replicates in gastric cancer (H173.1, H173.3 pass, clock-specific); the lung adenocarcinoma vs squamous difference is in the predicted direction but fails (H173.4 p 0.058)
+One-sided, 2,000 permutations; 200 pseudo-clock sets per series.
+
+| test | tumours | stat | p | Holm | MDE | pseudo percentile (q05) | verdict |
+|---|---|---|---|---|---|---|---|
+| H173.1 gastric GSE62254 (ACRG) | 300 | **−0.187** | 0.016 | **0.032** | 0.224 | 5.0 (−0.179) | pass, clock-specific (at the line) |
+| H173.2 gastric GSE84437 | 483 | −0.134 | 0.071 | 0.071 | 0.229 | 48.0 (−0.398) | fail |
+| H173.3 gastric GSE15459 | 200 | **−0.533** | 0.0005 | **0.0015** | 0.332 | 0.0 (−0.218) | pass, clock-specific |
+| H173.4 lung mean D = T_ADC − T_SQC | 581 | −0.230 | 0.058 | — | 0.355 | 6.0 | fail |
+
+- **Gastric:** two of three cohorts pass (≥ 2 of 3 was the registered replication reading); the mean over the three is
+  −0.285 (p 0.0005, MDE 0.153, 0th pseudo percentile; descriptive). GSE84437 fails but becomes −0.267 (p 0.010) without
+  PER1 and NR1D1; GSE62254 −0.194 (p 0.025) and GSE15459 −0.475 (p 0.001) without them. The FFPE DASL series GSE26253 (432,
+  no PER3) goes the other way (+0.184, p 0.96).
+- **Lung histology:** D is negative in all three series (GSE37745 −0.354, GSE30219 −0.280, GSE41271 −0.055), each
+  under-powered (MDE 0.60-0.63). Adenocarcinomas lose coherence with proliferation in every series (mean T_ADC −0.303,
+  p 0.0025, 0th pseudo percentile; GSE37745 −0.415, GSE30219 −0.352, GSE41271 −0.143), squamous tumours barely (mean
+  T_SQC −0.073, p 0.24). TCGA (seen): LUAD −0.361, LUSC +0.212.
+- **Reading:** gastric adenocarcinoma is the third cancer type, after breast and lung adenocarcinoma, with an
+  independently replicated and clock-specific proliferation coherence loss (A172 STAD −0.305 was the lead). The lung
+  histology contrast agrees with TCGA in direction but is not established (p 0.058 at MDE 0.355; the squamous arms have
+  61-80 tumours). Caveats: GSE62254 sits exactly at the 5 % pseudo line; GSE15459 includes the 8 arrays the authors
+  excluded; GSE62254 deposited log10 values (converted); GSE26253 (FFPE, DASL, 13 genes) disagrees.
+<!-- src: paper/exploratory/A173_gastric_lung_histology/output/{tests,descriptive,power}.csv -->

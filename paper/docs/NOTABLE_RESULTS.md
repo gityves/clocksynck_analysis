@@ -6,6 +6,17 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
 
 ## 2026-10-31
 
+- **A173: the proliferation clock-coherence loss replicates in gastric cancer (pre-specified; H173.1 −0.187 Holm 0.032,
+  H173.3 −0.533 Holm 0.0015, both clock-specific; H173.2 −0.134 fails).** Lung adenocarcinoma minus squamous −0.230
+  (p 0.058, MDE 0.355): adenocarcinomas lose coherence in all three lung series (mean −0.303), squamous tumours do not
+  (−0.073).
+  - *Why notable:* third cancer type with a replicated, clock-specific loss (breast, lung adenocarcinoma, gastric). All
+    three are adenocarcinomas; squamous lung and A172's non-epithelial tumours do not show it.
+  - *Caveats:* GSE62254 is at the 5 % pseudo line; the FFPE DASL cohort GSE26253 is +0.18; H173.4 is not significant.
+  - *Follow-up I would suggest:* a registered "adenocarcinoma vs squamous" test where both are large (TCGA ESCA/HNSC/CESC
+    are seen; oesophageal GEO cohorts are too small), or single-cell malignant-cell pseudobulks in gastric cancer.
+  - *Source:* `A173_gastric_lung_histology/output/tests.csv`, `descriptive.csv`.
+
 - **A172: the proliferation clock-coherence loss is not pan-cancer (pre-specified; H172.1 −0.032, p 0.18, MDE 0.087,
   12 unseen TCGA projects).** No project passes Holm. Descriptively the six carcinomas lean negative (−0.114, p 0.011,
   3rd pseudo percentile; STAD −0.305), while LUSC (+0.21) and LGG (+0.20) go the other way.
