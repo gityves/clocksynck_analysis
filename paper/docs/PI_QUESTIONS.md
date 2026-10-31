@@ -347,3 +347,21 @@ intervals (ranks, Δc, d*), and a correction is developed (option b): registered
   d*, phase, z2, psi), with TAURUS as the not-blind secondary; (ii) register the TAURUS readouts as an explicitly
   non-blind secondary only; (iii) drop 6.6, since gut stroma looks resilient to inflammation (A45).
 - My recommendation is (i).
+
+## Q20 (2026-10-31): proliferation coherence loss in gastric malignant cells — worth our own malignant-cell calling?
+- **Context:** the proliferation clock-coherence loss is now replicated in breast (A127, A166), lung adenocarcinoma
+  (A171) and gastric cancer (A173, two of three cohorts, clock-specific). It is not pan-cancer (A172 fails, power OK).
+  In breast single cells the ER− loss sits in the malignant cells (A170, p 0.044, not clock-specific).
+- **Gastric single cell (scout `scouts_2026-10-31/sc_gastric/`):** no public set has malignant-cell labels together
+  with raw counts. The candidates are GSE270680 (25 tumour donors), GSE183904 (26) and GSE150290 (23). All three are
+  public 10x / csv matrices, about 2.8 GB in total, and none has cell annotations. A test would need our own epithelial
+  annotation and CNV-based malignant calling, a methodological choice made before scoring. By analogy with Wu 2021,
+  perhaps 10-20 patients per set would have ≥ 50 malignant cells.
+- **Nothing is paused.**
+- **Options:**
+  - (i) register a pooled three-set gastric single-cell test with a pre-specified CNV caller;
+  - (ii) stop the gastric line at bulk;
+  - (iii) instead, test whether "adenocarcinoma vs squamous" holds where both are large. This would mean the TCGA
+    ESCA / HNSC / CESC rows, which are seen, so only as a secondary.
+- **My recommendation is (ii) for now.** The bulk replication is the paper-relevant result. Single-cell n would be
+  marginal, and the CNV step adds a degree of freedom.
