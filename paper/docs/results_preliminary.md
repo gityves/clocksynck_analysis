@@ -2219,3 +2219,13 @@ Fresh seeds (163), 8 designs × c_anchor {0.6, 0.8} × c_target {0.1, 0.3, 0.6, 
   Post hoc, a narrower claim would hold with all registered criteria met: c_anchor 0.8 and n ≥ 100 or K = 8, except the
   two c_target 0.9 width misses. Any such restriction needs a new registration on fresh seeds (PI decision, Q17).
 <!-- src: paper/exploratory/A163_reliability_correction/output/validate/{summary,cells,anchors}.csv -->
+
+## Erratum (2026-10-31): A166 cited as a replication of the breast proliferation loss
+The "Why" paragraphs of A171 (registered_experiments.md, "where the loss replicated (A127, A166)") and A172 ("breast
+(A127, A166)"), and the first version of Q20, cite A166 as a replication of the proliferation coherence loss. A166
+replicated the ER− loss (H166.1-2); its proliferation test H166.3 failed (−0.057, p 0.148, MDE 0.137 > the SCAN-B
+effect). The breast proliferation loss rests on A97 (TCGA, discovery) and A127 (SCAN-B, pre-specified replication). The
+registrations are left as written; no design or verdict depends on the citation. Separately, the A171 "Why" TCGA values
+(LUAD −0.515, LIHC −0.359) are the unstratified A97 per-cancer values (`figure_5/output/cancer/a97_proliferation_per_cancer.csv`).
+The power-step values (LUAD −0.361, LIHC −0.512) are the stratified H171 statistic. These are two statistics, not a
+transcription error.

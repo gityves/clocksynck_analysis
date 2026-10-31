@@ -357,9 +357,11 @@ Per the registered reading, c stays reported without intervals (ranks, Δc, d*).
 - My recommendation is (i).
 
 ## Q20 (2026-10-31): proliferation coherence loss in gastric malignant cells — worth our own malignant-cell calling?
-- **Context:** the proliferation clock-coherence loss is now replicated in breast (A127, A166), lung adenocarcinoma
+- **Context:** the proliferation clock-coherence loss is now replicated in breast (A97 discovery, A127 replication; A166
+  H166.3 failed, underpowered), lung adenocarcinoma
   (A171) and gastric cancer (A173, two of three cohorts, clock-specific). It is not pan-cancer (A172 fails, power OK).
-  In breast single cells the ER− loss sits in the malignant cells (A170, p 0.044, not clock-specific).
+  In breast single cells, ER− malignant cells are less coherent (A170, p 0.044) but not clock-specifically, so
+  the registered cell-intrinsic reading is not supported.
 - **Gastric single cell (scout `scouts_2026-10-31/sc_gastric/`):** no public set has malignant-cell labels together
   with raw counts. The candidates are GSE270680 (25 tumour donors), GSE183904 (26) and GSE150290 (23). All three are
   public 10x / csv matrices, about 2.8 GB in total, and none has cell annotations. A test would need our own epithelial
