@@ -1,0 +1,6 @@
+platform,n_probes,n_symbols,n_clock,n_clock_total,clock_missing,n_g2m,n_g2m_total,n_purity,n_purity_total,purity_missing
+GPL570,45118,22836,14,14,,192,200,11,11,
+GPL96,21225,14208,13,14,CIART,190,200,11,11,
+GPL6884,28742,19429,14,14,,192,200,11,11,
+GPL6947,29276,19617,14,14,,191,200,11,11,
+GPL8432,24526,18402,13,14,PER3,178,200,11,11,

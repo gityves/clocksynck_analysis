@@ -1,0 +1,197 @@
+series,gsm,title,dead,days to determined death status,histology,tumor stage,performance status corresponding to who criteria,age,gender,adjuvant treatment,recurrence,days to recurrence / to last visit,platform,source,file
+GSE37745,GSM1019138,"Patient 6, male, squamous",no,3418,squamous,2b,0,66,male,no,no,2637,GPL570,cancer cells from patient 6,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019139,"Patient 11, female, adeno",no,3186,adeno,1a,1,66,female,no,yes,3223,GPL570,cancer cells from patient 11,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019140,"Patient 12, male, adeno",yes,162,adeno,1a,1,77,male,no,yes,154,GPL570,cancer cells from patient 12,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019141,"Patient 13, male, squamous",yes,6,squamous,2b,1,72,male,not known,not known,not known,GPL570,cancer cells from patient 13,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019142,"Patient 14, male, squamous",no,3158,squamous,1b,0,63,male,not known,not known,not known,GPL570,cancer cells from patient 14,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019143,"Patient 19, female, adeno",yes,556,adeno,1b,1,40,female,yes,yes,470,GPL570,cancer cells from patient 19,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019144,"Patient 22, male, adeno",yes,304,adeno,3a,0,68,male,no,yes,91,GPL570,cancer cells from patient 22,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019145,"Patient 23, female, adeno",yes,590,adeno,1b,1,65,female,no,no,222,GPL570,cancer cells from patient 23,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019146,"Patient 27, female, squamous",yes,499,squamous,2b,3,76,female,no,yes,279,GPL570,cancer cells from patient 27,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019147,"Patient 32, male, adeno",yes,61,adeno,1b,1,78,male,no,not known,not known,GPL570,cancer cells from patient 32,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019148,"Patient 33, male, large",yes,253,large,1b,1,65,male,no,yes,245,GPL570,cancer cells from patient 33,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019149,"Patient 35, female, adeno",yes,595,adeno,1b,1,74,female,no,not known,not known,GPL570,cancer cells from patient 35,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019150,"Patient 37, female, adeno",yes,1839,adeno,1a,0,71,female,not known,not known,not known,GPL570,cancer cells from patient 37,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019151,"Patient 39, female, squamous",no,2923,squamous,2b,1,62,female,not known,not known,not known,GPL570,cancer cells from patient 39,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019152,"Patient 48, female, adeno",yes,523,adeno,1b,0,54,female,not known,not known,not known,GPL570,cancer cells from patient 48,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019153,"Patient 61, male, adeno",yes,393,adeno,3b,0,73,male,not known,not known,not known,GPL570,cancer cells from patient 61,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019154,"Patient 81, male, adeno",yes,250,adeno,4,0,56,male,not known,not known,not known,GPL570,cancer cells from patient 81,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019155,"Patient 87, female, large",yes,155,large,1b,1,64,female,yes,yes,95,GPL570,cancer cells from patient 87,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019156,"Patient 88, male, squamous",yes,158,squamous,1b,1,80,male,not known,not known,not known,GPL570,cancer cells from patient 88,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019157,"Patient 98, male, squamous",yes,594,squamous,1b,2,70,male,no,no,495,GPL570,cancer cells from patient 98,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019158,"Patient 112, male, adeno",yes,490,adeno,1b,0,70,male,yes,yes,437,GPL570,cancer cells from patient 112,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019159,"Patient 131, female, squamous",yes,109,squamous,1b,1,55,female,no,yes,84,GPL570,cancer cells from patient 131,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019160,"Patient 133, female, adeno",yes,84,adeno,1b,0,72,female,no,no,83,GPL570,cancer cells from patient 133,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019161,"Patient 158, male, large",yes,300,large,1b,0,64,male,yes,yes,266,GPL570,cancer cells from patient 158,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019162,"Patient 162, male, adeno",yes,355,adeno,1b,0,70,male,yes,no,359,GPL570,cancer cells from patient 162,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019163,"Patient 165, male, adeno",yes,88,adeno,2b,0,74,male,not known,not known,not known,GPL570,cancer cells from patient 165,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019164,"Patient 169, female, adeno",yes,286,adeno,3a,2,54,female,no,yes,239,GPL570,cancer cells from patient 169,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019165,"Patient 171, male, adeno",yes,151,adeno,2a,1,71,male,no,no,54,GPL570,cancer cells from patient 171,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019166,"Patient 172, female, adeno",yes,2108,adeno,1b,1,70,female,no,yes,1119,GPL570,cancer cells from patient 172,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019167,"Patient 174, male, large",yes,281,large,1b,1,61,male,no,yes,245,GPL570,cancer cells from patient 174,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019168,"Patient 175, male, squamous",no,5339,squamous,3b,1,59,male,not known,not known,not known,GPL570,cancer cells from patient 175,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019169,"Patient 189, female, adeno",yes,3470,adeno,3a,0,75,female,no,no,3383,GPL570,cancer cells from patient 189,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019170,"Patient 192, male, adeno",yes,4030,adeno,1b,0,69,male,no,no,4041,GPL570,cancer cells from patient 192,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019171,"Patient 193, female, adeno",yes,3260,adeno,1a,0,62,female,no,no,2531,GPL570,cancer cells from patient 193,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019172,"Patient 195, male, squamous",yes,462,squamous,2b,0,60,male,yes,yes,401,GPL570,cancer cells from patient 195,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019173,"Patient 196, male, large",no,4439,large,3a,0,44,male,yes,no,1942,GPL570,cancer cells from patient 196,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019174,"Patient 197, male, adeno",yes,514,adeno,2b,1,66,male,yes,yes,503,GPL570,cancer cells from patient 197,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019175,"Patient 200, male, adeno",no,5712,adeno,1a,0,56,male,no,no,2954,GPL570,cancer cells from patient 200,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019176,"Patient 201, female, adeno",yes,281,adeno,1b,1,76,female,no,yes,247,GPL570,cancer cells from patient 201,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019177,"Patient 202, male, squamous",yes,1938,squamous,2b,0,70,male,no,not known,not known,GPL570,cancer cells from patient 202,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019178,"Patient 203, male, large",no,4280,large,1b,0,56,male,no,no,4423,GPL570,cancer cells from patient 203,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019179,"Patient 207, male, large",yes,278,large,1b,0,66,male,yes,yes,139,GPL570,cancer cells from patient 207,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019180,"Patient 212, male, adeno",yes,343,adeno,1b,0,66,male,no,yes,116,GPL570,cancer cells from patient 212,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019181,"Patient 213, female, adeno",yes,3221,adeno,1a,0,52,female,no,yes,2579,GPL570,cancer cells from patient 213,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019182,"Patient 214, male, large",no,3973,large,1b,0,61,male,no,no,4207,GPL570,cancer cells from patient 214,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019183,"Patient 215, female, adeno",yes,591,adeno,1b,0,51,female,no,yes,190,GPL570,cancer cells from patient 215,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019184,"Patient 217, female, squamous",yes,429,squamous,1b,0,71,female,no,yes,242,GPL570,cancer cells from patient 217,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019185,"Patient 223, male, adeno",yes,3719,adeno,2b,0,62,male,yes,yes,2905,GPL570,cancer cells from patient 223,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019186,"Patient 224, female, adeno",no,3844,adeno,2b,1,64,female,yes,no,2086,GPL570,cancer cells from patient 224,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019187,"Patient 228, female, adeno",yes,3331,adeno,1b,0,82,female,no,yes,1707,GPL570,cancer cells from patient 228,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019188,"Patient 229, female, adeno",no,3723,adeno,1b,0,55,female,yes,no,966,GPL570,cancer cells from patient 229,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019189,"Patient 234, male, large",yes,3000,large,1b,0,68,male,no,no,3044,GPL570,cancer cells from patient 234,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019190,"Patient 235, female, adeno",no,3621,adeno,1b,0,71,female,no,no,1728,GPL570,cancer cells from patient 235,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019191,"Patient 243, male, squamous",yes,98,squamous,1b,2,80,male,no,no,37,GPL570,cancer cells from patient 243,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019192,"Patient 247, female, adeno",no,3369,adeno,1a,1,75,female,no,no,1726,GPL570,cancer cells from patient 247,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019193,"Patient 249, male, squamous",yes,2300,squamous,1b,0,69,male,no,yes,1305,GPL570,cancer cells from patient 249,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019194,"Patient 255, female, adeno",yes,2844,adeno,3a,0,74,female,no,no,2883,GPL570,cancer cells from patient 255,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019195,"Patient 256, female, squamous",yes,444,squamous,3a,1,58,female,no,yes,336,GPL570,cancer cells from patient 256,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019196,"Patient 258, male, adeno",yes,6,adeno,3a,1,59,male,no,no,6,GPL570,cancer cells from patient 258,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019197,"Patient 260, male, adeno",yes,196,adeno,1b,2,59,male,no,yes,133,GPL570,cancer cells from patient 260,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019198,"Patient 265, male, squamous",yes,123,squamous,2b,1,75,male,no,no,103,GPL570,cancer cells from patient 265,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019199,"Patient 271, female, squamous",yes,2739,squamous,1b,1,75,female,no,no,2736,GPL570,cancer cells from patient 271,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019200,"Patient 272, female, adeno",yes,351,adeno,2b,0,51,female,not known,not known,not known,GPL570,cancer cells from patient 272,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019201,"Patient 274, male, squamous",no,4945,squamous,1b,0,62,male,no,yes,4256,GPL570,cancer cells from patient 274,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019202,"Patient 278, male, squamous",yes,334,squamous,3a,0,60,male,yes,yes,325,GPL570,cancer cells from patient 278,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019203,"Patient 282, female, adeno",yes,79,adeno,2b,1,70,female,not known,not known,not known,GPL570,cancer cells from patient 282,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019204,"Patient 284, male, adeno",yes,3949,adeno,2b,0,70,male,yes,yes,2380,GPL570,cancer cells from patient 284,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019205,"Patient 288, male, adeno",no,4703,adeno,1a,0,59,male,yes,no,4978,GPL570,cancer cells from patient 288,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019206,"Patient 291, female, squamous",yes,281,squamous,3a,3,41,female,no,yes,71,GPL570,cancer cells from patient 291,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019207,"Patient 292, female, adeno",yes,247,adeno,1b,0,57,female,not known,not known,not known,GPL570,cancer cells from patient 292,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019208,"Patient 295, female, large",no,4622,large,2b,0,69,female,no,no,4914,GPL570,cancer cells from patient 295,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019209,"Patient 296, female, squamous",yes,1761,squamous,1b,1,62,female,yes,no,1690,GPL570,cancer cells from patient 296,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019210,"Patient 297, male, adeno",yes,2748,adeno,1a,0,66,male,no,no,2750,GPL570,cancer cells from patient 297,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019211,"Patient 299, female, adeno",yes,323,adeno,3a,0,60,female,yes,yes,306,GPL570,cancer cells from patient 299,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019212,"Patient 300, female, squamous",no,4510,squamous,1b,0,61,female,no,no,4314,GPL570,cancer cells from patient 300,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019213,"Patient 301, male, adeno",no,4489,adeno,1b,0,61,male,no,yes,3760,GPL570,cancer cells from patient 301,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019214,"Patient 302, female, adeno",no,4486,adeno,1a,0,55,female,no,no,2084,GPL570,cancer cells from patient 302,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019215,"Patient 305, male, squamous",yes,3202,squamous,1b,0,65,male,yes,yes,3130,GPL570,cancer cells from patient 305,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019216,"Patient 309, female, adeno",yes,396,adeno,3b,0,59,female,yes,yes,185,GPL570,cancer cells from patient 309,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019217,"Patient 310, female, adeno",yes,370,adeno,4,0,70,female,yes,yes,212,GPL570,cancer cells from patient 310,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019218,"Patient 311, male, adeno",yes,262,adeno,1b,0,67,male,no,yes,179,GPL570,cancer cells from patient 311,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019219,"Patient 314, male, large",yes,76,large,1b,1,69,male,no,yes,54,GPL570,cancer cells from patient 314,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019220,"Patient 317, female, adeno",yes,533,adeno,2a,1,64,female,no,yes,138,GPL570,cancer cells from patient 317,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019221,"Patient 319, male, squamous",yes,89,squamous,3a,1,65,male,no,yes,64,GPL570,cancer cells from patient 319,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019222,"Patient 331, male, large",yes,2940,large,1a,0,73,male,yes,yes,2851,GPL570,cancer cells from patient 331,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019223,"Patient 332, male, large",yes,387,large,1b,1,61,male,not known,not known,not known,GPL570,cancer cells from patient 332,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019224,"Patient 338, female, adeno",yes,1874,adeno,2b,0,49,female,yes,yes,255,GPL570,cancer cells from patient 338,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019225,"Patient 341, female, adeno",yes,177,adeno,2b,1,51,female,no,no,7,GPL570,cancer cells from patient 341,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019226,"Patient 342, male, squamous",yes,556,squamous,2b,0,74,male,yes,no,564,GPL570,cancer cells from patient 342,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019227,"Patient 344, female, squamous",yes,467,squamous,1b,1,61,female,no,no,392,GPL570,cancer cells from patient 344,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019228,"Patient 347, male, adeno",no,5082,adeno,1b,1,54,male,not known,not known,not known,GPL570,cancer cells from patient 347,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019229,"Patient 357, male, squamous",yes,3302,squamous,1b,0,58,male,yes,no,3348,GPL570,cancer cells from patient 357,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019230,"Patient 359, female, adeno",yes,2397,adeno,3a,0,68,female,yes,no,2267,GPL570,cancer cells from patient 359,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019231,"Patient 361, male, large",yes,2012,large,1a,1,57,male,not known,not known,not known,GPL570,cancer cells from patient 361,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019232,"Patient 365, male, squamous",yes,5311,squamous,1b,0,70,male,no,no,5385,GPL570,cancer cells from patient 365,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019233,"Patient 367, male, squamous",yes,2255,squamous,3b,2,66,male,no,no,2275,GPL570,cancer cells from patient 367,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019234,"Patient 369, female, adeno",yes,2068,adeno,1b,0,51,female,no,yes,622,GPL570,cancer cells from patient 369,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019235,"Patient 370, male, squamous",yes,97,squamous,1b,1,66,male,not known,not known,not known,GPL570,cancer cells from patient 370,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019236,"Patient 373, female, adeno",yes,3545,adeno,2b,3,47,female,yes,yes,3169,GPL570,cancer cells from patient 373,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019237,"Patient 375, female, large",no,5098,large,1a,0,48,female,yes,no,2208,GPL570,cancer cells from patient 375,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019238,"Patient 5, male, squamous",yes,1264,squamous,1b,1,78,male,not known,not known,not known,GPL570,cancer cells from patient 5,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019239,"Patient 7, male, adeno",yes,1222,adeno,1b,1,55,male,not known,not known,not known,GPL570,cancer cells from patient 7,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019240,"Patient 8, male, squamous",yes,1073,squamous,2b,0,75,male,not known,not known,not known,GPL570,cancer cells from patient 8,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019241,"Patient 10, male, squamous",yes,1138,squamous,1b,1,80,male,not known,not known,not known,GPL570,cancer cells from patient 10,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019242,"Patient 16, female, adeno",no,3227,adeno,1b,0,66,female,no,no,2086,GPL570,cancer cells from patient 16,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019243,"Patient 20, male, adeno",yes,1031,adeno,1b,0,60,male,not known,not known,not known,GPL570,cancer cells from patient 20,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019244,"Patient 28, female, adeno",yes,1243,adeno,1a,0,57,female,not known,not known,not known,GPL570,cancer cells from patient 28,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019245,"Patient 29, male, squamous",yes,143,squamous,3a,0,56,male,no,not known,not known,GPL570,cancer cells from patient 29,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019246,"Patient 30, female, squamous",yes,1343,squamous,1a,1,67,female,not known,not known,not known,GPL570,cancer cells from patient 30,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019247,"Patient 36, male, adeno",yes,1123,adeno,3a,1,60,male,not known,not known,not known,GPL570,cancer cells from patient 36,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019248,"Patient 38, male, large",no,2888,large,1b,0,64,male,not known,not known,not known,GPL570,cancer cells from patient 38,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019249,"Patient 41, female, adeno",no,2866,adeno,1a,0,73,female,not known,not known,not known,GPL570,cancer cells from patient 41,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019250,"Patient 43, male, squamous",no,3126,squamous,1b,0,67,male,no,no,2404,GPL570,cancer cells from patient 43,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019251,"Patient 52, female, squamous",yes,1061,squamous,1b,0,62,female,not known,not known,not known,GPL570,cancer cells from patient 52,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019252,"Patient 55, male, squamous",yes,625,squamous,1a,1,76,male,no,yes,407,GPL570,cancer cells from patient 55,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019253,"Patient 56, male, adeno",yes,857,adeno,1b,0,64,male,not known,not known,not known,GPL570,cancer cells from patient 56,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019254,"Patient 58, female, adeno",no,2761,adeno,1a,1,56,female,not known,not known,not known,GPL570,cancer cells from patient 58,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019255,"Patient 59, male, squamous",no,2767,squamous,1b,0,73,male,not known,not known,not known,GPL570,cancer cells from patient 59,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019256,"Patient 62, female, adeno",yes,836,adeno,1b,0,74,female,not known,not known,not known,GPL570,cancer cells from patient 62,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019257,"Patient 64, male, adeno",yes,1190,adeno,1a,1,78,male,not known,not known,not known,GPL570,cancer cells from patient 64,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019258,"Patient 66, male, adeno",yes,2170,adeno,1a,0,58,male,not known,not known,not known,GPL570,cancer cells from patient 66,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019259,"Patient 68, female, adeno",no,2589,adeno,3a,0,54,female,not known,not known,not known,GPL570,cancer cells from patient 68,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019260,"Patient 74, male, adeno",no,2350,adeno,1b,0,49,male,not known,not known,not known,GPL570,cancer cells from patient 74,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019261,"Patient 75, male, adeno",no,2308,adeno,1a,0,53,male,not known,not known,not known,GPL570,cancer cells from patient 75,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019262,"Patient 76, male, large",no,2385,large,1b,1,56,male,not known,not known,not known,GPL570,cancer cells from patient 76,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019263,"Patient 78, male, squamous",yes,758,squamous,1b,1,62,male,not known,not known,not known,GPL570,cancer cells from patient 78,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019264,"Patient 79, female, adeno",yes,1205,adeno,3a,0,67,female,not known,not known,not known,GPL570,cancer cells from patient 79,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019265,"Patient 80, female, adeno",no,2316,adeno,1a,0,51,female,not known,not known,not known,GPL570,cancer cells from patient 80,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019266,"Patient 84, male, squamous",no,2514,squamous,2b,2,67,male,not known,not known,not known,GPL570,cancer cells from patient 84,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019267,"Patient 92, female, squamous",yes,912,squamous,2b,0,57,female,not known,not known,not known,GPL570,cancer cells from patient 92,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019268,"Patient 93, male, adeno",no,2448,adeno,1a,0,53,male,not known,not known,not known,GPL570,cancer cells from patient 93,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019269,"Patient 96, male, squamous",yes,1565,squamous,1b,0,69,male,not known,not known,not known,GPL570,cancer cells from patient 96,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019270,"Patient 101, male, adeno",yes,1000,adeno,3a,1,66,male,not known,not known,not known,GPL570,cancer cells from patient 101,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019271,"Patient 105, male, squamous",no,2177,squamous,1b,0,65,male,not known,not known,not known,GPL570,cancer cells from patient 105,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019272,"Patient 107, female, adeno",yes,1224,adeno,1a,0,65,female,not known,not known,not known,GPL570,cancer cells from patient 107,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019273,"Patient 110, female, adeno",yes,1463,adeno,1a,0,55,female,not known,not known,not known,GPL570,cancer cells from patient 110,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019274,"Patient 111, female, adeno",yes,50,adeno,1a,2,57,female,not known,not known,not known,GPL570,cancer cells from patient 111,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019275,"Patient 114, female, adeno",yes,319,adeno,1b,1,75,female,no,yes,162,GPL570,cancer cells from patient 114,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019276,"Patient 116, female, squamous",yes,1087,squamous,1a,0,68,female,not known,not known,not known,GPL570,cancer cells from patient 116,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019277,"Patient 123, male, squamous",no,2066,squamous,1b,1,78,male,not known,not known,not known,GPL570,cancer cells from patient 123,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019278,"Patient 128, female, squamous",no,2091,squamous,1b,1,67,female,not known,not known,not known,GPL570,cancer cells from patient 128,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019279,"Patient 130, male, squamous",yes,1478,squamous,3a,0,56,male,not known,not known,not known,GPL570,cancer cells from patient 130,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019280,"Patient 135, male, squamous",yes,1612,squamous,1b,1,84,male,not known,not known,not known,GPL570,cancer cells from patient 135,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019281,"Patient 138, male, squamous",yes,2138,squamous,1a,1,58,male,not known,not known,not known,GPL570,cancer cells from patient 138,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019282,"Patient 139, male, squamous",yes,1523,squamous,1b,1,77,male,not known,not known,not known,GPL570,cancer cells from patient 139,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019283,"Patient 147, female, adeno",no,1928,adeno,1b,0,68,female,not known,not known,not known,GPL570,cancer cells from patient 147,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019284,"Patient 149, male, squamous",yes,906,squamous,1b,0,51,male,not known,not known,not known,GPL570,cancer cells from patient 149,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019285,"Patient 150, female, adeno",no,1826,adeno,2b,0,47,female,not known,not known,not known,GPL570,cancer cells from patient 150,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019286,"Patient 154, male, adeno",yes,756,adeno,1b,0,67,male,not known,not known,not known,GPL570,cancer cells from patient 154,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019287,"Patient 156, male, large",no,1806,large,1b,1,59,male,not known,not known,not known,GPL570,cancer cells from patient 156,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019288,"Patient 160, female, adeno",no,1859,adeno,1b,0,60,female,not known,not known,not known,GPL570,cancer cells from patient 160,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019289,"Patient 163, male, adeno",yes,1011,adeno,1b,1,78,male,not known,not known,not known,GPL570,cancer cells from patient 163,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019290,"Patient 164, female, adeno",yes,1500,adeno,1b,2,79,female,not known,not known,not known,GPL570,cancer cells from patient 164,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019291,"Patient 168, female, squamous",yes,726,squamous,1b,1,62,female,not known,not known,not known,GPL570,cancer cells from patient 168,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019292,"Patient 173, male, adeno",yes,1181,adeno,1a,1,67,male,not known,not known,not known,GPL570,cancer cells from patient 173,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019293,"Patient 178, female, squamous",yes,661,squamous,2b,1,70,female,yes,yes,374,GPL570,cancer cells from patient 178,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019294,"Patient 179, male, squamous",yes,1293,squamous,1b,0,68,male,not known,not known,not known,GPL570,cancer cells from patient 179,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019295,"Patient 180, female, adeno",no,4760,adeno,1b,2,67,female,no,no,5052,GPL570,cancer cells from patient 180,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019296,"Patient 182, male, squamous",yes,792,squamous,2b,1,66,male,not known,not known,not known,GPL570,cancer cells from patient 182,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019297,"Patient 184, female, squamous",yes,118,squamous,3b,2,61,female,not known,not known,not known,GPL570,cancer cells from patient 184,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019298,"Patient 186, female, adeno",yes,1007,adeno,2b,0,57,female,not known,not known,not known,GPL570,cancer cells from patient 186,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019299,"Patient 187, male, adeno",yes,1610,adeno,2b,2,51,male,not known,not known,not known,GPL570,cancer cells from patient 187,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019300,"Patient 190, male, adeno",yes,1367,adeno,1b,1,73,male,not known,not known,not known,GPL570,cancer cells from patient 190,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019301,"Patient 204, female, large",yes,178,large,3a,1,52,female,not known,not known,not known,GPL570,cancer cells from patient 204,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019302,"Patient 209, female, adeno",no,4068,adeno,1a,0,62,female,no,no,2369,GPL570,cancer cells from patient 209,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019303,"Patient 218, male, adeno",yes,766,adeno,1b,1,52,male,not known,not known,not known,GPL570,cancer cells from patient 218,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019304,"Patient 220, female, large",yes,1312,large,1b,1,75,female,not known,not known,not known,GPL570,cancer cells from patient 220,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019305,"Patient 226, female, adeno",no,3846,adeno,1a,1,67,female,no,no,4072,GPL570,cancer cells from patient 226,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019306,"Patient 236, female, squamous",yes,1250,squamous,2b,2,65,female,not known,not known,not known,GPL570,cancer cells from patient 236,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019307,"Patient 239, male, squamous",yes,1125,squamous,1a,0,50,male,not known,not known,not known,GPL570,cancer cells from patient 239,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019308,"Patient 241, male, adeno",yes,1221,adeno,2a,0,71,male,not known,not known,not known,GPL570,cancer cells from patient 241,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019309,"Patient 244, female, adeno",yes,979,adeno,1b,1,83,female,not known,not known,not known,GPL570,cancer cells from patient 244,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019310,"Patient 254, female, adeno",no,3217,adeno,4,0,63,female,not known,not known,not known,GPL570,cancer cells from patient 254,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019311,"Patient 257, female, adeno",yes,1687,adeno,1a,0,65,female,not known,not known,not known,GPL570,cancer cells from patient 257,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019312,"Patient 263, male, adeno",yes,2167,adeno,4,0,72,male,not known,not known,not known,GPL570,cancer cells from patient 263,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019313,"Patient 275, female, adeno",no,5063,adeno,1a,3,49,female,no,no,5045,GPL570,cancer cells from patient 275,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019314,"Patient 276, male, adeno",no,4897,adeno,2a,0,66,male,no,no,869,GPL570,cancer cells from patient 276,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019315,"Patient 277, female, large",yes,3857,large,1a,1,68,female,not known,not known,not known,GPL570,cancer cells from patient 277,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019316,"Patient 285, female, adeno",yes,1445,adeno,1b,0,70,female,not known,not known,not known,GPL570,cancer cells from patient 285,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019317,"Patient 287, female, large",yes,1229,large,3a,0,52,female,not known,not known,not known,GPL570,cancer cells from patient 287,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019318,"Patient 290, female, adeno",yes,2060,adeno,2b,1,54,female,not known,not known,not known,GPL570,cancer cells from patient 290,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019319,"Patient 294, male, squamous",yes,181,squamous,1a,1,70,male,no,yes,118,GPL570,cancer cells from patient 294,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019320,"Patient 312, male, adeno",yes,1488,adeno,1b,0,52,male,not known,not known,not known,GPL570,cancer cells from patient 312,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019321,"Patient 318, male, adeno",no,5207,adeno,1b,0,54,male,no,no,5423,GPL570,cancer cells from patient 318,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019322,"Patient 320, male, squamous",yes,229,squamous,3a,1,58,male,not known,not known,not known,GPL570,cancer cells from patient 320,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019323,"Patient 321, male, squamous",yes,342,squamous,3b,1,72,male,not known,not known,not known,GPL570,cancer cells from patient 321,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019324,"Patient 327, male, adeno",yes,2810,adeno,1b,1,67,male,no,no,531,GPL570,cancer cells from patient 327,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019325,"Patient 329, male, squamous",yes,718,squamous,1a,1,77,male,no,yes,602,GPL570,cancer cells from patient 329,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019326,"Patient 334, male, squamous",no,5469,squamous,2a,1,70,male,yes,no,4547,GPL570,cancer cells from patient 334,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019327,"Patient 336, female, large",yes,912,large,1b,1,39,female,not known,not known,not known,GPL570,cancer cells from patient 336,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019328,"Patient 348, male, adeno",yes,1113,adeno,1a,1,59,male,not known,not known,not known,GPL570,cancer cells from patient 348,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019329,"Patient 350, female, squamous",no,2666,squamous,1a,0,40,female,not known,not known,not known,GPL570,cancer cells from patient 350,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019330,"Patient 353, male, adeno",no,2515,adeno,1a,0,53,male,not known,not known,not known,GPL570,cancer cells from patient 353,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019331,"Patient 354, male, squamous",yes,640,squamous,1b,0,71,male,no,yes,239,GPL570,cancer cells from patient 354,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019332,"Patient 360, female, adeno",yes,1015,adeno,2a,1,47,female,not known,not known,not known,GPL570,cancer cells from patient 360,GSE37745_series_matrix.txt.gz
+GSE37745,GSM1019333,"Patient 363, female, large",yes,985,large,1b,0,70,female,not known,not known,not known,GPL570,cancer cells from patient 363,GSE37745_series_matrix.txt.gz
