@@ -2831,3 +2831,65 @@ myeloid added (12 patients).
 **Reading:** V174.1-3 pass → V3 enters the true-time panel (T3) on current code. A failure is reported as such against the
 archive values; no further amendment (stop rule).
 **Code:** `paper/exploratory/A174_v3_heart/`.
+
+## A175 (2026-11-01, written after a counts-only scout (pairs per cancer and per ER status; no pairing statistic by stratum computed) and before any stratified pairing readout; TCGA pairs and per-cancer coherence are seen (A97, H138.4, H138.8), so every test here is **secondary**; HANDOFF_2026-10-31 C1): does the tumour follow its own normal tissue less when it is proliferating or ER−? Readout level **L2** (tumour to the patient's normal tissue as host)
+
+**Why:** the coherence loss in proliferating and ER− tumours (L1; A127, A166, A171, A173) does not use host referencing.
+H138.4 showed that tumours follow their own patient's normal tissue (0.365 vs pairing null 0.122). C1 asks whether that
+following is weaker in the tumour states that lose coherence.
+**Readings stated in advance (both publishable):** lower pairing in high-proliferation (or ER−) tumours → the L1 loss
+comes with a loss of host following. Pairing not lower, with an MDE at or below the TCGA H138.4 margin over its null
+(0.24), → coherence is lost inside a tumour that still tracks the person.
+**Data:** the H138.4 set (517 tumour-normal pairs, 10 gated cancers, `A138_cancer_estimability`, states and A52 gate
+unchanged; the script first reproduces H138.4 = 0.3647).
+**Strata:**
+- Proliferation: G2M score of the tumour sample (A97 definition, `figure_5/scripts/cancer/_shared.py`: mean z of
+  HALLMARK_G2M_CHECKPOINT without clock genes, on `tcga_full_counts`), tertiles by rank within cancer; high vs low
+  tertile, cancers with ≥ 10 pairs per arm (expected to drop BLCA and UCEC).
+- ER (BRCA only): `xml_breast_carcinoma_estrogen_receptor_status` (Negative vs Positive; scout: 21 vs 78 pairs).
+**Tests (one-sided, label permutation within cancer, 10,000, p = (1 + #{D_null ≥ D}) / 10,001):**
+- **H175.1:** D_prolif = pooled pairing(low tertile) − pooled pairing(high tertile) > 0 (pairs-weighted pooling, as
+  H138.8).
+- **H175.2:** D_ER = pairing(ER+) − pairing(ER−) > 0 in BRCA. Run only if its MDE ≤ 0.3; otherwise "not estimable at
+  this n" (stop rule).
+- Holm over the tests that run.
+**Power, before the tests:** MDE = q95 + 0.84 × SD of the permutation null of D (labels only; the observed D is not
+evaluated in this step).
+**Specificity companions (same permutations):** D on 200 expression-matched pseudo-clock 14-gene sets per cancer (A52
+rule) and on the 200 responsive pseudo sets (H138.4-R); a loss is "clock-specific" only if D exceeds the 95th pseudo
+percentile of both.
+**Descriptive:** D per cancer; proliferation residualised on ABSOLUTE purity within cancer (475 pairs); BRCA PAM50
+basal + HER2 vs luminal; mid tertile.
+**Reading:** see above; a failed H175.1 with MDE > 0.24 is "not resolved at this n", not "unchanged".
+**Replication (primary, registered separately after this result):** GSE14520 HCC (213 pairs), GSE66229 gastric (98 paired
+patients, scout header only), any CPTAC LUAD/STAD; MDE step first, stop if MDE exceeds the TCGA D.
+**Code:** `paper/exploratory/A175_c1_pairing_strata/`.
+
+## A176 (2026-11-01, written before any clock-plane or off-plane variance is read in these cohorts (the A127/A166/A171/A173 outputs hold coherence only; scout `A127` off-plane descriptive is a different per-tumour measure); the coherence contrasts are seen, so the coherence column here is a reproduction; HANDOFF_2026-10-31 C3): is the coherence loss in proliferating and ER− tumours a swamped clock or a disordered one? Readout level **L1**
+
+**Why:** coherence R is a signal-to-noise quantity. Lower R can mean (a) disordered gene relations, or (b) intact
+relations with less clock-plane variance relative to non-clock variance in the clock genes ("swamped"). The variance
+decomposition of `clocksync.decompose.components` separates them: `log_plane` (clock-plane variance) and `log_off`
+(off-plane variance), from the same within-stratum-centred covariance as R.
+**Data and contrasts:** exactly the registered coherence contrasts, same strata, centring and arms: SCAN-B ER− vs ER+
+(H127.2) and high vs low proliferation (H127.1); METABRIC ER− vs ER+ (H166.1); GSE72094, GSE68465 (H171), GSE62254,
+GSE15459 (H173) high vs low proliferation tertile. Seven contrasts.
+**Statistics (low-coherence arm minus reference arm, combined over strata as the registered coherence statistic):**
+Δlog_plane, Δlog_off, and the in-plane log-odds Δs = Δlog_plane − Δlog_off; ΔR reproduced.
+**Tests (one-sided, the registered within-stratum label permutations of each contrast, 2,000):**
+- **H176.1 (swamped):** Δs < 0 in each of the seven contrasts; Holm over seven. Supported if ≥ 5 of 7 pass.
+- **H176.2 (disordered, per contrast):** "disordered" is called where Δs is not < 0 (H176.1 fails) **and** the MDE of
+  Δs is ≤ |Δs| expected under swamping (the log-odds change that alone reproduces the observed ΔR, from the pseudo-clock
+  calibration below); otherwise "unresolved".
+**Calibration (before reading Δs):** on the 200 pseudo-clock sets of each cohort, the regression of ΔR on Δs gives the Δs
+that a pure swamping would need to produce the observed ΔR; and the permutation null of Δs gives its MDE (2.49 × null
+SD).
+**Specificity companion:** Δs on the 200 pseudo-clock sets of each cohort (same permutations); swamping is reported as
+"clock-gene specific" when the observed Δs is below the 5th pseudo percentile, otherwise as a general feature of these
+tumours' expression (e.g. more variance in every gene set).
+**Descriptive:** Δlog_plane and Δlog_off separately; the same decomposition without PER1 and NR1D1; a proliferation-
+responsive pseudo pool (genes in the top decile of |correlation| with G2M, matched on mean and SD) as a second companion,
+which is the C4 pool.
+**Reading:** H176.1 supported → "clock signal swamped by non-clock variance" replaces "clock loss" wording (Q8);
+disordered calls in ≥ 5 of 7 → "clock relations disordered"; mixed → stated per cohort.
+**Code:** `paper/exploratory/A176_c3_plane_variance/`.
