@@ -2760,3 +2760,11 @@ purity proxy is not interpretable); each project without PER1 and NR1D1.
   rows say where.
 - Fail at a powered design → the loss is cancer-type specific (breast, LUAD), not a general tumour property.
 **Code:** `paper/exploratory/A172_tcga_unseen/`.
+
+**A172 power step (2026-10-31, before the tests; `A172_tcga_unseen/output/{eligibility,power}.csv`):** 12 eligible
+projects: CESC 304, ESCA 184, GBM 155, HNSC 502, LGG 514, LUSC 501, PAAD 178, PCPG 179, READ 166, SARC 259, STAD 415, TGCT
+150. Not eligible: LAML (126 primary blood samples), and ACC, CHOL, DLBC, KICH, MESO, SKCM (103 primaries; most SKCM
+samples are metastatic), THYM, UCS, UVM. READ was not among the expected projects; LAML drops out, so "without LAML" =
+H172.1. MDE (80 %): H172.1 0.087, carcinomas only 0.122; per project 0.175 (LGG) to 0.370 (GBM): CESC 0.259, ESCA 0.278,
+HNSC 0.287, LUSC 0.317, PAAD 0.282, PCPG 0.340, READ 0.318, SARC 0.330, STAD 0.357, TGCT 0.286. For scale, the seen TCGA
+effects are −0.51 to +0.15 (`A171_luad_lihc/output/tcga_all.csv`); the breast / LUAD effects are −0.17 to −0.36.
