@@ -1,0 +1,130 @@
+# This is a metadata template for submission of high-throughput sequencing samples to the GEO database.
+"# Before filling out the template, we highly recommend reviewing the appropriate EXAMPLE template(s) found on tabs of this Excel file."
+# Fields with a red triangle in the upper-right corner have pop-up instructions that can be displayed if you hover over the field.
+"# Invalid duplicate entries will be auto-highlighted. Please correct. For example, library name, title, raw file entries must be unique.",,,,,,
+,,,,,,
+,,,,,,
+STUDY,,,,,,,,,,,,,,,,,,
+# This section describes the overall study.,,,,,,,,,,,,,,,,,,
+# Information provided in this section will be displayed in a GEO Series (GSE record) on public web pages.,,,,,,,,,,,,,,,,,,
+*title,LAG3 is a promising target for gastric cancer patients with low prognostic nutritional index,
+*summary (abstract),The present study suggests that GC patients with low PNI may benefit from LAG3-targeted therapy.
+*experimental design,We performed scRNA-seq analysis from 38 gastric cancers and 16 adjacent normal gastric mucosae. 
+contributor,"Chikanori,Tsutsumi"
+contributor,"Kenoki, Ohuchida"
+contributor,,,,,
+contributor,,,,,
+supplementary file
+""
+""
+""
+""
+""
+""
+""
+,,,,,,,,,,,,,,,,,,
+SAMPLES,,,,,,,,,,,,,,,,,,
+# Information provided in this section will be displayed in GEO Samples (GSM records) on public web pages.,,,,,,,,,,,,,,,,,,
+# A GEO Sample record will be created from each row in this section.,,,,,,,,,,,,,,,,,,
+"# Biological replicates of the same sample: If provided, should be listed on different rows and titled accordingly (biol rep 1, biol rep 2, and so on).",,,,,,,,,,,,,,,,,,
+"# Technical replicates, eg, the same libraries were run in different lanes of a flow cell or sequenced multiple times: If provided, list all raw files in the same row, adding more ""raw file"" columns as needed to accommodate all raw files.",,,,,,,,,,,,,,,,,,
+"# All library names, titles and raw files must be unique.  ",,,,,,,,,,,,,,,,,,
+*library name,*title,*organism,**tissue,PNI,organ,age,sex,HER2,chemotherapy,*molecule,*single or paired-end,*instrument model,description,*processed data file ,processed data file ,*raw file,raw file,raw file,raw file,*raw file,raw file,raw file,raw file,*raw file,raw file,raw file,raw file
+GSM6061521	,gastric cancer [G40T],Homo sapiens,gastric cancer,PNI≤40,stomach,34,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,Illumina NovaSeq 6000,G40T_RSEC_MolsPerCell,GC.PNI.rds,,G40T_RSEC_MolsPerCell,,
+GSM6061522,gastric cancer [G41T],Homo sapiens,gastric cancer,PNI>40,stomach,73,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,Illumina NovaSeq 6000,G41T_RSEC_MolsPerCell,GC.PNI.rds,,G41T_RSEC_MolsPerCell,,
+GSM6061523,gastric cancer [G42T],Homo sapiens,gastric cancer,PNI>40,stomach,70,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,Illumina NovaSeq 6000,G42T_RSEC_MolsPerCell,GC.PNI.rds,,G42T_RSEC_MolsPerCell,,
+GSM6061524,gastric cancer [G43T],Homo sapiens,gastric cancer,PNI>40,stomach,41,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G43T-AK3959_S1_L003_I1_001.fastq.gz,G43T-AK3959_S1_L003_R1_001.fastq.gz,G43T-AK3959_S1_L003_R2_001.fastq.gz,G43T-AK3960_S2_L003_I1_001.fastq.gz,G43T-AK3960_S2_L003_R1_001.fastq.gz,G43T-AK3960_S2_L003_R2_001.fastq.gz,G43T-AK3961_S3_L003_I1_001.fastq.gz,G43T-AK3961_S3_L003_R1_001.fastq.gz,G43T-AK3961_S3_L003_R2_001.fastq.gz,G43T-AK3962_S4_L003_I1_001.fastq.gz,G43T-AK3962_S4_L003_R1_001.fastq.gz,G43T-AK3962_S4_L003_R2_001.fastq.gz
+GSM6061525,gastric cancer [G44T],Homo sapiens,gastric cancer,PNI>40,stomach,42,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,1_S1_L007_I1_001.fastq.gz,1_S1_L007_R1_001.fastq.gz,1_S1_L007_R2_001.fastq.gz
+GSM6061526,gastric cancer [G45T],Homo sapiens,gastric cancer,PNI>40,stomach,89,Female,LMR≤5.46,CARRY>11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,4_S2_L004_I1_001.fastq.gz,4_S2_L004_R1_001.fastq.gz,4_S2_L004_R2_001.fastq.gz
+GSM6061527	,gastric cancer [G47T],Homo sapiens,gastric cancer,PNI>40,stomach,87,Male,5.46<LMR,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,GT-SI-GA-G8_S4_L003_I1_001.fastq.gz,GT-SI-GA-G8_S4_L003_R1_001.fastq.gz,GT-SI-GA-G8_S4_L003_R2_001.fastq.gz,
+GSM7290597,gastric cancer [G48T],Homo sapiens,gastric cancer,PNI>40,stomach,80,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,1_S1_L004_I1_001.fastq.gz,1_S1_L004_R1_001.fastq.gz,1_S1_L004_R2_001.fastq.gz,
+GSM6061528,gastric cancer [G49T],Homo sapiens,gastric cancer,PNI>40,stomach,62,Female,5.46<LMR,CARRY>11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G49T_S7_L007_I1_001.fastq.gz,G49T_S7_L007_R1_001.fastq.gz,G49T_S7_L007_R2_001.fastq.gz,
+GSM6061529,gastric cancer [G50T],Homo sapiens,gastric cancer,PNI>40,stomach,57,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G50T_S4_L004_I1_001.fastq.gz,G50T_S4_L004_R1_001.fastq.gz,G50T_S4_L004_R2_001.fastq.gz,
+GSM6061530,gastric cancer [G51T],Homo sapiens,gastric cancer,PNI>40,stomach,32,Female,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G51T_S1_L002_I1_001.fastq.gz,G51T_S1_L002_R1_001.fastq.gz,G51T_S1_L002_R2_001.fastq.gz,
+GSM6061531,gastric cancer [G52T],Homo sapiens,gastric cancer,PNI>40,stomach,77,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G52T_S4_L003_I1_001.fastq.gz,G52T_S4_L003_R1_001.fastq.gz,G52T_S4_L003_R2_001.fastq.gz,
+GSM7290598,gastric cancer [G54T],Homo sapiens,gastric cancer,PNI>40,stomach,68,Female,5.46<LMR,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G54T_S7_L006_I1_001.fastq.gz,G54T_S7_L006_R1_001.fastq.gz,G54T_S7_L006_R2_001.fastq.gz,
+GSM6061532,gastric cancer [G55T],Homo sapiens,gastric cancer,PNI>40,stomach,73,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,4_S1_L001_R1_001.fastq.gz,4_S1_L001_R2_001.fastq.gz,,
+GSM7290599,gastric cancer [G57T],Homo sapiens,gastric cancer,PNI>40,stomach,76,Male,5.46<LMR,CARRY>11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,10_S1_L001_R1_001.fastq.gz,10_S1_L001_R2_001.fastq.gz,
+GSM7290600,gastric cancer [G60T],Homo sapiens,gastric cancer,PNI>40,stomach,67,Male,LMR≤5.46,CARRY>11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,7_S1_L001_R1_001.fastq.gz,7_S1_L001_R2_001.fastq.gz,
+GSM8035678	,gastric cancer [G64T],Homo sapiens,gastric cancer,PNI>40,stomach,63,Female,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,1_S1_L001_R1_001.fastq.gz,1_S1_L001_R2_001.fastq.gz,,
+GSM7290601	,gastric cancer [G65T],Homo sapiens,gastric cancer,PNI>40,stomach,76,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,11_S1_L001_R1_001.fastq.gz,11_S1_L001_R2_001.fastq.gz,,
+GSM8035679,gastric cancer [G66T],Homo sapiens,gastric cancer,PNI>40,stomach,75,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G66T_S13_L001_I1_001.fastq.gz,G66T_S13_L001_I2_001.fastq.gz,G66T_S13_L001_R1_001.fastq.gz,G66T_S13_L001_R2_001.fastq.gz
+GSM8035680	,gastric cancer [G67T],Homo sapiens,gastric cancer,PNI>40,stomach,78,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G67T_S17_L001_I1_001.fastq.gz,G67T_S17_L001_I2_001.fastq.gz,G67T_S17_L001_R1_001.fastq.gz,G67T_S17_L001_R2_001.fastq.gz
+GSM8035681,gastric cancer [G69T],Homo sapiens,gastric cancer,PNI>40,stomach,69,Female,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G69T_S1_L001_R1_001.fastq.gz,G69T_S1_L001_R2_001.fastq.gz,,
+GSM8035682,gastric cancer [G70T],Homo sapiens,gastric cancer,PNI>40,stomach,81,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G70T_S1_L001_I1_001.fastq.gz,G70T_S1_L001_I2_001.fastq.gz,G70T_S1_L001_R1_001.fastq.gz,G70T_S1_L001_R2_001.fastq.gz
+GSM8035683,gastric cancer [G71T],Homo sapiens,gastric cancer,PNI≤40,stomach,73,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G71T_S1_L001_I1_001.fastq.gz,G71T_S1_L001_I2_001.fastq.gz,G71T_S1_L001_R1_001.fastq.gz,G71T_S1_L001_R2_001.fastq.gz
+GSM8035684,gastric cancer [G72T],Homo sapiens,gastric cancer,PNI>40,stomach,69,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G72T_S1_L001_I1_001.fastq.gz,G72T_S1_L001_I2_001.fastq.gz,G72T_S1_L001_R1_001.fastq.gz,G72T_S1_L001_R2_001.fastq.gz
+GSM8035685,gastric cancer [G74T],Homo sapiens,gastric cancer,PNI>40,stomach,86,Male,5.46<LMR,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G74T_S1_L002_I1_001.fastq.gz,G74T_S1_L002_I2_001.fastq.gz,G74T_S1_L002_R1_001.fastq.gz,G74T_S1_L002_R2_001.fastq.gz
+GSM8035686,gastric cancer [G75T],Homo sapiens,gastric cancer,PNI≤40,stomach,81,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G75T_S4_L002_I1_001.fastq.gz,G75T_S4_L002_I2_001.fastq.gz,G75T_S4_L002_R1_001.fastq.gz,G75T_S4_L002_R2_001.fastq.gz
+GSM8035687,gastric cancer [G76T],Homo sapiens,gastric cancer,PNI>40,stomach,68,Male,LMR≤5.46,CARRY>11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G76T_S1_L001_I1_001.fastq.gz,G76T_S1_L001_I2_001.fastq.gz,G76T_S1_L001_R1_001.fastq.gz,G76T_S1_L001_R2_001.fastq.gz
+GSM8035688,gastric cancer [G78T],Homo sapiens,gastric cancer,PNI>40,stomach,73,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G78T_S1_L001_I1_001.fastq.gz,G78T_S1_L001_I2_001.fastq.gz,G78T_S1_L001_R1_001.fastq.gz,G78T_S1_L001_R2_001.fastq.gz
+GSM6061534,gastric cancer [G41N],Homo sapiens,Adjacent normal gastric mucosa,N/A,stomach,73,Male,N/A,N/A,total RNA,paired-end,Illumina NovaSeq 6000,,GC.PNI.rds,,G41N_RSEC_MolsPerCell,,,
+GSM6061535,gastric cancer [G42N],Homo sapiens,Adjacent normal gastric mucosa,N/A,stomach,70,Male,N/A,N/A,total RNA,paired-end,Illumina NovaSeq 6000,,GC.PNI.rds,,G42N_RSEC_MolsPerCell,,,
+GSM6061536,gastric cancer [G43N],Homo sapiens,Adjacent normal gastric mucosa,N/A,stomach,41,Male,N/A,N/A,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G43N1-AK831_S5_L003_I1_001.fastq.gz,G43N1-AK831_S5_L003_R1_001.fastq.gz,G43N1-AK831_S5_L003_R2_001.fastq.gz,G43N1-AK832_S6_L003_I1_001.fastq.gz,G43N1-AK832_S6_L003_R1_001.fastq.gz,G43N1-AK832_S6_L003_R2_001.fastq.gz,G43N1-AK833_S7_L003_I1_001.fastq.gz,G43N1-AK833_S7_L003_R1_001.fastq.gz,G43N1-AK833_S7_L003_R2_001.fastq.gz,G43N1-AK834_S8_L003_I1_001.fastq.gz,G43N1-AK834_S8_L003_R1_001.fastq.gz,G43N1-AK834_S8_L003_R2_001.fastq.gz
+GSM6061537,gastric cancer [G49N],Homo sapiens,Adjacent normal gastric mucosa,N/A,stomach,62,Female,N/A,N/A,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G49N_S6_L006_I1_001.fastq.gz,G49N_S6_L006_R1_001.fastq.gz,G49N_S6_L006_R2_001.fastq.gz,
+GSM6061538,gastric cancer [G50N],Homo sapiens,Adjacent normal gastric mucosa,N/A,stomach,57,Male,N/A,N/A,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G50N_S3_L003_I1_001.fastq.gz,G50N_S3_L003_R1_001.fastq.gz,G50N_S3_L003_R2_001.fastq.gz,
+GSM6061539,gastric cancer [G51N],Homo sapiens,Adjacent normal gastric mucosa,N/A,stomach,32,Female,N/A,N/A,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G51N_S1_L001_I1_001.fastq.gz,G51N_S1_L001_R1_001.fastq.gz,G51N_S1_L001_R2_001.fastq.gz,
+GSM6061540,gastric cancer [G52N],Homo sapiens,Adjacent normal gastric mucosa,N/A,stomach,77,Male,N/A,N/A,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G52N_S1_L004_I1_001.fastq.gz,G52N_S1_L004_R1_001.fastq.gz,G52N_S1_L004_R2_001.fastq.gz,
+GSM6061541,gastric cancer [G54N],Homo sapiens,Adjacent normal gastric mucosa,N/A,stomach,68,Female,N/A,N/A,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G54N_S8_L007_I1_001.fastq.gz,G54N_S8_L007_R1_001.fastq.gz,G54N_S8_L007_R2_001.fastq.gz,
+GSM6061542,gastric cancer [G55N],Homo sapiens,Adjacent normal gastric mucosa,N/A,stomach,73,Male,N/A,N/A,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,5_S1_L001_R1_001.fastq.gz,5_S1_L001_R2_001.fastq.gz,,
+G32T,gastric cancer [G32T],Homo sapiens,gastric cancer,PNI>40,stomach,73,Female,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,Illumina NovaSeq 6000,,GC.PNI.rds,,G32-T_S4_L004_I1_001.fastq.gz,G32-T_S4_L004_R1_001.fastq.gz,G32-T_S4_L004_R2_001.fastq.gz,
+G36T,gastric cancer [G36T],Homo sapiens,gastric cancer,PNI>40,stomach,67,Female,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,Illumina NovaSeq 6000,,GC.PNI.rds,,G36-T_S5_L005_I1_001.fastq.gz,G36-T_S5_L005_R1_001.fastq.gz,G36-T_S5_L005_R2_001.fastq.gz,
+G39T,gastric cancer [G39T],Homo sapiens,gastric cancer,PNI≤40,stomach,83,Female,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,Illumina NovaSeq 6000,,GC.PNI.rds,,G39T-AK1839_S1_L002_I1_001.fastq.gz,G39T-AK1839_S1_L002_R1_001.fastq.gz,G39T-AK1839_S1_L002_R2_001.fastq.gz,G39T-AK1840_S2_L002_I1_001.fastq.gz,G39T-AK1840_S2_L002_R1_001.fastq.gz,G39T-AK1840_S2_L002_R2_001.fastq.gz,G39T-AK1841_S3_L002_I1_001.fastq.gz,G39T-AK1841_S3_L002_R1_001.fastq.gz,G39T-AK1841_S3_L002_R2_001.fastq.gz,G39T-AK1842_S4_L002_I1_001.fastq.gz,G39T-AK1842_S4_L002_R1_001.fastq.gz,G39T-AK1842_S4_L002_R2_001.fastq.gz
+G56T,gastric cancer [G56T],Homo sapiens,gastric cancer,PNI>40,stomach,84,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,7_S1_L001_R1_001.fastq.gz,7_S1_L001_R2_001.fastq.gz,
+G63T,gastric cancer [G63T],Homo sapiens,gastric cancer,PNI≤40,stomach,74,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G63_S1_L001_R1_001.fastq.gz,G63_S1_L001_R2_001.fastq.gz,,
+G68T,gastric cancer [G68T],Homo sapiens,gastric cancer,PNI>40,stomach,94,Female,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G68T_S1_L001_R1_001.fastq.gz,G68T_S1_L001_R2_001.fastq.gz,,
+G73T,gastric cancer [G73T],Homo sapiens,gastric cancer,PNI>40,stomach,57,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G73T_S1_L001_I1_001.fastq.gz,G73T_S1_L001_I2_001.fastq.gz,G73T_S1_L001_R1_001.fastq.gz,G73T_S1_L001_R2_001.fastq.gz
+G77T,gastric cancer [G77T],Homo sapiens,gastric cancer,PNI>40,stomach,68,Male,LMR≤5.46,CARRY>11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G77T_S1_L001_I1_001.fastq.gz,G77T_S1_L001_I2_001.fastq.gz,G77T_S1_L001_R1_001.fastq.gz,G77T_S1_L001_R2_001.fastq.gz
+G79T,gastric cancer [G79T],Homo sapiens,gastric cancer,PNI>40,stomach,68,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G79T_S1_L001_I1_001.fastq.gz,G79T_S1_L001_I2_001.fastq.gz,G79T_S1_L001_R1_001.fastq.gz,G79T_S1_L001_R2_001.fastq.gz
+G80T,gastric cancer [G80T],Homo sapiens,gastric cancer,PNI>40,stomach,68,Male,LMR≤5.46,CARRY≤11.280,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G80T_S1_L001_I1_001.fastq.gz,G80T_S1_L001_I2_001.fastq.gz,G80T_S1_L001_R1_001.fastq.gz,G80T_S1_L001_R2_001.fastq.gz
+G47N,gastric cancer [G47N],Homo sapiens,Adjacent normal gastric mucosa,N/A,stomach,87,Male,N/A,N/A,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,GN-SI-GA-H8_S5_L003_I1_001.fastq.gz,GN-SI-GA-H8_S5_L003_R1_001.fastq.gz,GN-SI-GA-H8_S5_L003_R2_001.fastq.gz,
+G66N,gastric cancer [G66N],Homo sapiens,Adjacent normal gastric mucosa,N/A,stomach,75,Male,N/A,N/A,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,8_S1_L001_R1_001.fastq.gz,8_S1_L001_R2_001.fastq.gz,,
+G67N,gastric cancer [G67N],Homo sapiens,Adjacent normal gastric mucosa,N/A,stomach,78,Male,N/A,N/A,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,10_S1_L001_R1_001.fastq.gz,10_S1_L001_R2_001.fastq.gz,
+G69N,gastric cancer [G69N],Homo sapiens,Adjacent normal gastric mucosa,N/A,stomach,69,Female,N/A,N/A,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G69N_S1_L001_R1_001.fastq.gz,G69N_S1_L001_R2_001.fastq.gz,,
+G71N,gastric cancer [G71N],Homo sapiens,Adjacent normal gastric mucosa,N/A,stomach,73,Male,N/A,N/A,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G71N_S1_L001_I1_001.fastq.gz,G71N_S1_L001_I2_001.fastq.gz,G71N_S1_L001_R1_001.fastq.gz,G71N_S1_L001_R2_001.fastq.gz
+G74N,gastric cancer [G74N],Homo sapiens,Adjacent normal gastric mucosa,N/A,stomach,69,Male,N/A,N/A,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G74N_S2_L002_I1_001.fastq.gz,G74N_S2_L002_I2_001.fastq.gz,G74N_S2_L002_R1_001.fastq.gz,G74N_S2_L002_R2_001.fastq.gz
+G75N,gastric cancer [G75N],Homo sapiens,Adjacent normal gastric mucosa,N/A,stomach,86,Male,N/A,N/A,total RNA,paired-end,DNBSEQ-G400,,GC.PNI.rds,,G75N_S5_L002_I1_001.fastq.gz,G75N_S5_L002_I2_001.fastq.gz,G75N_S5_L002_R1_001.fastq.gz,G75N_S5_L002_R2_001.fastq.gz
+,,,,,,,,,,,,,,,,,,,
+PROTOCOLS,,,,,,,,,,,,,,,,,,,
+# Information provided in this section will appear in each GEO Sample (GSM record). ,,,,,,,,,,,,,,,,,,
+growth protocol,,,,,,,,,,,,,,,,,,
+treatment protocol,,,,,,,,,,,,,,,,,,
+*extract protocol,"Single-cell library preparation was performed according to the manual of the Chromium Next GEM Single-cell 3' Reagent Kits v3.1 the Chromium Next GEM Single Cell 5′ Kit v2 for Dual Index (10x Genomics). The cell suspensions were loaded on the Single-cell G Chip for gel bead-in-emulsion (GEM) generation and barcoding. cDNA library thus was generated with a droplet-based sequencing platform (10X Genomics). Next, reverse transcription, RT cleanup cDNA amplification, and quantification was performed to construct the 3’ and 5’ gene library.",,,,,,,,,,,,,,,,,
+*library construction protocol,The libraries were sequenced on NovaSeq6000 (Illumina) or DNBSEQ-G400 (MGI Tech).,,,,,,,,,,,,,,,,,
+*library strategy,scRNA-seq,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+*data processing step,Raw sequencing reads were aligned to the human reference genome GRCh38 and processed to a matrix representing the UMI’s per cell barcode per gene using Cell Ranger v7.1.0 (10x Genomics),,,,,,,,,,,,,,,,,
+data processing step,"Output files were analyzed with the R v4.2.1 package ""Seurat v4.3.0"".",,,,,,,,,,,,,,,,,
+data processing step,,,,,,,,,,,,,,,,,,
+data processing step,,,,,,,,,,,,,,,,,,
+data processing step,,,,,,,,,,,,,,,,,,
+*genome build/assembly,GRCh38,,,,,,,,,,,,,,,,,
+*processed data files format and content,"To merge the data of all samples, we used the ""SCTransform"" package for the normalization and variance stabilization of molecular count data.",,,,,,,,,,,,,,,,,
+processed data files format and content,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+PAIRED-END EXPERIMENTS,,,,,,,,,,,,,,,,,,
+"# If ""paired-end"" experiments are included, list the files for each paired-end run in a row. Each row will become one sequencing run on a GEO Sample (GSM record). ",,,,,,,,,,,,,,,,,,
+"# Single-cell data: If applicable, list index files (I1, I2, etc.) in ""file name 3"", ""file name 4"" columns.",,,,,,,,,,,,,,,,,,
+"# Please make sure all raw files listed here are also listed in the ""raw file"" columns in the above SAMPLES section.",,,,,,,,,,,,,,,,,,
+file name 1,file name 2,file name 3,file name 4,,,,,,,,,,,,,,,,,
+G32-T_S4_L004_R1_001.fastq.gz,G32-T_S4_L004_R2_001.fastq.gz,G32-T_S4_L004_I1_001.fastq.gz
+G36-T_S5_L005_R1_001.fastq.gz,G36-T_S5_L005_R2_001.fastq.gz,G36-T_S5_L005_I1_001.fastq.gz
+G39T-AK1839_S1_L002_R1_001.fastq.gz,G39T-AK1839_S1_L002_R2_001.fastq.gz,G39T-AK1839_S1_L002_I1_001.fastq.gz
+G39T-AK1839_S1_L002_R1_001.fastq.gz,G39T-AK1839_S1_L002_R2_001.fastq.gz,G39T-AK1839_S1_L002_I1_001.fastq.gz
+G39T-AK1840_S2_L002_R1_001.fastq.gz,G39T-AK1840_S2_L002_R2_001.fastq.gz,G39T-AK1840_S2_L002_I1_001.fastq.gz
+G39T-AK1841_S3_L002_R1_001.fastq.gz,G39T-AK1841_S3_L002_R2_001.fastq.gz,G39T-AK1841_S3_L002_I1_001.fastq.gz
+G39T-AK1842_S4_L002_R1_001.fastq.gz,G39T-AK1842_S4_L002_R2_001.fastq.gz,G39T-AK1842_S4_L002_I1_001.fastq.gz
+7_S1_L001_R1_001.fastq.gz,7_S1_L001_R2_001.fastq.gz
+G63_S1_L001_R1_001.fastq.gz,G63_S1_L001_R2_001.fastq.gz
+G68T_S1_L001_R1_001.fastq.gz,G68T_S1_L001_R2_001.fastq.gz
+G73T_S1_L001_R1_001.fastq.gz,G73T_S1_L001_R2_001.fastq.gz,G73T_S1_L001_I1_001.fastq.gz,G73T_S1_L001_I2_001.fastq.gz
+G77T_S1_L001_R1_001.fastq.gz,G77T_S1_L001_R2_001.fastq.gz,G77T_S1_L001_I1_001.fastq.gz,G77T_S1_L001_I2_001.fastq.gz
+G79T_S1_L001_R1_001.fastq.gz,G79T_S1_L001_R2_001.fastq.gz,G79T_S1_L001_I1_001.fastq.gz,G79T_S1_L001_I2_001.fastq.gz
+G80T_S1_L001_R1_001.fastq.gz,G80T_S1_L001_R2_001.fastq.gz,G80T_S1_L001_I1_001.fastq.gz,G80T_S1_L001_I2_001.fastq.gz
+GN-SI-GA-H8_S5_L003_R1_001.fastq.gz,GN-SI-GA-H8_S5_L003_R2_001.fastq.gz,GN-SI-GA-H8_S5_L003_I1_001.fastq.gz
+8_S1_L001_R1_001.fastq.gz,8_S1_L001_R2_001.fastq.gz
+10_S1_L001_R1_001.fastq.gz,10_S1_L001_R2_001.fastq.gz
+G69N_S1_L001_R1_001.fastq.gz,G69N_S1_L001_R2_001.fastq.gz
+G71N_S1_L001_R1_001.fastq.gz,G71N_S1_L001_R2_001.fastq.gz,G71N_S1_L001_I1_001.fastq.gz,G71N_S1_L001_I2_001.fastq.gz
+G74N_S2_L002_R1_001.fastq.gz,G74N_S2_L002_R2_001.fastq.gz,G74N_S2_L002_I1_001.fastq.gz,G74N_S2_L002_I2_001.fastq.gz
+G75N_S5_L002_R1_001.fastq.gz,G75N_S5_L002_R2_001.fastq.gz,G75N_S5_L002_I1_001.fastq.gz,G75N_S5_L002_I2_001.fastq.gz

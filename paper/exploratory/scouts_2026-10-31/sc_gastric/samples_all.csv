@@ -1,0 +1,843 @@
+gse,gsm,title,characteristics,instrument,supp
+GSE183904,GSM5573466,sample1: Primary Gastric Tissue (Normal),tissue: Primary Gastric Tissue (Normal),Illumina NovaSeq 6000,GSM5573466_sample1.csv.gz
+GSE183904,GSM5573467,sample2: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573467_sample2.csv.gz
+GSE183904,GSM5573468,sample3: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573468_sample3.csv.gz
+GSE183904,GSM5573469,sample4: Primary Gastric Tissue (Normal),tissue: Primary Gastric Tissue (Normal),Illumina NovaSeq 6000,GSM5573469_sample4.csv.gz
+GSE183904,GSM5573470,sample5: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573470_sample5.csv.gz
+GSE183904,GSM5573471,sample6: Primary Gastric Tissue (Normal),tissue: Primary Gastric Tissue (Normal),Illumina NovaSeq 6000,GSM5573471_sample6.csv.gz
+GSE183904,GSM5573472,sample7: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573472_sample7.csv.gz
+GSE183904,GSM5573473,sample8: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573473_sample8.csv.gz
+GSE183904,GSM5573474,sample9: Primary Gastric Tissue (Normal),tissue: Primary Gastric Tissue (Normal),Illumina NovaSeq 6000,GSM5573474_sample9.csv.gz
+GSE183904,GSM5573475,sample10: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573475_sample10.csv.gz
+GSE183904,GSM5573476,sample11: Primary Gastric Tissue (Normal),tissue: Primary Gastric Tissue (Normal),Illumina NovaSeq 6000,GSM5573476_sample11.csv.gz
+GSE183904,GSM5573477,sample12: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573477_sample12.csv.gz
+GSE183904,GSM5573478,sample13: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573478_sample13.csv.gz
+GSE183904,GSM5573479,sample14: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573479_sample14.csv.gz
+GSE183904,GSM5573480,sample15: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573480_sample15.csv.gz
+GSE183904,GSM5573481,sample16: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573481_sample16.csv.gz
+GSE183904,GSM5573482,sample17: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573482_sample17.csv.gz
+GSE183904,GSM5573483,sample18: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573483_sample18.csv.gz
+GSE183904,GSM5573484,sample19: Peritonium tissue (Tumor),tissue: Peritonium tissue (Tumor),Illumina NovaSeq 6000,GSM5573484_sample19.csv.gz
+GSE183904,GSM5573485,sample20: Peritonium tissue  (Tumor),tissue: Peritonium tissue  (Tumor),Illumina NovaSeq 6000,GSM5573485_sample20.csv.gz
+GSE183904,GSM5573486,sample21: Primary Gastric Tissue (Normal),tissue: Primary Gastric Tissue (Normal),Illumina NovaSeq 6000,GSM5573486_sample21.csv.gz
+GSE183904,GSM5573487,sample22: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573487_sample22.csv.gz
+GSE183904,GSM5573488,sample23: Primary Gastric Tissue (Normal),tissue: Primary Gastric Tissue (Normal),Illumina NovaSeq 6000,GSM5573488_sample23.csv.gz
+GSE183904,GSM5573489,sample24: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573489_sample24.csv.gz
+GSE183904,GSM5573490,sample25: Primary Gastric Tissue (Normal),tissue: Primary Gastric Tissue (Normal),Illumina NovaSeq 6000,GSM5573490_sample25.csv.gz
+GSE183904,GSM5573491,sample26: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573491_sample26.csv.gz
+GSE183904,GSM5573492,sample27: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573492_sample27.csv.gz
+GSE183904,GSM5573493,sample28: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573493_sample28.csv.gz
+GSE183904,GSM5573494,sample29: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573494_sample29.csv.gz
+GSE183904,GSM5573495,sample30: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573495_sample30.csv.gz
+GSE183904,GSM5573496,sample31: Primary Gastric Tissue (Normal),tissue: Primary Gastric Tissue (Normal),Illumina NovaSeq 6000,GSM5573496_sample31.csv.gz
+GSE183904,GSM5573497,sample32: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573497_sample32.csv.gz
+GSE183904,GSM5573498,sample33: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573498_sample33.csv.gz
+GSE183904,GSM5573499,sample34: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573499_sample34.csv.gz
+GSE183904,GSM5573500,sample35: Primary Gastric Tissue (Normal),tissue: Primary Gastric Tissue (Normal),Illumina NovaSeq 6000,GSM5573500_sample35.csv.gz
+GSE183904,GSM5573501,sample36: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573501_sample36.csv.gz
+GSE183904,GSM5573502,sample37: Peritonium tissue (Normal),tissue: Peritonium tissue (Normal),Illumina NovaSeq 6000,GSM5573502_sample37.csv.gz
+GSE183904,GSM5573503,sample38: Peritonium tissue (Tumor),tissue: Peritonium tissue (Tumor),Illumina NovaSeq 6000,GSM5573503_sample38.csv.gz
+GSE183904,GSM5573504,sample39: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573504_sample39.csv.gz
+GSE183904,GSM5573505,sample40: Primary Gastric Tissue (Tumor),tissue: Primary Gastric Tissue (Tumor),Illumina NovaSeq 6000,GSM5573505_sample40.csv.gz
+GSE134520,GSM3954946,Non-atrophic gastritis 1,Sex: Male; age: 58; pathological lesions: Normal; subject id: P1; agent: None,HiSeq X Ten,GSM3954946_processed_NAG1.txt.gz
+GSE134520,GSM3954947,Non-atrophic gastritis 2,Sex: Female; age: 56; pathological lesions: Normal; subject id: P2; agent: None,HiSeq X Ten,GSM3954947_processed_NAG2.txt.gz
+GSE134520,GSM3954948,Non-atrophic gastritis 3,Sex: Male; age: 62; pathological lesions: Normal; subject id: P9; agent: None,HiSeq X Ten,GSM3954948_processed_NAG3.txt.gz
+GSE134520,GSM3954949,Chronic atrophic gastritis 1,Sex: Male; age: 51; pathological lesions: Chronic atrophic gastritis; subject id: P3; agent: None,HiSeq X Ten,GSM3954949_processed_CAG1.txt.gz
+GSE134520,GSM3954950,Chronic atrophic gastritis 2,Sex: Female; age: 62; pathological lesions: Chronic atrophic gastritis; subject id: P4; agent: None,HiSeq X Ten,GSM3954950_processed_CAG2.txt.gz
+GSE134520,GSM3954951,Chronic atrophic gastritis 3,Sex: Female; age: 62; pathological lesions: Chronic atrophic gastritis; subject id: P4; agent: None,HiSeq X Ten,GSM3954951_processed_CAG3.txt.gz
+GSE134520,GSM3954952,Wild Intestinal metaplasia 1,Sex: Male; age: 63; pathological lesions: Gastric Metaplasia (wild); subject id: P5; agent: H. pylori,HiSeq X Ten,GSM3954952_processed_IMW1.txt.gz
+GSE134520,GSM3954953,Wild Intestinal metaplasia 2,Sex: Female; age: 48; pathological lesions: Gastric Metaplasia (wild); subject id: P6; agent: None,HiSeq X Ten,GSM3954953_processed_IMW2.txt.gz
+GSE134520,GSM3954954,Severe Intestinal metaplasia 1,Sex: Male; age: 68; pathological lesions: Gastric Metaplasia (severe); subject id: P7; agent: H. pylori,HiSeq X Ten,GSM3954954_processed_IMS1.txt.gz
+GSE134520,GSM3954955,Severe Intestinal metaplasia 2,Sex: Male; age: 68; pathological lesions: Gastric Metaplasia (severe); subject id: P7; agent: H. pylori,HiSeq X Ten,GSM3954955_processed_IMS2.txt.gz
+GSE134520,GSM3954956,Severe Intestinal metaplasia 3,Sex: Male; age: 67; pathological lesions: Gastric Metaplasia (severe); subject id: P8; agent: None,HiSeq X Ten,GSM3954956_processed_IMS3.txt.gz
+GSE134520,GSM3954957,Severe Intestinal metaplasia 4,Sex: Male; age: 67; pathological lesions: Gastric Metaplasia (severe); subject id: P8; agent: None,HiSeq X Ten,GSM3954957_processed_IMS4.txt.gz
+GSE134520,GSM3954958,Early gastric cancer,Sex: Male; age: 67; pathological lesions: Early gastric caner; subject id: P8; agent: None,HiSeq X Ten,GSM3954958_processed_EGC.txt.gz
+GSE163558,GSM5004180,primary gastric cancer PT1,tissue: stomach; treatment: untreated,Illumina NovaSeq 6000,GSM5004180_PT1_barcodes.tsv.gz|GSM5004180_PT1_features.tsv.gz|GSM5004180_PT1_matrix.mtx.gz
+GSE163558,GSM5004181,primary gastric cancer PT2,tissue: stomach; treatment: untreated,Illumina NovaSeq 6000,GSM5004181_PT2_barcodes.tsv.gz|GSM5004181_PT2_features.tsv.gz|GSM5004181_PT2_matrix.mtx.gz
+GSE163558,GSM5004182,primary gastric cancer PT3,tissue: stomach; treatment: untreated,Illumina NovaSeq 6000,GSM5004182_PT3_barcodes.tsv.gz|GSM5004182_PT3_features.tsv.gz|GSM5004182_PT3_matrix.mtx.gz
+GSE163558,GSM5004183,adjacent non-tumoral  NT1,tissue: stomach; treatment: untreated,Illumina NovaSeq 6000,GSM5004183_NT1_barcodes.tsv.gz|GSM5004183_NT1_features.tsv.gz|GSM5004183_NT1_matrix.mtx.gz
+GSE163558,GSM5004184,gastric cancer lymph node metastasis LN1,tissue: lymph node; treatment: untreated,Illumina NovaSeq 6000,GSM5004184_LN1_barcodes.tsv.gz|GSM5004184_LN1_features.tsv.gz|GSM5004184_LN1_matrix.mtx.gz
+GSE163558,GSM5004185,gastric cancer lymph node metastasis LN2,tissue: lymph node; treatment: untreated,Illumina NovaSeq 6000,GSM5004185_LN2_barcodes.tsv.gz|GSM5004185_LN2_features.tsv.gz|GSM5004185_LN2_matrix.mtx.gz
+GSE163558,GSM5004186,gastric cancer ovary metastasis O1,tissue: ovary; treatment: untreated,Illumina NovaSeq 6000,GSM5004186_O1_barcodes.tsv.gz|GSM5004186_O1_features.tsv.gz|GSM5004186_O1_matrix.mtx.gz
+GSE163558,GSM5004187,gastric cancer peritoneum metastasis P1,tissue: peritoneum; treatment: untreated,Illumina NovaSeq 6000,GSM5004187_P1_barcodes.tsv.gz|GSM5004187_P1_features.tsv.gz|GSM5004187_P1_matrix.mtx.gz
+GSE163558,GSM5004188,gastric cancer liver metastasis Li1,tissue: liver; treatment: untreated,Illumina NovaSeq 6000,GSM5004188_Li1_barcodes.tsv.gz|GSM5004188_Li1_features.tsv.gz|GSM5004188_Li1_matrix.mtx.gz
+GSE163558,GSM5004189,gastric cancer liver metastasis Li2,tissue: liver; treatment: untreated,Illumina NovaSeq 6000,GSM5004189_Li2_barcodes.tsv.gz|GSM5004189_Li2_features.tsv.gz|GSM5004189_Li2_matrix.mtx.gz
+GSE167297,GSM5101013,Pt1_normal,patient: patient1; diagnosis: diffuse type gastric cancer; tissue: normal gastric tissue,Illumina HiSeq 4000,GSM5101013_Pt1_Normal_CountMatrix.txt.gz
+GSE167297,GSM5101014,Pt1_superficial_cancer,patient: patient1; diagnosis: diffuse type gastric cancer; tissue: superficial layer of gastric cancer,Illumina HiSeq 4000,GSM5101014_Pt1_Superficial_CountMatrix.txt.gz
+GSE167297,GSM5101015,Pt1_deep_cancer,patient: patient1; diagnosis: diffuse type gastric cancer; tissue: deep layer of gastric cancer,Illumina HiSeq 4000,GSM5101015_Pt1_Deep_CountMatrix.txt.gz
+GSE167297,GSM5101016,Pt2_superficial_cancer,patient: patient2; diagnosis: diffuse type gastric cancer; tissue: superficial layer of gastric cancer,Illumina HiSeq 4000,GSM5101016_Pt2_Superficial_CountMatrix.txt.gz
+GSE167297,GSM5101017,Pt2_deep_cancer,patient: patient2; diagnosis: diffuse type gastric cancer; tissue: deep layer of gastric cancer,Illumina HiSeq 4000,GSM5101017_Pt2_Deep_CountMatrix.txt.gz
+GSE167297,GSM5101018,Pt3_normal,patient: patient3; diagnosis: diffuse type gastric cancer; tissue: normal gastric tissue,Illumina HiSeq 4000,GSM5101018_Pt3_Normal_CountMatrix.txt.gz
+GSE167297,GSM5101019,Pt3_superficial_cancer,patient: patient3; diagnosis: diffuse type gastric cancer; tissue: superficial layer of gastric cancer,Illumina HiSeq 4000,GSM5101019_Pt3_Superficial_CountMatrix.txt.gz
+GSE167297,GSM5101020,Pt3_deep_cancer,patient: patient3; diagnosis: diffuse type gastric cancer; tissue: deep layer of gastric cancer,Illumina HiSeq 4000,GSM5101020_Pt3_Deep_CountMatrix.txt.gz
+GSE167297,GSM5101021,Pt4_normal,patient: patient4; diagnosis: diffuse type gastric cancer; tissue: normal gastric tissue,Illumina HiSeq 4000,GSM5101021_Pt4_Normal_CountMatrix.txt.gz
+GSE167297,GSM5101022,Pt4_superficial_cancer,patient: patient4; diagnosis: diffuse type gastric cancer; tissue: superficial layer of gastric cancer,Illumina HiSeq 4000,GSM5101022_Pt4_Superficial_CountMatrix.txt.gz
+GSE167297,GSM5101023,Pt4_deep_cancer,patient: patient4; diagnosis: diffuse type gastric cancer; tissue: deep layer of gastric cancer,Illumina HiSeq 4000,GSM5101023_Pt4_Deep_CountMatrix.txt.gz
+GSE167297,GSM5101024,Pt5_normal,patient: patient5; diagnosis: diffuse type gastric cancer; tissue: normal gastric tissue,Illumina HiSeq 4000,GSM5101024_Pt5_Normal_CountMatrix.txt.gz
+GSE167297,GSM5101025,Pt5_superficial_cancer,patient: patient5; diagnosis: diffuse type gastric cancer; tissue: superficial layer of gastric cancer,Illumina HiSeq 4000,GSM5101025_Pt5_Superficial_CountMatrix.txt.gz
+GSE167297,GSM5101026,Pt5_deep_cancer,patient: patient5; diagnosis: diffuse type gastric cancer; tissue: deep layer of gastric cancer,Illumina HiSeq 4000,GSM5101026_Pt5_Deep_CountMatrix.txt.gz
+GSE150290,GSM4546300,Pat01-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546300_Pat01-A.raw_gene_bc_matrices.tar.gz|GSM4546300_Pat01-A.txt.gz
+GSE150290,GSM4546301,Pat01-B,tissue: cancer stomach; diagnosis: EGC; lauren classification: Intestinal,Illumina HiSeq 2500,GSM4546301_Pat01-B.raw_gene_bc_matrices.tar.gz|GSM4546301_Pat01-B.txt.gz
+GSE150290,GSM4546302,Pat02-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546302_Pat02-A.raw_gene_bc_matrices.tar.gz|GSM4546302_Pat02-A.txt.gz
+GSE150290,GSM4546303,Pat02-B,tissue: cancer stomach; diagnosis: AGC; lauren classification: Diffuse,Illumina HiSeq 2500,GSM4546303_Pat02-B.raw_gene_bc_matrices.tar.gz|GSM4546303_Pat02-B.txt.gz
+GSE150290,GSM4546304,Pat03-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546304_Pat03-A.raw_gene_bc_matrices.tar.gz|GSM4546304_Pat03-A.txt.gz
+GSE150290,GSM4546305,Pat03-B,tissue: cancer stomach; diagnosis: EGC; lauren classification: Diffuse,Illumina HiSeq 2500,GSM4546305_Pat03-B.raw_gene_bc_matrices.tar.gz|GSM4546305_Pat03-B.txt.gz
+GSE150290,GSM4546306,Pat04-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546306_Pat04-A.raw_gene_bc_matrices.tar.gz|GSM4546306_Pat04-A.txt.gz
+GSE150290,GSM4546307,Pat04-B,tissue: cancer stomach; diagnosis: EGC; lauren classification: Diffuse,Illumina HiSeq 2500,GSM4546307_Pat04-B.raw_gene_bc_matrices.tar.gz|GSM4546307_Pat04-B.txt.gz
+GSE150290,GSM4546308,Pat05-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546308_Pat05-A.raw_gene_bc_matrices.tar.gz|GSM4546308_Pat05-A.txt.gz
+GSE150290,GSM4546309,Pat05-B,tissue: cancer stomach; diagnosis: EGC; lauren classification: Diffuse,Illumina HiSeq 2500,GSM4546309_Pat05-B.raw_gene_bc_matrices.tar.gz|GSM4546309_Pat05-B.txt.gz
+GSE150290,GSM4546310,Pat06-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546310_Pat06-A.raw_gene_bc_matrices.tar.gz|GSM4546310_Pat06-A.txt.gz
+GSE150290,GSM4546311,Pat06-B,tissue: cancer stomach; diagnosis: EGC; lauren classification: Diffuse,Illumina HiSeq 2500,GSM4546311_Pat06-B.raw_gene_bc_matrices.tar.gz|GSM4546311_Pat06-B.txt.gz
+GSE150290,GSM4546312,Pat07-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546312_Pat07-A.raw_gene_bc_matrices.tar.gz|GSM4546312_Pat07-A.txt.gz
+GSE150290,GSM4546313,Pat07-B,tissue: cancer stomach; diagnosis: EGC; lauren classification: Intestinal,Illumina HiSeq 2500,GSM4546313_Pat07-B.raw_gene_bc_matrices.tar.gz|GSM4546313_Pat07-B.txt.gz
+GSE150290,GSM4546314,Pat08-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546314_Pat08-A.raw_gene_bc_matrices.tar.gz|GSM4546314_Pat08-A.txt.gz
+GSE150290,GSM4546315,Pat08-B,tissue: cancer stomach; diagnosis: EGC; lauren classification: Diffuse,Illumina HiSeq 2500,GSM4546315_Pat08-B.raw_gene_bc_matrices.tar.gz|GSM4546315_Pat08-B.txt.gz
+GSE150290,GSM4546316,Pat09-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546316_Pat09-A.raw_gene_bc_matrices.tar.gz|GSM4546316_Pat09-A.txt.gz
+GSE150290,GSM4546317,Pat09-B,tissue: cancer stomach; diagnosis: EGC; lauren classification: Intestinal,Illumina HiSeq 2500,GSM4546317_Pat09-B.raw_gene_bc_matrices.tar.gz|GSM4546317_Pat09-B.txt.gz
+GSE150290,GSM4546318,Pat10-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546318_Pat10-A.raw_gene_bc_matrices.tar.gz|GSM4546318_Pat10-A.txt.gz
+GSE150290,GSM4546319,Pat10-B,tissue: cancer stomach; diagnosis: EGC; lauren classification: Diffuse,Illumina HiSeq 2500,GSM4546319_Pat10-B.raw_gene_bc_matrices.tar.gz|GSM4546319_Pat10-B.txt.gz
+GSE150290,GSM4546320,Pat11-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546320_Pat11-A.raw_gene_bc_matrices.tar.gz|GSM4546320_Pat11-A.txt.gz
+GSE150290,GSM4546321,Pat11-B,tissue: cancer stomach; diagnosis: AGC; lauren classification: Diffuse,Illumina HiSeq 2500,GSM4546321_Pat11-B.raw_gene_bc_matrices.tar.gz|GSM4546321_Pat11-B.txt.gz
+GSE150290,GSM4546322,Pat12-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546322_Pat12-A.raw_gene_bc_matrices.tar.gz|GSM4546322_Pat12-A.txt.gz
+GSE150290,GSM4546323,Pat12-B,tissue: cancer stomach; diagnosis: AGC; lauren classification: Diffuse,Illumina HiSeq 2500,GSM4546323_Pat12-B.raw_gene_bc_matrices.tar.gz|GSM4546323_Pat12-B.txt.gz
+GSE150290,GSM4546324,Pat13-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546324_Pat13-A.raw_gene_bc_matrices.tar.gz|GSM4546324_Pat13-A.txt.gz
+GSE150290,GSM4546325,Pat13-B,tissue: cancer stomach; diagnosis: ECG; lauren classification: Intestinal,Illumina HiSeq 2500,GSM4546325_Pat13-B.raw_gene_bc_matrices.tar.gz|GSM4546325_Pat13-B.txt.gz
+GSE150290,GSM4546326,Pat14-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546326_Pat14-A.raw_gene_bc_matrices.tar.gz|GSM4546326_Pat14-A.txt.gz
+GSE150290,GSM4546327,Pat14-B,tissue: cancer stomach; diagnosis: AGC; lauren classification: Diffuse,Illumina HiSeq 2500,GSM4546327_Pat14-B.raw_gene_bc_matrices.tar.gz|GSM4546327_Pat14-B.txt.gz
+GSE150290,GSM4546328,Pat15-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546328_Pat15-A.raw_gene_bc_matrices.tar.gz|GSM4546328_Pat15-A.txt.gz
+GSE150290,GSM4546329,Pat15-B,tissue: cancer stomach; diagnosis: AGC; lauren classification: Diffuse,Illumina HiSeq 2500,GSM4546329_Pat15-B.raw_gene_bc_matrices.tar.gz|GSM4546329_Pat15-B.txt.gz
+GSE150290,GSM4546330,Pat16-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546330_Pat16-A.raw_gene_bc_matrices.tar.gz|GSM4546330_Pat16-A.txt.gz
+GSE150290,GSM4546331,Pat16-B,tissue: cancer stomach; diagnosis: EGC; lauren classification: Diffuse,Illumina HiSeq 2500,GSM4546331_Pat16-B.raw_gene_bc_matrices.tar.gz|GSM4546331_Pat16-B.txt.gz
+GSE150290,GSM4546332,Pat17-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546332_Pat17-A.raw_gene_bc_matrices.tar.gz|GSM4546332_Pat17-A.txt.gz
+GSE150290,GSM4546333,Pat17-B,tissue: cancer stomach; diagnosis: EGC; lauren classification: Intestinal,Illumina HiSeq 2500,GSM4546333_Pat17-B.raw_gene_bc_matrices.tar.gz|GSM4546333_Pat17-B.txt.gz
+GSE150290,GSM4546334,Pat18-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546334_Pat18-A.raw_gene_bc_matrices.tar.gz|GSM4546334_Pat18-A.txt.gz
+GSE150290,GSM4546335,Pat18-B,tissue: cancer stomach; diagnosis: EGC; lauren classification: Intestinal,Illumina HiSeq 2500,GSM4546335_Pat18-B.raw_gene_bc_matrices.tar.gz|GSM4546335_Pat18-B.txt.gz
+GSE150290,GSM4546336,Pat19-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546336_Pat19-A.raw_gene_bc_matrices.tar.gz|GSM4546336_Pat19-A.txt.gz
+GSE150290,GSM4546337,Pat19-B,tissue: cancer stomach; diagnosis: EGC; lauren classification: Intestinal,Illumina HiSeq 2500,GSM4546337_Pat19-B.raw_gene_bc_matrices.tar.gz|GSM4546337_Pat19-B.txt.gz
+GSE150290,GSM4546338,Pat20-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546338_Pat20-A.raw_gene_bc_matrices.tar.gz|GSM4546338_Pat20-A.txt.gz
+GSE150290,GSM4546339,Pat20-B,tissue: cancer stomach; diagnosis: AGC; lauren classification: Diffuse,Illumina HiSeq 2500,GSM4546339_Pat20-B.raw_gene_bc_matrices.tar.gz|GSM4546339_Pat20-B.txt.gz
+GSE150290,GSM4546340,Pat21-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546340_Pat21-A.raw_gene_bc_matrices.tar.gz|GSM4546340_Pat21-A.txt.gz
+GSE150290,GSM4546341,Pat22-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546341_Pat22-A.raw_gene_bc_matrices.tar.gz|GSM4546341_Pat22-A.txt.gz
+GSE150290,GSM4546342,Pat22-B,tissue: cancer stomach; diagnosis: EGC; lauren classification: Intestinal,Illumina HiSeq 2500,GSM4546342_Pat22-B.raw_gene_bc_matrices.tar.gz|GSM4546342_Pat22-B.txt.gz
+GSE150290,GSM4546343,Pat23-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546343_Pat23-A.raw_gene_bc_matrices.tar.gz|GSM4546343_Pat23-A.txt.gz
+GSE150290,GSM4546344,Pat23-B,tissue: cancer stomach; diagnosis: AGC; lauren classification: Diffuse,Illumina HiSeq 2500,GSM4546344_Pat23-B.raw_gene_bc_matrices.tar.gz|GSM4546344_Pat23-B.txt.gz
+GSE150290,GSM4546345,Pat24-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546345_Pat24-A.raw_gene_bc_matrices.tar.gz|GSM4546345_Pat24-A.txt.gz
+GSE150290,GSM4546346,Pat24-B,tissue: cancer stomach; diagnosis: AGC; lauren classification: Diffuse,Illumina HiSeq 2500,GSM4546346_Pat24-B.raw_gene_bc_matrices.tar.gz|GSM4546346_Pat24-B.txt.gz
+GSE150290,GSM4546347,Pat25-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546347_Pat25-A.raw_gene_bc_matrices.tar.gz|GSM4546347_Pat25-A.txt.gz
+GSE150290,GSM4546348,Pat26-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546348_Pat26-A.raw_gene_bc_matrices.tar.gz|GSM4546348_Pat26-A.txt.gz
+GSE150290,GSM4546349,Pat27-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546349_Pat27-A.raw_gene_bc_matrices.tar.gz|GSM4546349_Pat27-A.txt.gz
+GSE150290,GSM4546350,Pat28-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546350_Pat28-A.raw_gene_bc_matrices.tar.gz|GSM4546350_Pat28-A.txt.gz
+GSE150290,GSM4546351,Pat29-A,tissue: normal stomach,Illumina HiSeq 2500,GSM4546351_Pat29-A.raw_gene_bc_matrices.tar.gz|GSM4546351_Pat29-A.txt.gz
+GSE206785,GSM6262627,S1_D171012_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D171012; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262628,S2_D171012_T,tissue: stomach; tissue type: Tumor Sample from individual D171012; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262629,S3_D171116_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D171116; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262630,S4_D171116_T,tissue: stomach; tissue type: Tumor Sample from individual D171116; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262631,S5_D171218_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D171218; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262632,S6_D171218_T,tissue: stomach; tissue type: Tumor Sample from individual D171218; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262633,S7_D180116_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D180116; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262634,S8_D180116_T,tissue: stomach; tissue type: Tumor Sample from individual D180116; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262635,S9_D180118_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D180118; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262636,S10_D180118_T,tissue: stomach; tissue type: Tumor Sample from individual D180118; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262637,S11_D180123_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D180123; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262638,S12_D180123_T,tissue: stomach; tissue type: Tumor Sample from individual D180123; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262639,S13_D180124_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D180124; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262640,S14_D180124_T,tissue: stomach; tissue type: Tumor Sample from individual D180124; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262641,S15_D180129_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D180129; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262642,S16_D180129_T,tissue: stomach; tissue type: Tumor Sample from individual D180129; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262643,S17_D180305_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D180305; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262644,S18_D180305_T,tissue: stomach; tissue type: Tumor Sample from individual D180305; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262645,S19_D180308_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D180308; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262646,S20_D180308_T,tissue: stomach; tissue type: Tumor Sample from individual D180308; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262647,S21_D180605_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D180605; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262648,S22_D180605_T,tissue: stomach; tissue type: Tumor Sample from individual D180605; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262649,S23_D180606_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D180606; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262650,S24_D180606_T,tissue: stomach; tissue type: Tumor Sample from individual D180606; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262651,S25_D180608_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D180608; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262652,S26_D180608_T,tissue: stomach; tissue type: Tumor Sample from individual D180608; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262653,S27_D180611_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D180611; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262654,S28_D180611_T,tissue: stomach; tissue type: Tumor Sample from individual D180611; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262655,S29_D181019_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D181019; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262656,S30_D181019_T,tissue: stomach; tissue type: Tumor Sample from individual D181019; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262657,S31_D181025_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D181025; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262658,S32_D181025_T,tissue: stomach; tissue type: Tumor Sample from individual D181025; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262659,S33_D181026_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D181026; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262660,S34_D181026_T,tissue: stomach; tissue type: Tumor Sample from individual D181026; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262661,S35_D181217_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D181217; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262662,S36_D181217_T,tissue: stomach; tissue type: Tumor Sample from individual D181217; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262663,S37_D181227_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D181227; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262664,S38_D181227_T,tissue: stomach; tissue type: Tumor Sample from individual D181227; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262665,S39_D190103_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D190103; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262666,S40_D190103_T,tissue: stomach; tissue type: Tumor Sample from individual D190103; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262667,S41_D190118_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D190118; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262668,S42_D190118_T,tissue: stomach; tissue type: Tumor Sample from individual D190118; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262669,S43_D190123_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D190123; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262670,S44_D190123_T,tissue: stomach; tissue type: Tumor Sample from individual D190123; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262671,S45_D190124_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D190124; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262672,S46_D190124_T,tissue: stomach; tissue type: Tumor Sample from individual D190124; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262673,S47_D190125_N,tissue: stomach; tissue type: Adjacent non-tumor normal Sample from individual D190125; treatment: none,Illumina HiSeq 4000,NONE
+GSE206785,GSM6262674,S48_D190125_T,tissue: stomach; tissue type: Tumor Sample from individual D190125; treatment: none,Illumina HiSeq 4000,NONE
+GSE246662,GSM7874169,"HL, case 1, scRNAseq",tissue: Liver,Illumina HiSeq 4000,GSM7874169_HL1.csv.gz
+GSE246662,GSM7874170,"HL, case 2, scRNAseq",tissue: Liver,Illumina HiSeq 4000,GSM7874170_HL2.csv.gz
+GSE246662,GSM7874171,"HL, case 3, scRNAseq",tissue: Liver,Illumina HiSeq 4000,GSM7874171_HL3.csv.gz
+GSE246662,GSM7874172,"GC, case 1, scRNAseq",tissue: Gastric cancer,Illumina HiSeq 4000,GSM7874172_GC1.csv.gz
+GSE246662,GSM7874173,"GC, case 2, scRNAseq",tissue: Gastric cancer,Illumina HiSeq 4000,GSM7874173_GC2.csv.gz
+GSE246662,GSM7874174,"GC, case 3, scRNAseq",tissue: Gastric cancer,Illumina HiSeq 4000,GSM7874174_GC3.csv.gz
+GSE246662,GSM7874175,"LM, case 1, scRNAseq",tissue: Gastric cancer liver metastasis,Illumina HiSeq 4000,GSM7874175_LM1.csv.gz
+GSE246662,GSM7874176,"LM, case 2, scRNAseq",tissue: Gastric cancer liver metastasis,Illumina HiSeq 4000,GSM7874176_LM2.csv.gz
+GSE246662,GSM7874177,"LM, case 3, scRNAseq",tissue: Gastric cancer liver metastasis,Illumina HiSeq 4000,GSM7874177_LM3.csv.gz
+GSE270680,GSM8349949,"Donor 01, 10x 5', Stage I, Intestinal, Tumor",tissue: Gastric cancer tumor; cell line: D01T; cell type: Donor 01; Stage: Stage I; subtype: Intestinal,Illumina NovaSeq 6000,GSM8349949_D01T_barcodes.tsv.gz|GSM8349949_D01T_features.tsv.gz|GSM8349949_D01T_matrix.mtx.gz
+GSE270680,GSM8349950,"Donor 01, 10x 5', Stage I, Intestinal, Peripheral Blood",tissue: Peripheral blood; cell line: D01P; cell type: Donor 01; Stage: Stage I; subtype: Intestinal,Illumina NovaSeq 6000,GSM8349950_D01P_barcodes.tsv.gz|GSM8349950_D01P_features.tsv.gz|GSM8349950_D01P_matrix.mtx.gz
+GSE270680,GSM8349951,"Donor 02, 10x 5', Stage III, Indeterminate, Tumor",tissue: Gastric cancer tumor; cell line: D02T; cell type: Donor 02; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349951_D02T_barcodes.tsv.gz|GSM8349951_D02T_features.tsv.gz|GSM8349951_D02T_matrix.mtx.gz
+GSE270680,GSM8349952,"Donor 02, 10x 5', Stage III, Indeterminate, Normal",tissue: Adjacent normal; cell line: D02N; cell type: Donor 02; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349952_D02N_barcodes.tsv.gz|GSM8349952_D02N_features.tsv.gz|GSM8349952_D02N_matrix.mtx.gz
+GSE270680,GSM8349953,"Donor 02, 10x 5', Stage III, Indeterminate, Lymph Node",tissue: Lymph node; cell line: D02L; cell type: Donor 02; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349953_D02L_barcodes.tsv.gz|GSM8349953_D02L_features.tsv.gz|GSM8349953_D02L_matrix.mtx.gz
+GSE270680,GSM8349954,"Donor 02, 10x 5', Stage III, Indeterminate, Peripheral Blood",tissue: Peripheral blood; cell line: D02P; cell type: Donor 02; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349954_D02P_barcodes.tsv.gz|GSM8349954_D02P_features.tsv.gz|GSM8349954_D02P_matrix.mtx.gz
+GSE270680,GSM8349955,"Donor 03, 10x 3', Stage III, Intestinal, Tumor",tissue: Gastric cancer tumor; cell line: D03T; cell type: Donor 03; Stage: Stage III; subtype: Intestinal,Illumina NovaSeq 6000,GSM8349955_D03T_barcodes.tsv.gz|GSM8349955_D03T_features.tsv.gz|GSM8349955_D03T_matrix.mtx.gz
+GSE270680,GSM8349956,"Donor 03, 10x 5', Stage III, Intestinal, Normal",tissue: Adjacent normal; cell line: D03N; cell type: Donor 03; Stage: Stage III; subtype: Intestinal,Illumina NovaSeq 6000,GSM8349956_D03N_barcodes.tsv.gz|GSM8349956_D03N_features.tsv.gz|GSM8349956_D03N_matrix.mtx.gz
+GSE270680,GSM8349957,"Donor 03, 10x 3', Stage III, Intestinal, Lymph Node",tissue: Lymph node; cell line: D03L; cell type: Donor 03; Stage: Stage III; subtype: Intestinal,Illumina NovaSeq 6000,GSM8349957_D03L_barcodes.tsv.gz|GSM8349957_D03L_features.tsv.gz|GSM8349957_D03L_matrix.mtx.gz
+GSE270680,GSM8349958,"Donor 04, 10x 3', Stage II, Indeterminate, Tumor",tissue: Gastric cancer tumor; cell line: D04T; cell type: Donor 04; Stage: Stage II; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349958_D04T_barcodes.tsv.gz|GSM8349958_D04T_features.tsv.gz|GSM8349958_D04T_matrix.mtx.gz
+GSE270680,GSM8349959,"Donor 04, 10x 5', Stage II, Indeterminate, Normal",tissue: Adjacent normal; cell line: D04N; cell type: Donor 04; Stage: Stage II; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349959_D04N_barcodes.tsv.gz|GSM8349959_D04N_features.tsv.gz|GSM8349959_D04N_matrix.mtx.gz
+GSE270680,GSM8349960,"Donor 04, 10x 3', Stage II, Indeterminate, Lymph Node",tissue: Lymph node; cell line: D04L; cell type: Donor 04; Stage: Stage II; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349960_D04L_barcodes.tsv.gz|GSM8349960_D04L_features.tsv.gz|GSM8349960_D04L_matrix.mtx.gz
+GSE270680,GSM8349961,"Donor 04, 10x 3', Stage II, Indeterminate, Peripheral Blood",tissue: Peripheral blood; cell line: D04P; cell type: Donor 04; Stage: Stage II; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349961_D04P_barcodes.tsv.gz|GSM8349961_D04P_features.tsv.gz|GSM8349961_D04P_matrix.mtx.gz
+GSE270680,GSM8349962,"Donor 05, 10x 5', Stage III, Indeterminate, Tumor",tissue: Gastric cancer tumor; cell line: D05T; cell type: Donor 05; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349962_D05T_barcodes.tsv.gz|GSM8349962_D05T_features.tsv.gz|GSM8349962_D05T_matrix.mtx.gz
+GSE270680,GSM8349963,"Donor 05, 10x 5', Stage III, Indeterminate, Normal",tissue: Adjacent normal; cell line: D05N; cell type: Donor 05; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349963_D05N_barcodes.tsv.gz|GSM8349963_D05N_features.tsv.gz|GSM8349963_D05N_matrix.mtx.gz
+GSE270680,GSM8349964,"Donor 05, 10x 5', Stage III, Indeterminate, Lymph Node",tissue: Lymph node; cell line: D05L; cell type: Donor 05; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349964_D05L_barcodes.tsv.gz|GSM8349964_D05L_features.tsv.gz|GSM8349964_D05L_matrix.mtx.gz
+GSE270680,GSM8349965,"Donor 05, 10x 5', Stage III, Indeterminate, Peripheral Blood",tissue: Peripheral blood; cell line: D05P; cell type: Donor 05; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349965_D05P_barcodes.tsv.gz|GSM8349965_D05P_features.tsv.gz|GSM8349965_D05P_matrix.mtx.gz
+GSE270680,GSM8349966,"Donor 06, 10x 5', Stage III, Indeterminate, Tumor",tissue: Gastric cancer tumor; cell line: D06T; cell type: Donor 06; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349966_D06T_barcodes.tsv.gz|GSM8349966_D06T_features.tsv.gz|GSM8349966_D06T_matrix.mtx.gz
+GSE270680,GSM8349967,"Donor 06, 10x 5', Stage III, Indeterminate, Normal",tissue: Adjacent normal; cell line: D06N; cell type: Donor 06; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349967_D06N_barcodes.tsv.gz|GSM8349967_D06N_features.tsv.gz|GSM8349967_D06N_matrix.mtx.gz
+GSE270680,GSM8349968,"Donor 06, 10x 5', Stage III, Indeterminate, Lymph Node",tissue: Lymph node; cell line: D06L; cell type: Donor 06; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349968_D06L_barcodes.tsv.gz|GSM8349968_D06L_features.tsv.gz|GSM8349968_D06L_matrix.mtx.gz
+GSE270680,GSM8349969,"Donor 06, 10x 5', Stage III, Indeterminate, Peripheral Blood",tissue: Peripheral blood; cell line: D06P; cell type: Donor 06; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349969_D06P_barcodes.tsv.gz|GSM8349969_D06P_features.tsv.gz|GSM8349969_D06P_matrix.mtx.gz
+GSE270680,GSM8349970,"Donor 07, 10x 5', Stage III, Indeterminate, Tumor",tissue: Gastric cancer tumor; cell line: D07T; cell type: Donor 07; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349970_D07T_barcodes.tsv.gz|GSM8349970_D07T_features.tsv.gz|GSM8349970_D07T_matrix.mtx.gz
+GSE270680,GSM8349971,"Donor 07, 10x 5', Stage III, Indeterminate, Normal",tissue: Adjacent normal; cell line: D07N; cell type: Donor 07; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349971_D07N_barcodes.tsv.gz|GSM8349971_D07N_features.tsv.gz|GSM8349971_D07N_matrix.mtx.gz
+GSE270680,GSM8349972,"Donor 07, 10x 5', Stage III, Indeterminate, Lymph Node",tissue: Lymph node; cell line: D07L; cell type: Donor 07; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349972_D07L_barcodes.tsv.gz|GSM8349972_D07L_features.tsv.gz|GSM8349972_D07L_matrix.mtx.gz
+GSE270680,GSM8349973,"Donor 07, 10x 5', Stage III, Indeterminate, Peripheral Blood",tissue: Peripheral blood; cell line: D07P; cell type: Donor 07; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349973_D07P_barcodes.tsv.gz|GSM8349973_D07P_features.tsv.gz|GSM8349973_D07P_matrix.mtx.gz
+GSE270680,GSM8349974,"Donor 08, 10x 5', Stage I, Intestinal, Tumor",tissue: Gastric cancer tumor; cell line: D08T; cell type: Donor 08; Stage: Stage I; subtype: Intestinal,Illumina NovaSeq 6000,GSM8349974_D08T_barcodes.tsv.gz|GSM8349974_D08T_features.tsv.gz|GSM8349974_D08T_matrix.mtx.gz
+GSE270680,GSM8349975,"Donor 08, 10x 5', Stage I, Intestinal, Normal",tissue: Adjacent normal; cell line: D08N; cell type: Donor 08; Stage: Stage I; subtype: Intestinal,Illumina NovaSeq 6000,GSM8349975_D08N_barcodes.tsv.gz|GSM8349975_D08N_features.tsv.gz|GSM8349975_D08N_matrix.mtx.gz
+GSE270680,GSM8349976,"Donor 08, 10x 5', Stage I, Intestinal, Lymph Node",tissue: Lymph node; cell line: D08L; cell type: Donor 08; Stage: Stage I; subtype: Intestinal,Illumina NovaSeq 6000,GSM8349976_D08L_barcodes.tsv.gz|GSM8349976_D08L_features.tsv.gz|GSM8349976_D08L_matrix.mtx.gz
+GSE270680,GSM8349977,"Donor 08, 10x 5', Stage I, Intestinal, Peripheral Blood",tissue: Peripheral blood; cell line: D08P; cell type: Donor 08; Stage: Stage I; subtype: Intestinal,Illumina NovaSeq 6000,GSM8349977_D08P_barcodes.tsv.gz|GSM8349977_D08P_features.tsv.gz|GSM8349977_D08P_matrix.mtx.gz
+GSE270680,GSM8349978,"Donor 09, 10x 5', Stage III, Indeterminate, Tumor",tissue: Gastric cancer tumor; cell line: D09T; cell type: Donor 09; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349978_D09T_barcodes.tsv.gz|GSM8349978_D09T_features.tsv.gz|GSM8349978_D09T_matrix.mtx.gz
+GSE270680,GSM8349979,"Donor 09, 10x 5', Stage III, Indeterminate, Normal",tissue: Adjacent normal; cell line: D09N; cell type: Donor 09; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349979_D09N_barcodes.tsv.gz|GSM8349979_D09N_features.tsv.gz|GSM8349979_D09N_matrix.mtx.gz
+GSE270680,GSM8349980,"Donor 09, 10x 5', Stage III, Indeterminate, Lymph Node",tissue: Lymph node; cell line: D09L; cell type: Donor 09; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349980_D09L_barcodes.tsv.gz|GSM8349980_D09L_features.tsv.gz|GSM8349980_D09L_matrix.mtx.gz
+GSE270680,GSM8349981,"Donor 09, 10x 5', Stage III, Indeterminate, Peripheral Blood",tissue: Peripheral blood; cell line: D09P; cell type: Donor 09; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349981_D09P_barcodes.tsv.gz|GSM8349981_D09P_features.tsv.gz|GSM8349981_D09P_matrix.mtx.gz
+GSE270680,GSM8349982,"Donor 10, 10x 5', Stage III, Intestinal, Tumor",tissue: Gastric cancer tumor; cell line: D10T; cell type: Donor 10; Stage: Stage III; subtype: Intestinal,Illumina NovaSeq 6000,GSM8349982_D10T_barcodes.tsv.gz|GSM8349982_D10T_features.tsv.gz|GSM8349982_D10T_matrix.mtx.gz
+GSE270680,GSM8349983,"Donor 10, 10x 5', Stage III, Intestinal, Normal",tissue: Adjacent normal; cell line: D10N; cell type: Donor 10; Stage: Stage III; subtype: Intestinal,Illumina NovaSeq 6000,GSM8349983_D10N_barcodes.tsv.gz|GSM8349983_D10N_features.tsv.gz|GSM8349983_D10N_matrix.mtx.gz
+GSE270680,GSM8349984,"Donor 10, 10x 5', Stage III, Intestinal, Lymph Node",tissue: Lymph node; cell line: D10L; cell type: Donor 10; Stage: Stage III; subtype: Intestinal,Illumina NovaSeq 6000,GSM8349984_D10L_barcodes.tsv.gz|GSM8349984_D10L_features.tsv.gz|GSM8349984_D10L_matrix.mtx.gz
+GSE270680,GSM8349985,"Donor 10, 10x 5', Stage III, Intestinal, Peripheral Blood",tissue: Peripheral blood; cell line: D10P; cell type: Donor 10; Stage: Stage III; subtype: Intestinal,Illumina NovaSeq 6000,GSM8349985_D10P_barcodes.tsv.gz|GSM8349985_D10P_features.tsv.gz|GSM8349985_D10P_matrix.mtx.gz
+GSE270680,GSM8349986,"Donor 11, 10x 5', Stage III, Indeterminate, Tumor",tissue: Gastric cancer tumor; cell line: D11T; cell type: Donor 11; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349986_D11T_barcodes.tsv.gz|GSM8349986_D11T_features.tsv.gz|GSM8349986_D11T_matrix.mtx.gz
+GSE270680,GSM8349987,"Donor 11, 10x 5', Stage III, Indeterminate, Normal",tissue: Adjacent normal; cell line: D11N; cell type: Donor 11; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349987_D11N_barcodes.tsv.gz|GSM8349987_D11N_features.tsv.gz|GSM8349987_D11N_matrix.mtx.gz
+GSE270680,GSM8349988,"Donor 11, 10x 5', Stage III, Indeterminate, Peripheral Blood",tissue: Peripheral blood; cell line: D11P; cell type: Donor 11; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349988_D11P_barcodes.tsv.gz|GSM8349988_D11P_features.tsv.gz|GSM8349988_D11P_matrix.mtx.gz
+GSE270680,GSM8349989,"Donor 12, 10x 5', Stage II, Diffuse, Tumor",tissue: Gastric cancer tumor; cell line: D12T; cell type: Donor 12; Stage: Stage II; subtype: Diffuse,Illumina NovaSeq 6000,GSM8349989_D12T_barcodes.tsv.gz|GSM8349989_D12T_features.tsv.gz|GSM8349989_D12T_matrix.mtx.gz
+GSE270680,GSM8349990,"Donor 12, 10x 5', Stage II, Diffuse, Normal",tissue: Adjacent normal; cell line: D12N; cell type: Donor 12; Stage: Stage II; subtype: Diffuse,Illumina NovaSeq 6000,GSM8349990_D12N_barcodes.tsv.gz|GSM8349990_D12N_features.tsv.gz|GSM8349990_D12N_matrix.mtx.gz
+GSE270680,GSM8349991,"Donor 12, 10x 5', Stage II, Diffuse, Lymph Node",tissue: Lymph node; cell line: D12L; cell type: Donor 12; Stage: Stage II; subtype: Diffuse,Illumina NovaSeq 6000,GSM8349991_D12L_barcodes.tsv.gz|GSM8349991_D12L_features.tsv.gz|GSM8349991_D12L_matrix.mtx.gz
+GSE270680,GSM8349992,"Donor 15, 10x 3', Stage III, Indeterminate, Tumor",tissue: Gastric cancer tumor; cell line: D15T; cell type: Donor 15; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8349992_D15T_barcodes.tsv.gz|GSM8349992_D15T_features.tsv.gz|GSM8349992_D15T_matrix.mtx.gz
+GSE270680,GSM8349993,"Donor 16, 10x 5', Stage III, Diffuse, Normal",tissue: Adjacent normal; cell line: D16N; cell type: Donor 16; Stage: Stage III; subtype: Diffuse,Illumina NovaSeq 6000,GSM8349993_D16N_barcodes.tsv.gz|GSM8349993_D16N_features.tsv.gz|GSM8349993_D16N_matrix.mtx.gz
+GSE270680,GSM8349994,"Donor 16, 10x 5', Stage III, Diffuse, Lymph Node",tissue: Lymph node; cell line: D16L; cell type: Donor 16; Stage: Stage III; subtype: Diffuse,Illumina NovaSeq 6000,GSM8349994_D16L_barcodes.tsv.gz|GSM8349994_D16L_features.tsv.gz|GSM8349994_D16L_matrix.mtx.gz
+GSE270680,GSM8349995,"Donor 16, 10x 5', Stage III, Diffuse, Peripheral Blood",tissue: Peripheral blood; cell line: D16P; cell type: Donor 16; Stage: Stage III; subtype: Diffuse,Illumina NovaSeq 6000,GSM8349995_D16P_barcodes.tsv.gz|GSM8349995_D16P_features.tsv.gz|GSM8349995_D16P_matrix.mtx.gz
+GSE270680,GSM8349996,"Donor 17, 10x 3', Stage III, Diffuse, Tumor",tissue: Gastric cancer tumor; cell line: D17T; cell type: Donor 17; Stage: Stage III; subtype: Diffuse,Illumina NovaSeq 6000,GSM8349996_D17T_barcodes.tsv.gz|GSM8349996_D17T_features.tsv.gz|GSM8349996_D17T_matrix.mtx.gz
+GSE270680,GSM8349997,"Donor 17, 10x 3', Stage III, Diffuse, Normal",tissue: Adjacent normal; cell line: D17N; cell type: Donor 17; Stage: Stage III; subtype: Diffuse,Illumina NovaSeq 6000,GSM8349997_D17N_barcodes.tsv.gz|GSM8349997_D17N_features.tsv.gz|GSM8349997_D17N_matrix.mtx.gz
+GSE270680,GSM8349998,"Donor 18, 10x 5', Stage III, Diffuse, Tumor",tissue: Gastric cancer tumor; cell line: D18T; cell type: Donor 18; Stage: Stage III; subtype: Diffuse,Illumina NovaSeq 6000,GSM8349998_D18T_barcodes.tsv.gz|GSM8349998_D18T_features.tsv.gz|GSM8349998_D18T_matrix.mtx.gz
+GSE270680,GSM8349999,"Donor 18, 10x 5', Stage III, Diffuse, Lymph Node",tissue: Lymph node; cell line: D18L; cell type: Donor 18; Stage: Stage III; subtype: Diffuse,Illumina NovaSeq 6000,GSM8349999_D18L_barcodes.tsv.gz|GSM8349999_D18L_features.tsv.gz|GSM8349999_D18L_matrix.mtx.gz
+GSE270680,GSM8350000,"Donor 18, 10x 5', Stage III, Diffuse, Peripheral Blood",tissue: Peripheral blood; cell line: D18P; cell type: Donor 18; Stage: Stage III; subtype: Diffuse,Illumina NovaSeq 6000,GSM8350000_D18P_barcodes.tsv.gz|GSM8350000_D18P_features.tsv.gz|GSM8350000_D18P_matrix.mtx.gz
+GSE270680,GSM8350001,"Donor 19, 10x 5', Stage I, Intestinal, Tumor",tissue: Gastric cancer tumor; cell line: D19T; cell type: Donor 19; Stage: Stage I; subtype: Intestinal,Illumina NovaSeq 6000,GSM8350001_D19T_barcodes.tsv.gz|GSM8350001_D19T_features.tsv.gz|GSM8350001_D19T_matrix.mtx.gz
+GSE270680,GSM8350002,"Donor 19, 10x 5', Stage I, Intestinal, Normal",tissue: Adjacent normal; cell line: D19N; cell type: Donor 19; Stage: Stage I; subtype: Intestinal,Illumina NovaSeq 6000,GSM8350002_D19N_barcodes.tsv.gz|GSM8350002_D19N_features.tsv.gz|GSM8350002_D19N_matrix.mtx.gz
+GSE270680,GSM8350003,"Donor 19, 10x 5', Stage I, Intestinal, Lymph Node",tissue: Lymph node; cell line: D19L; cell type: Donor 19; Stage: Stage I; subtype: Intestinal,Illumina NovaSeq 6000,GSM8350003_D19L_barcodes.tsv.gz|GSM8350003_D19L_features.tsv.gz|GSM8350003_D19L_matrix.mtx.gz
+GSE270680,GSM8350004,"Donor 19, 10x 5', Stage I, Intestinal, Peripheral Blood",tissue: Peripheral blood; cell line: D19P; cell type: Donor 19; Stage: Stage I; subtype: Intestinal,Illumina NovaSeq 6000,GSM8350004_D19P_barcodes.tsv.gz|GSM8350004_D19P_features.tsv.gz|GSM8350004_D19P_matrix.mtx.gz
+GSE270680,GSM8350005,"Donor 20, 10x 3', Stage III, Diffuse, Core, Tumor",tissue: Gastric cancer tumor; cell line: D20T; cell type: Donor 20; Stage: Stage III; subtype: Diffuse,Illumina NovaSeq 6000,GSM8350005_D20T_barcodes.tsv.gz|GSM8350005_D20T_features.tsv.gz|GSM8350005_D20T_matrix.mtx.gz
+GSE270680,GSM8350006,"Donor 20, 10x 3', Stage III, Diffuse, Core, Normal",tissue: Adjacent normal; cell line: D20N; cell type: Donor 20; Stage: Stage III; subtype: Diffuse,Illumina NovaSeq 6000,GSM8350006_D20N_barcodes.tsv.gz|GSM8350006_D20N_features.tsv.gz|GSM8350006_D20N_matrix.mtx.gz
+GSE270680,GSM8350007,"Donor 21, 10x 5', Stage III, Indeterminate, Tumor",tissue: Gastric cancer tumor; cell line: D21T; cell type: Donor 21; Stage: Stage III; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8350007_D21T_barcodes.tsv.gz|GSM8350007_D21T_features.tsv.gz|GSM8350007_D21T_matrix.mtx.gz
+GSE270680,GSM8350008,"Donor 22, 10x 3', Stage I, Diffuse, Tumor",tissue: Gastric cancer tumor; cell line: D22T; cell type: Donor 22; Stage: Stage I; subtype: Diffuse,Illumina NovaSeq 6000,GSM8350008_D22T_barcodes.tsv.gz|GSM8350008_D22T_features.tsv.gz|GSM8350008_D22T_matrix.mtx.gz
+GSE270680,GSM8350009,"Donor 22, 10x 3', Stage I, Diffuse, Normal",tissue: Adjacent normal; cell line: D22N; cell type: Donor 22; Stage: Stage I; subtype: Diffuse,Illumina NovaSeq 6000,GSM8350009_D22N_barcodes.tsv.gz|GSM8350009_D22N_features.tsv.gz|GSM8350009_D22N_matrix.mtx.gz
+GSE270680,GSM8350010,"Donor 23, 10x 3', Stage II, Intestinal, Tumor",tissue: Gastric cancer tumor; cell line: D23T; cell type: Donor 23; Stage: Stage II; subtype: Intestinal,Illumina NovaSeq 6000,GSM8350010_D23T_barcodes.tsv.gz|GSM8350010_D23T_features.tsv.gz|GSM8350010_D23T_matrix.mtx.gz
+GSE270680,GSM8350011,"Donor 23, 10x 3', Stage II, Intestinal, Normal",tissue: Adjacent normal; cell line: D23N; cell type: Donor 23; Stage: Stage II; subtype: Intestinal,Illumina NovaSeq 6000,GSM8350011_D23N_barcodes.tsv.gz|GSM8350011_D23N_features.tsv.gz|GSM8350011_D23N_matrix.mtx.gz
+GSE270680,GSM8350012,"Donor 24, 10x 5', Stage II, Intestinal, Tumor",tissue: Gastric cancer tumor; cell line: D24T; cell type: Donor 24; Stage: Stage II; subtype: Intestinal,Illumina NovaSeq 6000,GSM8350012_D24T_barcodes.tsv.gz|GSM8350012_D24T_features.tsv.gz|GSM8350012_D24T_matrix.mtx.gz
+GSE270680,GSM8350013,"Donor 24, 10x 5', Stage II, Intestinal, Normal",tissue: Adjacent normal; cell line: D24N; cell type: Donor 24; Stage: Stage II; subtype: Intestinal,Illumina NovaSeq 6000,GSM8350013_D24N_barcodes.tsv.gz|GSM8350013_D24N_features.tsv.gz|GSM8350013_D24N_matrix.mtx.gz
+GSE270680,GSM8350014,"Donor 24, 10x 5', Stage II, Intestinal, Lymph Node",tissue: Lymph node; cell line: D24L; cell type: Donor 24; Stage: Stage II; subtype: Intestinal,Illumina NovaSeq 6000,GSM8350014_D24L_barcodes.tsv.gz|GSM8350014_D24L_features.tsv.gz|GSM8350014_D24L_matrix.mtx.gz
+GSE270680,GSM8350015,"Donor 24, 10x 5', Stage II, Intestinal, Peripheral Blood",tissue: Peripheral blood; cell line: D24P; cell type: Donor 24; Stage: Stage II; subtype: Intestinal,Illumina NovaSeq 6000,GSM8350015_D24P_barcodes.tsv.gz|GSM8350015_D24P_features.tsv.gz|GSM8350015_D24P_matrix.mtx.gz
+GSE270680,GSM8350016,"Donor 25, 10x 3', Stage III, Diffuse, Tumor",tissue: Gastric cancer tumor; cell line: D25T; cell type: Donor 25; Stage: Stage III; subtype: Diffuse,Illumina NovaSeq 6000,GSM8350016_D25T_barcodes.tsv.gz|GSM8350016_D25T_features.tsv.gz|GSM8350016_D25T_matrix.mtx.gz
+GSE270680,GSM8350017,"Donor 25, 10x 3', Stage III, Diffuse, Normal",tissue: Adjacent normal; cell line: D25N; cell type: Donor 25; Stage: Stage III; subtype: Diffuse,Illumina NovaSeq 6000,GSM8350017_D25N_barcodes.tsv.gz|GSM8350017_D25N_features.tsv.gz|GSM8350017_D25N_matrix.mtx.gz
+GSE270680,GSM8350018,"Donor 26, 10x 3', Stage II, Intestinal, Tumor",tissue: Gastric cancer tumor; cell line: D26T; cell type: Donor 26; Stage: Stage II; subtype: Intestinal,Illumina NovaSeq 6000,GSM8350018_D26T_barcodes.tsv.gz|GSM8350018_D26T_features.tsv.gz|GSM8350018_D26T_matrix.mtx.gz
+GSE270680,GSM8350019,"Donor 27, 10x 5', Stage II, Intestinal, Tumor",tissue: Gastric cancer tumor; cell line: D27T; cell type: Donor 27; Stage: Stage II; subtype: Intestinal,Illumina NovaSeq 6000,GSM8350019_D27T_barcodes.tsv.gz|GSM8350019_D27T_features.tsv.gz|GSM8350019_D27T_matrix.mtx.gz
+GSE270680,GSM8350020,"Donor 27, 10x 5', Stage II, Intestinal, Normal",tissue: Adjacent normal; cell line: D27N; cell type: Donor 27; Stage: Stage II; subtype: Intestinal,Illumina NovaSeq 6000,GSM8350020_D27N_barcodes.tsv.gz|GSM8350020_D27N_features.tsv.gz|GSM8350020_D27N_matrix.mtx.gz
+GSE270680,GSM8350021,"Donor 27, 10x 5', Stage II, Intestinal, Lymph Node",tissue: Gastric cancer tumor; cell line: D27L; cell type: Donor 27; Stage: Stage II; subtype: Intestinal,Illumina NovaSeq 6000,GSM8350021_D27L_barcodes.tsv.gz|GSM8350021_D27L_features.tsv.gz|GSM8350021_D27L_matrix.mtx.gz
+GSE270680,GSM8350022,"Donor 28, 10x 3', Stage II, Indeterminate, Lymph Node",tissue: Lymph node; cell line: D28T; cell type: Donor 28; Stage: Stage II; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8350022_D28T_barcodes.tsv.gz|GSM8350022_D28T_features.tsv.gz|GSM8350022_D28T_matrix.mtx.gz
+GSE270680,GSM8350023,"Donor 28, 10x 3', Stage II, Indeterminate, Normal",tissue: Adjacent normal; cell line: D28N; cell type: Donor 28; Stage: Stage II; subtype: Indeterminate,Illumina NovaSeq 6000,GSM8350023_D28N_barcodes.tsv.gz|GSM8350023_D28N_features.tsv.gz|GSM8350023_D28N_matrix.mtx.gz
+GSE270680,GSM8350024,"Donor 30, 10x 3', Stage III, Diffuse, Tumor",tissue: Gastric cancer tumor; cell line: D30T; cell type: Donor 30; Stage: Stage III; subtype: Diffuse,Illumina NovaSeq 6000,GSM8350024_D30T_barcodes.tsv.gz|GSM8350024_D30T_features.tsv.gz|GSM8350024_D30T_matrix.mtx.gz
+GSE270680,GSM8350025,"Donor 30, 10x 3', Stage III, Diffuse, Normal",tissue: Adjacent normal; cell line: D30N; cell type: Donor 30; Stage: Stage III; subtype: Diffuse,Illumina NovaSeq 6000,GSM8350025_D30N_barcodes.tsv.gz|GSM8350025_D30N_features.tsv.gz|GSM8350025_D30N_matrix.mtx.gz
+GSE268238,GSM8288494,gastric cancer [G32T],tissue: gastric cancer; pni: PNI>40; organ: stomach; age: 73; Sex: Female; her2: LMR<=5.46; chemotherapy: CARRY<=11.280,Illumina NovaSeq 6000,NONE
+GSE268238,GSM8288495,gastric cancer [G36T],tissue: gastric cancer; pni: PNI>40; organ: stomach; age: 67; Sex: Female; her2: LMR<=5.46; chemotherapy: CARRY<=11.280,Illumina NovaSeq 6000,NONE
+GSE268238,GSM8288496,gastric cancer [G39T],tissue: gastric cancer; pni: PNI<=40; organ: stomach; age: 83; Sex: Female; her2: LMR<=5.46; chemotherapy: CARRY<=11.280,Illumina NovaSeq 6000,NONE
+GSE268238,GSM8288497,gastric cancer [G56T],tissue: gastric cancer; pni: PNI>40; organ: stomach; age: 84; Sex: Male; her2: LMR<=5.46; chemotherapy: CARRY<=11.280,DNBSEQ-G400,NONE
+GSE268238,GSM8288498,gastric cancer [G63T],tissue: gastric cancer; pni: PNI<=40; organ: stomach; age: 74; Sex: Male; her2: LMR<=5.46; chemotherapy: CARRY<=11.280,DNBSEQ-G400,NONE
+GSE268238,GSM8288499,gastric cancer [G68T],tissue: gastric cancer; pni: PNI>40; organ: stomach; age: 94; Sex: Female; her2: LMR<=5.46; chemotherapy: CARRY<=11.280,DNBSEQ-G400,NONE
+GSE268238,GSM8288500,gastric cancer [G73T],tissue: gastric cancer; pni: PNI>40; organ: stomach; age: 57; Sex: Male; her2: LMR<=5.46; chemotherapy: CARRY<=11.280,DNBSEQ-G400,NONE
+GSE268238,GSM8288501,gastric cancer [G77T],tissue: gastric cancer; pni: PNI>40; organ: stomach; age: 68; Sex: Male; her2: LMR<=5.46; chemotherapy: CARRY>11.280,DNBSEQ-G400,NONE
+GSE268238,GSM8288502,gastric cancer [G79T],tissue: gastric cancer; pni: PNI>40; organ: stomach; age: 68; Sex: Male; her2: LMR<=5.46; chemotherapy: CARRY<=11.280,DNBSEQ-G400,NONE
+GSE268238,GSM8288503,gastric cancer [G80T],tissue: gastric cancer; pni: PNI>40; organ: stomach; age: 68; Sex: Male; her2: LMR<=5.46; chemotherapy: CARRY<=11.280,DNBSEQ-G400,NONE
+GSE268238,GSM8288504,gastric cancer [G47N],tissue: Adjacent normal gastric mucosa; pni: N/A; organ: stomach; age: 87; Sex: Male; her2: N/A; chemotherapy: N/A,DNBSEQ-G400,NONE
+GSE268238,GSM8288505,gastric cancer [G66N],tissue: Adjacent normal gastric mucosa; pni: N/A; organ: stomach; age: 75; Sex: Male; her2: N/A; chemotherapy: N/A,DNBSEQ-G400,NONE
+GSE268238,GSM8288506,gastric cancer [G67N],tissue: Adjacent normal gastric mucosa; pni: N/A; organ: stomach; age: 78; Sex: Male; her2: N/A; chemotherapy: N/A,DNBSEQ-G400,NONE
+GSE268238,GSM8288507,gastric cancer [G69N],tissue: Adjacent normal gastric mucosa; pni: N/A; organ: stomach; age: 69; Sex: Female; her2: N/A; chemotherapy: N/A,DNBSEQ-G400,NONE
+GSE268238,GSM8288508,gastric cancer [G71N],tissue: Adjacent normal gastric mucosa; pni: N/A; organ: stomach; age: 73; Sex: Male; her2: N/A; chemotherapy: N/A,DNBSEQ-G400,NONE
+GSE268238,GSM8288509,gastric cancer [G74N],tissue: Adjacent normal gastric mucosa; pni: N/A; organ: stomach; age: 69; Sex: Male; her2: N/A; chemotherapy: N/A,DNBSEQ-G400,NONE
+GSE268238,GSM8288510,gastric cancer [G75N],tissue: Adjacent normal gastric mucosa; pni: N/A; organ: stomach; age: 86; Sex: Male; her2: N/A; chemotherapy: N/A,DNBSEQ-G400,NONE
+GSE249874,GSM7966226,"Human, H. pylori-negative Gastric adenocarcinoma, scRNAseq, GC-HP-N_1_tongchunxia","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE249874,GSM7966227,"Human, H. pylori-negative Gastric adenocarcinoma, scRNAseq, GC-HP-N_2_wanghailong","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE249874,GSM7966228,"Human, H. pylori-negative Gastric adenocarcinoma, scRNAseq, GC-HP-N_3_chenyingxian","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE249874,GSM7966229,"Human, H. pylori-positive Gastric adenocarcinoma, scRNAseq, GC-HP-P_1_huwenming","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE249874,GSM7966230,"Human, H. pylori-positive Gastric adenocarcinoma, scRNAseq, GC-HP-P_2_liufugui","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE249874,GSM7966231,"Human, H. pylori-positive Gastric adenocarcinoma, scRNAseq, GC-HP-P_3_zhongshanlin","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE249874,GSM7966232,"Human, H. pylori-negative non-atrophic gastritis, scRNAseq,GS-HP-N_1_liuxiaoju","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE249874,GSM7966233,"Human, H. pylori-negative non-atrophic gastritis, scRNAseq, GS-HP-N_2_quelujing","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE249874,GSM7966234,"Human, H. pylori-negative non-atrophic gastritis, scRNAseq, GS-HP-N_3_liujian","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE249874,GSM7966235,"Human, H. pylori-positive non-atrophic gastritis, scRNAseq, GS-HP-P_1_yangyuxiang","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE249874,GSM7966236,"Human, H. pylori-positive non-atrophic gastritis, scRNAseq, GS-HP-P_2_liuyanlan","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE249874,GSM7966237,"Human, H. pylori-positive non-atrophic gastritis, scRNAseq, GS-HP-P_3_zengdexing","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE249874,GSM7966238,"Human, H. pylori-negative mild intestinal metaplasia, scRNAseq, IM-HP-N_1_yanglinsheng","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE249874,GSM7966239,"Human, H. pylori-negative severe intestinal metaplasia, scRNAseq, IM-HP-N_2_chengjugen","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE249874,GSM7966240,"Human, H. pylori-negative moderate intestinal metaplasia, scRNAseq, IM-HP-N_3_meipingqing","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE249874,GSM7966241,"Human, H. pylori-positive moderate intestinal metaplasia, scRNAseq","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE249874,GSM7966242,"Human, H. pylori-positive moderate intestinal metaplasia, scRNAseq, IM-HP-P_2_wuxiaole","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE249874,GSM7966243,"Human, H. pylori-positive moderate intestinal metaplasia, scRNAseq, IM-HP-P_3_zhouyoulan","tissue: stomach; cell type: epithelial cells, endothelial cells, fibroblasts, smooth muscle cells, T cells, B cells, myeloid cells, plasma cells, mast cells",Illumina NovaSeq 6000,NONE
+GSE201347,GSM6061521,gastric cancer [G40T],organ: stomach; age: 34; gender: Male; tissue: gastric cancer,Illumina NovaSeq 6000,NONE
+GSE201347,GSM6061522,gastric cancer [G41T],organ: stomach; age: 73; gender: Male; tissue: gastric cancer,Illumina NovaSeq 6000,NONE
+GSE201347,GSM6061523,gastric cancer [G42T],organ: stomach; age: 70; gender: Male; tissue: gastric cancer,Illumina NovaSeq 6000,NONE
+GSE201347,GSM6061524,gastric cancer [G43T],organ: stomach; age: 41; gender: Male; tissue: gastric cancer,Illumina NovaSeq 6000,NONE
+GSE201347,GSM6061525,gastric cancer [G44T],organ: stomach; age: 42; gender: Male; tissue: gastric cancer,DNBSEQ-G400,NONE
+GSE201347,GSM6061526,gastric cancer [G45T],organ: stomach; age: 89; gender: Female; tissue: gastric cancer,DNBSEQ-G400,NONE
+GSE201347,GSM6061527,gastric cancer [G47T],organ: stomach; age: 87; gender: Male; tissue: gastric cancer,DNBSEQ-G400,NONE
+GSE201347,GSM6061528,gastric cancer [G49T],organ: stomach; age: 62; gender: Female; tissue: gastric cancer,DNBSEQ-G400,NONE
+GSE201347,GSM6061529,gastric cancer [G50T],organ: stomach; age: 57; gender: Male; tissue: gastric cancer,DNBSEQ-G400,NONE
+GSE201347,GSM6061530,gastric cancer [G51T],organ: stomach; age: 32; gender: Female; tissue: gastric cancer,DNBSEQ-G400,NONE
+GSE201347,GSM6061531,gastric cancer [G52T],organ: stomach; age: 77; gender: Male; tissue: gastric cancer,DNBSEQ-G400,NONE
+GSE201347,GSM6061532,gastric cancer [G55T],organ: stomach; age: 73; gender: Male; tissue: gastric cancer,DNBSEQ-G400,NONE
+GSE201347,GSM6061533,non-malignant gastric mucosa [G40N],organ: stomach; age: 34; gender: Male; tissue: non-malignant gastric mucosa,Illumina NovaSeq 6000,NONE
+GSE201347,GSM6061534,non-malignant gastric mucosa [G41N],organ: stomach; age: 73; gender: Male; tissue: non-malignant gastric mucosa,Illumina NovaSeq 6000,NONE
+GSE201347,GSM6061535,non-malignant gastric mucosa [G42N],organ: stomach; age: 70; gender: Male; tissue: non-malignant gastric mucosa,Illumina NovaSeq 6000,NONE
+GSE201347,GSM6061536,non-malignant gastric mucosa [G43N],organ: stomach; age: 41; gender: Male; tissue: non-malignant gastric mucosa,Illumina NovaSeq 6000,NONE
+GSE201347,GSM6061537,non-malignant gastric mucosa [G49N],organ: stomach; age: 62; gender: Female; tissue: non-malignant gastric mucosa,DNBSEQ-G400,NONE
+GSE201347,GSM6061538,non-malignant gastric mucosa [G50N],organ: stomach; age: 57; gender: Male; tissue: non-malignant gastric mucosa,DNBSEQ-G400,NONE
+GSE201347,GSM6061539,non-malignant gastric mucosa [G51N],organ: stomach; age: 32; gender: Female; tissue: non-malignant gastric mucosa,DNBSEQ-G400,NONE
+GSE201347,GSM6061540,non-malignant gastric mucosa [G52N],organ: stomach; age: 77; gender: Male; tissue: non-malignant gastric mucosa,DNBSEQ-G400,NONE
+GSE201347,GSM6061541,non-malignant gastric mucosa [G54N],organ: stomach; age: 68; gender: Female; tissue: non-malignant gastric mucosa,DNBSEQ-G400,NONE
+GSE201347,GSM6061542,non-malignant gastric mucosa [G55N],organ: stomach; age: 73; gender: Male; tissue: non-malignant gastric mucosa,DNBSEQ-G400,NONE
+GSE231539,GSM7290597,gastric cancer [G48T],tissue: stomach; disease state: gastric cancer; age: 80; Sex: Male,Illumina NovaSeq 6000,NONE
+GSE231539,GSM7290598,gastric cancer-Chemotherapy [G54T],tissue: stomach; disease state: gastric cancer-Chemotherapy; age: 68; Sex: Female,DNBSEQ-G400,NONE
+GSE231539,GSM7290599,gastric cancer-Chemotherapy [G57T],tissue: stomach; disease state: gastric cancer-Chemotherapy; age: 76; Sex: Male,DNBSEQ-G400,NONE
+GSE231539,GSM7290600,gastric cancer-Chemotherapy+Anti-PD1 [G60T],tissue: stomach; disease state: gastric cancer-Chemotherapy+Anti-PD1; age: 67; Sex: Male,DNBSEQ-G400,NONE
+GSE231539,GSM7290601,gastric cancer-Chemotherapy+Anti-PD1 [G65T],tissue: stomach; disease state: gastric cancer-Chemotherapy+Anti-PD1; age: 76; Sex: Male,DNBSEQ-G400,NONE
+GSE231539,GSM7290602,Esophageal squamous cell carcinoma [E07SCC],tissue: Esophagus; disease state: Esophageal squamous cell carcinoma; age: 52; Sex: Male,Illumina NovaSeq 6000,NONE
+GSE231539,GSM7290603,Esophageal squamous cell carcinoma [E17SCC],tissue: Esophagus; disease state: Esophageal squamous cell carcinoma; age: 62; Sex: Male,DNBSEQ-G400,NONE
+GSE231539,GSM7290604,Esophageal squamous cell carcinoma [E18SCC],tissue: Esophagus; disease state: Esophageal squamous cell carcinoma; age: 74; Sex: Female,DNBSEQ-G400,NONE
+GSE231539,GSM7290605,Esophageal squamous cell carcinoma [E19SCC],tissue: Esophagus; disease state: Esophageal squamous cell carcinoma; age: 72; Sex: Male,DNBSEQ-G400,NONE
+GSE231539,GSM7290606,Esophageal squamous cell carcinoma [E23SCC],tissue: Esophagus; disease state: Esophageal squamous cell carcinoma; age: 57; Sex: Male,DNBSEQ-G400,NONE
+GSE231539,GSM7290607,Esophageal squamous cell carcinoma [E24SCC],tissue: Esophagus; disease state: Esophageal squamous cell carcinoma; age: 76; Sex: Female,DNBSEQ-G400,NONE
+GSE231539,GSM7290608,Esophageal squamous cell carcinoma [E25SCC],tissue: Esophagus; disease state: Esophageal squamous cell carcinoma; age: 66; Sex: Female,DNBSEQ-G400,NONE
+GSE231539,GSM7290609,Esophageal squamous cell carcinoma [E28SCC],tissue: Esophagus; disease state: Esophageal squamous cell carcinoma; age: 48; Sex: Male,DNBSEQ-G400,NONE
+GSE231539,GSM7290610,non-malignant esophageal mucosa [E08SCN],tissue: Esophagus; disease state: non-malignant esophageal mucosa; age: 54; Sex: Male,Illumina NovaSeq 6000,NONE
+GSE231539,GSM7290611,non-malignant esophageal mucosa [E09SCN],tissue: Esophagus; disease state: non-malignant esophageal mucosa; age: 80; Sex: Female,Illumina NovaSeq 6000,NONE
+GSE231539,GSM7290612,non-malignant esophageal mucosa [E14SCN],tissue: Esophagus; disease state: non-malignant esophageal mucosa; age: 61; Sex: Male,Illumina NovaSeq 6000,NONE
+GSE231539,GSM7290613,non-malignant esophageal mucosa [E15SCN],tissue: Esophagus; disease state: non-malignant esophageal mucosa; age: 71; Sex: Male,Illumina NovaSeq 6000,NONE
+GSE231539,GSM7290614,non-malignant esophageal mucosa [E16SCN],tissue: Esophagus; disease state: non-malignant esophageal mucosa; age: 65; Sex: Male,DNBSEQ-G400,NONE
+GSE254188,GSM8035678,gastric cancer-Chemotherapy [G64T],tissue: gastric cancer; cell type: HER2-negative; age: 63; gender: Female; treatment: Chemo,DNBSEQ-G400,NONE
+GSE254188,GSM8035679,gastric cancer [G66T],tissue: gastric cancer; cell type: HER2-negative; age: 75; gender: Male; treatment: no,DNBSEQ-G400,NONE
+GSE254188,GSM8035680,gastric cancer [G67T],tissue: gastric cancer; cell type: HER2-negative; age: 78; gender: Male; treatment: no,DNBSEQ-G400,NONE
+GSE254188,GSM8035681,gastric cancer [G69T],tissue: gastric cancer; cell type: HER2-negative; age: 69; gender: Female; treatment: no,DNBSEQ-G400,NONE
+GSE254188,GSM8035682,gastric cancer [G70T],tissue: gastric cancer; cell type: HER2-negative; age: 81; gender: Male; treatment: no,DNBSEQ-G400,NONE
+GSE254188,GSM8035683,gastric cancer [G71T],tissue: gastric cancer; cell type: HER2-negative; age: 73; gender: Male; treatment: no,DNBSEQ-G400,NONE
+GSE254188,GSM8035684,gastric cancer-Chemotherapy [G72T],tissue: gastric cancer; cell type: HER2-positive; age: 69; gender: Male; treatment: Chemo+Tz,DNBSEQ-G400,NONE
+GSE254188,GSM8035685,gastric cancer [G74T],tissue: gastric cancer; cell type: HER2-negative; age: 86; gender: Male; treatment: no,DNBSEQ-G400,NONE
+GSE254188,GSM8035686,gastric cancer [G75T],tissue: gastric cancer; cell type: HER2-negative; age: 81; gender: Male; treatment: no,DNBSEQ-G400,NONE
+GSE254188,GSM8035687,gastric cancer-Chemotherapy [G76T],tissue: gastric cancer; cell type: HER2-positive; age: 68; gender: Male; treatment: Chemo+Tz,DNBSEQ-G400,NONE
+GSE254188,GSM8035688,gastric cancer-Chemotherapy [G78T],tissue: gastric cancer; cell type: HER2-negative; age: 73; gender: Male; treatment: Chemo,DNBSEQ-G400,NONE
+GSE281274,GSM8616890,Patient_1_rep1,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616890_Patient_1_rep1_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616891,Patient_1_rep2,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616891_Patient_1_rep2_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616892,Patient_1_rep3,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616892_Patient_1_rep3_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616893,Patient_1_rep4,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616893_Patient_1_rep4_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616894,Patient_1_rep5,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616894_Patient_1_rep5_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616895,Patient_1_rep6,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616895_Patient_1_rep6_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616896,Patient_1_rep7,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616896_Patient_1_rep7_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616897,Patient_1_rep8,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616897_Patient_1_rep8_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616898,Patient_2_rep1,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616898_Patient_2_rep1_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616899,Patient_2_rep2,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616899_Patient_2_rep2_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616900,Patient_2_rep3,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616900_Patient_2_rep3_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616901,Patient_2_rep4,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616901_Patient_2_rep4_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616902,Patient_2_rep5,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616902_Patient_2_rep5_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616903,Patient_2_rep6,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616903_Patient_2_rep6_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616904,Patient_2_rep7,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616904_Patient_2_rep7_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616905,Patient_2_rep8,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616905_Patient_2_rep8_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616906,Patient_3_rep1,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616906_Patient_3_rep1_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616907,Patient_3_rep2,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616907_Patient_3_rep2_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616908,Patient_3_rep3,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616908_Patient_3_rep3_filtered_feature_bc_matrix.h5
+GSE281274,GSM8616909,Patient_3_rep4,tissue: gastric mucosa; cell type: gastric epithelial cells,Illumina NovaSeq 6000,GSM8616909_Patient_3_rep4_filtered_feature_bc_matrix.h5
+GSE234209,GSM7457272,"P1ST_1, replicate 1, scRNAseq","individual: P1; tissue: Stomach; disease state: advanced gastric cancer; cell type: Cancer cell, immune cell; treatment: baseline",HiSeq X Ten,GSM7457272_P1ST_1.expression_matrix.tar.gz|GSM7457272_P1ST_1barcode.info.txt.gz
+GSE234209,GSM7457273,"P1PB_1, replicate 1, scRNAseq",individual: P1; tissue: Peripheral blood; disease state: advanced gastric cancer; cell type: Immune cell; treatment: baseline,HiSeq X Ten,GSM7457273_P1PB_1.expression_matrix.tar.gz|GSM7457273_P1PB_1barcode.info.txt.gz
+GSE234209,GSM7457274,"P1AS_1, replicate 1, scRNAseq","individual: P1; tissue: Ascites; disease state: advanced gastric cancer; cell type: Cancer cell, immune cell; treatment: baseline",HiSeq X Ten,GSM7457274_P1AS_1.expression_matrix.tar.gz|GSM7457274_P1AS_1barcode.info.txt.gz
+GSE234209,GSM7457275,"P1PL_1, replicate 1, scRNAseq","individual: P1; tissue: Pleural fluid; disease state: advanced gastric cancer; cell type: Cancer cell, immune cell; treatment: baseline",HiSeq X Ten,GSM7457275_P1PL_1.expression_matrix.tar.gz|GSM7457275_P1PL_1barcode.info.txt.gz
+GSE234209,GSM7457276,"P1PB_2, replicate 1, scRNAseq",individual: P1; tissue: Peripheral blood; disease state: advanced gastric cancer; cell type: Immune cell; treatment: posttreatment of PD-1 antibody,HiSeq X Ten,GSM7457276_P1PB_2.expression_matrix.tar.gz|GSM7457276_P1PB_2barcode.info.txt.gz
+GSE234209,GSM7457277,"P1PL_2, replicate 1, scRNAseq","individual: P1; tissue: Pleural fluid; disease state: advanced gastric cancer; cell type: Cancer cell, immune cell; treatment: posttreatment of PD-1 antibody",HiSeq X Ten,GSM7457277_P1PL_2.expression_matrix.tar.gz|GSM7457277_P1PL_2barcode.info.txt.gz
+GSE234209,GSM7457278,"P2ST_1, replicate 1, scRNAseq","individual: P2; tissue: Stomach; disease state: advanced gastric cancer; cell type: Cancer cell, immune cell; treatment: baseline",HiSeq X Ten,GSM7457278_P2ST_1.expression_matrix.tar.gz|GSM7457278_P2ST_1barcode.info.txt.gz
+GSE234209,GSM7457279,"P2PB_1, replicate 1, scRNAseq",individual: P2; tissue: Peripheral blood; disease state: advanced gastric cancer; cell type: Immune cell; treatment: baseline,HiSeq X Ten,GSM7457279_P2PB_1.expression_matrix.tar.gz|GSM7457279_P2PB_1barcode.info.txt.gz
+GSE234209,GSM7457280,"P2AS_1, replicate 1, scRNAseq",individual: P2; tissue: Ascites; disease state: advanced gastric cancer; cell type: Immune cell; treatment: baseline,HiSeq X Ten,GSM7457280_P2AS_1.expression_matrix.tar.gz|GSM7457280_P2AS_1barcode.info.txt.gz
+GSE234209,GSM7457281,"P2ST_2, replicate 1, scRNAseq","individual: P2; tissue: Stomach; disease state: advanced gastric cancer; cell type: Cancer cell, immune cell; treatment: posttreatment of PD-1 antibody",HiSeq X Ten,GSM7457281_P2ST_2.expression_matrix.tar.gz|GSM7457281_P2ST_2barcode.info.txt.gz
+GSE234209,GSM7457282,"P2PB_2, replicate 1, scRNAseq",individual: P2; tissue: Peripheral blood; disease state: advanced gastric cancer; cell type: Immune cell; treatment: posttreatment of PD-1 antibody,HiSeq X Ten,GSM7457282_P2PB_2.expression_matrix.tar.gz|GSM7457282_P2PB_2barcode.info.txt.gz
+GSE234209,GSM7457283,"P2AS_2, replicate 1, scRNAseq",individual: P2; tissue: Ascites; disease state: advanced gastric cancer; cell type: Immune cell; treatment: posttreatment of PD-1 antibody,HiSeq X Ten,GSM7457283_P2AS_2.expression_matrix.tar.gz|GSM7457283_P2AS_2barcode.info.txt.gz
+GSE158631,GSM4804670,GC2-LN6,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804671,GC3-LN12,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804672,GC3-LN1,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804673,GC3-LN2,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804674,GC3-LN3,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804675,GC1-LN1,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804676,GC1-LN2,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804677,GC1-LN3,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804678,GC2-LN1,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804679,GC2-LN2,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804680,GC2-LN3,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804681,GC2-LN4,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804682,GC2-LN5,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804683,GC2-LN7,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804684,GC2-LN8,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804685,GC1-LN4,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804686,GC2-LN9,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804687,GC2-LN10,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804688,GC2-LN11,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804689,GC2-LN12,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804690,GC2-LN13,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804691,GC3-LN5,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804692,GC3-LN6,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804693,GC3-LN7,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804694,GC3-LN8,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804695,GC3-LN10,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804696,GC1-TT9,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804697,GC2-TT1,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804698,GC1-TT10,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804699,GC1-TT12,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804700,GC1-TT5,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804701,GC1-TT13,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804702,GC1-TT2,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804703,GC1-TT14,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804704,GC2-TT2,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804705,GC2-TT3,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804706,GC2-TT4,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804707,GC2-TT5,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804708,GC2-TT6,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804709,GC3-TT1,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804710,GC2-TT7,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804711,GC2-TT8,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804712,GC2-TT9,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804713,GC3-TT2,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804714,GC3-TT3,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804715,GC3-TT19,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804716,GC3-TT4,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804717,GC3-TT5,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804718,GC3-TT6,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804719,GC3-TT7,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804720,GC3-TT18,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804721,GC3-TT8,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804722,GC1-TT6,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804723,GC1-TT3,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804724,GC1-TT16,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804725,GC1-TT18,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804726,GC2-TT10,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804727,GC2-TT11,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804728,GC2-TT12,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804729,GC2-TT13,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804730,GC2-TT14,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804731,GC2-TT15,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804732,GC2-TT16,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804733,GC2-TT17,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804734,GC3-TT9,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804735,GC3-TT10,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804736,GC3-TT11,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804737,GC3-TT13,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804738,GC3-TT16,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804739,GC2-TT18,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804740,GC2-TT19,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804741,GC2-TT20,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804742,GC2-TT21,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804743,GC2-TT22,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804744,GC2-TT23,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804745,GC2-TT24,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804746,GC2-TT25,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804747,GC2-TT26,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804748,GC2-TT27,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804749,GC1-TT1,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804750,GC1-TT4,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804751,GC1-TT7,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804752,GC1-TT8,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804753,GC1-TT11,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804754,GC1-TT15,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804755,GC1-TT17,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804756,GC1-TT19,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804757,GC3-TT12,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804758,GC3-TT14,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804759,GC3-TT15,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804760,GC3-TT17,tissue: tumor tissue; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804761,GC3-LN4,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804762,GC3-LN9,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE158631,GSM4804763,GC3-LN11,tissue: lymph node; disease state: gastric cancer,Illumina HiSeq 2500,NONE
+GSE112302,GSM3067368,GAS14_C_B1,tissue: tumor; gender: male,Illumina HiSeq 4000,GSM3067368_GAS14_C_B1_expression_TPM.txt.gz
+GSE112302,GSM3067369,GAS14_C_B2,tissue: tumor; gender: male,Illumina HiSeq 4000,GSM3067369_GAS14_C_B2_expression_TPM.txt.gz
+GSE112302,GSM3067370,GAS14_C_B3,tissue: tumor; gender: male,Illumina HiSeq 4000,GSM3067370_GAS14_C_B3_expression_TPM.txt.gz
+GSE112302,GSM3067371,GAS14_T_B1,tissue: normal; gender: male,Illumina HiSeq 4000,GSM3067371_GAS14_T_B1_expression_TPM.txt.gz
+GSE112302,GSM3067372,GAS14_T_B2,tissue: normal; gender: male,Illumina HiSeq 4000,GSM3067372_GAS14_T_B2_expression_TPM.txt.gz
+GSE112302,GSM3067373,GAS15_C_B1,tissue: tumor; gender: male,Illumina HiSeq 4000,GSM3067373_GAS15_C_B1_expression_TPM.txt.gz
+GSE112302,GSM3067374,GAS15_C_B2,tissue: tumor; gender: male,Illumina HiSeq 4000,GSM3067374_GAS15_C_B2_expression_TPM.txt.gz
+GSE112302,GSM3067375,GAS15_C_B3,tissue: tumor; gender: male,Illumina HiSeq 4000,GSM3067375_GAS15_C_B3_expression_TPM.txt.gz
+GSE112302,GSM3067376,GAS15_T_B1,tissue: normal; gender: male,Illumina HiSeq 4000,GSM3067376_GAS15_T_B1_expression_TPM.txt.gz
+GSE112302,GSM3067377,GAS15_T_B2,tissue: normal; gender: male,Illumina HiSeq 4000,GSM3067377_GAS15_T_B2_expression_TPM.txt.gz
+GSE140182,GSM4155930,AGC01_02,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155931,AGC01_04,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155932,AGC01_05,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155933,AGC01_14,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155934,AGC01_25,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155935,AGC01_26,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155936,AGC01_28,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155937,AGC01_29,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155938,AGC01_31,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155939,AGC01_33,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155940,AGC01_35,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155941,AGC01_39,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155942,AGC01_50,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155943,AGC01_52,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155944,AGC01_61,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155945,AGC01_63,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155946,AGC01_64,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155947,AGC01_65,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155948,AGC01_72,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155949,AGC01_83,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155950,AGC01_86,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155951,AGC01_87,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155952,AGC01_88,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155953,AGC01_89,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155954,AGC01_90,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155955,AGC01_Pooled,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC01,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155956,AGC02_01,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155957,AGC02_02,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155958,AGC02_03,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155959,AGC02_04,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155960,AGC02_05,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155961,AGC02_07,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155962,AGC02_11,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155963,AGC02_15,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155964,AGC02_16,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155965,AGC02_18,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155966,AGC02_22,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155967,AGC02_26,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155968,AGC02_28,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155969,AGC02_33,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155970,AGC02_34,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155971,AGC02_35,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155972,AGC02_37,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155973,AGC02_43,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155974,AGC02_44,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155975,AGC02_45,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155976,AGC02_46,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155977,AGC02_50,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155978,AGC02_52,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155979,AGC02_56,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155980,AGC02_57,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155981,AGC02_58,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155982,AGC02_59,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155983,AGC02_60,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155984,AGC02_66,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155985,AGC02_67,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155986,AGC02_72,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155987,AGC02_73,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155988,AGC02_74,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155989,AGC02_75,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155990,AGC02_76,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155991,AGC02_77,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155992,AGC02_80,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155993,AGC02_81,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155994,AGC02_82,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155995,AGC02_83,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155996,AGC02_84,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155997,AGC02_86,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155998,AGC02_87,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4155999,AGC02_88,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156000,AGC02_90,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156001,AGC02_92,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156002,AGC02_94,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156003,AGC02_96,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156004,AGC02_Pooled,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC02,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156005,AGC04_01,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156006,AGC04_03,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156007,AGC04_08,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156008,AGC04_13,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156009,AGC04_16,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156010,AGC04_17,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156011,AGC04_19,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156012,AGC04_21,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156013,AGC04_22,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156014,AGC04_24,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156015,AGC04_27,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156016,AGC04_29,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156017,AGC04_33,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156018,AGC04_35,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156019,AGC04_36,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156020,AGC04_43,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156021,AGC04_44,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156022,AGC04_50,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156023,AGC04_51,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156024,AGC04_53,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156025,AGC04_56,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156026,AGC04_57,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156027,AGC04_58,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156028,AGC04_60,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156029,AGC04_62,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156030,AGC04_68,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156031,AGC04_69,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156032,AGC04_71,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156033,AGC04_74,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156034,AGC04_76,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156035,AGC04_78,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156036,AGC04_79,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156037,AGC04_81,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156038,AGC04_82,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156039,AGC04_84,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156040,AGC04_85,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156041,AGC04_86,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156042,AGC04_87,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156043,AGC04_92,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156044,AGC04_Pooled,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156045,AGC04CSF_01,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156046,AGC04CSF_04,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156047,AGC04CSF_05,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156048,AGC04CSF_07,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156049,AGC04CSF_10,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156050,AGC04CSF_16,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156051,AGC04CSF_19,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156052,AGC04CSF_21,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156053,AGC04CSF_23,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156054,AGC04CSF_24,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156055,AGC04CSF_38,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156056,AGC04CSF_39,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156057,AGC04CSF_40,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156058,AGC04CSF_43,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156059,AGC04CSF_44,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156060,AGC04CSF_52,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156061,AGC04CSF_54,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156062,AGC04CSF_55,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156063,AGC04CSF_60,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156064,AGC04CSF_65,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156065,AGC04CSF_68,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156066,AGC04CSF_69,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156067,AGC04CSF_71,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156068,AGC04CSF_72,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156069,AGC04CSF_77,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156070,AGC04CSF_84,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156071,AGC04CSF_85,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156072,AGC04CSF_87,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156073,AGC04CSF_88,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156074,AGC04CSF_90,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156075,AGC04CSF_91,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156076,AGC04CSF_92,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156077,AGC04CSF_95,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156078,AGC04CSF_96,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156079,AGC04CSF_Pooled,cell type: Cerebrospinal metastasis of AGC; disease state: advanced gastric cancer; patient: AGC04,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156080,AGC05_01,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156081,AGC05_03,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156082,AGC05_08,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156083,AGC05_12,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156084,AGC05_15,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156085,AGC05_20,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156086,AGC05_22,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156087,AGC05_31,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156088,AGC05_34,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156089,AGC05_44,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156090,AGC05_51,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156091,AGC05_54,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156092,AGC05_58,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156093,AGC05_61,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156094,AGC05_62,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156095,AGC05_65,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156096,AGC05_66,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156097,AGC05_67,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156098,AGC05_68,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156099,AGC05_70,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156100,AGC05_71,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156101,AGC05_72,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156102,AGC05_74,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156103,AGC05_78,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156104,AGC05_79,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156105,AGC05_81,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156106,AGC05_84,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156107,AGC05_87,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156108,AGC05_88,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156109,AGC05_89,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156110,AGC05_90,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156111,AGC05_91,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156112,AGC05_94,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156113,AGC05_95,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156114,AGC05_Pooled,cell type: Malignant ascites of AGC; disease state: advanced gastric cancer; patient: AGC05,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156115,Donor1.M1_01,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156116,Donor1.M1_07,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156117,Donor1.M1_13,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156118,Donor1.M1_14,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156119,Donor1.M1_16,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156120,Donor1.M1_17,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156121,Donor1.M1_18,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156122,Donor1.M1_19,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156123,Donor1.M1_24,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156124,Donor1.M1_25,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156125,Donor1.M1_30,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156126,Donor1.M1_33,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156127,Donor1.M1_38,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156128,Donor1.M1_43,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156129,Donor1.M1_45,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156130,Donor1.M1_50,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156131,Donor1.M1_51,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156132,Donor1.M1_52,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156133,Donor1.M1_62,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156134,Donor1.M1_63,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156135,Donor1.M1_64,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156136,Donor1.M1_66,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156137,Donor1.M1_67,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156138,Donor1.M1_70,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156139,Donor1.M1_71,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156140,Donor1.M1_72,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156141,Donor1.M1_73,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156142,Donor1.M1_74,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156143,Donor1.M1_76,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156144,Donor1.M1_78,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156145,Donor1.M1_80,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156146,Donor1.M1_84,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156147,Donor1.M1_87,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156148,Donor1.M1_89,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156149,Donor1.M1_92,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156150,Donor1.M1_93,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156151,Donor1.M1_94,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156152,Donor1.M1_95,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156153,Donor1.M2_06,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156154,Donor1.M2_09,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156155,Donor1.M2_14,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156156,Donor1.M2_49,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156157,Donor1.M2_54,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156158,Donor1.M2_58,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156159,Donor1.M2_62,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156160,Donor1.M2_64,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156161,Donor1.M2_70,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156162,Donor1.M2_72,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156163,Donor1.M2_77,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156164,Donor1.M2_83,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156165,Donor1.M2_85,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156166,Donor1.M2_88,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156167,Donor1.M2_90,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156168,Donor1.M2_92,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156169,Donor1.M2_93,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156170,Donor1.M2_94,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor1,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156171,Donor2.M1_01,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156172,Donor2.M1_02,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156173,Donor2.M1_03,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156174,Donor2.M1_04,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156175,Donor2.M1_05,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156176,Donor2.M1_09,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156177,Donor2.M1_11,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156178,Donor2.M1_13,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156179,Donor2.M1_14,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156180,Donor2.M1_15,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156181,Donor2.M1_17,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156182,Donor2.M1_18,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156183,Donor2.M1_19,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156184,Donor2.M1_20,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156185,Donor2.M1_21,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156186,Donor2.M1_22,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156187,Donor2.M1_23,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156188,Donor2.M1_24,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156189,Donor2.M1_26,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156190,Donor2.M1_27,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156191,Donor2.M1_28,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156192,Donor2.M1_29,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156193,Donor2.M1_31,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156194,Donor2.M1_32,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156195,Donor2.M1_34,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156196,Donor2.M1_35,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156197,Donor2.M1_37,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156198,Donor2.M1_38,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156199,Donor2.M1_40,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156200,Donor2.M1_43,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156201,Donor2.M1_44,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156202,Donor2.M1_47,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156203,Donor2.M1_48,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156204,Donor2.M1_49,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156205,Donor2.M1_50,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156206,Donor2.M1_51,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156207,Donor2.M1_52,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156208,Donor2.M1_54,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156209,Donor2.M1_59,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156210,Donor2.M1_61,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156211,Donor2.M1_63,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156212,Donor2.M1_64,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156213,Donor2.M1_68,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156214,Donor2.M1_71,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156215,Donor2.M1_72,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156216,Donor2.M1_79,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156217,Donor2.M1_80,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156218,Donor2.M1_82,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156219,Donor2.M1_83,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156220,Donor2.M1_84,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156221,Donor2.M1_87,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156222,Donor2.M1_88,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156223,Donor2.M1_89,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156224,Donor2.M1_90,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156225,Donor2.M1_92,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156226,Donor2.M1_93,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156227,Donor2.M1_94,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156228,Donor2.M1_95,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156229,Donor2.M1_96,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156230,Donor2.M1_Pooled,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156231,Donor2.M2_01,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156232,Donor2.M2_02,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156233,Donor2.M2_08,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156234,Donor2.M2_10,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156235,Donor2.M2_11,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156236,Donor2.M2_14,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156237,Donor2.M2_18,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156238,Donor2.M2_21,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156239,Donor2.M2_22,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156240,Donor2.M2_24,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156241,Donor2.M2_25,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156242,Donor2.M2_27,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156243,Donor2.M2_30,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156244,Donor2.M2_33,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156245,Donor2.M2_39,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156246,Donor2.M2_40,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156247,Donor2.M2_41,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156248,Donor2.M2_42,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156249,Donor2.M2_43,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156250,Donor2.M2_44,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156251,Donor2.M2_45,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156252,Donor2.M2_48,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156253,Donor2.M2_49,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156254,Donor2.M2_51,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156255,Donor2.M2_54,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156256,Donor2.M2_62,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156257,Donor2.M2_76,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4156258,Donor2.M2_Pooled,cell type: CD14+ monocytes; disease state: Healthy donor; patient: Donor2,Illumina HiSeq 2500,NONE
+GSE140182,GSM4796049,AGC04_10x,cell type: malignant ascites; disease state: gastric cancer; patient: AGC04,Illumina HiSeq 2500,GSM4796049_AGC_10x_cell_information.txt.gz|GSM4796049_AGC_10x_count_matrix.txt.gz
+GSE140182,GSM4797795,PD01_27,cell type: Peritoneal dialysate; patient: PD01; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797796,PD01_30,cell type: Peritoneal dialysate; patient: PD01; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797797,PD01_01,cell type: Peritoneal dialysate; patient: PD01; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797798,PD01_88,cell type: Peritoneal dialysate; patient: PD01; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797799,PD01_35,cell type: Peritoneal dialysate; patient: PD01; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797800,PD01_25,cell type: Peritoneal dialysate; patient: PD01; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797801,PD01_89,cell type: Peritoneal dialysate; patient: PD01; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797802,PD04_55,cell type: Peritoneal dialysate; patient: PD04; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797803,PD04_03,cell type: Peritoneal dialysate; patient: PD04; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797804,PD04_58,cell type: Peritoneal dialysate; patient: PD04; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797805,PD04_80,cell type: Peritoneal dialysate; patient: PD04; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797806,PD04_02,cell type: Peritoneal dialysate; patient: PD04; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797807,PD04_83,cell type: Peritoneal dialysate; patient: PD04; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797808,PD04_pooled,cell type: Peritoneal dialysate; patient: PD04; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797809,PD08_25,cell type: Peritoneal dialysate; patient: PD08; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797810,PD08_33,cell type: Peritoneal dialysate; patient: PD08; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797811,PD08_43,cell type: Peritoneal dialysate; patient: PD08; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797812,PD08_83,cell type: Peritoneal dialysate; patient: PD08; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797813,PD08_15,cell type: Peritoneal dialysate; patient: PD08; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797814,PD08_05,cell type: Peritoneal dialysate; patient: PD08; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797815,PD08_10,cell type: Peritoneal dialysate; patient: PD08; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797816,PD08_91,cell type: Peritoneal dialysate; patient: PD08; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797817,PD08_36,cell type: Peritoneal dialysate; patient: PD08; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797818,PD08_62,cell type: Peritoneal dialysate; patient: PD08; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797819,PD08_81,cell type: Peritoneal dialysate; patient: PD08; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797820,PD08_03,cell type: Peritoneal dialysate; patient: PD08; disease state: healthy,Illumina HiSeq 2500,NONE
+GSE140182,GSM4797821,PD08_pooled,cell type: Peritoneal dialysate; patient: PD08; disease state: healthy,Illumina HiSeq 2500,NONE
