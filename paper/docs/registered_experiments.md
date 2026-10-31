@@ -2800,3 +2800,9 @@ test without PER1 and NR1D1; gastric pooled mean of H173.1-3.
 - H173.4 passes → in lung the loss is a property of adenocarcinoma, not of the organ.
 - Failures at a powered design bound the claim to breast and lung adenocarcinoma.
 **Code:** `paper/exploratory/A173_gastric_lung_histology/`.
+
+**A173 power step (2026-10-31, before the tests; `A173_gastric_lung_histology/output/power.csv`):** gastric strata
+GSE62254 100/100/100, GSE84437 161 ×3, GSE15459 67/66/67; lung halves (ADC; SQC) GSE37745 53/53; 33/33, GSE41271
+92/91; 40/40, GSE30219 43/42; 31/30. All series have 14 clock genes (GSE26253 13, no PER3). MDE (80 %): H173.1 0.224,
+H173.2 0.229, H173.3 0.332 (TCGA STAD −0.305); H173.4 0.355 (TCGA LUAD − LUSC = −0.361 − 0.212 = −0.57); per-series D
+0.60-0.63, per-histology T 0.41-0.49 (descriptive only).
