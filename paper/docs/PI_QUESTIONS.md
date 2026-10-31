@@ -42,6 +42,12 @@ A141 (registered after your Q6 answer):
 3. Look for CPTAC (LUAD/STAD/BRCA with normal adjacent tissue) for a powered replication? This means a PDC/GDC download
    (open access), size to be checked.
 **On hold:** any L2 wording for cancer beyond "secondary, TCGA". Nothing else is paused.
+**Update (scout 2026-11-01, `exploratory/scouts_2026-11-01/SCOUT.md`):**
+- A powered C1 replication may exist in GEO: the Nurses' Health Study breast tumour/adjacent pairs (GSE93601, 445 pairs;
+  GSE115577, 328; overlap unresolved; ER and proliferation recorded; FFPE DASL array, clock-gene coverage unchecked).
+- For H1, GSE154200 has 186 persons with lesional + non-lesional skin (psoriasis 88, nummular 52, atopic eczema 46).
+- Proposal: download both (open GEO, small), check clock-gene coverage and gates, run the MDE step, and bring the
+  primary registrations to you before scoring. Go ahead?
 
 ## Answered
 ### Q13 (2026-10-28): roadmap phase 0 decisions (ROADMAP_2026-10-28.md)
