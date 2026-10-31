@@ -6,17 +6,27 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 
 ## Open
 
-### Q14 (2026-10-28): COARSE ordering choices (bone marrow, muscle)
-The data audit found three ordering choices in the shared COARSE rules. They are not bugs of the "T cell" kind:
-- "granulocyte monocyte progenitor cell" (21,500 cells) goes to `monocyte`;
-- "mesenchymal stem cell" (28,275) and "skeletal muscle satellite stem cell" (13,531) go to `progenitor`, because
-  progenitor comes before fibroblast_stromal and muscle.
-- **Question:** keep them, or move GMP to progenitor and the two stem labels to fibroblast_stromal / muscle?
-- **Default:** keep (the archive A9 choice). Changing them would rebuild organ_bone_marrow and organ_muscle and
-  relearn their anchors.
-- **On hold:** nothing. If you change them, I rebuild before phase 3.
-- **Answer (PI, 2026-10-30):** keep.
+### Still with the PI (2026-10-31)
+- **Q12** (below): brain time-of-death request. The draft is never sent without the PI.
+- **A136:** the brain-death drug test stays a draft for PI review.
+- **A119:** lung T-cell procurement scout (outward-facing / procurement).
+- **Outcome analyses** (survival, endocrine response): wait until the cancer L1/L2 tests C1 and C3 are in, then ask
+  again (PI, 2026-10-31).
+- **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
+- **Closed 2026-10-31** (answer lines in each entry): Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the A121 and A135
+  placements (embryo and brain disease panels in Extended Data).
 
+### Q12 (2026-10-27): request brain time-of-death fields? (A141)
+A141 (registered after your Q6 answer):
+- 8 of 12 brain contrasts are noise-driven, so not estimable.
+- 4 are anchor-dependent beyond noise: PD_mssm, VaD_mssm, ASCVD_hbcc and the PD atlas.
+- Your Q6 answer foresaw a time-of-death request in this case. A draft (not sent) covers PsychAD on Synapse and the PD
+  atlas on AMP PD, plus optionally ROSMAP: `paper/exploratory/A141_brain_stability/drafts/tod_request_draft.md`.
+- **Question:** send the request(s), edit them, or not request?
+- **On hold:** nothing else. The brain panels stay in Extended Data with the result stated.
+- Evidence: `results_preliminary.md` (A141).
+
+## Answered
 ### Q13 (2026-10-28): roadmap phase 0 decisions (ROADMAP_2026-10-28.md)
 I am going ahead with phases 1, 2 and 4 (code, data integrity, simulations) and the phase 6 scouts. None of them
 depends on the answers below. The defaults in brackets apply when phase 3 starts, unless you say otherwise.
@@ -35,18 +45,19 @@ depends on the answers below. The defaults in brackets apply when phase 3 starts
   - A138 Q2 simulator: [default: option (b), fix the clock signal-to-noise with a dated note]
   - Q12 and A119: yours (outward-facing / procurement).
 - **On hold:** phase 3 onwards (anchors, backbone, A150 extension, disease reruns).
+- **Answer (PI, 2026-10-31, review of STATE_2026-10-31 / HANDOFF_2026-10-31):** defaults accepted: Δc is the main readout (raw c in the supplement); family-level eligibility (as A153 note, Q15 a); leave-one-out anchor amplitude and offset become the default readout; 0.6 items as applied (A136 stays a draft for the PI).
 
-### Q12 (2026-10-27): request brain time-of-death fields? (A141)
-A141 (registered after your Q6 answer):
-- 8 of 12 brain contrasts are noise-driven, so not estimable.
-- 4 are anchor-dependent beyond noise: PD_mssm, VaD_mssm, ASCVD_hbcc and the PD atlas.
-- Your Q6 answer foresaw a time-of-death request in this case. A draft (not sent) covers PsychAD on Synapse and the PD
-  atlas on AMP PD, plus optionally ROSMAP: `paper/exploratory/A141_brain_stability/drafts/tod_request_draft.md`.
-- **Question:** send the request(s), edit them, or not request?
-- **On hold:** nothing else. The brain panels stay in Extended Data with the result stated.
-- Evidence: `results_preliminary.md` (A141).
+### Q14 (2026-10-28): COARSE ordering choices (bone marrow, muscle)
+The data audit found three ordering choices in the shared COARSE rules. They are not bugs of the "T cell" kind:
+- "granulocyte monocyte progenitor cell" (21,500 cells) goes to `monocyte`;
+- "mesenchymal stem cell" (28,275) and "skeletal muscle satellite stem cell" (13,531) go to `progenitor`, because
+  progenitor comes before fibroblast_stromal and muscle.
+- **Question:** keep them, or move GMP to progenitor and the two stem labels to fibroblast_stromal / muscle?
+- **Default:** keep (the archive A9 choice). Changing them would rebuild organ_bone_marrow and organ_muscle and
+  relearn their anchors.
+- **On hold:** nothing. If you change them, I rebuild before phase 3.
+- **Answer (PI, 2026-10-30):** keep.
 
-## Answered
 ### Q11 (2026-10-27): A140 Q1 simulator gate fails; rerun with the published CYCLOPS settings and a cleaner factor calibration?
 The registered gate (arm D, whole-day sampling, CYCLOPS circular correlation with truth >= 0.7, seed 1,500) fails: median
 0.067, 0 of 50 at >= 0.7. In the same replicates the clocksync gate passes 43 of 50, and the three CYCLOPS compartment phases
@@ -209,6 +220,7 @@ shows 3-fold higher off-plane (non-clock) variance of the clock genes across tum
 - **A134 result (2026-10-24):** inferred copy number explains a small part (malignant coherence 0.23 -> 0.29, p 0.017 vs normal; about 1/10 of the gap); oncogenic programmes nothing; per-cell test uninformative. Figure 5 wording: keep "coherence lost" with the per-cell caveat and the copy-number share, or restate? (open)
 - **On hold:** the Figure 5 cancer narrative; WP5 (A114) framing. The A86/A87 numbers themselves stand.
 - Evidence: results_preliminary.md, WP0 item 2 (second and third parts).
+- **Answer (PI, 2026-10-31, review of STATE_2026-10-31 / HANDOFF_2026-10-31):** the Figure 5 wording sub-question waits for C3 (in-plane vs off-plane variance: "swamped" vs "disordered").
 
 ### Q5 (2026-10-23): A132 outcome and the Figure 3 wording
 Within ventilated (Hardy 0) donors, the push of pair phases toward 0 / 12 h is seen in both brain-dead organ donors and
@@ -287,6 +299,7 @@ malignant level but not for fibroblasts.
 - (b) Register the re-annotation of the used cohorts, labelled "not fresh".
 - (c) **[default, recommended]** Keep the pairing descriptive in Figure 5 (lead with A97/A127 coherence vs
   proliferation), and spend no more compute on 7.2.
+- **Answer (PI, 2026-10-31, review of STATE_2026-10-31 / HANDOFF_2026-10-31):** (c): single-cell stromal pairing stays descriptive. The bulk host-referenced tumour–normal tests (HANDOFF_2026-10-31, C1) take over.
 
 ## Q17 (2026-10-29): coupling intervals undercover (A154 V154.3 fails) — how to report c?
 **Finding:**
@@ -318,6 +331,7 @@ Per the registered reading, c stays reported without intervals (ranks, Δc, d*).
 - (1) accept this, which is my default;
 - (2) register a restricted claim (c_anchor ≥ 0.8 with n ≥ 100 or K = 8) on fresh seeds;
 - (3) develop a better interval (e.g. a bootstrap that re-estimates R per replicate, or BCa) before a new validation.
+- **Answer (PI, 2026-10-31, review of STATE_2026-10-31 / HANDOFF_2026-10-31):** option (1): absolute c is reported without intervals (ranks, Δc, d*); no further interval development now.
 
 ## Q18 (2026-10-30): A153 under rule (a) still has no primaries — where should the disease positive come from?
 
@@ -334,6 +348,7 @@ Per the registered reading, c stays reported without intervals (ranks, Δc, d*).
   - (iii) Larger single-cell disease cohorts (an outward action: data requests).
   - (iv) Rely on within-person and GTEx designs for the disease positive.
 - My recommendation is (iv) now, with (iii) as a longer-term ask.
+- **Answer (PI, 2026-10-31, review of STATE_2026-10-31 / HANDOFF_2026-10-31):** (iv): the disease positive is sought in larger bulk within-person designs from routine clinical sampling (HANDOFF_2026-10-31, Priority 2, H1), with cancer C1 as the host-referenced tumour test. Scouts list only estimable bulk designs: at least 2 compartments (tissues, sites or sorted cell types) per person, since one compartment per person has no host and gives L1 coherence only (PI, 2026-10-31).
 
 ## Q19 (2026-10-30): within-person designs (roadmap 6.6) — the on-disk paired cohorts are already analysed; acquire Smillie 2019?
 
@@ -355,6 +370,7 @@ Per the registered reading, c stays reported without intervals (ranks, Δc, d*).
   d*, phase, z2, psi), with TAURUS as the not-blind secondary; (ii) register the TAURUS readouts as an explicitly
   non-blind secondary only; (iii) drop 6.6, since gut stroma looks resilient to inflammation (A45).
 - My recommendation is (i).
+- **Answer (PI, 2026-10-31, review of STATE_2026-10-31 / HANDOFF_2026-10-31):** bulk first: closed for now. H1 scouts paired bulk IBD series; Smillie 2019 is revisited only if no bulk design reaches MDE ≤ 0.15 on d* (the portal login stays a PI step). Scouts list only estimable bulk designs: at least 2 compartments (tissues, sites or sorted cell types) per person, since one compartment per person has no host and gives L1 coherence only (PI, 2026-10-31).
 
 ## Q20 (2026-10-31): proliferation coherence loss in gastric malignant cells — worth our own malignant-cell calling?
 - **Context:** the proliferation clock-coherence loss is now replicated in breast (A97 discovery, A127 replication; A166
@@ -375,3 +391,4 @@ Per the registered reading, c stays reported without intervals (ranks, Δc, d*).
     ESCA / HNSC / CESC rows, which are seen, so only as a secondary.
 - **My recommendation is (ii) for now.** The bulk replication is the paper-relevant result. Single-cell n would be
   marginal, and the CNV step adds a degree of freedom.
+- **Answer (PI, 2026-10-31, review of STATE_2026-10-31 / HANDOFF_2026-10-31):** (ii): gastric stops at bulk. Single-cell cancer work (C4) uses sets with author malignant labels (Wu + Pal breast, a labelled LUAD atlas after a scout).
