@@ -2204,10 +2204,11 @@ Fresh seeds (163), 8 designs × c_anchor {0.6, 0.8} × c_target {0.1, 0.3, 0.6, 
 | V163.3 \|median bias\| ≤ 0.05, both | 58/64 (max 0.146) | 33/64 (max 0.265) | fail |
 | V163.4 coverage ≥ 0.90 at c_target 0.1 | 16/16 (min 0.940) | — | pass |
 
-- **Where it fails:** all 7 coverage misses are at c_target ≥ 0.6, and 4 of them are in the n = 30, K = 4 designs. The two
+- **Where it fails:** all 7 coverage misses are at c_target ≥ 0.6, and 3 of them are in the n = 30, K = 4 designs. The two
   c_anchor 0.8 misses are n100_K8_bulk (0.854) and n30_K8_bulk (0.872), both at c_target 0.9 with small bias (−0.02,
   −0.03). This points to interval width rather than bias. The bias misses are n = 30, K = 4 at c_anchor 0.6 (−0.069 to
-  −0.146), where host reliability R is about 0.75; one more is n30_K4_single_cell at c_anchor 0.8, c_target 0.9 (−0.067).
+  −0.146), where host reliability R is about 0.75; two more are n30_K4_single_cell at c_anchor 0.8, c_target 0.9 (−0.067) and
+  n30_K8_single_cell at c_anchor 0.6, c_target 0.9 (−0.060).
 - **Gain over the default:** large. Median coverage at c_target 0.9 rises from 0.019 to 0.896 (c_anchor 0.6) and from 0.186 to
   0.938 (0.8). The median ratio is 0.96-0.97 instead of 0.87-0.92. At most 9.6 % of corrected values exceed 1.
 - **Descriptive (A154 equal-c cells, weak-anchor limit):** at c = 0.3 the corrected coverage falls to 0.06-0.53 in K = 4
