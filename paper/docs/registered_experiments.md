@@ -2893,3 +2893,38 @@ which is the C4 pool.
 **Reading:** H176.1 supported → "clock signal swamped by non-clock variance" replaces "clock loss" wording (Q8);
 disordered calls in ≥ 5 of 7 → "clock relations disordered"; mixed → stated per cohort.
 **Code:** `paper/exploratory/A176_c3_plane_variance/`.
+
+## A178 (2026-11-01, written before any leave-one-gene-out or enlarged-pseudo-pool statistic is computed; the full-gene statistics are seen; HANDOFF_2026-10-31 C7): are the breast, lung and gastric coherence losses robust to single genes and to the pseudo pool size? Readout level **L1**
+
+**Why:** two passing cohorts sit at the pseudo 5 % line (GSE72094 5.5th, GSE62254 5.0th percentile, 200 sets), and only
+PER1 and NR1D1 have been dropped so far.
+**V178.1 (leave-one-gene-out):** SCAN-B H127.1 and H127.2, METABRIC H166.1 and H166.2, each registered statistic recomputed
+with each of the 14 clock genes dropped (waveform subset as in the existing without-PER1/NR1D1 sensitivity, same strata and
+2,000 permutations). Robust if, per contrast, all 14 statistics are negative and ≥ 12 of 14 have one-sided p < 0.05.
+**V178.2 (pseudo pool size):** GSE72094 (H171.1) and GSE62254 (H173.1) against 1,000 new pseudo-clock sets (A168
+construction, new seed; the 200 earlier sets not reused). The observed statistic's percentile is reported with its exact
+binomial 95 % interval. Clock-specific if the percentile is < 5; "at the line" if the interval contains 5.
+**Descriptive:** the gene whose removal moves each statistic most; the same 1,000-set percentile for the other five passing
+contrasts (H127.1, H127.2, H166.1, H171.2, H173.3).
+**Reading:** V178.1 and V178.2 pass → the losses are not carried by one gene or by the pseudo pool size. A V178.1 failure
+names the carrying gene.
+**Code:** `paper/exploratory/A178_c7_robustness/`.
+
+## A179 (2026-11-01, written before any cell-cycle-conditioned coherence is computed; the unconditioned contrasts are seen; A176 is scored (swamped: clock-plane variance falls in proliferating tumours); HANDOFF_2026-10-31 C4, bulk part): is the proliferation coherence loss carried by clock-gene variation that tracks the cell cycle? Readout level **L1**
+
+**Why:** the mammalian clock can phase-lock to the cell cycle, and PER/CRY/NR1D1 respond to it. If the clock genes'
+variation across proliferating tumours follows cell-cycle composition, conditioning on it should restore coherence.
+**Data and contrasts:** the five registered proliferation contrasts (H127.1, H171.1, H171.2, H173.1, H173.3), with their
+strata, arms and centring.
+**Conditioning:** within each arm × stratum, every clock gene is regressed on the tumours' G1/S (HALLMARK_E2F_TARGETS
+without clock genes) and G2M (A97) scores, and coherence is recomputed on the residuals. Shrinkage S = ΔR_conditioned −
+ΔR (> 0 when conditioning reduces the loss).
+**Test H179.1 (one-sided):** S > 0, against 200 random score pairs (scores built like G1/S and G2M from expression-matched
+random gene sets of the same size, A168 pool), per contrast; p = share of random S ≥ observed. Holm over five. Supported
+if ≥ 3 of 5 pass **and** the median shrinkage is ≥ 50 % of |ΔR|.
+**Descriptive:** fraction of each clock gene's variance explained by the two scores, high vs low arm; Δlog_plane after
+conditioning.
+**Readings:** H179.1 supported → the loss is carried by cell-cycle-associated clock-gene variation (compatible with
+locking or with cell-cycle regulation of clock genes; bulk data cannot tell them apart; the single-cell part of C4
+would). Not supported, with S's MDE below 50 % of |ΔR| → not explained by linear cell-cycle composition.
+**Code:** `paper/exploratory/A179_c4_cellcycle/`.
