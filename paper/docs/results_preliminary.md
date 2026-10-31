@@ -2192,3 +2192,29 @@ One-sided, 2,000 permutations; 200 pseudo-clock sets per series.
   61-80 tumours). Caveats: GSE62254 sits exactly at the 5 % pseudo line; GSE15459 includes the 8 arrays the authors
   excluded; GSE62254 deposited log10 values (converted); GSE26253 (FFPE, DASL, 13 genes) disagrees.
 <!-- src: paper/exploratory/A173_gastric_lung_histology/output/{tests,descriptive,power}.csv -->
+
+## A163 (scored 2026-10-31): the df-adjusted host-reliability correction of c fails validation (V163.1-3 fail, V163.4 passes); c stays reported without intervals
+Fresh seeds (163), 8 designs × c_anchor {0.6, 0.8} × c_target {0.1, 0.3, 0.6, 0.9} = 64 cells, 200 replicates per cell
+(n per cell = 200 × the 2-4 target compartments, 400-800 estimates). Frozen candidate (i) `attenuation="df"`.
+
+| criterion | corrected (df) | raw (default) | verdict |
+|---|---|---|---|
+| V163.1 coverage ≥ 0.90, c_anchor 0.8 | 30/32 cells (min 0.854) | 19/32 | fail |
+| V163.2 coverage ≥ 0.90, c_anchor 0.6 | 27/32 (min 0.802) | 16/32 | fail |
+| V163.3 \|median bias\| ≤ 0.05, both | 58/64 (max 0.146) | 33/64 (max 0.265) | fail |
+| V163.4 coverage ≥ 0.90 at c_target 0.1 | 16/16 (min 0.940) | — | pass |
+
+- **Where it fails:** all 7 coverage misses are at c_target ≥ 0.6, and 4 of them are in the n = 30, K = 4 designs. The two
+  c_anchor 0.8 misses are n100_K8_bulk (0.854) and n30_K8_bulk (0.872), both at c_target 0.9 with small bias (−0.02,
+  −0.03). This points to interval width rather than bias. The bias misses are n = 30, K = 4 at c_anchor 0.6 (−0.069 to
+  −0.146), where host reliability R is about 0.75; one more is n30_K4_single_cell at c_anchor 0.8, c_target 0.9 (−0.067).
+- **Gain over the default:** large. Median coverage at c_target 0.9 rises from 0.019 to 0.896 (c_anchor 0.6) and from 0.186 to
+  0.938 (0.8). The median ratio is 0.96-0.97 instead of 0.87-0.92. At most 9.6 % of corrected values exceed 1.
+- **Descriptive (A154 equal-c cells, weak-anchor limit):** at c = 0.3 the corrected coverage falls to 0.06-0.53 in K = 4
+  bulk, with median ratio 0.28-0.31, so the correction cannot rescue weak anchors. Anchors' own corrected c: coverage ≥ 0.92 at
+  c_anchor 0.6 / 0.8.
+- **Reading (registered):** "otherwise → c stays reported without intervals (A162 reading), and the correction is not
+  used." `coupling_corrected` stays opt-in and undocumented as a reported readout. Contrasts (d, d*) are unaffected.
+  Post hoc, a narrower claim would hold with all registered criteria met: c_anchor 0.8 and n ≥ 100 or K = 8, except the
+  two c_target 0.9 width misses. Any such restriction needs a new registration on fresh seeds (PI decision, Q17).
+<!-- src: paper/exploratory/A163_reliability_correction/output/validate/{summary,cells,anchors}.csv -->

@@ -311,6 +311,14 @@ c ≤ 0.3 but not at 0.6-0.9; the estimate is shrunk by a roughly constant facto
 errors-in-variables attenuation by the host's reliability. Per the registered reading, absolute c is reported without
 intervals (ranks, Δc, d*), and a correction is developed (option b): registered as A163.
 
+**Outcome of A163 (2026-10-31):** the frozen correction fails validation (V163.1 30/32, V163.2 27/32, V163.3 58/64
+cells; V163.4 passes). It removes most of the attenuation: coverage at c_target 0.9 goes from 0.02-0.19 to 0.90-0.94
+(median), but it misses at c_target ≥ 0.6 with n = 30, K = 4, and with an interval-width shortfall at c_target 0.9.
+Per the registered reading, c stays reported without intervals (ranks, Δc, d*). **Decision for you:**
+- (1) accept this, which is my default;
+- (2) register a restricted claim (c_anchor ≥ 0.8 with n ≥ 100 or K = 8) on fresh seeds;
+- (3) develop a better interval (e.g. a bootstrap that re-estimates R per replicate, or BCa) before a new validation.
+
 ## Q18 (2026-10-30): A153 under rule (a) still has no primaries — where should the disease positive come from?
 
 - Rule (a) makes fibroblast_stromal the eligible family (endothelial too in the 3-atlas sensitivity).
