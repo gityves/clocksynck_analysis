@@ -2229,3 +2229,181 @@ registrations are left as written; no design or verdict depends on the citation.
 (LUAD −0.515, LIHC −0.359) are the unstratified A97 per-cancer values (`figure_5/output/cancer/a97_proliferation_per_cancer.csv`).
 The power-step values (LUAD −0.361, LIHC −0.512) are the stratified H171 statistic. These are two statistics, not a
 transcription error.
+
+## Bookkeeping errata (2026-11-01)
+
+No new scoring. Every number below is read from the output table named next to it. `RE` is `registered_experiments.md`
+(line numbers as on 2026-11-01; the file is edited concurrently, so they may drift). Items 1-5 close the bookkeeping
+list of `HANDOFF_2026-10-31.md` and inconsistencies 3, 4, 5, 6, 7, 11 and 12 of `state_2026-10-31/inventory.md` section 13.
+The full list of tests with their verdicts is `VERDICT_TABLE.md`. No registered verdict is reversed; each
+reinterpretation is labelled.
+
+### 1. A109 and A138 Holm families, closed
+
+**Convention.** Holm is computed on the registered family size (primary). Registered members that were never scored are
+taken as not smaller than any scored p (they sit at the top of the order). The "scored only" column shrinks the family to
+the members that have a p. A pass or fail does not change under either convention.
+
+**A109** (RE 32-33: family of five, H109.1, H109.2, H114.1, H115.1, H116.1; family-wise alpha 0.05)
+
+| member | status | raw p | Holm, family of 5 (primary) | Holm, scored only (m = 2) |
+|---|---|---|---|---|
+| H109.1 | scored, PASS | 0.00498 (1/201, the floor) | 0.0249 | 0.0100 |
+| H109.2 | scored, FAIL | 0.1650 | 0.660 | 0.165 |
+| H114.1 | never registered: A114 (WP5) was replaced by A138 (RE 495, header "replaces WP5 / A114"); no A114 entry exists in RE | none | none | none |
+| H115.1 | never scored as a test: made descriptive by PI decision 2026-10-27 (RE 1026, "leaves the confirmatory family"); D115.1 is reported with its detection limit (-1.806 h, p 0.0084, MDE 1.91 h) | none (descriptive) | none | none |
+| H116.1 | withdrawn the same day (RE 1070); data already used in A56 | none | none | none |
+
+- The bounds written at scoring ("Holm <= 0.025", "Holm >= 0.165", RP 98, 103 and 111) become the final values 0.0249 and
+  0.660 (family of 5), or 0.0100 and 0.165 (scored only). H109.1 passes and H109.2 fails under either convention.
+- The framing note of RE 152-157 ("the Holm table keeps H109.2 as failed") stands.
+- The secondary family H109.1-R / H138.4-R is separate (Holm 0.0099 each, family of 2, unchanged).
+<!-- src: paper/exploratory/A109_coupling_nulls/output/h109_1_null.csv (vent, pseudo_clock row: p 0.004975); h109_2_offsets.csv (vent, full: p 0.164984); a115_d115_1.csv; Holm recomputed from these p values -->
+
+**A138** (RE 564: "Holm over H138.1-H138.7"; RE 634, note 5 (ii), written before scoring: H138.5 leaves the family, so Holm runs over H138.1-H138.4, H138.6, H138.7, family of six)
+
+| member | status | raw p | Holm, family of 6 (primary) | Holm, scored only (m = 2) |
+|---|---|---|---|---|
+| H138.1 | scored, FAIL under the changed rule (item 3) | 0.0968 (3/31) | 0.484 | 0.0968 |
+| H138.2 | never scored | none | none | none |
+| H138.3 | never scored | none | none | none |
+| H138.4 | scored, PASS | 1e-4 (the floor, 1/10,001) | 6.0e-4 | 2.0e-4 |
+| H138.6 | never scored | none | none | none |
+| H138.7 | never scored | none | none | none |
+
+- H138.2, H138.3, H138.6 and H138.7 are the Q2 simulation tests. RE 531 makes a simulator gate a condition before any
+  scoring ("if not, Q2 stops and the simulator is fixed first"). The docs record the item as parked (PI, ROADMAP 4.8, "fix the
+  clock signal-to-noise (option b), then the gate, or drop"; RP 777). A two-replicate gate check dated 2026-10-28 exists and
+  reports gate_pass False for CoFE genome-wide, CoFE clock genes and CYCLOPS; no RP or RE line records it, so the doc status
+  remains "parked", not "failed".
+- Before note 5 the family was seven (H138.1-H138.7): H138.4 7.0e-4, H138.1 0.581. H138.5 (descriptive, p 0.069, MDE 0.677) is
+  outside the family.
+- Final: H138.4 passes and H138.1 fails under either family size. The provisional values of RP 777-778 (2e-4 or 6e-4; 0.097
+  or 0.48) are confirmed.
+<!-- src: paper/exploratory/A138_cancer_estimability/output/score/holm.csv (columns holm_adj_scored, holm_adj_family6); score/tests.csv; q2_gate_check/gate_verdict.csv; family of 7 recomputed from the two p values -->
+
+### 2. A142 digestive erratum (H142.2)
+
+- **Registered statistic (r*, reliability-corrected):** digestive r* 0.883 [0.819, 0.971], 160 donors; random 7-tissue blocks
+  median 0.970, 5th percentile 0.900; one-sided p 0.028 (28/1,001), Holm 0.028 over H142.1-2. Registered verdict: **PASS**.
+  Verified: `tests.csv`, row digestive, r_star 0.8832, p_one_sided 0.02797, verdict pass.
+- **Bounded statistic (uncorrected r):** digestive r 0.782 (the same r that r* divides by sqrt(rel_a x rel_b) =
+  sqrt(0.864 x 0.907) = 0.885); reference r median 0.821, 5th percentile 0.731; one-sided p **0.207**. Not supported. Verified:
+  `targets_bounded.csv`, row digestive, r 0.7818, p_uncorrected_r 0.2068. The brain holds on both statistics (r* 0.639, p 0.001;
+  r 0.575 vs reference q05 0.802, p 0.001).
+- **Erratum.** The registered verdict (PASS on r*, p 0.028) stands. The reading of RP 654-659 ("digestive organs depart from the
+  rest of the body as a group, more than an arbitrary organ group does") holds only on the disattenuated r*. It rests on the
+  correction, not on the raw correlation. The PER1/PER2-free sensitivity is p 0.056 (RP 645). Any text that uses the digestive
+  departure must say "on the reliability-corrected statistic" and report the uncorrected p 0.207 next to it. The registration says
+  a pass becomes a Figure 2 row ("main if it passes", RE 905): whether the row stays main is a PI decision, flagged here.
+- **0.028 vs 0.029 (inventory item 7).** The registered run gives p 0.0280 (28/1,001) and the Phase 5 rerun p 0.0290 (29/1,001, r*
+  0.885). The two runs draw different random tissue splits for the reliabilities. The registered value is 0.028; 0.029 is the rerun.
+  Both are in `targets_bounded.csv` (columns registered_p, p_old).
+- The bounded rescore (RP 1498-1504) is post hoc and descriptive; it is cited here as an erratum to the reading, not as a new verdict.
+<!-- src: paper/exploratory/A142_organ_blocks/output/tests.csv; paper/exploratory/A142_organ_blocks/bounded_2026-10-29/output/targets_bounded.csv (columns r, r_star, p_uncorrected_r, ref_r_q05, ref_r_median, registered_p, p_old) -->
+
+### 3. H138.1: the rule change after the power step is a design change
+
+- **Registered rule (RE 509-511):** pass if the lower bound of the 95 % patient-bootstrap interval (1,000, DerSimonian-Laird) of the
+  pooled malignant coupling is > 0.
+- **Power step (before any observed statistic; RP 721-735):** the registered rule passes in 4 of 30 null replicates (false-positive
+  rate 0.133, nominal 0.05; `h138_1_sim.csv`, c = 0: share_lo_gt0 0.1333); the pooled estimate at c = 0 has mean 0.030 and 95th
+  percentile 0.083.
+- **Rule applied (RE 626-634, note 5 (i), dated 2026-10-27, written after the power step and before any observed A138 statistic;
+  PI decision):** pass if the pooled coupling exceeds 0.083; one-sided p = (1 + k)/31 over the 30 null replicates.
+- **Observed (225 patients, 17 cohorts):** pooled coupling 0.0764 [0.0139, 0.1388], tau2 0. Registered rule: lower bound 0.0139
+  > 0, **would pass**. Applied rule: 0.0764 < 0.083, k = 2, p = 3/31 = 0.0968, **fails**.
+- **Verdict as registered after the change: FAIL.** This is recorded as a design change made after seeing the null power
+  simulation and before any observed H138.1 value, not as a post hoc reinterpretation. The registered-rule outcome (pass, lower
+  bound 0.014) is reported next to it. The registered rule is anti-conservative (false-positive 0.133), so its pass carries little
+  weight; MDE about 0.2 under either rule, so neither supports a claim of malignant host coupling. 15 of 17 cohorts have a lower
+  bound of 0. The power design used 270 patients; 225 were fitted (RP 772-777).
+<!-- src: paper/exploratory/A138_cancer_estimability/output/score/tests.csv (H138.1: statistic 0.07636, pooled_lo95 0.01389, pooled_hi95 0.13883, p 0.09677, null_q95 0.08297, null_k_ge_obs 2, lower_bound_rule_pass True); power/h138_1_sim.csv (c 0: share_lo_gt0 0.1333, pooled_q95 0.08297) -->
+
+### 4. Hepatocyte Bmal1 knockout: one value, and the A47 sign
+
+**Value to quote for A129 / H111.3: d\* = -0.287 [-0.411, -0.118], p 0.001** (liver, hepatocyte Bmal1 KO vs Alb-Cre, ad libitum, 24 vs
+24 mice; c 0.967 -> 0.676), at a common host spread. The three numbers in the docs are three different quantities:
+
+| value | what it is | table |
+|---|---|---|
+| **-0.287** | d\*: coupling difference at a common host spread. This is the registered A111 / A129 H111.3 estimand | `a111_h111_3.csv`, Liver row, variant primary: d_star -0.2869 [-0.4109, -0.1178], p_less_d_star 0.001 |
+| -0.291 | d: the raw difference c_KO - c_control in the same run (own spreads), [-0.463, -0.111]; cited as "the A111 reference" | same row, column d -0.2907 |
+| -0.293 | a different run: two separate per-genotype fits of the A145 comparison pipeline (WAT + Lung anchors, ad libitum arm, no bootstrap): c 0.9690 (Alb-Cre) -> 0.6756 (BLKO); raw difference, not d\*. It is the "observed" value that A158 reproduces (-0.2934) and the clocksync value compared with the timed oracle (-0.1859) | `A145_two_step/output/d145_2.csv` (method clocksync); `A158_bmal1_bias/output/a158_reproduce.csv` (observed_change -0.2934) |
+
+- Quote -0.287 whenever the claim is the genetic positive control. Quote -0.293 against -0.186 only for the clocksync-versus-oracle
+  comparison, labelled "raw difference of per-genotype fits (A145)". Do not call it d\*.
+- Wrong labels: RE 1840 (A158 "Why": "A129: clocksync d* -0.293") names the A145 raw difference d\*; RP 902 and 1375 quote -0.293 as the
+  clocksync drop (correct as the A145 raw difference, not d\*); RP 1563 heading "(-0.291)" is d, not d\*. RP 1566 already gives the real d\*
+  (-0.287). A158 itself is unaffected: it compares the raw values -0.293 and -0.186 like for like.
+- **A47 sign.** `a164_a47_side_by_side.csv` gives A47 unmatched T2D module "dstar | module mean" **+0.0432** (case minus control; negative
+  = loss), so the sign in RP 1887 (+0.043) is correct in the A164 convention. RE 2261 (A164 registration header) quotes the archive value
+  "d\* -0.043 [-0.091, 0.004]": that is the A47 table itself (`a47_t2d_pooled.csv`, dstar, module mean, D -0.0432 [-0.0908, 0.0043], p_upper
+  0.94), stored as a loss (control minus case; the A164 script writes `D = -r.D`). In the A164 convention the interval is
+  [-0.0043, +0.0908]. Neither value says T2D loosens coupling: the A47 estimate is a slightly higher coupling in T2D than in controls,
+  inside the A164 equivalence bound (+/-0.15). Where the doc is wrong: RE 2261 (and inventory sections 0 and 7, which copy it) writes the
+  archive loss-convention number as a d\* without saying so; read it as "loss -0.043" = d\* +0.043. RE is not edited here.
+<!-- src: paper/exploratory/A111_feeding_controls/output/a111_h111_3.csv; paper/exploratory/A145_two_step/output/{d145_2,real_clocksync}.csv; paper/exploratory/A158_bmal1_bias/output/a158_reproduce.csv; paper/exploratory/A164_gtex_metabolic_matched/output/a164_a47_side_by_side.csv; paper/results/figure_3/output/gtex_cues/a47_t2d_pooled.csv; script compute_a164.py lines 410-419 -->
+
+### 5. A154 V154.1 and A157 V157.1: the registered wording, read literally
+
+**A154 V154.1.** Registered text (RE 1670-1671), exactly: "**V154.1:** gate pass rate in N0 <= 0.075 in every design (one-sided exact
+binomial against 0.05 not rejected at p < 0.01)."
+- The sentence has two conditions with no connective: a rate threshold (<= 0.075) and a parenthetical binomial condition. Observed in
+  the worst design, n100_K8_single_cell: 17/200 = 0.085 (exact 95 % interval 0.050-0.133); binomial p (rate > 0.05) 0.0238. The other
+  seven designs are 0.040-0.070.
+- **Reading A (both conditions must hold; literal, since neither stated clause is dropped):** 0.085 > 0.075, so that design fails;
+  the binomial condition holds (0.0238 is not < 0.01). **V154.1 FAILS.** This is the registered and scored verdict, and the reading the code
+  implements (columns `rate_le_0.075` False, `binom_not_rejected_p>=0.01` True, `V154.1_design_pass` False).
+- **Reading B (only the binomial parenthetical is operative; reinterpretation, not adopted):** all 8 designs pass (minimum p 0.0238 >=
+  0.01), so V154.1 would PASS.
+- Verdict: FAIL stands. RP 1714-1716 ("binomial p 0.024, not < 0.01", then "fails") is consistent with Reading A but reads as if the
+  binomial condition failed; it did not, the rate condition did. The registered consequence (gate "mildly anti-conservative" at K 8,
+  n 100, single cell; calibrated threshold there) is unchanged.
+
+**A157 V157.1.** Registered text (RE 1832-1833), exactly: "**V157.1:** in the muscle design, JS < 0 in >= 20 % of replicates while
+Fisher-Lee stays > 0.5 in >= 80 %; in the adipose design, JS < 0 in < 5 %."
+- Observed: muscle JS < 0 in 37.2 %, Fisher-Lee > 0.5 in 99.6 % (both pass); adipose JS < 0 in 25 of 500 = **5.0 %** exactly.
+- **Literal reading (strict inequality):** 5.0 % is not < 5 %, so the adipose condition fails and **V157.1 FAILS**; the registered
+  consequence follows: muscle goes to Extended Data as a registered fail (RE 1835). This is the scored verdict and it stands.
+- Alternative (reinterpretation, labelled, not adopted): with "<= 5 %" the adipose part would pass, V157.1 would pass, and the
+  registered consequence would be that the Fisher-Lee muscle value is reported as the design-appropriate estimator with the post hoc
+  label and this simulation.
+- Context, not a change of verdict: 25/500 is a Monte Carlo estimate (exact 95 % interval 3.3-7.3 %), so the boundary outcome is
+  within sampling error. The failing component is the adipose comparator; the muscle design itself meets both of its criteria
+  (inventory item 6). The muscle pass of A113 stays labelled post hoc either way. Rerunning with more replicates would be a post hoc
+  step and is not done.
+<!-- src: paper/exploratory/A154_gate_calibration/output/v154_1_n0.csv; paper/exploratory/A157_js_grid/output/a157_summary.csv (share_js_lt0 0.05 adipose, 0.372 muscle; share_fl_gt05 0.996; V157_1_adipose_part False); exact intervals computed from 17/200 and 25/500 -->
+
+## A174 V3 heart, scored 2026-11-01 (confirmation on current code; archive result known)
+
+- **V174.1 PASS:** gate on 16 patients, 4 compartments (cardiomyocyte, fibroblast, endothelial, neuron; learned heart
+  anchors fibroblast, cardiomyocyte, neuron; LOO default): pairing p 0.0005, acrophase p 0.0010 (2,000 permutations).
+- **V174.2 PASS:** PM − AM host displacement p 0.0004 (5,000 window-label permutations; archive 0.0004).
+- **V174.3 PASS:** angle 19.73 h vs 18 h forward, error +1.73 h (archive 19.30 h, +1.30 h).
+- Sensitivities (descriptive), all with gate p ≤ 0.0015 and the angle within 1.4-1.7 h of 18 h: each surgical arm
+  (NCR p 0.032, ACR p 0.033, as the archive; 8 patients give a coarse permutation floor), floor 50 cells (p 0.0004), fixed
+  stromal-vascular anchors (p 0.0004), myeloid added (identical: myeloid is not an anchor), left-ventricle waveform
+  (p 0.0004, angle 19.41 h).
+- **Reading:** V3 holds on the current estimator and enters the true-time panel (T3). Its truth is a 4-h window per
+  patient, not a recorded time, so its error is on the group displacement, not per patient.
+<!-- src: paper/exploratory/A174_v3_heart/output/v3_scores.csv -->
+
+## A175 C1, scored 2026-11-01 (secondary: TCGA is seen)
+
+- **Reproduction:** H138.4 = 0.3647 (517 pairs, 10 cancers).
+- **Power:** H175.1 null SD 0.077, MDE 0.194 (8 cancers, 162 / 159 pairs; BLCA and UCEC below 10 per arm). H175.2 (BRCA ER,
+  78 / 21 pairs) MDE 0.408 > 0.3: **not estimable at this n** (stop rule), not run.
+- **H175.1 PASS:** pooled pairing low proliferation tertile 0.459, high 0.301; D +0.158, p 0.021 (Holm over the one test
+  run). Clock-specific: above the 95th percentile of the matched pseudo-clock sets (98.0th; q95 0.129) and of the responsive
+  sets (99.5th; q95 0.087).
+- **Descriptive:** mid tertile 0.460 (the drop is in the high tertile only). G2M residualised on ABSOLUTE purity (472 pairs):
+  D +0.140, p 0.037. Per cancer D: positive in 7 of 8 pooled cancers (BRCA 0.13, KIRC 0.17, KIRP 0.21, LIHC 0.16, LUAD 0.03,
+  PRAD 0.34, THCA 0.39), COAD −0.22. BRCA luminal A/B 0.408 (79) vs basal + HER2 0.192 (24): D +0.217, p 0.080.
+- **Choices fixed in the code, not in the registration:** G2M z-scored within the paired tumours of each cancer (A97
+  z-scored over the whole project); pseudo-companion D on the observed labels; linear purity residual within cancer.
+- **Reading (as registered):** in TCGA the most proliferative tumours follow their own normal tissue less (L2), clock-
+  specifically. **Caveat:** the pairing statistic is a correlation, so it falls when the tumour's clock-state variance
+  shrinks relative to noise, even if the following is intact; A176 (swamped vs disordered) decides between "less host
+  following" and "less clock signal". Primary replication (GSE14520, GSE66229) to be registered and brought to the PI.
+<!-- src: paper/exploratory/A175_c1_pairing_strata/output/{power.csv,tests.csv,descriptives.csv,per_cancer.csv} -->
