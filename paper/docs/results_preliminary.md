@@ -2446,3 +2446,14 @@ Fisher-Lee stays > 0.5 in >= 80 %; in the adipose design, JS < 0 in < 5 %."
   0.214 (104 / 104). All exceed the TCGA D +0.158. **Stop rule (HANDOFF C1): the replication is not run as a test; not
   estimable at this n.** CPTAC (nothing on disk) is the remaining route.
 <!-- src: paper/exploratory/A177_c1_replication/output/{power.csv,gates.csv,power_arms.csv} -->
+
+## V5 spike-ins ported (2026-11-01, Extended Data; M3-style compare, no registered verdict involved)
+
+- Archive design kept (SRP445031, 20 biopsies, epithelial:A vs B; 7 effects × 40 replicates, same seeds, 200 bootstraps),
+  now on `clocksync.Dataset.joint_contrasts`. Input is still the archive pseudobulk (`outputs/pilot/SRP445031_pseudobulk.csv`).
+  No current builder exists for the raw data.
+- Every detection and coverage rate equals the archive: false positives 0.025 (amplitude) and 0.100 (offset); 0.7×
+  damping detected in 1.000 of replicates (mean log ratio −0.348, expected −0.345); 2 h shift detected in 1.000 (mean
+  2.27 h, expected 1.95 h: the offset is overestimated by about 0.3 h); 4 h shift mean 4.77 h (coverage 0.525). Means
+  differ from the archive by ≤ 0.0033.
+<!-- src: paper/results/extended_data/output/spikeins/{compare_archive.csv,v5_summary.csv}; paper/results/logs/v5_spikeins_compare.md -->

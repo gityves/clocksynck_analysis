@@ -30,7 +30,7 @@ GROUPS = {  # group -> figure folder under results/
     "resilience": "figure_4", "spread_multiplicity": "figure_4", "natural_experiments": "figure_4",
     "cancer": "figure_5", "cancer_pipeline": "figure_5", "lung_breaks": "figure_5", "psoriasis": "figure_5",
     "psoriasis_details": "figure_5",
-    "calibration": "extended_data", "gate": "extended_data", "host_identity": "extended_data",
+    "calibration": "extended_data", "gate": "extended_data", "host_identity": "extended_data", "spikeins": "extended_data",
     "simulations": "extended_data",
 }
 
