@@ -2806,3 +2806,28 @@ GSE62254 100/100/100, GSE84437 161 ×3, GSE15459 67/66/67; lung halves (ADC; SQC
 92/91; 40/40, GSE30219 43/42; 31/30. All series have 14 clock genes (GSE26253 13, no PER3). MDE (80 %): H173.1 0.224,
 H173.2 0.229, H173.3 0.332 (TCGA STAD −0.305); H173.4 0.355 (TCGA LUAD − LUSC = −0.361 − 0.212 = −0.57); per-series D
 0.60-0.63, per-histology T 0.41-0.49 (descriptive only).
+
+## A174 (2026-11-01, written after the pseudobulk build (`A174_v3_heart/output/cells_per_class.csv`: cell counts only, no clock-gene value read) and before any gate, host or AM/PM readout on current code; the archive result is known (V3), so this is a **confirmation on current code**, not a new test; HANDOFF_2026-10-31 T1): does the V3 heart-surgery validation hold on the current estimator?
+
+**Why:** V3 (archive, pre-A17 estimator: `scCircadianCancer/legacy/scripts/v3_heart.py`, `outputs/v3_heart/checks.csv`) is the
+only true-time human validation that has not been ported: gate p 0.0005 (minimum at 2,000 permutations), PM − AM host
+displacement p 0.0004 (each surgical arm 0.032 / 0.033), displacement angle 19.3 h against 18 h predicted for forward time.
+**Data:** GSE270258 (Jia 2024), left-ventricle snRNA-seq of 16 cardiac-surgery patients, 8 operated 06-10 h (AM) and 8
+14-18 h (PM), 4 + 4 in each arm (NCR, ACR); window only, no per-patient time. No author labels: cell classes from the
+archive marker rule, frozen in `build_v3.py` (no clock gene among the markers), floor 20 cells.
+**Design (fixed now):**
+- Compartments: non-immune classes with ≥ 12 patients: cardiomyocyte (16), fibroblast (16), endothelial (16), neuron (15).
+- Anchors: the learned A17 heart anchors present here (`common/anchors_a17.csv`, heart_global: cardiomyocyte, fibroblast,
+  neuron; mural is learned but present in 4 patients only); clocksync c266e20 defaults (`anchor_readout="loo"`).
+- Host state: `Dataset.host()` on these anchors; reference anchor fibroblast (as in the archive).
+**Predictions (restated from the archive):**
+- **V174.1** the gate passes (pairing and acrophase p < 0.05, 2,000 permutations) on the 16 patients.
+- **V174.2** the PM − AM mean host-state displacement is longer than under window-label permutation (5,000, archive
+  statistic), p < 0.05.
+- **V174.3** its angle is within ±3 h of 18 h (forward time; 6 h if reversed).
+**Sensitivity (descriptive):** each surgical arm separately (8 patients, as in the archive); archive floor of 50 cells; the
+fixed stromal-vascular anchors available here (fibroblast, endothelial; 2 anchors, so only non-anchor targets are read);
+myeloid added (12 patients).
+**Reading:** V174.1-3 pass → V3 enters the true-time panel (T3) on current code. A failure is reported as such against the
+archive values; no further amendment (stop rule).
+**Code:** `paper/exploratory/A174_v3_heart/`.
