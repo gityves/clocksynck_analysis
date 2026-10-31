@@ -6,6 +6,15 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
 
 ## 2026-10-31
 
+- **A172: the proliferation clock-coherence loss is not pan-cancer (pre-specified; H172.1 −0.032, p 0.18, MDE 0.087,
+  12 unseen TCGA projects).** No project passes Holm. Descriptively the six carcinomas lean negative (−0.114, p 0.011,
+  3rd pseudo percentile; STAD −0.305), while LUSC (+0.21) and LGG (+0.20) go the other way.
+  - *Why notable:* bounds the breast / LUAD claim: the loss is cancer-type specific. LUSC vs LUAD makes histology, not
+    organ, the axis.
+  - *Follow-up I would suggest:* a registered gastric replication (GEO STAD cohorts, e.g. ACRG GSE62254) and an
+    adeno vs squamous contrast within lung and oesophagus.
+  - *Source:* `A172_tcga_unseen/output/per_project.csv`, `pooled.csv`.
+
 - **A171: the proliferation clock-coherence loss replicates in lung adenocarcinoma (pre-specified; H171.1-2 pass,
   Holm 0.002 and 0.0135).** GSE72094 −0.242 (442 tumours), GSE68465 −0.293 (443, clock-specific, 1st pseudo percentile);
   GSE31210 −0.232 descriptively. Hepatocellular carcinoma does not replicate (−0.12, −0.10; powered for the TCGA −0.51).

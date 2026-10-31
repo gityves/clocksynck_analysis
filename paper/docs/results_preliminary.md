@@ -2131,3 +2131,39 @@ TCGA with the same statistic (seen, power step): LUAD −0.361, LIHC −0.512.
   differ from their own non-tumour liver. Caveats: GSE68465 needs site centring (four sites); HCC series lack CIART
   (GSE14520) and are HBV-dominated (GSE14520).
 <!-- src: paper/exploratory/A171_luad_lihc/output/{tests,strata,descriptive,power,tcga}.csv -->
+
+## A172 (scored 2026-10-31): the proliferation clock-coherence loss is not a general tumour property (H172.1 fails at a powered design; no project passes H172.2)
+recount3 TCGA, 12 unseen projects with ≥ 150 primary tumours; H166.3 / H171 statistic, one-sided, 2,000 permutations;
+200 pseudo-clock sets per project.
+
+| test | T | p | MDE | pseudo percentile | verdict |
+|---|---|---|---|---|---|
+| H172.1 mean of 12 projects | −0.032 | 0.183 | 0.087 | 22.5 | fail |
+| carcinomas only (descriptive: CESC, ESCA, HNSC, LUSC, PAAD, STAD) | −0.114 | 0.0105 | 0.122 | 3.0 | — |
+
+| project | n | T | p | Holm | MDE | pseudo pct | without PER1/NR1D1 (p) |
+|---|---|---|---|---|---|---|---|
+| STAD | 415 | −0.305 | 0.015 | 0.180 | 0.357 | 2.0 | −0.404 (0.003) |
+| CESC | 304 | −0.175 | 0.039 | 0.429 | 0.259 | 8.0 | −0.139 (0.106) |
+| HNSC | 502 | −0.170 | 0.080 | 0.795 | 0.287 | 12.5 | −0.146 (0.122) |
+| ESCA | 184 | −0.149 | 0.095 | 0.855 | 0.278 | 16.5 | −0.234 (0.042) |
+| PAAD | 178 | −0.097 | 0.188 | 1 | 0.282 | 29.0 | −0.126 (0.143) |
+| READ | 166 | −0.029 | 0.416 | 1 | 0.318 | 45.0 | −0.024 (0.440) |
+| TGCT | 150 | −0.028 | 0.396 | 1 | 0.286 | 33.5 | +0.041 (0.636) |
+| GBM | 155 | +0.031 | 0.597 | 1 | 0.370 | 63.5 | −0.186 (0.125) |
+| PCPG | 179 | +0.036 | 0.588 | 1 | 0.340 | 67.0 | −0.064 (0.310) |
+| SARC | 259 | +0.088 | 0.761 | 1 | 0.330 | 76.5 | +0.186 (0.923) |
+| LGG | 514 | +0.205 | 0.997 | 1 | 0.175 | 97.0 | +0.156 (0.987) |
+| LUSC | 501 | +0.212 | 0.950 | 1 | 0.317 | 96.0 | +0.072 (0.712) |
+
+- **Reading:** the pooled loss over unseen tumour types is absent (−0.03 against an MDE of 0.09), so proliferation-linked
+  clock-coherence loss is cancer-type specific, not pan-cancer. No single project passes after Holm.
+- **Descriptive pattern (not tested):** the six carcinomas lean negative (−0.114, p 0.011, 3rd pseudo percentile), led
+  by STAD (−0.305, 2nd pseudo percentile, Holm 0.18); the non-epithelial tumours (glioma, sarcoma, PCPG, TGCT) are null or
+  positive. LUSC is positive (+0.21) while LUAD is the strongest seen loss (−0.36; A171 replicated): within lung the
+  effect follows histology. Together with A97's seen projects (LIHC, LUAD, KIRP negative; BLCA, KIRC, THCA null) the loss
+  is carried by a subset of adenocarcinomas and possibly gastric/cervical carcinomas.
+- **Caveats:** per-project MDEs (0.18-0.37) are near the size of the breast / LUAD effects, so single projects are
+  individually under-powered; "carcinomas only" was a registered descriptive row, not a test. Any histology mixed (STAD,
+  ESCA include adeno and squamous).
+<!-- src: paper/exploratory/A172_tcga_unseen/output/{per_project,pooled,power,eligibility}.csv -->
