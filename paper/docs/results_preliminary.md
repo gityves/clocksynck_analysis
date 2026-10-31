@@ -2407,3 +2407,32 @@ Fisher-Lee stays > 0.5 in >= 80 %; in the adipose design, JS < 0 in < 5 %."
   shrinks relative to noise, even if the following is intact; A176 (swamped vs disordered) decides between "less host
   following" and "less clock signal". Primary replication (GSE14520, GSE66229) to be registered and brought to the PI.
 <!-- src: paper/exploratory/A175_c1_pairing_strata/output/{power.csv,tests.csv,descriptives.csv,per_cancer.csv} -->
+
+## A176 C3, scored 2026-11-01: swamped, not disordered (L1)
+
+- **Reproduction:** ΔR of all seven registered coherence contrasts equals the amendment tables (|diff| ≤ 6e-17).
+- **H176.1 SUPPORTED (7 of 7, Holm ≤ 0.006):** the in-plane log-odds Δs falls in the low-coherence arm in every contrast:
+  SCAN-B proliferation −0.248, SCAN-B ER− −0.364, METABRIC ER− −0.271, GSE72094 −0.712, GSE68465 −0.384, GSE62254 −0.864,
+  GSE15459 −0.613. All below the 5th pseudo-clock percentile (SCAN-B ER− at the 5.0th, Δs −0.364 < q05 −0.357: marginal).
+  MDE of Δs 0.16-0.54.
+- **H176.2:** no contrast is called disordered. The registered swamping calibration was **degenerate**: on pseudo sets ΔR
+  and Δs are nearly uncorrelated (|r| ≤ 0.13), so the "Δs needed" values (3-30 log units) are meaningless. H176.2 is not
+  informative as designed; this does not affect H176.1 (design flaw recorded, no amendment).
+- **Which component carries it (descriptive, two-sided p, pseudo percentiles):**
+  - Clock-plane variance falls in the proliferation contrasts: SCAN-B −0.228 (p 0.0005), GSE72094 −0.545 (0.0005),
+    GSE62254 −0.687 (0.0005), GSE68465 −0.232 (0.049); pseudo percentiles of Δlog_plane 0-5.5. Not clearly in the ER
+    contrasts (SCAN-B −0.087, p 0.22; METABRIC −0.153, p 0.027) or GSE15459 (−0.212, p 0.30).
+  - Off-plane variance rises in all seven (+0.020 to +0.401), but this is **not clock-specific** (pseudo percentiles of
+    Δlog_off 19.5-90): proliferating and ER− tumours carry more variance in any gene set.
+  - Without PER1 and NR1D1, Δs stays negative in the proliferation contrasts (p ≤ 0.008) but weakens in ER (SCAN-B −0.166,
+    p 0.026; METABRIC −0.067, p 0.21), where Δlog_plane becomes ≥ 0.
+  - Against a proliferation-responsive pseudo pool (C4 pool), Δs is below the 5th percentile in 6 of 7 (GSE68465 6.0th).
+- **Reading (Q8 wording):** the coherence loss is a swamped clock, not disordered relations. In proliferating tumours
+  the clock-plane variance across tumours shrinks clock-specifically, on top of a generic rise in off-plane variance.
+  In ER− tumours the swamping is mostly the generic off-plane rise, and it depends partly on PER1/NR1D1. Wording to
+  propose: "less clock signal relative to non-clock variation", not "clock loss".
+- **Consequence for A175:** lower clock-plane variance in high-proliferation tumours lowers a pairing correlation by
+  itself. So H175.1 (lower tumour-normal pairing) cannot yet be read as "less host following". A spread-matched pairing
+  readout (pairing at common tumour clock-plane variance, the d* logic) is needed before the L2 claim. That would be a new
+  registration.
+<!-- src: paper/exploratory/A176_c3_plane_variance/output/{tests.csv,verdict.csv,calibration.csv,descriptive_without_per1_nr1d1.csv,descriptive_prolif_pool.csv} -->
