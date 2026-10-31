@@ -2436,3 +2436,13 @@ Fisher-Lee stays > 0.5 in >= 80 %; in the adipose design, JS < 0 in < 5 %."
   readout (pairing at common tumour clock-plane variance, the d* logic) is needed before the L2 claim. That would be a new
   registration.
 <!-- src: paper/exploratory/A176_c3_plane_variance/output/{tests.csv,verdict.csv,calibration.csv,descriptive_without_per1_nr1d1.csv,descriptive_prolif_pool.csv} -->
+
+## C1 replication scout (2026-11-01, power and gates only; no stratified or overall pairing statistic computed)
+
+- GSE14520 HCC (GPL3921, 213 pairs, 13 clock genes, no CIART) and GSE66229 gastric (ACRG, 98 paired patients; series
+  matrix downloaded, sha256 in `$SCCC_DATA/gse66229/PROVENANCE.md`). Both gates pass: reference gate on normals p 0.019 /
+  0.0065; tumour-normal pair gate p_pairing 0.0005 in both, p_acrophase 0.010 / 0.0055.
+- MDE of D (high vs low G2M tertile, 10,000 label permutations): GSE14520 0.251 (71 / 71), GSE66229 0.405 (33 / 33), pooled
+  0.214 (104 / 104). All exceed the TCGA D +0.158. **Stop rule (HANDOFF C1): the replication is not run as a test; not
+  estimable at this n.** CPTAC (nothing on disk) is the remaining route.
+<!-- src: paper/exploratory/A177_c1_replication/output/{power.csv,gates.csv,power_arms.csv} -->

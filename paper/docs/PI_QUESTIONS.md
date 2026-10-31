@@ -26,6 +26,23 @@ A141 (registered after your Q6 answer):
 - **On hold:** nothing else. The brain panels stay in Extended Data with the result stated.
 - Evidence: `results_preliminary.md` (A141).
 
+### Q21 (2026-11-01): cancer L2 after A175/A176, and the Q8 wording
+**Evidence** (`results_preliminary.md`, A175, A176, C1 replication scout):
+- A175 H175.1 (TCGA, secondary): high-proliferation tumours pair less with their own normal tissue (D +0.158, p 0.021,
+  clock-specific). ER split not estimable (MDE 0.41).
+- A176: the coherence loss is "swamped", not "disordered", in 7 of 7 cohorts. In proliferating tumours the clock-plane
+  variance across tumours falls clock-specifically. In ER− tumours it is mostly a generic rise in off-plane variance.
+- So the lower pairing in A175 may be less clock signal rather than less host following. The two cannot be separated
+  without a spread-matched pairing readout.
+- Primary replication: GSE14520 + GSE66229 pooled MDE 0.214 > TCGA D 0.158. Stopped by the stop rule.
+**Questions:**
+1. Q8 wording: replace "clock loss" by "less clock signal relative to non-clock variation (swamped)" in Figure 5?
+2. Register a spread-matched pairing readout (pairing at common tumour clock-plane variance, d* logic) on TCGA as a
+   secondary? This would be a second amendment on the C1 question, which the one-amendment rule forbids without your OK.
+3. Look for CPTAC (LUAD/STAD/BRCA with normal adjacent tissue) for a powered replication? This means a PDC/GDC download
+   (open access), size to be checked.
+**On hold:** any L2 wording for cancer beyond "secondary, TCGA". Nothing else is paused.
+
 ## Answered
 ### Q13 (2026-10-28): roadmap phase 0 decisions (ROADMAP_2026-10-28.md)
 I am going ahead with phases 1, 2 and 4 (code, data integrity, simulations) and the phase 6 scouts. None of them
