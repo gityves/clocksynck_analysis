@@ -2457,3 +2457,30 @@ Fisher-Lee stays > 0.5 in >= 80 %; in the adipose design, JS < 0 in < 5 %."
   2.27 h, expected 1.95 h: the offset is overestimated by about 0.3 h); 4 h shift mean 4.77 h (coverage 0.525). Means
   differ from the archive by ≤ 0.0033.
 <!-- src: paper/results/extended_data/output/spikeins/{compare_archive.csv,v5_summary.csv}; paper/results/logs/v5_spikeins_compare.md -->
+
+## T4: true-time groups on the LOO anchor default (2026-11-01; clocksync c266e20)
+
+- Baboon A36 organ offsets vs timed truth: r_FL 0.9116 → 0.9118, median error 0.455 → 0.452 h (peripheral 0.383 → 0.378,
+  neural 0.497 → 0.496). The host phase vs ZT readout is unchanged (R 0.987, error 0.392 h). Baboon windows: the order
+  statistics are unchanged, and the leave-one-out offset medians move ≤ 0.007.
+- A37 skin, V25.5 and the A25 prior baseline are byte-identical. Their readouts do not use anchor amplitudes or offsets.
+- Previous outputs: `$SCCC_DATA/m3_snapshot_backup/2026-11-01_pre_loo/`.
+<!-- src: paper/results/figure_1/output/species/a36_readouts.csv, windows/baboon_windows_summary.csv (new vs backup) -->
+
+## T3: the true-time validation table (2026-11-01)
+
+| dataset | truth | n | readout | value | error (h) | prior-only: window centre (h) | prior-only: best constant, oracle (h) |
+|---|---|---|---|---|---|---|---|
+| baboon (A36) | ZT, full day | 12 animals | host phase vs ZT, R | 0.987 | 0.39 | n/a (full day) | n/a |
+| baboon (A36) | timed organ offsets | 63 tissues | offsets, r_FL | 0.912 | 0.45 | n/a | n/a |
+| V25.5 breast | recorded resection time | 42 patients | order, Spearman | 0.558 | 1.07 (1.42 with no use of truth) | 2.10 | 1.67 |
+| A113 adipose | timed biopsies | 12 men, 48 biopsies | rho | 0.888 | 1.11 | 5.50 | 4.88 |
+| A37 skin | timed epidermis-dermis offset (−2.14 h) | 11 subjects | untimed offset | −1.69 h | 0.45 | 2.14 (no offset) | n/a |
+| V3 heart (A174) | AM / PM window | 16 patients | PM − AM displacement angle | 19.73 h | 1.73 | no prior-only direction (chance 6 h) | n/a |
+
+- No dataset shares donors with its truth. The method beats every prior-only baseline that is defined, including the
+  oracle constant.
+- V25.5 error is 1.07 h in the A25 table (offset on a 0.05 h grid) and 1.12 h in `v25_5_summary.csv` (the V25.5 fit).
+  Quote 1.12 h with the V25.5 readout and 1.07 h only next to the A25 baselines.
+- A113 errors are after the circular offset fit. Its prior-only baselines are large because sampling spans the day.
+<!-- src: paper/exploratory/T3_truetime/output/truetime_table.csv (script T3_truetime/scripts/truetime_table.py) -->
