@@ -2582,3 +2582,32 @@ in `$SCCC_DATA/m3_snapshot_backup/2026-11-01_pre_loo/`.
   A159 differ in pseudo-set construction, so myeloid is clock-specific on A150 (0.180) but near zero on A159 (0.07).
   Quote both with their method, or A159 only.
 <!-- src: paper/exploratory/A150_atlas_specificity/output/{h150_1.csv,per_family.csv,d150_2.csv}; paper/results/figure_4/output/resilience/a17_contrast*.csv; figure_3/output/gtex_cues; figure_4/output/natural_experiments; paper/results/logs/rerun_2026-11-01_compare.md -->
+
+## A181 D1, scored 2026-11-01: the fetal gate failure is uninformative (design-limited, not depth-limited)
+
+- **Reproduction:** the A107b gates reproduce exactly (whole organs p_pairing 0.746, p_acrophase 0.038; stromal 0.269 /
+  0.002).
+- **V181.1 FAIL (stop rule):** adult GTEx at the fetal design passes the gate in 0.20 of 200 subsamples [0.15, 0.26]
+  thinned, and 0.21 [0.16, 0.27] unthinned. The design is 23 donors with the H107b.1 organ-presence pattern, deaths at
+  08-18 h, any Hardy class, pool 170 donors. p_acrophase < 0.05 in 0.975 of subsamples, p_pairing < 0.05 in only 0.20.
+  Thinning changes nothing: the limit is the design (few donors share organs), not depth. Brain could not be thinned to
+  Cao depth; it is 2.6 times shallower than Cao cerebrum.
+- **H181.2 FAIL (descriptive under V181.1 < 0.8):** no responsive-gene shared state. Whole organs p_pairing 0.461,
+  stromal 0.366 (Holm 0.731).
+- **Reading:** mid-gestation fetal organs give no evidence for or against a shared clock or cue-driven state. The Cao
+  design cannot show one even where adults have one. D1 closes as "not estimable at this design". No further amendment.
+  The development arc stays a stated limit (STATE §4.3; the D3 scout found no paediatric multi-compartment series).
+<!-- src: paper/exploratory/A181_fetal_depth/output/{repro_a107b.csv,v181_1_passrates.csv,v181_1_depths.csv,h181_2_responsive.csv} -->
+
+## Gate sensitivity statement (2026-11-01, for METHOD and the paper)
+
+The gate is specific: its pass rate under no clock is 0.040-0.085 (A154 N0; 0.14 in the worst N1 cell), and the
+contrasts it guards are calibrated (V154.2). It is not sensitive:
+- under strong shared non-clock structure, at most about a third of true clocks pass (A154 P arm 0.26-0.415);
+- in sparse designs where few donors share compartments, real clocks pass rarely: adult GTEx at the fetal organ-presence
+  pattern passes 0.20-0.21, whether or not it is thinned (A181).
+
+A failed gate is therefore never evidence of absent or decoupled clocks. Real-data specificity is the A154 N0 rate;
+A181 adds a real-data sensitivity bound, not a specificity estimate. The fetal data cannot serve as a negative control,
+because the design could not pass.
+<!-- src: A154 results above; paper/exploratory/A181_fetal_depth/output/v181_1_passrates.csv -->
