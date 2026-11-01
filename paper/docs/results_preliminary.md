@@ -2641,3 +2641,63 @@ No outcome statistic was computed in any of the three (nulls, gates and header f
   needed. No labour / caesarean factor (all vaginal). A106 (first-trimester decidua / placenta single cell) is the
   only archive overlap. Proposed registration: Q22.
 <!-- src: paper/exploratory/scouts_2026-11-01/prep_d2_gse27272/output/{counts.csv,gates.csv,power.csv} -->
+
+## A182 C6 blind types, scored 2026-11-01: no cohort passes; type specificity not resolved at these n
+
+| test | cohort (n tumours) | T | p | Holm p | MDE | pseudo pct | verdict |
+|---|---|---|---|---|---|---|---|
+| H182.1 | GSE39582 colon (566) | −0.220 | 0.041 | 0.123 | 0.305 | 5.5 | not estimable (MDE > 0.30) |
+| H182.2 | GSE17536 colon (177) | −0.090 | 0.240 | 0.480 | 0.292 | 25.0 | not resolved |
+| H182.3 | GSE116918 prostate (248, 13 genes) | −0.034 | 0.407 | 0.480 | 0.358 | 41.0 | not estimable |
+| H182.4 | GSE157009 lung squamous (249) | −0.089 | 0.249 | 0.249 | 0.329 | 27.0 | not estimable |
+| H182.5 | GSE157010 lung squamous (235) | −0.158 | 0.107 | 0.214 | 0.318 | 12.5 | not estimable |
+
+- **Equivalence (T − 1.645 × null SD > −0.19): no cohort.** Design flaw of the registration: at null SD 0.12-0.14 the
+  criterion needs T > about +0.01, so it could not be met at these n. It cannot show "no loss" here.
+- **Colon GSE39582** is the only cohort near the replicated size (−0.220; discovery −0.203, validation −0.239, both
+  nominal p ≈ 0.05), at the 5.5th pseudo percentile; without PER1 and NR1D1 −0.128 (p 0.18). It fails Holm and is
+  above the MDE cut: a lead, not a type for the claim.
+- **Head and neck GSE65858 (descriptive):** −0.060 (two-sided p 0.62), against TCGA HNSC −0.170.
+- **Reading:** no blind cohort adds a type, and none shows the absence of a loss. The claim stays named to breast,
+  lung adenocarcinoma and gastric cancer; whether the loss is type-specific is **not resolved** by C6.
+<!-- src: paper/exploratory/C6_blind_types/output/{power.csv,tests.csv,descriptive.csv,strata.csv,prep_log.csv} -->
+
+## A183 psoriasis lesion delay (GSE154200), scored 2026-11-01: replicates in size, not clock-specific
+
+- **H183.1 PASS (Holm), not clock-specific:** psoriasis lesional offset −1.45 h (81 persons in 4 batches; `paired`
+  min_pairs 10 dropped batches of 4 and 2 persons), p 0.0001, Holm 0.0002. Beyond the responsive-gene q05 (−1.01;
+  0.5th percentile) but not the expression-matched pseudo-clock q05 (−1.56; 5.5th percentile), so not "beyond both".
+- **H183.2 PASS (Holm), not clock-specific:** psoriasis − mean eczema offset −1.09 h, p 0.037 (matched pct 20,
+  responsive 5.5). Without PER1 and NR1D1 it flips to +0.49 h: carried by NR1D1. Eczema offsets are noisy (nummular
+  −0.74 h [−5.52, +0.27], atopic +0.14 h [−2.50, +2.48]).
+- **Robustness of the psoriatic delay:** own-framework −1.39 h [−1.96, −0.99]; leave-one-gene-out −1.02 to −1.46 h;
+  negative in each batch with ≥ 10 persons (−0.91 to −1.78 h). r 0.50 (more lesional clock-plane variance).
+- **Deviation:** the pseudo companions were scored once per set, not re-run under each label permutation.
+- **Reading:** the psoriatic delay (A54: −0.93 h held-out) replicates in a blind single-centre cohort at −1.4 h, robust to
+  any one gene; its separation from expression-matched non-clock gene sets is at the line (5.5th percentile), so it is
+  stated as a replicated delay of the clock genes, not a clock-specific one. Psoriasis-specificity is not supported
+  (NR1D1-dependent).
+<!-- src: paper/exploratory/A183_skin_gse154200/output/{tests.csv,descriptives_*.csv,companions_pseudo_sets.csv} -->
+
+## A184 mother–fetus at term (GSE27272), scored 2026-11-01: not resolved
+
+- **H184.1 FAIL:** cord blood × maternal blood coherence 0.193 vs shuffled null q95 0.221 (p 0.103, 60 deliveries).
+- **Companions:** matched pseudo-clock median 0.176 (clock at the 56th percentile); responsive sets median 0.354, 87 %
+  of them with p < 0.05 (clock at the 7th percentile). Mother and cord share a strong non-clock (responsive-gene) state
+  at delivery; the clock genes do not stand out from it.
+- **Descriptive:** cord − mother offset −1.57 h [−5.76, +1.35]; without PER1 and NR1D1 −0.54 h [−2.38, +1.27].
+- **Reading:** no evidence that the term fetus shares its mother's clock state beyond the shared delivery state; not
+  resolved at n 60. D2 closes.
+<!-- src: paper/exploratory/A184_mother_fetus/output/{tests.csv,companions_pseudo_sets.csv,descriptives.csv} -->
+
+## A185 spread-matched C1 pairing (TCGA), scored 2026-11-01: not resolved
+
+- Reproduction: A175 D 0.1577 (low 0.459, high 0.301).
+- **H185.1:** D_match +0.116 (12 of 24 cancer × amplitude bins kept, 195 pairs; COAD and KIRP drop out), p 0.064;
+  MDE 0.187 > 0.158, so neither branch of the reading is available. Pseudo-clock 93.5th, responsive 97.0th percentile.
+- Descriptive: matching removes 26 % of D; matched on normal-tissue amplitude instead, D_match 0.067 (p 0.14, 58 %
+  removed). Tumour amplitudes differ little between arms (median relative |z| 1.02 low vs 0.95 high).
+- **Reading:** about three quarters of the A175 drop survives tumour-amplitude matching, but not significantly; whether
+  proliferating tumours follow their normal tissue less beyond having less clock signal is not resolved. C1 wording:
+  "secondary, TCGA; part of the drop may be less clock signal".
+<!-- src: paper/exploratory/A185_c1_spread_matched/output/{reproduction_a175.csv,power.csv,tests.csv,descriptive.csv,bins.csv,companion_D_match.csv} -->

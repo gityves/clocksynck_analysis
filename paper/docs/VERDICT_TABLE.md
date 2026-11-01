@@ -1,6 +1,6 @@
 # Verdict table: every registered test from A109 onward
 
-Written 2026-11-01; A174-A181 and the A150 rerun added the same day (counts below are those before the additions: A174-A181 add 6 passes, 6 failures, 1 not scored, 1 not informative, with A180 counted as two rows). Procedure: analysis plans committed before scoring (each hypothesis is an amendment in
+Written 2026-11-01; A174-A181 and the A150 rerun added the same day (counts below are those before the additions: A174-A181 add 6 passes, 6 failures, 1 not scored, 1 not informative, with A180 counted as two rows; A182-A185 add 2 passes (not clock-specific), 3 failures, 4 not estimable). Procedure: analysis plans committed before scoring (each hypothesis is an amendment in
 `paper/docs/registered_experiments.md`, committed before its data were scored); this is internal pre-specification with a git
 history, not external pre-registration. Anything chosen after seeing results is labelled post hoc and is not counted below.
 Verdicts are those of `paper/docs/results_preliminary.md` (RP), which governs over `state_2026-10-31/inventory.md`; numbers are copied
@@ -185,6 +185,15 @@ lists A109b and the simulations separately); the counts here follow the verdict 
 | A180 | A165 TOST (phase +/-1.5 h, amplitude 1.5-fold; testable rows) | L3/L2 | S | phase 7 of 8, amplitude 7 of 10 equivalent | - | PASS per row (14 of 18) | 24 phase, 22 amplitude rows not testable | A180_equivalence/output/tost.csv |
 | A181 | V181.1 (adult design-matched gate pass rate >= 0.8) | method | P | 0.20 [0.15, 0.26] thinned; 0.21 unthinned | - | FAIL (fetal gate uninformative) | - | A181_fetal_depth/output/v181_1_passrates.csv |
 | A181 | H181.2 (fetal responsive-gene shared state) | other | P | whole organs p 0.461, stromal 0.366 | Holm 0.731 | FAIL (descriptive under V181.1) | - | A181_fetal_depth/output/h181_2_responsive.csv |
+| A182 | H182.1 GSE39582 colon (blind) | L1 | P | T −0.220, pseudo pct 5.5 | 0.041 / Holm 0.123 | not estimable (MDE > 0.30); not equivalent | MDE 0.305 | C6_blind_types/output/tests.csv |
+| A182 | H182.2 GSE17536 colon (blind) | L1 | P | T −0.090 | 0.240 / Holm 0.480 | FAIL (not resolved; not equivalent) | MDE 0.292 | C6_blind_types/output/tests.csv |
+| A182 | H182.3 GSE116918 prostate (blind) | L1 | P | T −0.034 | 0.407 / Holm 0.480 | not estimable; not equivalent | MDE 0.358 | C6_blind_types/output/tests.csv |
+| A182 | H182.4 GSE157009 lung squamous (blind) | L1 | P | T −0.089 | 0.249 / Holm 0.249 | not estimable; not equivalent | MDE 0.329 | C6_blind_types/output/tests.csv |
+| A182 | H182.5 GSE157010 lung squamous (blind) | L1 | P | T −0.158 | 0.107 / Holm 0.214 | not estimable; not equivalent | MDE 0.318 | C6_blind_types/output/tests.csv |
+| A183 | H183.1 psoriasis lesion delay (GSE154200) | L3 | P | offset −1.45 h; matched pct 5.5, responsive 0.5 | 0.0001 / Holm 0.0002 | PASS, not clock-specific | MDE 0.81 h | A183_skin_gse154200/output/tests.csv |
+| A183 | H183.2 psoriasis minus eczema delay | L3 | P | −1.09 h; matched pct 20, responsive 5.5 | 0.037 / Holm 0.037 | PASS, not clock-specific (NR1D1-dependent) | MDE 0.69 h | A183_skin_gse154200/output/tests.csv |
+| A184 | H184.1 cord × maternal blood coherence | L2 | S | 0.193 vs null q95 0.221 | 0.103 | FAIL (not resolved) | - | A184_mother_fetus/output/tests.csv |
+| A185 | H185.1 tumour-amplitude-matched pairing D | L2 | S | D_match +0.116 (A175 D 0.158) | 0.064 | FAIL (not resolved) | MDE 0.187 | A185_c1_spread_matched/output/tests.csv |
 
 ## Archive results cited by a figure (A1-A108c; flagged archive, not rescored here)
 
