@@ -1,6 +1,6 @@
 # Verdict table: every registered test from A109 onward
 
-Written 2026-11-01. Procedure: analysis plans committed before scoring (each hypothesis is an amendment in
+Written 2026-11-01; A174-A181 and the A150 rerun added the same day (counts below are those before the additions: A174-A181 add 9 passes, 6 failures, 1 not scored, 1 not informative, with A180 counted as two rows). Procedure: analysis plans committed before scoring (each hypothesis is an amendment in
 `paper/docs/registered_experiments.md`, committed before its data were scored); this is internal pre-specification with a git
 history, not external pre-registration. Anything chosen after seeing results is labelled post hoc and is not counted below.
 Verdicts are those of `paper/docs/results_preliminary.md` (RP), which governs over `state_2026-10-31/inventory.md`; numbers are copied
@@ -114,7 +114,7 @@ lists A109b and the simulations separately); the counts here follow the verdict 
 | A149 | H149.1 (malignant vs normal epithelium, single cell) | L2 | S | 0.534 vs null 0.446 +/- 0.042 (q95 0.517), 190 patients; pseudo-clock median 0.579 | 0.022 / Holm 0.044 | PASS nominal; not clock-specific | MDE (statistic level) 0.552 | A149_paired_tumour_normal/output/score/tests.csv |
 | A149 | H149.2 (via stroma) | L2 | S | 0.550 vs 0.539 (61 patients) | 0.45 | FAIL | MDE 0.768 | A149_paired_tumour_normal/output/score/tests.csv |
 | A149 | H149.3 (stroma pairing) | L2 | S | 0.607 vs 0.410 (51 patients); no specificity control registered | 0.0077 / Holm 0.023 | PASS (no specificity control) | MDE 0.608 | A149_paired_tumour_normal/output/score/tests.csv |
-| A150 | H150.1 (atlas coupling clock-specific) | L2 | S | mean c 0.404 vs pseudo mean 0.249, q95 0.316 (52 compartments) | 0.005 (floor) | PASS | - | A150_atlas_specificity/output/h150_1.csv |
+| A150 | H150.1 (atlas coupling clock-specific) | L2 | S | mean c 0.393 vs pseudo mean 0.242, q95 0.313 (53 compartments; rerun 2026-11-01 on class-fixed tables; was 0.404 vs 0.249, p 0.005) | 0.00995 | PASS | - | A150_atlas_specificity/output/h150_1.csv |
 | A151 | H151.1 (tumour fibroblasts pair with normal) | L2 | S | 0.860 vs null 0.504 +/- 0.058 (98 patients) | 1e-4 / Holm 2e-4 | PASS | MDE 0.650 | A151_fibroblast_pairing/output/tests.csv |
 | A151 | H151.2 (clock-specific) | L2 | S | pseudo median 1.013, q95 1.693 | 0.77 | FAIL (uninterpretable: statistic exceeds 1) | - | A151_fibroblast_pairing/output/tests.csv |
 | A152 | H152.1 (residency carries lymphocyte coupling) | L2 | S | resident minus circulating -0.092 | 0.856 | FAIL | MDE 0.220 | A152_lymphocyte_residency/output/h1521.csv |
@@ -171,13 +171,20 @@ lists A109b and the simulations separately); the counts here follow the verdict 
 | A173 | H173.2 (gastric GSE84437) | L1 | P | T -0.134; 48.0th pseudo percentile | 0.071 / Holm 0.071 | FAIL | MDE 0.229 | A173_gastric_lung_histology/output/tests.csv |
 | A173 | H173.3 (gastric GSE15459) | L1 | P | T -0.533; 0.0th pseudo percentile | 0.0005 / Holm 0.0015 | PASS, clock-specific | MDE 0.332 | A173_gastric_lung_histology/output/tests.csv |
 | A173 | H173.4 (lung ADC vs SQC) | L1 | P | D -0.230; 6.0th pseudo percentile | 0.058 / Holm 0.058 | FAIL (predicted direction) | MDE 0.355 | A173_gastric_lung_histology/output/tests.csv |
-| A174 | V174.1 (V3 heart gate passes, current code) | method | P | - | - | not scored (registered 2026-11-01; no result in RP at the time of writing) | - | RE A174 |
-| A174 | V174.2 (PM - AM host displacement) | method | P | - | - | not scored (registered 2026-11-01; no result in RP at the time of writing) | - | RE A174 |
-| A174 | V174.3 (displacement angle within +/-3 h of 18 h) | method | P | - | - | not scored (registered 2026-11-01; no result in RP at the time of writing) | - | RE A174 |
-| A175 | H175.1 (pairing lower in high-proliferation tumours) | L2 | S | - | - | not scored (registered 2026-11-01; no result in RP at the time of writing) | - | RE A175 |
-| A175 | H175.2 (pairing lower in ER- BRCA; runs only if MDE <= 0.3) | L2 | S | - | - | not scored (registered 2026-11-01; no result in RP at the time of writing) | - | RE A175 |
-| A176 | H176.1 (swamped clock: in-plane log-odds < 0 in >= 5 of 7 contrasts) | L1 | P | - | - | not scored (registered 2026-11-01; no result in RP at the time of writing) | - | RE A176 |
-| A176 | H176.2 (disordered clock, per contrast) | L1 | P | - | - | not scored (registered 2026-11-01; no result in RP at the time of writing) | - | RE A176 |
+| A174 | V174.1 (V3 heart gate passes, current code) | method | P (confirmation) | gate on 16 patients | pairing 0.0005, acrophase 0.0010 | PASS | - | A174_v3_heart/output/v3_scores.csv |
+| A174 | V174.2 (PM - AM host displacement) | method | P (confirmation) | length vs window-label permutation | 0.0004 | PASS | - | A174_v3_heart/output/v3_scores.csv |
+| A174 | V174.3 (displacement angle within +/-3 h of 18 h) | method | P (confirmation) | angle 19.73 h, error +1.73 h | - | PASS | - | A174_v3_heart/output/v3_scores.csv |
+| A175 | H175.1 (pairing lower in high-proliferation tumours) | L2 | S | D +0.158 (low 0.459, high 0.301); pseudo 98.0th, responsive 99.5th pct | 0.021 (Holm 0.021) | PASS (clock-specific; reading pending spread match, A176) | MDE 0.194 | A175_c1_pairing_strata/output/tests.csv |
+| A175 | H175.2 (pairing lower in ER- BRCA; runs only if MDE <= 0.3) | L2 | S | - | - | not scored (MDE 0.408 > 0.3, stop rule) | MDE 0.408 | A175_c1_pairing_strata/output/power.csv |
+| A176 | H176.1 (swamped clock: in-plane log-odds < 0 in >= 5 of 7 contrasts) | L1 | P | 7 of 7, Ds -0.25 to -0.86, all below pseudo q05 | Holm <= 0.006 | PASS | MDE 0.16-0.54 | A176_c3_plane_variance/output/tests.csv |
+| A176 | H176.2 (disordered clock, per contrast) | L1 | P | 0 of 7 disordered; calibration degenerate | - | not informative (design flaw) | - | A176_c3_plane_variance/output/verdict.csv |
+| A178 | V178.1 (leave-one-gene-out robust in 4 breast contrasts) | L1 | S | robust: H127.2, H166.1; not: H127.1 (ARNTL, NPAS2, PER3), H166.2 (ARNTL carries it) | - | FAIL | - | A178_c7_robustness/output/verdict.csv |
+| A178 | V178.2 (GSE72094, GSE62254 clock-specific with 1,000 pseudo sets) | L1 | S | 2.8th [1.9, 4.0]; 5.7th [4.3, 7.3] | - | FAIL (GSE62254 at the line) | - | A178_c7_robustness/output/pseudo1000.csv |
+| A179 | H179.1 (cell-cycle conditioning shrinks the proliferation loss) | L1 | P | 0 of 5; median shrinkage -0.13 | Holm >= 0.37 | FAIL (resolved negative in 4 of 5) | median MDE 0.103 | A179_c4_cellcycle/output/tests.csv |
+| A180 | A19 age TOST (+/-0.0375 per decade) | L2 | S | 90 % CI [-0.147, 0.089] | - | FAIL (not equivalent) | bound 0.0375 | A180_equivalence/output/tost.csv |
+| A180 | A165 TOST (phase +/-1.5 h, amplitude 1.5-fold; testable rows) | L3/L2 | S | phase 7 of 8, amplitude 7 of 10 equivalent | - | PASS per row (14 of 18) | 24 phase, 22 amplitude rows not testable | A180_equivalence/output/tost.csv |
+| A181 | V181.1 (adult design-matched gate pass rate >= 0.8) | method | P | 0.20 [0.15, 0.26] thinned; 0.21 unthinned | - | FAIL (fetal gate uninformative) | - | A181_fetal_depth/output/v181_1_passrates.csv |
+| A181 | H181.2 (fetal responsive-gene shared state) | other | P | whole organs p 0.461, stromal 0.366 | Holm 0.731 | FAIL (descriptive under V181.1) | - | A181_fetal_depth/output/h181_2_responsive.csv |
 
 ## Archive results cited by a figure (A1-A108c; flagged archive, not rescored here)
 
