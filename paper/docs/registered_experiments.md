@@ -3140,3 +3140,12 @@ fraction > 0 (tertile labels permuted within study, 10,000).
 - A fail at MDE ≤ 1.0 h bounds any G2/M–G1 clock offset below about 1 h, so phase locking does not explain the
   coherence loss. This replicates archive C2 on corrected fits.
 **Code:** `paper/exploratory/C4_single_cell/` (A187).
+
+**A187 inclusion, fixed before scoring (2026-11-01; after the CoPhaser fits and seed checks, no clock value read):** "stable"
+= the kept seed's theta has circular correlation ≥ 0.8 with at least one other usable (finite, non-vetoed) seed over the
+kept seed's cycling cells; a study with a single usable seed gets seeds 5-9 first (done for GSE131907, GSE176078, GSE161529,
+ERP149257). Included (valid plot and stable): GSE178341, GSE132465, GSE131907, GSE176078 (Wu), GSE161529 (Pal), SRP327758,
+GSE181919, SRP416180. Excluded: unstable GSE183904 (max 0.33), GSE294300 (0.77), GSE315534 (0.74), GSE166555, GSE200997,
+GSE335070; no second usable seed ERP149257; invalid fits (all seeds vetoed) GSE159115, GSE212966, GSE270680
+(`C4_single_cell/fits/output/{qc.csv,seed_stability.csv}`, `FITS.md`). Wu and Pal malignant cells are the authors' tumour
+epithelial labels (no CNV calls).
