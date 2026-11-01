@@ -3083,3 +3083,25 @@ instead; amplitude distributions per arm (aggregates).
 D_match fails with MDE ≤ 0.158 → A175's pairing drop is explained by less clock signal (swamped), and the C1 wording is
 "less clock signal, host following not shown to change". Otherwise "not resolved".
 **Code:** `paper/exploratory/A185_c1_spread_matched/`.
+
+## A186 (2026-11-01, written after the CPTAC metadata scout (`exploratory/scouts_2026-11-01/CPTAC_scout.md`: pair counts and file sizes only) and before any CPTAC expression file is read (download running); approved by the PI 2026-11-01 ("download + register anyway"); the A175 replication clause): does the proliferation pairing drop (A175 H175.1) replicate in independent CPTAC-3 patients? Readout level **L2**, **primary**
+
+**Data:** CPTAC-3 open STAR gene counts (`$SCCC_DATA/cptac_<type>/`, manifests and sample sheets in
+`scouts_2026-11-01/cptac_manifests/`): cases with a Primary Tumor and a Solid Tissue Normal file, LUAD 215, CCRCC 151,
+LSCC 96, SKCM 66, HNSCC 61, PDAC 52, UCEC 45, STAD 27 (scout type mapping; cases without a clean type are dropped).
+Several aliquots of one sample type in one case: unstranded counts summed. No TCGA patient is included.
+**Pipeline (= H138.4 / A175):** per type, clock states of tumour and normal on the A138 projector and the per-type gate of
+H138.4 (`A138_cancer_estimability`); only gated types enter. G2M = A97 score (Hallmark G2M without clock genes) of the
+tumour sample, tertiles by rank within type; types with ≥ 10 pairs per arm.
+**Test H186.1 (one-sided):** D = pooled pairing(low tertile) − pooled pairing(high tertile) > 0, pairs-weighted pooling
+over types (`q3_lib.corr_stat`, as A175); proliferation labels permuted within type, 10,000; p = (1 + #{D_null ≥ D}) /
+10,001.
+**Power and stop rule (before the test):** MDE = q95 + 0.84 SD of the label-permutation null (labels only). If MDE >
+0.158 (the TCGA D) the test is not run and the result is "not estimable in CPTAC".
+**Specificity companions (same permutations):** 200 expression-matched pseudo-clock 14-gene sets per type and 200
+responsive sets (A175 construction); "clock-specific" only above the 95th percentile of both.
+**Descriptive:** D per type; the A185 tumour-amplitude-matched D_match; the reproduction of the gates per type.
+**Reading:** H186.1 passes clock-specifically → the drop replicates in independent patients and C1 becomes a replicated
+L2 result (proliferation only; ER cannot be tested, no breast pairs). A fail at MDE ≤ 0.158 → not replicated. Gate
+failures in a type are uninformative and only remove that type.
+**Code:** `paper/exploratory/A186_cptac_c1/`.
