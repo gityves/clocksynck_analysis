@@ -2540,3 +2540,45 @@ The CHIRAL age-dampening reanalysis (pooled −0.73, p 0.008 → Hardy-matched �
 recomputed here on 2026-10-23 (WP0 item 5, `WP0_integrity/output/chiral_tmm/count_comparison_tmm_summary.csv`). STATE
 2026-10-31 §3.5 ("not re-verified") is wrong. Two limits remain: matched minus pooled is significant on CPM (+0.57, p 0.024)
 but not on TMM (+0.39, p 0.092), and the statistic is CHIRAL's count of rhythmic genes, not clocksync coupling.
+
+## Reruns of possibly stale results (2026-11-01; clocksync c266e20, class fix, relearned anchors, permutation null)
+
+All 12 steps ended ok. The per-step compare is in `paper/results/logs/rerun_2026-11-01_compare.md`; previous outputs are
+in `$SCCC_DATA/m3_snapshot_backup/2026-11-01_pre_loo/`.
+- **Unchanged (byte-identical):** A144 split-half (0.690, p 1e-4); backbone a104, A18 cancer / positive control / PD Braak;
+  A46 tables other than the dose model; A47 T2D; A23 cancer.
+- **A17 Figure 4 contrasts (superseded in design by A153):**
+  - Rows go from 657 to 673 (heart:adipocyte, heart:mast, heart:mesothelial and ileum:mast added). Rows with p < 0.05:
+    56 → 57.
+  - The only flip is dcm_healthy heart:lymphocyte (fixed rule p 0.386 → 0.047, a Holm primary; learned p 0.228 → 0.064).
+    It sits on a class without clock-specific coupling and at the c boundary (c_case 0.0035), so it is **not an A17
+    positive**.
+  - Islets β is unchanged (p 0.040, p* 0.176).
+- **A46 ventilation dose (permutation null):** H46.1 0.0167 → 0.0199, p 0.812 unchanged. Per-tissue p < 0.05: 14 → 8 rows.
+- **A47 BMI:** +0.0253 (p 0.792) → +0.0246 (p 0.782).
+- **A105 COVID covariates:** estimates identical. Under the permutation null, nominal p < 0.05 goes from 4 to 2.
+  PMI × myeloid slope (0.040 → 0.060) and intubation days × myeloid amplitude (0.050 → 0.065) lose nominal significance.
+- **A150 (now on the class-fixed tables):**
+  - 53 compartments (heart:mast added). Clock 0.393 vs pseudo 0.242 (q95 0.313, max 0.406). **H150.1 still passes, p
+    0.00995** (was 0.005).
+  - Family Δc (excess): fibroblast 0.368, endothelial 0.334, other 0.300, epithelial 0.252, mural 0.213, myeloid 0.180,
+    neuron 0.178, parenchyma 0.046, lymphocyte −0.002.
+  - **Myeloid flips to above its pseudo q95** (0.328 vs q95 0.282; was 0.271 vs 0.299). Lymphocyte stays at pseudo
+    level (0.069 vs 0.071).
+  - D150.2: Spearman 0.966 (was 0.943).
+- **A20 / A23 (backbone follow-ups):**
+  - Neurodegeneration × neuron d* −0.069, CI upper end now −0.0001 (was +0.001). The myeloid offset −0.571 h now
+    excludes 0. Metabolic × neuron offset +1.16 h [0.04, 2.69].
+  - "The only interval excluding 0" no longer holds. These are descriptive A20/A23 rows; no registered verdict flips.
+- **A21 without lymphatic:** shifts move ≤ 0.03 h; the acceptance holds.
+- **Stale quotes superseded by this entry:**
+  - the A150 section and its heading ("myeloid not distinguishable from pseudo-clocks");
+  - NOTABLE_RESULTS A150 and VERDICT_TABLE row A150;
+  - STATE §3.2 (0.404 vs 0.249);
+  - the A20/A23 intervals;
+  - A21 epithelial −8.95 → −8.92 h;
+  - REVIEW row 10.
+  STATE's family Δc list (endothelial 0.31 … lymphocyte 0.015) is A159, which is current and was not rerun. A150 and
+  A159 differ in pseudo-set construction, so myeloid is clock-specific on A150 (0.180) but near zero on A159 (0.07).
+  Quote both with their method, or A159 only.
+<!-- src: paper/exploratory/A150_atlas_specificity/output/{h150_1.csv,per_family.csv,d150_2.csv}; paper/results/figure_4/output/resilience/a17_contrast*.csv; figure_3/output/gtex_cues; figure_4/output/natural_experiments; paper/results/logs/rerun_2026-11-01_compare.md -->
