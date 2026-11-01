@@ -2611,3 +2611,22 @@ A failed gate is therefore never evidence of absent or decoupled clocks. Real-da
 A181 adds a real-data sensitivity bound, not a specificity estimate. The fetal data cannot serve as a negative control,
 because the design could not pass.
 <!-- src: A154 results above; paper/exploratory/A181_fetal_depth/output/v181_1_passrates.csv -->
+
+## Pre-registration prep, 2026-11-01 (after the user's GEO downloads): NHS breast, GSE154200 skin, C6 headers
+
+No outcome statistic was computed in any of the three (nulls, gates and header fields only).
+- **NHS breast tumour/adjacent (C1 replication of A175 H175.1): stopped.** Only GSE93601 (GPL22920) has expression:
+  445 pairs; GPL17585 (178 pairs) has values only in RAW.tar (not downloaded). 14 of 14 clock genes; ER IHC 357+ / 86−.
+  Reference gate on normals passes (p 0.032); tumour–normal pair gate fails (p_pairing 0.0005, p_acrophase 0.098).
+  MDE (A177 rule) H175.1 0.198 > TCGA D 0.158 → not estimable; ER contrast MDE 0.206, but unreadable under the failed
+  pair gate. No powered GEO replication of C1 remains (Q21).
+- **GSE154200 (H1):** 185 persons with lesional + non-lesional skin in one batch (psoriasis 87, nummular 52, atopic 46);
+  14 of 14 clock genes; the gate passes in every diagnosis and pooled (p ≤ 0.002). d* is not estimable on two
+  compartments (the host needs ≥ 2 anchors), so the HANDOFF MDE ≤ 0.15 on d* cannot be checked; on the paired offset
+  the MDE is 0.81 h (psoriasis lesional vs non-lesional) and 0.69 h (psoriasis vs the two eczemas), against the A54
+  held-out delay of 0.93 h. Draft registration A183 for the PI (Q22).
+- **C6 blind cohorts (headers only):** primary tumours GSE39582 566, GSE17536 177, GSE116918 248 (13 clock genes, no
+  NR1D1), GSE65858 253, GSE157009 249, GSE157010 235; GSE53625 (179 ESCC) has no symbol annotation on GEO and is not
+  mappable. GSE14333 could not be downloaded. Seen TCGA values (H171 statistic): COAD −0.108, PRAD −0.101, HNSC −0.170,
+  ESCA −0.149 (mixed histology), LUSC +0.212. Draft registration A182 for the PI (Q22).
+<!-- src: paper/exploratory/scouts_2026-11-01/prep_nhs/output/{gates.csv,power.csv}; scouts_2026-11-01/prep_gse154200/output/{gates.csv,power.csv}; C6_blind_types/output/header_summary.csv; A171_luad_lihc/output/tcga_all.csv; A172_tcga_unseen/output/per_project.csv -->

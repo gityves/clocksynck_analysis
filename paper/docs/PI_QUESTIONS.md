@@ -13,6 +13,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Outcome analyses** (survival, endocrine response): wait until the cancer L1/L2 tests C1 and C3 are in, then ask
   again (PI, 2026-10-31).
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
+- **Q22** (below): approve the A182 (C6) and A183 (H1 skin) registrations.
 - **Closed 2026-10-31** (answer lines in each entry): Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the A121 and A135
   placements (embryo and brain disease panels in Extended Data).
 
@@ -49,6 +50,31 @@ A141 (registered after your Q6 answer):
 - For H1, GSE154200 has 186 persons with lesional + non-lesional skin (psoriasis 88, nummular 52, atopic eczema 46).
 - Proposal: download both (open GEO, small), check clock-gene coverage and gates, run the MDE step, and bring the
   primary registrations to you before scoring. Go ahead?
+
+**Update (2026-11-01, after the downloads):** the NHS replication is stopped: 445 usable pairs, tumour–normal pair
+gate fails (p_acrophase 0.098) and H175.1 MDE 0.198 > TCGA D 0.158 (`results_preliminary.md`, pre-registration prep).
+CPTAC (point 3) is the only route left to a powered C1 replication.
+
+### Q22 (2026-11-01): two primary registrations to approve before scoring (C6 blind types, H1 skin)
+**A183 (H1, GSE154200 skin)**, draft `exploratory/scouts_2026-11-01/prep_gse154200/REGISTRATION_DRAFT.md`: blind
+replication of the psoriatic lesion delay (A54 held-out −0.93 h; MDE 0.81 h, 87 persons) and its specificity against
+nummular and atopic eczema in the same pipeline (MDE 0.69 h). d* is not estimable (two compartments), so the HANDOFF
+target "MDE on d* ≤ 0.15" is replaced by the paired offset. **Question:** approve as is?
+
+**A182 (C6)**, draft `exploratory/C6_blind_types/REGISTRATION_DRAFT.md` (headers only read). My defaults in brackets:
+1. GSE17536 (177 colon, Moffitt; GSE14333 could not be downloaded): [separate test in the weak/null family].
+2. GSE39582 and GSE65858 are ComBat-corrected by the authors: [keep, caveat in the text].
+3. Prostate GSE116918 (custom FFPE array, 13 clock genes, no NR1D1; the only prostate cohort ≥ 150): [include with 13].
+4. ESCC GSE53625 (no symbol annotation on GEO; relation line in an earlier scout header): [drop].
+5. Clock genes: [the pipeline's 14 (with RORA, CIART), as in A171-A173], not the HANDOFF list (BHLHE40/41).
+6. Pancreatic, endometrial and cervical have no blind cohort ≥ 150: [accept the narrower family (colon, prostate);
+   no near-miss cohorts].
+7. HNSC and ESCA lean negative in TCGA (−0.17, −0.15): [keep HNSC as a test; state the TCGA value next to it].
+8. Null reading: TCGA values of the weak types (−0.03 to −0.11) are below the expected MDE (about 0.2), so a
+   non-significant cohort cannot say "no loss". [Add an equivalence test per cohort: T > −0.19 (the smallest
+   replicated cohort effect, GSE62254) with a 90 % interval.]
+9. GSE157009 / GSE157010 (two arms of one Alliance study): [separate tests].
+**On hold:** scoring of A182 and A183. Their power steps are done (A183) or run right after the commit (A182).
 
 ## Answered
 ### Q13 (2026-10-28): roadmap phase 0 decisions (ROADMAP_2026-10-28.md)
