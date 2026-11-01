@@ -1,6 +1,6 @@
 # Verdict table: every registered test from A109 onward
 
-Written 2026-11-01; A174-A181 and the A150 rerun added the same day (counts below are those before the additions: A174-A181 add 6 passes, 6 failures, 1 not scored, 1 not informative, with A180 counted as two rows; A182-A185 add 2 passes (not clock-specific), 3 failures, 4 not estimable; A136 adds 1 pass, 2 failures; A186 adds 1 pass (not clock-specific); A187 adds 2 not scored). Procedure: analysis plans committed before scoring (each hypothesis is an amendment in
+Written 2026-11-01; A174-A181 and the A150 rerun added the same day (counts below are those before the additions: A174-A181 add 6 passes, 6 failures, 1 not scored, 1 not informative, with A180 counted as two rows; A182-A185 add 2 passes (not clock-specific), 3 failures, 4 not estimable; A136 adds 1 pass, 2 failures; A186 adds 1 pass (not clock-specific); A187 adds 2 not scored; A188 adds 1 descriptive, 1 not scored). Procedure: analysis plans committed before scoring (each hypothesis is an amendment in
 `paper/docs/registered_experiments.md`, committed before its data were scored); this is internal pre-specification with a git
 history, not external pre-registration. Anything chosen after seeing results is labelled post hoc and is not counted below.
 Verdicts are those of `paper/docs/results_preliminary.md` (RP), which governs over `state_2026-10-31/inventory.md`; numbers are copied
@@ -201,6 +201,8 @@ lists A109b and the simulations separately); the counts here follow the verdict 
 | A187 | H187.1 G2/M − NC clock offset in malignant cells (cell-cycle locking) | L3 | P | - | - | not scored (no study passes the NC gate; MDE not computable) | - | C4_single_cell/A187/output/gates.csv |
 | A187 | H187.2 locking larger in high-proliferation tumours | L3 | P | - | - | not scored (H187.1 not estimable) | - | C4_single_cell/A187/output/power.csv |
 | A187b | H187.1 with the gate over all NC patients (POST HOC, not counted) | L3 | - | −0.069 h (SRP327758, 12 patients); pseudo 18th, responsive 21st pct | 0.83 | FAIL (no offset; post hoc) | MDE 0.48 h | C4_single_cell/A187/output/tests_b.csv |
+| A188 | H188.1 malignant coupling to own stroma, high − low proliferation (d*) | L2 | S | d* −0.166 [−0.541, 0.208] (1 cohort, SRP329496) | - | descriptive only (MDE 0.476 > 0.3) | MDE 0.476 | A188_c5_within_tumour/output/descriptive.csv |
+| A188 | H188.2 ER− vs ER+ | L2 | S | - | - | not estimable (no eligible cohort) | - | A188_c5_within_tumour/output/descriptive.csv |
 
 ## Archive results cited by a figure (A1-A108c; flagged archive, not rescored here)
 

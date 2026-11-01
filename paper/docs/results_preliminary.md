@@ -2783,3 +2783,31 @@ No outcome statistic was computed in any of the three (nulls, gates and header f
   The proliferation coherence loss is therefore not explained by a cell-cycle-locked clock phase in these patients. Not
   counted among the pre-specified results.
 <!-- src: paper/exploratory/C4_single_cell/A187/output/{power_b,tests_b,artefacts_b,descriptive_b,power_b_mp4,tests_b_mp4,artefacts_b_mp4,descriptive_b_mp4}.csv -->
+
+## A188 C5 within-tumour coupling by proliferation, scored 2026-11-01: descriptive only (not estimable at this n)
+
+- Data: the H138.1 set (17 cohorts), with the G2M score rebuilt from the per-cell counts. 6 cohorts have ≥ 5 patients
+  per tertile arm.
+- Arm gates: only SRP329496 (ovarian, 14 low / 13 high) passes in both arms.
+  - SRP567887 fails in the high arm (p_pairing 0.21); SRP327758 fails in both arms.
+  - GSE131907, GSE132465 and GSE178341 cannot be gated in the arms: the learned A17 anchors include adjacent-normal
+    stroma, which most arm donors lack.
+  - A failed gate is uninformative.
+- **Power:** pooled MDE on d* 0.476 > 0.3, so the registered branch is descriptive only. The per-cohort `power.mde` never
+  reaches 80 % (malignant c0 0.052).
+- **H188.1 (descriptive, SRP329496):**
+  - malignant d* high − low −0.166 [−0.541, 0.208]; c low 0.129, high 0.015;
+  - myeloid companion d* +0.123;
+  - malignant − companion −0.289 [−0.775, 0.196].
+  - Post hoc, with tumour-sample anchors only: d* −0.183 [−0.565, 0.199], MDE 0.485.
+- **H188.2 (ER):** not estimable. Wu and Pal are not in the H138.1 set (no learned anchors or stromal tables), and the
+  one breast H138.1 cohort (SRP273482, 7 patients) has no ER labels.
+- Scorer choices (recorded):
+  - G2M from Hallmark v2024.1 (A97 used v2026.1);
+  - permutations global within cohort (`blocks="none"`);
+  - `power.mde` called directly on the malignant target;
+  - Wald intervals; the specificity interval uses the permutation SD.
+- **Reading:** the direction is that of A175 (lower malignant coupling in proliferating tumours), but one cohort at MDE
+  0.48 cannot resolve it. C5 is a feasibility statement: the single-cell tumour atlases do not power within-tumour L2
+  contrasts (as A153 found for disease atlases).
+<!-- src: paper/exploratory/A188_c5_within_tumour/output/{prep.csv,gates.csv,power.csv,descriptive.csv,per_cohort.csv,loco.csv}; post_hoc_tumour_anchors/ -->
