@@ -2484,3 +2484,38 @@ Fisher-Lee stays > 0.5 in >= 80 %; in the adipose design, JS < 0 in < 5 %."
   Quote 1.12 h with the V25.5 readout and 1.07 h only next to the A25 baselines.
 - A113 errors are after the circular offset fit. Its prior-only baselines are large because sampling spans the day.
 <!-- src: paper/exploratory/T3_truetime/output/truetime_table.csv (script T3_truetime/scripts/truetime_table.py) -->
+
+## A178 C7 robustness, scored 2026-11-01: partly robust (L1)
+
+- **V178.1 FAIL overall** (leave-one-gene-out; robust = all 14 negative and ≥ 12 with p < 0.05):
+  - Robust: SCAN-B ER− (H127.2, 14/14 with p < 0.05) and METABRIC ER− (H166.1, 13/14).
+  - Not robust: SCAN-B proliferation (H127.1). All 14 are negative, but 11/14 have p < 0.05; ARNTL, NPAS2 and PER3 fail
+    (max p 0.161).
+  - Not robust: METABRIC within PAM50 × proliferation (H166.2). 10/14 have p < 0.05. **ARNTL carries it:** −0.168 → −0.017
+    without ARNTL (p 0.467). CRY1, DBP and CIART also fail.
+  - Dropping NR1D1 strengthens H127.1 (−0.123 → −0.205).
+- **V178.2 FAIL overall** (1,000 new pseudo sets):
+  - GSE72094 (H171.1): 2.8th percentile [1.87, 4.02], clock-specific.
+  - GSE62254 (H173.1): 5.7th percentile [4.35, 7.32], **at the line, not clock-specific**. It moves from 5.0 (200 sets)
+    to 5.7.
+- **Descriptive, same 1,000-set pools:** H127.1 1.8, H127.2 1.4, H166.1 0.2, H171.2 1.0, H173.3 0.0. Every upper bound
+  is < 3.
+- **Reading:** the ER− losses are robust to single genes and to pool size. The breast proliferation losses rest partly on
+  ARNTL / NPAS2 (the positive limb). GSE62254 is no longer counted as clock-specific, so gastric clock-specificity rests
+  on GSE15459 alone.
+<!-- src: paper/exploratory/A178_c7_robustness/output/{verdict.csv,logo.csv,pseudo1000.csv} -->
+
+## A179 C4 bulk, scored 2026-11-01: not explained by cell-cycle composition (L1)
+
+- **H179.1 NOT SUPPORTED:** 0 of 5 pass; median shrinkage share −0.133.
+- Conditioning the clock genes on G1/S and G2M scores makes the loss larger in SCAN-B, GSE72094 and GSE68465
+  (S −0.047, −0.032, −0.047). It reduces the loss non-significantly in GSE62254 (S +0.032, p 0.44) and GSE15459 (+0.190,
+  p 0.075).
+- MDE of S (2.49 × random-S SD) is below 50 % of |ΔR| in 4 of 5 contrasts (median MDE 0.103 vs median ½|ΔR| 0.121).
+  So "not explained by linear cell-cycle composition" is a resolved negative in breast and lung. In gastric it is not
+  resolved (GSE62254 MDE 0.136 > 0.094).
+- The two scores explain little clock-gene variance (mean R² 0.06-0.21 per arm). Δlog_plane stays negative after
+  conditioning in all five.
+- **Reading:** the proliferation coherence loss is not linear cell-cycle composition in bulk. Locking at the single-cell
+  level stays untested (C4 single-cell part).
+<!-- src: paper/exploratory/A179_c4_cellcycle/output/{tests.csv,verdict.csv,descriptive.csv} -->
