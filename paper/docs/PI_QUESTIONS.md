@@ -43,8 +43,9 @@ A141 (registered after your Q6 answer):
    (open access), size to be checked.
 **On hold:** any L2 wording for cancer beyond "secondary, TCGA". Nothing else is paused.
 **Update (scout 2026-11-01, `exploratory/scouts_2026-11-01/SCOUT.md`):**
-- A powered C1 replication may exist in GEO: the Nurses' Health Study breast tumour/adjacent pairs (GSE93601, 445 pairs;
-  GSE115577, 328; overlap unresolved; ER and proliferation recorded; FFPE DASL array, clock-gene coverage unchecked).
+- A powered C1 replication may exist in GEO: the Nurses' Health Study breast tumour/adjacent pairs (623 unique patients with
+  tumour + adjacent normal: 445 on GPL22920, 178 on GPL17585 (GSE115577 re-analyses the GSE93601 arrays); ER− 117 /
+  ER+ 503; Affymetrix HTA arrays, all 14 clock genes annotated; `scouts_2026-11-01/prep_nhs/output/nhs_counts.csv`).
 - For H1, GSE154200 has 186 persons with lesional + non-lesional skin (psoriasis 88, nummular 52, atopic eczema 46).
 - Proposal: download both (open GEO, small), check clock-gene coverage and gates, run the MDE step, and bring the
   primary registrations to you before scoring. Go ahead?
