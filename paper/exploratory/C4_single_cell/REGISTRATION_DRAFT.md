@@ -1,4 +1,4 @@
-# A187 registration DRAFT (C4 single cell; not yet in registered_experiments.md)
+# A187 registration draft (superseded: registered as primary in registered_experiments.md, commit fab1005)
 
 ## A187 (draft 2026-11-01, written after the C4 scout (`scouts_2026-11-01/c4_single_cell/SCOUT_C4.md`: cell counts, depth, clock-gene detection) and the CoPhaser cell-cycle refits (`C4_single_cell/pilot`, `C4_single_cell/fits`: phases and QC only), before any clock-gene value is read across cell-cycle phase; the archive C2 result on overlapping cells is known: CoPhaser G2/M − non-cycling offset −0.02 h [−0.55, 0.51], 9 studies, `figure_5/output/cancer/decision.csv`): is the clock of malignant cells locked to their cell cycle? Readout level **L3** (within-patient phase offset between cell-cycle states, `clocksync.paired`), **secondary** (re-test of archive C2 with current CoPhaser fits)
 

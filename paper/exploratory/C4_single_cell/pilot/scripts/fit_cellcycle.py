@@ -123,6 +123,54 @@ def load_wu(cap, rng):
     return a[:, ~a.var_names.duplicated()].copy()
 
 
+PAL_DIR = D / "sc_breast_er/GSE161529/hb10x_tumours"
+PAL_RDS = D / "sc_breast_er/GSE161529/figshare17058077"
+PAL_TUM = {"ERTotal": {0, 4}, "TNBC": {0, 2}}  # authors' Tum clusters (A170 units)
+
+
+def load_pal(cap, rng):
+    """Pal 2021 (GSE161529): epithelial 'Tum' clusters of the 21 ER-labelled tumours (A170 definition), raw 10x counts."""
+    import io, gzip
+    a170 = Path(__file__).resolve().parents[3] / "A170_sc_breast_er/scripts"
+    sys.path.insert(0, str(a170))
+    import rds_parse as R
+    sys.path.pop(0)
+    units = pd.read_csv(Path(__file__).resolve().parents[3] / "scouts_2026-11-01/c4_single_cell/pal_per_patient_malignant.csv")
+    want = set(units.patient)
+    parts = []
+    for obj, tum in PAL_TUM.items():
+        md = R.read_rds(PAL_RDS / f"SeuratObject_{obj}.rds")["meta.data"]
+        vals = dict(zip(list(md["names"].data), md.data))
+
+        def fac(c):
+            if "levels" not in c:
+                return np.array([str(x) for x in c.data], dtype=object)
+            lv = list(c["levels"].data)
+            return np.array([lv[i - 1] for i in np.asarray(c.data)], dtype=object)
+        cl, grp = fac(vals["seurat_clusters"]).astype(int), fac(vals["group"])
+        cells = pd.DataFrame({"group": grp, "cluster": cl}, index=list(md["row.names"].data))
+        for g, d in cells.groupby("group"):
+            if g not in want:
+                continue
+            d = d[d.cluster.isin(tum)]
+            smp = PAL_DIR / g.replace("_", "-")
+            bc = pd.read_csv(smp / "barcodes.tsv.gz", header=None)[0].astype(str).to_numpy()
+            sym = pd.read_csv(smp / "features.tsv.gz", header=None, sep="\t")[1].astype(str).str.upper().to_numpy()
+            names = pd.Index([f"{g}_{b}" for b in bc])
+            pos = np.sort(names.get_indexer(d.index))
+            assert (pos >= 0).all(), g
+            mt = pd.read_csv(smp / "matrix.mtx.gz", sep=" ", comment="%", header=None)
+            shape, mt = mt.iloc[0], mt.iloc[1:]
+            X = sp.csr_matrix((mt[2].to_numpy(np.float32), (mt[1].to_numpy(int) - 1, mt[0].to_numpy(int) - 1)),
+                              shape=(int(shape[1]), int(shape[0])))[pos]
+            sub = ad.AnnData(X, obs=pd.DataFrame({"patient": g}, index=names[pos]), var=pd.DataFrame(index=pd.Index(sym)))
+            parts.append(sub[:, ~sub.var_names.duplicated()].copy())
+            print(f"Pal {g}: {len(pos)} Tum cells", flush=True)
+    assert len(parts) == 21, len(parts)
+    a = ad.concat(parts, join="inner")
+    return cap_patients(a, cap, rng)
+
+
 def version_info():
     import importlib.metadata as im
     head = subprocess.run(["git", "-C", str(COPHASER), "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
@@ -142,8 +190,15 @@ def main():
     ap.add_argument("--restarts", type=int, default=5)
     ap.add_argument("--max-per-patient", type=int, default=3000)
     ap.add_argument("--epochs", type=int, default=200)
+    ap.add_argument("--seeds", default=None, help="comma list, default 0..restarts-1")
+    ap.add_argument("--out", default=None, help="output folder (default: pilot output)")
+    ap.add_argument("--extra", action="store_true", help="extra seeds only: write seeds_/theta_ files with suffix _extra, no cells/qc")
+    ap.add_argument("--load-only", action="store_true", help="load, filter and print cohort counts, then stop")
     args = ap.parse_args()
     study = args.study
+    global OUT
+    if args.out:
+        OUT = Path(args.out)
     OUT.mkdir(exist_ok=True)
     import torch
     import matplotlib
@@ -156,7 +211,9 @@ def main():
 
     if study == "GSE176078":
         a = load_wu(args.max_per_patient, rng)
-    elif study.startswith("SRP"):
+    elif study == "GSE161529":
+        a = load_pal(args.max_per_patient, rng)
+    elif (D / "scbc_full" / study).is_dir():
         a = load_srp(study, args.max_per_patient, rng)
     else:
         a = load_geo(study, args.max_per_patient, rng)
@@ -167,7 +224,10 @@ def main():
     a = a[a.obs.total_umi >= MIN_UMI].copy()
     print(f"loaded {n_before} cells ({a.obs.patient.nunique()} patients) in {time.time()-t0:.0f}s; "
           f"{n_before - a.n_obs} below {MIN_UMI} UMI dropped; median UMI {a.obs.total_umi.median():.0f}", flush=True)
-    assert not (CLOCK & set(a.var_names)) or True
+    pc_ = a.obs.groupby("patient").size()
+    print(f"COHORT {study}: {a.n_obs} cells, {len(pc_)} patients, {(pc_ >= 300).sum()} with >= 300 cells, median UMI {a.obs.total_umi.median():.0f}", flush=True)
+    if args.load_only:
+        return
 
     # S / G2M scores on the full gene matrix (control genes from all genes), clock genes dropped from the lists
     s_all, g_all = auto_params._seurat_cell_cycle_gene_sets()
@@ -196,7 +256,8 @@ def main():
     print("auto hyperparameters:", {k: v for k, v in hp["trainer"].items()}, flush=True)
     del probe
 
-    seeds = list(range(args.restarts))
+    seeds = [int(x) for x in args.seeds.split(",")] if args.seeds else list(range(args.restarts))
+    sfx = "_extra" if args.extra else ""
     res = cycle_qc.fit_with_restarts(am, model_params, hp, layer="total", n_restarts=args.restarts, seeds=seeds,
                                      cycle="cell_cycle", library_size_field="total_umi", device="cuda",
                                      n_epochs=args.epochs)
@@ -209,8 +270,22 @@ def main():
                                   and np.isfinite(r["model"].variable_genes.sum().item())) for r in res]
     seeds_df["vetoed"] = seeds_df.score < 0
     seeds_df["usable"] = seeds_df.converged & ~seeds_df.vetoed
-    seeds_df.to_csv(OUT / f"seeds_{study}.csv", index=False)
+    seeds_df.to_csv(OUT / f"seeds_{study}{sfx}.csv", index=False)
     usable = [i for i in range(len(res)) if seeds_df.usable[i]]
+    # aligned phase and cycling probability of every cell for every converged, non-vetoed seed (seed stability)
+    save = {}
+    for i in usable:
+        m_ = res[i]["model"]
+        m_.to("cpu"); m_.eval()
+        _, sp_ = m_.get_outputs()
+        th_ = m_.orient_align_pseudotimes(sp_["theta"], plot=False).detach().cpu().numpy().ravel().astype(float)
+        save[f"theta_{res[i]['seed']}"] = np.arctan2(np.sin(th_), np.cos(th_)).astype(np.float32)
+        lg_ = sp_["cycling_logits"].detach().cpu().numpy().ravel().astype(float) if "cycling_logits" in sp_ else np.full(len(th_), np.inf)
+        save[f"pcyc_{res[i]['seed']}"] = (1 / (1 + np.exp(-lg_))).astype(np.float32)
+    np.savez_compressed(OUT / f"seed_theta_{study}{sfx}.npz", cells=a.obs_names.to_numpy().astype(str), **save)
+    if args.extra:
+        print(f"extra seeds usable {len(usable)}/{len(res)}", flush=True)
+        return
     kept_i = usable[0] if usable else 0  # res is sorted best first
     best = res[kept_i]
     model = best["model"]
