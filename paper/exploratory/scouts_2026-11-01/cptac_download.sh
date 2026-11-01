@@ -10,7 +10,7 @@ for T in "$@"; do
   tail -n +2 "$M" | while IFS=$'\t' read -r id fn md5 size state; do
     f=$OUT/$id.$fn
     if [ -f "$f" ] && [ "$(md5sum "$f" | cut -d' ' -f1)" = "$md5" ]; then continue; fi
-    curl -sS --fail -o "$f" "https://api.gdc.cancer.gov/data/$id"
+    curl -sS --fail --retry 10 --retry-all-errors --retry-delay 10 -o "$f" "https://api.gdc.cancer.gov/data/$id"
     [ "$(md5sum "$f" | cut -d' ' -f1)" = "$md5" ] || { echo "md5 mismatch $id" >&2; exit 1; }
   done
   echo "$T done: $(du -sh "$OUT" | cut -f1)"
