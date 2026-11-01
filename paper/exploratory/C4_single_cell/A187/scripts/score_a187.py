@@ -4,6 +4,10 @@ Pseudobulks from prep_a187.py. `clocksync.paired` (unit = patient, cohort = stud
 Order (stop rules binding): prep tables, gates -> POWER (MDE = 2.49 x SD of the label-swap null of the pooled G2M-NC offset;
 STOP if > 1.0 h) -> H187.1 + companions -> artefact checks (a), (c) -> H187.2 -> descriptives.
 Run: python -I score_a187.py [--n_perm 10000] [--min_pairs 10]
+A187b (post hoc): --gate all_nc applies the study gate to the NC pseudobulks of every patient with >= 50 NC cells (column
+gate_p_all_NC_patients_descriptive of gates.csv); the contrast then runs on the gated studies only, with paired(gated_only=False)
+on samples restricted to those studies (paired's own gate on the contrast patients is then informational only). Outputs *_b.csv
+(*_b_mp<k>.csv when min_pairs differs from 10).
 """
 from __future__ import annotations
 import argparse, sys, time
@@ -21,6 +25,8 @@ STUDIES = ["GSE178341", "GSE132465", "GSE131907", "GSE176078", "GSE161529", "SRP
 PILOT = {"GSE178341", "GSE132465", "GSE131907", "GSE176078", "SRP327758"}
 MIN_CELLS = 50
 SEED = 20261101
+SUF = ""          # output suffix ("_b" for A187b)
+GATED = True      # paired(gated_only=...): False when the gate was applied upstream (A187b)
 CLOCK = list(P.gtex().genes)
 META = ["study", "patient", "bin", "n_cells", "depth"]
 
@@ -73,10 +79,10 @@ def pseudo_means(x, ref="NC"):
     return out
 
 
-def run(x, case, drop=None, min_pairs=10, n_perm=10000, pm=None, resp=False, seed=SEED, gated_only=True):
+def run(x, case, drop=None, min_pairs=10, n_perm=10000, pm=None, resp=False, seed=SEED, gated_only=None):
     return P.paired(x, unit="patient", condition="condition", levels=("NC", case), cohort="study", counts=True,
                     n_perm=n_perm, pseudo_means=pm, pseudo_responsive=resp, drop_genes=drop, min_pairs=min_pairs,
-                    seed=seed, gated_only=gated_only)
+                    seed=seed, gated_only=GATED if gated_only is None else gated_only)
 
 
 def weights(res):
@@ -144,7 +150,11 @@ def main():
     ap.add_argument("--n_perm", type=int, default=10000)
     ap.add_argument("--n_pseudo", type=int, default=200)
     ap.add_argument("--min_pairs", type=int, default=10)
+    ap.add_argument("--gate", choices=["contrast", "all_nc"], default="contrast")
     a = ap.parse_args()
+    global SUF, GATED
+    if a.gate == "all_nc":
+        SUF, GATED = "_b" + ("" if a.min_pairs == 10 else f"_mp{a.min_pairs}"), False
     limit_threads(4)
     sam = load()
     say("samples", sam.shape)
@@ -159,7 +169,7 @@ def main():
                          patients_NC_G2M=int(((w.NC >= MIN_CELLS) & (w.G2M >= MIN_CELLS)).sum()),
                          patients_NC_S=int(((w.NC >= MIN_CELLS) & (w.S >= MIN_CELLS)).sum())))
     prep = pd.DataFrame(rows)
-    prep.to_csv(OUT / "prep.csv", index=False)
+    prep.to_csv(OUT / f"prep{SUF}.csv", index=False)
     say("\n" + prep.round(3).to_string())
 
     xg = contrast(sam, "G2M")
@@ -177,7 +187,14 @@ def main():
         allnc[st_] = (len(g), P.reference_gate(yr, P.gtex(), 200, np.random.default_rng(SEED))["p"])
     gates["n_patients_NC_ge50"] = gates.study.map({k: v[0] for k, v in allnc.items()})
     gates["gate_p_all_NC_patients_descriptive"] = gates.study.map({k: v[1] for k, v in allnc.items()})
-    gates.to_csv(OUT / "gates.csv", index=False)
+    if a.gate == "all_nc":
+        gs = set(gates.study[gates.gate_p_all_NC_patients_descriptive < 0.05])
+        gates["gated_all_NC"] = gates.study.isin(gs)
+        xg = xg[xg.study.isin(gs)]
+        pm = {k: v for k, v in pm.items() if k in gs}
+        primary = run(xg, "G2M", min_pairs=a.min_pairs, n_perm=100, pm=None)
+        say("A187b gated studies:", sorted(gs))
+    gates.to_csv(OUT / f"gates{SUF}.csv", index=False)
     say("\n" + gates.round(4).to_string())
 
     # ---- 2. POWER ------------------------------------------------------------------------------------------------
@@ -191,7 +208,7 @@ def main():
                          n_pairs=int(r0.pooled.n_pairs), null_sd_h=sd, mde_h=2.49 * sd, n_swaps=a.n_perm,
                          proceed=bool(2.49 * sd <= 1.0)))
     power = pd.DataFrame(prow)
-    power.to_csv(OUT / "power.csv", index=False)
+    power.to_csv(OUT / f"power{SUF}.csv", index=False)
     say("\n" + power.round(3).to_string())
     if not power.loc[power.design == "primary", "proceed"].fillna(False).iloc[0]:
         say("STOP: MDE > 1.0 h (or no gated cohort): not estimable. Nothing further is scored.")
@@ -200,7 +217,7 @@ def main():
     # ---- 3. H187.1 + companions ----------------------------------------------------------------------------------
     res = run(xg, "G2M", min_pairs=a.min_pairs, n_perm=a.n_perm, pm=pm, resp=True)
     keys, w = weights(res)
-    res.cohorts.to_csv(OUT / "per_study.csv", index=False)
+    res.cohorts.to_csv(OUT / f"per_study{SUF}.csv", index=False)
     obs = float(res.pooled.offset_h)
     comp = {k: pseudo_offsets(xg, "G2M", res, pm, a.n_pseudo, k, SEED) for k in ("matched", "responsive")}
     crow = []
@@ -209,8 +226,8 @@ def main():
                          abs_offset=abs(obs), pctile_of_abs_offset=float(np.mean(abs(v) <= abs(obs))), beyond_q95=bool(abs(obs) > np.quantile(abs(v), 0.95))))
     crow.append(dict(kind="r_pseudo_clock_paired", pseudo_q95=res.pooled.get("pseudo_q95"), pseudo_median=res.pooled.get("pseudo_median"),
                      responsive_q95=res.pooled.get("responsive_q95"), responsive_median=res.pooled.get("responsive_median"), r_clock=res.pooled.fixed))
-    pd.DataFrame(crow).to_csv(OUT / "companions.csv", index=False)
-    pd.DataFrame({"kind": np.repeat(list(comp), a.n_pseudo), "offset_h": np.concatenate(list(comp.values()))}).to_csv(OUT / "companions_pseudo_offsets.csv", index=False)
+    pd.DataFrame(crow).to_csv(OUT / f"companions{SUF}.csv", index=False)
+    pd.DataFrame({"kind": np.repeat(list(comp), a.n_pseudo), "offset_h": np.concatenate(list(comp.values()))}).to_csv(OUT / f"companions_pseudo_offsets{SUF}.csv", index=False)
     t1 = dict(hypothesis="H187.1", offset_h=obs, p_two_sided=float(res.pooled.p_offset), n_swaps=a.n_perm, cohorts=res.pooled.cohorts,
               n_pairs=int(res.pooled.n_pairs), r_fixed=float(res.pooled.fixed), r_random=float(res.pooled.get("random", np.nan)),
               pseudo_pctile_matched=crow[0]["pctile_of_abs_offset"], pseudo_pctile_responsive=crow[1]["pctile_of_abs_offset"],
@@ -228,7 +245,7 @@ def main():
     rc = run(xt, "G2M", min_pairs=a.min_pairs, n_perm=a.n_perm, seed=SEED + 2)
     arows.append(dict(check="c_G2M_thinned_to_NC_depth", offset_h=float(rc.pooled.offset_h), p=float(rc.pooled.p_offset), n_cohorts=int(rc.pooled.n_cohorts),
                       n_pairs=int(rc.pooled.n_pairs)))
-    pd.DataFrame(arows).to_csv(OUT / "artefacts.csv", index=False)
+    pd.DataFrame(arows).to_csv(OUT / f"artefacts{SUF}.csv", index=False)
     say("\n" + pd.DataFrame(arows).round(3).to_string())
 
     # ---- 5. H187.2: dose, tertiles of patient cycling fraction ------------------------------------------------------
@@ -249,12 +266,14 @@ def main():
     t2 = dict(hypothesis="H187.2", statistic_abs_offset_high_minus_low_h=obs2, p_one_sided_greater=S.perm_p(null2, obs2, "greater", tie=0.0),
               n_swaps=len(null2), null_sd_h=float(null2.std(ddof=1)), mde_h=2.49 * float(null2.std(ddof=1)), cohorts=";".join(keys),
               n_patients=int(sum(len(v) for v in labs.values())), n_high=int(sum((v == "high").sum() for v in labs.values())))
-    pd.DataFrame([t1, t2]).to_csv(OUT / "tests.csv", index=False)
+    pd.DataFrame([t1, t2]).to_csv(OUT / f"tests{SUF}.csv", index=False)
     say("H187.2", t2)
 
     # ---- 6. descriptives -----------------------------------------------------------------------------------------
     drows = []
     xs = contrast(sam, "S")
+    if a.gate == "all_nc":
+        xs = xs[xs.study.isin(set(xg.study))]
     rs_ = run(xs, "S", min_pairs=a.min_pairs, n_perm=a.n_perm, seed=SEED + 3)
     drows.append(dict(quantity="S_minus_NC_pooled", offset_h=float(rs_.pooled.offset_h), p=float(rs_.pooled.p_offset), r=float(rs_.pooled.fixed),
                       n_cohorts=int(rs_.pooled.n_cohorts), n_pairs=int(rs_.pooled.n_pairs)))
@@ -263,9 +282,11 @@ def main():
     ps_all = run(xs, "S", min_pairs=3, n_perm=100, gated_only=False)
     pg_all = run(xg, "G2M", min_pairs=3, n_perm=100, gated_only=False)
     ps = pd.concat([pg_all.cohorts.assign(contrast="G2M-NC"), ps_all.cohorts.assign(contrast="S-NC")])
-    ps.to_csv(OUT / "per_study_all_min3.csv", index=False)
+    ps.to_csv(OUT / f"per_study_all_min3{SUF}.csv", index=False)
     for k in keys:  # leave one study out
         rr = run(xg[xg.study != k], "G2M", min_pairs=a.min_pairs, n_perm=a.n_perm, seed=SEED + 4)
+        if int(rr.pooled.n_cohorts) == 0:
+            drows.append(dict(quantity=f"LOSO_without_{k}", n_cohorts=0, note="no cohort left")); continue
         drows.append(dict(quantity=f"LOSO_without_{k}", offset_h=float(rr.pooled.offset_h), p=float(rr.pooled.p_offset), r=float(rr.pooled.fixed),
                           n_cohorts=int(rr.pooled.n_cohorts), n_pairs=int(rr.pooled.n_pairs)))
     er = pd.concat([
@@ -280,7 +301,7 @@ def main():
             drows.append(dict(quantity=f"Wu+Pal_{lab}", offset_h=float(rr.pooled.offset_h) if len(rr.cohorts) else np.nan,
                               p=float(rr.pooled.get("p_offset", np.nan)), r=float(rr.pooled.get("fixed", np.nan)), n_cohorts=int(rr.pooled.get("n_cohorts", 0)),
                               n_pairs=int(rr.pooled.get("n_pairs", 0)), note="min_pairs 3, ungated"))
-    pd.DataFrame(drows).to_csv(OUT / "descriptive.csv", index=False)
+    pd.DataFrame(drows).to_csv(OUT / f"descriptive{SUF}.csv", index=False)
     say("\n" + pd.DataFrame(drows).round(3).to_string())
     say("done")
 

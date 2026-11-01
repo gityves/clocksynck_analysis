@@ -200,6 +200,7 @@ lists A109b and the simulations separately); the counts here follow the verdict 
 | A186 | H186.1 CPTAC replication of H175.1 (pairing lower in high-proliferation tumours) | L2 | P | D +0.113 (low 0.506, high 0.392; TCGA 0.158); pseudo 90.0th, responsive 85.0th pct | 0.017 | PASS (not clock-specific) | MDE 0.135 | A186_cptac_c1/output/tests.csv |
 | A187 | H187.1 G2/M − NC clock offset in malignant cells (cell-cycle locking) | L3 | P | - | - | not scored (no study passes the NC gate; MDE not computable) | - | C4_single_cell/A187/output/gates.csv |
 | A187 | H187.2 locking larger in high-proliferation tumours | L3 | P | - | - | not scored (H187.1 not estimable) | - | C4_single_cell/A187/output/power.csv |
+| A187b | H187.1 with the gate over all NC patients (POST HOC, not counted) | L3 | - | −0.069 h (SRP327758, 12 patients); pseudo 18th, responsive 21st pct | 0.83 | FAIL (no offset; post hoc) | MDE 0.48 h | C4_single_cell/A187/output/tests_b.csv |
 
 ## Archive results cited by a figure (A1-A108c; flagged archive, not rescored here)
 

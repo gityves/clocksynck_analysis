@@ -1,0 +1,3 @@
+hypothesis,offset_h,p_two_sided,n_swaps,cohorts,n_pairs,r_fixed,r_random,pseudo_pctile_matched,pseudo_pctile_responsive,beyond_q95_matched,beyond_q95_responsive,mde_h,passes_p05,clock_specific,statistic_abs_offset_high_minus_low_h,p_one_sided_greater,null_sd_h,n_patients,n_high
+H187.1,-0.09283174035716682,0.7243275672432756,10000,GSE131907;SRP327758,18.0,0.1400221657866042,0.17720900521831595,0.205,0.22,False,False,0.43908654236146216,False,False,,,,,
+H187.2,,,10000,GSE131907;SRP327758,,,,,,,,1.9288353689614401,,,-0.4906226631534749,0.7514248575142486,0.774632678297767,18.0,6.0

@@ -2761,3 +2761,25 @@ No outcome statistic was computed in any of the three (nulls, gates and header f
   not evidence on its own. The single-cell locking question stays where archive C2 left it: −0.02 h [−0.55, 0.51],
   older fits, two of them degenerate.
 <!-- src: paper/exploratory/C4_single_cell/A187/output/{prep.csv,gates.csv,power.csv}; fits/output/{qc.csv,seed_stability.csv} -->
+
+## A187b (POST HOC gate), scored 2026-11-01: no G2/M clock offset in malignant cells (exploratory)
+
+- Gate over every patient with ≥ 50 NC cells: GSE131907 (p 0.025) and SRP327758 (p 0.035) pass. The contrast then runs on
+  their patients with ≥ 50 cells in both bins.
+- **Primary (min_pairs 10; SRP327758 only, 12 patients):** MDE 0.48 h (null SD 0.19 h), so the test proceeds. G2/M − NC
+  offset −0.069 h, two-sided p 0.83. Matched pseudo-clock sets put it at the 18th percentile, responsive sets at the 21st:
+  not clock-specific.
+- **Sensitivity (min_pairs 4; + GSE131907, 18 patients):** MDE 0.44 h; offset −0.093 h, p 0.72 (20th and 22nd
+  percentiles).
+- **Artefact checks** (min_pairs 10 / 4):
+  - without NR1D1 and PER1: −0.131 h (p 0.32) / −0.172 h (p 0.13);
+  - G2/M bin thinned to NC depth: −0.061 h (p 0.85) / −0.092 h (p 0.71).
+  - The immune-cell check is not available: there are no immune fits.
+- **H187.2:** |offset| high − low cycling tertile −0.491 h, p 0.74, own MDE 1.94 h > 1.0 h: uninformative.
+- **Descriptive:** S − NC −0.115 h (p 0.66) / −0.140 h (p 0.54). GSE131907 alone −0.345 h (6 patients, se 0.41).
+- **Reading (exploratory; gate chosen after seeing gate p-values; 1-2 studies):** in the malignant cells whose clock passes
+  a gate, G2/M and non-cycling cells keep the same clock phase to within about 0.5 h. Phase locking strong enough to shift
+  the clock by an hour or more across the cell cycle is not seen. This agrees with archive C2 (−0.02 h [−0.55, 0.51]).
+  The proliferation coherence loss is therefore not explained by a cell-cycle-locked clock phase in these patients. Not
+  counted among the pre-specified results.
+<!-- src: paper/exploratory/C4_single_cell/A187/output/{power_b,tests_b,artefacts_b,descriptive_b,power_b_mp4,tests_b_mp4,artefacts_b_mp4,descriptive_b_mp4}.csv -->

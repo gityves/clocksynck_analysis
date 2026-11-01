@@ -1,0 +1,3 @@
+design,min_pairs,n_cohorts,cohorts,n_pairs,null_sd_h,mde_h,n_swaps,proceed
+primary,4,2,GSE131907;SRP327758,18,0.17633997685199282,0.43908654236146216,10000,True
+sensitivity_min_pairs_4,4,2,GSE131907;SRP327758,18,0.17633997685199282,0.43908654236146216,10000,True

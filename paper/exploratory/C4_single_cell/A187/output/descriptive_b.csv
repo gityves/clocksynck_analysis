@@ -1,0 +1,6 @@
+quantity,offset_h,p,r,n_cohorts,n_pairs,note
+S_minus_NC_pooled,-0.11524865798129788,0.6628337166283371,0.002415547600161494,1,13.0,
+G2M_minus_NC_pooled,-0.0686267378030602,0.8342165783421658,0.09903901070591203,1,12.0,
+LOSO_without_SRP327758,,,,0,,no cohort left
+Wu+Pal_ER+,,,,0,0.0,"min_pairs 3, ungated"
+Wu+Pal_ER-,,,,0,0.0,"min_pairs 3, ungated"
