@@ -2968,3 +2968,17 @@ so the companion is the same pairing statistic on the 14 clock genes (A107b p_pa
 state", the mirror image of A109. V181.1 ≥ 0.8 and H181.2 fails → no shared state of either kind at this depth.
 V181.1 < 0.8 → the fetal clock result stays uninformative, and H181.2 is reported descriptively.
 **Code:** `paper/exploratory/A181_fetal_depth/`.
+
+**A181 design note (2026-11-01, before any GTEx thinning or gate and before H181.2; only the A107b reproduction has run):**
+- "23 donors with all four organs" cannot be drawn. GTEx 08-18 h deaths with all four organs: at most 12 donors (BA9).
+- The fetal design does not have all four organs either: its 23 fetuses carry 8-11 organs each of Cerebrum, Heart,
+  Kidney and Lung.
+- V181.1 therefore matches the fetal **organ-presence pattern**. Each subsample draws 23 donors from the 08-18 h deaths
+  (any Hardy class) that have ≥ 2 of the 4 organs. The 23 H107b.1 fetal organ sets are assigned to them at random,
+  redrawing a donor that lacks an organ of its assigned set. Organs outside the set are masked. Pairs and per-organ n
+  then equal the fetal design.
+- The brain tissue is the one with more donors in the window (Frontal Cortex BA9).
+- The 11-donor arm is dropped: it was the lung within-organ analogue, and adult bulk has no within-organ compartments.
+- H181.2 uses an identity projector on the 15 responsive genes. A flat waveform leaves no clock plane, so
+  `Dataset.gate` cannot run; the pairing null is computed in the script.
+- Criteria and readings unchanged.
