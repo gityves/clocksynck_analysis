@@ -2519,3 +2519,24 @@ Fisher-Lee stays > 0.5 in >= 80 %; in the adipose design, JS < 0 in < 5 %."
 - **Reading:** the proliferation coherence loss is not linear cell-cycle composition in bulk. Locking at the single-cell
   level stays untested (C4 single-cell part).
 <!-- src: paper/exploratory/A179_c4_cellcycle/output/{tests.csv,verdict.csv,descriptive.csv} -->
+
+## A180 TOST, scored 2026-11-01 (secondary: estimates seen; bounds from existing conventions)
+
+- **A19 age: not equivalent.** γ −0.029 per decade, 90 % CI [−0.147, 0.089], against ±0.0375 per decade (±0.15 over 40
+  years). The age null stays "not detected, MDE 0.20". The data exclude only age effects larger than about 0.15 per decade.
+- **A165 phase:** 8 of 32 primary rows have MDE ≤ 1.5 h. 7 of the 8 are equivalent within ±1.5 h: ckd_sc kidney EC;
+  dcm heart fibroblast; dcm_healthy heart EC and fibroblast; hlca_fibrotic lung fibroblast; skin_ad EC and fibroblast.
+  Not equivalent: skin_ad non-lesional fibroblast (−1.12 h, CI [−1.84, −0.41]).
+- **A165 amplitude:** 10 of 32 rows have MDE ≤ 1.5-fold. 7 are equivalent. Not equivalent: dcm_healthy heart EC (log z2
+  +0.53, CI [0.23, 0.84]), myocarditis heart EC (+1.14, [0.67, 1.62]), skin_ad EC (−0.48, [−0.84, −0.11]). The two heart
+  EC rows are the higher-relative-amplitude pattern of H165.2 (anchor-relative, see A165).
+- **Wording:** "no phase shift beyond ±1.5 h" holds for 7 named compartment × disease rows. It does not hold for the
+  disease atlases in general (24 of 32 phase rows cannot be tested at this n).
+<!-- src: paper/exploratory/A180_equivalence/output/tost.csv -->
+
+## Status correction (2026-11-01): D4 is already re-verified in this repo
+
+The CHIRAL age-dampening reanalysis (pooled −0.73, p 0.008 → Hardy-matched −0.13, p 0.78; TMM −0.58 → −0.20) was
+recomputed here on 2026-10-23 (WP0 item 5, `WP0_integrity/output/chiral_tmm/count_comparison_tmm_summary.csv`). STATE
+2026-10-31 §3.5 ("not re-verified") is wrong. Two limits remain: matched minus pooled is significant on CPM (+0.57, p 0.024)
+but not on TMM (+0.39, p 0.092), and the statistic is CHIRAL's count of rhythmic genes, not clocksync coupling.
