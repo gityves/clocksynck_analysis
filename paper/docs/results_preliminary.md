@@ -2701,3 +2701,20 @@ No outcome statistic was computed in any of the three (nulls, gates and header f
   proliferating tumours follow their normal tissue less beyond having less clock signal is not resolved. C1 wording:
   "secondary, TCGA; part of the drop may be less clock signal".
 <!-- src: paper/exploratory/A185_c1_spread_matched/output/{reproduction_a175.csv,power.csv,tests.csv,descriptive.csv,bins.csv,companion_D_match.csv} -->
+
+## A136 donor-management glucocorticoids (GTEx), scored 2026-11-01: gate fails; the brain-death reading stands (post hoc)
+
+- Reproduction: A132b ρ post-mortem 0.678, organ donors 0.161, difference 0.517 (p 0.008; 65 pairs, 79 per group).
+- **H136.1 FAIL (gate):** GR score organ donors − ventilated +0.103 (null SD 0.076; 298 vs 79), p 0.098, Holm 0.197.
+  Both Hardy 0 groups are far above fast deaths (median GR z 0.376, 0.273 vs −0.512): GR exposure is a feature of
+  ventilated deaths in general, not of organ donors.
+- **H136.2 (descriptive under the failed gate):** ρ top − bottom GR tertile −0.194 (0.005 vs 0.200), p 0.185; MDE 0.515.
+  The hypoxia companion gives the same size (−0.185, p 0.208): no GR-specific dose-response at this power. The
+  ventilated companion is not estimable (no organ pair with ≥ 20 shared donors per tertile).
+- **H136.3:** without PER1/PER2 the A132b difference stays 0.458 (ρ 0.726 vs 0.268; two-sided p 0.012, Holm 0.036): the
+  loss of order in organ donors does not run through direct GR induction of PER1/PER2.
+- **Sensitivity (long-term steroid users removed, not in Holm):** H136.1 +0.184, p 0.021; H136.2 −0.179, p 0.175. The
+  gate failure is therefore not robust; stated as a caveat.
+- **Reading:** the drug explanation is not supported: exposure does not differ robustly, there is no dose-response at
+  MDE 0.52, and the effect does not need PER1/PER2. The brain-death reading of A132b stands, still post hoc.
+<!-- src: paper/exploratory/A136_glucocorticoid/output/{reproduction.csv,power.csv,tests.csv,companions.csv,sensitivity.csv,scores_summary.csv} -->

@@ -1,6 +1,6 @@
 # Verdict table: every registered test from A109 onward
 
-Written 2026-11-01; A174-A181 and the A150 rerun added the same day (counts below are those before the additions: A174-A181 add 6 passes, 6 failures, 1 not scored, 1 not informative, with A180 counted as two rows; A182-A185 add 2 passes (not clock-specific), 3 failures, 4 not estimable). Procedure: analysis plans committed before scoring (each hypothesis is an amendment in
+Written 2026-11-01; A174-A181 and the A150 rerun added the same day (counts below are those before the additions: A174-A181 add 6 passes, 6 failures, 1 not scored, 1 not informative, with A180 counted as two rows; A182-A185 add 2 passes (not clock-specific), 3 failures, 4 not estimable; A136 adds 1 pass, 2 failures). Procedure: analysis plans committed before scoring (each hypothesis is an amendment in
 `paper/docs/registered_experiments.md`, committed before its data were scored); this is internal pre-specification with a git
 history, not external pre-registration. Anything chosen after seeing results is labelled post hoc and is not counted below.
 Verdicts are those of `paper/docs/results_preliminary.md` (RP), which governs over `state_2026-10-31/inventory.md`; numbers are copied
@@ -194,6 +194,9 @@ lists A109b and the simulations separately); the counts here follow the verdict 
 | A183 | H183.2 psoriasis minus eczema delay | L3 | P | −1.09 h; matched pct 20, responsive 5.5 | 0.037 / Holm 0.037 | PASS, not clock-specific (NR1D1-dependent) | MDE 0.69 h | A183_skin_gse154200/output/tests.csv |
 | A184 | H184.1 cord × maternal blood coherence | L2 | S | 0.193 vs null q95 0.221 | 0.103 | FAIL (not resolved) | - | A184_mother_fetus/output/tests.csv |
 | A185 | H185.1 tumour-amplitude-matched pairing D | L2 | S | D_match +0.116 (A175 D 0.158) | 0.064 | FAIL (not resolved) | MDE 0.187 | A185_c1_spread_matched/output/tests.csv |
+| A136 | H136.1 GR exposure organ donors > ventilated (gate) | other | P | +0.103 (null SD 0.076) | 0.098 / Holm 0.197 | FAIL (gate; p 0.021 without long-term steroid users) | - | A136_glucocorticoid/output/tests.csv |
+| A136 | H136.2 GR dose-response in organ donors | L3 | P | ρ top − bottom −0.194 | 0.185 / Holm 0.197 | FAIL (descriptive under failed gate) | MDE 0.515 | A136_glucocorticoid/output/tests.csv |
+| A136 | H136.3 A132b difference without PER1/PER2 | L3 | P | 0.458 (≥ 0.26) | 0.012 / Holm 0.036 | PASS ("not through PER1/PER2") | - | A136_glucocorticoid/output/tests.csv |
 
 ## Archive results cited by a figure (A1-A108c; flagged archive, not rescored here)
 
