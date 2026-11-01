@@ -2928,3 +2928,17 @@ conditioning.
 locking or with cell-cycle regulation of clock genes; bulk data cannot tell them apart; the single-cell part of C4
 would). Not supported, with S's MDE below 50 % of |ΔR| → not explained by linear cell-cycle composition.
 **Code:** `paper/exploratory/A179_c4_cellcycle/`.
+
+## A180 (2026-11-01, written after the A19 and A165 estimates and SEs were scored and seen, so both tests are **secondary**; the bounds are fixed by existing conventions, not by the estimates; HANDOFF_2026-10-31 "Turning nulls into tested claims"): are the A19 age and A165 disease nulls equivalent to no effect?
+
+**Why:** the paper must never say "unchanged" without an equivalence bound or an MDE.
+**Bounds:**
+- Age (A19 H19.1, γ per decade, all compartments): the A164 bound of ±0.15 on coupling, spread over the 40 years that
+  separate GTEx's youngest and oldest decades: ±0.0375 per decade.
+- Disease (A165): phase ±1.5 h; amplitude 1.5-fold (log z2 ratio within ±2 ln 1.5, since z2 is amplitude squared). These
+  are the "best-powered rows detect about 1-1.5 h or 1.3-1.5-fold" scale of the A165 entry. TOST is applied only to rows
+  whose MDE is at or below the bound (the others cannot be equivalent at this n).
+**Test:** TOST at α 0.05 each side, i.e. the 90 % interval (estimate ± 1.645 SE) inside the bounds.
+**Reading:** equivalence passes → "no change larger than the bound" for that row. Fails → the null stays "not detected,
+MDE x". No multiplicity correction for equivalence (each row is its own claim). Rows are listed with their verdict.
+**Code:** `paper/exploratory/A180_equivalence/`.
