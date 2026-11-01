@@ -1,6 +1,6 @@
 # Verdict table: every registered test from A109 onward
 
-Written 2026-11-01; A174-A181 and the A150 rerun added the same day (counts below are those before the additions: A174-A181 add 9 passes, 6 failures, 1 not scored, 1 not informative, with A180 counted as two rows). Procedure: analysis plans committed before scoring (each hypothesis is an amendment in
+Written 2026-11-01; A174-A181 and the A150 rerun added the same day (counts below are those before the additions: A174-A181 add 6 passes, 6 failures, 1 not scored, 1 not informative, with A180 counted as two rows). Procedure: analysis plans committed before scoring (each hypothesis is an amendment in
 `paper/docs/registered_experiments.md`, committed before its data were scored); this is internal pre-specification with a git
 history, not external pre-registration. Anything chosen after seeing results is labelled post hoc and is not counted below.
 Verdicts are those of `paper/docs/results_preliminary.md` (RP), which governs over `state_2026-10-31/inventory.md`; numbers are copied
