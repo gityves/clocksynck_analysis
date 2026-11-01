@@ -6,16 +6,13 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 
 ## Open
 
-### Still with the PI (2026-10-31)
-- **Q12** (below): brain time-of-death request. The draft is never sent without the PI.
-- **A136:** the brain-death drug test stays a draft for PI review.
+### Still with the PI (updated 2026-11-01)
+- **Q12** (below): brain time-of-death request. The PI reviews and sends the draft themselves; nothing is sent by the agent.
 - **A119:** lung T-cell procurement scout (outward-facing / procurement).
-- **Outcome analyses** (survival, endocrine response): wait until the cancer L1/L2 tests C1 and C3 are in, then ask
-  again (PI, 2026-10-31).
+- **Outcome analyses (C8):** not yet (PI, 2026-11-01): wait for C6 and the CPTAC scout.
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
-- **Q22** (below): approve the A182 (C6) and A183 (H1 skin) registrations.
-- **Closed 2026-10-31** (answer lines in each entry): Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the A121 and A135
-  placements (embryo and brain disease panels in Extended Data).
+- **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
+  A121 and A135 placements.
 
 ### Q12 (2026-10-27): request brain time-of-death fields? (A141)
 A141 (registered after your Q6 answer):
@@ -27,6 +24,7 @@ A141 (registered after your Q6 answer):
 - **On hold:** nothing else. The brain panels stay in Extended Data with the result stated.
 - Evidence: `results_preliminary.md` (A141).
 
+## Answered
 ### Q21 (2026-11-01): cancer L2 after A175/A176, and the Q8 wording
 **Evidence** (`results_preliminary.md`, A175, A176, C1 replication scout):
 - A175 H175.1 (TCGA, secondary): high-proliferation tumours pair less with their own normal tissue (D +0.158, p 0.021,
@@ -80,8 +78,13 @@ coherent with its own mother's blood beyond shuffled pairs, clock-specifically a
 companion (delivery stress)? [Register it as a secondary, marginal design (n 60); smoking not estimable.] Draft on
 your yes.
 **On hold:** scoring of A182 and A183. Their power steps are done (A183) or run right after the commit (A182).
+- **Answer (PI, 2026-11-01):** Q21.1 yes, Figure 5 uses "less clock signal relative to non-clock variation
+  (swamped)". Q21.2 yes, the spread-matched pairing readout is registered as A185 (second C1 amendment, allowed).
+  Q21.3 scout CPTAC (metadata, commands for the user). Q22: A183 approved as drafted; A182 with the equivalence bound
+  −0.19, registered tests GSE39582, GSE17536, GSE116918, GSE157009, GSE157010, GSE65858 descriptive, GSE53625 dropped,
+  all other defaults; D2 registered as a secondary (A184). Also: Q12 the PI reviews and sends the draft; C8 not yet;
+  A136 proceeds as drafted.
 
-## Answered
 ### Q13 (2026-10-28): roadmap phase 0 decisions (ROADMAP_2026-10-28.md)
 I am going ahead with phases 1, 2 and 4 (code, data integrity, simulations) and the phase 6 scouts. None of them
 depends on the answers below. The defaults in brackets apply when phase 3 starts, unless you say otherwise.

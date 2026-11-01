@@ -2982,3 +2982,104 @@ V181.1 < 0.8 → the fetal clock result stays uninformative, and H181.2 is repor
 - H181.2 uses an identity projector on the 15 responsive genes. A flat waveform leaves no clock plane, so
   `Dataset.gate` cannot run; the pairing null is computed in the script.
 - Criteria and readings unchanged.
+
+## A136 (registered 2026-11-01 from the 2026-10-27 draft `exploratory/A136_glucocorticoid/A136_draft.md`, PI approval 2026-11-01 "proceed with A136"; nothing computed before this commit): is the loss of organ phase relations in brain-dead organ donors a drug effect? Readout level **L3**
+
+Registered exactly as the draft (exposure score, H136.1-H136.3, specificity companions, Holm over three, readings).
+The draft's open choices take their defaults: the five-gene GR set (FKBP5, TSC22D3, ZBTB16, KLF15, DDIT4; no PER1, MT2A
+or CDKN1C); H136.1 is the gate for H136.2; no external replication in this amendment. The H136.2 power step (null SD
+and MDE from tertile-label permutations) is run and written before the tests. Controlled access: aggregates only.
+**Code:** `paper/exploratory/A136_glucocorticoid/`.
+
+## A182 (2026-11-01, written after a metadata-only scout (`exploratory/scouts_2026-11-01/C6_blind_cohorts.md`) and a header-only summary (`exploratory/C6_blind_types/output/header_summary.csv`: header lines, the ID_REF column and platform annotation; no expression value) and before any expression value of the series below is read; the TCGA values of the same types are seen; design choices approved by the PI 2026-11-01 (Q22); HANDOFF_2026-10-31 C6): is the proliferation clock-coherence loss specific to the types where it replicated (breast, lung adenocarcinoma, gastric)? Readout level **L1**
+
+**Why:** no new type enters the claim unless scored blind. C6 scores types whose TCGA value was weak or null, and lung
+squamous carcinoma, in cohorts never read.
+**Data** (`$SCCC_DATA/c6_*`, GEO series matrices, A171 parser; tumour filters from `header_summary.csv`):
+- Family 1 (weak/null TCGA value): **H182.1** GSE39582 colon (566 primary; 19 non-tumoral dropped; authors' RMA +
+  ComBat), **H182.2** GSE17536 colon (177), **H182.3** GSE116918 prostate (248; 13 clock genes, no NR1D1; purity proxy
+  10 of 11, no CD3E).
+- Family 2 (squamous): **H182.4** GSE157009 and **H182.5** GSE157010 lung squamous (249, 235; two arms of one study,
+  separate tests).
+- Descriptive only: GSE65858 head and neck (253 primary; TCGA HNSC leans negative), two-sided, with its pseudo
+  percentile. GSE53625 (oesophageal) is dropped (no symbol annotation). GSE14333 could not be downloaded.
+**Definitions (= A171 / A173):** pipeline 14 clock genes (`a168_lib.GENES`, those present); linear matrices (max > 100)
+→ log2; probes averaged per symbol; G2M (Hallmark without clock genes) and purity proxy (A97 11 genes) mean z over the
+cohort's tumours; coherence `a127_lib.coh`.
+**Statistic:** H171: purity-proxy tertile strata (≥ 30 tumours), T = mean over strata of coh(high G2M tertile) −
+coh(low); proliferation permuted within stratum, 2,000 permutations, one-sided for a loss; Holm within each family.
+**Seen TCGA values (H171 statistic):** COAD −0.108 (p 0.146), PRAD −0.101 (0.159), LUSC +0.212 (0.95), HNSC −0.170
+(0.079) (`A171_luad_lihc/output/tcga_all.csv`, `A172_tcga_unseen/output/per_project.csv`).
+**Equivalence (per cohort, PI 2026-11-01):** a cohort shows "no loss of the replicated size" if T − 1.645 × null SD >
+−0.19 (the smallest replicated cohort effect, GSE62254 −0.187), where null SD is the SD of the permutation null.
+**Specificity companion:** 200 pseudo-clock sets per cohort (A168 construction), same permutations; "clock-specific"
+only below the 5th pseudo percentile.
+**Power (after this commit, before the tests):** MDE = 2.49 × null SD per cohort; MDE > 0.30 → "not estimable".
+**Predictions:** no Family 1 or Family 2 cohort loses coherence clock-specifically; each is equivalent at −0.19.
+**Reading:**
+- All cohorts fail and are equivalent → the loss is specific to breast, lung adenocarcinoma and gastric cancer.
+- A Family 1 cohort passes clock-specifically → that type's TCGA value was a false negative; the type joins the claim.
+- A Family 2 cohort passes clock-specifically → the loss is not adenocarcinoma-specific in lung; the histology wording
+  is dropped (cf. A173 H173.4).
+- Neither pass nor equivalence → "not resolved at this n".
+**Descriptive:** each test without PER1 and NR1D1; T per stratum; GSE39582 by dataset (discovery / validation).
+**Code:** `paper/exploratory/C6_blind_types/` (renamed in the code header as A182).
+
+## A183 (2026-11-01, written after the GSE154200 prep, gate and label-permutation nulls (`scouts_2026-11-01/prep_gse154200/output/{gates.csv,power.csv}`) and before any lesional-minus-non-lesional or between-diagnosis value is computed; the archive psoriasis result is seen (A54-A59); PI approval 2026-11-01 (Q22); HANDOFF_2026-10-31 H1): does the psoriatic lesion delay replicate blind in a single-centre cohort, and is it specific to psoriasis? Readout level **L3**
+
+**Why:** A54 replicated a lesional clock delay in psoriasis on held-out GEO series (0.93 h, p 0.004; discovery 1.50 h);
+A59 found no psoriasis-sized delay in other lesional skin diseases. GSE154200 samples psoriasis, nummular eczema and
+atopic eczema the same way at one centre, so diagnosis is not confounded with series.
+**Data:** `$SCCC_DATA/skin_gse154200/GSE154200_countMat.txt.gz`; persons with both biopsies in one batch: psoriasis 87,
+nummular 52, atopic 46. Gate passes in each diagnosis and pooled (p ≤ 0.002). 14 of 14 clock genes.
+**Estimator:** `clocksync.paired` (counts, GTEx waveform, one projector, cohort = batch), offset = arg(z_lesional /
+z_nonlesional) in hours, negative = lesion delayed. d* is not estimable on two compartments.
+**Tests (one-sided, Holm over two):**
+- **H183.1:** psoriasis lesional offset < 0 (per-person label-swap null, 10,000). MDE 0.81 h.
+- **H183.2:** psoriasis offset − mean offset of the two eczemas < 0 (diagnosis labels permuted within batch, 10,000).
+  MDE 0.69 h.
+**Specificity companions (same permutations):** 200 expression-matched pseudo-clock sets (`pseudo_means` from the
+genome-wide counts) and the responsive-gene companion (`pseudo_responsive=True`); "clock-specific" only beyond the q05 of
+both.
+**Descriptive:** eczema offsets with bootstrap intervals; coherence and r per diagnosis; leave-one-gene-out; without PER1
+and NR1D1; offset by batch.
+**Reading:** H183.1 passes clock-specifically → the delay replicates blind in a single-centre cohort. H183.2 passes → it
+is a psoriasis property, not one of eczematous inflammation. A fail bounds the delay below about 0.8 h here and does not
+retract A54.
+**Code:** `paper/exploratory/A183_skin_gse154200/`.
+
+## A184 (2026-11-01, written after the GSE27272 prep, gates and nulls (`scouts_2026-11-01/prep_d2_gse27272/output/{gates.csv,power.csv}`; the cord blood × mother gate is seen, p_pairing 0.022, p_acrophase 0.013) and before any pairwise coherence or offset is computed; PI approval 2026-11-01 as a **secondary** (marginal design); HANDOFF_2026-10-31 D2): does the term fetus follow its mother's internal time? Readout level **L2** (pairwise)
+
+**Data:** GSE27272 (69 vaginal deliveries, GPL6883, 13 clock genes, no PER3); 60 deliveries with maternal and cord blood.
+**Estimator:** `clocksync.paired` on (maternal blood, cord blood) per delivery, log2 intensities; coherence = length of the
+mean of the per-delivery unit offset vectors (the pairwise complex coherence of the power step).
+**Test H184.1 (one-sided):** coherence > its null from shuffling cord-blood states across deliveries (5,000). Null q95
+0.224 (`power.csv`).
+**Companions (same shuffles):** 200 expression-matched pseudo-clock sets and the responsive-gene sets
+(`pseudo_responsive=True`; delivery stress and glucocorticoid response). "Clock-specific" only above the q95 of both.
+**Descriptive:** mean offset (cord minus mother) with bootstrap interval; the same without PER1 and NR1D1. Placenta ×
+mother failed its gate and is not read. Smoking is not estimable (arm gates fail).
+**Reading:** H184.1 passes clock-specifically → the term fetus shares its mother's clock state at delivery (blood only;
+shared delivery-time structure not fully excluded). A pass beaten by the responsive companion → shared delivery state,
+not a shared clock. A fail is "not resolved at n 60".
+**Code:** `paper/exploratory/A184_mother_fetus/`.
+
+## A185 (2026-11-01, written after A175 and A176 were scored (A175 H175.1 D +0.158; A176 swamped 7 of 7) and before any tumour-amplitude-matched pairing is computed; second amendment on C1, allowed by the PI 2026-11-01 (Q21.2); **secondary**): is the lower tumour–normal pairing in proliferating tumours explained by less tumour clock signal? Readout level **L2**
+
+**Why:** A176 showed that proliferating tumours have less clock-plane variance. Pairing (`q3_lib.corr_stat`) falls when the
+tumour clock state is small even if the tumour still follows its normal tissue, so A175's D can be "less signal" rather
+than "less following". Comparing pairing at a common tumour amplitude separates the two (the d* logic).
+**Data:** the A175 set and arms (517 H138.4 pairs, cancers with ≥ 10 pairs per arm, G2M tertiles within cancer).
+**Matching:** tumour amplitude a = |z_tumour| in the H138.4 state space (the states entering `corr_stat`). Within each
+cancer, pairs of the low and high arms are pooled and cut into amplitude tertiles; D_match = pairs-weighted mean over
+cancer × amplitude bins of pairing(low) − pairing(high), bins with ≥ 5 pairs per arm.
+**Test H185.1 (one-sided, D_match > 0):** proliferation labels permuted within cancer × amplitude bin, 10,000.
+**Power (before the test):** MDE = q95 + 0.84 SD of the null; MDE > 0.3 → "not estimable"; the reading uses the A175 D
+0.158 as reference.
+**Companions:** D_match on the 200 pseudo-clock and 200 responsive sets of A175 (same permutations).
+**Descriptive:** the share of A175's D removed by matching, (D − D_match) / D; matching on normal-tissue amplitude
+instead; amplitude distributions per arm (aggregates).
+**Reading:** D_match > 0 (passes) → proliferating tumours follow their normal tissue less beyond having less clock signal.
+D_match fails with MDE ≤ 0.158 → A175's pairing drop is explained by less clock signal (swamped), and the C1 wording is
+"less clock signal, host following not shown to change". Otherwise "not resolved".
+**Code:** `paper/exploratory/A185_c1_spread_matched/`.
