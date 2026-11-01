@@ -2630,3 +2630,14 @@ No outcome statistic was computed in any of the three (nulls, gates and header f
   mappable. GSE14333 could not be downloaded. Seen TCGA values (H171 statistic): COAD −0.108, PRAD −0.101, HNSC −0.170,
   ESCA −0.149 (mixed histology), LUSC +0.212. Draft registration A182 for the PI (Q22).
 <!-- src: paper/exploratory/scouts_2026-11-01/prep_nhs/output/{gates.csv,power.csv}; scouts_2026-11-01/prep_gse154200/output/{gates.csv,power.csv}; C6_blind_types/output/header_summary.csv; A171_luad_lihc/output/tcga_all.csv; A172_tcga_unseen/output/per_project.csv -->
+- **GSE27272 mother–fetus at term (D2):** 69 vaginal deliveries (Illumina GPL6883; maternal blood 65, cord blood 64,
+  placenta 54; 60 mother + cord pairs, 51 mother + placenta); 13 of 14 clock genes (no PER3 probe). Gates: all three
+  compartments pass (p_pairing 0.0005, p_acrophase 0.003), cord blood × mother passes (0.022 / 0.013), placenta ×
+  mother fails (0.133 / 0.190, uninformative). Smoking (20 vs 49) is not estimable: the non-smoker arm and the smoker
+  fetal × host design fail their own gates. With one maternal compartment, coupling on the mother's host (c, d*) is not
+  available; the estimable primary is the one-group pairwise coherence of cord blood with maternal blood against
+  shuffled fetal states (null q95 0.224 coherence units; MDE not yet referred to an expected effect). The gate pass
+  does not exclude shared non-circadian delivery structure (stress, processing): the responsive-gene companion is
+  needed. No labour / caesarean factor (all vaginal). A106 (first-trimester decidua / placenta single cell) is the
+  only archive overlap. Proposed registration: Q22.
+<!-- src: paper/exploratory/scouts_2026-11-01/prep_d2_gse27272/output/{counts.csv,gates.csv,power.csv} -->

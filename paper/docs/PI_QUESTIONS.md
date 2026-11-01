@@ -74,6 +74,11 @@ target "MDE on d* ≤ 0.15" is replaced by the paired offset. **Question:** appr
    non-significant cohort cannot say "no loss". [Add an equivalence test per cohort: T > −0.19 (the smallest
    replicated cohort effect, GSE62254) with a 90 % interval.]
 9. GSE157009 / GSE157010 (two arms of one Alliance study): [separate tests].
+**D2 (GSE27272, mother–fetus at term), optional third registration:** 60 mother + cord blood pairs; the cord blood ×
+mother gate passes (p 0.022 / 0.013), placenta × mother fails. The only estimable question is one-group: is cord blood
+coherent with its own mother's blood beyond shuffled pairs, clock-specifically and beyond the responsive-gene
+companion (delivery stress)? [Register it as a secondary, marginal design (n 60); smoking not estimable.] Draft on
+your yes.
 **On hold:** scoring of A182 and A183. Their power steps are done (A183) or run right after the commit (A182).
 
 ## Answered
