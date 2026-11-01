@@ -3149,3 +3149,13 @@ GSE181919, SRP416180. Excluded: unstable GSE183904 (max 0.33), GSE294300 (0.77),
 GSE335070; no second usable seed ERP149257; invalid fits (all seeds vetoed) GSE159115, GSE212966, GSE270680
 (`C4_single_cell/fits/output/{qc.csv,seed_stability.csv}`, `FITS.md`). Wu and Pal malignant cells are the authors' tumour
 epithelial labels (no CNV calls).
+
+## A187b (2026-11-01, POST HOC: written after the A187 gate p-values were seen, `A187/output/gates.csv`, and before any offset was read; requested by the PI): A187 with the gate taken over all patients with ≥ 50 NC cells
+
+**Change (only this):** the per-study reference gate is computed on the NC pseudobulks of every patient with ≥ 50 NC cells
+(not only the patients in the contrast), same `n_gate` and seed as A187. Known at registration: this gate passes in GSE131907
+(p 0.025, 14 patients) and SRP327758 (p 0.035, 22 patients) and in no other study. Everything else as A187: same 8 studies,
+bins, ≥ 50 cells per bin per contrast, `paired` with min_pairs = 10 (as in the A187 scoring; min_pairs = 4 reported as a
+sensitivity), power step first with stop if MDE > 1.0 h, then H187.1, companions, artefact checks (a)-(c), H187.2 and the
+descriptives. Status: **post hoc**; any pass is exploratory and is not counted among the pre-specified results.
+**Code:** `paper/exploratory/C4_single_cell/A187/` (A187b outputs with suffix `_b`).
