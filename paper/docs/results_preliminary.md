@@ -2718,3 +2718,25 @@ No outcome statistic was computed in any of the three (nulls, gates and header f
 - **Reading:** the drug explanation is not supported: exposure does not differ robustly, there is no dose-response at
   MDE 0.52, and the effect does not need PER1/PER2. The brain-death reading of A132b stands, still post hoc.
 <!-- src: paper/exploratory/A136_glucocorticoid/output/{reproduction.csv,power.csv,tests.csv,companions.csv,sensitivity.csv,scores_summary.csv} -->
+
+## A186 CPTAC-3 replication of the A175 proliferation pairing drop, scored 2026-11-01: replicates, not clock-specific
+
+- Data: 713 open CPTAC-3 tumour/normal pairs (raw GDC STAR unstranded counts, aliquots of one sample type summed). All
+  8 per-type gates pass (p ≤ 0.010); STAD (9 pairs per arm) is below the 10-pair floor, so the pool has 7 types,
+  231 low vs 228 high G2M-tertile pairs.
+- Power: null SD 0.054, q95 0.089, MDE 0.135 ≤ 0.158, so the stop rule did not fire.
+- **H186.1 PASS, not clock-specific:** D 0.113 (pooled pairing low 0.506, high 0.392; TCGA D 0.158), one-sided p 0.017.
+  The pseudo-clock companion puts D at the 90.0th percentile (q95 0.138) and the responsive companion at the 85.0th
+  (q95 0.131). Both are below the registered 95th, whereas TCGA was clock-specific (98.0th, 99.5th).
+- Descriptive: D per type LUAD 0.134, CCRCC 0.051, LSCC 0.224, HNSCC 0.231, PDAC 0.238, SKCM −0.016, UCEC −0.137
+  (STAD, not pooled, 0.096). Tumour-amplitude-matched D_match 0.106 (p 0.020, MDE 0.127; 19 bins, 439 pairs; 2 UCEC
+  bins dropped). Matching removes 6 % of D here, against 26 % in TCGA (A185).
+- Deviations:
+  - Raw GDC counts were used, not recount3-scaled.
+  - The companion sets are scored on the observed labels, as in A175, not re-run under each label permutation.
+- **Reading:** proliferating tumours follow their normal tissue less in independent patients, at about 70 % of the TCGA
+  size, and here the drop is not explained by lower tumour clock amplitude. In CPTAC, expression-matched non-clock gene
+  sets show drops of comparable size, so the replicated part is a loss of tumour–normal concordance in proliferating
+  tumours, not a clock-specific property. Suggested C1 wording: "replicated in CPTAC (p 0.017), clock specificity not
+  replicated".
+<!-- src: paper/exploratory/A186_cptac_c1/output/{gates.csv,power.csv,tests.csv,per_type.csv,descriptive.csv,companion_D.csv} -->
