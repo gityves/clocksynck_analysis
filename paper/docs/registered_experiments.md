@@ -2942,3 +2942,29 @@ would). Not supported, with S's MDE below 50 % of |ΔR| → not explained by lin
 **Reading:** equivalence passes → "no change larger than the bound" for that row. Fails → the null stays "not detected,
 MDE x". No multiplicity correction for equivalence (each row is its own claim). Rows are listed with their verdict.
 **Code:** `paper/exploratory/A180_equivalence/`.
+
+## A181 (2026-11-01, written after the archive A107b fetal gates on Cao 2020 were seen (no primary passes after Holm; p_acrophase 0.002-0.038, p_pairing 0.028-0.746) and before any downsampled-adult gate or responsive-gene readout; HANDOFF_2026-10-31 D1): is the mid-gestation failure informative? Depth control and the responsive-gene shared state
+
+**Why:** a failed gate is uninformative unless the design could have passed. A107b used about 1,000 counts per cell
+and pseudobulk depths of 1e6-1.4e8 (`legacy/.../build_cao.md`), with 8-23 fetuses.
+**V181.1 (depth control, the precondition):** GTEx bulk, deaths at 08-18 h (fetal material is collected in hospital
+hours), the A107b H107b.1 organs (brain cortex for cerebrum, heart left ventricle, kidney cortex, lung). Draw 200
+subsamples of 23 donors with all four organs. Thin each sample's clock-gene counts binomially to the Cao median
+pseudobulk depth of that organ (whole-organ depths, `build_cao.md`), scaled by the sample's clock-gene share of the
+library. Run the same gate (GTEx waveform, 1,000 permutations, pass = p_pairing and p_acrophase < 0.05). Repeat with 11
+donors and the lung within-organ analogue: no adult within-organ bulk exists, so H107b.3-4 get no control and stay
+uninformative. **Sensitivity = pass rate.** The A107b failure counts as "no shared clock state at a depth and n where
+adults show one" only if the pass rate is ≥ 0.8. Below 0.8 it stays uninformative (stop rule: no further amendment).
+GTEx is used here as a benchmark for fetal material, not as a GTEx-only analysis. Only aggregate pass rates are
+reported.
+**H181.2 (responsive-gene shared state; one-sided):** in the A107b whole-organ and stromal designs, the same gate on the
+immediate-early and glucocorticoid-responsive genes of the Cao panel. Gene set: FOS, FOSB, JUN, JUNB, EGR1, EGR3, IER2,
+ATF3, NR4A1, DUSP1, FKBP5, TSC22D3, ZBTB16, DDIT4, KLF9. The pairing statistic is the cross-organ covariance of the
+responsive-gene state against shuffled fetal pairing (`Dataset.gate` p_pairing on these genes with a flat waveform:
+pairing only, no acrophase test, since these genes have no waveform). Pass: p_pairing < 0.05 in either design (Holm
+over two). Companion: 200 expression-matched pseudo sets from the 68-gene panel's housekeeping/other genes are too few,
+so the companion is the same pairing statistic on the 14 clock genes (A107b p_pairing 0.746 / 0.269, seen).
+**Reading:** V181.1 ≥ 0.8 and H181.2 passes → "fetal organs share a cue-driven (responsive-gene) state but no clock
+state", the mirror image of A109. V181.1 ≥ 0.8 and H181.2 fails → no shared state of either kind at this depth.
+V181.1 < 0.8 → the fetal clock result stays uninformative, and H181.2 is reported descriptively.
+**Code:** `paper/exploratory/A181_fetal_depth/`.
