@@ -3159,3 +3159,31 @@ bins, ≥ 50 cells per bin per contrast, `paired` with min_pairs = 10 (as in the
 sensitivity), power step first with stop if MDE > 1.0 h, then H187.1, companions, artefact checks (a)-(c), H187.2 and the
 descriptives. Status: **post hoc**; any pass is exploratory and is not counted among the pre-specified results.
 **Code:** `paper/exploratory/C4_single_cell/A187/` (A187b outputs with suffix `_b`).
+
+## A188 (2026-11-01, written before any C5 contrast, power value or per-arm gate is computed; the A138 Q1 single-cell set and H138.1 are seen: malignant host coupling 0.076 [0.014, 0.139], MDE about 0.2; the bulk proliferation pairing drop is seen (A175, A186); requested by the PI 2026-11-01 with the rule "test if powered, else descriptive only"; HANDOFF_2026-10-31 C5): do malignant cells follow their own tumour stroma less in high-proliferation (and ER−) tumours? Readout level **L2** (anchored coupling at a common host spread, d*), **secondary**
+
+**Why:** A175/A186 show that proliferating tumours follow the patient's normal tissue less (in CPTAC not clock-specific).
+C5 asks the within-tumour version: whether malignant cells couple less to the stromal host of their own tumour.
+**Data:** the A138 Q1 single-cell set: cohorts and patients of H138.1 (`cancer_sc`, copy-number-called malignant cells,
+else tumour epithelium). Host = the cohort's learned A17 stromal anchors, as in H138.1; ≥ 2 anchors are needed for d*.
+**Groups:** proliferation = the A97 G2M score (Hallmark G2M without clock genes) of the patient's malignant pseudobulk,
+tertiles by rank within cohort; high vs low (middle dropped). ER (H188.2) = breast cohorts with ER labels (Wu, Pal; labels as
+in A170 and `scouts_2026-10-31/sc_breast_er`), ER− vs ER+.
+**Estimator:** per cohort `Dataset.contrast(groups, levels=(low, high), targets=malignant, companion=<myeloid, else the mean
+of the non-anchor non-malignant compartments>, require_host_gate_each_arm=True, mde=True, anchor_readout="loo")`. A cohort
+enters with ≥ 5 patients per arm and both arm gates passing. Pooled d* = inverse-variance (se_d_star) mean over the
+entering cohorts; the pooled null is the same weighting over the per-cohort permutation draws (labels permuted within
+cohort).
+**Power and branch (binding, decided now):** pooled MDE on d* = 2.49 × pooled se of d*, with pooled se = (Σ 1/se_d_star²)^−½.
+The per-cohort `power.mde` values are reported alongside.
+- **MDE ≤ 0.3: test.** H188.1 (one-sided): pooled d*(malignant, high − low) < 0, p from the pooled permutation null
+  (≥ 1,000 per cohort). Specificity: d*(malignant) − d*(companion) on the same permutations; "malignant-specific" only if
+  that difference is also < 0 at p < 0.05.
+- **MDE > 0.3: descriptive only.** The same quantities are computed and reported with intervals. There is no p-value
+  verdict, and the result is "not estimable at this n".
+- H188.2 (ER− vs ER+) follows the same branch rule on its own MDE.
+**Descriptive (either branch):** per-cohort d*, d, c per arm, z2 and psi ratios, offsets; gates per arm; leave-one-cohort-out.
+**Reading:** a powered pass means proliferating malignant cells follow their own stroma less, the within-tumour
+counterpart of A175. A powered fail bounds the drop below the MDE. Descriptive-only output is a feasibility statement,
+not "no change".
+**Code:** `paper/exploratory/A188_c5_within_tumour/`.
