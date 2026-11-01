@@ -2740,3 +2740,24 @@ No outcome statistic was computed in any of the three (nulls, gates and header f
   tumours, not a clock-specific property. Suggested C1 wording: "replicated in CPTAC (p 0.017), clock specificity not
   replicated".
 <!-- src: paper/exploratory/A186_cptac_c1/output/{gates.csv,power.csv,tests.csv,per_type.csv,descriptive.csv,companion_D.csv} -->
+
+## A187 C4 single-cell cell-cycle locking, scored 2026-11-01: not estimable (no study passes the gate)
+
+- Fits: CoPhaser cell-cycle phase (current version, clock genes excluded) in 18 studies. 8 studies are valid and stable
+  across seeds (inclusion rule committed before scoring); in these 8, every cell joins its phase table (match rate 1.0).
+- Patients with ≥ 50 cells in both NC and G2/M: GSE178341 58, GSE132465 17, Pal 16, SRP327758 12, Wu 9, GSE131907 6,
+  GSE181919 6, SRP416180 4.
+- **Gate (NC pseudobulks of the contrast patients):** no study passes. p: GSE178341 0.144, GSE132465 0.687, GSE131907
+  0.154, Wu 0.269, Pal 0.119, SRP327758 0.080, GSE181919 0.085, SRP416180 0.363. With no gated study the MDE is not
+  computable, so H187.1, the companions, the artefact checks and H187.2 were not run, and no offset was read.
+- Choices made by the scorer (recorded):
+  - `paired` min_pairs = 10, as in A183; it changes nothing at 4.
+  - The gate runs on the contrast patients.
+  - Long runs used `python` without `-I`.
+- Post hoc, not used: the same gate over every patient with ≥ 50 NC cells gives p 0.025 (GSE131907, 14 patients) and
+  0.035 (SRP327758, 22).
+- **Reading:** uninformative, not "no locking". Across patients, the malignant non-cycling pseudobulks do not carry a
+  clock-shaped shared state at these n. This fits the low malignant coherence of A87 (0.23 vs 0.78), but a failed gate is
+  not evidence on its own. The single-cell locking question stays where archive C2 left it: −0.02 h [−0.55, 0.51],
+  older fits, two of them degenerate.
+<!-- src: paper/exploratory/C4_single_cell/A187/output/{prep.csv,gates.csv,power.csv}; fits/output/{qc.csv,seed_stability.csv} -->
