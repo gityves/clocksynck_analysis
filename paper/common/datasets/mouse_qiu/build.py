@@ -30,6 +30,12 @@ Choices (as the legacy builder)
 Donor table (embryo): `day` (E-day; P0 = 19.5, a label only), `day_label`, `batch`, `t_clock` = 24 x frac(E-day) h
 (the clock time of the sample of an embryo at E15.0-E18.75, one sample per embryo; NaN for P0; not interpretable before
 E15), sample-sheet columns (RT_group, somite_count, Plug_Date, Date_Harvested, litter_ID, shipment_ID), `n_cells`.
+
+Clock time checked against the Qiu 2024 Methods (PMC10901739, 2026-11-02): plugs checked in the morning, noon of the plug
+day = E0.5, and collection at E15.0-E18.75 "was performed precisely at 00:00, 06:00, 12:00 and 18:00", so frac 0, .25,
+.5, .75 = 00, 06, 12, 18 h local time (not ZT: the light schedule is not given). The sample sheet agrees: E(n).0 is
+harvested on the date before E(n).25-.75 of the same plug-to-harvest span, i.e. at midnight. E10.25-E14.75 are staged
+morphologically (eMOSS), so their fraction is not a clock time.
 """
 
 from __future__ import annotations
