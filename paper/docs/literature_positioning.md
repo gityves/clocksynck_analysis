@@ -252,7 +252,7 @@ Tested since (registered A192-A194, `results_preliminary.md`):
 - **Cadenas (A192):** the same three public cohorts (684 tumours, 215 metastases). The direction reproduces. A score of
   their 7 protective genes (HR 0.81 per SD) sits at the 7th percentile of 1,000 random gene sets matched for correlation
   with proliferation, so it is not clock-specific. It falls to 0.88 (p 0.12) with G2M, and to 0.96 with AURKA.
-  TIMELESS is fully absorbed. RORC keeps an independent association (0.80, p 0.019).
+  TIMELESS is fully absorbed. RORC keeps an independent association (0.80, p 0.019). It is not immune-driven (post hoc), and the other six genes are null after adjustment (0.93).
 - **TimeTeller (A194):** Theta is not prognostic in SCAN-B and TCGA (400 deaths; HR 0.97 per SD). The grade 1-2 claim
   goes the other way (0.83, p 0.03, nominal).
 - **Li et al. (A193):** CYCLOPS magnitude in TCGA, METABRIC and SCAN-B luminal A; running.

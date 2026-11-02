@@ -2968,11 +2968,17 @@ genes). Power before outcomes: MDE HR 1.25 (H192.2b) and 1.21 (H192.3) per SD.
     proliferation is in the model, and disappears with AURKA, the proliferation module of the Transbig group.
   - TIMELESS, the strongest adverse gene, is a replication gene, and G2M absorbs it fully.
   - Not everything is proliferation. RORC keeps an independent association in the Cadenas model, and Mainz carries most of
-    the signal. RORC is a nuclear receptor also expressed by immune (Th17) cells, so it is not a clean clock readout.
+    the signal.
+  - **Post hoc RORC check** (`posthoc_rorc.py`, after seeing the result):
+    - RORC is not an immune proxy here: r -0.08 with an immune score (PTPRC, CD3E, CD2, CD247). It is only weakly tied to
+      the other clock genes (r 0.23), G2M (-0.23) and ESR1 (+0.24).
+    - Its HR is 0.843 [0.742, 0.958] (p 0.009) with G2M, ESR1 and ERBB2, and stays 0.844 with the immune score added.
+    - The other six genes together are null after the same adjustment: 0.934 [0.801, 1.089], p 0.38.
+    - So the residual is a single-gene RORC association, not a clock-wide one.
   - The clock-plane share (clocksync L1) is not prognostic in any cohort. Pooled with METABRIC, effects beyond HR 1.15 per
     SD are excluded.
 - Code `paper/exploratory/C8b_clock_prognosis_replication/` (`score_a192.py`, about 5 min).
-<!-- src: paper/exploratory/C8b_clock_prognosis_replication/output/{a192_power.csv,a192_reproduction.csv,a192_tests.csv,a192_prolif_match.csv,a192_secondary.csv} -->
+<!-- src: paper/exploratory/C8b_clock_prognosis_replication/output/{a192_power.csv,a192_reproduction.csv,a192_tests.csv,a192_prolif_match.csv,a192_secondary.csv,a192_posthoc_rorc.csv} -->
 
 ## A194 C8b, scored 2026-11-02: TimeTeller's clock-dysfunction score is not prognostic in breast cancer
 
