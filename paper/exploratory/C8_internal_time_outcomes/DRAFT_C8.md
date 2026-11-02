@@ -87,3 +87,7 @@ Public clinical material with per-patient collection clock time is nearly absent
 - Not done: a full screen of GEO sample characteristics for fields such as "time of surgery" (E-utilities).
 Reading: the A146 replication cannot be done from public data found so far. Options: the Johanns liver data (single
 compartment, so internal time from one tissue only), a systematic GEO characteristics screen, or the biobank request.
+- **Decision (user, 2026-11-02): the A146 replication is not pursued for now**; A146 is reported as a single-cohort
+  result. The morning/afternoon heart validation already in hand is V3 (A174, GSE270258, Jia 2024, 16 left-ventricle
+  snRNA-seq patients, 4 compartments), not the Montaigne atrial microarray GSE111351 (bulk, one compartment), which
+  would add little.
