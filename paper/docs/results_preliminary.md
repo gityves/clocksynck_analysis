@@ -988,6 +988,13 @@ failed except CoFE clock genes in 1 W tissue.
   while clocksync keeps it (0.945) and beats the supervised TimeTeller and the timed oracle on the window donors. The
   distinctive property of the method on real data is partial-day coverage, not coupling estimation as such.
 <!-- src: paper/exploratory/A123_working_hours/output/a123b/{h123_4,tests,donor_order,runtime}.csv -->
+- **Post hoc check (2026-11-02, `scripts/posthoc_reflect.py`, `posthoc_reflect.csv`): reflection and stretch allowed.**
+  The orderer maps were compared without a global reflection, and orderers spread a 10 h window over the whole circle.
+  Taking the better of the two directions and a least-squares stretch, design W offsets vs truth (i): CHIRAL |r| 0.165
+  (Spearman 0.127), CoFE clock 0.417 (0.400), CoFE genome-wide 0.283 (0.141), CYCLOPS 0.296 (0.406); clocksync 0.945
+  (0.911). Design F: CHIRAL 0.877, CoFE clock 0.856. The working-hours loss of the orderers is not a reflection or
+  scaling artefact.
+<!-- src: paper/exploratory/A123_working_hours/output/a123b/posthoc_reflect.csv -->
 
 ## A149 (scored 2026-10-28, secondary): single-cell tumour / normal pairing exists but is not clock-specific; malignant cells covary with the tumour stroma, specificity not tested
 27 cohorts (18 existing, 9 new), 190 paired patients for S1; S2 61 (9 cohorts), S3 51 (7). Nulls equal the power step.
