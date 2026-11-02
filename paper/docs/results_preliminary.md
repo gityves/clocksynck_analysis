@@ -2840,7 +2840,7 @@ and depths equal the stored `fetal_cao` tables exactly (organ 112 rows, class 77
 - Code `paper/exploratory/A189_fetal_within/` (`build_genome.py` 1,305 s; `score_a189.py` 1,128 s).
 <!-- src: paper/exploratory/A189_fetal_within/output/{h189_1_coherence.csv,h189_2_3_gates.csv}; build log paper/results/logs/build_genome.log -->
 
-## A190, scored 2026-11-02: the fetal adrenal cortex, stroma and vessels share one clock state (gate passes, clock-specific at the margin)
+## A190, scored 2026-11-02: the within-adrenal gate passes (clock-specific at the margin) but is confounded by cortex RNA in the shallow classes (post hoc, below)
 
 Cao 2020, the 7 A189 adrenal fetuses (89-122 days) with parenchyma (94% adrenocortical), stromal and endothelial
 pseudobulks (≥ 200 cells). Proxy sensitivity 0.875-0.90 (adult heart and kidney atlases at the adrenal design).

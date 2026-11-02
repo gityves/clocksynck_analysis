@@ -156,12 +156,23 @@ time-of-day effect.
 - Ohta H, et al. Maternal feeding controls fetal biological clock. *PLoS One* 2008 (PMC2432029; only the first author
   and title verified). Rat: restricted maternal feeding shifts fetal SCN and liver by 5 and 7 h independent of the
   maternal SCN. **Candidate** earlier basis.
+- Torres-Farfan C, et al. Maternal melatonin effects on clock gene expression in a nonhuman primate fetus.
+  *Endocrinology* 2006;147(10):4618-26. doi:10.1210/en.2006-0628. PMID 16840546. **Abstract verified (2026-11-02).**
+  Capuchin fetus at ~90 % gestation: Bmal1, Per2 and MT1 oscillate in the fetal SCN and adrenal; maternal melatonin
+  suppression changes the fetal SCN clock but not the adrenal one ("probably not" its Zeitgeber). Related: functional
+  MT1 in the capuchin fetal adrenal (J Physiol 2004, PMID 14673186, listing only); a melatonin-responsive rat fetal
+  adrenal clock (Endocrinology 2011, doi 10.1210/en.2010-1260, title unverified).
+- Umemura Y, Koike N, et al., Yagita K. Cell and tissue-autonomous development of the circadian clock in mouse embryos.
+  *PNAS* 2017. doi:10.1073/pnas.1703170114. PMID 28827343. Abstract level: no cell-autonomous oscillation in E10
+  hearts, clear at E18; CLOCK translation suppressed early (Dicer/Dgcr8).
 
 How we differ. Fetal peripheral clocks are weak, partly driven by the mother, and mature late, so the clock-gene
 shared state across organs that clocksync needs may not exist or may be maternal-cue-driven (D1 prediction). A181
 could not test this: adult GTEx at the Cao fetal design passes the gate in only 0.20 of subsamples, so the fetal
-gate failure (whole organs p 0.746) is uninformative and design-limited, not depth-limited. The development arc stays
-a stated limit; the D3 scout found no paediatric multi-compartment series.
+gate failure (whole organs p 0.746) is uninformative and design-limited, not depth-limited. Within one compartment
+(A189) the fetal adrenal carries a clock-specific coherent clock at 13-17 weeks, the first human fetal clock evidence we
+know of, matching the primate fetal adrenal oscillation above; its cross-class coupling (A190) is confounded by cortex
+RNA. The D3 scout found no paediatric multi-compartment series.
 
 ## 8. Fetal atlases
 
