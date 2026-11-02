@@ -3046,3 +3046,21 @@ variant (addendum 1dfaa8e, before outcomes: the registered raw readout saturates
   it does not establish the opposite direction either.
 - Code `paper/exploratory/A196_proliferation_arrest/` (about 40 s).
 <!-- src: paper/exploratory/A196_proliferation_arrest/output/{power,tests,descriptive,calibration_posthoc}.csv -->
+
+## Post hoc, descriptive (2026-11-03): GTEx Whole Blood has no core-clock time signal; composition explains little of its weak time signal
+
+User observation stated before running: blood shows no coherent core clock, its time-of-day genes follow cell composition.
+GTEx v10 fast deaths with recorded time of death; Whole Blood (212 donors) vs five solid tissues (179-220). Aggregates only.
+- **Clock genes:** Whole Blood median cosinor R² 0.0096, the 52nd percentile of all expressed genes (solid tissues
+  0.081-0.350, 99.5th-99.96th percentile). Phase concordance with the GTEx waveform 0.430 (solid 0.854-0.937). Adjusting
+  for composition changes neither (0.0088; 0.482).
+- **Time genes (top 100, chosen in one donor half, read in the other):** Whole Blood held-out R² 0.021 vs 0.014 for
+  random genes, so blood carries little time-of-death signal at all. Composition removes 6 % of it. 20 % of these genes
+  correlate |r| > 0.5 with a composition score (solid tissues 0-7.5 %).
+- **Composition rhythms:** weak (neutrophil R² 0.025, peak 20.6 h; erythroid 0.025; T 0.003).
+- **Reading:** the absence of a coherent core clock in blood is clear (no better than a random gene). The composition
+  explanation is only weakly supported in post-mortem blood: blood time genes lean towards composition markers, but
+  composition removes little, because there is little time signal to remove. Post-mortem blood may also differ from
+  timed blood in living people.
+- Code `paper/exploratory/blood_composition_posthoc/scripts/blood_composition.py` (seconds).
+<!-- src: paper/exploratory/blood_composition_posthoc/output/blood_composition.csv -->
