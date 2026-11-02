@@ -3378,3 +3378,46 @@ the GTEx training mean (shift only; no outcome involved). The raw variant is rep
 benchmark). Covariates per cohort enter as cohort-specific columns of the stratified model (TCGA: age, T stage, N+,
 recorded ER, ERBB2 expression; SCAN-B: age, log size, N+, grade, ER, HER2; METABRIC: age, size, grade, nodes, ER, ERBB2
 expression). SCAN-B is the A127 analysis set (PAM50 and ER recorded).
+
+## A195 (2026-11-02, on the user's question "is clock desynchrony a byproduct of division, or is division eased by the absence of a coherent clock?"; written before any clock-plane variance is computed on single-cell cell-cycle bins): is the proliferation clock-signal loss confined to cycling cells? **L1 (clock-plane variance), primary (Holm over two)**
+
+**Seen before writing:** bulk proliferation contrasts lower the clock-plane variance (A176: Δlog_plane SCAN-B −0.228,
+GSE72094 −0.545, GSE62254 −0.687, GSE68465 −0.232); linear cell-cycle composition does not explain it in bulk (A179); in
+malignant single cells the G2/M − NC phase offset is null in the one gated study (A187b, −0.07 h, MDE 0.48 h); the A187
+per-study NC reference gates (pass only GSE131907 and SRP327758 over all NC patients); within-tumour L2 coupling by
+proliferation is not estimable (A188). Never computed: log_plane of NC or cycling pseudobulks, or of any arm defined by
+cycling fraction.
+**Why:** a cross-sectional association cannot order clock loss and proliferation. One mechanism can be separated: if the
+loss is a byproduct of division in the dividing cells (mitotic transcriptional shutdown, cycle-driven clock-gene
+transcription), it sits in cycling cells, and the non-cycling cells of highly proliferative tumours keep a full clock
+signal. If it persists in their non-cycling cells, it is a property of the tumour (cell-intrinsic clock loss that may permit
+division, or a shared cause), not of the act of dividing. This does not order the two causally; it rules one direction's
+simplest mechanism in or out.
+**Data:** the A187 pseudobulks (`C4_single_cell/A187/output/pseudobulk_clock_*.csv.gz`, `genome_*.csv.gz`; 8 studies,
+malignant cells, CoPhaser bins NC / S / G2M); cycling = S + G2M summed; ALL = NC + S + G2M summed. Cycling fraction per
+patient = share of the patient's malignant cells with cycling probability ≥ 0.5 (A187 `cycling_fraction`).
+**Statistic:** `clocksync.decompose.components` on `logfrac` (counts, Poisson term removed), GTEx waveform, log fractions
+centred within study (and within arm), pooled over studies (k = number of studies); log_plane difference between arms.
+**H195.1 (cell state, within patient):** Δ1 = log_plane(cycling) − log_plane(NC) over patients with ≥ 50 cells in both;
+null: NC/cycling labels swapped within patient (10,000). Byproduct predicts Δ1 < 0.
+**H195.2 (tumour state, decisive):** Δ2 = log_plane(NC; high cycling-fraction tertile) − log_plane(NC; low tertile),
+tertiles by rank within study (middle dropped), patients with ≥ 50 NC cells, studies with ≥ 3 patients per arm; null:
+tertile labels permuted within study (10,000). The same contrast on ALL pseudobulks (ΔALL) is the reference: it should
+reproduce the bulk direction.
+Two-sided p, Holm over the two. **Power and stop rule (before the tests):** MDE = 2.49 × null SD; a test with MDE > 0.40
+(about the median bulk |Δlog_plane|) is not estimable and is not read.
+**Signal check:** NC pseudobulks must carry a clock-shaped signal: pooled gene coherence R (`components`) above the 95th
+percentile of 200 expression-matched pseudo-clock sets (`paired.pseudo_waveforms`, means from the NC pseudobulks). If not,
+both tests are uninformative.
+**Specificity:** Δ1, Δ2, ΔALL of the 200 matched pseudo sets on the observed labels; percentile reported.
+**Artefact checks (descriptive):** (c1) NC binomially thinned to the cycling depth per patient (H195.1); (c2) every NC
+pseudobulk thinned to the 10th-percentile NC depth of its study (H195.2); (d) per-study Δ; S and G2M separately for Δ1.
+**Reading:**
+- ΔALL < 0 and Δ2 bounded (fails at MDE ≤ 0.40, |Δ2| < |ΔALL| / 2) with Δ1 < 0: the loss sits in dividing cells, a
+  byproduct of division (at this resolution).
+- Δ2 < 0 (pass, same sign as ΔALL): non-cycling cells of proliferative tumours also lose the signal; division in the cell
+  does not explain it. Direction stays open (clock loss permissive, or a shared cause).
+- ΔALL not negative: the single-cell data do not reproduce the bulk loss; uninformative.
+**Limitation (registered):** NC = no S/G2M signature, i.e. G0 and G1 cells; G1 cells of cycling lineages are inside NC.
+**Stop rule:** one amendment.
+**Code:** `paper/exploratory/C4_single_cell/A195/`.
