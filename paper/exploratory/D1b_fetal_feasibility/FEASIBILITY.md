@@ -55,6 +55,8 @@ would be temporary: 376 + 21 = 397 GB of the 400 GB cap, deleted after the build
 Caveat: adult sampling times are unknown and probably spread more widely than hospital hours; GTEx (timed) has no
 cell classes. The heart rate is therefore an upper bound for a narrow fetal window.
 Feasible: heart (0.94). Kidney is just below the rule.
+Adrenal (`--adrenal`, added for A190): no adult adrenal nucleus atlas; heart and kidney classes cut to the adrenal
+design (7 fetuses, parenchyma, stromal, endothelial depths) pass 0.90 [0.85, 0.94] and 0.875 [0.82, 0.92].
 
 ## 3. Clock maturation markers (descriptive)
 

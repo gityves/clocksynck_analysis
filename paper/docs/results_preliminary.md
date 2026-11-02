@@ -2839,3 +2839,25 @@ and depths equal the stored `fetal_cao` tables exactly (organ 112 rows, class 77
   - All other fails are uninformative (sensitivities 0.51-0.94 for adult clocks), so they do not rank organs by onset.
 - Code `paper/exploratory/A189_fetal_within/` (`build_genome.py` 1,305 s; `score_a189.py` 1,128 s).
 <!-- src: paper/exploratory/A189_fetal_within/output/{h189_1_coherence.csv,h189_2_3_gates.csv}; build log paper/results/logs/build_genome.log -->
+
+## A190, scored 2026-11-02: the fetal adrenal cortex, stroma and vessels share one clock state (gate passes, clock-specific at the margin)
+
+Cao 2020, the 7 A189 adrenal fetuses (89-122 days) with parenchyma (94% adrenocortical), stromal and endothelial
+pseudobulks (≥ 200 cells). Proxy sensitivity 0.875-0.90 (adult heart and kidney atlases at the adrenal design).
+
+- **H190.1 (within adrenal gate, blind, primary): passes, clock-specifically.** p_pairing 0.0047, p_acrophase 0.0018
+  (10,000 permutations), clock share 0.277. Matched pseudo-clock sets: 5th percentile of p_pairing 0.0060, so the clock is
+  below it, but 4.5 % of matched sets pair at least as strongly (the criterion is met by a narrow margin). Responsive sets:
+  0.5 % (5th percentile 0.044).
+- **Descriptive L1 per class (not tested):** parenchyma R 0.731 (p 0.0065; matched 99th percentile), stromal R 0.592
+  (p 0.054; 97th), endothelial R 0.555 (p 0.084; 94th); null means 0.283-0.296. The shallow classes point the same way
+  but do not resolve alone.
+- **Reading:**
+  - At 13-17 post-conception weeks the clock state of the fetal adrenal is shared across cortex, stroma and vessels of
+    the same fetus: a coupled organ clock, not a cortex-only pattern. With A189, the fetal adrenal is the one organ in
+    this atlas with an organised and coupled clock.
+  - It is a follow-up on the same 7 fetuses that A189 selected, not a replication, and the matched-set margin is narrow
+    (4.5 % vs the 5 % criterion). A second fetal dataset with adrenal tissue is needed before this is a claim.
+  - The classes are not ranked (depths differ 30-70 fold); the L1 values do not localise the clock to the cortex.
+- Code `paper/exploratory/A190_fetal_adrenal/` (`score_a190.py`, 168 s); power `D1b_fetal_feasibility/scripts/feasibility.py --adrenal`.
+<!-- src: paper/exploratory/A190_fetal_adrenal/output/{h190_1_gate.csv,l1_classes.csv}; paper/exploratory/D1b_fetal_feasibility/output/passrates_adrenal.csv -->
