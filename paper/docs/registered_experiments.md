@@ -3368,3 +3368,13 @@ Two-sided, Holm over two; power step first (MDE above 1.5 per SD: not estimable)
 an RNA-seq training set) with OS and RFS; Theta vs G2M and vs the A191 in-plane log-odds (Spearman); MKI67 instead of G2M.
 **Stop rule:** one amendment; no retraining on another reference.
 **Code:** `paper/exploratory/C8b_clock_prognosis_replication/`.
+
+**A194 addendum (2026-11-02, before any outcome is read):** the registered readout (tumour log2 values as they are)
+saturates: Theta = 1 for 97 % (SCAN-B), 94 % (TCGA) and 100 % (METABRIC) of tumours, because constant per-gene offsets
+between the GTEx training scale and each tumour cohort (platform, depth, gene length) put tumours outside the training
+distribution. Primary readout is therefore the "aligned" variant: each panel gene shifted so that the cohort mean equals
+the GTEx training mean (shift only; no outcome involved). The raw variant is reported as uninformative. Training check:
+128 GTEx donors, 8 bins, 5-fold out-of-fold median absolute time error 4.38 h (weaker than muscle or thyroid in the
+benchmark). Covariates per cohort enter as cohort-specific columns of the stratified model (TCGA: age, T stage, N+,
+recorded ER, ERBB2 expression; SCAN-B: age, log size, N+, grade, ER, HER2; METABRIC: age, size, grade, nodes, ER, ERBB2
+expression). SCAN-B is the A127 analysis set (PAM50 and ER recorded).
