@@ -2935,3 +2935,41 @@ Started on the user's instruction (PI review pending). Power before outcomes: bo
     defined on the gene-centred design.
 - Code `paper/exploratory/C8_internal_time_outcomes/` (`score_a191.py`, 66 s).
 <!-- src: paper/exploratory/C8_internal_time_outcomes/output/{power.csv,tests.csv,secondary.csv} -->
+
+## A192 C8b, scored 2026-11-02: the published clock-gene prognosis in untreated node-negative breast cancer is largely carried by proliferation
+
+Fresh cohorts (Mainz GSE11121, Rotterdam GSE2034, Transbig GSE7390; 684 tumours, 215 distant metastases; U133A, 13 clock
+genes). Power before outcomes: MDE HR 1.25 (H192.2b) and 1.21 (H192.3) per SD.
+- **H192.1 (pipeline check, not counted):** all 7 "protective" genes have HR < 1 and TIMELESS HR > 1, as published; at BH
+  q < 0.05 only RORC (HR 0.812 per SD, q 0.002) and TIMELESS (1.299, q 0.001) reproduce; PER1 0.851, PER2 0.876, PER3 0.878
+  (nominal p 0.02-0.05, q 0.05-0.07), CRY2 0.905, CLOCK and NPAS2 about 1. Correlations with G2M match Cadenas' with their
+  proliferation metagene (CRY2 -0.41 vs -0.61, PER2 -0.38 vs -0.44, PER3 -0.33 vs -0.41, TIMELESS +0.62 vs +0.67).
+- **H192.2 "carried by proliferation" (the registered prediction):** clock score S (mean z of the 7 genes) unadjusted HR
+  0.809 [0.709, 0.923] per SD (z -3.16), at the 7.1th percentile of 1,000 proliferation-matched pseudo-scores (2.5-97.5 %
+  range of z -3.67 to 0.77; matching: mean r with G2M -0.243 clock vs -0.238 pseudo), so not clock-specific. Adjusted for
+  G2M, ESR1, ERBB2: HR 0.883 [0.756, 1.031], p 0.115, Holm 0.136.
+- **H192.3 FAIL (fresh test of A191):** in-plane log-odds adjusted HR 1.145 [0.990, 1.324], p 0.068, Holm 0.136; 90.5th
+  percentile of 200 expression-matched pseudo sets (not clock-specific).
+- **Secondary:**
+  - G2M absorbs 60 % of the log HR of S (bootstrap 95 % interval 23-161 %). G2M itself (positive control): HR 1.380
+    [1.208, 1.575] alone, 1.476 with ESR1 and ERBB2.
+  - The proliferation term matters: S adjusted for AURKA alone 0.965 (p 0.65), G2M alone 0.918 (p 0.26), MKI67 alone 0.852
+    (p 0.023), ESR1 + ERBB2 only 0.804 (p 0.004).
+  - Cadenas' multivariate model (Mainz + Transbig, 396 tumours, 108 events: grade, size, ESR1, ERBB2): TIMELESS 1.268
+    (p 0.027) falls to 1.114 (p 0.44) with G2M; PER3 0.829 (p 0.041) to 0.840 (p 0.059); **RORC 0.780 (p 0.006) stays 0.805
+    (p 0.019) with G2M.**
+  - Heterogeneity: S unadjusted Mainz 0.606 (p 0.0002), Rotterdam 0.863, Transbig 0.945; adjusted Mainz 0.671 (p 0.016),
+    Rotterdam 0.920, Transbig 1.032. ESR1-high half (ER+ proxy): adjusted 0.933 (p 0.52).
+  - In-plane log-odds pooled with A191 H191.1 (fixed effect): HR 1.030 [0.947, 1.121] per SD; equivalence within HR 1.15
+    per SD, TOST p 0.005 (Cochran Q 3.05, 1 df: some heterogeneity).
+- **Reading:**
+  - The published association reproduces in direction but is weaker than reported. A score of these clock genes predicts
+    metastasis no better than random genes with the same correlation to proliferation. The association halves once
+    proliferation is in the model, and disappears with AURKA, the proliferation module of the Transbig group.
+  - TIMELESS, the strongest adverse gene, is a replication gene, and G2M absorbs it fully.
+  - Not everything is proliferation. RORC keeps an independent association in the Cadenas model, and Mainz carries most of
+    the signal. RORC is a nuclear receptor also expressed by immune (Th17) cells, so it is not a clean clock readout.
+  - The clock-plane share (clocksync L1) is not prognostic in any cohort. Pooled with METABRIC, effects beyond HR 1.15 per
+    SD are excluded.
+- Code `paper/exploratory/C8b_clock_prognosis_replication/` (`score_a192.py`, about 5 min).
+<!-- src: paper/exploratory/C8b_clock_prognosis_replication/output/{a192_power.csv,a192_reproduction.csv,a192_tests.csv,a192_prolif_match.csv,a192_secondary.csv} -->
