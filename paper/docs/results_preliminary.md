@@ -2832,8 +2832,8 @@ and depths equal the stored `fetal_cao` tables exactly (organ 112 rows, class 77
   - By 13-17 post-conception weeks, the clock genes of the fetal adrenal keep the adult phase relations across fetuses,
     beyond expression-matched and responsive gene sets. This is the first clock-specific fetal positive in the project
     and places a running, organised clock in the human fetal adrenal at mid-gestation. It agrees with primate work
-    reporting clock-gene rhythms in the fetal adrenal (Torres-Farfan and colleagues, capuchin monkey; to verify before
-    citing).
+    reporting clock-gene rhythms in the fetal adrenal (Torres-Farfan et al. 2006, Endocrinology 147:4618, PMID 16840546,
+    capuchin at ~90 % gestation; abstract checked 2026-11-02, see A190 post hoc).
   - It is a whole-organ L1 result in 7 fetuses at Holm 0.0495, so it is fragile. It says nothing about coupling to other
     organs, and the adrenal parenchyma class was not registered.
   - All other fails are uninformative (sensitivities 0.51-0.94 for adult clocks), so they do not rank organs by onset.
@@ -2861,3 +2861,33 @@ pseudobulks (≥ 200 cells). Proxy sensitivity 0.875-0.90 (adult heart and kidne
   - The classes are not ranked (depths differ 30-70 fold); the L1 values do not localise the clock to the cortex.
 - Code `paper/exploratory/A190_fetal_adrenal/` (`score_a190.py`, 168 s); power `D1b_fetal_feasibility/scripts/feasibility.py --adrenal`.
 <!-- src: paper/exploratory/A190_fetal_adrenal/output/{h190_1_gate.csv,l1_classes.csv}; paper/exploratory/D1b_fetal_feasibility/output/passrates_adrenal.csv -->
+
+### A190 post hoc checks (2026-11-02, chosen after scoring): the within-adrenal coupling is confounded by cortex RNA in the shallow classes
+
+`posthoc_checks.py`. Contamination fraction a = parenchyma-marker fraction (STAR, CYP11A1, CYP17A1, CYP21A2, CYP11B1,
+NR5A1) in a class relative to the parenchyma, per fetus; heart as comparison (MYH6, MYH7, TNNT2, NPPA, MYL7).
+
+- **Adrenal stromal and endothelial profiles are about one third cortex-derived:** median a 0.44 (0.32-0.74) and 0.33
+  (0.21-0.42); the expected cortex-derived share of their clock-gene counts has median 0.67 and 0.72 (above 1 for CIART,
+  so the marker estimate is approximate). Heart, by comparison: a 0.036 and 0.039, clock share 0.04-0.05.
+- **Gate on corrected counts (expected contamination subtracted):** p_pairing 0.672, p_acrophase 0.172, clock share
+  0.036. It fails; with two thirds of the shallow-class clock counts removed this fail is uninformative too.
+- **Reading:** the A190 pass cannot be separated from contamination. A shared clock state across adrenal classes is
+  what cortex RNA in the stromal and endothelial profiles would produce, so A190 is **not evidence of a coupled
+  adrenal clock**. A189 (whole-organ coherence) is not affected: it reads the organ as one sample. The descriptive
+  stromal and endothelial L1 values of A190 carry the same contamination. The heart gates (A107b, H189.3) are clean in
+  this respect (4 %).
+- **Receptors (descriptive, CPM, median over fetuses; `posthoc_receptors.csv`):** melatonin receptors are near zero
+  everywhere (adrenal MTNR1A 0.08, MTNR1B 0.14; highest MTNR1A kidney 1.26, MTNR1B placenta 1.91), so the atlas
+  neither supports nor excludes melatonin input (low-abundance GPCRs at this depth). NR3C1 is broad (adrenal 90, other
+  organs 30-285; adrenal parenchyma 77, among the lowest). MC2R (ACTH receptor) is adrenal-specific (245; other organs
+  ≤ 4.4) as expected; its 74-97 CPM in the adrenal shallow classes is itself a contamination marker.
+<!-- src: paper/exploratory/A190_fetal_adrenal/output/{posthoc_contamination.csv,posthoc_gate_corrected.csv,posthoc_receptors.csv} -->
+- **Literature (checked 2026-11-02 at abstract level, Sonnet search; full texts not read):** Torres-Farfan et al. 2006
+  (Endocrinology 147:4618, PMID 16840546): in the capuchin fetus at ~90 % gestation, Bmal1, Per2 and MT1 oscillate in
+  the fetal SCN and adrenal; suppressing maternal melatonin (constant light) changed the fetal SCN clock but not the
+  adrenal one, so melatonin is "probably not" the adrenal Zeitgeber. The same group reports a functional MT1 in the
+  capuchin fetal adrenal (J Physiol 2004, PMID 14673186) and a strong melatonin-responsive fetal adrenal clock in the rat
+  (Endocrinology 2011, title unverified). No human fetal adrenal clock data were found. Mouse: peripheral clocks start
+  oscillating late in gestation (Umemura et al. 2017 PNAS, PMID 28827343: none in E10 heart, clear at E18). Qiu 2024 used
+  C57BL/6NJ; C57BL/6J is melatonin-deficient (Aanat), the NJ substrain unverified.
