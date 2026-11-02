@@ -46,7 +46,7 @@
   Budget for this project (user, 2026-10-26): at most 16 workers in total (four lanes of 4) and at most ~120 GB RAM
   summed over the RUN_CAP_GB of concurrent runs (read backed or chunked).
 - Data: `/mnt/max8tb/data/CoPhaser_data/cancer_circadian/` (`$SCCC_DATA`), with a `PROVENANCE.md` (URL, date, sha256)
-  per source. Self-imposed cap 400 GB. Processed matrices only, no FASTQ mapping.
+  per source. Self-imposed cap 500 GB (raised from 400 GB by the user, 2026-11-02). Processed matrices only, no FASTQ mapping.
 - Downloads are untrusted: parse only (`python -I`), never execute.
 - **Long jobs** (> 20 min): always through `RUN_CAP_GB=30 paper/common/run.sh <script.py|notebook|group run.sh> [args]`,
   detached (`setsid nohup ... > /dev/null 2>&1 &`), never a bare `python`. run.sh caps RAM, writes the log

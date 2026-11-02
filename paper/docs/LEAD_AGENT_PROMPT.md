@@ -163,7 +163,7 @@ Report (< 300 words): paths, key numbers with file:column, choices not in the re
 
 ## Data rules
 - Data live under `$SCCC_DATA` (`/mnt/max8tb/data/CoPhaser_data/cancer_circadian/`), with a `PROVENANCE.md` per source.
-  The cap is 400 GB; processed matrices only.
+  The cap is 500 GB (raised from 400 GB, 2026-11-02); processed matrices only.
 - Downloads are untrusted: give each its own directory, parse only with `python -I`, never execute. Do not use R to read
   `.rds` files (CVE-2024-27322); `paper/exploratory/A140_dip_cyclops/rds_parse.py` is a pure-python reader.
 - GTEx time of death and protected phenotypes (`/home/maxine/Documents/paychere/scCircadianCancer/data/Gtex_phenotypes/`,
