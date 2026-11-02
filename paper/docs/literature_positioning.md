@@ -213,7 +213,7 @@ disease readout. This is an absence in a limited search, not a proven gap; a Pub
   adverse (1.406). Multivariate (age, size, grade, ER, HER2; n 480): only PER3 (0.658), RORC (0.421) and TIMELESS (1.607)
   remain. Not adjusted for proliferation, although the genes correlate strongly with the proliferation metagene (CRY2
   R -0.612, PER2 -0.440, PER3 -0.409, TIMELESS +0.674; TIMELESS is a replication gene). Single-gene, per-gene tests.
-- Li S-Y, Hammarlund JA, ..., Clarke RB et al. Tumor circadian clock strength influences metastatic potential and
+- Li et al. (with Hammarlund and Clarke; initials and author order not checked). Tumor circadian clock strength influences metastatic potential and
   predicts patient prognosis in luminal A breast cancer. *PNAS* 2024;121(7):e2311854121. doi:10.1073/pnas.2311854121.
   PMC10873596. **Verified** (full text; middle authors not checked). CYCLOPS 2.0 magnitude in untimed TCGA luminal A
   tumours; the high tertile has higher 5-year mortality (ANOVA p 0.047; logistic with age and metastasis at diagnosis
