@@ -18,7 +18,9 @@ sensitivity of that readout at the fetal design (feasible if >= 0.8, the A181 ru
 
 Controlled access: GTEx time of death is used in memory to select donors; only aggregates are written.
 
-    python feasibility.py [--n-sub 200] [--jobs 4] [--check]
+   `--adrenal`: proxy L2 calibration for the fetal adrenal classes (heart and kidney atlases at the adrenal design).
+
+    python feasibility.py [--n-sub 200] [--jobs 4] [--check] [--all-day | --adrenal]
 """
 import argparse
 import sys
@@ -156,6 +158,36 @@ def setup(all_day=False, gtex_only=False):
     return pd.DataFrame(design), org, cls
 
 
+def setup_adrenal():
+    """Proxy L2 calibration for the fetal adrenal (parenchyma, stromal, endothelial; no adult adrenal nucleus atlas):
+    the heart and kidney atlas classes cut to the adrenal design (fetuses with all three classes, adrenal class
+    depths)."""
+    cls, _ = data.load("fetal_cao", level="class")
+    cls = cls[cls.n_cells >= MIN_CLASS_CELLS]
+    use = ["parenchyma", "stromal", "endothelial"]
+    fc = cls[cls.compartment.isin([f"Adrenal:{c}" for c in use])].copy()
+    fc["cls"] = fc.compartment.str.split(":").str[1]
+    n_f = int((fc.groupby("donor").cls.nunique() == len(use)).sum())
+    target = fc.groupby("cls").depth.median().to_dict()
+    design = []
+    for o in ("Heart", "Kidney"):
+        name, cmap = ATLAS[o]
+        a, _ = data.load(name)
+        x = a[a.compartment.isin([cmap[c] for c in use])].copy()
+        x["compartment"] = x.compartment.map({cmap[c]: c for c in use})
+        full = x.groupby(["stratum", "donor"]).compartment.nunique()
+        full = full[full == len(use)].reset_index()
+        st = full.groupby("stratum").donor.nunique().idxmax()
+        x = x[(x.stratum == st) & x.donor.isin(full.donor[full.stratum == st])].assign(stratum="one")
+        ok = x.donor.nunique() >= POOL_FACTOR * n_f
+        if ok:
+            JOBS.append(("L2", f"adrenal_proxy:{name}", by_donor(x), n_f, target, use))
+        design.append(dict(kind="L2", label=f"adrenal_proxy:{name}", fetal_n=n_f,
+                           fetal_depth=";".join(f"{k}={v:.3g}" for k, v in target.items()),
+                           adult_pool=x.donor.nunique(), adult_depth=x.depth.median(), calibrated=ok))
+    return pd.DataFrame(design)
+
+
 def markers(org, cls):
     """Detection of core and output clock genes in the fetal pseudobulks (counts only)."""
     rows = []
@@ -206,6 +238,7 @@ def main():
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--markers", action="store_true", help="only the expected-marker table")
     ap.add_argument("--all-day", action="store_true", help="GTEx L1 only, deaths at any hour (suffix _allday)")
+    ap.add_argument("--adrenal", action="store_true", help="proxy L2 calibration at the adrenal design (_adrenal)")
     a = ap.parse_args()
     if a.markers:
         OUT.mkdir(exist_ok=True)
@@ -215,13 +248,16 @@ def main():
     OUT.mkdir(exist_ok=True)
     t0 = time.time()
     limit_threads(1)
-    design, org, cls = setup(a.all_day, gtex_only=a.all_day)
-    sfx = ("_check" if a.check else "") + ("_allday" if a.all_day else "")
+    sfx = ("_check" if a.check else "") + ("_allday" if a.all_day else "") + ("_adrenal" if a.adrenal else "")
+    if a.adrenal:
+        design = setup_adrenal()
+    else:
+        design, org, cls = setup(a.all_day, gtex_only=a.all_day)
+        meta = data.load("fetal_cao", level="organ")[1]
+        if meta is not None and "ga_days" in meta:
+            org, cls = (t.merge(meta[["ga_days"]], left_on="donor", right_index=True, how="left") for t in (org, cls))
+        markers(org, cls).to_csv(OUT / f"markers{sfx}.csv", index=False)
     design.to_csv(OUT / f"design{sfx}.csv", index=False)
-    meta = data.load("fetal_cao", level="organ")[1]
-    if meta is not None and "ga_days" in meta:
-        org, cls = (t.merge(meta[["ga_days"]], left_on="donor", right_index=True, how="left") for t in (org, cls))
-    markers(org, cls).to_csv(OUT / f"markers{sfx}.csv", index=False)
     print(design.to_string(index=False), flush=True)
     n = 3 if a.check else a.n_sub
     tasks = [(j, i) for j in range(len(JOBS)) for i in range(n)]

@@ -3222,3 +3222,32 @@ current code with the same specificity companion.
 - Compartments are not compared with each other and organs are not ranked by onset: their sensitivities differ.
 **Stop rule:** no further amendment of D1/A189; whatever the outcome, it is written up.
 **Code:** `paper/exploratory/A189_fetal_within/`.
+
+## A190 (2026-11-02, written after A189 was scored (commit 99529d5; seen: fetal adrenal whole-organ coherence passes clock-specifically, R 0.734, Holm 0.0495) and after a proxy power calibration on adult material (`exploratory/D1b_fetal_feasibility`, `--adrenal`); before any fetal adrenal class-level coherence or within-adrenal gate is computed; not scored in the archive (A107b gated heart and lung only)): is the fetal adrenal clock shared across its cell types? **L2 gate within one organ**, **primary** (one test), plus a descriptive L1 per class
+
+**Why:** user request (2026-11-02) after the A189 adrenal positive. A189 shows clock-shaped organisation in the whole organ,
+which is dominated by the cortex. A gate across cell classes asks whether the cortex, the stroma and the vessels of the
+same fetuses share one clock state (a coupled organ clock), not only whether the cortex carries one.
+**Selection:** the organ was chosen after its A189 L1 pass on the same 7 fetuses. The two readouts are not independent
+(the parenchyma enters both), so a pass is a follow-up of A189, not a replication of it.
+**Data:** Cao 2020 class pseudobulks (≥ 200 cells): Adrenal:parenchyma (adrenocortical cells, 94%, and chromaffin cells,
+`build.CLASSMAP`), Adrenal:stromal, Adrenal:endothelial, all present in the same 7 fetuses (89-122 days). Neural
+(sympathoblasts, Schwann; 6 fetuses) and myeloid (5) are left out.
+**Power (proxy, no adult adrenal nucleus atlas):** adult heart (cardiomyocyte, fibroblast, endothelial) and kidney
+(proximal tubule, interstitial, endothelial) atlases cut to 7 donors and thinned to the adrenal class depths: pass rate
+0.90 [0.85, 0.94] and 0.875 [0.82, 0.92] over 200 subsamples (`output/passrates_adrenal.csv`).
+**H190.1 (L2, blind, primary):** `Dataset.gate` (no anchors, GTEx waveform, 10,000 permutations) on the three classes
+passes: p_pairing < 0.05 and p_acrophase < 0.05. Specificity as H189.2: "clock-specific" only if the clock p_pairing is
+below the 5th percentile of p_pairing over 200 expression-matched pseudo-clock sets (gate rerun with each, 1,000
+permutations; mean log expression over the three classes); responsive sets reported, descriptive.
+**Descriptive (not tested):** L1 coherence R per adrenal class against the per-gene donor permutation null (10,000) with
+the matched pseudo 95th percentile; leave-one-gene-out range of the gate's p_pairing is not computed.
+**Reading:**
+- A clock-specific pass: the fetal adrenal cortex, stroma and vessels share one clock state at 13-17 weeks (a coupled
+  organ clock), on the same fetuses as A189.
+- A fail is uninformative (proxy sensitivity 0.875-0.90, adult sampling times unknown); it does not show the classes
+  run separate clocks.
+- The class-level L1 values are descriptive: they do not localise the A189 clock to one class (no multiplicity control,
+  stromal and endothelial pseudobulks are 30-70 times shallower than the parenchyma).
+**Stop rule:** one amendment; no further adrenal sub-question on these fetuses without a second fetal dataset.
+**Code:** `paper/exploratory/A190_fetal_adrenal/`.
