@@ -2811,3 +2811,31 @@ No outcome statistic was computed in any of the three (nulls, gates and header f
   0.48 cannot resolve it. C5 is a feasibility statement: the single-cell tumour atlases do not power within-tumour L2
   contrasts (as A153 found for disease atlases).
 <!-- src: paper/exploratory/A188_c5_within_tumour/output/{prep.csv,gates.csv,power.csv,descriptive.csv,per_cohort.csv,loco.csv}; post_hoc_tumour_anchors/ -->
+
+## A189 D1b, scored 2026-11-02: the fetal adrenal carries a clock-specific coherent clock at 13-17 weeks; no other compartment or organ gate resolves
+
+Cao 2020, 28 fetuses (compartments of 7-11 fetuses, 72-125 days). Inclusion and sensitivities from the adult calibrations
+(`D1b_fetal_feasibility/FEASIBILITY.md`). Genome-wide pseudobulks rebuilt for the companions; their clock-gene columns
+and depths equal the stored `fetal_cao` tables exactly (organ 112 rows, class 775 rows).
+
+- **H189.1 (L1 coherence, Holm over 9): the adrenal passes, clock-specifically.** Whole adrenal (7 fetuses, 89-122 days):
+  R 0.734 (null mean 0.283, q95 0.592), p 0.0055, Holm 0.0495. Matched pseudo-clock sets 98.5th percentile (q95 0.589),
+  responsive sets 99.5th. Leave-one-gene-out R 0.691-0.818 (lowest without PER3): no single gene carries it.
+- The other eight fail (Holm 1.0): liver R 0.189, lung 0.310, heart 0.336, heart stromal 0.422, lung stromal 0.192, heart
+  endothelial 0.237, lung epithelial 0.286, kidney parenchyma 0.399 (null means 0.284-0.298; p 0.22-0.68).
+- **H189.2 (within kidney, blind): fails.** p_pairing 0.920, p_acrophase 0.858 (9 fetuses; calibration 0.76).
+- **H189.3 (A107b re-reads, secondary, not counted).** Heart: p_pairing 0.095, p_acrophase 0.022, fails (A107b 0.093 /
+  0.023 reproduced; calibration 0.94). Lung: the gate passes (p_pairing 0.028, p_acrophase 0.0016) but not
+  clock-specifically: matched pseudo sets pair at least as strongly in 77.5 % (22.5th percentile; responsive 28th). The
+  A107b "nominal lung clock" is shared non-clock structure.
+- **Reading:**
+  - By 13-17 post-conception weeks, the clock genes of the fetal adrenal keep the adult phase relations across fetuses,
+    beyond expression-matched and responsive gene sets. This is the first clock-specific fetal positive in the project
+    and places a running, organised clock in the human fetal adrenal at mid-gestation. It agrees with primate work
+    reporting clock-gene rhythms in the fetal adrenal (Torres-Farfan and colleagues, capuchin monkey; to verify before
+    citing).
+  - It is a whole-organ L1 result in 7 fetuses at Holm 0.0495, so it is fragile. It says nothing about coupling to other
+    organs, and the adrenal parenchyma class was not registered.
+  - All other fails are uninformative (sensitivities 0.51-0.94 for adult clocks), so they do not rank organs by onset.
+- Code `paper/exploratory/A189_fetal_within/` (`build_genome.py` 1,305 s; `score_a189.py` 1,128 s).
+<!-- src: paper/exploratory/A189_fetal_within/output/{h189_1_coherence.csv,h189_2_3_gates.csv}; build log paper/results/logs/build_genome.log -->

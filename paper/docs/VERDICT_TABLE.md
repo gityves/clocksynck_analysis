@@ -226,3 +226,7 @@ Source for the rows with a figure panel: `paper/exploratory/WP0_integrity/output
 | A19 (rerun 2026-10-30) | H19.2 immune vs stromal age | +0.000 (SE 0.041) | 0.994 | uninformative (immune arm not eligible) | MDE 0.114 | Fig 4 |
 | A54 | psoriatic delay, discovery H54.1-3; held-out H54.1-3 | discovery -1.50 h; held-out -0.93 h | held-out H54.2 0.004; H54.1 0.11 | discovery pass; held-out H54.2 pass, H54.1 and H54.3 fail | - | Fig 5 |
 | A5 / A17 / A98 | fibrotic-lung T cells | HLCA 0.14 -> 0.00; Natri 0.45 -> 0.00 (free fit; WP0 Q3 anchored: |z| 0.659 -> 0.000 and 0.344 -> 0.000) | 0.027; 0.009; Fisher 0.0023 | holds, conditional on procurement (A119 not registered) | - | Fig 5 |
+| A189 | H189.1 L1 coherence, fetal adrenal (Cao) | L1 | P | R 0.734; matched 98.5th, responsive 99.5th pct | 0.0055 / Holm 0.0495 | PASS (clock-specific) | sens 0.705 | A189_fetal_within/output/h189_1_coherence.csv |
+| A189 | H189.1 L1 coherence, 8 other fetal compartments | L1 | P | R 0.189-0.422 | Holm 1.0 | FAIL (uninformative) | sens 0.51-0.935 | A189_fetal_within/output/h189_1_coherence.csv |
+| A189 | H189.2 within fetal kidney gate | L2 | P | p_acrophase 0.858 | p_pairing 0.920 | FAIL (uninformative) | sens 0.76 | A189_fetal_within/output/h189_2_3_gates.csv |
+| A189 | H189.3 within fetal heart / lung gates (A107b re-read, not counted) | L2 | S | lung pseudo 22.5th pct | heart 0.095; lung 0.028 | heart FAIL; lung PASS not clock-specific | sens 0.94 / - | A189_fetal_within/output/h189_2_3_gates.csv |
