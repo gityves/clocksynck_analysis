@@ -11,6 +11,11 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **A119:** lung T-cell procurement scout (outward-facing / procurement).
 - **Outcome analyses (C8):** scored as A191 on the user's instruction (2026-11-02): both primaries fail (HR 0.98 and 0.96 per SD); draft in
   `paper/exploratory/C8_internal_time_outcomes/DRAFT_C8.md`; results in `results_preliminary.md` (A191). PI to review.
+- **Replication of published clock-survival claims (C8b, A192-A194; user's instruction 2026-11-02):**
+  - Cadenas genes: carried by proliferation, with RORC as a partial exception.
+  - TimeTeller Theta: not prognostic.
+  - CYCLOPS magnitude (Li et al. 2024): running.
+  - Outward-facing use (sharing with these groups, wording in the paper) is the PI's call.
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
