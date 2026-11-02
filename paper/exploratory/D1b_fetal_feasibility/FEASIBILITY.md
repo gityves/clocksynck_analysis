@@ -33,6 +33,10 @@ Coherence R (`decompose.components`, GTEx waveform) against a per-gene donor per
 | kidney nuclei: endothelial | 6 | 0.245 |
 | kidney nuclei: interstitial (stromal) | 9 | 0.085 |
 
+Window check (`--all-day`, `passrates_allday.csv`): the fetal clock phase at collection is unknown. Collection is in
+clinic hours, but a fetal clock not entrained to the mother would sit at any phase. GTEx deaths at any hour (wider phase
+spread) give nearly the same rates: lung 0.695, liver 0.69, adrenal 0.765, heart 0.525, muscle 0.48, kidney 0.44,
+cerebellum 0.38, cerebrum 0.13. The window is not the limit; n is.
 Lung endothelial not calibrated (adult pool 15 < 1.5 x 11). Thinning changes little: n is the limit, not depth.
 Fetal liver is haematopoietic at this age, so adult bulk liver is a poor calibrator for it.
 Feasible: heart stromal (0.935), lung stromal (0.815). The null breaks all gene covariance, so a pass shows clock-shaped

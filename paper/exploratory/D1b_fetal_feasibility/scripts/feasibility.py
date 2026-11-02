@@ -101,8 +101,9 @@ def by_donor(pb):
     return {d: g.reset_index(drop=True) for d, g in pb.groupby("donor")}
 
 
-def setup():
-    """Fetal design (n, depth) and the adult pools of every calibration job."""
+def setup(all_day=False, gtex_only=False):
+    """Fetal design (n, depth) and the adult pools of every calibration job (`all_day`: GTEx deaths at any hour,
+    the bound for fetal clocks not entrained to clock time; `gtex_only`: skip the nucleus atlases)."""
     org, _ = data.load("fetal_cao", level="organ")
     org = org[org.n_cells >= MIN_ORGAN_CELLS]
     cls, _ = data.load("fetal_cao", level="class")
@@ -111,7 +112,8 @@ def setup():
     # 1a. GTEx bulk organs, 08-18 h deaths
     pb, _ = gtex.load(list(GTEX.values()), hardy=(0, 1, 2, 3, 4), depth="library_size")
     _, d = gtex.load(list(GTEX.values()), hardy=(0, 1, 2, 3, 4), depth="library_size")
-    pb = pb[pb.donor.isin(set(d.index[in_window(d.tod.to_numpy())]))]
+    if not all_day:
+        pb = pb[pb.donor.isin(set(d.index[in_window(d.tod.to_numpy())]))]
     del d
     for o, t in GTEX.items():
         f = org[org.compartment == o]
@@ -123,7 +125,7 @@ def setup():
                            adult_pool=a.donor.nunique(), adult_depth=a.depth.median(), calibrated=True))
     # 1b and 2. adult nucleus atlases (one stratum: the one with most usable donors) per Cao class, and the classes
     # of an organ together
-    for o, (name, cmap) in ATLAS.items():
+    for o, (name, cmap) in ([] if gtex_only else ATLAS.items()):
         a, _ = data.load(name)
         fc = cls[cls.compartment.isin([f"{o}:{c}" for c in cmap])].copy()
         fc["cls"] = fc.compartment.str.split(":").str[1]
@@ -203,6 +205,7 @@ def main():
     ap.add_argument("--jobs", type=int, default=4)
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--markers", action="store_true", help="only the expected-marker table")
+    ap.add_argument("--all-day", action="store_true", help="GTEx L1 only, deaths at any hour (suffix _allday)")
     a = ap.parse_args()
     if a.markers:
         OUT.mkdir(exist_ok=True)
@@ -212,8 +215,8 @@ def main():
     OUT.mkdir(exist_ok=True)
     t0 = time.time()
     limit_threads(1)
-    design, org, cls = setup()
-    sfx = "_check" if a.check else ""
+    design, org, cls = setup(a.all_day, gtex_only=a.all_day)
+    sfx = ("_check" if a.check else "") + ("_allday" if a.all_day else "")
     design.to_csv(OUT / f"design{sfx}.csv", index=False)
     meta = data.load("fetal_cao", level="organ")[1]
     if meta is not None and "ga_days" in meta:
