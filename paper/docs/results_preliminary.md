@@ -1164,6 +1164,21 @@ Truth (iii): cosinor on recorded time of the fast deaths who died outside 08-18 
   ceiling of truth (iii), and the split-half distribution (`output/a123c/diag/`). Class-fix reruns are held after the
   anchor relearn until roadmap phases 1-2 are done.
 
+### A123c post hoc (2026-11-02, descriptive): the estimate is far more reproducible than the disjoint truth
+
+`scripts/posthoc_estimate_split.py`: the 111 window donors split into random halves balanced within tissue (40 splits),
+clocksync refitted on each half with the A123 cross-fitted waveform.
+- **Half map vs half map:** offset circular r median 0.873 [0.735, 0.942]. The truth (iii) halves agree at 0.544
+  [0.317, 0.714] (`diag/split_half.csv`, 200 splits).
+- **Each half (about 55 donors) vs truth (i):** 0.900 and 0.915; vs truth (iii): 0.637 and 0.669.
+- Spearman-Brown reliability at full n (linear formula applied to circular r, descriptive): estimate 0.93, truth (iii)
+  0.70; r(estimate, truth iii) corrected for both 0.681 / sqrt(0.93 x 0.70) = 0.84.
+- The full map refitted here gives 0.945 vs truth (i) and 0.681 vs truth (iii) (stored H123.5 0.679; the difference
+  comes from truth (iii) read back from its 4-decimal csv).
+- **Reading:** the working-hours map reproduces across disjoint donor halves (0.87 at half the donors), so the H123.5
+  shortfall comes from the night-only truth (reliability 0.54 at half size), not from the estimate.
+<!-- src: paper/exploratory/A123_working_hours/output/a123c/diag/{estimate_split_half.csv,split_half.csv} -->
+
 ## A17 note (2026-10-28): anchors relearned on the class-fixed tables (provisional until roadmap phase 2)
 
 `compute_coherence.py` then `compute_anchors.py` were rerun on the class-fixed tables, with the unchanged rule.
