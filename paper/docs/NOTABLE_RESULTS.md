@@ -75,7 +75,7 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
 - **A153: the corrected disease contrasts have no primaries.** No A17 disease cohort reaches MDE ≤ 0.2 on d* in an
   eligible family. The smallest is 0.232 (dcm_healthy heart fibroblast), and 0.214 for endothelial in the descriptive
   scope. The A17 islets beta effect does not survive (p* 0.189).
-  - *Why notable:* this is the main obstacle to the "pre-specified disease positive" Cell needs. Per-arm cohort sizes
+  - *Why notable:* this was the main obstacle to the former internal "pre-specified disease positive" rule for Cell (superseded 2026-11-03: Cell's criterion is a conceptual advance or provocative questions). Per-arm cohort sizes
     of current single-cell disease atlases are too small for a 0.2 coupling change.
   - *Follow-up:* within-person designs (6.6) and GTEx matched contrasts (A164); the PI may consider option (b) or larger cohorts.
   - *Source:* `A153_corrected_contrasts/output/readout_all5.csv`, `mde_table.csv`.

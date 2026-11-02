@@ -7,8 +7,10 @@
   compartments: coupling c, relative amplitude |z| and phase offset arg z. No sample is assigned a time; constant
   offsets cancel, so hospital-hours samples work. A model-free gate checks that shared covariance is clock-shaped;
   the host is anchored on compartments learned to carry it (stromal-vascular, neurons in CNS).
-- **Target journal:** Cell; Nature Methods as fallback. Cell needs a clear pre-specified
-  positive in disease or perturbation. The code gets a public API, tests and tutorials before submission either way.
+- **Target journal:** Cell; Nature Methods as fallback. Cell's criterion (user, 2026-11-03): results that provide
+  significant conceptual advances into, or raise provocative questions and hypotheses regarding, an interesting and
+  important biological question. There is no internal "pre-specified disease positive" requirement (superseded). The
+  code gets a public API, tests and tutorials before submission either way.
 
 ## Where things are
 | path | content |
