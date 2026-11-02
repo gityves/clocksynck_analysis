@@ -9,7 +9,8 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 ### Still with the PI (updated 2026-11-01)
 - **Q12** (below): brain time-of-death request. The PI reviews and sends the draft themselves; nothing is sent by the agent.
 - **A119:** lung T-cell procurement scout (outward-facing / procurement).
-- **Outcome analyses (C8):** not yet (PI, 2026-11-01): wait for C6 and the CPTAC scout.
+- **Outcome analyses (C8):** C6 (A182) and CPTAC (A186) are now scored; draft for approval in
+  `paper/exploratory/C8_internal_time_outcomes/DRAFT_C8.md` (2026-11-02; three decisions at its end). Nothing computed.
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
