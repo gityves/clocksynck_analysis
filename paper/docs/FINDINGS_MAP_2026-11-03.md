@@ -56,7 +56,8 @@ Status: strong = registered pass (clock-specific where tested); qualified = pass
 
 | finding | numbers | source | status |
 |---|---|---|---|
-| Psoriasis lesion delay, replicated in a fresh series | −1.45 h (Holm 0.0002); matched 5.5th, responsive 0.5th pct; vs eczema −1.09 h | A54, A183 | qualified (not clock-specific by the matched rule; NR1D1-dependent) |
+| Psoriasis lesion delay, replicated in a fresh series | discovery data (A54, post hoc robustness): −1.43 h, 0 of 600 pseudo sets reach it; fresh GSE154200 (A183): −1.45 h (Holm 0.0002), matched 5.5th pct (line 5th), responsive 0.5th | A54, robustness 2026-10-28, A183 H183.1 | qualified (specific in discovery, at the line in replication) |
+| Psoriasis-specific vs eczema | −1.09 h (p 0.037); matched 20th pct; without PER1 and NR1D1 +0.49 h; eczema offsets noisy | A183 H183.2 | weak (not clock-specific, NR1D1-carried) |
 | Tumour clocks follow their own patient's normal tissue | 0.365 vs null 0.122 (q95 0.157), 517 pairs; pseudo q95 0.261 | A138 H138.4 | strong |
 | Tumour fibroblasts pair with normal | 0.860 vs 0.504 (98 patients) | A151 | qualified (specificity uninterpretable) |
 | Proliferating tumours follow their normal tissue less | TCGA D +0.158, clock-specific; CPTAC D +0.113, not clock-specific | A175, A186 | qualified |
