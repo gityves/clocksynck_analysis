@@ -3007,3 +3007,19 @@ variant (addendum 1dfaa8e, before outcomes: the registered raw readout saturates
     tissues (4.4 h error). The aligned readout was chosen before outcomes but after seeing the readout's distribution.
 - Code `paper/exploratory/C8b_clock_prognosis_replication/` (`timeteller_theta.py`, about 6 min; `score_a194.py`).
 <!-- src: paper/exploratory/C8b_clock_prognosis_replication/output/{timeteller_training_check.csv,timeteller_theta_summary.csv,a194_power.csv,a194_tests.csv,a194_secondary.csv} -->
+
+## A195 single-cell NC vs cycling clock-plane variance, scored 2026-11-02: not estimable (no clock-shaped signal in malignant NC pseudobulks)
+
+- Data: A187 malignant pseudobulks, 8 studies. H195.1: 150 patients with ≥ 50 NC and ≥ 50 cycling cells (100,964 NC,
+  71,785 cycling cells). H195.2: 165 patients in 7 studies, 58 low vs 55 high cycling-fraction tertile.
+- **Signal check FAIL:** pooled gene coherence of the NC pseudobulks R 0.243 (170 patients), 42nd percentile of 200
+  expression-matched pseudo-clock sets (q95 0.567). The NC malignant pseudobulks carry no clock-shaped signal above
+  matched non-clock genes, so both tests are uninformative as registered.
+- **Power:** H195.1 MDE 0.158 (≤ 0.40); H195.2 MDE 0.630 and the ALL reference 0.586 (> 0.40): the decisive tumour-level
+  test would not have been estimable even with a signal.
+- Tests, companions and artefact checks were not run (stop rules).
+- **Reading:** the single-cell tumour atlases cannot say whether the proliferation clock-signal loss sits in dividing
+  cells. This agrees with A187 (gates pass in 2 of 8 studies) and A188 (not estimable). Ordering clock loss and
+  proliferation needs an intervention design (paired biopsies before and during an anti-proliferative treatment).
+- Code `paper/exploratory/C4_single_cell/A195/scripts/score_a195.py --power-only` (about 4 min).
+<!-- src: paper/exploratory/C4_single_cell/A195/output/{prep.csv,signal_check.csv,power.csv} -->
