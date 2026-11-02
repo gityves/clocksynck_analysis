@@ -3421,3 +3421,29 @@ pseudobulk thinned to the 10th-percentile NC depth of its study (H195.2); (d) pe
 **Limitation (registered):** NC = no S/G2M signature, i.e. G0 and G1 cells; G1 cells of cycling lineages are inside NC.
 **Stop rule:** one amendment.
 **Code:** `paper/exploratory/C4_single_cell/A195/`.
+
+## A196 (2026-11-02, same question as A195; A195 not estimable; A168 and A169 scored and seen (2-week aromatase inhibition: proliferation −0.9 SD, clock coherence unchanged, POETIC T −0.010, GSE20181 +0.191, GSE87411 0.529 → 0.598); written before any clock value of GSE93204 is read): does arresting proliferation restore tumour clock coherence? **L1 within-patient, primary H196.1 (one test); H196.2 post hoc**
+
+**Why:** if the proliferation coherence loss is a byproduct of ongoing division, stopping division should restore
+coherence within days; a stable tumour property (or clock loss that permits division) predicts no change. NeoPalAna
+(GSE93204) adds palbociclib to anastrozole between C1D1 and C1D15, so C1D1 → C1D15 is a CDK4/6 arrest on a constant
+endocrine background, the cleanest cell-cycle intervention in open data (scout: `scratchpad`, verified GEO counts).
+**Data:** GSE93204 (Agilent GPL6480 two-colour, log2 ratio to a universal reference, as GSE87411), parsed with the A168
+prep functions (probes averaged per symbol, genes missing in > 20 % dropped, A97 scores over the series).
+**H196.1 (primary):** T = coh(C1D15) − coh(C1D1) over patients with both samples, registered coherence (A166 `coh`, clock
+genes present); null: time labels swapped within patient (2,000); two-sided. Byproduct predicts T > 0.
+**Treatment check (first):** paired proliferation change C1D1 → C1D15 negative (Wilcoxon p < 0.05); otherwise
+uninformative. **Power:** MDE = 2.49 × null SD; MDE > 0.40 = not estimable, T is then descriptive only.
+**Specificity:** 200 matched pseudo-clock sets (A168 `pseudo_sets`), percentile of T.
+**Descriptive:** BL → C1D1 (anastrozole), BL → C1D15, C1D15 → surgery; residualised on proliferation and purity.
+**H196.2 (POST HOC: A168 estimates seen): reversal calibration.** For POETIC AI B → S (157), GSE20181 A → B, GSE87411
+base → w2 and GSE93204 C1D1 → C1D15: predicted rise P = b × (−Δprolif), b = [coh(low) − coh(high proliferation tertile)]
+/ [mean prolif(high) − mean prolif(low)] in the series' pre-treatment samples, Δprolif = mean paired change. Observed T
+(A168 code) minus P, z with var(T) from the swap null and var(P) from the tertile-label null of the numerator (×
+Δprolif / denominator); pooled by inverse variance. Uninformative if the pooled pre-treatment numerator is not above its
+null (one-sided p ≥ 0.05). Reading: pooled T − P < 0 (p < 0.05) = proliferation arrest does not restore coherence at the
+size the cross-sectional loss implies (not an acute byproduct of division); T ≈ P = compatible with the byproduct.
+**Caveats (registered):** aromatase inhibition also blocks ER signalling; POETIC on-treatment samples are surgical
+(the untreated arm falls, A168); two-colour ratios; no biopsy clock time.
+**Stop rule:** one amendment.
+**Code:** `paper/exploratory/A196_proliferation_arrest/`.
