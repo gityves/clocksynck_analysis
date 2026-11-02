@@ -181,6 +181,11 @@ follow-up I would suggest, and the source file. Newest first. Numbers come from 
   - *Follow-up:* a better-powered perturbation (timed series: GSE48113 forced desynchrony, blood, 22 subjects x 7
     times) or GTEx steroid users (roadmap 6.2-6.3).
   - *Source:* `A124_night_shift/output/tests.csv`.
+- **A123c post hoc (2026-11-02): the working-hours offset map reproduces across disjoint donor halves (median circular r
+  0.873 [0.735, 0.942], 40 splits), while truth (iii) halves agree at 0.544.** Each half map vs truth (i) 0.900 / 0.915;
+  corrected for both reliabilities, r(estimate, truth iii) about 0.84. The H123.5 shortfall comes from the night-only
+  truth, not from the estimate (the H123.5 verdict as registered stands).
+  - *Source:* `A123_working_hours/output/a123c/diag/estimate_split_half.csv`.
 - **A123c diagnostic: truth (iii) is too noisy to test offsets at 0.7 (explains the fail).** Split-half truth
   reliability 0.54, so the ceiling for a perfect estimate is about 0.83. The estimate disattenuated is 0.73-0.81. Whole
   Blood alone (truth (iii) R2 0.028) moves r from 0.679 to 0.754. The 0.807 split was a 95th-percentile draw.
