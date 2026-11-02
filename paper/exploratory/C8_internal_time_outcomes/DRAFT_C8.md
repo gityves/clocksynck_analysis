@@ -62,9 +62,14 @@ Secondary and exploratory (not counted):
   its total clock-gene variance) next to `decompose.components`, with a test; per-sample states exist in `paired.states`.
 - Cox models: lifelines or statsmodels (check which is in the sccc env).
 
-## Decisions for the PI
+## Decisions
 
-1. Approve the primary family (H-C8.1 METABRIC, H-C8.2 GSE14520) or reduce it to H-C8.1.
-2. Whether to report internal time at surgery at all, given the scheduling confound.
-3. The A146 replication stays blocked without a second timed cohort: send the biobank request about recording excision
-   times (draft on request)?
+1. **Family (user delegated the choice, 2026-11-02): both, H-C8.1 and H-C8.2, Holm over two.** H-C8.2 is conditional on
+   its pair gate; if the gate fails, the family is H-C8.1 alone (stated before scoring, so no multiplicity is gained).
+2. **Internal time at surgery (user, 2026-11-02): kept as exploratory.** Hospital hours remove night and emergency
+   surgery, but within 08-18 h the hour still tracks case order (first cases are often scheduled differently), fasting
+   and anaesthesia duration and team, and in a 10 h window a patient's internal time is mostly the hour of surgery. Its
+   individual part (internal minus recorded time), the part free of scheduling, needs recorded times. So the readout
+   stays a proxy of surgery hour plus individual phase, with no causal reading.
+3. **Biobank request: avoid if possible (user).** First a targeted search for public cohorts with recorded biopsy or
+   resection clock times (T5/H2 scout, 2026-11-02); the request is drafted only if that search finds nothing usable.
