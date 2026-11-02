@@ -3251,3 +3251,39 @@ the matched pseudo 95th percentile; leave-one-gene-out range of the gate's p_pai
   stromal and endothelial pseudobulks are 30-70 times shallower than the parenchyma).
 **Stop rule:** one amendment; no further adrenal sub-question on these fetuses without a second fetal dataset.
 **Code:** `paper/exploratory/A190_fetal_adrenal/`.
+
+## A191 C8 (2026-11-02, started on the user's instruction; draft `exploratory/C8_internal_time_outcomes/DRAFT_C8.md`, family chosen by the user's delegation; PI review pending): do a tumour's clock signal and its phase offset from its own normal tissue relate to recurrence? **L1 and L3, primary (Holm over two), exploratory in spirit**
+
+**Seen before writing:** outcome event counts and covariate distributions (metadata only); A166 group-level METABRIC
+coherence (ER, proliferation) and A176 group-level in-plane log-odds (swamped clock); A127 SCAN-B off-plane score vs
+survival (HR 0.94 per SD, p 0.35); A177 GSE14520 tumour-normal pair gate (passes: p_pairing 0.0005, p_acrophase 0.010)
+and its G2M tertiles; A171 GSE14520 tumour vs normal coherence. No per-tumour clock readout has been related to any
+outcome in either cohort.
+**H191.1 (L1, METABRIC, ER+ by IHC with hormone therapy, relapse-free survival):** per-tumour in-plane log-odds
+s_i = log(y_i' P y_i) - log(y_i' (I - P) y_i), y_i = the tumour's 14 clock genes (log2 x ln 2, gene-centred within
+METABRIC cohort), P = projector on the GTEx waveform plane (`clocksync.decompose.sample_log_odds`); the per-sample
+counterpart of the A176 readout. Cox model (statsmodels PHReg, strata = METABRIC cohort), s standardised, adjusted for age,
+tumour size, grade (categorical), log(1 + positive nodes), PAM50 (claudin-low kept as its own level) and the G2M score
+(A166 `prolif`); complete cases. Statistic: Wald z of s; two-sided.
+**H191.2 (L3, GSE14520 HCC, recurrence):** per-patient folded phase distance of the tumour from its own non-tumour
+liver, relative to the cohort offset: states from `paired.cohort_states` (arrays, CIART absent so 13 genes), centred
+across patients, d_i = |arg(z_T,i conj(z_N,i) conj(c))| in hours (0-12), c = sum z_T conj(z_N). Cox model, d standardised,
+adjusted for age, sex, BCLC (0/A vs B/C), cirrhosis, AFP (high), size (large), multinodular; complete cases. Wald z, two-sided.
+**Power step (before any outcome is read, written to `output/power.csv`):** MDE of the HR per SD at 80 % power, two-sided
+alpha 0.05, from the number of events and the variance of the readout not explained by the covariates (Schoenfeld with
+1 - R^2 of the readout on the covariates). MDE above HR 1.5 per SD: not estimable, not run.
+**Specificity (both):** the same Cox z with the readout computed from 200 expression-matched pseudo-clock sets (A166/A127
+construction: each clock gene replaced by one of its 20 nearest non-clock, non-G2M, non-purity genes in mean and SD,
+waveform amplitudes and phases carried over). "Clock-specific" only if |z_clock| exceeds the 95th percentile of |z_pseudo|.
+**Pass:** Holm-adjusted p < 0.05 over H191.1 and H191.2 and clock-specific.
+**Secondary (not counted):** H191.1 for overall survival and in all METABRIC tumours (ER as an added covariate); H191.2 for
+overall survival; the unadjusted HRs; GSE14520 internal time at surgery (non-tumour liver phase relative to the cohort,
+cos and sin terms, likelihood-ratio test, 2 df), read as surgery hour plus individual phase, no causal reading.
+**Reading:**
+- A clock-specific association independent of proliferation and stage would make the tumour clock a prognostic variable
+  (L1) or tumour-host desynchrony a prognostic variable (L3).
+- The prediction for H191.1 is no independent association (A176: the loss is swamping by proliferation). A fail is
+  reported with its MDE, never as "no effect" without it.
+- A pass that is not clock-specific means a matched gene set carries the same prognostic information.
+**Stop rule:** one amendment. NHS, SCAN-B, POETIC and the A146 replication are not part of A191.
+**Code:** `paper/exploratory/C8_internal_time_outcomes/`.
