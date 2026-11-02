@@ -3287,3 +3287,84 @@ cos and sin terms, likelihood-ratio test, 2 df), read as surgery hour plus indiv
 - A pass that is not clock-specific means a matched gene set carries the same prognostic information.
 **Stop rule:** one amendment. NHS, SCAN-B, POETIC and the A146 replication are not part of A191.
 **Code:** `paper/exploratory/C8_internal_time_outcomes/`.
+
+## A192 (2026-11-02, on the user's instruction "replication/explanation" of published clock-survival claims; literature in `literature_positioning.md` section 10): is the published prognostic value of clock genes in breast cancer (Cadenas et al., Cell Cycle 2014) carried by proliferation? **Fresh cohorts, primary (Holm over two)**
+
+**Seen before writing:** event counts only (Mainz GSE11121 200 tumours, 46 distant metastases; Rotterdam GSE2034 286, 107;
+Transbig GSE7390 198, 62; all node-negative, no systemic therapy, U133A); Cadenas' published per-gene HRs and their
+correlations with a proliferation metagene (CRY2 -0.612, PER2 -0.440, PER3 -0.409, TIMELESS +0.674). No expression value of
+these cohorts has been looked at. Data: `paper/common/datasets/breast_prognosis_geo/build.py` (log2, one probe per gene;
+CIART not on U133A, so 13 of the 14 clock genes).
+**Definitions.** Endpoint: distant-metastasis-free survival (months). Within-cohort z-scores of log2 expression. G2M:
+mean within-cohort z of the hallmark G2M genes present (A127 definition). ESR1 and ERBB2 expression stand in for ER and HER2
+(recorded ER is missing in Mainz). Cox (statsmodels PHReg, Efron ties), strata = cohort, readouts standardised.
+**H192.1 (reproduction, a pipeline check, not counted):** univariate HR of each gene Cadenas reported (protective: CLOCK,
+PER1, PER2, PER3, CRY2, NPAS2, RORC; adverse: TIMELESS). Reproduced if same direction with BH q < 0.05 over the 8.
+**H192.2 (primary, mechanism):** clock score S = mean z of the 7 protective genes.
+(a) Specificity against proliferation: the unadjusted Cox z of S against 1,000 proliferation-matched pseudo-scores, each
+gene replaced by one of its 20 nearest pool genes (non-clock, non-G2M, non-purity) in standardised (mean, SD, correlation
+with G2M). Clock-specific if z_S lies outside the 2.5-97.5 percentiles of the pseudo z.
+(b) Adjusted: Wald test of S adjusted for G2M, ESR1 and ERBB2.
+Reading: "carried by proliferation" (prediction) if (a) is not clock-specific and (b) p >= 0.05; "clock-specific
+prognosis" if (a) is clock-specific and (b) p < 0.05 in the published direction; otherwise "mixed", reported as such.
+**H192.3 (primary, fresh test of A191):** per-tumour in-plane log-odds (`decompose.sample_log_odds`, 13 genes, GTEx waveform
+restricted to them, gene-centred within cohort), adjusted for G2M, ESR1, ERBB2; specificity against 200 expression-matched
+pseudo-clock sets as in A191.
+**Power step first** (Schoenfeld with 1 - R^2 on the covariates, written before outcomes are read); MDE above HR 1.5 per SD:
+not estimable, not run. **Holm** over the p-values of H192.2(b) and H192.3.
+**Secondary (not counted):** Cadenas' multivariate model (Mainz and Transbig: grade, size, ESR1, ERBB2) for PER3, RORC and
+TIMELESS with and without G2M; MKI67 alone and AURKA alone as proliferation terms; each gene's correlation with G2M against
+Cadenas' values; the share of log HR of S absorbed by G2M (1,000 bootstrap resamples); per-cohort HRs; ER+ only;
+random-effects pooling of H192.3 with A191 H191.1 and an equivalence test (TOST, margin HR 1.15 per SD).
+**Stop rule:** one amendment; no other proliferation definition is tried for the primary.
+**Code:** `paper/exploratory/C8b_clock_prognosis_replication/`.
+
+## A193 (2026-11-02, same instruction): does high CYCLOPS magnitude predict worse survival in luminal A breast cancer (Li, Hammarlund, Clarke et al., PNAS 2024)? **Reproduction in TCGA, replication in METABRIC and SCAN-B, primary (Holm over two)**
+
+**Seen before writing:** event counts (TCGA PanCanAtlas luminal A 499 patients, 57 deaths, 31 within 5 years; METABRIC PAM50
+LumA 700, 378 deaths, 231 relapses; SCAN-B LumA 1,642, 115 deaths); the authors' public code (GitHub ranafi/tumor-circadian-
+clock-strength-..., mortality script and training script, read only). METABRIC and SCAN-B outcomes have been related to other
+clock readouts (A127 SCAN-B off-plane, A191 METABRIC ER+ in-plane, both null); CYCLOPS magnitude has never been computed in
+any of these cohorts.
+**Readout.** CYCLOPS 2.0 (`common.benchmark.cyclops`, commit 56dbacb, template hyperparameters, 80 models), seeds = the
+CYCLOPS human seed list (`cyclops_seed_genes.txt`; the authors' Zhang/Meng list is not public), magnitude = `Magnitude` of
+`fit_output.csv`; three fits per cohort (sample-order seeds 0-2), readout = mean of the within-fit z-scored magnitudes.
+TCGA: luminal A tumours fitted together with TCGA adjacent normal breast, tumour status as the discrete covariate (the
+paper's design; the authors' normal-only eigenspace and GTEx/Manchester training samples are not reproduced). METABRIC and
+SCAN-B: luminal A tumours only (no normal tissue), batch covariate = METABRIC cohort or SCAN-B platform.
+**Reproduction (TCGA, not counted):** the authors' analysis: "died within 5 years" (death at <= 5 y = 1, every other patient
+0, as in their script), top tertile vs the rest, logistic regression with age and metastasis at diagnosis, and with MKI67
+added; then a Cox model for OS (top tertile, and per SD), adjusted for age, stage and G2M.
+**H193.1 (primary):** METABRIC + SCAN-B luminal A, overall survival, top magnitude tertile (within cohort) vs the rest, Cox
+with strata = cohort, adjusted for age and G2M (their age + MKI67 model; metastasis at diagnosis is not recorded).
+**H193.2 (primary):** the same, magnitude per SD, adjusted for age, tumour size, grade, log(1 + positive nodes) (METABRIC) or
+node status (SCAN-B), and G2M.
+Two-sided; the published direction is HR > 1. **Replicated** if Holm-adjusted p < 0.05 with HR > 1. Power step first (MDE
+of the tertile HR and of the HR per SD); MDE above 1.5 (per SD) or 2.0 (tertile): not estimable.
+**Secondary (not counted):** METABRIC relapse-free survival; disease-specific survival where recorded; magnitude vs G2M,
+the purity score and the A191 in-plane log-odds (Spearman); the same with MKI67 instead of G2M; seed concordance of the three
+fits; their 5-year logistic endpoint in METABRIC and SCAN-B.
+**Stop rule:** one amendment. If CYCLOPS fails to fit a cohort (fewer than 2 eigengenes, or no fit), that cohort is dropped
+and reported.
+**Code:** `paper/exploratory/C8b_clock_prognosis_replication/`.
+
+## A194 (2026-11-02, same instruction): is TimeTeller's clock-dysfunction score Theta an independent prognostic factor in breast cancer (Vlachou et al., bioRxiv 2019), and does it survive a proliferation term? **Primary (Holm over two)**
+
+**Seen before writing:** event counts (SCAN-B all tumours 3,073, 289 deaths; TCGA BRCA PanCanAtlas, OS events to be counted
+in the power step); the TimeTeller preprint (REMAGUS: favourable good clock function in grade 1-2, HR 0.24, no proliferation
+term; REMAGUS survival data are not public, GSE26639 has none). Theta has never been computed in these cohorts.
+**Readout.** TimeTeller (`common.benchmark.timeteller`, the method-comparison install), genes = the published human panel
+present (ARNTL, NPAS2, PER1, PER2, PER3, NR1D1, NR1D2, CIART, TEF, DBP), trained on GTEx "Breast - Mammary Tissue" fast
+deaths (Hardy 1-2) with recorded time of death (3 h bins, as in the benchmark), log2-normalised counts; applied to tumour
+log2 expression (SCAN-B log2 FPKM, TCGA recount3 log2 CPM). Theta per tumour (continuous). Deviation: the authors trained on
+oral mucosa arrays; their GCF/PCF thresholds are training-specific, so Theta is used as a continuous score and in tertiles.
+GTEx: only aggregates are released.
+**H194.1 (primary):** SCAN-B + TCGA BRCA (strata = cohort), overall survival, Theta per SD, adjusted for the clinical model
+of the preprint (age, size, nodes, grade where recorded, ER, HER2). Published direction: higher Theta (worse clock), worse
+outcome.
+**H194.2 (primary):** the same plus G2M.
+Two-sided, Holm over two; power step first (MDE above 1.5 per SD: not estimable).
+**Secondary (not counted):** grade 1-2 subgroup (the preprint's claim); Theta tertiles; METABRIC (arrays; cross-platform from
+an RNA-seq training set) with OS and RFS; Theta vs G2M and vs the A191 in-plane log-odds (Spearman); MKI67 instead of G2M.
+**Stop rule:** one amendment; no retraining on another reference.
+**Code:** `paper/exploratory/C8b_clock_prognosis_replication/`.
