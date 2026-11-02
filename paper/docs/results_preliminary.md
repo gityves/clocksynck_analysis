@@ -2913,3 +2913,25 @@ NR5A1) in a class relative to the parenchyma, per fetus; heart as comparison (MY
   (Endocrinology 2011, title unverified). No human fetal adrenal clock data were found. Mouse: peripheral clocks start
   oscillating late in gestation (Umemura et al. 2017 PNAS, PMID 28827343: none in E10 heart, clear at E18). Qiu 2024 used
   C57BL/6NJ; C57BL/6J is melatonin-deficient (Aanat), the NJ substrain unverified.
+
+## A191 C8, scored 2026-11-02: neither the tumour clock signal nor the tumour-liver phase distance relates to recurrence
+
+Started on the user's instruction (PI review pending). Power before outcomes: both estimable.
+- **H191.1 FAIL (METABRIC, ER+ with hormone therapy, RFS; 1,020 tumours, 405 events; MDE HR 1.15 per SD):** per-tumour
+  in-plane log-odds HR 0.977 per SD [0.881, 1.083], p 0.657, Holm 1.0; |z| at the 29th percentile of 200 matched
+  pseudo-clock sets (q95 |z| 2.08). Unadjusted HR 0.923 [0.838, 1.017] (p 0.105).
+- **H191.2 FAIL (GSE14520 HCC, recurrence; 202 patients, 112 events; MDE HR 1.31 per SD):** folded tumour-to-own-liver
+  phase distance HR 0.956 per SD [0.790, 1.157], p 0.643, Holm 1.0; 43rd pseudo percentile (q95 |z| 1.89). Unadjusted
+  HR 0.969 [0.804, 1.167].
+- **Secondary:** METABRIC ER+ hormone therapy OS HR 0.976 [0.895, 1.063] (596 deaths); all METABRIC RFS with ER as a
+  covariate 0.995 [0.922, 1.075] (1,793, 730 events); GSE14520 OS 0.953 [0.759, 1.197] (77 deaths). Internal time at
+  surgery (liver phase, cos/sin added to the covariate model): recurrence LR 3.63, p 0.163; OS LR 0.33, p 0.847.
+- **Reading:**
+  - At these MDEs, neither the tumour's clock signal (L1) nor its desynchrony from its own liver (L3) carries prognostic
+    information beyond stage and proliferation; the METABRIC interval excludes HRs above 1.08 or below 0.88 per SD.
+  - This matches the A127 SCAN-B null and the A176 reading: the clock-signal loss travels with proliferation and adds
+    nothing to it for outcome. Internal time at surgery shows no association (p 0.16, 0.85).
+  - Deviation (code, not registration): `sample_log_odds` also centres each sample over genes, as the gate's plane is
+    defined on the gene-centred design.
+- Code `paper/exploratory/C8_internal_time_outcomes/` (`score_a191.py`, 66 s).
+<!-- src: paper/exploratory/C8_internal_time_outcomes/output/{power.csv,tests.csv,secondary.csv} -->
