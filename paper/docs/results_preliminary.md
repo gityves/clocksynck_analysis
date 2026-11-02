@@ -3023,3 +3023,26 @@ variant (addendum 1dfaa8e, before outcomes: the registered raw readout saturates
   proliferation needs an intervention design (paired biopsies before and during an anti-proliferative treatment).
 - Code `paper/exploratory/C4_single_cell/A195/scripts/score_a195.py --power-only` (about 4 min).
 <!-- src: paper/exploratory/C4_single_cell/A195/output/{prep.csv,signal_check.csv,power.csv} -->
+
+## A196 proliferation arrest, scored 2026-11-02: coherence does not recover when proliferation is stopped (H196.1 not estimable; post hoc calibration uninformative)
+
+- **Treatment check (NeoPalAna, GSE93204, C1D1 → C1D15, palbociclib added to anastrozole, 23 pairs):** proliferation
+  −0.54 SD (Wilcoxon p 0.005). The arrest acted.
+- **H196.1 not estimable** (MDE 0.478 > 0.40). Descriptive: T −0.139 (p 0.48), 21.5th percentile of the matched pseudo
+  sets; residualised on proliferation and purity −0.098. Coherence did not rise.
+- Descriptive NeoPalAna: BL → C1D1 (anastrozole, proliferation −1.04 SD) +0.316 (p 0.037, 22 pairs); BL → C1D15
+  (−1.59 SD) −0.050 (p 0.79); C1D15 → surgery −0.243 (15 pairs). Coherence per time point: 0.312, 0.676, 0.550, 0.415.
+- **H196.2 (post hoc) uninformative:** within these ER+ cohorts the pre-treatment samples show no proliferation–coherence
+  relation to reverse (pooled low − high tertile 0.026, one-sided p 0.41; GSE87411 alone 0.484, p 0.018; the other three
+  0.127, −0.417, −0.395). Per series T − P: POETIC −0.063, GSE20181 +0.408, GSE87411 −0.122, GSE93204 +0.010; pooled
+  −0.019 (z −0.23).
+- **Pooled observed change (descriptive, 4 series, 319 pairs, proliferation down 0.54-0.92 SD in each):** +0.019
+  (SD 0.062), so about [−0.10, +0.14].
+- **Reading:** stopping proliferation for 2 weeks (aromatase inhibition) or adding a CDK4/6 arrest does not measurably
+  restore clock coherence. A rise of the size of the SCAN-B proliferation contrast (about 0.3) is excluded, but a rise
+  scaled to the 0.5-0.9 SD drops achieved (about 0.1-0.15 if the loss were fully and acutely reversible) is not. Within
+  ER+ tumours the cross-sectional proliferation–coherence relation itself is not present in these cohorts, which limits
+  what reversal can show. Nothing here supports the loss being an acute, reversible byproduct of ongoing division;
+  it does not establish the opposite direction either.
+- Code `paper/exploratory/A196_proliferation_arrest/` (about 40 s).
+<!-- src: paper/exploratory/A196_proliferation_arrest/output/{power,tests,descriptive,calibration_posthoc}.csv -->
