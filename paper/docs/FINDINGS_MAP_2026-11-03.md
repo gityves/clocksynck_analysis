@@ -20,7 +20,7 @@ Status: strong = registered pass (clock-specific where tested); qualified = pass
 | Regenerating mouse colon, blind | epithelial shift −8.95 h untimed vs −9.03 h timed | A21 R21.4 (archive) | qualified (anchor rule V17.2 failed) |
 | Genetic positive control: hepatocyte Bmal1 KO decouples the liver, specifically | d* −0.287 [−0.411, −0.118]; WAT −0.009, lung +0.019 | A111 / A129 H111.3 | strong |
 | Feeding shift: untimed offset change tracks the timed change | Fisher-Lee 0.988 (4 tissues, exact p 0.042) | A111 H111.1 Xin | qualified (minimum attainable p) |
-| Mouse embryo: early clock structure lets clock time be inferred | **source to identify** (not found in RP; A108 / A121 cover the late window) | ? | to locate |
+| Mouse embryo (Qiu 2024), latest window E15-E18.75: the untimed host phase follows the collection clock time | R 0.52 (16 embryos, 100 cell types), p 0.016; error 2.02 h; matched pseudo-clock sets R 0.191 / 0.334 / 0.194; body-wide, no single lineage carries it | A108 H108.1 (archive; reproduced in the archive figure code) | qualified (clock-shape gate borderline, p_acrophase 0.08; n 16; onset within the window not shown, A121) |
 
 ## 2. Organisation in health: a shared internal time, with the brain (and partly the digestive tract) departing
 
@@ -32,7 +32,7 @@ Status: strong = registered pass (clock-specific where tested); qualified = pass
 | Coupling is clock-specific across atlases | mean c 0.393 vs pseudo-clock mean 0.242, q95 0.313 (53 compartments) | A150 H150.1 | strong, but the pseudo baseline is large (Δc readout needed) |
 | Stronger clocks are more coupled, not shared noise | cross-half rho 0.690 | A144 H144.1 (A104 post hoc direction) | strong |
 | Fetal adrenal carries a coherent, clock-specific clock at 13-17 weeks; shared across its classes | R 0.734, Holm 0.0495; within-adrenal gate p_acrophase 0.0018 | A189, A190 | strong / qualified (A190 narrow, depth confound) |
-| Mouse embryo: shared clock late in gestation | H108.1 R 0.52, p 0.016; onset not shown (A121) | A108, A121 | weak |
+| Mouse embryo: a shared time-of-day state late in gestation, earlier windows not clock-shaped | p_acrophase 0.63 / 0.55 / 0.33 before E15; H108.1 R 0.52 in E15-E18.75 | A108, A121 | qualified |
 | Ageing: prefrontal amplitude loss above 60; no peripheral age effect | −0.532 log2 (p 0.022); A19 γ −0.029/decade, MDE 0.20 | A3, A94, A19 | qualified (age not equivalent, A180) |
 
 ## 3. When daily cues are lost, organs lose wall time but keep their relations
@@ -84,7 +84,8 @@ Status: strong = registered pass (clock-specific where tested); qualified = pass
    tumours).
 4. **Tumours stay entrained to their host, but proliferating adenocarcinomas lose clock coherence stably and without
    prognostic cost** (section 5). Provocative question: what does clock loss do in tumours?
-5. **The clock is organised before birth** (fetal adrenal; embryo pending its source).
+5. **The clock is organised before birth:** the late mouse embryo already tracks the time of day (A108), and the human
+   fetal adrenal carries a coherent clock at 13-17 weeks (A189).
 
 Main reviewer risk: the pseudo-clock baseline of coupling (A150: 0.242 vs 0.393), so main panels use the Δc readout or
 show the matched null.
