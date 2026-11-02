@@ -86,7 +86,7 @@ def main():
         sec.append(dict(test=f"{k} clinical", **run([p], {k: cov[k]})[2]))
         sec.append(dict(test=f"{k} clinical + G2M", **run([p], {k: cov[k]}, ("g2m",))[2]))
     g12 = [p[p.grade12 == 1] for p in prim if "grade12" in p and p.grade12.notna().any()]
-    sec.append(dict(test="SCAN-B grade 1-2, clinical (preprint subgroup)", **run(g12, {"SCAN-B": cov["SCAN-B"]})[2]))
+    sec.append(dict(test="SCAN-B grade 1-2, clinical (preprint subgroup)", **run(g12, {"SCAN-B": [v for v in cov["SCAN-B"] if v != "grade3"]})[2]))
     for p in prim:  # tertiles: top vs bottom third (worse vs better clock)
         k = p.cohort.iloc[0]
         q = pd.qcut(p.theta.rank(method="first"), 3, labels=False)

@@ -2973,3 +2973,31 @@ genes). Power before outcomes: MDE HR 1.25 (H192.2b) and 1.21 (H192.3) per SD.
     SD are excluded.
 - Code `paper/exploratory/C8b_clock_prognosis_replication/` (`score_a192.py`, about 5 min).
 <!-- src: paper/exploratory/C8b_clock_prognosis_replication/output/{a192_power.csv,a192_reproduction.csv,a192_tests.csv,a192_prolif_match.csv,a192_secondary.csv} -->
+
+## A194 C8b, scored 2026-11-02: TimeTeller's clock-dysfunction score is not prognostic in breast cancer
+
+Readout: Theta from TimeTeller trained on GTEx breast (128 fast deaths, out-of-fold median time error 4.38 h), "aligned"
+variant (addendum 1dfaa8e, before outcomes: the registered raw readout saturates at Theta 1). Power: MDE HR 1.15 per SD
+(3,844 patients, 400 deaths).
+- **H194.1 FAIL (SCAN-B + TCGA, OS, clinical model):** HR 0.966 [0.879, 1.062] per SD, p 0.475, Holm 0.732.
+- **H194.2 FAIL (+ G2M):** HR 0.957 [0.870, 1.053], p 0.366, Holm 0.732.
+- **Secondary:**
+  - Unadjusted: 0.998 [0.908, 1.097].
+  - Per cohort, clinical model: SCAN-B 0.974 (268 deaths), TCGA 0.949 (132).
+  - Top vs bottom tertile: 0.956 [0.855, 1.069].
+  - METABRIC (arrays, cross-platform): OS 0.962 (p 0.23), RFS 1.030 (p 0.44).
+  - Grade 1-2, the preprint's subgroup (SCAN-B, 1,874, 139 deaths): HR 0.833 [0.706, 0.983], p 0.031, nominal. This is
+    opposite to the published direction (there, a worse clock, i.e. higher Theta, was unfavourable).
+  - Theta is nearly independent of proliferation (Spearman with G2M 0.087, 0.059, 0.021). It tracks the clocksync clock
+    signal as expected (Spearman with the in-plane log-odds -0.37 in SCAN-B, -0.35 in METABRIC: more clock-plane signal,
+    lower dysfunction).
+- **Reading:**
+  - In about 4,000 tumours, a TimeTeller-type dysfunction score carries no prognostic information with or without the
+    clinical model. The interval excludes HRs above 1.06 per SD.
+  - The REMAGUS result (224 tumours, grade 1-2 subgroup) does not replicate in direction.
+  - Unlike the gene-level scores of A192, Theta is not a proliferation proxy, which is consistent with it not being
+    prognostic.
+  - Caveats: the training reference is GTEx breast, not the authors' oral mucosa set. The model is weaker than in other
+    tissues (4.4 h error). The aligned readout was chosen before outcomes but after seeing the readout's distribution.
+- Code `paper/exploratory/C8b_clock_prognosis_replication/` (`timeteller_theta.py`, about 6 min; `score_a194.py`).
+<!-- src: paper/exploratory/C8b_clock_prognosis_replication/output/{timeteller_training_check.csv,timeteller_theta_summary.csv,a194_power.csv,a194_tests.csv,a194_secondary.csv} -->
