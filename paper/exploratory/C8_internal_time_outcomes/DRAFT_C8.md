@@ -73,3 +73,17 @@ Secondary and exploratory (not counted):
    stays a proxy of surgery hour plus individual phase, with no causal reading.
 3. **Biobank request: avoid if possible (user).** First a targeted search for public cohorts with recorded biopsy or
    resection clock times (T5/H2 scout, 2026-11-02); the request is drafted only if that search finds nothing usable.
+
+## Timed-cohort scout (2026-11-02, Sonnet web and GEO metadata search; nothing downloaded)
+
+Public clinical material with per-patient collection clock time is nearly absent beyond GSE233242.
+- GSE111351 (Montaigne et al., Lancet 2018): right atrial appendage at aortic valve replacement, 15 samples, one
+  compartment, time only "morning / afternoon"; patient labels inconsistent. Too small and binary for C8 or T5.
+- Johanns et al. (bioRxiv 10.1101/2023.04.05.535334; JHEP Reports 2023): 290 bariatric liver biopsies with the exact
+  biopsy time (08-16 h); one compartment, histology outcomes, data "upon reasonable request" (no accession found;
+  contacting the authors is outward-facing: PI).
+- Rejected: GSE81089 (NSCLC tumour + normal + survival, surgery date without hour), GSE112660 (skin, volunteers or
+  untimed), cardiac POAF cohorts (no time field in the summaries; sample fields unchecked), TCGA and glioma (no times).
+- Not done: a full screen of GEO sample characteristics for fields such as "time of surgery" (E-utilities).
+Reading: the A146 replication cannot be done from public data found so far. Options: the Johanns liver data (single
+compartment, so internal time from one tissue only), a systematic GEO characteristics screen, or the biobank request.
