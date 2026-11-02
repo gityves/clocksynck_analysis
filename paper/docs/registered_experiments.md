@@ -3187,3 +3187,38 @@ The per-cohort `power.mde` values are reported alongside.
 counterpart of A175. A powered fail bounds the drop below the MDE. Descriptive-only output is a feasibility statement,
 not "no change".
 **Code:** `paper/exploratory/A188_c5_within_tumour/`.
+
+## A189 (2026-11-02, written after the D1b feasibility calibrations on adult material (`exploratory/D1b_fetal_feasibility/FEASIBILITY.md`, commits fef03e4, 3226f03) and before any fetal coherence value, kidney within-organ gate or genome-wide fetal pseudobulk is computed; seen: the archive A107b gates on the same fetuses (whole organs, stromal cells per organ, within lung p_pairing 0.028 / p_acrophase 0.003, within heart 0.093 / 0.023), the A181 depth control, and fetal clock-gene counts next to adult expectations (`markers_expected.csv`)): which mid-gestation fetal organs and cell types carry clock-shaped gene organisation? Readout levels **L1** (coherence within one compartment) and **L2** (gate across cell classes within one organ); **primary** for the blind tests, **secondary** for the A107b re-reads
+
+**Why:** human tissue clocks cannot be timed in utero, and imaging is not possible in humans. Snapshot atlases are the
+only human route to where and when a peripheral clock is present. A181 showed the cross-organ gate cannot pass at the Cao
+design (few fetuses share organs; adult pass rate 0.20). Readouts within one compartment or one organ avoid that limit.
+Inclusion was fixed on adult calibrations at the fetal design (sensitivity = pass rate over 200 adult subsamples cut to
+the fetal n and depth), threshold ≥ 0.5 (user, 2026-11-02: keep underpowered compartments; a fail is uninformative anyway).
+**Data:** Cao 2020 (GSE156793), 28 fetuses, 72-129 days. Organ pseudobulks with ≥ 1,000 cells, class pseudobulks with ≥ 200
+cells (`fetal_cao`, classes as `build.CLASSMAP`). Genome-wide pseudobulks of the same rows are rebuilt from the GEO loom
+(`fetal_cao` builder with all genes; the 21 GB decompressed loom is temporary and deleted after the build).
+**H189.1 (L1, blind, primary; one-sided, Holm over 9):** coherence R (`decompose.components`, GTEx waveform) of one
+compartment across fetuses exceeds the per-gene donor permutation null (10,000 permutations; breaks gene covariance,
+keeps each gene's distribution). Compartments (calibration pass rate, thinned, `passrates.csv`): Liver 0.805, Lung 0.715,
+Adrenal 0.705, Heart 0.51 (whole organs, GTEx 08-18 h calibrators); Heart:stromal 0.935, Lung:stromal 0.815,
+Heart:endothelial 0.73, Lung:epithelial 0.62, Kidney:parenchyma 0.55 (classes, adult nucleus-atlas calibrators).
+**H189.2 (L2, blind, primary; one test):** within the fetal kidney (parenchyma, stromal; 9 fetuses; calibration 0.76),
+`Dataset.gate` (10,000 permutations) passes: p_pairing < 0.05 and p_acrophase < 0.05.
+**Specificity (both):** 200 expression-matched pseudo-clock sets (`paired.pseudo_waveforms`, kind "matched", from the
+compartment's genome-wide pseudobulk; for H189.2 the mean log expression over both classes), each carrying the GTEx
+amplitudes and phases. H189.1: "clock-specific" only if R exceeds the pseudo 95th percentile of R in that compartment.
+H189.2: "clock-specific" only if the clock p_pairing is below the pseudo 5th percentile of p_pairing (gate rerun with each
+pseudo waveform, 1,000 permutations). The responsive companion (kind "responsive") is reported for both, descriptive.
+**H189.3 (secondary, seen, not counted):** the A107b within-heart (cardiomyocyte, stromal, endothelial; 9 fetuses;
+calibration 0.94) and within-lung (epithelial, stromal, endothelial; 11 fetuses; no adult calibration) gates rescored on
+current code with the same specificity companion.
+**Descriptive:** leave-one-gene-out R; R per compartment with fetal ages listed (no age test: 5-11 fetuses); marker table
+(seen) with adult expectations.
+**Reading:**
+- A clock-specific pass places clock-shaped gene organisation in that fetal compartment at 13-18 post-conception weeks
+  (L1), or clock-shaped covariance shared across cell types of one fetal organ (L2: a coupled organ clock).
+- A fail is uninformative: a weaker or less coherent clock, or too few fetuses (sensitivity 0.51-0.94 even for adult clocks).
+- Compartments are not compared with each other and organs are not ranked by onset: their sensitivities differ.
+**Stop rule:** no further amendment of D1/A189; whatever the outcome, it is written up.
+**Code:** `paper/exploratory/A189_fetal_within/`.
