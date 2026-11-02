@@ -204,6 +204,50 @@ between compartments of the same person, or reports inter-organ clock coherence 
 disease readout. This is an absence in a limited search, not a proven gap; a PubMed search of "inter-organ" or
 "inter-tissue" circadian coherence and a bioRxiv alert for 2026 should be repeated before submission.
 
+## 10. Tumour clock state and survival (searched 2026-11-02, after A191 was scored)
+
+- Cadenas C, van de Sandt L, Edlund K, et al. Loss of circadian clock gene expression is associated with tumor
+  progression in breast cancer. *Cell Cycle* 2014;13(20):3282-3291. doi:10.4161/15384101.2014.954454. **Verified**
+  (Europe PMC full text). 766 node-negative, systemically untreated patients (Mainz, Rotterdam, Transbig), metastasis-free
+  survival. Univariate: higher CLOCK, PER1-3, CRY2, NPAS2, RORC protective (e.g. CRY2 HR 0.781, PER3 0.806), TIMELESS
+  adverse (1.406). Multivariate (age, size, grade, ER, HER2; n 480): only PER3 (0.658), RORC (0.421) and TIMELESS (1.607)
+  remain. Not adjusted for proliferation, although the genes correlate strongly with the proliferation metagene (CRY2
+  R -0.612, PER2 -0.440, PER3 -0.409, TIMELESS +0.674; TIMELESS is a replication gene). Single-gene, per-gene tests.
+- Li S-Y, Hammarlund JA, ..., Clarke RB et al. Tumor circadian clock strength influences metastatic potential and
+  predicts patient prognosis in luminal A breast cancer. *PNAS* 2024;121(7):e2311854121. doi:10.1073/pnas.2311854121.
+  PMC10873596. **Verified** (full text; middle authors not checked). CYCLOPS 2.0 magnitude in untimed TCGA luminal A
+  tumours; the high tertile has higher 5-year mortality (ANOVA p 0.047; logistic with age and metastasis at diagnosis
+  p < 0.05, about 1.5-fold risk; p < 0.01 with MKI67 added). Survival subset apparently n 70; no HR, no interval,
+  no grade, stage or PAM50 adjustment in a model; the death-or-new-event endpoint is not significant. Direction is the
+  opposite of "clock loss is bad": stronger rhythm, worse outcome (via EMT genes).
+- Vlachou D, et al. TimeTeller (bioRxiv 10.1101/622050, 2019; methods paper *PLoS Comput Biol* 2024;20(2):e1011779).
+  **Verified (preprint).** Single-sample clock dysfunction metric in pre-treatment biopsies of the REMAGUS neoadjuvant
+  trial (224 tumours): good clock function is favourable, multivariate HR 0.24 (p 0.021) in grade 1-2 tumours (n 96),
+  adjusted for ER, PR, HER2, triple-negative, grade, size, nodes, LVI. No proliferation (Ki67) term and no check of
+  the metric against proliferation; subgroup result. The survival part is not in the 2024 journal version as far as
+  the search shows.
+- Ye Y, et al. The genomic landscape and pharmacogenomic interactions of clock genes in cancer chronotherapy. *Cell
+  Syst* 2018. doi:10.1016/j.cels.2018.01.013. **Candidate** (abstract only): clock-gene expression alterations relate
+  to survival, stage and subtype across TCGA types; per-gene, no proliferation adjustment checked.
+- Chang C, Lai L-C (as indexed; authors not checked), *J Transl Med* 2019 (10.1186/s12967-019-1880-9). **Candidate.**
+  "ClockLoss" gene down-regulation associated with mortality in five of 21 cohorts, "independent of clinicopathological
+  features"; proliferation adjustment not seen.
+- Clock-gene risk-score papers (LASSO signatures in lung, liver, kidney and other cancers) are numerous; those seen
+  report enrichment of proliferation pathways in the high-risk group and do not adjust for it.
+- Background for the confound: Venet D, Dumont JE, Detours V. Most random gene expression signatures are
+  significantly associated with breast cancer outcome. *PLoS Comput Biol* 2011. **Candidate** (from memory; record not
+  opened): the association is carried by proliferation, which is why A191 adjusts for G2M and uses pseudo-clock sets.
+
+How we differ. Earlier survival associations use single clock genes or untimed orderings, without a proliferation
+term and without matched random gene sets, mostly in single cohorts or subgroups. Several of the genes (TIMELESS,
+CRY2, PER2/3) track the proliferation metagene closely, so "clock loss predicts poor outcome" is largely expected from
+the proliferation-outcome association (Venet 2011) together with A176 (proliferation swamps the clock). A191 tests the
+clock-plane share with age, size, grade, nodes, G2M and PAM50 in the model and against 200 pseudo-clock sets: HR 0.977
+[0.881, 1.083] per SD in 1,020 ER+ endocrine-treated METABRIC tumours, unadjusted 0.923 (p 0.105), consistent with an
+association that disappears once proliferation and stage are in (A127 SCAN-B off-plane HR 0.94 likewise). Li et al.
+2024 is the one result not explained this way (MKI67 in the model, opposite direction); it is luminal A only, n about
+70, and uses CYCLOPS magnitude, not a clock-specific share. A luminal A-only METABRIC check would be post hoc.
+
 ## Status table
 
 | # | reference | status | note |
@@ -232,3 +276,7 @@ disease readout. This is an absence in a limited search, not a proven gap; a Pub
 | 21 | tauFisher, Nat Commun 2024 | verified | |
 | 22 | scRitmo, bioRxiv 2026 | verified | |
 | 23 | Tempo, transcriptional-noise paper, DCPR, CYCLOPS 2.0, BayCT, TimeTeller | candidate | see section 9 |
+| 24 | Cadenas et al., Cell Cycle 2014 | verified | section 10; not proliferation-adjusted |
+| 25 | Li, Hammarlund, Clarke et al., PNAS 2024 | verified | luminal A, CYCLOPS magnitude, MKI67-adjusted |
+| 26 | TimeTeller survival (Vlachou et al., bioRxiv 2019) | verified (preprint) | REMAGUS, grade 1-2 subgroup |
+| 27 | Ye et al., Cell Syst 2018; Chang and Lai, J Transl Med 2019; Venet et al., PLoS Comput Biol 2011 | candidate | section 10 |
