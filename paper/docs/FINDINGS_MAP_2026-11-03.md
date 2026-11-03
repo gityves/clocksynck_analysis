@@ -40,7 +40,7 @@ Status: strong = registered pass (clock-specific where tested); qualified = pass
 | finding | numbers | source | status |
 |---|---|---|---|
 | Inter-organ coherence above clock-specific nulls | C 0.463 vs pseudo 0.154 (excess 0.310); vs responsive genes 0.214 | A109 H109.1, -R | strong |
-| Ventilated / slow deaths: wall time lost, offsets kept | Hardy 4 wall-time R 0.097 (null 0.101); offsets rho 0.784, residual 0.750 | A109c, H109.2 sec | strong (H109.2 primary fails on ventilated donors) |
+| Ventilated / slow deaths: wall time lost, offsets kept | Hardy 4 wall-time R 0.097 (null 0.101); offsets rho 0.784, residual 0.750 | A109c, H109.2 sec | strong; ventilated donors keep the order except brain-dead organ donors (A132b post hoc 0.678 vs 0.161; A136 H136.3 Holm 0.036) |
 | Brain death: preserved order, not through PER1/PER2 | H136.3 0.458, Holm 0.036 | A136 | qualified (GR gate fails) |
 | Not temperature; feeding not tested well | drop in C 0.017 (bound 0.05) | A110 H110.3, H110.5 | exclusion |
 
