@@ -3060,6 +3060,35 @@ and clinical covariates. Ratio = ratio of HRs per SD of s (treated vs untreated)
 - Code `paper/exploratory/C8b_clock_prognosis_replication/scripts/score_a198.py` (about 5 min).
 <!-- src: paper/exploratory/C8b_clock_prognosis_replication/output/{a198_power.csv,a198_tests.csv,a198_secondary.csv} -->
 
+## A199 C8b, scored 2026-11-03: CYCLOPS magnitude barely tracks clock strength in GTEx, with or without whole-day coverage
+
+GTEx fast deaths, 12 tissues (breast + 11 with most window donors), W = 08-18 h deaths (58-98 donors, median 84) vs Fs = as
+many random fast deaths from the whole day; 72 CYCLOPS fits, all ok (108 min, peak 11 GB). Power: MDE 0.120 (≤ 0.20).
+- **H199.1 FAIL:** median rho_Fs − rho_W 0.075, Wilcoxon p 0.259, Holm 0.259. Coverage does not detectably change what
+  magnitude tracks.
+- **H199.2 PASS (formally), negligible size:** median rho_Fs 0.055 (range −0.095 to 0.145), p 0.021, Holm 0.043. With
+  whole-day sampling, magnitude carries a trace of clock strength (about 0.3 % of rank variance). Median rho_W 0.020 (−0.193
+  to 0.241).
+- **Secondary:**
+  - R² of magnitude on the hour of death: W 0.016, Fs 0.017 (medians). Magnitude does not follow the hour.
+  - |Spearman| with the first non-clock principal component: 0.062 / 0.054; magnitude is not a dominant non-clock axis either.
+  - Seed concordance (minimum Spearman of three sample-order fits): W median 0.447 (0.138-0.918), Fs 0.425 (0.295-0.787).
+    At 58-98 samples per tissue, the magnitude ranking is not reproducible across fits (tumour cohorts in A193, 499-1,642
+    samples: ≥ 0.976).
+  - CYCLOPS phase vs recorded time, |circular r|: W 0.069, Fs 0.101 (descriptive; range restriction in W).
+- **Post hoc (truth reliability, `posthoc_truth_reliability.csv`):** timed clock strength computed from two disjoint halves
+  of the clock genes agrees at Spearman 0.612 (median; 0.416-0.720). The truth is reliable, so the low rho is not truth noise.
+- **Reading:**
+  - The user's hypothesis (magnitude fails specifically in working hours) is not supported: magnitude is a poor
+    clock-strength readout in single GTEx tissues whatever the coverage.
+  - Main caveat: 58-98 samples per fit is small for CYCLOPS, and the fits are unstable across seeds. The result says
+    nothing direct about magnitude in 500-1,600-sample tumour cohorts, where the fits are stable.
+  - Supportable wording: "In GTEx tissues with recorded time of death, CYCLOPS magnitude was nearly unrelated to a timed
+    measure of clock strength (median Spearman 0.06 with whole-day sampling, 0.02 in working hours)." Not "CYCLOPS cannot
+    be used in hospital hours".
+- Code `paper/exploratory/A199_cyclops_working_hours/scripts/a199.py` (`fit --jobs 3 --threads 4`, 108 min; `score`).
+<!-- src: paper/exploratory/A199_cyclops_working_hours/output/{power.csv,fits.csv,tests.csv,per_tissue.csv,posthoc_truth_reliability.csv} -->
+
 ## A195 single-cell NC vs cycling clock-plane variance, scored 2026-11-02: not estimable (no clock-shaped signal in malignant NC pseudobulks)
 
 - Data: A187 malignant pseudobulks, 8 studies. H195.1: 150 patients with ≥ 50 NC and ≥ 50 cycling cells (100,964 NC,
