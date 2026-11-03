@@ -3447,3 +3447,34 @@ size the cross-sectional loss implies (not an acute byproduct of division); T �
 (the untreated arm falls, A168); two-colour ratios; no biopsy clock time.
 **Stop rule:** one amendment.
 **Code:** `paper/exploratory/A196_proliferation_arrest/`.
+
+## A197 (2026-11-03, on the user's agreement to test the "clock is a property of differentiated tissue" message; written before any ES-like score is computed in any cohort): does tumour clock coherence fall with dedifferentiation beyond proliferation and subtype? **L1, primary H197.1-2 (Holm over two); H197.3-4 secondary**
+
+**Seen before writing:** coherence falls with proliferation (A127 H127.1, A171, A173) and with ER− (A127 H127.2, A166, also
+within PAM50 × proliferation, H166.2); not cell-cycle composition (A179); no recovery on arrest (A168, A196). No
+dedifferentiation index has been computed in these cohorts.
+**Why:** if the clock is a property of differentiated tissue, coherence should fall with dedifferentiation at equal
+proliferation and subtype. ER− and histology results are compatible but confounded with proliferation and subtype.
+**Index (fixed now):** ES-like score (Ben-Porath et al., Nat Genet 2008) = mean within-cohort gene z of BENPORATH_ES_1
+(MSigDB C2 v2024.1, `$SCCC_DATA/reference/c2.cgp.v2024.1.Hs.symbols.gmt`) after removing Hallmark G2M,
+BENPORATH_PROLIFERATION, BENPORATH_CYCLING_GENES, the purity genes, clock-like and clock genes (gene count reported).
+**Statistic:** within strata, coherence (A127 `coh`) of the high minus the low ES-like tertile (tertiles by rank within
+stratum); T = mean over strata; null: ES-like tertile labels permuted within stratum (2,000). One-sided, T < 0.
+Breast strata = PAM50 × proliferation tertile (tertile within PAM50), ≥ 30 tumours. LUAD strata = proliferation tertile
+× purity tertile (within cohort), ≥ 30 tumours.
+**H197.1:** SCAN-B (A127 analysis set). **H197.2:** METABRIC (A166 set). Holm over the two.
+**H197.3-4 (secondary, Holm over two):** LUAD GSE72094, GSE68465 (A171 tables).
+**Power and stop rule:** MDE = 2.49 × null SD; a test with MDE > 0.15 is not estimable and not read.
+**Specificity:** 200 expression-matched pseudo-clock sets (A127 construction; pool also without the ES genes), observed
+labels; clock-specific if T < pseudo q05.
+**Descriptive:** Spearman of the ES-like score with proliferation and ER; T without proliferation strata; PRC2 targets
+score (BENPORATH_PRC2_TARGETS, expected opposite sign) as an alternative index; leave-one-gene-out.
+**Reading:**
+- H197.1-2 pass, clock-specifically: coherence follows dedifferentiation beyond proliferation and subtype; supports the
+  "clock is a property of differentiated tissue" message.
+- Fail at MDE ≤ 0.15: the ES-like index adds nothing beyond proliferation and subtype; the message rests on ER− and
+  histology only and is stated as a hypothesis.
+**Caveat (registered):** the ES-like signature is a transcriptional proxy for dedifferentiation, not lineage
+differentiation itself.
+**Stop rule:** one amendment.
+**Code:** `paper/exploratory/A197_dedifferentiation/`.
