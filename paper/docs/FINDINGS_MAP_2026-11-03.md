@@ -14,7 +14,7 @@ Status: strong = registered pass (clock-specific where tested); qualified = pass
 | Same map vs a donor-disjoint truth | offsets 0.679 (registered bar 0.7: FAIL), amplitudes 0.965; post hoc: half maps agree 0.873, truth (iii) halves 0.544, corrected about 0.84 | A123c, post hoc 2026-11-02 | qualified (shortfall is truth noise; blood explained below) |
 | Whole Blood is the outlier because blood has no core-clock time signal | clock genes at the 52nd gene percentile (solid 99.5-99.96th); phase concordance 0.43 vs 0.85-0.94 | post hoc 2026-11-03 | descriptive |
 | Heart surgery, morning vs afternoon (living patients) | gate pairing 0.0005; PM − AM displacement p 0.0004, angle 19.73 h (expected 18 h) | A174 V174.1-3 | strong (confirmation) |
-| Breast surgery: internal time vs recorded resection time | Spearman 0.56, median error 1.1 h | V25.5 (archive, post hoc note) | weak (needs a registered rerun) |
+| Breast surgery: internal time vs recorded resection time | Spearman 0.558, above all 200 matched pseudo-clock sets (q95 0.215); error 1.42 h without recorded time vs 2.28 h shuffled | V25.5, A200 (registered rerun, seen data) | qualified (clock-specific; NR1D1-leaning; fresh cohort needed) |
 | Living timed adipose (12 men) | JS 0.888, Fisher-Lee 0.822, p 0.001 | A113 | strong; muscle fails as registered (post hoc FL 0.576) |
 | Baboon timed truth | offsets median error 0.455 h, R 0.987 | A36 (archive) | qualified (registered JS statistic degenerate) |
 | Regenerating mouse colon, blind | epithelial shift −8.95 h untimed vs −9.03 h timed | A21 R21.4 (archive) | qualified (anchor rule V17.2 failed) |

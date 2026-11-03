@@ -3089,6 +3089,23 @@ many random fast deaths from the whole day; 72 CYCLOPS fits, all ok (108 min, pe
 - Code `paper/exploratory/A199_cyclops_working_hours/scripts/a199.py` (`fit --jobs 3 --threads 4`, 108 min; `score`).
 <!-- src: paper/exploratory/A199_cyclops_working_hours/output/{power.csv,fits.csv,tests.csv,per_tissue.csv,posthoc_truth_reliability.csv} -->
 
+## A200 registered rerun of V25.5, scored 2026-11-03: breast-surgery internal time is clock-specific (seen data)
+
+GSE233242, 42 patients, tumour + adjacent normal, recorded resection hour 08-18 h; V25.5 estimator unchanged.
+- **H200.1 PASS:** Spearman of the internal-time coordinate with the recorded hour 0.558; 200 expression-matched
+  pseudo-clock sets through the same pipeline: median −0.053, q95 0.215, none reached it (p 0.005, the floor; Holm
+  0.006). 0 of 200 fits failed.
+- **H200.2 PASS:** median error with no recorded time used (estimates centred on 13:00) 1.42 h vs 2.28 h for shuffled
+  hours (p 0.003, Holm 0.006); pseudo-clock sets 2.51 h (median).
+- **Secondary:** without PER1 0.560 (error 1.38 h); without PER1 and NR1D1 0.233 (1.97 h); normal alone 0.528, tumour alone
+  0.517; breast waveform 0.548.
+- **Reading:** the per-patient ordering by surgery hour is carried by the clock genes, not by matched genes that could track
+  the hour (fasting, anaesthesia, handling), and it does not rest on glucocorticoid-induced PER1. It leans on NR1D1 (0.233
+  without PER1 and NR1D1). Seen data: a robustness test, not a replication; a fresh cohort with recorded resection times
+  remains the decisive step.
+- Code `paper/exploratory/A200_breast_surgery_rerun/scripts/score_a200.py` (about 4 min).
+<!-- src: paper/exploratory/A200_breast_surgery_rerun/output/{tests.csv,secondary.csv} -->
+
 ## A195 single-cell NC vs cycling clock-plane variance, scored 2026-11-02: not estimable (no clock-shaped signal in malignant NC pseudobulks)
 
 - Data: A187 malignant pseudobulks, 8 studies. H195.1: 150 patients with ≥ 50 NC and ≥ 50 cycling cells (100,964 NC,
