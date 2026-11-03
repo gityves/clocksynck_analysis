@@ -3131,6 +3131,14 @@ Pools of 2 aortas; aligned 14 libraries, misaligned 8 (5 days after a 6 h advanc
   within the clock, not between cell types, and is not tested here.
 - Code `paper/exploratory/A201_aorta_jetlag/scripts/score_a201.py` (about 2 min).
 <!-- src: paper/exploratory/A201_aorta_jetlag/output/{power.csv,tests.csv,secondary.csv,gate.csv} -->
+- **Post hoc (2026-11-03, user question: is a pre-existing offset lost?; `posthoc_baseline_offset.py`):** under aligned
+  conditions SMC and fibroblast clocks are nearly in phase: SMC − fibroblast +0.18 h (jackknife SD 0.14; Tempo's 4 male
+  libraries +0.27, the other 10 +0.08; females +0.17, males +0.17). Misaligned: +0.26 h (SD 0.43). There is no sizeable
+  baseline offset to lose, so the aorta shows cell types that start in phase and stay in phase while shifting; it cannot
+  show preservation of a non-zero offset. Per gene (no intervals, descriptive): most genes within 0.6 h in both conditions;
+  Cry2 +2.51 → +5.04 h and Rora −7.58 → −10.17 h move most (both low-amplitude in fibroblasts, unreliable without
+  intervals); Nr1d1 +0.96 → +1.10 h.
+<!-- src: paper/exploratory/A201_aorta_jetlag/output/{posthoc_baseline_offset.csv,posthoc_gene_offsets.csv} -->
 
 ## A195 single-cell NC vs cycling clock-plane variance, scored 2026-11-02: not estimable (no clock-shaped signal in malignant NC pseudobulks)
 
