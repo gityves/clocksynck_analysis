@@ -3008,6 +3008,37 @@ variant (addendum 1dfaa8e, before outcomes: the registered raw readout saturates
 - Code `paper/exploratory/C8b_clock_prognosis_replication/` (`timeteller_theta.py`, about 6 min; `score_a194.py`).
 <!-- src: paper/exploratory/C8b_clock_prognosis_replication/output/{timeteller_training_check.csv,timeteller_theta_summary.csv,a194_power.csv,a194_tests.csv,a194_secondary.csv} -->
 
+## A193 C8b, scored 2026-11-03: CYCLOPS magnitude does not predict survival in luminal A breast cancer (Li et al. 2024 not replicated)
+
+- **Fits:** CYCLOPS 2.0, 3 fits per cohort, all completed (5 eigengenes each; 20 / 19 / 26 seed genes in TCGA / METABRIC /
+  SCAN-B). Seed concordance of the magnitude (Spearman, tumours): TCGA 0.998-0.999, METABRIC 0.976-0.991, SCAN-B
+  0.986-0.998. Total run 325 min, peak 12 GB.
+- **Power:** H193.1 MDE HR 1.31 (≤ 2.0; 2,342 patients, 493 deaths); H193.2 MDE 1.14 per SD (≤ 1.5; 2,230, 451).
+- **H193.1 FAIL (top tertile, age + G2M, METABRIC + SCAN-B):** HR 0.920 [0.761, 1.113], p 0.392, Holm 0.784.
+- **H193.2 FAIL (per SD, clinical + G2M):** HR 0.978 [0.892, 1.073], p 0.638, Holm 0.784.
+- **Reproduction in TCGA (their cohort, not counted):** their 5-year logistic model (age + M1): OR 0.810, p 0.620 (499
+  patients, 31 deaths within 5 years); + MKI67 0.846 (p 0.698); unadjusted 0.810 (p 0.606). Cox OS top tertile, age + T + N:
+  HR 0.837 [0.461, 1.519] (52 deaths). The published association is not reproduced with our refit (see deviations).
+- **Secondary:**
+  - Per cohort, top tertile, age + G2M: METABRIC 1.018 (p 0.87); SCAN-B 0.665 [0.447, 0.990], p 0.044, nominal and
+    opposite to the published direction. SCAN-B per SD, clinical + G2M 0.803 (p 0.028), same caveat; unadjusted 1.039.
+  - Pooled top tertile with MKI67 instead of G2M 0.883 (p 0.21); age only 0.919 (p 0.39).
+  - METABRIC RFS: top tertile 1.107 (p 0.46); per SD 1.086 (p 0.22).
+  - Their 5-year logistic endpoint: METABRIC OR 0.958 (p 0.87), SCAN-B 0.671 (p 0.08).
+  - Magnitude is not a proliferation proxy in luminal A: Spearman with G2M −0.004 (METABRIC), −0.011 (SCAN-B), −0.190
+    (TCGA); with the in-plane log-odds 0.109 (METABRIC), −0.075 (SCAN-B).
+- **Deviations from the paper (all registered, stated here for the write-up):** CYCLOPS human seed list instead of the
+  authors' Zhang/Meng list (not public); TCGA eigenspace from tumour + adjacent normal jointly, not the authors' normal-only
+  space with GTEx/Manchester training samples; METABRIC and SCAN-B fitted on tumours only (no normal tissue); METABRIC
+  re-read on all genes; SCAN-B on the cached gene subset. Cohort labels in the scorer were mapped to those of
+  `cyclops_magnitude.csv` (a key mismatch fixed before the power step; no analysis change).
+- **Reading:** in 2,342 luminal A tumours with 493 deaths, a CYCLOPS clock-strength magnitude carries no prognostic
+  information; the tertile interval excludes HR above 1.11. It does not reproduce in TCGA either, so the published result
+  may depend on the authors' normal-tissue eigenspace and seed list, which we could not rebuild. With A192 and A194, none of
+  the three published clock-survival claims holds beyond proliferation in independent cohorts.
+- Code `paper/exploratory/C8b_clock_prognosis_replication/` (`cyclops_magnitude.py --threads 8`, 325 min; `score_a193.py`).
+<!-- src: paper/exploratory/C8b_clock_prognosis_replication/output/{cyclops_runs.csv,cyclops_magnitude.csv,a193_power.csv,a193_tests.csv,a193_reproduction.csv,a193_secondary.csv}; paper/results/logs/cyclops_magnitude.log -->
+
 ## A195 single-cell NC vs cycling clock-plane variance, scored 2026-11-02: not estimable (no clock-shaped signal in malignant NC pseudobulks)
 
 - Data: A187 malignant pseudobulks, 8 studies. H195.1: 150 patients with ≥ 50 NC and ≥ 50 cycling cells (100,964 NC,

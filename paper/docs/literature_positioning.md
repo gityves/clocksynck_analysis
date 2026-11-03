@@ -255,7 +255,9 @@ Tested since (registered A192-A194, `results_preliminary.md`):
   TIMELESS is fully absorbed. RORC keeps an independent association (0.80, p 0.019). It is not immune-driven (post hoc), and the other six genes are null after adjustment (0.93).
 - **TimeTeller (A194):** Theta is not prognostic in SCAN-B and TCGA (400 deaths; HR 0.97 per SD). The grade 1-2 claim
   goes the other way (0.83, p 0.03, nominal).
-- **Li et al. (A193):** CYCLOPS magnitude in TCGA, METABRIC and SCAN-B luminal A; running.
+- **Li et al. (A193):** CYCLOPS magnitude (our refit: CYCLOPS seed list, no normal-only eigenspace) is not prognostic in
+  METABRIC + SCAN-B luminal A (2,342 patients, 493 deaths; top tertile HR 0.92, per SD 0.98) and does not reproduce in TCGA
+  with their 5-year model (OR 0.81, p 0.62). It is not a proliferation proxy (Spearman with G2M about 0).
 
 ## Status table
 

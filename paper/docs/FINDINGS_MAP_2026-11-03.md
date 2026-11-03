@@ -64,7 +64,7 @@ Status: strong = registered pass (clock-specific where tested); qualified = pass
 | Coherence loss with proliferation and ER−, by histology | SCAN-B −0.123 / −0.343; METABRIC ER− −0.229; LUAD −0.242, −0.293; gastric −0.187, −0.533; not pan-cancer (A172), not squamous, not HCC | A127, A166, A171, A173, A172 | strong (breast ER−, LUAD, gastric); A178 robustness partial |
 | The loss is a swamped clock plane, not disorder; not cell-cycle composition | 7 of 7 Δs below pseudo q05; 0 of 5 composition | A176, A179 | strong / resolved negative |
 | Stable: does not recover when proliferation or ER signalling stops | POETIC −0.010 (MDE 0.196); 4 series pooled +0.019 (SD 0.062) | A168, A169, A196 | qualified (moderate rise not excluded) |
-| No prognostic value beyond proliferation; published claims reduce to proliferation | A191 HR 0.977, 0.956; A192 score at the 7th pct of proliferation-matched sets; A194 HR 0.966 / 0.957 | A191-A194 (A193 running) | strong negatives |
+| No prognostic value beyond proliferation; published claims reduce to proliferation | A191 HR 0.977, 0.956; A192 score at the 7th pct of proliferation-matched sets; A193 HR 0.920 / 0.978; A194 HR 0.966 / 0.957 | A191-A194 | strong negatives |
 | Tumour microenvironment programs follow recorded surgery time | S 1.339, Holm 0.0012; adjusted 1.234 | A146 H146.2, H146.5 | strong (internal-time version fails) |
 | Fibrotic-lung T cells decouple | HLCA 0.14 → 0.00; Natri 0.45 → 0.00 | A5 / A17 / A98 (archive) | conditional on procurement |
 
@@ -75,6 +75,18 @@ Status: strong = registered pass (clock-specific where tested); qualified = pass
 - Immune cue-following (A85) is not cue-specific (A122).
 - Coupling interval coverage fails (A154, A162, A163): report point estimates with permutation nulls, not bootstrap CIs.
 - Single-cell tumour atlases do not power within-tumour contrasts (A187, A188, A195).
+- Tumour coherence loss is not explained by ES-like dedifferentiation beyond proliferation and subtype (A197: SCAN-B
+  +0.092, METABRIC −0.067; MDE 0.11-0.13); a differentiation reading rests on ER− and histology only.
+
+## Headline message (user, 2026-11-03)
+
+Message 1 is the provocative one: the field expects internal desynchrony (ageing, cue loss, metabolic disease, cancer);
+in most of these settings the organs keep a shared internal time (sections 2-4, H138.4), from late gestation (A108,
+A189) to old age. Breaks are real but local and structured: the brain (A142, sheep), the psoriatic lesion (A54, A183),
+proliferating and ER− adenocarcinomas (section 5), without prognostic cost beyond proliferation (A191-A194). Reviewer
+risk: robustness rests partly on nulls, answered by equivalence bounds and the positive controls of section 1 (Bmal1 KO,
+feeding shift, brain departure, psoriasis delay); a deliberate desynchrony (in-house jet-lag data) would be decisive,
+with the owner's and PI's agreement.
 
 ## Candidate conceptual claims for Cell
 

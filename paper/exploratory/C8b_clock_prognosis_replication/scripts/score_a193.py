@@ -28,12 +28,13 @@ from clocksync.decompose import sample_log_odds  # noqa: E402
 
 OUT = HERE.parents[1] / "output"
 LN2 = np.log(2)
+KEY = {"METABRIC": "metabric", "SCAN-B": "scanb", "TCGA-BRCA": "tcga"}  # cohort labels in cyclops_magnitude.csv
 CLIN = {"SCAN-B": ["age", "log_size", "node_pos", "grade3", "grade1"], "METABRIC": ["age", "log_size", "nodes", "grade3", "grade1"]}
 
 
 def readout(cohort):
     m = pd.read_csv(OUT / "cyclops_magnitude.csv")
-    m = m[(m.cohort == cohort) & (m.is_tumour.astype(bool))].set_index("sample")
+    m = m[(m.cohort == KEY[cohort]) & (m.is_tumour.astype(bool))].set_index("sample")
     return m
 
 
