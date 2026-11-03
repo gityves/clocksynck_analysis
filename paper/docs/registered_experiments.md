@@ -3575,3 +3575,34 @@ from the main text (ordering may be generic time-of-surgery biology). Being on s
 replication; a fresh cohort with recorded resection times remains the decisive step.
 **Stop rule:** one amendment.
 **Code:** `paper/exploratory/A200_breast_surgery_rerun/`.
+
+## A201 (2026-11-03, on the user's instruction): after a 6 h light advance, do aortic cell types keep their clock phase relations while losing alignment to the light cycle? **Mouse aorta scRNA-seq (Auerbach et al., bioRxiv 2026), primary**
+
+**Data and what was seen:** Zenodo 22847203 (`$SCCC_DATA/aorta_jetlag_auerbach2026`, PROVENANCE.md). Metadata only:
+32 libraries, each a pool of 2 aortas (paper Methods); aligned controls 14 (sex x ZT0/6/12/18, 1-3 per cell), misaligned
+8 (one per sex x ZT, 5 days after a 6 h advance, ZT on the new schedule), ubiquitous Bmal1 KO (CAGG-CreERT2, tamoxifen)
+10; cells per library and type: SMC 672-6,321, fibroblast 36-1,151, EC 34-332, macrophage 8-198. The paper reports reduced
+amplitudes, limited adaptation of peak times and, within SMCs, Dbp and Nr1d1 about 1.2-1.3 h closer to Arntl. No
+expression value has been read.
+**Readout.** Per library x cell type (SMC, fibroblast; EC and macrophage secondary, used only where >= 30 cells in every
+library of the comparison), pseudobulk counts of the 14 clock genes (mouse orthologs of the GTEx set), log(CPM + 1) with CPM
+on the library's total counts of that cell type. Per condition and cell type, per gene: y = m_g + sex_g + a_g cos(w ZT) +
+b_g sin(w ZT); complex amplitude z_g = a_g - i b_g. Phase shift of cell type c, misaligned vs aligned:
+Delta_c = arg sum_g z_g^mis conj(z_g^ali) (hours, amplitude-weighted).
+**H201.0 (gate, first):** the misalignment acted on the peripheral clock: mean of Delta_SMC and Delta_fib differs from 0
+(90 % interval excludes 0). If it fails, H201.1 is uninformative (nothing to desynchronise).
+**H201.1 (primary):** relations kept: D = Delta_SMC - Delta_fib lies within +/- 1.5 h (90 % interval inside the bounds,
+TOST at alpha 0.05).
+**Uncertainty:** the larger of (a) a cell bootstrap (cells resampled within library, 1,000) and (b) a library jackknife
+(leave one library out, within condition); intervals as estimate +/- 1.645 SD.
+**Power step first:** SD of D; estimable if 1.645 SD <= 0.75 h, else H201.1 is not estimable.
+**Secondary (not counted):** amplitude ratio misaligned / aligned per cell type; Delta for EC and macrophage; Delta per sex;
+clocksync untimed analysis (libraries as donors, cell types as compartments): gate per condition and arg z of fibroblast
+vs SMC, aligned vs misaligned; Bmal1 KO as negative control: the gate should fail and the clock-gene amplitude collapse
+(ratio KO / control of sum |z_g|).
+**Reading:** H201.0 and H201.1 pass: five days after a shift, aortic cell types moved together, consistent with a shared
+internal time that is misaligned with the light cycle rather than desynchronised internally. H201.1 fails with H201.0
+passing: cell types re-entrain at different rates (internal desynchrony). One tissue, one time after the shift, pools of
+two mice, n = 1 per sex x ZT: an existence test, not a body-wide statement.
+**Stop rule:** one amendment.
+**Code:** `paper/exploratory/A201_aorta_jetlag/`.
