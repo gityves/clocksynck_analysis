@@ -3606,3 +3606,57 @@ passing: cell types re-entrain at different rates (internal desynchrony). One ti
 two mice, n = 1 per sex x ZT: an existence test, not a body-wide statement.
 **Stop rule:** one amendment.
 **Code:** `paper/exploratory/A201_aorta_jetlag/`.
+
+## A202 (2026-11-03, on the user's instruction after the claims-ledger audit; written before any simulation below; A164 scored and seen): is the A164 equivalence interval valid at its own design? **Method, confirmatory (V202.1-2)**
+
+**Why:** H164.1-2 (T2D, obesity) are the paper's equivalence claims: the 90 % interval D ± 1.645 × bootstrap SE of the
+pooled module d* lies inside ±0.15. Coupling intervals undercover elsewhere (A154 V154.3, A162, A163), and the coverage of
+d* intervals was never checked. **Seen before writing:** `A164.../output/a164_power.csv` gives a pooled T2D bootstrap SE
+of 0.0247 against a permutation-null SD of 0.0334 (ratio 0.74; vent 0.77, fast 0.72); obesity 0.0518 vs 0.0523. The
+T2D interval may therefore be too narrow. A162 also reports an attenuation of c by about 0.8-0.9 at realistic anchor
+coupling, which a thinning design cannot see (below).
+**Design (real data, A164 matched sets, both cohorts, module tissues only):** truth injected by binomial thinning of the
+real counts (`clocksync.power.damped`, as `power.mde`), with exchangeable labels:
+1. Per replicate, labels are reassigned within every matched set exactly as the A164 permutations (one uniform key per
+   donor, shared across tissues; the member with the largest key is the case).
+2. Per module tissue k, the host-locked clock part of k is damped to s_k times itself in the donors labelled **case**
+   (δ < 0) or **control** (δ > 0), with s_k chosen so that c0_k − c′(s_k) = |δ|, c0_k the pooled coupling of k on the
+   labelled donors and c′(s) = s² c0 / (s² c0 + 1 − c0) (`power.mde`). Every module tissue gets the same δ. A tissue with
+   c0_k < |δ| + 0.02 is damped to s = 0 and its realised δ_k recorded; the module truth is the mean of the realised δ_k.
+3. d* per tissue as A164 (`Dataset.contrast`, one call per tissue on its leave-one-out host, untruncated); module mean;
+   pooled over cohorts with the **A164 weights** (fixed, `a164_power.csv`).
+- Each tissue is read on a host that excludes it, so damping all module tissues at once leaves each tissue's host
+  unchanged (as `power.mde`). Under exchangeable labels both arms have the same host spread in expectation, so d* ≈ the
+  injected change of c.
+- Seeds `SeedSequence([202, design, cell, rep])`. Designs: T2D (1:3) and obesity (1:1), the primary A164 designs.
+
+**Arm P (point estimates, no bootstrap):** cells δ ∈ {0, −0.075, −0.15, +0.15}, 1,000 replicates per cell and design.
+Readouts: median bias of the pooled module D̂ minus the module truth; the SD of D̂ over replicates (SD_sim), against the
+A164 bootstrap SE and null SD; the coverage of D̂ ± 1.645 × SE_A164 (the registered half-width, fixed at its observed
+value); the TOST rate: share of replicates declared equivalent (interval inside ±0.15) at δ = ±0.15.
+**Arm B (the registered procedure in full):** cells δ ∈ {0, −0.15}, 100 replicates per cell and design, each with the
+A164 matched-set bootstrap (200 replicates instead of 500, host refitted; a cost deviation stated here) and its own
+interval D̂ ± 1.645 × SE_boot.
+**Validation criteria:**
+- **V202.1 (coverage of the registered procedure, arm B):** coverage of the 90 % interval ≥ 0.85 in every cell × design
+  (100 replicates: binomial SD 0.03 at 0.90).
+- **V202.2 (equivalence size, arm P):** the TOST rate at δ = −0.15 and at δ = +0.15 is ≤ 0.075 in each design (nominal
+  0.05; the A154 tolerance).
+
+**Descriptive:** bias per cell; SD_sim / SE_A164 and SD_sim / null SD; coverage with SD_sim and with the null SD in place
+of SE_A164; per-cohort results; arm B's distribution of SE_boot. **Attenuation (descriptive, not simulated):** the A164
+intervals divided by the A162 attenuation range (0.80 and 0.90), read against ±0.15. This is arithmetic on seen numbers,
+reported as a sensitivity, not a test.
+**Reading:**
+- V202.1-2 pass → H164.1-2 stand as tested equivalences, with "interval validated at the design (A202)"; the attenuation
+  sensitivity is stated.
+- V202.1 fails or V202.2 fails → the A164 equivalence is re-read (labelled as a re-reading after A202, not a new test)
+  with the design-based half-width 1.645 × max(SD_sim, null SD) and, if the bias exceeds 0.02 in magnitude, with D̂ − bias.
+  If that interval still lies inside ±0.15, H164.1-2 hold under the corrected interval; otherwise the claim drops to
+  "no effect detected (MDE 0.083 / 0.130)".
+- Thinning on real data defines the truth on the estimator's own scale, so attenuation of the true c (A162) is not
+  covered by A202; it stays a stated limit.
+**Compute:** arm P about 25 min on 16 workers; arm B about 4 h on 16 workers (A164 run: about 2.5 CPU-s per cohort evaluation of 8 tissues). Run
+through `paper/common/run.sh`, arm P first; arm B only after arm P is logged.
+**Stop rule:** one amendment; no new bound, design or test is added after either arm is seen.
+**Code:** `paper/exploratory/A202_a164_coverage/` (reuses `A164.../scripts/compute_a164.py` helpers and `clocksync.power.damped`).
