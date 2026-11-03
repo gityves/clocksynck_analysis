@@ -15,6 +15,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
   - Cadenas genes: carried by proliferation, with RORC as a partial exception.
   - TimeTeller Theta: not prognostic.
   - CYCLOPS magnitude (Li et al. 2024): not prognostic (HR 0.92 top tertile), not reproduced in TCGA with our refit.
+  - Clock x treatment (A198): no interaction with chemotherapy or endocrine therapy beyond proliferation (MDE 1.19 / 1.27).
   - Outward-facing use (sharing with these groups, wording in the paper) is the PI's call.
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the

@@ -64,7 +64,7 @@ Status: strong = registered pass (clock-specific where tested); qualified = pass
 | Coherence loss with proliferation and ER−, by histology | SCAN-B −0.123 / −0.343; METABRIC ER− −0.229; LUAD −0.242, −0.293; gastric −0.187, −0.533; not pan-cancer (A172), not squamous, not HCC | A127, A166, A171, A173, A172 | strong (breast ER−, LUAD, gastric); A178 robustness partial |
 | The loss is a swamped clock plane, not disorder; not cell-cycle composition | 7 of 7 Δs below pseudo q05; 0 of 5 composition | A176, A179 | strong / resolved negative |
 | Stable: does not recover when proliferation or ER signalling stops | POETIC −0.010 (MDE 0.196); 4 series pooled +0.019 (SD 0.062) | A168, A169, A196 | qualified (moderate rise not excluded) |
-| No prognostic value beyond proliferation; published claims reduce to proliferation | A191 HR 0.977, 0.956; A192 score at the 7th pct of proliferation-matched sets; A193 HR 0.920 / 0.978; A194 HR 0.966 / 0.957 | A191-A194 | strong negatives |
+| No prognostic value beyond proliferation; published claims reduce to proliferation | A191 HR 0.977, 0.956; A192 score at the 7th pct of proliferation-matched sets; A193 HR 0.920 / 0.978; A194 HR 0.966 / 0.957; no clock x treatment interaction (A198, ratio 1.09 / 1.07) | A191-A194, A198 | strong negatives |
 | Tumour microenvironment programs follow recorded surgery time | S 1.339, Holm 0.0012; adjusted 1.234 | A146 H146.2, H146.5 | strong (internal-time version fails) |
 | Fibrotic-lung T cells decouple | HLCA 0.14 → 0.00; Natri 0.45 → 0.00 | A5 / A17 / A98 (archive) | conditional on procurement |
 

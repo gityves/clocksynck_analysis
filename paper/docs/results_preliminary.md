@@ -3039,6 +3039,27 @@ variant (addendum 1dfaa8e, before outcomes: the registered raw readout saturates
 - Code `paper/exploratory/C8b_clock_prognosis_replication/` (`cyclops_magnitude.py --threads 8`, 325 min; `score_a193.py`).
 <!-- src: paper/exploratory/C8b_clock_prognosis_replication/output/{cyclops_runs.csv,cyclops_magnitude.csv,a193_power.csv,a193_tests.csv,a193_reproduction.csv,a193_secondary.csv}; paper/results/logs/cyclops_magnitude.log -->
 
+## A198 C8b, scored 2026-11-03: the tumour clock signal does not modify chemotherapy or endocrine benefit beyond proliferation
+
+Readout: per-tumour in-plane log-odds (A191), METABRIC + SCAN-B, Cox OS stratified by cohort with s x T, s, T, G2M x T, G2M
+and clinical covariates. Ratio = ratio of HRs per SD of s (treated vs untreated).
+- **Power:** H198.1 MDE 1.19 (4,612 patients, 1,294 deaths, 1,431 chemotherapy); H198.2 MDE 1.27 (3,988 ER+, 1,032
+  deaths, 3,354 endocrine). Both ≤ 1.5.
+- **H198.1 FAIL (chemotherapy):** ratio 1.088 [0.937, 1.264], p 0.268, Holm 0.536; pseudo |z| 65.5th percentile.
+- **H198.2 FAIL (endocrine, ER+):** ratio 1.068 [0.913, 1.249], p 0.410, Holm 0.536; pseudo 55.5th percentile.
+- **Secondary:**
+  - Without the G2M x T term: 1.074 (p 0.35) and 1.068 (p 0.41).
+  - MKI67 in place of G2M: 1.054 and 1.094.
+  - Chemotherapy, per cohort: METABRIC 1.202 [1.008, 1.433], p 0.040; SCAN-B 0.758 [0.569, 1.010], p 0.058. Nominal and
+    in opposite directions, so heterogeneity, not a shared effect. METABRIC RFS 1.118 (p 0.23). Within ER+ 0.951 (p 0.62).
+  - Endocrine, per cohort: METABRIC 1.078, SCAN-B 0.905; METABRIC RFS 1.041.
+- **Reading:** no evidence of a clock x treatment interaction larger than a ratio of about 1.26 (chemotherapy) or 1.25
+  (endocrine) per SD, in either direction (upper bounds of the intervals), and nothing above matched pseudo-clock sets.
+  Treatment is not randomised, so this is observational. Wording: "no evidence of an interaction larger than X", not "the
+  clock does not affect treatment response". Dosing time is not recorded, so chronotherapy is not addressed.
+- Code `paper/exploratory/C8b_clock_prognosis_replication/scripts/score_a198.py` (about 5 min).
+<!-- src: paper/exploratory/C8b_clock_prognosis_replication/output/{a198_power.csv,a198_tests.csv,a198_secondary.csv} -->
+
 ## A195 single-cell NC vs cycling clock-plane variance, scored 2026-11-02: not estimable (no clock-shaped signal in malignant NC pseudobulks)
 
 - Data: A187 malignant pseudobulks, 8 studies. H195.1: 150 patients with ≥ 50 NC and ≥ 50 cycling cells (100,964 NC,
