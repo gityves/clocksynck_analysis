@@ -3507,3 +3507,43 @@ these cohorts can. Wording in the paper: "no evidence of an interaction larger t
 treatment response".
 **Stop rule:** one amendment.
 **Code:** `paper/exploratory/C8b_clock_prognosis_replication/scripts/score_a198.py`.
+
+## A199 (2026-11-03, on the user's instruction): does CYCLOPS magnitude measure clock strength in samples taken in working hours? **GTEx fast deaths, primary (Holm over two)**
+
+**Question.** Li et al. (PNAS 2024) read CYCLOPS 2.0 magnitude as tumour clock strength in surgical samples, which are taken
+in daytime. A123b showed that untimed orderers, CYCLOPS included, lose the organ map on 08-18 h donors, but CYCLOPS also did
+poorly with the whole day (offsets 0.115) and its donor order did not degrade (0.47 vs 0.50); magnitude was never tested.
+**Seen before writing:** A123b orderings (phases only) and window / whole-day donor counts per tissue; no CYCLOPS magnitude
+has been computed in GTEx.
+**Data.** GTEx v10 fast deaths (Hardy 1-2) with recorded time of death (`_shared.load`), as A123 (user: fast deaths only;
+CHIRAL's donor internal phase not used). Tissues: Breast - Mammary Tissue plus the 11 other tissues with most window donors,
+Whole Blood excluded (no core-clock signal, post hoc 2026-11-03). Designs per tissue: **W** = donors who died 08-18 h;
+**Fs** = the same number of fast deaths drawn at random from the whole day (seed 20261103), so W and Fs differ only in time
+coverage.
+**Fits.** CYCLOPS 2.0 as in A123b (`run_order` input: 2^log2-normalised - 1, CYCLOPS human seed list, template
+hyperparameters, 80 models, no covariate), three sample-order seeds per (tissue, design); magnitude = mean over seeds of the
+within-fit z-scored `Magnitude`.
+**Timed clock strength (truth).** Per tissue, cosinor of the 14 GTEx clock genes (log2-normalised) on recorded time over
+all fast deaths, 5-fold cross-fitted (the donor's own fold excluded); a donor's strength = projection coefficient of its
+centred clock-gene vector on the expected profile at its recorded time, sum_g (y_g - m_g) p_g / sum_g p_g^2.
+**H199.1 (primary):** magnitude tracks timed clock strength less in working hours. Per tissue rho = Spearman(magnitude,
+timed strength) in W and in Fs; statistic = median over tissues of rho_Fs - rho_W; one-sided Wilcoxon signed-rank over
+tissues.
+**H199.2 (primary):** with whole-day coverage, magnitude tracks timed clock strength: median rho_Fs > 0, one-sided
+Wilcoxon over tissues. (If H199.2 fails, magnitude does not measure clock strength in GTEx whatever the coverage, and
+H199.1 is read in that light.)
+**Power step first:** MDE = 2.49 x sqrt(mean over tissues of (1/(n_W - 3) + 1/(n_Fs - 3))) x 1.05 / sqrt(n tissues)
+(Fisher-z approximation, Wilcoxon efficiency); above 0.20: not estimable.
+**Pass:** Holm p < 0.05 for each.
+**Secondary (not counted):** R^2 of magnitude on (cos, sin) of the hour of death, W vs Fs; Spearman of magnitude with
+sequencing depth and with the first principal component of non-clock genes; seed concordance of magnitude per design;
+CYCLOPS phase vs recorded time (|circular r| after rotation and reflection), descriptive only (range restriction makes it
+not comparable between designs).
+**Reading:** H199.1 and H199.2 pass: magnitude measures clock strength only with whole-day sampling, so its use on daytime
+surgical samples is unsupported. H199.1 fails with H199.2 passing: coverage is not the problem for magnitude. H199.2 fails:
+magnitude is not a clock-strength readout in GTEx at all. Wording in the paper stays at "in GTEx fast deaths"; tumours are
+not tested here.
+**Controlled access:** recorded time of death and per-donor values stay in memory or in the git-ignored output cache; only
+per-tissue aggregates are written.
+**Stop rule:** one amendment. A tissue whose fit fails in any seed or design is dropped and reported.
+**Code:** `paper/exploratory/A199_cyclops_working_hours/`.
