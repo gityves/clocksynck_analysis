@@ -3478,3 +3478,32 @@ score (BENPORATH_PRC2_TARGETS, expected opposite sign) as an alternative index; 
 differentiation itself.
 **Stop rule:** one amendment.
 **Code:** `paper/exploratory/A197_dedifferentiation/`.
+
+## A198 (2026-11-03, on the user's instruction): does the tumour clock signal modify the benefit of chemotherapy or endocrine therapy in breast cancer, beyond proliferation? **Clock x treatment interaction, primary (Holm over two), observational**
+
+**Seen before writing:** treatment counts (METABRIC: chemotherapy 412 yes / 1,568 no, hormone therapy 1,216 / 764, 529
+missing; SCAN-B: chemotherapy 1,153 / 1,903, endocrine 2,523 / 532); main-effect outcome analyses of clock readouts in
+both cohorts (A127 SCAN-B off-plane HR 0.94; A191 METABRIC ER+ hormone-treated in-plane null; A193 CYCLOPS magnitude and
+in-plane log-odds correlations; A192, A194). No clock x treatment term has been fitted in any cohort.
+**Readout:** per-tumour in-plane log-odds s (`clocksync.decompose.sample_log_odds`, GTEx waveform, 14 clock genes, log2 x
+ln 2), genes centred within METABRIC cohort or SCAN-B platform; s standardised within cohort (A191 readout).
+**Model:** Cox, overall survival, METABRIC + SCAN-B pooled, strata = cohort. Terms: s, treatment T, s x T, G2M, G2M x T,
+age, size, grade (1 / 3 vs 2), nodes (METABRIC log(1 + positive), SCAN-B status), PAM50 (claudin-low its own level), ER and
+HER2 where not fixed by the population, all cohort-specific as in A193 (`outcomes.block_design`); complete cases.
+Statistic: Wald z of s x T, two-sided. The G2M x T term is the proliferation companion: proliferation is known to predict
+chemotherapy benefit, so the clock term is read only beyond it.
+**H198.1:** T = chemotherapy, all tumours.
+**H198.2:** T = endocrine therapy, ER+ tumours.
+**Power step first (`output/a198_power.csv`):** MDE of the interaction (ratio of HRs per SD of s) at 80 % power, two-sided
+alpha 0.05: Schoenfeld with the variance of s x T not explained by all other terms. MDE above 1.5: not estimable, not run.
+**Specificity:** the same interaction z from 200 expression-matched pseudo-clock sets (A166 construction). Clock-specific
+only if |z| exceeds the 95th percentile of |z_pseudo|.
+**Pass:** Holm p < 0.05 and clock-specific. Even then the reading is hypothesis-generating: treatment is not randomised
+(confounding by indication), and a pass would need a randomised-trial cohort before any clinical statement.
+**Secondary (not counted):** without the G2M x T term; METABRIC RFS; per cohort; within ER+ for H198.1; MKI67 instead of
+G2M.
+**Reading:** a fail with its MDE closes the last prognosis question that proliferation does not already answer, as far as
+these cohorts can. Wording in the paper: "no evidence of an interaction larger than X", never "the clock does not affect
+treatment response".
+**Stop rule:** one amendment.
+**Code:** `paper/exploratory/C8b_clock_prognosis_replication/scripts/score_a198.py`.
