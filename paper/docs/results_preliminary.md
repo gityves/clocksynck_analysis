@@ -3106,6 +3106,32 @@ GSE233242, 42 patients, tumour + adjacent normal, recorded resection hour 08-18 
 - Code `paper/exploratory/A200_breast_surgery_rerun/scripts/score_a200.py` (about 4 min).
 <!-- src: paper/exploratory/A200_breast_surgery_rerun/output/{tests.csv,secondary.csv} -->
 
+## A201 aorta jet lag (Auerbach et al. 2026), scored 2026-11-03: smooth muscle and fibroblasts shifted together after a 6 h advance (H201.1 not estimable by 0.03 h)
+
+Pools of 2 aortas; aligned 14 libraries, misaligned 8 (5 days after a 6 h advance), Bmal1 KO 10; 14 clock genes.
+- **Power:** SD of D 0.474 h (library jackknife; cell bootstrap 0.118), 1.645 SD = 0.78 h > 0.75 h: **H201.1 not
+  estimable** (registered stop rule). Pool-to-pool variation dominates.
+- **H201.0 PASS:** the clock phase moved: mean shift −2.86 h, 90 % [−3.95, −1.77] (about half of the 6 h advance after
+  5 days).
+- **H201.1 not estimable; descriptive:** SMC −2.85 h, fibroblast −2.87 h, D +0.02 h, 90 % [−0.76, +0.80]. The interval
+  lies inside the registered ±1.5 h bounds, but the power criterion failed narrowly, so it is not counted as equivalence.
+- **Secondary:**
+  - Endothelial cells −2.29 h (≥ 30 cells in every library); macrophages −3.98 h (fewer than 30 cells in some libraries).
+  - Per sex: female SMC −3.28 / fibroblast −3.24 h; male −2.41 / −2.48 h. Both sexes show D ≤ 0.07 h.
+  - Amplitude misaligned / aligned: SMC 0.875, fibroblast 0.888 (the reduced amplitude the paper reports).
+  - Bmal1 KO / aligned amplitude: SMC 0.091, fibroblast 0.240 (clock collapse as expected).
+  - clocksync gate (libraries as donors, SMC + fibroblast): aligned p_pairing 0.001, p_acrophase 0.001, clock share 0.77;
+    misaligned 0.001 / 0.001, 0.83; Bmal1 KO 0.002 / 0.003, 0.36. The gate does not fail in the KO: the residual
+    covariance passes the shape check although the amplitude has collapsed, so the gate is not a clean negative control
+    here (clock share halves).
+- **Reading:** five days after a 6 h advance, aortic SMC, fibroblasts and endothelial cells sit at the same partial shift
+  (about −2.3 to −2.9 h): misaligned with the light cycle together, with no sign of desynchrony between them (difference
+  0.02 h). Not counted as equivalence (power rule missed by 0.03 h). One tissue, one time after the shift, n = 1 pool per
+  sex x ZT. The paper's intracellular finding (Dbp, Nr1d1 about 1.2 h closer to Arntl within SMC) is about gene order
+  within the clock, not between cell types, and is not tested here.
+- Code `paper/exploratory/A201_aorta_jetlag/scripts/score_a201.py` (about 2 min).
+<!-- src: paper/exploratory/A201_aorta_jetlag/output/{power.csv,tests.csv,secondary.csv,gate.csv} -->
+
 ## A195 single-cell NC vs cycling clock-plane variance, scored 2026-11-02: not estimable (no clock-shaped signal in malignant NC pseudobulks)
 
 - Data: A187 malignant pseudobulks, 8 studies. H195.1: 150 patients with ≥ 50 NC and ≥ 50 cycling cells (100,964 NC,
