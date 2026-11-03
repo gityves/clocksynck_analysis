@@ -3547,3 +3547,31 @@ not tested here.
 per-tissue aggregates are written.
 **Stop rule:** one amendment. A tissue whose fit fails in any seed or design is dropped and reported.
 **Code:** `paper/exploratory/A199_cyclops_working_hours/`.
+
+## A200 (2026-11-03, on the user's instruction): registered rerun of V25.5, is per-patient internal time in breast surgery clock-specific? **Seen data, primary (Holm over two)**
+
+**Seen before writing:** the V25.5 result on these data (GSE233242, 42 patients, tumour + adjacent normal, resections
+08-18 h): Spearman of the tangent coordinate with the recorded hour 0.558 [0.297, 0.772], median error 1.12 h with the
+error-minimising offset, 1.42 h with the estimates' circular mean set to 13:00, against 2.10 h for "always 13:00" and
+1.67 h for the best constant (`A25_prior_baseline`); PER1 removal unchanged (archive); A146 programs on the tumours.
+Nothing in this amendment is fresh data: it fixes the analysis plan and adds the specificity control that V25.5 lacked.
+**Estimator (unchanged from V25.5, `compute_breast_timed.py`):** two-compartment host (normal, tumour), A25 internal-time
+estimate, 12 h flip resolved by the hospital prior, 30 M reads, pooled human waveform, primary join (42 patients).
+**H200.1 (clock specificity):** the Spearman of the tangent coordinate with the recorded hour exceeds the 95th percentile of
+the same statistic from 200 expression-matched pseudo-clock sets run through the identical pipeline (each clock gene
+replaced by one of its 20 nearest non-clock-like, non-G2M genes in mean and SD of log2(TPM + 1) over the 84 libraries;
+counts built as for the clock genes; the pseudo genes take the clock genes' waveform amplitudes and phases). One-sided p =
+(1 + #pseudo >= clock) / (1 + #pseudo). Fits that fail are excluded and counted; above 20 % failures, H200.1 is
+uninformative.
+**H200.2 (no use of truth):** median absolute error with the estimates' circular mean set to 13:00 (the hospital prior,
+no recorded time used) is below the permutation null (2,000 shuffles of the recorded hours, same rule); one-sided.
+**Pass:** Holm p < 0.05 for each.
+**Secondary (not counted):** without PER1 (glucocorticoid-induced at surgery); without PER1, PER2 and TSC22D3-responsive
+genes is not applicable (14-gene set: drop PER1 only, plus PER1 and NR1D1); per compartment alone (normal, tumour); breast
+waveform; error of the pseudo sets under the 13:00 rule (distribution); the pseudo-set percentile of the error.
+**Reading:** H200.1 pass = the patient ordering by recorded surgery hour is carried by the clock, not by any matched gene
+set that tracks the hour (fasting, anaesthesia, handling). H200.1 fail = the per-patient internal-time claim is withdrawn
+from the main text (ordering may be generic time-of-surgery biology). Being on seen data, this is a robustness test, not a
+replication; a fresh cohort with recorded resection times remains the decisive step.
+**Stop rule:** one amendment.
+**Code:** `paper/exploratory/A200_breast_surgery_rerun/`.
