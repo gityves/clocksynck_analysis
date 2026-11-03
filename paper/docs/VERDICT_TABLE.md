@@ -242,3 +242,6 @@ Source for the rows with a figure panel: `paper/exploratory/WP0_integrity/output
 | A195 | H195.2 NC clock-plane variance, high − low cycling-fraction tertile | L1 | P | not run | — | NOT ESTIMABLE (signal check fails; MDE 0.630 > 0.40) | MDE 0.630 | C4_single_cell/A195/output/power.csv |
 | A196 | H196.1 NeoPalAna coherence C1D15 − C1D1 (palbociclib arrest) | L1 | P | T −0.139 (prolif −0.54 SD) | 0.485 | NOT ESTIMABLE (descriptive) | MDE 0.478 | A196_proliferation_arrest/output/tests.csv |
 | A196 | H196.2 reversal calibration, 4 series (post hoc) | L1 | S | T − P −0.019; pooled change +0.019 (SD 0.062, 319 pairs) | 0.817 | UNINFORMATIVE (no pre-treatment slope, p 0.41) | — | A196_proliferation_arrest/output/calibration_posthoc.csv |
+| A197 | H197.1 SCAN-B coherence, high − low ES-like within PAM50 × proliferation | L1 | P | T +0.092; pseudo 98.0th pct | 0.979 / Holm 0.979 | FAIL | MDE 0.114 | A197_dedifferentiation/output/tests.csv |
+| A197 | H197.2 METABRIC, same | L1 | P | T −0.067; pseudo 13.5th pct | 0.100 / Holm 0.200 | FAIL | MDE 0.131 | A197_dedifferentiation/output/tests.csv |
+| A197 | H197.3-4 LUAD GSE72094, GSE68465 | L1 | S | T −0.090, +0.008 | 0.100, 0.546 | NOT ESTIMABLE | MDE 0.169, 0.193 | A197_dedifferentiation/output/tests.csv |

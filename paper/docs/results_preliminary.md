@@ -3064,3 +3064,28 @@ GTEx v10 fast deaths with recorded time of death; Whole Blood (212 donors) vs fi
   timed blood in living people.
 - Code `paper/exploratory/blood_composition_posthoc/scripts/blood_composition.py` (seconds).
 <!-- src: paper/exploratory/blood_composition_posthoc/output/blood_composition.csv -->
+
+## A197 dedifferentiation, scored 2026-11-03: no coherence loss with the ES-like index beyond proliferation and subtype (H197.1-2 fail)
+
+ES-like score: BENPORATH_ES_1 without proliferation, purity and clock genes (254 genes SCAN-B, 293 METABRIC). Strata:
+PAM50 × proliferation tertile (15 per cohort); 2,000 within-stratum permutations; 200 matched pseudo-clock sets.
+
+| test | T (high − low ES-like) | p one-sided | Holm | MDE | pseudo percentile |
+|---|---|---|---|---|---|
+| H197.1 SCAN-B (3,073) | +0.092 | 0.979 | 0.979 | 0.114 | 98.0 |
+| H197.2 METABRIC (1,756) | −0.067 | 0.100 | 0.200 | 0.131 | 13.5 |
+| H197.3 GSE72094 (442, secondary) | −0.090 | 0.100 | — | 0.169 (not estimable) | 10.0 |
+| H197.4 GSE68465 (443, secondary) | +0.008 | 0.546 | — | 0.193 (not estimable) | — (13 clock genes) |
+
+- **Both primaries fail at MDE ≤ 0.15.** SCAN-B points the opposite way. A drop of 0.114 (SCAN-B) or 0.131 (METABRIC)
+  is excluded at 80 % power.
+- **Descriptive:** without proliferation strata, SCAN-B T −0.137 and GSE72094 −0.165, so the ES-like association runs
+  through proliferation. The index stays correlated with proliferation after removing proliferation genes in RNA-seq and
+  LUAD arrays (Spearman 0.72 SCAN-B, 0.80 GSE72094) but not in METABRIC (0.11). ES-like vs ER: −0.19 (SCAN-B), −0.42
+  (METABRIC). PRC2-target score: +0.191 (SCAN-B), +0.019 (METABRIC). Leave-one-gene-out ranges: SCAN-B +0.007 to
+  +0.109, METABRIC −0.124 to +0.008.
+- **Reading (as registered):** the ES-like index adds nothing beyond proliferation and subtype, so the "clock is a
+  property of differentiated tissue" message rests on ER− (within PAM50 × proliferation, A166 H166.2) and on histology
+  (adenocarcinoma vs squamous), and is stated as a hypothesis. Caveat: one transcriptional proxy of dedifferentiation.
+- Code `paper/exploratory/A197_dedifferentiation/scripts/score_a197.py` (about 3 min).
+<!-- src: paper/exploratory/A197_dedifferentiation/output/{power,tests,descriptive}.csv -->
