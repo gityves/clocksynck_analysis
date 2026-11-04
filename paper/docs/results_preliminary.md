@@ -3221,3 +3221,36 @@ PAM50 × proliferation tertile (15 per cohort); 2,000 within-stratum permutation
   (adenocarcinoma vs squamous), and is stated as a hypothesis. Caveat: one transcriptional proxy of dedifferentiation.
 - Code `paper/exploratory/A197_dedifferentiation/scripts/score_a197.py` (about 3 min).
 <!-- src: paper/exploratory/A197_dedifferentiation/output/{power,tests,descriptive}.csv -->
+
+## A202 (scored 2026-11-04): the A164 T2D interval is too narrow; the equivalences hold on the registered re-reading
+
+Known changes of coupling injected into the real GTEx counts (`clocksync.power.damped`) at the A164 matched design, labels
+exchangeable within the matched sets; module = 5 (vent) or 4 (fast) metabolic tissues, pooled with the fixed A164 weights.
+Realised module truths at ±0.15: T2D ±0.150, obesity ±0.145 (vent obese liver, c0 0.090, damped to 0).
+- **V202.2 (equivalence size, arm P, 1,000 replicates per cell): T2D FAILS, obesity passes.** Share of replicates declared
+  equivalent with the registered A164 half-width at δ = −0.15 / +0.15: T2D 0.126 / 0.095 (limit 0.075), obesity 0.053 /
+  0.030.
+- **Cause: the T2D bootstrap SE is too small, not bias.** Median bias ≤ 0.006 (T2D) and ≤ 0.014 (obesity) in every cell.
+  SD of the pooled estimate over replicates: T2D 0.0335-0.0344 against the A164 bootstrap SE 0.0247 (ratio 1.36-1.39)
+  and null SD 0.0334; obesity 0.048-0.053 against 0.0518 and 0.0523. Coverage of the 90 % interval with the A164 SE:
+  T2D 0.76-0.77, obesity 0.89-0.91; with SD_sim or the null SD, 0.88-0.90 in both designs.
+- **V202.1 (coverage of the full procedure, arm B, 100 replicates with 200 bootstrap replicates each): T2D FAILS narrowly,
+  obesity passes.** T2D 0.84 [0.76, 0.90] at δ 0 and 0.95 at −0.15; obesity 0.89 and 0.94 (limit 0.85). The replicate
+  bootstrap SEs for T2D (median 0.032 at δ 0, 0.037 at −0.15) are larger than the SE A164 obtained on the observed
+  labels (0.0247, below the 5th percentile of the δ-0 replicates, 0.0252): the observed SE was a small draw of an already
+  slightly anti-conservative procedure.
+- **Registered re-reading of A164** (a re-reading after A202, not a new test): half-width 1.645 × max(SD_sim over the arm P
+  cells, A164 null SD), no bias correction (|bias| ≤ 0.02).
+  - T2D: +0.019, 90 % [−0.037, +0.076] (A164: [−0.021, +0.060]). Inside ±0.15: **H164.1 holds under the corrected
+    interval.**
+  - Obesity: +0.004 [−0.083, +0.091] (A164: [−0.081, +0.089]). Inside ±0.15.
+- **Attenuation sensitivity (descriptive, arithmetic on the A164 intervals):** divided by the A162 attenuation range 0.8 /
+  0.9, T2D [−0.027, +0.075] / [−0.024, +0.067], obesity [−0.101, +0.112] / [−0.090, +0.099]: inside ±0.15. Thinning
+  defines the truth on the estimator's scale, so this stays a stated limit.
+- **Reading:** T2D and obesity leave metabolic-organ coupling within ±0.15, now with an interval validated at the design.
+  Text: "+0.019 (90 % interval −0.037 to +0.076, design-based)". Methods: the matched-set bootstrap SE of a pooled d*
+  can be too small at this design; report max(bootstrap SE, permutation-null SD) for equivalence intervals.
+- Deviation: the first arm B run stopped in the obesity cells ("need at least 5 donors"); the replicate table was then
+  built on the donors of every tissue's sets, as A164 (README). Runs: arm P 1,154 s, arm B 10,987 s + 6,331 s (16 workers).
+- Code `paper/exploratory/A202_a164_coverage/scripts/{compute_a202,score_a202}.py`.
+<!-- src: paper/exploratory/A202_a164_coverage/output/{arm_p,arm_b,summary,reread,attenuation,per_cohort,design}.csv -->

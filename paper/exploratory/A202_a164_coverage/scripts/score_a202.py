@@ -2,7 +2,7 @@
 arm P), with the descriptive tables, from `compute_a202.py`.
 
     python score_a202.py [--subsample]
-Writes (../output): arm_p.csv (design x cell: realised truth, bias, SD_sim against the A164 SE and null SD, coverage
+Writes (../output): reread.csv (registered re-reading of A164 when a criterion fails), arm_p.csv (design x cell: realised truth, bias, SD_sim against the A164 SE and null SD, coverage
 with each half-width, TOST rate), arm_b.csv (design x cell: coverage of the replicate's own interval, SE_boot
 distribution), per_cohort.csv, attenuation.csv (A164 intervals divided by the A162 range), summary.csv (V202.1-2).
 """
@@ -122,6 +122,21 @@ def main():
                                  passes=bool(len(b) == 2 and (b.coverage >= COVER_MIN).all()),
                                  note="min coverage over delta 0 and -0.15"))
 
+    if len(rawp) and len(summ) and not all(r["passes"] for r in summ):
+        # registered re-reading after a failed V202.1 or V202.2: half-width 1.645 x max(SD_sim over the arm P cells,
+        # A164 null SD); bias correction only if |median bias| > 0.02 in some cell
+        rr = []
+        for dsg, r in obs.iterrows():
+            g = AP[AP.design == dsg]
+            sd = max(float(g.sd_sim.max()), null164[dsg])
+            bias = float(g.bias_median.abs().max())
+            D = r.D - (float(g.bias_median.median()) if bias > 0.02 else 0.0)
+            rr.append(dict(design=dsg, D=D, half_width=Z90 * sd, lo90=D - Z90 * sd, hi90=D + Z90 * sd,
+                           sd_used=sd, max_abs_bias=bias, bias_corrected=bias > 0.02,
+                           inside=bool(D - Z90 * sd > -BOUND and D + Z90 * sd < BOUND),
+                           a164_lo90=r.lo90, a164_hi90=r.hi90))
+        pd.DataFrame(rr).to_csv(base / "reread.csv", index=False)
+
     att = []
     for dsg, r in obs.iterrows():
         for a in ATTENUATION:
@@ -131,7 +146,7 @@ def main():
     S = pd.DataFrame(summ)
     S.to_csv(base / "summary.csv", index=False)
     pd.set_option("display.width", 220)
-    for f in ("arm_p.csv", "arm_b.csv", "attenuation.csv", "summary.csv"):
+    for f in ("arm_p.csv", "arm_b.csv", "attenuation.csv", "summary.csv", "reread.csv"):
         if (base / f).exists():
             print(f, "\n", pd.read_csv(base / f).round(4).to_string(index=False))
 

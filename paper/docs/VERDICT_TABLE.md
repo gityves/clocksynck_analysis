@@ -255,3 +255,5 @@ Source for the rows with a figure panel: `paper/exploratory/WP0_integrity/output
 | A197 | H197.1 SCAN-B coherence, high − low ES-like within PAM50 × proliferation | L1 | P | T +0.092; pseudo 98.0th pct | 0.979 / Holm 0.979 | FAIL | MDE 0.114 | A197_dedifferentiation/output/tests.csv |
 | A197 | H197.2 METABRIC, same | L1 | P | T −0.067; pseudo 13.5th pct | 0.100 / Holm 0.200 | FAIL | MDE 0.131 | A197_dedifferentiation/output/tests.csv |
 | A197 | H197.3-4 LUAD GSE72094, GSE68465 | L1 | S | T −0.090, +0.008 | 0.100, 0.546 | NOT ESTIMABLE | MDE 0.169, 0.193 | A197_dedifferentiation/output/tests.csv |
+| A202 | V202.1 coverage of the A164 interval, full procedure (arm B) | method | P | T2D 0.84 [0.76, 0.90] at δ 0, 0.95 at −0.15; obesity 0.89, 0.94 | - | FAIL (T2D, narrowly); obesity pass | 0.85 | A202_a164_coverage/output/arm_b.csv |
+| A202 | V202.2 equivalence size at ±0.15 (arm P) | method | P | T2D 0.126 / 0.095 (SD_sim 0.034 vs boot SE 0.0247); obesity 0.053 / 0.030 | - | FAIL (T2D); obesity pass. Re-read A164: T2D [−0.037, +0.076], obesity [−0.083, +0.091], both inside ±0.15 | 0.075 | A202_a164_coverage/output/{arm_p,reread}.csv |
