@@ -457,3 +457,16 @@ Per the registered reading, c stays reported without intervals (ranks, Δc, d*).
 - **My recommendation is (ii) for now.** The bulk replication is the paper-relevant result. Single-cell n would be
   marginal, and the CNV step adds a degree of freedom.
 - **Answer (PI, 2026-10-31, review of STATE_2026-10-31 / HANDOFF_2026-10-31):** (ii): gastric stops at bulk. Single-cell cancer work (C4) uses sets with author malignant labels (Wu + Pal breast, a labelled LUAD atlas after a scout).
+
+## Q23 (2026-11-04): ARNTL was zero in the A18-era per-cell files — rebuild all and rerun the per-cell readouts?
+
+- **Finding** (results_preliminary, integrity 2026-11-04): seven per-cell files (hlca_full, islets_t2d, natri2024_ild,
+  parkinson_regions, psychad_mssm, psychad_radc, seaad_dlpfc) have ARNTL = 0 (Census symbol BMAL1). Pseudobulk results,
+  the A152 files and the cancer per-cell files are not affected.
+- **Affected readouts:** A18 part 2 per-cell amplitude / synchrony, A144 part 2 (descriptive, inconclusive), the
+  Extended Data per-cell calibration. None is in the claims ledger.
+- **Done:** builder fixed; HLCA rebuilt for A203.
+- **Nothing else is paused.**
+- **Options:** (i) rebuild the six other files (about 3 h of Census streaming, about 9 GB) and rerun the three readouts,
+  with the old and new numbers side by side; (ii) drop the per-cell readouts from the paper and keep the erratum.
+- **My recommendation is (i)** if any per-cell number stays in the Extended Data, else (ii).
