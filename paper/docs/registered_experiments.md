@@ -3660,3 +3660,37 @@ reported as a sensitivity, not a test.
 through `paper/common/run.sh`, arm P first; arm B only after arm P is logged.
 **Stop rule:** one amendment; no new bound, design or test is added after either arm is seen.
 **Code:** `paper/exploratory/A202_a164_coverage/` (reuses `A164.../scripts/compute_a164.py` helpers and `clocksync.power.damped`).
+
+## A203 (2026-11-04, on the user's question whether single cells could be used better than pseudobulks; written before any subsampled fit is computed; seen: the A17 `lung_hlca` table (198 healthy donors, 18 compartments, median cells per pseudobulk 113-948 by compartment) and the per-cell file's columns): is the precision of internal-time readouts limited by cells or by donors? **Method, confirmatory (V203.1-2); enters the Methods only if both pass (user, 2026-11-04)**
+
+**Why:** clock time varies between donors only, so donors should set the precision of coupling and offsets, and cells
+only each donor's measurement error. If this holds at a real design it gives a design rule (how many cells per
+pseudobulk are enough) and states why the method works on pseudobulks.
+**Data:** HLCA per-cell clock-gene counts (`$SCCC_DATA/cells/hlca_full/cells.parquet`, Census 2025-11-08), regrouped
+into the A17 `lung_hlca` healthy rows (same donors, compartments from `ann_level_3` / `ann_level_2` as
+`common/datasets/_atlas/lung.py`, the donor's majority assay, strata study | assay, depth = summed `raw_sum`), A17
+learned anchors (`common/anchors_a17.csv`). **Acceptance:** the regrouped full table reproduces the A17 `lung_hlca`
+clock counts of every row (else the cause is reported and the scoring waits for a fix).
+**Readout compartments:** those with ≥ 40 donors in the full table (rule fixed here; the others stay in the fit). Fit:
+`Dataset.fit(gate=False, n_boot=0)`, LOO anchor readout (default): per compartment offset arg z (h) and coupling c.
+**Error metric (split halves):** donors split at random into two halves, balanced within stratum; both halves fitted on
+the same cell subsample rule; per compartment |offset₁ − offset₂| (circular, h) and |c₁ − c₂|. err = median over
+readout compartments and 50 splits. Descriptive: circular correlation of offsets and Pearson of c between halves.
+- **Cells arm:** all 198 donors; cells per pseudobulk capped at m ∈ {10, 25, 50, 100, 200, all} by random subsampling
+  of cells without replacement (a new subsample per split and half).
+- **Donors arm:** all cells; donors first subsampled to N ∈ {50, 100, 150, 198} (within strata), then split.
+- Seeds `SeedSequence([203, arm, level, split])`.
+**Validation criteria:**
+- **V203.1 (cells saturate):** err at m = 100 ≤ 1.10 × err at m = all, for the offset and for c.
+- **V203.2 (donors limit):** err at N = 100 ≥ 1.25 × err at N = 198, for the offset and for c (√2 ≈ 1.41 is expected
+  if donors set the precision).
+**Descriptive:** m₉₅ (cells at which err is within 5 % of err(all), interpolated); per compartment family; binomial
+thinning of the full pseudobulks to the expected UMI of m cells (m = 25, 100) against true cell subsampling, which
+shows whether cell-to-cell heterogeneity adds error beyond counting noise.
+**Reading:**
+- V203.1 and V203.2 pass → Methods: "beyond about m cells per pseudobulk, the precision of coupling and offsets is set
+  by the number of donors" with the curves (Extended Data).
+- Either fails → reported in `results_preliminary.md` only, not in the Methods (user, 2026-11-04).
+- One atlas (lung); the rule is not claimed for other tissues or depths.
+**Stop rule:** one amendment; no new metric or threshold after scoring.
+**Code:** `paper/exploratory/A203_cells_vs_donors/`.
