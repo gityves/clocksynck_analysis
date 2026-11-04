@@ -71,7 +71,7 @@ not estimable or post hoc only (not in the main text).
 
 | # | Sentence | Evidence | Limit | Avoid | Objection → answer | Status |
 |---|---|---|---|---|---|---|
-| 5.1 | Type 2 diabetes and obesity leave inter-organ coupling unchanged within ±0.15. | A164: d* +0.019 [−0.021, 0.060]; +0.004 [−0.081, 0.089]. | Coupling, metabolic organs, GTEx; phase offsets per organ not separately bounded here. | "Metabolic disease does not disrupt the clock." | "Contradicts animal and human literature." → bounded estimate at common host spread; scope to inter-organ coupling. | A |
+| 5.1 | Type 2 diabetes and obesity leave inter-organ coupling unchanged within ±0.15. | A164 re-read after A202: d* +0.019, 90 % [−0.037, +0.076] (T2D); +0.004 [−0.083, +0.091] (obesity); design-based intervals validated at the A164 design (A202: the A164 T2D bootstrap interval [−0.021, 0.060] was too narrow). | Coupling, metabolic organs, GTEx; phase offsets per organ not separately bounded here. Attenuation of c (A162) not covered by A202; dividing the intervals by 0.8 keeps them inside ±0.15 (descriptive). | "Metabolic disease does not disrupt the clock." | "Contradicts animal and human literature." → bounded estimate at common host spread; scope to inter-organ coupling. | A |
 | 5.2 | Where testable, disease atlases show equivalent phase and amplitude. | A180 TOST: phase 7 of 8, amplitude 7 of 10 rows within ±1.5 h / 1.5-fold. | 24 phase and 22 amplitude rows not testable; A165 0 of 89 detected with phase MDE median 2.20 h. | Counting not-estimable rows as negatives. | — | B |
 
 ## 6. Where clocks break, they break locally
