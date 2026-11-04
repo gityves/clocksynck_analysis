@@ -3254,3 +3254,24 @@ Realised module truths at ±0.15: T2D ±0.150, obesity ±0.145 (vent obese liver
   built on the donors of every tissue's sets, as A164 (README). Runs: arm P 1,154 s, arm B 10,987 s + 6,331 s (16 workers).
 - Code `paper/exploratory/A202_a164_coverage/scripts/{compute_a202,score_a202}.py`.
 <!-- src: paper/exploratory/A202_a164_coverage/output/{arm_p,arm_b,summary,reread,attenuation,per_cohort,design}.csv -->
+
+### 2026-11-04, integrity (found by the A203 acceptance check): ARNTL is zero in the A18-era per-cell files
+
+- **Finding.** In the per-cell clock-gene files built by `common/datasets/cells_census/build.py` (legacy
+  `desync/common/extract_cells.py`), the ARNTL column is 0 in every cell: hlca_full, islets_t2d, natri2024_ild,
+  parkinson_regions, psychad_mssm, psychad_radc, seaad_dlpfc. The builder requested Census genes by symbol and the Census
+  2025-11-08 names ARNTL "BMAL1", so the column was never filled and no error was raised. The A203 regrouping of the HLCA
+  cells reproduces the A17 `lung_hlca` table exactly for the 13 other genes, the cell counts and the depths (1,321 of
+  1,321 rows) and fails only on ARNTL.
+- **Not affected:** every pseudobulk table (built from the Census groups, which map the symbol), hence every registered
+  result from pseudobulks; the A152 per-cell files (their extractor maps BMAL1 → ARNTL; ARNTL totals 10,843 and 2,640);
+  the cancer per-cell files (`cells/cancer`, ARNTL present).
+- **Affected (per-cell readouts only, none in the claims ledger):** A18 part 2 per-cell amplitude and synchrony
+  (`figure_2/scripts/backbone/compute_per_cell.py`, `figure_2/output/backbone/a18_cell_split*.csv`), A144 part 2
+  (D144.2, descriptive, inconclusive, reads `a18_cell_split.csv`), and the Extended Data per-cell calibration
+  (`extended_data/scripts/calibration/compute_orpheus_cells.py`, `orpheus_cells_*.csv`) where it reads these datasets.
+  These readouts used 13 of the 14 clock genes; whether they change is not known until rerun.
+- **Fix:** the builder maps Census symbols to the panel (BMAL1 → ARNTL, as A152) and fails if a panel gene is missing;
+  `check_columns` compares cell ids and the 13 other genes with the stored file. HLCA is being rebuilt for A203
+  (`A203_cells_vs_donors/scripts/rebuild_hlca_cells.sh`); the other six datasets and the reruns of the affected
+  readouts wait for a decision (PI_QUESTIONS).

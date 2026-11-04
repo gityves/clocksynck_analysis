@@ -32,6 +32,7 @@ from common.paths import DATA  # noqa: E402
 GENES = list(gtex().genes)
 CENSUS_COLS = ["donor_id", "cell_type", "assay", "tissue"]
 CENSUS_VERSION = "2025-11-08"
+ALIAS = {"BMAL1": "ARNTL", "CHRONO": "CIART", "C1orf51": "CIART"}  # Census symbol -> panel symbol (as A152)
 # name -> (Census dataset id, extra obs columns of the source h5ad)
 DATASETS = {
     "hlca_full": ("9f222629-9e39-47d0-b83f-e08d610c7479",
@@ -100,10 +101,18 @@ def build(name: str, threads: int = 2, out: Path | None = None, version: str = C
         if source_cols:
             src = read_source_obs(dataset_id, ["observation_joinid"] + source_cols, version)
             obs = obs.merge(src, on="observation_joinid", how="left", validate="one_to_one")
-        vf = "feature_name in [%s]" % ", ".join(repr(g) for g in GENES)
-        var = exp.ms["RNA"].var.read(value_filter=vf).concat().to_pandas().drop_duplicates("feature_name")
+        # Census symbols of panel genes: ARNTL is BMAL1 in Census 2025-11-08 (the first version requested "ARNTL" only and
+        # wrote an all-zero ARNTL column for the 7 datasets of DATASETS; fixed 2026-11-04, A203)
+        names = [g for g in GENES] + list(ALIAS)
+        vf = "feature_name in [%s]" % ", ".join(repr(g) for g in names)
+        var = exp.ms["RNA"].var.read(value_filter=vf).concat().to_pandas()
+        var["panel"] = var.feature_name.map(lambda g: ALIAS.get(g, g))
+        var = var.drop_duplicates("panel")
         vlut = np.full(int(var.soma_joinid.max()) + 1, -1, dtype=np.int64)
-        vlut[var.soma_joinid.to_numpy()] = [GENES.index(g) for g in var.feature_name]
+        vlut[var.soma_joinid.to_numpy()] = [GENES.index(g) for g in var.panel]
+        missing = sorted(set(GENES) - set(var.panel))
+        if missing:
+            raise ValueError(f"panel genes not found in the Census var: {missing}")
         lut = np.full(int(obs.soma_joinid.max()) + 1, -1, dtype=np.int64)
         lut[obs.soma_joinid.to_numpy()] = np.arange(len(obs))
         X = np.zeros((len(obs), len(GENES)), dtype=np.int32)
@@ -127,16 +136,19 @@ def build(name: str, threads: int = 2, out: Path | None = None, version: str = C
     return out / "cells.parquet"
 
 
-def check_columns(name: str, fresh: Path) -> bool:
-    """Same columns and cell ids as the stored table (after a `build(name, out=fresh)`)."""
-    a, b = pd.read_parquet(path(name), columns=["observation_joinid"] + GENES), pd.read_parquet(fresh / "cells.parquet")
+def check_columns(name: str, fresh: Path, skip=("ARNTL",)) -> bool:
+    """Same columns, cell ids and counts as the stored table (after a `build(name, out=fresh)`), genes in `skip` excepted
+    (ARNTL: all zero in the first version)."""
+    g = [x for x in GENES if x not in skip]
+    a, b = pd.read_parquet(path(name), columns=["observation_joinid"] + g), pd.read_parquet(fresh / "cells.parquet")
     return bool(set(a.columns) <= set(b.columns) and a.observation_joinid.equals(b.observation_joinid)
-                and (a[GENES].to_numpy() == b[GENES].to_numpy()).all())
+                and (a[g].to_numpy() == b[g].to_numpy()).all())
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("name", choices=list(DATASETS))
     ap.add_argument("--threads", type=int, default=2)
+    ap.add_argument("--out", type=Path, default=None, help="output folder (default: the stored dataset folder)")
     a = ap.parse_args()
-    print(build(a.name, a.threads))
+    print(build(a.name, a.threads, out=a.out))
