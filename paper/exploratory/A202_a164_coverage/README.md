@@ -26,3 +26,8 @@ outputs hold per-replicate module estimates per cohort and per-tissue design agg
   when both cohorts give a finite module estimate.
 - **Coverage** of an interval = |D - truth| <= 1.645 x half-width SD; TOST "equivalent" = D -/+ 1.645 x SE_A164 inside
   +/-0.15 (strict), as A164.
+- **Arm B replicate table** (fix 2026-11-04, after the first arm B run stopped in the obesity cells with "need at least 5
+  donors"): the copied donors are those of every tissue's sets, as A164 `boot_chunk` (the first version used only the
+  target tissue's sets). The contrast still uses only the target's labelled donors, so the estimate is unchanged; the
+  chunks already written (t2d cells, 32 obesity delta-0 chunks) were computed with the first version and are kept: for
+  them the host is fitted on the same labelled donors, so only the validation of other compartments differed.

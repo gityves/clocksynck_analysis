@@ -104,15 +104,17 @@ def boot_se(co: Cohort, tabs: dict, ksets: dict, n_boot: int, rng) -> float:
     vals = []
     for _ in range(n_boot):
         draw = rng.choice(len(co.cases), len(co.cases))
+        sets = {t: [(by_case[t][co.cases[i]], j) for j, i in enumerate(draw) if co.cases[i] in by_case[t]]
+                for t in ksets}
+        mp = pd.DataFrame(sorted({(d, f"{d}@{j}") for v in sets.values() for s, j in v for d in s}),
+                          columns=["orig", "copy"])  # donors of every tissue's sets, as A164 `boot_chunk`
         row = []
         for t in ksets:
-            sets = [(by_case[t][co.cases[i]], j) for j, i in enumerate(draw) if co.cases[i] in by_case[t]]
-            mp = pd.DataFrame(sorted({(d, f"{d}@{j}") for s, j in sets for d in s}), columns=["orig", "copy"])
             rep = tabs[t].merge(mp, left_on="donor", right_on="orig")
             rep["donor"] = rep["copy"]
             rep = rep.drop(columns=["orig", "copy"]).reset_index(drop=True)
             ds = cs.Dataset(rep, anchors=[a for a in co.anchors if a in set(rep.compartment)])
-            lab = pd.concat([C.labels([s], copy=j) for s, j in sets])
+            lab = pd.concat([C.labels([s], copy=j) for s, j in sets[t]])
             row.append(C.dstar(ds, lab, t))
         row = np.asarray(row, float)
         vals.append(np.nanmean(row) if np.isfinite(row).any() else np.nan)
