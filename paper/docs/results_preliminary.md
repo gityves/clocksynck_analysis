@@ -3275,3 +3275,36 @@ Realised module truths at ±0.15: T2D ±0.150, obesity ±0.145 (vent obese liver
   `check_columns` compares cell ids and the 13 other genes with the stored file. HLCA is being rebuilt for A203
   (`A203_cells_vs_donors/scripts/rebuild_hlca_cells.sh`); the other six datasets and the reruns of the affected
   readouts wait for a decision (PI_QUESTIONS).
+
+## A203 (scored 2026-11-04): cells do not saturate at 100 per pseudobulk in HLCA; not a Methods design rule (V203.1 and V203.2 each fail on one metric)
+
+HLCA healthy lung, the A17 `lung_hlca` rows regrouped from per-cell counts (acceptance: 1,321 of 1,321 rows exact, after
+the ARNTL rebuild), 198 donors, 14 readout compartments, 50 split halves per level. Median over compartments and splits
+of the between-half difference:
+
+| arm, level | offset (h) | c |
+|---|---|---|
+| cells 10 / 25 / 50 / 100 / 200 / all | 3.98 / 2.43 / 1.45 / 1.07 / 0.93 / 0.86 | 0.000 / 0.045 / 0.066 / 0.074 / 0.075 / 0.090 |
+| donors 50 / 100 / 150 / 198 (all cells) | 4.02 / 2.07 / 1.30 / 0.90 | 0.033 / 0.057 / 0.077 / 0.091 |
+| thinning to 25 / 100 cells' UMI | 2.31 / 1.08 | 0.049 / 0.070 |
+
+- **V203.1 (cells saturate at 100): FAILS on the offset** (1.07 / 0.86 = 1.25 > 1.10); passes on c (0.82).
+- **V203.2 (donors limit): passes on the offset** (2.07 / 0.90 = 2.29 ≥ 1.25); **fails on c** (0.63).
+- **The c metric is not interpretable.** c is truncated at 0, and the share of half pairs with a zero c rises as
+  information falls (cells 10: 0.88, 25: 0.51, 100: 0.15, all: 0.06; donors 50: 0.23, 198: 0.06; `boundary.csv`). Less
+  information pulls both halves to 0 and shrinks |c₁ − c₂|, so err_c decreases with fewer cells and donors. Its pass
+  (V203.1) and its fail (V203.2) both come from the truncation. The registered metric was not fit for c (a design flaw,
+  stated, not re-scored).
+- **Offsets (interpretable):** both cells and donors limit precision at HLCA depth. Error falls steadily up to 200 cells
+  and is still 8 % above the all-cells value there (m₉₅ not reached among the tested levels). Halving donors more than
+  doubles the error (2.29 for 198 → 100; √2 expected for pure donor sampling, the excess plausibly from less stable host
+  fits in 50-donor halves). Per compartment the low-coupled lymphocytes (B, NK/ILC) stay at 2.6-5.8 h at every cell level.
+- **Cell heterogeneity adds little beyond counting noise:** binomial thinning to the UMI of m cells gives nearly the same
+  offset error as subsampling m real cells (25: 2.31 vs 2.43 h; 100: 1.08 vs 1.07 h).
+- **Reading:** not a Methods design rule (registered; user, 2026-11-04). Descriptive answer to the question: at current
+  single-cell depth, clock-gene counts per pseudobulk still limit offset precision below a few hundred cells, so deeper
+  sequencing or more cells per donor would help as well as more donors. Per-cell clock signal behaves like Poisson
+  counts, so pseudobulks lose little relative to a cell-level model. One atlas.
+- Runs: HLCA per-cell rebuild 1,197 s; split fits 983 s (16 workers).
+- Code `paper/exploratory/A203_cells_vs_donors/scripts/{compute_a203,score_a203}.py`.
+<!-- src: paper/exploratory/A203_cells_vs_donors/output/{acceptance,errors,summary,m95,families,boundary,compartments}.csv -->
