@@ -77,9 +77,10 @@ Cross-covariances C_kl of the centred log fractions of compartment pairs across 
 - **Validation.** GTEx (timed): the untimed slopes rank tissues like the timed ones and are compressed about x0.4.
 
 ## 6. Between cells (`cells/vonmises.py`, `desync/common/cell_split.py`, A18 part 2)
-**Not used in the paper (user, 2026-11-04, Q23).** The A18-era per-cell files had ARNTL = 0 (integrity note
-2026-11-04), and at current depth per-cell clock signal behaves like counting noise (A203: thinning to the UMI of m cells
-gives the same offset error as m real cells), so within-sample synchrony is not resolvable. Kept as a record.
+**Scope in the paper (user, 2026-11-04, Q23):** only D, only in malignant cells (WP0 item 2; about 4.3 clock UMI per
+cell, where D separates coherent from scrambled gene phases: 4.70 vs 0.42 in the calibrated simulation). The healthy-atlas
+lambda and R (A18 part 2) are dropped: their per-cell files had ARNTL = 0 (integrity note 2026-11-04) and the readout was
+inconclusive (A144 part 2). Resolution depends on clock UMI per cell; eligibility below stays as the minimum.
 - **D.** Within-sample in-plane dispersion from fraction-scale cross-gene moments, per donor x compartment (>= 100
   cells), minus a permuted-acrophase null. It needs no time and no host.
 - **Coherent amplitude.** rho^2 = c S / (1 - R_W^2), from the anchored coupling, the between-donor clock-plane

@@ -471,6 +471,7 @@ Per the registered reading, c stays reported without intervals (ranks, Δc, d*).
   with the old and new numbers side by side; (ii) drop the per-cell readouts from the paper and keep the erratum.
 - **My recommendation is (i)** if any per-cell number stays in the Extended Data, else (ii).
 - **Answer (user, 2026-11-04):** (ii) drop the per-cell readouts (A18 part 2 per-cell amplitude and synchrony, A144 part 2,
-  the Extended Data per-cell calibration, and the malignant per-cell synchrony row of WP0 item 2) and keep the erratum. The
-  six other per-cell files are not rebuilt. Basis: A203 (descriptive) shows per-cell clock signal at current depth
-  behaves like counting noise, so these readouts have little to resolve; none is in the claims ledger.
+  the Extended Data per-cell calibration) and keep the erratum. Amended the same day: the malignant per-cell D of WP0 item 2
+  stays (cancer files have ARNTL; malignant depth 4.3 clock UMI per cell, where D resolves gene-phase coherence). The
+  six other per-cell files are not rebuilt. Basis: the dropped readouts rest on the ARNTL-zero files and were inconclusive; none is in the claims ledger. A203
+  bears on donor-level precision, not on within-sample readouts such as D.
