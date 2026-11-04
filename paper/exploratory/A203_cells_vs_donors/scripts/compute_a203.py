@@ -121,7 +121,7 @@ def one(arm, level, split, rows, g, X, depth, strata, anchors, readout):
     limit_threads(1)
     warnings.filterwarnings("ignore")
     rng = np.random.default_rng(np.random.SeedSequence([203, ["cells", "donors", "thin"].index(arm),
-                                                        -1 if level is None else int(level), split]))
+                                                        0 if level is None else int(level), split]))  # 0 = all cells
     donors = strata
     if arm == "donors" and level < len(strata):
         frac = level / len(strata)  # within-stratum subsample, rounded per stratum, at least one donor per stratum
