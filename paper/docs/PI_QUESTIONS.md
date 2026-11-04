@@ -470,3 +470,7 @@ Per the registered reading, c stays reported without intervals (ranks, Δc, d*).
 - **Options:** (i) rebuild the six other files (about 3 h of Census streaming, about 9 GB) and rerun the three readouts,
   with the old and new numbers side by side; (ii) drop the per-cell readouts from the paper and keep the erratum.
 - **My recommendation is (i)** if any per-cell number stays in the Extended Data, else (ii).
+- **Answer (user, 2026-11-04):** (ii) drop the per-cell readouts (A18 part 2 per-cell amplitude and synchrony, A144 part 2,
+  the Extended Data per-cell calibration, and the malignant per-cell synchrony row of WP0 item 2) and keep the erratum. The
+  six other per-cell files are not rebuilt. Basis: A203 (descriptive) shows per-cell clock signal at current depth
+  behaves like counting noise, so these readouts have little to resolve; none is in the claims ledger.

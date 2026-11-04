@@ -3308,3 +3308,6 @@ of the between-half difference:
 - Runs: HLCA per-cell rebuild 1,197 s; split fits 983 s (16 workers).
 - Code `paper/exploratory/A203_cells_vs_donors/scripts/{compute_a203,score_a203}.py`.
 <!-- src: paper/exploratory/A203_cells_vs_donors/output/{acceptance,errors,summary,m95,families,boundary,compartments}.csv -->
+- **Decision (user, 2026-11-04, PI_QUESTIONS Q23):** the per-cell readouts are dropped from the paper (plan ED item 8 and
+  the WP0 item 2 per-cell row; METHOD section 6 kept as a record). The six other per-cell files are not rebuilt; HLCA
+  was rebuilt for A203. Basis: A203, cell subsampling behaves like count thinning at current depth.

@@ -519,7 +519,7 @@ Five main figures plus a graphical abstract. Each figure states one claim; its t
 | Specific to psoriasis (atopic dermatitis, other skin diseases, gut) | A59, A79, A82 | Not a generic inflammation effect | ED |
 | Fibrotic-lung T cells lose relative amplitude, two cohorts (Q3 recomputed 2026-10-27 on the A22-confirmed anchors: |z| to 0 in both; HLCA -0.66 [-0.97, -0.13], Natri -0.34 [-1.19, 0.20]; fibroblast companion unchanged) | A98; **new** A118, A119 | A third mode, if procurement is resolved | main if A119 passes, else ED |
 | Taxonomy: incoherent, damped, desynchronised, delayed | schematic | Summarises the modes of breakage | main |
-| Per-cell synchrony vs coherence in malignant cells | WP0 item 2 | Reconciles the two cancer readouts | ED |
+| ~~Per-cell synchrony vs coherence in malignant cells~~ | WP0 item 2 | Dropped 2026-11-04 (user, Q23): per-cell readouts out of the paper | — |
 
 ### Extended Data
 
@@ -530,7 +530,7 @@ Five main figures plus a graphical abstract. Each figure states one claim; its t
 5. Waveform sensitivity, human vs baboon reference.
 6. Glucocorticoid axis in ventilated donors.
 7. Gene-level atlas go/no-go and donor-count curve (A27, A31, A39).
-8. Per-cell amplitude and synchrony, with the WP0 reconciliation.
+8. ~~Per-cell amplitude and synchrony, with the WP0 reconciliation.~~ Dropped 2026-11-04 (user, Q23): per-cell readouts (D, lambda, R) are not in the paper; A203 (descriptive) states why the method works at pseudobulk level.
 9. Development: human fetal and placental attempts (A106, A107, A107b) and embryo robustness (A108b leave-one-day-out, lineage halves of A108c).
 10. Covariate sensitivity (A102) and per-disease contrast tables.
 11. Circadian disruption proxies (WP8): simulated night shift, menstrual cycle, SCAN-B, weekday analysis, including negative results.
