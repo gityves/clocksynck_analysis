@@ -139,7 +139,8 @@ def build():
     segs.append([(mF.real, mF.imag), (mF.real, mF.imag + 0.9)])  # 0 h reference of theta
     kw = dict(obstacles=xy(final), segments=np.array(segs), max_dist=14, leader_from=4, clearance=2.2)  # markers: ~1.9 mm radius
     mus = [0.5 * c["mu"] for c in COMPS.values()]
-    A["mu_labs"] = pf.place_labels(ax, *xy(mus).T, [rf"$\mu_\mathrm{{{k}}}$" for k in COMPS], prefer=[-2.4, 1.7, 2.4],
+    mus[1] = 0.82 * COMPS["E"]["mu"]  # mu_E: between the beta_1 axis and its arrow, clear of the hepatocytes
+    A["mu_labs"] = pf.place_labels(ax, *xy(mus).T, [rf"$\mu_\mathrm{{{k}}}$" for k in COMPS], prefer=[-2.4, -np.pi / 2, 2.4],
                                    fontsize=15, color=INK, **kw)
     tops = [c["c"] + 1j * abs(c["z"] * CLOCK[0]) * (1 if k != "F" else -1) for k, c in COMPS.items()]
     A["names"] = pf.place_labels(ax, *xy(tops).T, [c["name"] for c in COMPS.values()], prefer=[-np.pi / 2, np.pi / 2, np.pi / 2],
