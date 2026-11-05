@@ -1,5 +1,8 @@
 # Introduction references: circadian cycle and internal desynchrony
 
+> **Superseded (2026-11-05)** for claims: the full-text cards in `literature/notes/<key>.md` (quotes checked against the papers) and `literature/synthesis.md` replace the one-line claims below, which were written from abstracts. About 45 claims are wrong or overstated; the list is in `literature/synthesis.md` §3. Keep this file for bibliographic data only.
+
+
 Source of bibliographic data: Crossref (title, authors, year, journal, volume, pages, DOI) for every entry marked verified. Claims are one-line summaries written from the abstracts as known to the compiler, not re-read in full text: check numbers (n, percentages) against the paper before quoting. Open access: PMC id from the NCBI ID converter ('none' = no PMC record found; preprints may be on bioRxiv).
 
 ## 1. The circadian cycle

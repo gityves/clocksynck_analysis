@@ -1,5 +1,8 @@
 # Verified references: Introduction, cancer interaction and phase inference
 
+> **Superseded (2026-11-05)** for claims: the full-text cards in `literature/notes/<key>.md` (quotes checked against the papers) and `literature/synthesis.md` replace the one-line claims below, which were written from abstracts. About 45 claims are wrong or overstated; the list is in `literature/synthesis.md` §3. Keep this file for bibliographic data only.
+
+
 Exact CoPhaser citation: Paychere Y, Salati A, Gobet C, Naef F. CoPhaser: generic modeling of biological cycles in scRNA-seq with context-dependent periodic manifolds. bioRxiv 2025 (posted 26 Dec 2025; v2 exists). doi:10.64898/2025.12.24.696376. Key: paychere2025cophaser.
 scRitmo: Salati A, Paychere Y, Hahaut V, Gobet C, Naef F. Inferring circadian phases and quantifying biological desynchrony across single-cell transcriptomes. bioRxiv 2026. doi:10.64898/2026.03.30.715278.
 
