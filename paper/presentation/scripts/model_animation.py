@@ -9,8 +9,10 @@ hospital hours; then the fitted terms are introduced one at a time: the compartm
 theta_i and amplitude A_i, the compartment loading z_k (endothelial, hepatocyte: rotated by phi_k, scaled by |z_k|),
 the compartment noise sigma_k^2, and the full equation. All values are illustrative, not fitted.
 
-Output (paper/presentation/figures/): model_animation.mp4 (1920 x 864, the slide below its title) and one still per
-step (model_step<k>.png, the last frame of the step). Runs in about a minute.
+Output (paper/presentation/figures/model_animation/, 1920 x 864, the slide below its title): the full video
+model_animation.mp4, and the same content split for slides, in order: model_01.mp4 (the transition of step 1),
+model_02.png (its final frame, to speak over), model_03.mp4 (step 2), model_04.png, ... one clip per animation and one
+image per pause. Runs in about a minute.
 
     python scripts/model_animation.py [--fps 30] [--stills-only]
 """
@@ -23,7 +25,7 @@ from matplotlib.patches import Arc, Circle, FancyArrowPatch, FancyBboxPatch
 
 import paperfig as pf
 
-OUT = Path(__file__).resolve().parents[1] / "figures"
+OUT = Path(__file__).resolve().parents[1] / "figures" / "model_animation"
 WIDTH, HEIGHT = pf.SLIDE_WIDTH, 152.0  # mm: the slide below the title band
 PX_W = 1920
 
@@ -313,29 +315,41 @@ def main():
     fig.set_dpi(PX_W / (WIDTH / 25.4))
     w, h = (int(round(v)) for v in fig.canvas.get_width_height())
     w, h = w - w % 2, h - h % 2
-    OUT.mkdir(exist_ok=True)
-    enc = None
-    if not args.stills_only:
-        enc = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgba",
-                                "-s", f"{w}x{h}", "-r", str(args.fps), "-i", "-", "-c:v", "libx264", "-pix_fmt",
-                                "yuv420p", "-crf", "18", str(OUT / "model_animation.mp4")], stdin=subprocess.PIPE)
+    OUT.mkdir(parents=True, exist_ok=True)
+
+    def encoder(path):
+        return subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgba",
+                                 "-s", f"{w}x{h}", "-r", str(args.fps), "-i", "-", "-c:v", "libx264", "-pix_fmt",
+                                 "yuv420p", "-crf", "18", str(path)], stdin=subprocess.PIPE)
+
+    def frame():
+        fig.canvas.draw()
+        return np.ascontiguousarray(np.asarray(fig.canvas.buffer_rgba())[:h, :w]).tobytes()
+
+    full = None if args.stills_only else encoder(OUT / "model_animation.mp4")
     for s, (_, _, t_in, t_hold) in enumerate(STEPS):
         n_in, n_hold = int(t_in * args.fps), int(t_hold * args.fps)
-        frames = [(i / n_in) for i in range(n_in)] + [1.0] * n_hold if enc else [1.0]
-        for u in frames:
-            update(A, s, u)
-            if enc:
-                fig.canvas.draw()
-                buf = np.asarray(fig.canvas.buffer_rgba())[:h, :w]
-                enc.stdin.write(np.ascontiguousarray(buf).tobytes())
+        clip = None if args.stills_only else encoder(OUT / f"model_{2 * s + 1:02d}.mp4")  # the transition, ending on its final frame
+        for i in range(0 if args.stills_only else n_in + 1):
+            update(A, s, i / n_in)
+            buf = frame()
+            clip.stdin.write(buf)
+            if i < n_in:
+                full.stdin.write(buf)
+        if clip:
+            clip.stdin.close()
+            clip.wait()
         update(A, s, 1.0)
-        fig.savefig(OUT / f"model_step{s + 1}.png", dpi=fig.dpi)
+        buf = frame()
+        for _ in range(0 if args.stills_only else n_hold):
+            full.stdin.write(buf)
+        fig.savefig(OUT / f"model_{2 * s + 2:02d}.png", dpi=fig.dpi)  # the pause
         issues = pf.collisions(fig)
         print(f"step {s + 1}: {len(issues)} collision(s)" + "".join(f"\n  {m}" for _, m in issues), flush=True)
-    if enc:
-        enc.stdin.close()
-        enc.wait()
-        print("wrote", OUT / "model_animation.mp4")
+    if full:
+        full.stdin.close()
+        full.wait()
+    print("wrote", OUT)
 
 
 if __name__ == "__main__":
