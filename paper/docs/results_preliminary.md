@@ -3313,3 +3313,41 @@ of the between-half difference:
   A203). The malignant per-cell D of WP0 item 2 stays: the cancer per-cell files have ARNTL and malignant cells carry
   about 4.3 clock UMI per cell, where D separates coherent from scrambled gene phases. A203 bears on donor-level
   precision only, not on within-sample readouts.
+
+## A204 (run 2026-11-05/06): simulator gate fails on TimeTeller, so A204 is not scored; COFE descriptives are reported, labelled as such
+Registered gate (arm F, written before any readout): COFE |circular correlation| of tumour labels with true times 0.859
+(>= 0.7, passes); TimeTeller median circular error 5.78 h (<= 3 h, **fails**). As registered, A204 stops: H204.1-H204.4 are
+not scored. TimeTeller put 99-100 % of predictions inside 07-20 h even with whole-day sampling (`tt_cells.csv`
+share_7_20), so it does not work on this simulator (likely the healthy-training vs tumour mesor mismatch or our 3 h
+binning; not investigated). Nothing is concluded about the REMAGUS r ≈ 0.
+**Descriptive only (not verdicts; the would-be readouts are in `tests.csv`):** COFE on 14 clock genes, 300 tumours,
+about 60 matched normals, 30 replicates per cell:
+| window, truth | true times: R / largest gap (h) | COFE labels: R / largest gap (h) | Rayleigh p > 0.05 on differences | clocksync pairing p < 0.05 |
+|---|---|---|---|---|
+| 08-18 h, c 0.9 | 0.715 / 11.03 | 0.043 / 0.83 | 18 of 30 | 30 of 30 |
+| 08-18 h, c 0.5 | 0.712 / 10.95 | 0.023 / 0.57 | 22 of 30 | 30 of 30 |
+| 08-18 h, uncoupled | 0.713 / 10.76 | 0.018 / 0.60 | 27 of 30 | 1 of 30 |
+| whole day, c 0.9 | 0.054 / 0.48 | 0.024 / 0.52 | 13 of 30 | 30 of 30 |
+- COFE spreads 08-18 h labels over the whole cycle (largest empty arc 0.83 h vs 11.0 h true) and its CV minimum is
+  interior in every run (its validity signal). Its tumour-normal differences separate coupled (c 0.9) from uncoupled
+  tumours with AUC 0.666 [0.518, 0.804] under working hours (0.928 whole day); clocksync's pairing correlation 1.000 in
+  both, offset 3.05 h (truth 3 h). Even with whole-day sampling, COFE differences pass as uniform in 13 of 30 coupled
+  replicates at about 60 pairs.
+- Reading (descriptive): consistent with the mechanism stated in the prompt (full-cycle labels and weakly informative
+  tumour-normal differences under working hours), but registered only conditional on a gate that failed; quote as a
+  descriptive simulation, not a test. Genome-wide COFE was not simulated.
+<!-- src: paper/exploratory/A204_orderer_uncoupling/output/{gate,tests,cofe_cells,auc,tt_cells}.csv -->
+
+## A205 (scored 2026-11-06): under Saini-type partial shifts the gate passes (V205.1 PASS) but the offset is not bounded by the gene shifts (V205.2 FAIL)
+Target compartment with ARNTL/CLOCK/NPAS2/CRY1 +6 h and the other 10 genes +12 h; 4 intact anchors; n 80; 100 replicates.
+- **V205.1 PASS:** gate passes in 100 of 100 (08-18 h; binomial lower bound 0.96); also 100 % in every cell.
+- **V205.2 FAIL:** offset in [6, 12] h in 1 of 100; circular mean 12.86 h (08-18 h), 14.26 h (whole day), i.e. beyond the
+  larger gene shift. Caveat on the criterion: a coherent 12 h shift (P12) lands in [6, 12] in only 46-47 % because
+  estimates scatter around the 12 h edge; the whole-day value 14.26 h is nevertheless clearly outside.
+- **Descriptive:** incoherence reads as a weaker clock: coupling 0.695 vs 0.836 (P0, W), log relative amplitude -0.39
+  (P12: -0.01); clock share 0.931 vs 0.976. With +3 h / +12 h: coupling 0.262, log amplitude -1.35, offset 11.28 h (W).
+- **Reading:** the gate is a clock test, not a waveform test: a compartment whose loops shift unequally passes it and
+  returns an offset that is not an average of the gene shifts (here 1-2 h beyond the larger one) together with lower |z|
+  and c. A measured offset or amplitude drop therefore cannot be attributed to one loop, and a lower |z| alone does not
+  distinguish a damped clock from an internally incoherent one. To add to METHOD.md assumptions (conserved waveform).
+<!-- src: paper/exploratory/A205_partial_shift_gate/output/{tests,cells,per_rep}.csv -->

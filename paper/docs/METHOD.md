@@ -116,6 +116,7 @@ inconclusive (A144 part 2). Resolution depends on clock UMI per cell; eligibilit
 | Living human skin, epidermis vs dermis (A37) | untimed offset -1.6 vs timed -2.2 h; per-sample rho 0.505 | `desync/validation/skin_paired/` |
 | MASLD hepatocyte coupling (A38) | 0.68 -> 0.54, n.s. (MDE 0.45) | `desync/validation/masld/` |
 | Farm-animal GTEx (A34) | sheep gate passes (343 animals, 45 tissues); tissue phase order not conserved with human (r -0.19) | `desync/validation/farm_gtex/` |
+| Gene-specific partial shifts in one compartment (A205; Saini 2013 pattern, loop genes +6 h, others +12 h) | gate passes (100 %); offset not bounded by the gene shifts (12.9-14.3 h); incoherence lowers c and abs(z): a lower amplitude does not separate a damped from an internally incoherent clock | `paper/exploratory/A205_partial_shift_gate/output/` |
 
 ## 8. Not identified, not implemented
 - **Not identified without times:** absolute amplitude and phase, the host's own ageing, and per-gene waveforms.
