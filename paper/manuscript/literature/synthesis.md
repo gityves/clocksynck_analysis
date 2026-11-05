@@ -2,7 +2,7 @@
 
 Built from the cards in `notes/` (full texts of the Zotero export, quotes checked by `check_quotes.py`). Numbers here
 are taken from the cards' verbatim quotes; follow the key to the card for the quote and its location.
-Status: methods and hospital-hours sections complete; claims matrix in progress (background batches running).
+Status: all 148 full texts carded (144 + 4), 865+ quotes verified; claims matrix to be built with the introduction.
 
 ## 1. Hospital hours: what the literature states
 
@@ -14,6 +14,7 @@ Status: methods and hospital-hours sections complete; claims matrix in progress 
 | TCGA inferred phases "concentrated during the presumed working day"; GTEx more uniform but biased | li2024tumor | inferred phases (CYCLOPS 2.0), not recorded times |
 | GTEx deaths cover the day: 351 (08-17 h), 315 (21-05 h), 266 twilight donors ≈ 38 per hour in each window | wucher2023day | published aggregate (recorded TOD) |
 | Collection time usually unrecorded; most dosing-time trials compare two time points | ruben2019dosing | perspective |
+| Recorded surgery times (end of anaesthesia) of 302 GBM patients analysed in 2 h bins "from 10am to 6pm"; authors: "we do not know what happens to MGMT promoter methylation from around 6pm until 10am" | gonzalezaponte2025circadian | only recorded hospital-hours distribution in our set |
 | Recorded resection times (Manchester breast, REMAGUS breast) exist only for small subsets | li2024tumor, vasilyev2026robust | data |
 | Orderers degrade on incomplete cycles (14-18 h synthetic spans) | han2025dcpr | only benchmark of partial coverage; numbers in SI |
 
@@ -68,6 +69,7 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 - sulli2018pharmacological: clock-independence of SR9009/SR9011 lethality not shown. fortin2024circadian: epithelial clock loss abolishes (not raises) the MDSC rhythm; scRNA at one time point.
 - schwabe2020transcriptome (Revelio): PCA rotation, not spliced/unspliced (that is riba2022cell). thaben2016differential (DODR): not limma-based. pelikan2021venn: hypothesis testing preferred over model selection.
 - grabe2024quantification: human data are TCGA-LUAD paired normal/tumour, not GTEx lung. agostinelli2016what: mouse only. mello2026rhythms: immune-tumour content minor.
+- thegtexconsortium2020gtex: no time of death, Hardy scale or ventilation in the paper (dbGaP only); cite for cohort sizes. GTEx donors are post-mortem/organ donors without exclusion of common diseases (lonsdale2013genotype): write "non-cancer reference", not "healthy".
 - hollis2025reconstructed: snRNA-seq pseudobulk per cell type, not bulk deconvolution. galinde2023different: does not state a lack of human biomarkers (cite for the 4-level desynchrony taxonomy only).
 
 ## 4. Verification ideas (checked against METHOD.md / registered / results; "new" = not found there)
