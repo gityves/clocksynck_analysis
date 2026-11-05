@@ -26,7 +26,7 @@ genes with BIC weight below 0.4 labelled ambiguous. Phase change below 4 h or am
 - Time points and replicates per time point are not retrievable from the extracted text.
 
 ## Link to us
-- **Intro claim(s):** refs_circadian_desynchrony.md claim: microbiome required for sex-specific diurnal liver rhythms; sex effects in rodent rhythms. SUPPORTED (liver and WAT, GF vs ConvR); the file also marks this as Naef-lab coauthor, true (Naef corresponding on the ref list but last-author correspondence is Gachon).
+- **Intro claim(s):** refs_circadian_desynchrony.md claim: microbiome required for sex-specific diurnal liver rhythms; sex effects in rodent rhythms. SUPPORTED (liver and WAT, GF vs ConvR); the refs file labels this Naef-lab coauthor, which is true (Naef is a co-author; correspondence is Gachon).
 - **Relation to clocksync:** background for sex as a covariate of rhythm amplitude and for the finding that the molecular clock stays similar while output rhythms differ (supports reading the clock-gene panel as the shared state).
 
 ## Ideas

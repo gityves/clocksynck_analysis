@@ -27,7 +27,7 @@ published mouse tissue time courses (11 tissues; mice in constant darkness for 1
 - Clock-gene phase spread across tissues is reported as a window (about 6 h), not decomposed into shared and tissue-specific offsets.
 
 ## Link to us
-- **Intro claim(s):** refs_circadian_desynchrony.md claim: baboon atlas, 64 tissues, 2 h sampling, tissue-specific rhythmic programs. SUPPORTED. The claim "~82 %" is the 81.7 % of expressed PCGs. WRONG attribution in refs_circadian_desynchrony.md: "Naef lab, with Mure" is not right: Mure is at the Panda lab, Salk; no Naef author.
+- **Intro claim(s):** refs_circadian_desynchrony.md claim: baboon atlas, 64 tissues, 2 h sampling, tissue-specific rhythmic programs. SUPPORTED. The claim of about 82 % is the 81.7 % of expressed PCGs. WRONG attribution in refs_circadian_desynchrony.md: the entry calling it Naef lab with Mure is not right: Mure is at the Panda lab, Salk; no Naef author.
 - **Relation to clocksync:** data we could use; background for tissue-specific offsets in a diurnal primate (human-like phase relative to light).
 
 ## Ideas

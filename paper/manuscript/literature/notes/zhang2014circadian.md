@@ -29,10 +29,10 @@ rhythmic genes (Fig. 2B). No inference of time or of organ phase offsets from un
 - Compares organs only through gene-level phases; never estimates a per-organ clock state or its coupling to a host.
 
 ## Link to us
-- **Intro claim(s):** refs_circadian_desynchrony.md and refs_cancer_phase_inference.md claim: 43 % of protein-coding genes rhythmic in at least one of 12 mouse tissues, mostly tissue-specific. SUPPORTED (43 %, 12 organs, mostly organ-specific confirmed). The "12 tissues" and "~43 %" are for array JTK at FDR 5 %.
+- **Intro claim(s):** refs_circadian_desynchrony.md and refs_cancer_phase_inference.md claim: 43 % of protein-coding genes rhythmic in at least one of 12 mouse tissues, mostly tissue-specific. SUPPORTED (43 %, 12 organs, mostly organ-specific confirmed); the 43 % is for array JTK_CYCLE at FDR 5 %.
 - **Relation to clocksync:** background and data we could use. It documents that core clocks stay within about 3 h across organs in a healthy mouse (the shared host state) while outputs diverge, which is the premise of reading each compartment against the host.
 
 ## Ideas
 - Use GSE54652 as a ground-truth test of clocksync on mice: per-time-point organ pseudobulks of clock genes, check c, |z|, arg z against the known 3 h clock-gene spread and the muscle/cerebellum 1 to 2 h offsets (with only 24 samples per organ, one donor per time point).
 - Simulate hospital hours by keeping only 8 to 12 time points of the day and verify that offsets survive (our central claim for untimed day-only sampling).
-- Citable for "most rhythmic genes are tissue-specific" together with Mure 2018 (baboon, 82 %) and Yeung 2018.
+- Citable for tissue specificity of rhythmic genes together with Mure 2018 (baboon, 82 %) and Yeung 2018.
