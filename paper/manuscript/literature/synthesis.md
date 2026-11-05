@@ -10,7 +10,7 @@ Status: methods and hospital-hours sections complete; claims matrix in progress 
 |---|---|---|
 | Orderers need the whole cycle: "It requires data from the entire periodic cycle to form an ellipse. Biopsies are almost exclusively obtained during the day." | anafi2017cyclops | author's own limitation, verbatim |
 | "Most computational methods for quantifying circadian rhythmicity and inferring the status of the clock require that samples be acquired over the entire 24-h cycle." | shilts2018evidence | verbatim |
-| Surgical biopsies in working hours (~6 am-6 pm) | anafi2017cyclops, shilts2018evidence | stated, not measured |
+| Surgical biopsies in working hours (~6 am-6 pm) | anafi2017cyclops, shilts2018evidence, grabe2024quantification ("clinical samples are collected during surgical working hours that are not evenly spread across the day") | stated, not measured |
 | TCGA inferred phases "concentrated during the presumed working day"; GTEx more uniform but biased | li2024tumor | inferred phases (CYCLOPS 2.0), not recorded times |
 | GTEx deaths cover the day: 351 (08-17 h), 315 (21-05 h), 266 twilight donors ≈ 38 per hour in each window | wucher2023day | published aggregate (recorded TOD) |
 | Collection time usually unrecorded; most dosing-time trials compare two time points | ruben2019dosing | perspective |
@@ -45,6 +45,7 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 | BayCT-M (xue2026bayesian) | donor shift shared by 3 brain regions | TOD prior | needs TOD | learned | one shared shift, no per-compartment coupling | — |
 | CYCLOPS 2.0 on snRNA brain (hollis2025reconstructed) | donor (one phase from excitatory neurons, applied to all cell types) | none | yes | learned | no (cell types share the donor phase by construction) | — |
 | ORPHEUS (hollis2026singlecell) | cells within a cell type: gene-wise phase dispersion | needs subject phases (time course or CYCLOPS) | yes | — | no | — |
+| Grabe 2024 (grabe2024quantification) | sample; tumour ordered by its paired normal's inferred time | none on target (gene list from timed mouse/baboon) | assumed ("facilitated, if a dataset covers a full circadian cycle"); partial coverage untested | reference correlations to PER3 | tumour vs own normal (closest host-referencing precedent), no coupling estimate, no gate, no CI | — |
 | Zhang 2025 (zhang2025inferring) | phase differences from co-expression | reference matrices | no | reference | no | — |
 | **clocksync** | donor × compartment | none (host-referenced) | **no** (constant offsets cancel) | fixed acrophases shared (CoPhaser idea) | **yes: c, abs(z), arg z per compartment** | Poisson V_ik + compartment σ² |
 
@@ -66,6 +67,7 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 - wu2019pan: loss of rhythm inferred from mean mRNA only (cite for copy-number down-regulation). shaashua2020stromal: global host Per knockouts, not stroma-specific. broadberry2018disrupted: rhythm in 3 patients, qPCR in 8.
 - sulli2018pharmacological: clock-independence of SR9009/SR9011 lethality not shown. fortin2024circadian: epithelial clock loss abolishes (not raises) the MDSC rhythm; scRNA at one time point.
 - schwabe2020transcriptome (Revelio): PCA rotation, not spliced/unspliced (that is riba2022cell). thaben2016differential (DODR): not limma-based. pelikan2021venn: hypothesis testing preferred over model selection.
+- grabe2024quantification: human data are TCGA-LUAD paired normal/tumour, not GTEx lung. agostinelli2016what: mouse only. mello2026rhythms: immune-tumour content minor.
 - hollis2025reconstructed: snRNA-seq pseudobulk per cell type, not bulk deconvolution. galinde2023different: does not state a lack of human biomarkers (cite for the 4-level desynchrony taxonomy only).
 
 ## 4. Verification ideas (checked against METHOD.md / registered / results; "new" = not found there)
@@ -89,6 +91,9 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 - new: Fortin 2024 Apc/epithelial-Bmal1 mouse (epithelial clock off, spleen intact) as a controlled cross-compartment desynchrony positive, if timed data are public.
 - motivation: Diamantopoulou 2022 (CTC timing driven by host hormones, tumour clock genes not differential) supports host-referenced readout; parallels A138/A149.
 - methods support: pelikan2021venn (Venn comparisons of thresholded lists: 48 % false differential hits) justifies direct permutation contrasts over counting gate-passing units; phillips2020circadian and nikhat2026transcriptional justify pseudobulks (24 h explains ~all variance when pooling ~1,000 cells; 20-70 cells × 3 genes ≈ 1 h): compare with A203 (registered, unscored) when scoring.
+- new: Grabe 2024 procedure (PER3-correlation shifts; tumour ordered by the paired normal's time) on TCGA-LUAD vs clocksync coupling (A171 covers LUAD coherence only).
+- new: tauFisher timed dermis scRNA (GSE223109, fibroblasts vs immune, 4 h over 72 h) as timed truth for cell-type coupling and |z| (V13/A31 are colon/skin, different sets).
+- new: gate vs technical cyclic artefacts (Oscope C1 chip position, leng2015oscope).
 - done: ORPHEUS bias under subject-phase error (V14); RADC/brain AD contrasts (A135, A141, mostly not estimable).
 - done: baboon (A36/A40/A41), living skin epidermis/dermis (A37, Del Olmo), forced desynchrony blood (GSE48113), TimeTeller/COFE/CYCLOPS 2.0/CHIRAL benchmark (V2), Manchester breast pairs (A25 V25.5, A146), orderers under working hours (A145, A123).
 
