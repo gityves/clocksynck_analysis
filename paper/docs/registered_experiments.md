@@ -3766,3 +3766,28 @@ clocksync's corr, on the same replicates; TimeTeller power per c_T and window an
 **Stop rule:** one amendment; no truth level, window or threshold added after any readout is seen.
 **Compute:** about 180 COFE and 450 TimeTeller runs of about 30 s each, 8 workers, about 1 h; through `paper/common/run.sh`.
 **Code:** `paper/exploratory/A204_orderer_uncoupling/`.
+
+## A205 (2026-11-05, literature follow-up item 4a; written before any simulation of it): does the gate pass, and where does the offset land, when the genes of one compartment shift by different amounts? **Simulation, method (V205.1-2), secondary**
+
+**Why.** After feeding inversion, liver Bmal1-luc shifts about 6-7 h while Rev-erbα and PER2 shift about 12 h (Saini 2013,
+Kiessling 2010 cards). clocksync assumes one shift per compartment (conserved waveform). METHOD.md tests scrambled
+phases only; A139 tested refit and flags (both failed) but never computed the gate or the offset bias for this pattern
+(its D139.3 was not run).
+**Simulator:** A145 design (`clocksync.simulate`, GTEx 14 genes, defaults), 4 anchors (z 1, c 0.9) and one target
+(z 1, c 0.9, offset 0) whose genes carry `gene_shift_h`:
+- P0: none (reference); P12: all 14 genes +12 h (coherent shift); P_partial: ARNTL, CLOCK, NPAS2, CRY1 (the
+  Bmal1 loop, about 6 h) +6 h, the other 10 genes +12 h; P_partial3: the same with +3 h / +12 h (stronger incoherence).
+Windows F (0-24 h) and W (08-18 h, jitter 1 h); n = 80 donors; 100 replicates per cell (seed `[205, ...]`).
+**Fit:** `Dataset.fit(n_boot=0, force=True)`, 4 anchors, leave-one-out host; gate (`passes`, clock share) and the target's
+offset (relative to the anchors' circular mean), coupling and log relative amplitude.
+**Validation criteria (W, the primary window):**
+- **V205.1 (the gate tests a shared clock, not the waveform):** the gate passes in >= 80 % of P_partial replicates
+  (anchors are intact, so a clock is present). Fail → the gate also rejects incoherent compartments; METHOD.md states it.
+- **V205.2 (offset stays within the gene shifts):** the target offset lies in [6, 12] h in >= 90 % of P_partial
+  replicates (the readout is an average of the gene shifts, not an artefact outside them).
+**Descriptive:** per cell, gate pass rate, median offset (and its position between 6 and 12 h as a weight), coupling and
+|z| against P0 and P12 (does incoherence read as lower amplitude or coupling?), P_partial3 the same.
+**Reading:** V205.1-2 pass → METHOD.md: a compartment whose genes shift unequally passes the gate and returns an offset
+between the gene shifts, with lower |z| (if seen); a measured offset is then not attributable to a single loop. Stop
+rule: one amendment, no new scenario after scoring.
+**Code:** `paper/exploratory/A205_partial_shift_gate/`.
