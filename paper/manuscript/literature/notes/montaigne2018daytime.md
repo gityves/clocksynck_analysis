@@ -13,7 +13,7 @@ Propensity score matching, Cox model, randomisation, differential expression (fo
 - Randomised: troponin T AUC 179 ng/L (afternoon) vs 225 ng/L (morning); "estimated ratio of geometric means for afternoon to morning of 0·79 [95% CI 0·68–0·93; p=0·0045]" (Fig 2A).
 - Same team did both slots: "the same surgical team did both morning and afternoon" surgery on the same day.
 - Atrial biopsies: contraction recovery after hypoxia-reoxygenation better in afternoon samples (Fig 2B).
-- Transcriptome: "showed that the expression of 287 genes was" regulated by time of day, "circadian rhythm" enriched; REV-ERBa high in the morning, BMAL1/ARNTL anti-phasic: "prominently expressed during the afternoon when" REV-ERBa is low (Fig 2E).
+- Transcriptome: "showed that the expression of 287 genes was" regulated by time of day, the KEGG theme circadian rhythm is enriched; REV-ERBa high in the morning, BMAL1/ARNTL anti-phasic, with BMAL1 "prominently expressed during the afternoon when" REV-ERBa is low (Fig 2E).
 - Mouse: Rev-Erba deletion or antagonist protects at the sleep-to-wake transition via CDKN1a/p21.
 
 ## Not addressed / limits

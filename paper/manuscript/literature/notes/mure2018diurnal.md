@@ -14,7 +14,7 @@ published mouse tissue time courses (11 tissues; mice in constant darkness for 1
 
 ## Key results
 - Rhythmicity is pervasive: "with up to 81.7% of protein-coding genes showing daily rhythms in expression" (15,269 of 18,684 expressed PCGs); 16,442 genes (65.5 % of expressed) rhythmic in at least one tissue.
-- Tissue specific: even in tissues with many cyclers, "less than 1% (<10) rhythmic genes were shared" between tissues (more than 1000 rhythmic genes); number cycling per tissue from below 200 (pineal, bone marrow, SCN-adjacent regions) to above 3000 (thyroid, gastric fundus, PVN, prefrontal cortex).
+- Tissue specific: even in tissues with many cyclers, "less than 1% (<10) rhythmic genes were shared" between tissues (more than 1000 rhythmic genes); number cycling per tissue from below 200 (pineal, mesenteric lymph nodes, supraoptic nucleus, lateral hypothalamus, bone marrow) to above 3000 (thyroid, stomach fundus, gastrocnemius, PVN, prefrontal cortex).
 - 97 % of 10,989 ubiquitously expressed genes cycle somewhere: rhythms add a tissue-specific layer to housekeeping functions.
 - Global timing: peaks at ZT8 (11,146 genes) and ZT22 (5,127 genes), a quiescent zone at ZT14-19 (696 genes at ZT16).
 - Clock genes: "the peak phase of expression of each clock component was mostly restricted" to about a 6 h window across tissues; e.g. Bmal1 ZT13.3 +/- 0.2 and Npas2 ZT14.3 +/- 0.5. Relative phases "components are remarkably conserved across" tissues; no clock gene cycles in all 64 tissues (Ciart in 52).
