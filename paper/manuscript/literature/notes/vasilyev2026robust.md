@@ -19,6 +19,7 @@ TimeTeller (ref [38] in the paper, trained on healthy time series) applied to 12
 - Theta barely tracks proliferation (r = 0.07).
 
 ## Not addressed / limits
+- **Caveat (checked in the text by the lead):** the 93.2% is before a reassignment: off-window samples with a secondary likelihood peak in the working day were moved there ("we reassigned TT time to the secondary peak"), so the working-day concentration is partly imposed. The lack of correlation with sampling time is within a narrow working-hours window (small spread of sampling times, n = 108), where low power or estimation noise also predict r ≈ 0; the authors argue against chronotype from the error distribution only.
 - Breast cancer only: "Our study focused exclusively on breast cancer, and generalizability to other tumour types remains unknown." Our refs line ("across cancers") is OVERSTATED.
 - Retrospective, 6 cohorts with different treatments; bulk tissue (tumour vs stroma/immune unresolved); microarray only (no RNA-seq training set).
 - The near-universal working-day TT times and the absent correlation with sampling time (n = 108) could also reflect the training window or a collapsed signal; the authors add a lasso day/night check but no negative control (for example healthy hospital-hours tissue).
