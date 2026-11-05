@@ -50,9 +50,12 @@ def _full_fit(X, s, seed):
 
 
 def run_cofe(logexpr: pd.DataFrame, s_choices=None, n_s: int = 20, seed: int = 0, ncores: int = MAX_THREADS,
-             K: int = 5, repeats: int = 3, restarts: int = 5) -> dict:
+             K: int = 5, repeats: int = 3, restarts: int = 5, test: pd.DataFrame | None = None) -> dict:
     """`logexpr`: samples x genes (log scale). Returns phase (h, arbitrary origin and direction), the
-    cross-validation curve, the chosen sparsity, and the loadings of the two cyclic components."""
+    cross-validation curve, the chosen sparsity, and the loadings of the two cyclic components. `test`: samples x the
+    same genes, not used in training, given time labels by COFE's test rule (centred and scaled by the training means
+    and SDs, projected on the loadings; `cross_validate` with train = False); returned as `test_phase` (h, same
+    origin and direction as `phase`)."""
     a = ad.AnnData(logexpr.to_numpy(float), obs=pd.DataFrame(index=logexpr.index.astype(str)),
                    var=pd.DataFrame(index=logexpr.columns.astype(str)))
     a.obs["train"] = True
@@ -86,10 +89,17 @@ def run_cofe(logexpr: pd.DataFrame, s_choices=None, n_s: int = 20, seed: int = 0
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         a = COFE.estimate_phase(a, train=True)
+    test_phase = None
+    if test is not None:
+        Xt = (test[logexpr.columns].to_numpy(float) - a.var["mean"].to_numpy()) / a.var["std"].to_numpy()
+        Y = Xt @ a.varm["PCs"]
+        test_phase = pd.Series((np.arctan2(Y[:, 1], Y[:, 0]) / (2 * np.pi)) % 1 * a.uns["period"], index=test.index,
+                               name="phase")
     return {
         "phase": a.obs["phase"].reindex(logexpr.index.astype(str)).set_axis(logexpr.index).rename("phase"),
         "cv": cv,
         "best_s": float(s_choices[best]),
         "interior_min": 0 < best < len(cv) - 1,
         "loadings": pd.DataFrame(a.varm["PCs"], index=a.var_names, columns=["v1", "v2"]),
+        "test_phase": test_phase,
     }
