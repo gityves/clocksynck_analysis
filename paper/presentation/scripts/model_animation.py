@@ -144,7 +144,7 @@ def build():
                                    fontsize=15, color=INK, **kw)
     tops = [c["c"] + 1j * abs(c["z"] * CLOCK[0]) * (1 if k != "F" else -1) for k, c in COMPS.items()]
     A["names"] = pf.place_labels(ax, *xy(tops).T, [c["name"] for c in COMPS.values()], prefer=[-np.pi / 2, np.pi / 2, np.pi / 2],
-                                 fontsize=13, color=MUTED, **kw)
+                                 fontsize=13, color=MUTED, **{**kw, "leader_from": np.inf})  # names need no leader
     A["theta_lab"] = pf.place_labels(ax, *xy(theta_anchor).T, [r"$\theta_1$"], prefer=[mid], fontsize=14, color=PAT[0], **kw)
     phi_anchor = []
     for k in ("E", "H"):  # middle of the final phase arc
