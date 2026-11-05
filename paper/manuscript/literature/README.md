@@ -41,5 +41,5 @@ supervised training data); outputs.
 - Checks we could run; methods to compare; references it cites that we lack.
 ```
 
-Quotes are verbatim, in straight double quotes, at least 20 characters; `check_quotes.py` must report none missing
+Quotes are verbatim, in straight double quotes, at least 20 characters (paraphrases never in double quotes); `check_quotes.py` must report none missing
 before a card is used.
