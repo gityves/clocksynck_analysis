@@ -21,6 +21,7 @@ import subprocess
 from pathlib import Path
 
 import numpy as np
+from PIL import Image
 from matplotlib.patches import Arc, Circle, FancyArrowPatch, FancyBboxPatch
 
 import paperfig as pf
@@ -343,7 +344,7 @@ def main():
         buf = frame()
         for _ in range(0 if args.stills_only else n_hold):
             full.stdin.write(buf)
-        fig.savefig(OUT / f"model_{2 * s + 2:02d}.png", dpi=fig.dpi)  # the pause
+        Image.frombytes("RGBA", (w, h), buf).save(OUT / f"model_{2 * s + 2:02d}.png")  # the pause, pixel-identical to the clip
         issues = pf.collisions(fig)
         print(f"step {s + 1}: {len(issues)} collision(s)" + "".join(f"\n  {m}" for _, m in issues), flush=True)
     if full:
