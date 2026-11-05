@@ -1,15 +1,13 @@
 """Slide video: the host-referenced factor model, built step by step in the clock plane.
 
-    beta_ik = mu_k + z_k f_i + e_ik,   z_k = |z_k| exp(i phi_k),   e_ik ~ N(0, sigma_k^2 I + V_ik)
+    beta_ik = mu_k + z_k f_i + e_ik,   f_i = A_i exp(i theta_i),   z_k = |z_k| exp(i phi_k),   e_ik ~ N(0, sigma_k^2 I + V_ik)
 
 One colour per patient, one marker per compartment, on a clock face (midnight on top, the day turning clockwise).
 The host state is centred over patients (sum_i f_i = 0), so mu_k is the mean of compartment k's points: with sampling
 in hospital hours it is not the centre of the cycle. Fibroblasts (the reference, z_F = 1) appear first, sampled in
-hospital hours; then the terms are introduced one at a time: the compartment mean mu_k, the patient's true clock
-(phase theta_i and amplitude A_i around the centre of the cycle, which is unknown, so these are never estimated), the
-host state f_i the model does estimate (the patient's deviation from the cohort mean, f_i = A_i exp(i theta_i) - mean:
-its angle is not the sampling time, as patient 4 shows), the compartment loading z_k (endothelial, hepatocyte: rotated
-by phi_k, scaled by |z_k|), the compartment noise sigma_k^2, and the full equation. All values are illustrative.
+hospital hours; then the fitted terms are introduced one at a time: the compartment centre mu_k, the patient phase
+theta_i and amplitude A_i, the compartment loading z_k (endothelial, hepatocyte: rotated by phi_k, scaled by |z_k|),
+the compartment noise sigma_k^2, and the full equation. All values are illustrative, not fitted.
 
 Output (paper/presentation/figures/): model_animation.mp4 (1920 x 864, the slide below its title) and one still per
 step (model_step<k>.png, the last frame of the step). Runs in about a minute.
@@ -31,7 +29,7 @@ PX_W = 1920
 
 # ---- the illustrative model --------------------------------------------------------------------------------
 HOURS = np.array([8.5, 10.0, 11.5, 13.0, 15.0, 17.0])  # sampling hour of each patient (unknown to the method)
-AMP = np.array([1.0, 1.0, 1.0, 0.5, 1.0, 1.0])  # A_i: patient 4 has a weaker clock
+AMP = np.array([1.0, 1.0, 1.0, 0.85, 1.0, 1.0])  # patient 4 has a weaker clock (kept in phase order once centred)
 THETA = 2 * np.pi * HOURS / 24  # clock phase of each patient (radians, 0 = midnight)
 CLOCK = 1.35 * AMP * np.exp(1j * THETA)  # clock state (fibroblast units); its angle is the clock phase
 F = CLOCK - CLOCK.mean()  # host state f_i, centred over patients: what the model estimates
@@ -44,24 +42,20 @@ def D(w):
 
 
 COMPS = {  # centre of the cycle (on screen), z_k, marker, noise sd
-    "F": dict(name="fibroblast", c=2.3 + 1.85j, z=1.0 + 0j, marker="o", sd=0.08),
-    "E": dict(name="endothelial", c=6.7 + 1.3j, z=0.75 * np.exp(1j * np.pi / 4), marker="^", sd=0.09),  # 3 h ahead
-    "H": dict(name="hepatocyte", c=3.4 - 1.7j, z=1.15 * np.exp(-1j * np.pi / 3), marker="s", sd=0.2),  # 4 h behind
+    "F": dict(name="fibroblast", c=3.0 - 1.45j, z=1.0 + 0j, marker="o", sd=0.08),
+    "E": dict(name="endothelial", c=6.9 + 1.0j, z=0.75 * np.exp(1j * np.pi / 4), marker="^", sd=0.09),  # 3 h ahead
+    "H": dict(name="hepatocyte", c=2.5 + 2.05j, z=1.15 * np.exp(-1j * np.pi / 3), marker="s", sd=0.2),  # 4 h behind
 }
 for _c in COMPS.values():  # mu_k: the mean of the compartment's points
     _c["mu"] = _c["c"] + D(_c["z"] * CLOCK.mean())
 NOISE = {k: np.random.default_rng(i).normal(0, c["sd"], (len(F), 2)) @ np.array([1, 1j]) for i, (k, c) in enumerate(COMPS.items())}
 INK, MUTED, HIGHLIGHT = "#222222", pf.GREY, "#fff1a8"
-VIEW = np.array([-0.8, 8.6, -3.6, 3.45])  # xlim, ylim of the plane
-ZOOM = np.array([0.05, 4.55, 0.12, 3.495])  # the fibroblasts (same aspect), for the patient clock in steps 3-4
 
 STEPS = [  # caption, sub-caption, seconds of transition, seconds of hold
     ("Fibroblasts of six patients", "each sampled once, between 08 and 18 h", 3.0, 2.5),
     (r"$\mu_k$: the compartment mean", "constant offsets (baseline, platform) only move it;\nnot the centre of the cycle: sampling covers 08-18 h only", 1.5, 3.5),
-    (r"$\theta_i$, $A_i$: each patient's clock", "phase (clockwise from the top) and amplitude\naround the centre of the cycle;"
-     "\nthe centre is unknown, so they are never estimated", 2.0, 3.5),
-    (r"$f_i$: what the model estimates", r"the patient's deviation from the mean $\mu_\mathrm{F}$;" + "\n"
-     "its angle is not the sampling time:\nsee patient 4 (weaker clock), sampled at 13 h", 1.5, 4.5),
+    (r"$\theta_i$: the patient's phase", r"its angle around $\mu_k$, read clockwise from the top", 1.5, 3.0),
+    (r"$A_i$: the patient's amplitude", r"its distance from $\mu_k$; patient 4 has a weaker clock", 1.5, 3.0),
     ("Endothelial cells: the same patients", r"moved to $\mu_\mathrm{E}$, rotated by $\varphi_\mathrm{E}$, scaled by $|z_\mathrm{E}|$", 4.0, 3.0),
     ("Hepatocytes", r"rotated by $\varphi_\mathrm{H}$, scaled by $|z_\mathrm{H}|$" + "\n" + r"fibroblasts are the reference: $z_\mathrm{F} = 1$", 3.0, 3.0),
     (r"$\sigma_k^2$: each compartment's own noise", "hepatocytes follow the shared time less closely", 1.5, 3.0),
@@ -108,11 +102,11 @@ def build():
     lay = pf.Layout("PD;PE", width=WIDTH, height=HEIGHT, letters=False, col_ratios=[1.75, 1], row_heights=[1, 2.2],
                     polar="D", blank="PE", aspect={"P": 0.75}, anchor="C", margins=(3, 3, 3, 3))
     ax, dial, eqa = lay.axes["P"], lay.axes["D"], lay.axes["E"]
-    ax.set(xlim=VIEW[:2], ylim=VIEW[2:])
+    ax.set(xlim=(-0.8, 8.6), ylim=(-3.6, 3.45))
     for a, b, lab, off in (((-0.6, 0), (8.0, 0), r"$\beta_1$", (0, -16)), ((0, -3.4), (0, 3.0), r"$\beta_2$", (-22, -10))):
         ax.annotate("", xy=b, xytext=a, arrowprops=dict(arrowstyle="-|>", color=MUTED, lw=1.0, mutation_scale=12))
         ax.annotate(lab, xy=b, xytext=off, textcoords="offset points", color=MUTED, ha="center")
-    A = {"ax": ax}
+    A = {}
     for k, c in COMPS.items():
         A[k, "circle"] = ax.add_patch(Circle((c["c"].real, c["c"].imag), abs(c["z"] * CLOCK[0]), fill=False, ec="#c8c8c8", lw=1.0, ls=(0, (4, 3))))
         A[k, "mu"] = ax.add_patch(FancyArrowPatch((0, 0), (c["mu"].real, c["mu"].imag), arrowstyle="-|>", mutation_scale=14,
@@ -121,15 +115,13 @@ def build():
         A[k, "noise"] = [ax.add_patch(Circle((p.real, p.imag), c["sd"], fill=False, ec=PAT[i], lw=0.8, ls=":", zorder=4))
                          for i, p in enumerate(c["mu"] + D(c["z"] * F))]
         A[k, "links"] = [ax.plot([], [], color=PAT[i], lw=0.8, ls=":", zorder=2)[0] for i in range(len(F))]
-    mF, cF = COMPS["F"]["mu"], COMPS["F"]["c"]
-    A["rays"] = [ax.plot(*xy([mF, mF + D(f)]).T, color=PAT[i], lw=1.2, zorder=3)[0] for i, f in enumerate(F)]  # f_i
-    A["true"] = [ax.plot(*xy([cF, cF + D(w)]).T, color=PAT[i], lw=1.2, zorder=3)[0] for i, w in enumerate(CLOCK)]
-    A["centre"] = ax.plot([cF.real], [cF.imag], marker="+", ms=9, mew=1.2, color=MUTED)[0]
-    A["ref"] = ax.plot([cF.real, cF.real], [cF.imag, cF.imag + 0.9], color=MUTED, lw=0.8, ls="--")[0]  # 0 h: up
-    a1 = 90 - np.degrees(THETA[0])  # screen angle of patient 1, clockwise from the top
-    A["theta_arc"] = ax.add_patch(Arc((cF.real, cF.imag), 0.6, 0.6, theta1=a1, theta2=90, color=PAT[0], lw=1.4))
+    mF = COMPS["F"]["mu"]
+    A["rays"] = [ax.plot(*xy([mF, mF + D(f)]).T, color=PAT[i], lw=1.2, zorder=3)[0] for i, f in enumerate(F)]
+    A["ref"] = ax.plot([mF.real, mF.real], [mF.imag, mF.imag + 0.9], color=MUTED, lw=0.8, ls="--")[0]  # 0 h: up
+    a1 = 90 - np.degrees(np.mod(np.angle(F[0]), 2 * np.pi))  # screen angle of patient 1, clockwise from the top
+    A["theta_arc"] = ax.add_patch(Arc((mF.real, mF.imag), 0.6, 0.6, theta1=a1, theta2=90, color=PAT[0], lw=1.4))
     mid = np.radians((a1 + 90) / 2)
-    theta_anchor = cF + 0.3 * np.exp(1j * mid)
+    theta_anchor = mF + 0.3 * np.exp(1j * mid)
     for k in ("E", "H"):
         c = COMPS[k]
         A[k, "phi_arc"] = ax.add_patch(Arc((c["mu"].real, c["mu"].imag), 0.8, 0.8, color=INK, lw=1.2))
@@ -138,19 +130,19 @@ def build():
     # text labels of the plane, placed clear of every final mark, arrow and circle
     final = np.concatenate([c["mu"] + D(c["z"] * F) + d * NOISE[k] for k, c in COMPS.items() for d in (0, 1)])
     segs = [[(0, 0), (c["mu"].real, c["mu"].imag)] for c in COMPS.values()]
+    segs += [[(-0.6, 0), (8.0, 0)], [(0, -3.4), (0, 3.0)]]  # the beta axes
     for c in COMPS.values():
         ring = c["c"] + abs(c["z"] * CLOCK[0]) * np.exp(1j * np.linspace(0, 2 * np.pi, 33))
         segs += [[(a.real, a.imag), (b.real, b.imag)] for a, b in zip(ring[:-1], ring[1:])]
     for k, c in COMPS.items():
         segs += [[(c["mu"].real, c["mu"].imag), (p.real, p.imag)] for p in c["mu"] + D(c["z"] * F)]  # rays and arcs region
-    segs += [[(cF.real, cF.imag), (p.real, p.imag)] for p in cF + D(CLOCK)]  # true clock rays
-    segs.append([(cF.real, cF.imag), (cF.real, cF.imag + 0.9)])  # 0 h reference of theta
+    segs.append([(mF.real, mF.imag), (mF.real, mF.imag + 0.9)])  # 0 h reference of theta
     kw = dict(obstacles=xy(final), segments=np.array(segs), max_dist=14, leader_from=4, clearance=2.2)  # markers: ~1.9 mm radius
     mus = [0.5 * c["mu"] for c in COMPS.values()]
-    A["mu_labs"] = pf.place_labels(ax, *xy(mus).T, [rf"$\mu_\mathrm{{{k}}}$" for k in COMPS], prefer=[2.4, 1.7, -2.4],
+    A["mu_labs"] = pf.place_labels(ax, *xy(mus).T, [rf"$\mu_\mathrm{{{k}}}$" for k in COMPS], prefer=[-2.4, 1.7, 2.4],
                                    fontsize=15, color=INK, **kw)
-    tops = [c["c"] + 1j * abs(c["z"] * CLOCK[0]) * (1 if k != "H" else -1) for k, c in COMPS.items()]
-    A["names"] = pf.place_labels(ax, *xy(tops).T, [c["name"] for c in COMPS.values()], prefer=[np.pi / 2, np.pi / 2, -np.pi / 2],
+    tops = [c["c"] + 1j * abs(c["z"] * CLOCK[0]) * (1 if k != "F" else -1) for k, c in COMPS.items()]
+    A["names"] = pf.place_labels(ax, *xy(tops).T, [c["name"] for c in COMPS.values()], prefer=[-np.pi / 2, np.pi / 2, np.pi / 2],
                                  fontsize=13, color=MUTED, **kw)
     A["theta_lab"] = pf.place_labels(ax, *xy(theta_anchor).T, [r"$\theta_1$"], prefer=[mid], fontsize=14, color=PAT[0], **kw)
     phi_anchor = []
@@ -161,9 +153,8 @@ def build():
     A["phi_labs"] = pf.place_labels(ax, *xy(phi_anchor).T, [r"$\varphi_\mathrm{E}$", r"$\varphi_\mathrm{H}$"],
                                     prefer=[np.angle(a - COMPS[k]["mu"]) for a, k in zip(phi_anchor, "EH")], fontsize=14,
                                     color=INK, **kw)
-    A["amp_lab"] = pf.place_labels(ax, *xy(cF + D(CLOCK[3])).T, [r"$A_4$"], prefer=[np.pi], fontsize=14, color=PAT[3], **kw)
-    A["f_lab"] = pf.place_labels(ax, *xy(mF + D(F[3])).T, [r"$f_4$"], prefer=[np.angle(D(F[3]))], fontsize=14,
-                                 color=PAT[3], **kw)
+    A["amp_lab"] = pf.place_labels(ax, *xy(mF + D(F[3])).T, [rf"$A_4 = {abs(F[3]):.2f}$"], prefer=[-2.5], fontsize=14,
+                                   color=PAT[3], **kw)
     A["z_labs"] = {k: pf.place_labels(ax, *xy(COMPS[k]["c"] + abs(COMPS[k]["z"] * CLOCK[0])).T,
                                       [rf"$|z_\mathrm{{{k}}}| = {abs(COMPS[k]["z"]):.2f}$"], prefer=[0.0], fontsize=13, color=INK, **kw)
                    for k in ("E", "H")}
@@ -183,8 +174,8 @@ def build():
     eqs = [
         ([r"\beta_{i\mathrm{F}}", "=", "?"], None),
         ([r"\beta_{i\mathrm{F}}", "=", r"\mu_\mathrm{F}", "+", "?"], 2),
-        ([r"\beta_{i\mathrm{F}}", "=", r"c_\mathrm{F}", "+", r"A_i\, e^{i\theta_i}"], 4),
-        ([r"\beta_{i\mathrm{F}}", "=", r"\mu_\mathrm{F}", "+", r"f_i"], 4),
+        ([r"\beta_{i\mathrm{F}}", "=", r"\mu_\mathrm{F}", "+", r"A_i", r"e^{i\theta_i}"], 5),
+        ([r"\beta_{i\mathrm{F}}", "=", r"\mu_\mathrm{F}", "+", r"A_i", r"e^{i\theta_i}"], 4),
         ([r"\beta_{i\mathrm{E}}", "=", r"\mu_\mathrm{E}", "+", r"|z_\mathrm{E}|\, e^{i\varphi_\mathrm{E}}", r"f_i"], 4),
         ([r"\beta_{ik}", "=", r"\mu_k", "+", r"z_k", r"f_i"], 4),
         ([r"\beta_{ik}", "=", r"\mu_k", "+", r"z_k f_i", "+", r"e_{ik}"], 6),
@@ -198,11 +189,6 @@ def build():
             box = eqa.add_patch(FancyBboxPatch((x0 - 2, y0 - 2), x1 - x0 + 4, y1 - y0 + 4, transform=e.transform,
                                                boxstyle="round,pad=0,rounding_size=3", fc=HIGHLIGHT, ec="none", zorder=0))
         A["eq"].append((e, box))
-    e3 = eqa.text(0.0, 0.26, r"$c_\mathrm{F}$: centre of the cycle (unknown)", fontsize=13, color=MUTED, transform=eqa.transAxes)
-    A["eq"][2] = (*A["eq"][2], e3, None)
-    e4 = pf.equation(eqa, (0.0, 0.26), [r"f_i = A_i\, e^{i\theta_i} - \overline{A\, e^{i\theta}}"], ha="left", size=18)
-    t4 = eqa.text(0.0, 0.1, "the centre cancels; the time does not come back", fontsize=12, color=MUTED, transform=eqa.transAxes)
-    A["eq"][3] = (*A["eq"][3], e4, None, t4, None)
     # step 7 adds the noise distribution, step 8 the labelled model
     e7 = pf.equation(eqa, (0.0, 0.26), [r"e_{ik} \sim \mathcal{N}(0,\ ", r"\sigma_k^2", r"I + V_{ik})"], ha="left", size=18)
     x0, y0, x1, y1 = e7.boxes[1]
@@ -211,7 +197,7 @@ def build():
     A["eq"][-1] = (A["eq"][-1][0], A["eq"][-1][1], e7, b7)
     e8 = pf.equation(eqa, (0.5, 0.5), [r"\beta_{ik}", "=", (r"\mu_k", "centre", INK), "+",
                                        dict(tex=r"z_k", label="compartment\n" + r"$|z_k|,\ \varphi_k$", color=INK, side="above"),
-                                       (r"f_i", "host state\n(centred)", INK), "+",
+                                       (r"f_i", "patient\n" + r"$A_i,\ \theta_i$", INK), "+",
                                        (r"e_{ik}", "noise\n" + r"$\sigma_k^2$", INK)], size=24, gap=12, label_size=14, label_sep=6, marks="none")
     t8 = eqa.text(0.5, 0.08, r"reference: $z_\mathrm{F} = 1$" + "\nreadouts per compartment: coupling, $|z_k|$, $\\varphi_k$",
                   ha="center", va="bottom", fontsize=12, color=MUTED, transform=eqa.transAxes)
@@ -221,8 +207,6 @@ def build():
 
 
 def eq_artists(e):
-    if not hasattr(e, "texts"):  # a plain Text
-        return [e]
     out = list(e.texts)
     for _, lab, arts in e.labels:
         out += [lab, *arts]
@@ -274,17 +258,12 @@ def update(A, s, u):
             A[k, "ghost"].set_alpha(arc.get_alpha())
             A[k, "ray"].set_alpha(arc.get_alpha())
             _fade(A["z_labs"][k], 0, visible(step, 6, s, u) * on(step, s, u, 0.85, 1.0))
-    for i, (r, t) in enumerate(zip(A["rays"], A["true"])):  # true clock in step 3 (faint in 4), f_i in step 4
-        t.set_alpha(visible(2, 4, s, u) * (1 - 0.75 * on(3, s, u)))
-        r.set_alpha(visible(3, 4, s, u) * (1.0 if i == 3 else 0.6))
-    A["true"][3].set_alpha(visible(2, 4, s, u) * (1 - 0.4 * on(3, s, u)))  # patient 4's true direction stays visible
-    A["true"][3].set_linestyle("-" if s < 3 else "--")
-    A["rays"][3].set_linewidth(2.2)
-    for key in ("ref", "theta_arc", "centre"):
-        A[key].set_alpha(visible(2, 3, s, u))
-    _fade(A["theta_lab"], 0, visible(2, 3, s, u))
-    _fade(A["amp_lab"], 0, visible(2, 3, s, u))
-    _fade(A["f_lab"], 0, visible(3, 4, s, u))
+    for i, r in enumerate(A["rays"]):
+        r.set_alpha(0.8 * visible(2, 4, s, u))
+    for key in ("ref", "theta_arc"):
+        A[key].set_alpha(visible(2, 4, s, u))
+    _fade(A["theta_lab"], 0, visible(2, 4, s, u))
+    _fade(A["amp_lab"], 0, visible(3, 4, s, u))
     for i, t in enumerate(A["ticks"]):
         t.set_alpha(np.clip(u * 7 - i, 0, 1) if s == 0 else 1.0)
     for j, (t, st) in enumerate(A["cap"]):
@@ -309,11 +288,6 @@ def update(A, s, u):
         for art in ax.texts + ax.patches + ax.lines:
             a = art.get_alpha()
             art.set_visible(a is None or a > 0.01)
-    lim = VIEW + ease(visible(2, 4, s, u)) * (ZOOM - VIEW)  # zoom on the fibroblasts for the patient clock
-    if not np.array_equal(lim, A.get("lim")):
-        A["lim"] = lim
-        A["ax"].set(xlim=lim[:2], ylim=lim[2:])
-        pf.place_all(A["ax"].figure)  # labels follow the zoom (placed among the texts visible now)
 
 
 def _fade(labelset, j, a):
@@ -336,7 +310,6 @@ def main():
     pf.use_style("slide")
     fig, A = build()
     fig.set_dpi(PX_W / (WIDTH / 25.4))
-    pf.place_all(fig)  # at the video resolution
     w, h = (int(round(v)) for v in fig.canvas.get_width_height())
     w, h = w - w % 2, h - h % 2
     OUT.mkdir(exist_ok=True)
