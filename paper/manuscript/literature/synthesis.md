@@ -65,6 +65,7 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 - filipski2002host: SCN lesion only (no jet lag). masri2016lung: host core clock unchanged; output rewiring (46 % of 505 shared rhythmic liver genes shift ≥ 1 h).
 - wu2019pan: loss of rhythm inferred from mean mRNA only (cite for copy-number down-regulation). shaashua2020stromal: global host Per knockouts, not stroma-specific. broadberry2018disrupted: rhythm in 3 patients, qPCR in 8.
 - sulli2018pharmacological: clock-independence of SR9009/SR9011 lethality not shown. fortin2024circadian: epithelial clock loss abolishes (not raises) the MDSC rhythm; scRNA at one time point.
+- schwabe2020transcriptome (Revelio): PCA rotation, not spliced/unspliced (that is riba2022cell). thaben2016differential (DODR): not limma-based. pelikan2021venn: hypothesis testing preferred over model selection.
 - hollis2025reconstructed: snRNA-seq pseudobulk per cell type, not bulk deconvolution. galinde2023different: does not state a lack of human biomarkers (cite for the 4-level desynchrony taxonomy only).
 
 ## 4. Verification ideas (checked against METHOD.md / registered / results; "new" = not found there)
@@ -87,6 +88,7 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 - new: glioblastoma single-cell cohorts (malignant vs non-malignant brain per patient; Dong 2019 GSC clock dependence); no glioma cohort in the docs (only paragangliomas).
 - new: Fortin 2024 Apc/epithelial-Bmal1 mouse (epithelial clock off, spleen intact) as a controlled cross-compartment desynchrony positive, if timed data are public.
 - motivation: Diamantopoulou 2022 (CTC timing driven by host hormones, tumour clock genes not differential) supports host-referenced readout; parallels A138/A149.
+- methods support: pelikan2021venn (Venn comparisons of thresholded lists: 48 % false differential hits) justifies direct permutation contrasts over counting gate-passing units; phillips2020circadian and nikhat2026transcriptional justify pseudobulks (24 h explains ~all variance when pooling ~1,000 cells; 20-70 cells × 3 genes ≈ 1 h): compare with A203 (registered, unscored) when scoring.
 - done: ORPHEUS bias under subject-phase error (V14); RADC/brain AD contrasts (A135, A141, mostly not estimable).
 - done: baboon (A36/A40/A41), living skin epidermis/dermis (A37, Del Olmo), forced desynchrony blood (GSE48113), TimeTeller/COFE/CYCLOPS 2.0/CHIRAL benchmark (V2), Manchester breast pairs (A25 V25.5, A146), orderers under working hours (A145, A123).
 
