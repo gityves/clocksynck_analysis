@@ -194,7 +194,11 @@ def build():
                                                boxstyle="round,pad=0,rounding_size=3", fc=HIGHLIGHT, ec="none", zorder=0))
         A["eq"].append((e, box))
     # step 7 adds the noise distribution, step 8 the labelled model
-    e7 = pf.equation(eqa, (0.0, 0.26), [r"e_{ik} \sim \mathcal{N}(0,\ ", r"\sigma_k^2", r"I + V_{ik})"], ha="left", size=18)
+    e7 = pf.equation(eqa, (0.0, 0.26), [r"e_{ik} \sim \mathcal{N}(0,\ ", (r"\sigma_k^2", "compartment\nnoise", INK),
+                                         r"\,\mathbb{I}_2 +", (r"V_{ik}", "Poisson\nnoise", INK), ")"],
+                     ha="left", size=18, gap=1.0, label_size=12, marks="none")
+    for _, lab, _ in e7.labels:
+        lab.set_color(MUTED)
     x0, y0, x1, y1 = e7.boxes[1]
     b7 = eqa.add_patch(FancyBboxPatch((x0 - 2, y0 - 2), x1 - x0 + 4, y1 - y0 + 4, transform=e7.transform,
                                       boxstyle="round,pad=0,rounding_size=3", fc=HIGHLIGHT, ec="none", zorder=0))
