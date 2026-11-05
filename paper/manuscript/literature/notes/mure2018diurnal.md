@@ -31,5 +31,4 @@ published mouse tissue time courses (11 tissues; mice in constant darkness for 1
 - **Relation to clocksync:** data we could use; background for tissue-specific offsets in a diurnal primate (human-like phase relative to light).
 
 ## Ideas
-- Best available multi-tissue, known-time primate data: since each animal contributes all tissues (to confirm), it is a donor x compartment table with ground truth time; test clocksync offsets (arg z per tissue) against Mure's per-tissue clock-gene phases (about 6 h window) and the PVN, kidney cortex vs medulla offsets.
-- Check whether clocksync on day-only subsets (ZT2-ZT10) still recovers tissue offsets and the SCN exception.
+- Done: A36 (untimed ordering 0.4 h, tissue offsets 0.5 h vs timed truth), A40 (8 h working-hours windows: tissue offsets r 0.52, 1.2 h), A41 (species-specific reference no better); see paper/docs/METHOD.md validation table. Cite Mure 2018 as the source of that validation set.
