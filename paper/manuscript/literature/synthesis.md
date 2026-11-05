@@ -59,6 +59,7 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 - yoo2004periodluciferase: headline is persistence + tissue-specific period/phase, not damping.
 - hughey2016zeitzeiger: mouse only.
 - reddy2002differential: no SCN shell/core; mPer vs mCry1 dissociation within SCN. kiessling2010adrenal: adrenal clock ablation accelerates re-entrainment (refs say GC needed). vollmers2009time: Cry1/Cry2 double KO, not Bmal1.
+- tahara2012in: no jet lag (SCN lesion + restricted feeding). kolbe2019circadian: no misalignment design. archer2014mistimed: loss of rhythmicity (6.4 % → 1.0 % of transcripts), not phase shifts. sinturel2021circadian: Schibler/Dibner, not Naef.
 - hollis2025reconstructed: snRNA-seq pseudobulk per cell type, not bulk deconvolution. galinde2023different: does not state a lack of human biomarkers (cite for the 4-level desynchrony taxonomy only).
 
 ## 4. Verification ideas (checked against METHOD.md / registered / results; "new" = not found there)
@@ -68,10 +69,12 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 - new: ΔCCD next to clocksync coupling on TCGA pairs (A138): do low-coupling tumours have high CCD?
 - new: stress-test the gate with gene-specific partial shifts inside one tissue (Kiessling 2010, Saini 2013: Bmal1-luc 6-7 h vs Rev-erbα/PER2 ~12 h after feeding inversion); METHOD.md has scrambled phases only.
 - new: Cry1/2 DKO under restricted feeding (Vollmers 2009, GSE13093): feeding-rhythmic clockless liver as a gate negative control.
+- new: adipose vs liver offsets as a function of feeding-cue strength, prior from Heyde 2022 (day-4 delays eWAT 1.6 vs 7.1 h, liver 2.6 vs 5.8 h across feeding regimes).
 - done: ORPHEUS bias under subject-phase error (V14); RADC/brain AD contrasts (A135, A141, mostly not estimable).
 - done: baboon (A36/A40/A41), living skin epidermis/dermis (A37, Del Olmo), forced desynchrony blood (GSE48113), TimeTeller/COFE/CYCLOPS 2.0/CHIRAL benchmark (V2), Manchester breast pairs (A25 V25.5, A146), orderers under working hours (A145, A123).
 
 ## 5. Missing literature
+- Husse 2014, Izumo 2014 (SCN-specific Bmal1 loss); Leproult 2014, Morris 2015 (human misalignment and glucose); Janich 2011 (epidermal clock).
 - van der Horst 1999 (Cry1/Cry2 double KO arrhythmia); Kornmann 2007 (liver-specific clock); Cho 2012 (REV-ERB double KO).
 - Giacchetti 2012 (sex and chronotherapy survival); Iurisci 2006 (tumour clocks).
 - hughey2017machine, hastings2018generation: in bib, PDFs missing from the export.
