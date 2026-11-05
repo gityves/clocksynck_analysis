@@ -3694,3 +3694,75 @@ shows whether cell-to-cell heterogeneity adds error beyond counting noise.
 - One atlas (lung); the rule is not claimed for other tissues or depths.
 **Stop rule:** one amendment; no new metric or threshold after scoring.
 **Code:** `paper/exploratory/A203_cells_vs_donors/`.
+
+## A204 (2026-11-05, from the literature follow-up list, `paper/docs/prompts/literature_followup_analyses.md` item 1; written before any simulated readout; seen: one COFE and one TimeTeller run per design for runtime only, no output read): how do orderers produce "uncoupled tumour clocks" under working hours? **Simulation, secondary family A204 (Holm over four)**
+
+**Why.** Two published claims of tumour-clock uncoupling rest on readouts that working-hours sampling may produce by
+itself. COFE (Ananthasubramaniam & Venkataramanan, PLoS Biol 2025, TCGA): "predicted time labels lay throughout the
+circadian cycle in all ACs" and "the difference between the predicted time labels for healthy and tumor tissue was
+distributed throughout the circadian cycle". TimeTeller (Vasilyev et al., bioRxiv 2026, REMAGUS breast, n = 108):
+"sampling time was not correlated with either TT time (slope -0.027, p = 0.80)". A145 measured coupling error of
+two-step orderers (W arm, CoFE 0.206 vs clocksync 0.060), not the orderers' own outputs.
+**Relation to A138 Q2 (H138.3).** H138.3 registered the same Rayleigh readout on a genome-scale simulator; its
+simulator gate failed in a two-replicate check and Q2 is parked (ROADMAP 4.8). A204 uses the A145 clock-gene simulator,
+on which CoFE recovers time with whole-day sampling (A145 D145.1). It does not score H138.3; that stays parked.
+Limit stated now: COFE in TCGA used genome-wide features; A204 tests COFE on the 14 clock genes.
+
+**Simulator** (`clocksync.simulate`, GTEx 14-gene waveform, depth, tau, shift and mesor_sd at their defaults; the
+per-compartment gene mesor offsets play the tissue difference between tumour and normal). Per patient:
+- normal N: z = 1, psi for c = 0.9, presence 0.2 (about 60 matched normals, as TCGA per cancer);
+- tumour T: z = 0.7 exp(i 3 h), presence 1; truth levels c_T in {0.9, 0.5} (coupled) and "uncoupled" (`coupled=False`,
+  psi as for 0.5).
+psi is set from c at whole-day host variance (`A145 lib.psi_of`, V of 0-24 h) in every window: the biology is fixed and
+the window changes, so population coupling is lower in W (stated, as CLAUDE.md "coupling scales with host spread").
+n = 300 patients. Windows: F (0-24 h, jitter 0) and W (08-18 h, jitter 1 h). 30 replicates per window x truth (seed
+`[204, window, truth, rep]`).
+**COFE as in the paper:** `common.benchmark.cofe.run_cofe` (standardised features, 3 x 5-fold CV, 5 restarts) trained on
+the 300 tumours (log2 normalised clock genes); the matched normals are test samples projected with COFE's own test rule
+(centred and scaled by the tumour means and SDs, projected on the tumour loadings, angle = time label), as COFE's
+train/test API does. Direction and origin of the labels are COFE's (arbitrary); the readouts below do not depend on them.
+**clocksync on the same data:** the A138 H138.4 tumour-normal statistic on the matched patients:
+`paired.cohort_states` (one projector, counts and depth) and `paired.cross` corr (Poisson-corrected modulus of the
+complex correlation); null: normals permuted across patients (1,000), p = (1 + #null >= obs) / 1,001; offset arg.
+**TimeTeller (REMAGUS design):** `common.benchmark.timeteller.run_timeteller`, trained on 144 timed whole-day healthy
+samples (compartment z = 1, psi for c 0.9, its own mesor offsets: a tissue mismatch as healthy training vs tumour), tested
+on 108 tumours (z = 0.7 exp(i 3 h)) with c_T in {0 (uncoupled), 0.25, 0.5, 0.75, 0.9}, windows F, W and W_narrow
+(10-16 h, jitter 1 h; REMAGUS times "cluster around midday", range not reported: the window is an assumption). Readout as
+the paper: linear regression of TT time (h) on sampling time (h), slope p (two-sided), plus the circular-linear
+correlation. 30 replicates per cell.
+
+**Simulator gate (checked first, from arm F; if it fails A204 stops and is reported as such):** COFE, F, c_T 0.9:
+median |circular correlation| of tumour labels with true times >= 0.7; TimeTeller, F, c_T 0.9: median circular error of
+TT time minus (true time + 3 h) <= 3 h.
+
+**Hypotheses (secondary family A204, Holm over H204.1-H204.4; 30 replicates; "≥ 20 of 30" is the exact one-sided
+binomial test against 0.5, p 0.049):**
+- **H204.1 (labels span the cycle):** W, c_T 0.9: COFE's tumour labels leave no empty arc of 4 h or more (largest gap
+  between consecutive sorted labels < 4 h) in >= 20 of 30 replicates. The true times' largest gap (about 12 h) is reported.
+- **H204.2 (false uncoupling):** W, c_T 0.9: the COFE tumour-minus-normal label differences pass as uniform (Rayleigh
+  p > 0.05) in >= 20 of 30 replicates (the H138.3 readout).
+- **H204.3 (clocksync on the same data):** W, c_T 0.9: the pairing test gives p < 0.05 in >= 24 of 30 replicates, and
+  the specificity companion on the same permutation scheme, W uncoupled, gives p < 0.05 in <= 3 of 30 (both required).
+  Test statistic for Holm: the one-sided exact binomial p of the detection count against 0.5.
+- **H204.4 (TimeTeller at the REMAGUS design):** W, c_T 0.9, n = 108: the slope test detects (p < 0.05) in >= 24 of 30
+  replicates (power >= 0.8). Holm p: one-sided exact binomial of the count against 0.5.
+**Descriptive (D204):** per cell, the resultant length R of COFE labels and of the true times; R and Rayleigh p of
+the differences; COFE's interior CV minimum share; |circular correlation| of labels with true times; clocksync corr,
+offset (truth 3 h) and detection rate; the discrimination AUC between c_T 0.9 and uncoupled in W of COFE's R_diff and of
+clocksync's corr, on the same replicates; TimeTeller power per c_T and window and its MDE (smallest c_T with power >=
+0.8); the share of TT times inside 07-20 h.
+
+**Reading (fixed now):**
+- H204.1 and H204.2 pass → under working hours, clock-gene COFE returns full-cycle labels and uniform tumour-normal
+  differences for a coupled tumour: the two published observations are what COFE outputs whether or not the tumour is
+  coupled, so they are not evidence of uncoupling. If H204.3 also passes, clocksync detects the coupling in the same
+  patients. Genome-wide COFE is not tested.
+- H204.2 fails (differences concentrated) → in this simulator COFE would have seen coupling under working hours; the
+  TCGA observation is then not explained by the sampling window, and the paper does not say it is.
+- H204.4 passes → a coupled tumour clock correlates with sampling time at REMAGUS size if TimeTeller times are as
+  accurate as in this simulator; r ≈ 0 then is not explained by the narrow window alone (supports the authors' reading
+  under the stated window). H204.4 fails → a narrow window with TimeTeller's error gives r ≈ 0 for a coupled tumour; the
+  MDE is reported. W_narrow is a sensitivity, not a test.
+**Stop rule:** one amendment; no truth level, window or threshold added after any readout is seen.
+**Compute:** about 180 COFE and 450 TimeTeller runs of about 30 s each, 8 workers, about 1 h; through `paper/common/run.sh`.
+**Code:** `paper/exploratory/A204_orderer_uncoupling/`.
