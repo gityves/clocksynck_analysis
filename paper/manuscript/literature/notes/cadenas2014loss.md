@@ -14,7 +14,7 @@ metagenes, and pairwise clock-gene correlations stratified by ER, HER2, grade an
 
 ## Key results
 - Prognosis: higher CLOCK, PER1, PER2, PER3, CRY2, NPAS2 and RORC expression go with longer MFS (HR < 1, FDR < 0.05); TIMELESS shorter (HR = 1.405).
-- Multivariate: "only PER3 (HR = 0.66; P = 0.016) and RORC (HR = 0.42; P = 0.003)" independent of clinical parameters (abstract).
+- Multivariate: only PER3 (HR 0.66, P 0.016) and RORC (HR 0.42, P 0.003) stay independent of clinical parameters (abstract).
 - Proliferation link: "Most clock genes (PER1, PER2, PER3, CRY2, RORC, BHLHE40, BHLHE41) showed a negative correlation (R < -0.3; P < 0.001) with the proliferation metagene", strongest CRY2 (R = -0.612), TIMELESS +0.674; clock genes track ER-positive status, low grade, low pT.
 - Co-expression: PER2-PER3 R = 0.537 in ER+ but 0.054 in ER- tumours; "correlations between the expression of canonical circadian clock genes decrease in more aggressive tumor types".
 - ARNTL vs PER anti-phase correlation (R = -0.2 for ARNTL-PER1) only in low-grade tumours.

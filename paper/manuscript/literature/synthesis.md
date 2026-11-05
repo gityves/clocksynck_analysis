@@ -63,6 +63,7 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 - kervezee2018simulated (PBMC only) and skene2018separation (plasma, between subjects): not two compartments in the same people.
 - feillet2014phase: not Naef lab (Delaunay, Rand, van der Horst); modes 1:1, ~3:2, ~5:4. bieler2014robust: coupling predominantly cell cycle → clock. droin2019low: cell cycle accelerates the clock (not a cell-cycle slowdown). matsuo2003control: gating shown, unidirectionality not.
 - filipski2002host: SCN lesion only (no jet lag). masri2016lung: host core clock unchanged; output rewiring (46 % of 505 shared rhythmic liver genes shift ≥ 1 h).
+- wu2019pan: loss of rhythm inferred from mean mRNA only (cite for copy-number down-regulation). shaashua2020stromal: global host Per knockouts, not stroma-specific. broadberry2018disrupted: rhythm in 3 patients, qPCR in 8.
 - hollis2025reconstructed: snRNA-seq pseudobulk per cell type, not bulk deconvolution. galinde2023different: does not state a lack of human biomarkers (cite for the 4-level desynchrony taxonomy only).
 
 ## 4. Verification ideas (checked against METHOD.md / registered / results; "new" = not found there)
@@ -77,10 +78,13 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 - new: organ phase offset arg z vs proliferation (MKI67, MYC) across tissues of the same GTEx donor, with a specificity gene set (Droin 2019: 12 mouse tissues span 1.5 h, offsets correlate with Mki67/Myc; cell cycle accelerates the clock). A97/A126/A127/A166 test coherence only.
 - new: Masri 2016 GSE73222 (timed liver, lung-tumour-bearing vs WT): core clock offset ≈ 0 under a distant tumour while outputs shift; a specificity positive control for the clock panel.
 - planned, not registered: A125 mouse chronic jet lag (Kettner 2016, GSE75475; provisory_plan_paper.md).
+- done: Cadenas 2014 replication (A192, mostly proliferation); Ye 2018 co-expression loss in TCGA pairs (A138 H138.4); copy number and malignant coherence (A134).
+- new: ER-stratified malignant coupling at common d* with matched non-clock pairs (partly A134/A138.5); stromal |z| tumour-adjacent vs normal stroma of the same donors (Broadberry 2018 stiffness).
 - done: ORPHEUS bias under subject-phase error (V14); RADC/brain AD contrasts (A135, A141, mostly not estimable).
 - done: baboon (A36/A40/A41), living skin epidermis/dermis (A37, Del Olmo), forced desynchrony blood (GSE48113), TimeTeller/COFE/CYCLOPS 2.0/CHIRAL benchmark (V2), Manchester breast pairs (A25 V25.5, A146), orderers under working hours (A145, A123).
 
 ## 5. Missing literature
+- Fuhr 2018/2019, Gutierrez-Monreal 2016 (tumour clocks).
 - Filipski 2005, Lee 2010 (Cancer Cell), Hojo 2017 (tumour reprograms hepatic circadian transcriptome), Gery 2006, Altman 2015 (MYC and clock).
 - Husse 2014, Izumo 2014 (SCN-specific Bmal1 loss); Leproult 2014, Morris 2015 (human misalignment and glucose); Janich 2011 (epidermal clock).
 - van der Horst 1999 (Cry1/Cry2 double KO arrhythmia); Kornmann 2007 (liver-specific clock); Cho 2012 (REV-ERB double KO).

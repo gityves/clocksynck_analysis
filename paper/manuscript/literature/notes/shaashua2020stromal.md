@@ -28,7 +28,7 @@ CIBERSORT with single-cell reference for liver composition.
 - Opposite to the usual tumour-suppressor reading of Per2 (cell-autonomous), so direction depends on compartment.
 
 ## Link to us
-- **Intro claim(s):** host clock acts on tumours, host and tumour clocks can have opposite roles. Our refs row ("stromal (not tumour) Per2 required for tumour initiation and metastatic colonisation") is SUPPORTED but should say "host Per2 (global knockout)" and note the authors' clock-independence caveat.
+- **Intro claim(s):** host clock acts on tumours, host and tumour clocks can have opposite roles. Our refs row (stromal, not tumour, Per2 required for initiation and colonisation) is SUPPORTED but should say host Per2 (global knockout) and note the authors' clock-independence caveat.
 - **Relation to clocksync:** background; the authors pose "synchronization, or lack of synchronization, between the TME and the cancer cells" as a hypothesis, which is what a host-referenced readout tests.
 
 ## Ideas
