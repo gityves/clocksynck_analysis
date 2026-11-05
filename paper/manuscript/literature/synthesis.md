@@ -43,6 +43,8 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 | scRitmo (salati2026inferring) | cell | none (fixed reference) | no (cells within sample) | fixed | no (cell scale σbio) | NB, technical σ simulated |
 | CoPhaser (paychere2025cophaser) | cell | none | cells must span cycle | shared, context mean/amplitude | no donor level | NB |
 | BayCT-M (xue2026bayesian) | donor shift shared by 3 brain regions | TOD prior | needs TOD | learned | one shared shift, no per-compartment coupling | — |
+| CYCLOPS 2.0 on snRNA brain (hollis2025reconstructed) | donor (one phase from excitatory neurons, applied to all cell types) | none | yes | learned | no (cell types share the donor phase by construction) | — |
+| ORPHEUS (hollis2026singlecell) | cells within a cell type: gene-wise phase dispersion | needs subject phases (time course or CYCLOPS) | yes | — | no | — |
 | Zhang 2025 (zhang2025inferring) | phase differences from co-expression | reference matrices | no | reference | no | — |
 | **clocksync** | donor × compartment | none (host-referenced) | **no** (constant offsets cancel) | fixed acrophases shared (CoPhaser idea) | **yes: c, abs(z), arg z per compartment** | Poisson V_ik + compartment σ² |
 
@@ -56,12 +58,14 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 - vlachou2024timeteller: no prognosis analysis. vasilyev2026robust: breast only, nonlinear Θ-survival. winkler2022gene: PROGENy on timed mouse liver, not TCGA phase inference.
 - yoo2004periodluciferase: headline is persistence + tissue-specific period/phase, not damping.
 - hughey2016zeitzeiger: mouse only.
+- hollis2025reconstructed: snRNA-seq pseudobulk per cell type, not bulk deconvolution. galinde2023different: does not state a lack of human biomarkers (cite for the 4-level desynchrony taxonomy only).
 
 ## 4. Verification ideas (checked against METHOD.md / registered / results; "new" = not found there)
 - new: COFE's own outputs under simulated 08-18 h sampling (full-cycle labels, random tumour-normal differences) to show the mechanism of false uncoupling (A145 has the coupling MAE, not the mechanism).
 - new: Wu 2020 skin (154 women × arm/buttock/cheek × epidermis/dermis, untimed): within-person multi-site compartments.
 - new: GTEx brain arg z vs periphery: discriminates Hughey 2016 (~8.5 h, between people) from CHIRAL (few hours).
 - new: ΔCCD next to clocksync coupling on TCGA pairs (A138): do low-coupling tumours have high CCD?
+- done: ORPHEUS bias under subject-phase error (V14); RADC/brain AD contrasts (A135, A141, mostly not estimable).
 - done: baboon (A36/A40/A41), living skin epidermis/dermis (A37, Del Olmo), forced desynchrony blood (GSE48113), TimeTeller/COFE/CYCLOPS 2.0/CHIRAL benchmark (V2), Manchester breast pairs (A25 V25.5, A146), orderers under working hours (A145, A123).
 
 ## 5. Missing literature
