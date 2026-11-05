@@ -64,6 +64,7 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 - feillet2014phase: not Naef lab (Delaunay, Rand, van der Horst); modes 1:1, ~3:2, ~5:4. bieler2014robust: coupling predominantly cell cycle → clock. droin2019low: cell cycle accelerates the clock (not a cell-cycle slowdown). matsuo2003control: gating shown, unidirectionality not.
 - filipski2002host: SCN lesion only (no jet lag). masri2016lung: host core clock unchanged; output rewiring (46 % of 505 shared rhythmic liver genes shift ≥ 1 h).
 - wu2019pan: loss of rhythm inferred from mean mRNA only (cite for copy-number down-regulation). shaashua2020stromal: global host Per knockouts, not stroma-specific. broadberry2018disrupted: rhythm in 3 patients, qPCR in 8.
+- sulli2018pharmacological: clock-independence of SR9009/SR9011 lethality not shown. fortin2024circadian: epithelial clock loss abolishes (not raises) the MDSC rhythm; scRNA at one time point.
 - hollis2025reconstructed: snRNA-seq pseudobulk per cell type, not bulk deconvolution. galinde2023different: does not state a lack of human biomarkers (cite for the 4-level desynchrony taxonomy only).
 
 ## 4. Verification ideas (checked against METHOD.md / registered / results; "new" = not found there)
@@ -83,6 +84,9 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 - new: sex-stratified coupling c and offset arg z at common d* (only the sex phase A99 exists), motivated by the sex × schedule interaction of chronotherapy (levi2010circadian, levi2024circadian).
 - framing: map the three published tumour scenarios (arrhythmic / out of phase / in phase; sancar2021clocks) onto |z| ≈ 0, low c with offset, high c.
 - done: chronotherapy benefit vs clock readout (A198, null), tumour clock vs survival (A191-A194), T2D/obesity (A164).
+- new: glioblastoma single-cell cohorts (malignant vs non-malignant brain per patient; Dong 2019 GSC clock dependence); no glioma cohort in the docs (only paragangliomas).
+- new: Fortin 2024 Apc/epithelial-Bmal1 mouse (epithelial clock off, spleen intact) as a controlled cross-compartment desynchrony positive, if timed data are public.
+- motivation: Diamantopoulou 2022 (CTC timing driven by host hormones, tumour clock genes not differential) supports host-referenced readout; parallels A138/A149.
 - done: ORPHEUS bias under subject-phase error (V14); RADC/brain AD contrasts (A135, A141, mostly not estimable).
 - done: baboon (A36/A40/A41), living skin epidermis/dermis (A37, Del Olmo), forced desynchrony blood (GSE48113), TimeTeller/COFE/CYCLOPS 2.0/CHIRAL benchmark (V2), Manchester breast pairs (A25 V25.5, A146), orderers under working hours (A145, A123).
 
