@@ -61,6 +61,7 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 - reddy2002differential: no SCN shell/core; mPer vs mCry1 dissociation within SCN. kiessling2010adrenal: adrenal clock ablation accelerates re-entrainment (refs say GC needed). vollmers2009time: Cry1/Cry2 double KO, not Bmal1.
 - tahara2012in: no jet lag (SCN lesion + restricted feeding). kolbe2019circadian: no misalignment design. archer2014mistimed: loss of rhythmicity (6.4 % → 1.0 % of transcripts), not phase shifts. sinturel2021circadian: Schibler/Dibner, not Naef.
 - kervezee2018simulated (PBMC only) and skene2018separation (plasma, between subjects): not two compartments in the same people.
+- feillet2014phase: not Naef lab (Delaunay, Rand, van der Horst); modes 1:1, ~3:2, ~5:4. bieler2014robust: coupling predominantly cell cycle → clock. droin2019low: cell cycle accelerates the clock (not a cell-cycle slowdown). matsuo2003control: gating shown, unidirectionality not.
 - hollis2025reconstructed: snRNA-seq pseudobulk per cell type, not bulk deconvolution. galinde2023different: does not state a lack of human biomarkers (cite for the 4-level desynchrony taxonomy only).
 
 ## 4. Verification ideas (checked against METHOD.md / registered / results; "new" = not found there)
@@ -72,6 +73,7 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 - new: Cry1/2 DKO under restricted feeding (Vollmers 2009, GSE13093): feeding-rhythmic clockless liver as a gate negative control.
 - new: adipose vs liver offsets as a function of feeding-cue strength, prior from Heyde 2022 (day-4 delays eWAT 1.6 vs 7.1 h, liver 2.6 vs 5.8 h across feeding regimes).
 - planned, not registered: A117 timed brain regions (provisory_plan_paper.md WP7): GSE45642 (Li 2013: cross-region consistency lost in MDD) and GSE71620 (Chen 2016: age). Strongest literature precedent for disease-related loss of cross-region synchrony; register before scoring.
+- new: organ phase offset arg z vs proliferation (MKI67, MYC) across tissues of the same GTEx donor, with a specificity gene set (Droin 2019: 12 mouse tissues span 1.5 h, offsets correlate with Mki67/Myc; cell cycle accelerates the clock). A97/A126/A127/A166 test coherence only.
 - done: ORPHEUS bias under subject-phase error (V14); RADC/brain AD contrasts (A135, A141, mostly not estimable).
 - done: baboon (A36/A40/A41), living skin epidermis/dermis (A37, Del Olmo), forced desynchrony blood (GSE48113), TimeTeller/COFE/CYCLOPS 2.0/CHIRAL benchmark (V2), Manchester breast pairs (A25 V25.5, A146), orderers under working hours (A145, A123).
 

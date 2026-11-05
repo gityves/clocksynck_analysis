@@ -22,7 +22,7 @@ Not a method paper. Cox proportional hazards, baseline versus cumulatively updat
 - Different rotation schedules, chronotype and permanent night work not captured.
 
 ## Link to us
-- **Intro claim(s):** refs_circadian_desynchrony ("n about 189,000 women, dose-response CHD risk") is supported. Cites shift work as a human circadian-disruption exposure with dose-response and reversibility.
+- **Intro claim(s):** refs_circadian_desynchrony (n about 189,000 women, dose-response CHD risk) is supported. Cites shift work as a human circadian-disruption exposure with dose-response and reversibility.
 - **Relation to clocksync:** background (health consequence of chronic misalignment). Reversibility (risk decays after quitting) fits a state, not a trait, view of desynchrony.
 
 ## Ideas

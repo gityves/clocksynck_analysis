@@ -18,9 +18,9 @@ Not a method paper.
 
 ## Not addressed / limits
 - "Although we did not validate self-reported duration of rotating nightshifts" (cohort self-reports otherwise accurate).
-- Only the top category is significant and holds 1.8% of person-years; the lower categories include 1.0; effect modest.
+- Only the top category is significant and holds 1.8% of person-years; the CIs of the lower categories include 1.0.
 - Exposure is lifetime years at baseline, not schedule intensity; no circadian phase, no clock-gene or tissue data; 10-year follow-up.
-- Later meta-analyses disagree (see boivin2022disturbance: "A couple of recent meta-analyses found that shift work had little to no effect on breast cancer").
+- Later meta-analyses disagree (see boivin2022disturbance, which cites meta-analyses finding little to no effect on breast cancer).
 - Women only, nurses.
 
 ## Link to us
