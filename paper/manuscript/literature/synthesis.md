@@ -80,10 +80,14 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 - planned, not registered: A125 mouse chronic jet lag (Kettner 2016, GSE75475; provisory_plan_paper.md).
 - done: Cadenas 2014 replication (A192, mostly proliferation); Ye 2018 co-expression loss in TCGA pairs (A138 H138.4); copy number and malignant coherence (A134).
 - new: ER-stratified malignant coupling at common d* with matched non-clock pairs (partly A134/A138.5); stromal |z| tumour-adjacent vs normal stroma of the same donors (Broadberry 2018 stiffness).
+- new: sex-stratified coupling c and offset arg z at common d* (only the sex phase A99 exists), motivated by the sex × schedule interaction of chronotherapy (levi2010circadian, levi2024circadian).
+- framing: map the three published tumour scenarios (arrhythmic / out of phase / in phase; sancar2021clocks) onto |z| ≈ 0, low c with offset, high c.
+- done: chronotherapy benefit vs clock readout (A198, null), tumour clock vs survival (A191-A194), T2D/obesity (A164).
 - done: ORPHEUS bias under subject-phase error (V14); RADC/brain AD contrasts (A135, A141, mostly not estimable).
 - done: baboon (A36/A40/A41), living skin epidermis/dermis (A37, Del Olmo), forced desynchrony blood (GSE48113), TimeTeller/COFE/CYCLOPS 2.0/CHIRAL benchmark (V2), Manchester breast pairs (A25 V25.5, A146), orderers under working hours (A145, A123).
 
 ## 5. Missing literature
+- Giacchetti 2012 (sex and chronotherapy, 842 patients), Mormont 2000, Innominato 2014 (rest-activity and survival), Dallmann 2016 (dosing time).
 - Fuhr 2018/2019, Gutierrez-Monreal 2016 (tumour clocks).
 - Filipski 2005, Lee 2010 (Cancer Cell), Hojo 2017 (tumour reprograms hepatic circadian transcriptome), Gery 2006, Altman 2015 (MYC and clock).
 - Husse 2014, Izumo 2014 (SCN-specific Bmal1 loss); Leproult 2014, Morris 2015 (human misalignment and glucose); Janich 2011 (epidermal clock).
