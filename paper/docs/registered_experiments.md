@@ -4478,3 +4478,31 @@ a rank-2 clock is about 1 at any amplitude, so "noise-free" was read this way): 
 - **H225.2 (ARNTL) not scored:** 59 cells with both arms >= 10, none estimable after masking the other 13 genes (19-58 % of
   ARNTL-loss tumours CN-neutral at each other gene). **H225.3:** PER1 (9 cells, 662 tumours, MDE 0.182), TEF (7, 592, 0.193),
   NR1D2 (5, 303, 0.259) eligible (>= 5 cells); the others not.
+
+## A226 (2026-11-06, user agreement; confirmatory; written before any new cohort is identified, downloaded or read; seen: A151 H151.1 (pairing 0.860, 98 patients / 17 cohorts), A149 note 5 / A151 note 2 POST HOC (bounded statistic: fibroblasts 0.699 vs pseudo q95 0.542, endothelium 0.701 vs 0.527, p 0.005)): does tumour stroma follow the same patient's normal-tissue stroma clock-specifically, in cohorts not used before? **L3-like pairing; single-cell, independent cohorts**
+**Why.** The stromal pairing is one of the two positive cancer claims, but its clock specificity was established post hoc
+(bounded statistic chosen after the registered one broke down). This registers that statistic and tests it on new data.
+**Cohorts.** Single-cell or single-nucleus studies with, from the same patients, tumour and adjacent-normal (or
+paired normal) tissue and annotated or annotatable fibroblasts / endothelial cells, **not among the A149 / A151 cohorts**
+(`A151_fibroblast_pairing/output/units.csv`, `A149_paired_tumour_normal/output/units.csv`). Sources: on-disk studies not
+yet used (scRNAseq_database, CELLxGENE Census incl. Moorman 2025 and LuCA donors outside A149), public GEO / CELLxGENE
+studies found by a dated search (processed matrices only; <= 50 GB new data). Cell typing as A149 (marker rules of its
+note 1, or the authors' labels when present, documented per study). The cohort list is fixed in the power note before
+any statistic is computed.
+**Statistic (A149 note 5, now registered).** Per patient, clock state of each compartment from the pseudobulk on the GTEx
+waveform plane, centred within cohort; per cohort the uncorrected |complex correlation| |sum za conj(zb)| / sqrt(sum |za|^2
+sum |zb|^2) between tumour and normal compartment states; pooled with patient-count weights. Eligibility per compartment
+and cohort as A151 (>= 4 patients with both; pseudobulk depth rules of A149).
+- **H226.1 (primary, fibroblasts):** pooled statistic > within-cohort permutation null (patients' normal states shuffled,
+  10,000), one-sided.
+- **H226.2 (primary, fibroblast specificity):** pooled clock statistic > the pooled statistic of 200 expression-matched
+  pseudo-clock sets (A149 note 2 (iv) construction, same patients and weights); p = (1 + #{pseudo >= clock}) / 201.
+- **H226.3 / H226.4 (secondary):** the same for endothelial cells.
+Holm over H226.1-2 and over H226.3-4 separately.
+**Power (dated note before scoring):** patients and cohorts per compartment; permutation null SD and MDE (2.49 x SD).
+Not scored if < 30 patients in a compartment or if MDE > the A151-note-2 clock−null difference halved (i.e. the test
+must detect half the post hoc effect).
+**Reading:** H226.1-2 pass -> the stromal host pairing is confirmed clock-specific in independent data (main-text claim).
+H226.1 pass, H226.2 fail -> pairing confirmed, clock specificity not replicated (the claim stays "patient-specific stromal
+pairing", specificity post hoc only). Not scored / fails -> the stromal claim stays post hoc and is reported as such.
+**Stop rule:** one amendment. **Code:** `paper/exploratory/A226_stroma_pairing_confirm/`.
