@@ -3511,3 +3511,26 @@ Data GSE180012 (`$SCCC_DATA/gse180012_phx/`): 24 PHx and 24 sham livers, 3 per t
 - **Property of the statistic (README):** dR is not monotone in D, W and H strength (coherence rises again at rho <= 0.4
   or shifts >= 4-5 h); matched strengths lie on the monotone branch.
 <!-- src: paper/exploratory/A212_coherence_mechanisms/output/{matched,tests,auc_all,observed,grid}.csv -->
+
+## A213 (scored 2026-11-06): subclonal heterogeneity does not lower coherence (H213.1 FAIL, powered); copy-number burden does in TCGA (H213.2 PASS, clock-specific), not in METABRIC
+- **Power note:** `registered_experiments.md` (commit e8b2f2e). ABSOLUTE subclonal genome fraction (PanCanAtlas,
+  sha256 in `$SCCC_DATA/tcga/absolute_pancanatlas/PROVENANCE.md`); FGA from the A210 GISTIC matrices.
+- **H213.1 FAIL (primary, powered):** TCGA, 69 project x proliferation cells in 23 projects, 5,499 tumours; top − bottom
+  subclonal-fraction tertile T +0.021 (null −0.000, SD 0.023), p 0.82, MDE 0.058; pseudo 84th percentile. 18.7 % of
+  called tumours have subclonal fraction 0 (ties split by table order).
+- **H213.2 PASS, clock-specific (TCGA, FGA):** 6,024 tumours; T −0.063 (null −0.000, SD 0.023), p 0.003, Holm 0.009,
+  MDE 0.058; pseudo 2nd percentile (q05 −0.047). Negative in 15 of 23 projects (PAAD −0.311, BRCA −0.290, LIHC −0.228).
+- **H213.3 FAIL (METABRIC, FGA):** 15 cells, 1,176 tumours; T −0.032 (null 0.000, SD 0.055), p 0.28, Holm 0.56, MDE 0.136.
+- **S213.4:** FGA-matched A210 MYC contrast (453 pairs in 25 cells, mean |FGA gap| 0.008): excess −0.065 vs the A210
+  excess −0.085 (ratio 0.77), p 0.073. By the registered rule FGA does not carry the A210 result.
+- **Descriptive:** Spearman subclonal ~ FGA 0.52 within project; FGA ~ proliferation 0.21. Residual imbalance top −
+  bottom within cells: proliferation +0.076 z (H213.1), +0.142 z (H213.2), +0.021 z (H213.3); purity −0.061 / −0.002.
+  Components (top − bottom): H213.1 dlog_plane −0.109, dlog_off −0.047; H213.2 dlog_plane −0.010, dlog_off +0.125,
+  ds −0.136; H213.3 −0.106, −0.021.
+- **Reading:** heterogeneity measured as subclonal genome fraction does not lower coherence at matched proliferation
+  (bounded at 0.058), so clonal heterogeneity is not supported as a cause of the coherence results. Copy-number burden
+  goes with a clock-specific loss in TCGA, but not in METABRIC (lower power), and the FGA arms keep a residual
+  proliferation imbalance (+0.14 z). The FGA loss has the off-plane-rise pattern (in-plane variance unchanged), unlike
+  the proliferation loss of A176/A212 (in-plane fall, off-plane flat). The A210 MYC result is not explained by FGA.
+  Both TCGA passes (A210, A213 H213.2) are secondary: no METABRIC replication.
+<!-- src: paper/exploratory/A213_heterogeneity_coherence/output/{power,tests,s213_4,descriptive,descriptive_spearman,descriptive_per_project}.csv -->
