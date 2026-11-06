@@ -4424,3 +4424,42 @@ METABRIC (array) beta 0.017 (NR1D1) to 0.411 (PER2), PER1 0.033; CIART has no CN
 0.053, MDE 0.133; H224.2 (46 cells, 6,449) SD 0.027, MDE 0.066; H224.3 (14 projects, 2,362 tumours) SD 0.032, MDE 0.079
 log2. All scored. Choices (README): seeds of A219 / A215 reused, crc32("A224") for H224.3; TCGA beta pooled over the A215
 projects; pseudo genes use the 14-gene phase; H224.1 one-sided greater, H224.2 one-sided less, H224.3 two-sided.
+
+## A225 (2026-11-06, user agreement; written after A224 and its post hoc breakdown were seen (LumA − others +0.276 → +0.101 after cis-CN adjustment; ARNTL and PER3 carry most of it; CN variance 2-4 x higher outside LumA); before any simulation, masked estimate or trans contrast is computed): copy number at the clock loci — readout artefact or clock biology? **Validation (simulation) gating L1 tests; METABRIC + TCGA BRCA, TCGA pan-project**
+**Why.** A224 subtracts an estimated dosage offset; this removes a readout artefact (a gene's level shifted at every hour
+inflates its between-tumour spread and lowers coherence with an intact oscillator) but could also remove real effects of
+copy number on the oscillator. Three pieces separate them: (A) a semi-synthetic test of the estimators on the real copy-number
+profiles, which gates (B) a model-free masked estimate, and (C) a trans test of copy-number effects on the rest of the
+clock.
+**A. Simulation (gate).** Cells, tumours, subtypes and real GISTIC profiles of A224 H224.1 (METABRIC, TCGA BRCA). Per tumour:
+internal phase uniform, log level of clock gene g = m_g + lam amp_g cos(phi - psi_g) + beta_g CN_g + (CN x phase terms of
+A224 `dosage.csv`) + Gaussian noise with the gene's A224 residual SD; lam calibrated so that the raw estimator reproduces the
+observed LumA coherence of each cohort (LumA only, the CN-quiet arm). Pseudo genes: same construction without the clock
+term, with their own CN and betas. 200 replicates per scenario, seeds crc32("A225").
+- Scenario N (null): identical clocks in all subtypes. Scenario D: non-LumA lam x 0.7 (30 % damping).
+- Estimators: raw (A219), adjusted (A224, betas re-estimated in each replicate), masked (B).
+- **V225.1 (positive control, descriptive):** mean raw D under N, as a share of the observed +0.276.
+- **V225.2 (gate):** an estimator passes if under N |mean D| <= 0.03 and the A219 permutation test rejects in <= 7 % of
+  replicates, and under D its mean recovers the planted difference within ±25 % (true D under D from the noise-free
+  coherences of the simulation). Only passing estimators are used in B; if none passes, B is not scored.
+**B. Masked estimate.** A gene's value is set missing in tumours where its GISTIC state is not 0; coherence from
+pairwise-complete gene-gene covariances (tumour weights as A219); pseudo genes masked by their own CN.
+- **H225.1 (primary):** A219 H219.2 (LumA − others, METABRIC + TCGA BRCA, same cells and permutations) with the
+  gate-passing estimator (masked if it passes, else adjusted); pass = permutation p < 0.05 and above the q95 of the 200 pseudo
+  sets treated alike.
+**C. Trans test (TCGA, 23 A215 projects).** For clock gene g, arms: GISTIC(g) <= -1 vs = 0; cells = project x FGA tertile x
+proliferation tertile (both within project); arm >= 10 per cell. Outcome: coherence of the other 13 clock genes (raw; each
+of them masked where its own CN is not 0, so they carry no dosage artefact). D_g = mean over cells of coh(loss) − coh(neutral);
+labels permuted within cell (2,000).
+- **H225.2 (primary, g = ARNTL):** one-sided less; companion: 200 expression-matched 13-gene pseudo sets with the same
+  ARNTL-defined arms (masked alike): pass = p < 0.05 and below the pseudo q05 (a loss specific to the clock, not to the
+  genomic state of ARNTL-lost tumours).
+- **H225.3 (secondary):** the same for each of the other 13 clock genes with >= 5 eligible cells; Holm within H225.3.
+Holm over H225.1-2.
+**Power (dated note before B and C are scored, after A):** MDE = 2.49 x null SD; H225.1 not scored if MDE > 0.25,
+H225.2 not scored if MDE > 0.15.
+**Reading:** V225.1 near 1 -> copy-number noise alone can produce the luminal A gap. H225.1 fails with a passing estimator
+-> the luminal A advantage is a readout artefact (A219 withdrawn as a biological claim); passes -> a clock-specific
+advantage survives without dosage modelling. H225.2 passes -> ARNTL copy loss disorganises the rest of the tumour clock (a
+biological copy-number effect, and the correct estimator is the one validated in A); fails powered -> ARNTL loss acts on its
+own level only. **Stop rule:** one amendment. **Code:** `paper/exploratory/A225_cn_artefact_or_biology/`.
