@@ -3468,3 +3468,18 @@ Data GSE180012 (`$SCCC_DATA/gse180012_phx/`): 24 PHx and 24 sham livers, 3 per t
   clock percentile 0 in N and N_resp) and H209.1 is strict by construction. A209b repeats N and N_resp with exchangeable
   pseudo genes. H209.3 (power) is not affected.
 <!-- src: paper/exploratory/A209_gate_companion/output/{tests,rates,per_target}.csv -->
+
+## A209b (scored 2026-11-06): with clock-like non-clock genes, still no false claim; the exchangeability check fails for a structural reason
+- **H209b.1 PASS:** N_b, gate-only false claims 13 of 150 (0.087), with the matched companion 0 of 150 (p 1.4e-9 vs
+  0.127, Holm 1.4e-9).
+- **H209b.2 PASS:** N_resp_b + N_resp1_b, 0 of 300 (p 2.0e-18, Holm 4.0e-18); the gate failed in all 60 replicates, also
+  with the 1x responsive loading.
+- **Exchangeability check (registered descriptive) fails:** median clock-gene percentile among matched sets 0.010 (N_b),
+  0.020 (N_resp1_b), 0.115 (N_resp_b), not about 0.5.
+- **Reading:** the A145 no-clock arm is not clock-free: every compartment keeps its own clock-shaped state (psi, set from
+  the target c), aligned with the clock waveform by definition, so it lowers the clock genes' shared fraction and
+  cannot be given to pseudo genes, whose phases do not match the clock projector. What the arm does show: false coupling
+  produced by a non-clock factor shared by all genes is carried at least as strongly by matched pseudo genes, and the
+  companion removes every such claim; a factor biased to responsive clock genes breaks the gate (0 of 60). Not tested,
+  and not separable by any method: a shared non-clock factor with the clock genes' own phase pattern.
+<!-- src: paper/exploratory/A209_gate_companion/output/a209b/{tests,rates,per_target}.csv -->
