@@ -14,8 +14,12 @@ variance of the full-group D (variance ~ 1 / cells). Only dh, never D, is writte
 difference, SE^2 = sum w^2 (s2_mal + s2_norm) / (sum w)^2, w = equal or min(cells); true between-patient heterogeneity is
 not included, so the MDE is a lower bound.
 
-    python power_scout.py [--jobs 4]
-Outputs: ../output/power/{model_rewiring,model_damp_dephase,noise_groups,power}.csv
+Depth needed (`--depth-only` reruns this part from noise_groups.csv): median regression of log |dh| / 2 on log clock UMI
+per cell and log cells; per-group SE at a given depth and 500 cells (median-based, x 1 and x 2 for heavier tails), and the
+patients needed for MDE 1.0 (about the 2 h bound at D 3.9) with both compartments at that depth.
+
+    python power_scout.py [--jobs 4] [--depth-only]
+Outputs: ../output/power/{model_rewiring,model_damp_dephase,noise_groups,power,depth_scaling}.csv
 """
 from __future__ import annotations
 
@@ -150,12 +154,33 @@ def power(noise: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def depth_scaling(noise: pd.DataFrame) -> pd.DataFrame:
+    import statsmodels.api as sm
+    n = noise[noise.dh != 0]
+    X = sm.add_constant(np.column_stack([np.log(n.clock_umi_mean), np.log(n.n_cells)]))
+    fit = sm.QuantReg(np.log(np.abs(n.dh) / 2), X).fit(q=0.5)
+    b, se_b = np.asarray(fit.params), np.asarray(fit.bse)
+    rows = []
+    for umi in (1, 2, 4, 8, 16, 30):
+        se = float(np.exp(b[0] + b[1] * np.log(umi) + b[2] * np.log(500)) / 0.6745)
+        rows.append(dict(clock_umi_per_cell=umi, cells=500, group_se=se, slope_umi=b[1], slope_umi_se=se_b[1], slope_cells=b[2],
+                         slope_cells_se=se_b[2], n_for_mde1=int((2.49 * np.sqrt(2) * se) ** 2),
+                         n_for_mde1_tails_x2=int((2.49 * np.sqrt(2) * 2 * se) ** 2)))
+    return pd.DataFrame(rows)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--jobs", type=int, default=4)
+    ap.add_argument("--depth-only", action="store_true")
     args = ap.parse_args()
     limit_threads(1)
     OUT.mkdir(parents=True, exist_ok=True)
+    if args.depth_only:
+        d = depth_scaling(pd.read_csv(OUT / "noise_groups.csv"))
+        d.to_csv(OUT / "depth_scaling.csv", index=False)
+        print(d.round(3).to_string(index=False))
+        return
     model_rewiring().to_csv(OUT / "model_rewiring.csv", index=False)
     model_damp_dephase().to_csv(OUT / "model_damp_dephase.csv", index=False)
     print("model done", flush=True)
@@ -166,6 +191,7 @@ def main():
     noise.to_csv(OUT / "noise_groups.csv", index=False)
     p = power(noise)
     p.to_csv(OUT / "power.csv", index=False)
+    depth_scaling(noise).to_csv(OUT / "depth_scaling.csv", index=False)
     pd.set_option("display.width", 200)
     print(p.round(3).to_string(index=False))
 

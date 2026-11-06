@@ -46,3 +46,10 @@ Q1 (rewired vs intact, 2 h bound), Q2 (damping vs dephasing) and Q3 (the same by
 estimable with the cohorts on disk; the shortfall is depth of the normal epithelium (about 1 clock UMI per cell), not the
 number of studies. Q4 (clones) needs clone calls not on disk and a pseudobulk clock signal in malignant cells that A187 /
 A195 did not find. See the proposal in the lead's report.
+
+## Depth needed (`output/power/depth_scaling.csv`)
+Median regression over the 543 groups: per-group D SE ~ (clock UMI per cell)^-0.61 (SE 0.06) x cells^-0.41 (SE 0.06).
+At 500 cells per group and the same depth in both compartments, patients for MDE 1.0 (about the 2 h bound): 1,264 at 2
+clock UMI per cell, 543 at 4, 233 at 8, 100 at 16 (x 4 if the tails stay as heavy as now: rms SE about 2x the robust
+one). Clock UMI is about 3.5-4 per 10,000 total UMI, so 8-16 clock UMI means roughly 20,000-40,000 UMI per cell. The fit
+covers groups up to about 10 clock UMI per cell; 16 and above are extrapolated. Scout of deep studies: `inventory/INVENTORY_DEEP.md`.
