@@ -16,7 +16,9 @@ proposing anything, check that it was not already done (grep `METHOD.md`, `regis
    A213, and the single-cell entries WP0 item 2 (2026-10-24, second and third parts: per-cell D), A134, A138, A149, A187,
    A187b, A188, A195. `METHOD.md` section on D, coherent amplitude, lambda and R.
 5. The code of these single-cell analyses: `paper/exploratory/A138_cancer_estimability/`, `A149_paired_tumour_normal/`,
-   `C4_single_cell/` (A187 holds per-study malignant pseudobulks, inferred-genome and match files), `WP0_integrity/`
+   `C4_single_cell/` (A187 holds per-study malignant pseudobulks, inferred-genome and match files; `fits/` holds
+   CoPhaser cell-cycle fits of malignant cells for 18 studies, with per-cell files, per-patient cycling fractions and
+   `qc_rerun_all.csv`, on disk but not committed; `REGISTRATION_DRAFT.md`), `WP0_integrity/`
    (per-cell D and its calibrated simulation), and the clocksync API (`decompose`, `paired`, `simulate`).
 
 ## Where the question stands (all numbers from the files named in results_preliminary.md)
