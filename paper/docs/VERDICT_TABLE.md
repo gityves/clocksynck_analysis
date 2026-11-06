@@ -263,3 +263,4 @@ Source for the rows with a figure panel: `paper/exploratory/WP0_integrity/output
 | A204 | H204.1-H204.4 | method | S | descriptive only (gate failed): see RP A204 | - | not scored (simulator gate failed) | - | A204_orderer_uncoupling/output/{tests,cofe_cells,auc,tt_cells}.csv |
 | A205 | V205.1 gate passes under gene-specific partial shifts (W, 6 h / 12 h) | method | S | 100 of 100 | - | PASS | 0.80 | A205_partial_shift_gate/output/{tests,cells}.csv |
 | A205 | V205.2 offset within the gene shifts [6, 12] h | method | S | 1 of 100 (circular mean 12.86 h W; 14.26 h F) | - | FAIL | 0.90 | A205_partial_shift_gate/output/{tests,cells,per_rep}.csv |
+| A206 | H206.1 Cry1/2 DKO restricted-feeding liver fails the single-set gate (companion: both WT RF halves pass) | method | S | DKO RF share 0.158, p 0.0597; WT halves 0.692 / 0.742, p 0.005 | 0.0597 | PASS (borderline: p just above 0.05) | - | A206_cry_dko_gate/output/{gate,cosinor}.csv |

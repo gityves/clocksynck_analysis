@@ -8,7 +8,7 @@ Registered in paper/docs/registered_experiments.md (A204). Two task families, ca
 Scoring: score_a204.py.
 
     RUN_CAP_GB=10 paper/common/run.sh paper/exploratory/A204_orderer_uncoupling/scripts/compute_a204.py --jobs 8
-    options: --reps N (default 30), --out DIR, --only cofe|tt
+    options: --reps N (default 30), --out DIR, --only cofe|tt, --mesor-sd (A204b: --only tt --mesor-sd 0)
 """
 from __future__ import annotations
 
@@ -64,11 +64,11 @@ def psi_of(c: float, z: float) -> float:
     return z * z * V_FULL * (1 - c) / (2 * c)
 
 
-def tumour(c) -> Compartment:
+def tumour(c, mesor_sd: float = 0.5) -> Compartment:
     """Tumour compartment: coupled at c, or uncoupled (c None or 0) with the psi of c = 0.5."""
     if not c:
-        return Compartment(z=Z_T, psi=psi_of(0.5, AMP_T), coupled=False)
-    return Compartment(z=Z_T, psi=psi_of(c, AMP_T))
+        return Compartment(z=Z_T, psi=psi_of(0.5, AMP_T), coupled=False, mesor_sd=mesor_sd)
+    return Compartment(z=Z_T, psi=psi_of(c, AMP_T), mesor_sd=mesor_sd)
 
 
 def log2(tab: pd.DataFrame) -> pd.DataFrame:
@@ -118,7 +118,7 @@ def cofe_task(window: str, truth: str, rep: int, runs: str) -> dict:
     return dict(key=f.stem, runtime_s=out["runtime_s"], failed=False)
 
 
-def tt_task(window: str, c: float, rep: int, runs: str) -> dict:
+def tt_task(window: str, c: float, rep: int, runs: str, mesor_sd: float = 0.5) -> dict:
     from clocksync.config import limit_threads
 
     limit_threads(1)
@@ -127,10 +127,10 @@ def tt_task(window: str, c: float, rep: int, runs: str) -> dict:
         return dict(key=f.stem, runtime_s=pd.read_pickle(f)["runtime_s"], failed=False)
     from common.benchmark.timeteller import run_timeteller
 
-    tr, ttr = cs.simulate(WF, {"H": Compartment(z=1.0, psi=psi_of(C_NORMAL, 1.0))}, n=N_TRAIN, window_h=(0.0, 24.0),
+    tr, ttr = cs.simulate(WF, {"H": Compartment(z=1.0, psi=psi_of(C_NORMAL, 1.0), mesor_sd=mesor_sd)}, n=N_TRAIN, window_h=(0.0, 24.0),
                           jitter_h=0.0, seed=np.random.SeedSequence([SEED, 7, rep]))  # same training set across cells
     (win, jit) = WINDOWS[window]
-    te, tte = cs.simulate(WF, {"T": tumour(c)}, n=N_TEST, window_h=win, jitter_h=jit,
+    te, tte = cs.simulate(WF, {"T": tumour(c, mesor_sd)}, n=N_TEST, window_h=win, jitter_h=jit,
                           seed=np.random.SeedSequence([SEED, 8, list(WINDOWS).index(window), TT_CS.index(c), rep]))
     Ltr, Lte = log2(tr), log2(te)
     Lte.index = [f"t{i}" for i in Lte.index]
@@ -155,6 +155,7 @@ def main(argv=None):
     ap.add_argument("--jobs", type=int, default=8)
     ap.add_argument("--out", default=str(OUT))
     ap.add_argument("--only", choices=("cofe", "tt"))
+    ap.add_argument("--mesor-sd", type=float, default=0.5, help="TimeTeller arm: per-gene tissue offset sd (A204b: 0)")
     args = ap.parse_args(argv)
     runs = Path(args.out) / "runs"
     runs.mkdir(parents=True, exist_ok=True)
@@ -166,7 +167,8 @@ def main(argv=None):
     print(f"workers = {args.jobs} x 1 thread; {len(todo)} tasks ({args.reps} replicates)", flush=True)
     t0, done, last = time.time(), 0, time.time()
     with cf.ProcessPoolExecutor(args.jobs, mp_context=mp.get_context("spawn")) as ex:
-        pend = {ex.submit(cofe_task if k == "cofe" else tt_task, w, x, r, str(runs)): (k, w, x, r) for k, w, x, r in todo}
+        pend = {(ex.submit(cofe_task, w, x, r, str(runs)) if k == "cofe" else ex.submit(tt_task, w, x, r, str(runs), args.mesor_sd)):
+                (k, w, x, r) for k, w, x, r in todo}
         while pend:
             fin, _ = cf.wait(pend, timeout=600, return_when=cf.FIRST_COMPLETED)
             for fu in fin:

@@ -3351,3 +3351,20 @@ Target compartment with ARNTL/CLOCK/NPAS2/CRY1 +6 h and the other 10 genes +12 h
   and c. A measured offset or amplitude drop therefore cannot be attributed to one loop, and a lower |z| alone does not
   distinguish a damped clock from an internally incoherent one. To add to METHOD.md assumptions (conserved waveform).
 <!-- src: paper/exploratory/A205_partial_shift_gate/output/{tests,cells,per_rep}.csv -->
+
+## A206 (scored 2026-11-06): a clockless liver with a feeding rhythm does not pass the single-set gate (H206.1 PASS, borderline)
+GSE13093 liver, GTEx human waveform, `paired.reference_gate` (200 permutations, seed 206), 12 samples per set:
+| set | clock share (null mean) | p |
+|---|---|---|
+| WT restricted feeding, even CTs | 0.692 (0.109) | 0.005 |
+| WT restricted feeding, odd CTs | 0.742 (0.118) | 0.005 |
+| Cry1/2 DKO restricted feeding | 0.158 (0.072) | 0.0597 |
+| Cry1/2 DKO ad libitum | 0.182 (0.101) | 0.110 |
+- Power companion passes (both WT halves). **H206.1 PASS**, but p 0.0597 is close to the threshold and the DKO share
+  is still above its null mean: feeding leaves a weak, partly clock-like co-variation (cosinor amplitudes log2 0.01-0.66
+  in DKO RF vs 0.18-3.78 in WT).
+- Reading: in a single tissue, a feeding-driven rhythm without a clock is not read as a clock at n = 12, unlike the
+  cross-compartment gate in Bmal1 knockouts (A201, A129), which kept passing. With the A201 result: the clock share,
+  not the pass/fail, is the informative readout of clock loss. Caveat: CRY1/CRY2 are the knocked-out genes, so 2 of
+  14 genes carry no signal by construction.
+<!-- src: paper/exploratory/A206_cry_dko_gate/output/{gate,cosinor}.csv -->
