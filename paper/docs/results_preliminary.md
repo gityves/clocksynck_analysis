@@ -3386,3 +3386,18 @@ checked against the files.
   the same cohorts, so "disrupted" (ΔCCD, Grabe R²) must not be read as "uncoupled". Post hoc observation, not a test:
   across cancers ΔCCD tracks weaker pairing (rho -0.78), so CCD and pairing share information at the cohort level.
 <!-- src: paper/exploratory/A207_ccd_grabe_tcga/output/{tests,per_cancer,pseudo}.csv -->
+
+## A204b (scored 2026-11-06, post hoc to A204's failed gate): with matched tissue means TimeTeller works, and a coupled tumour would correlate with sampling time at REMAGUS size (H204b.4 PASS)
+- **Gate passes:** whole-day median error 1.23 h (A204, with independent per-gene tissue offsets: 5.78 h).
+- **H204b.4 PASS:** 08-18 h, c_T 0.9, n 108: slope p < 0.05 in 30 of 30 (median slope 0.81, r 0.57). Power by c_T
+  (08-18 h): 0.07 (uncoupled), 0.70 (0.25), 0.87 (0.5), 0.97 (0.75), 1.00 (0.9); MDE c_T 0.5. Narrow window 10-16 h
+  (sensitivity): 0.03 / 0.67 / 0.77 / 0.97 / 0.97, MDE 0.75. Whole-day linear slopes are not meaningful (circular
+  time) and not read.
+- **Reading (registered for H204.4, applied here):** if TimeTeller times are as accurate as in this simulator, a tumour
+  coupled at c >= 0.5 correlates with sampling time at n = 108 over a 08-18 h window; the REMAGUS r ≈ 0 (slope -0.027,
+  p 0.80) is then not explained by the narrow window alone. Combined with A204 (post hoc, not a test): when the
+  training tissue's per-gene mean levels differ from the test tissue's (sd 0.5 in log), TimeTeller's times are biased
+  into 07-20 h and lose the link to time. Healthy-tissue training applied to tumours is that situation, so a mean-level
+  mismatch is an alternative to tumour uncoupling that the REMAGUS analysis does not exclude. The window range of
+  REMAGUS is not reported; both windows are assumptions.
+<!-- src: paper/exploratory/A204_orderer_uncoupling/output/a204b/{gate,tests,tt_cells}.csv; A204 output/tt_cells.csv -->
