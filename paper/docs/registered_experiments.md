@@ -4542,3 +4542,10 @@ patients; fibroblast / endothelial anchors.
 the caveat that tumour and normal immune cells share the same circulation (diurnal trafficking and composition), so they
 mark host time reaching the tumour, not necessarily a local clock. Pairing without clock specificity -> patient-specific
 non-clock structure (as A149 epithelium). **Stop rule:** one amendment. **Code:** `paper/exploratory/A227_tme_compartment_pairing/`.
+
+**A227 power note (2026-11-06, before any observed pairing; `A227_tme_compartment_pairing/output/{eligibility,eligibility_by_cancer,power}.csv`).**
+34 cohorts (27 A149 with estimable S1 + 7 A226). Permutation null from shuffled pairings only (identity never evaluated),
+10,000 per cohort. Myeloid 169 patients / 24 cohorts, null 0.361 SD 0.036, MDE 0.089; T_NK 227 / 27, 0.320, 0.032, 0.079;
+B_plasma 172 / 22, 0.339, 0.035, 0.087; mast 50 / 8, 0.390, 0.066, 0.165; mural 37 / 7 (MDE 0.189): **not scored** (< 40
+patients). Anchors: fibroblast 93 / 16 (MDE 0.119), endothelial 101 / 14 (0.114). Scored: H227.1-3, H227.5. Patients are not
+de-duplicated across A149 and A226 cohorts (Qian 2020 donor overlap with A149 unconfirmed; README).
