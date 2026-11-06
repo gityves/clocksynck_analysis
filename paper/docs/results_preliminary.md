@@ -3747,3 +3747,46 @@ random lists per cohort; 18 TCGA projects with >= 60 OS events, METABRIC, SCAN-B
   random lists or over clinical covariates and proliferation. The core clock genes carry less outcome information than a
   random gene set of the same size (descriptive, post hoc reading of a registered descriptive).
 <!-- src: paper/exploratory/A220_signature_benchmark/output/{power,tests,per_cohort,eligibility}.csv -->
+
+## A224 (scored 2026-11-06): most of the luminal A coherence advantage is cis copy-number noise on the clock loci (H224.1 not clock-specific after adjustment); TP53 mutation lowers PER1 / PER2 beyond 17p dosage (H224.3 PASS, not adjusted for tumour state)
+Power note: `registered_experiments.md` (commit af6bcfc). Dosage fitted with leave-the-gene-out phase covariates (user
+caution: clock levels depend on sampling time); adjusted expression y - beta_g CN_g; 200 pseudo sets adjusted alike.
+- **H224.1 (METABRIC + TCGA BRCA, 6 cells, 2,526 tumours): LumA − others +0.276 → +0.101 after adjustment**; permutation p
+  0.011 (Holm 0.022) but pseudo 92nd percentile (q95 0.128): **not clock-specific, so not a registered pass** (registration:
+  p < 0.05 and above q95; the script's verdict column reads "pass" on p alone). Attenuation 63 % (jackknife 95 % 26-101 %).
+  MDE 0.133.
+- **H224.2 FAIL (TCGA TP53, 46 cells, 6,449 tumours):** −0.085 → −0.052, p 0.097, Holm 0.097, pseudo 6.5th percentile;
+  attenuation 38 % (−6 to 82 %). MDE 0.066.
+- **H224.3 PASS (14 projects, 2,362 tumours without PER1 / TP53 loss and PER2 CN 0):** TP53 mutant − wild-type,
+  phase- and dosage-adjusted mean log2 PER1 / PER2, −0.156 (two-sided p 0.0005, Holm 0.0015, MDE 0.079). Naive contrast over
+  all tumours −0.233 (8,530). 2 x 2 means (mutation x 17p loss): WT / no loss +0.115 (3,807), WT / loss −0.076 (1,320),
+  mutant / no loss −0.024 (1,416), mutant / loss −0.152 (1,987). Not adjusted for proliferation or subtype (as registered).
+- **Dosage (before scoring, power note):** all 14 betas > 0 in TCGA (0.24-0.46 log2 per GISTIC step); CN carries 2-15 % of
+  between-tumour variance.
+- **Post hoc breakdown (not registered; `posthoc_*.csv`, `scripts/posthoc_a224.py`):**
+  - Per cohort: METABRIC 0.277 → 0.117 (58 %), TCGA BRCA 0.275 → 0.085 (69 %).
+  - Which genes: ARNTL alone 39 % (METABRIC 54 %, BRCA 24 %), PER3 alone 21 % (BRCA 41 %, METABRIC 2 %), PER2 11 %, NR1D1
+    9 %, others <= 5 %; all but ARNTL 37 %. Not additive.
+  - CN variance is 2-4 x higher in non-LumA tumours for most clock genes (e.g. METABRIC CLOCK 0.070 vs 0.288, ARNTL 0.160 vs
+    0.363); PER1 is the exception (ratio 0.87-1.05). LumA is the copy-number-quiet subtype.
+  - Cis vs trans: adding proliferation, subtype and FGA keeps 88-110 % of each TCGA beta (PER1 0.388 → 0.342); in METABRIC
+    62-129 % (ARNTL 0.201 → 0.179). The slopes are mostly cis dosage, so over-adjustment by tumour-state biology is small in
+    TCGA and partial in METABRIC (FGA is itself derived from CN and may absorb some cis signal).
+  - H224.2 per project: the adjustment moves projects both ways (GBM −0.026 → +0.163, HNSC −0.043 → +0.077, BRCA −0.209 →
+    −0.120; LUAD −0.132 → −0.202).
+- **Reading (registered + post hoc qualification):** copy-number variation at the clock loci, larger in non-luminal-A
+  tumours, lowers their between-tumour clock coherence; removing it leaves a LumA advantage of +0.10 that matched non-clock
+  genes reproduce. The A219 H219.2-3 passes therefore mostly reflect genome stability of luminal A tumours, not a
+  lineage-specific clock (qualified below). The TCGA TP53 coherence loss was compositional (A217) and partly positional
+  (38 %). PER1 / PER2 are lower in TP53-mutant tumours without 17p loss, so "p53 and the clock" is not only positional, but the
+  contrast is not adjusted for proliferation or subtype and is not a mechanism. Methods consequence: between-tumour coherence
+  contrasts need a cis copy-number companion (clock and pseudo genes adjusted alike); the pseudo-clock companion alone did
+  not catch this because random genes rarely share the clock genes' copy-number exposure in these subtypes.
+<!-- src: paper/exploratory/A224_cis_copy_number/output/{power,tests,dosage,descriptive_naive,descriptive_2x2,pseudo_stat,posthoc_cells,posthoc_leave_one_gene,posthoc_cn_by_subtype,posthoc_beta_trans}.csv -->
+
+## A219 qualification (2026-11-06, after A224): the luminal A advantage is mostly cis copy number
+The A219 H219.2 pass (+0.276, clock-specific) stands as scored. After cis copy-number adjustment of clock and pseudo genes
+alike (A224 H224.1) it is +0.101 and no longer above the adjusted pseudo sets (92nd percentile). The reading "luminal A / ER
+state is the breast tumour-state correlate of clock coherence beyond proliferation" is withdrawn as stated; supportable:
+"luminal A tumours are more clock-coherent, mostly because their clock loci vary less in copy number". H219.3 (SCAN-B) has
+no copy number and is not re-examined; the ER-within-subtype descriptive (A219) is likewise not CN-adjusted.
