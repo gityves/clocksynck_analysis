@@ -4153,3 +4153,42 @@ precondition (observed P0 below its pseudo 5th percentile) cannot be evaluated b
 sequenced = barcode in the MAF (METABRIC: `cases_sequenced`); intact requires a copy-number call; H215.4 status permuted within project x pooled proliferation tertile with
 status-specific tertiles recomputed; S215.5 caliper 0.1 SD of the project's score over tumours with TP53 status; P0 on all tertiles of the eligible P1 strata; "residual
 proliferation imbalance" in A216 read as top - bottom FGA, TP53 fraction and purity within strata.
+
+## A217 (2026-11-06, user agreement; written before PanCanAtlas subtype labels are downloaded for any project other than BRCA; seen: A210, A213, A215 results and the post hoc TCGA BRCA PAM50 rerun (losses shrink 59-96 % at matched subtype)): do the TCGA genomic-state losses survive matching on molecular subtype? **L1, TCGA, BRCA excluded from the tests (not blind)**
+**Why.** The pan-cancer TCGA passes (A210 H210.2 MYC, A213 H213.2 FGA, A215 H215.1 TP53) used project x proliferation
+cells. In breast the altered arms are mostly Basal / LumB, and at matched PAM50 the losses mostly vanish. If the same holds
+in the other projects, these passes are subtype composition, not lesion effects.
+**Data.** PanCanAtlas molecular subtypes: patient attribute `SUBTYPE` of the cBioPortal studies
+`<project>_tcga_pan_can_atlas_2018` (COAD and READ: `coadread`), API or study tarball, provenance recorded. Projects of the
+A210 set (23) with a subtype for >= 50 % of their primaries enter; tumours without a subtype are dropped. Lesions,
+expression, proliferation, coherence exactly as A210 / A213 / A215.
+**Cells:** project x subtype x proliferation tertile (tertile within project x subtype); arms as registered originally
+(MYC: GISTIC 2 vs 0; FGA: top vs bottom tertile within cell; TP53: altered vs intact); >= 10 per arm. T = mean over cells of
+coherence(arm 1) − coherence(arm 0); labels permuted within cell (2,000); one-sided; excess over the null mean reported.
+- **H217.1:** TP53. **H217.2:** FGA. **H217.3:** MYC amplification. Holm over the three. BRCA excluded.
+**Specificity companion:** 200 pseudo-clock sets per project (seeds crc32("A217")); clock-specific only below their 5th
+percentile.
+**Descriptive:** the same tumours with project x proliferation cells (the original design) and the ratio of the two
+excesses; per-project and per-subtype values; subtype composition of the arms; BRCA reported separately.
+**Power (dated note before the tests):** MDE = 2.49 x null SD; > 0.25 not scored.
+**Reading:** pass, clock-specific -> the lesion goes with less clock signal beyond subtype; powered fail -> the original
+TCGA pass is read as subtype composition and is withdrawn as a lesion effect. **Stop rule:** one amendment.
+**Code:** `paper/exploratory/A217_subtype_matched/`.
+
+## A218 (2026-11-06, user agreement; written with A217, before any subtype label outside BRCA is read; seen: A127 H127.1 (SCAN-B, proliferation loss within PAM50 x purity, pass), A166 H166.3 (METABRIC, fail), A97 / A172 per-project proliferation losses, A216 precondition fail): is the tumour proliferation clock loss carried by molecular subtype? **L1, TCGA projects with subtypes, BRCA excluded**
+**Why.** Within breast the proliferation loss was tested within PAM50 (SCAN-B pass, METABRIC fail). Elsewhere it was tested
+within project only, where proliferation differs by subtype. If subtype (lineage or differentiation state) carries it,
+proliferation is a marker of subtype in these projects.
+**Design.** Projects and subtypes as A217. Purity proxy as A127 (mean z of COL1A1, COL1A2, COL3A1, DCN, LUM, PDGFRB, PTPRC,
+CD3E, CD14, LYZ, CD74), tertile within project. P_proj = mean over project x purity-tertile cells of coherence(top) −
+coherence(bottom proliferation tertile, within cell); P_sub = the same over project x subtype x purity-tertile cells;
+>= 10 per arm; both on the tumours of the eligible P_sub cells. Proliferation labels of the two arms permuted within cell
+(2,000).
+- **H218.1:** P_sub < 0 (one-sided), clock-specific (below the pseudo 5th percentile, 200 sets, seeds crc32("A218")).
+- **Precondition:** P_proj below its own pseudo 5th percentile on these tumours; otherwise H218.1 is not scored (nothing
+  to explain) and both values are descriptive.
+- **Attenuation:** A = P_sub / P_proj, delete-one-project jackknife interval (no resampling with replacement).
+**Power (dated note before the tests):** MDE of P_sub = 2.49 x null SD; > 0.25 not scored.
+**Reading:** H218.1 passes and A >= 0.5 -> the proliferation loss holds within subtype (as SCAN-B); powered fail with the
+upper jackknife bound of A < 0.5 -> it is carried by subtype; otherwise inconclusive. Per-project values descriptive.
+**Stop rule:** one amendment. **Code:** `paper/exploratory/A217_subtype_matched/` (shared).
