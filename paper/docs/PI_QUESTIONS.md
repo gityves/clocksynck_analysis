@@ -36,6 +36,9 @@ loses it". This needs your review (Phase 8: framing and figures). All numbers: `
     A confirmatory test in independent cohorts (A226) could not be scored: all sizeable public paired studies are already
     A149 cohorts (11 / 13 new patients). The clock-specific stromal pairing therefore stays post hoc.
   - HCC is less coherent than its own adjacent liver (GSE14520, −0.33).
+  - Tumour myeloid and T/NK cells keep the patient's normal-tissue clock state, clock-specifically (A227, registered: myeloid
+    0.581 vs pseudo q95 0.548, 169 patients; T/NK 0.539 vs 0.510, 227 patients); B / plasma and mast pair without clock
+    specificity. Gradient stroma > myeloid ≈ T/NK > B follows residency; immune passes may reflect shared circulation.
 - **Corrective (the method's specificity and design discipline applied to the literature):**
   - Clock "prognosis" is proliferation (A191-A198).
   - Circadian LASSO signatures are no better than random gene lists; they "validate" exactly where random lists do (A220;

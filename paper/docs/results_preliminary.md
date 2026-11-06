@@ -3830,3 +3830,29 @@ Fibroblasts 11 patients, endothelium 13, in the new cohorts that pass the A149 r
 normal-stroma clock-specific pairing stays a post hoc result (A149 note 5), reported as such; its registered-statistic
 pairing (A151 H151.1, 0.860 vs null 0.504) is confirmed only as patient-specific, not as clock-specific.
 <!-- src: paper/exploratory/A226_stroma_pairing_confirm/output/{eligibility,power}.csv; scout/SCOUT.md -->
+
+## A227 (scored 2026-11-07): tumour myeloid and T/NK cells keep the patient's normal-tissue clock state, clock-specifically (H227.1-2 PASS); B / plasma and mast cells pair but not clock-specifically
+Power note: `registered_experiments.md` (commit 0763cf8). 34 cohorts (A149 + A226), uncorrected |complex correlation|,
+within-cohort permutation null (10,000), 200 pseudo-clock sets. First run killed for memory (8 workers, 39 GB); rerun with 2
+workers, unchanged code.
+- **H227.1 PASS (myeloid, 169 patients / 24 cohorts):** 0.581 vs null 0.361 (SD 0.036), p 1e-4, Holm 2e-4; pseudo median
+  0.476, q95 0.548, p_clock 0.020: clock-specific.
+- **H227.2 PASS (T/NK, 227 / 27):** 0.539 vs 0.320 (SD 0.031), p 1e-4, Holm 2e-4; pseudo median 0.461, q95 0.510, p_clock
+  0.030: clock-specific.
+- **H227.3 (B / plasma, 172 / 22):** pairing 0.420 vs 0.338, p 0.010, Holm 0.020; pseudo q95 0.465, p_clock 0.30: **not
+  clock-specific**.
+- **H227.5 (mast, 50 / 8):** 0.514 vs 0.390, p 0.036, Holm 0.036; pseudo q95 0.549, p_clock 0.17: **not clock-specific**.
+  Mural not scored (37 patients).
+- **Anchors (descriptive; mostly the A151 patients, not confirmatory):** fibroblasts 0.686 (pseudo q95 0.539), endothelium
+  0.677 (0.512), both above every pseudo set.
+- **Ordering (clock − pseudo median):** endothelium +0.255, fibroblasts +0.220, myeloid +0.106, mast +0.082, T/NK +0.077,
+  B / plasma +0.020.
+- **Per cancer type (descriptive, >= 12 patients):** lung strongest for all compartments (myeloid +0.181, T/NK +0.194,
+  fibroblasts +0.329, endothelium +0.262); colorectal immune near 0 (myeloid +0.031, T/NK +0.003, B +0.033) while colorectal
+  fibroblasts keep +0.218; liver and prostate positive (small n).
+- **Reading (registered):** in the tumour, stromal and myeloid / T/NK compartments keep the same patient's normal-tissue clock
+  state beyond matched non-clock genes; lymphoid B / plasma and mast cells share patient-specific structure that is not
+  clock-specific. Immune passes carry the registered caveat: tumour and normal immune cells share the circulation (diurnal
+  trafficking, composition), so they show host time reaching the tumour, not necessarily a local clock. The gradient
+  stroma > myeloid ≈ T/NK > B follows residency. Colorectal immune cells pair without clock specificity (descriptive).
+<!-- src: paper/exploratory/A227_tme_compartment_pairing/output/{power,tests,pooled,descriptive,per_cohort,eligibility,eligibility_by_cancer}.csv -->

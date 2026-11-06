@@ -316,3 +316,8 @@ Source for the rows with a figure panel: `paper/exploratory/WP0_integrity/output
 | A225 | H225.2 ARNTL copy loss → coherence of the other 13 genes | L1 | P | not run | - | NOT ESTIMABLE (masking) | - | A225_cn_artefact_or_biology/output/power.csv |
 | A225 | H225.3 same for PER1, TEF, NR1D2 | L1 | S | −0.081, +0.066, +0.054 | Holm 0.88-1.0 | FAIL (MDE 0.18-0.26) | - | A225_cn_artefact_or_biology/output/tests.csv |
 | A226 | H226.1-4 tumour vs normal stroma clock pairing, independent cohorts (fibroblasts, endothelium) | L3 | P | not run | - | NOT SCORED (11 / 13 new patients; MDE 0.38 / 0.40) | threshold 0.12 / 0.13 | A226_stroma_pairing_confirm/output/power.csv |
+| A227 | H227.1 tumour vs normal myeloid clock pairing (169 patients, 24 cohorts) | L3 | P | 0.581 (null 0.361; pseudo q95 0.548) | 1e-4 / Holm 2e-4; p_clock 0.020 | PASS, clock-specific | MDE 0.089 | A227_tme_compartment_pairing/output/tests.csv |
+| A227 | H227.2 same, T/NK (227, 27) | L3 | P | 0.539 (null 0.320; q95 0.510) | 1e-4 / Holm 2e-4; p_clock 0.030 | PASS, clock-specific | MDE 0.079 | A227_tme_compartment_pairing/output/tests.csv |
+| A227 | H227.3 same, B / plasma (172, 22) | L3 | S | 0.420 (null 0.338; q95 0.465) | 0.010 / Holm 0.020; p_clock 0.30 | pairing PASS, not clock-specific | MDE 0.087 | A227_tme_compartment_pairing/output/tests.csv |
+| A227 | H227.5 same, mast (50, 8) | L3 | S | 0.514 (null 0.390; q95 0.549) | 0.036 / Holm 0.036; p_clock 0.17 | pairing PASS, not clock-specific | MDE 0.165 | A227_tme_compartment_pairing/output/tests.csv |
+| A227 | H227.4 mural | L3 | S | not run | - | NOT SCORED (37 patients) | MDE 0.189 | A227_tme_compartment_pairing/output/power.csv |
