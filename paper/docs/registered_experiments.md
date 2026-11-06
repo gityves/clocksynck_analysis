@@ -4415,3 +4415,12 @@ attenuation or a fail -> part of it is genome instability on the clock loci, and
 H224.2 near 0 -> the TCGA TP53 loss was positional or compositional (with A217). H224.3 fails powered -> no TP53-mutation
 effect on PER1 / PER2 beyond 17p dosage: "p53 regulates the clock" claims from tumour level contrasts are positional.
 **Stop rule:** one amendment. **Code:** `paper/exploratory/A224_cis_copy_number/`.
+
+**A224 power note (2026-11-06, before any adjusted contrast; `A224_cis_copy_number/output/{power,dosage,counts,eligibility,eligibility_h224_3}.csv`).**
+Dosage (phase-adjusted, log2 per GISTIC step, all p < 0.001): TCGA pooled (23 projects) beta 0.236 (CRY1) to 0.462 (PER3);
+PER1 0.388, PER2 0.362, NR1D1 0.274; CN share of between-tumour variance 0.016 (NPAS2) to 0.153 (CLOCK), PER1 0.048.
+METABRIC (array) beta 0.017 (NR1D1) to 0.411 (PER2), PER1 0.033; CIART has no CN row (not adjusted). CN x phase joint p
+< 0.01: TCGA ARNTL, NPAS2, NR1D2, CIART; METABRIC PER3, DBP (descriptive). Power: H224.1 (6 cells, 2,526 tumours) null SD
+0.053, MDE 0.133; H224.2 (46 cells, 6,449) SD 0.027, MDE 0.066; H224.3 (14 projects, 2,362 tumours) SD 0.032, MDE 0.079
+log2. All scored. Choices (README): seeds of A219 / A215 reused, crc32("A224") for H224.3; TCGA beta pooled over the A215
+projects; pseudo genes use the 14-gene phase; H224.1 one-sided greater, H224.2 one-sided less, H224.3 two-sided.
