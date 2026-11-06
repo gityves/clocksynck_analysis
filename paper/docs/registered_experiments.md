@@ -4230,3 +4230,10 @@ tumours keep more clock signal than other subtypes at equal proliferation. Passe
 differ in co-expression generally, not in the clock. Powered fails -> subtype does not set coherence at matched
 proliferation, and the A217 fails leave proliferation as the only tumour-state correlate. **Stop rule:** one amendment.
 **Code:** `paper/exploratory/A219_subtype_coherence/`.
+
+**A219 power note (2026-11-06, before any observed coherence difference; `A219_subtype_coherence/output/{eligibility,counts,power}.csv`).**
+Cells project (cohort) x proliferation tertile; a subtype enters with >= 15 tumours, a cell needs >= 2 entering subtypes. H219.1 (TCGA non-BRCA, S): 9 of the 11 A217 projects have an eligible cell (GBM and READ have none), 23 of 33 cells,
+2,388 tumours, null mean 0.0764, null SD 0.0100, MDE 0.025 (on S - null mean). H219.2 (METABRIC + TCGA BRCA, D): 2 cohorts, 6 cells (3 + 3), 2,526 tumours, null mean -0.0011, null SD 0.0623, MDE 0.155. H219.3 (SCAN-B, D): 1 cohort, 3 cells,
+2,865 tumours, null mean 0.0152, null SD 0.0488, MDE 0.121. All three have MDE <= 0.25 and are scored. Choices left open (README): proliferation tertile within project over all tumours with a subtype label (before the 15-tumour rule);
+for D each of LumA, LumB, Her2, Basal enters on its own count (LumA and >= 1 other required, the entering others pooled); weighted SD in population form, unweighted mean over cells; METABRIC pseudo sets are the stored A166 sets and
+SCAN-B the stored A127 mean- and variance-matched sets.
