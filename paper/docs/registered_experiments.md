@@ -4506,3 +4506,13 @@ must detect half the post hoc effect).
 H226.1 pass, H226.2 fail -> pairing confirmed, clock specificity not replicated (the claim stays "patient-specific stromal
 pairing", specificity post hoc only). Not scored / fails -> the stromal claim stays post hoc and is reported as such.
 **Stop rule:** one amendment. **Code:** `paper/exploratory/A226_stroma_pairing_confirm/`.
+
+**A226 power note (2026-11-06; `A226_stroma_pairing_confirm/output/{eligibility,power}.csv`, scout `scout/SCOUT.md`): not scored.**
+Dated scout (user database, on-disk inventories, CELLxGENE Census 2025-11-08, GEO E-utilities 6,226 single-cell series): every
+study with same-patient tumour and normal samples and enough pairs is already an A149 cohort. New data (9.9 GB, `$SCCC_DATA/a226`)
+give, under the A149 rules, fibroblasts 11 patients / 2 cohorts (GSE308103 lung 5, Qian 2020 CRC 6) and endothelium 13 / 2
+(GSE308103 5, GSE183219 8); without depth and presence rules 48 / 6 and 47 / 5. Null SD (simulated independent states at the
+real cohort sizes, calibrated on the A151 pseudo-set spread) 0.154 / 0.162, MDE 0.383 / 0.403 (sensitivity set 0.184 / 0.212)
+against the threshold (half the A151 clock − pseudo-median difference) 0.120 / 0.134. Both compartments below 30 patients:
+not scored. Design note: the threshold was too strict for any feasible cohort set (the same method gives MDE 0.127 at
+A151's own 98 patients); the claim nevertheless stays post hoc, as registered.

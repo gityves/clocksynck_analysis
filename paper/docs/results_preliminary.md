@@ -3823,3 +3823,10 @@ Gate and power: `registered_experiments.md` (commit 5f97893).
   not estimable at TCGA / METABRIC arm sizes. A219 stands as scored, with this caveat attached; neither "lineage sets the
   clock" nor "copy-number noise" is supported as the mechanism.
 <!-- src: paper/exploratory/A225_cn_artefact_or_biology/output/{sim_calibration,sim_summary,power,tests,eligibility,posthoc_arm_coherence_real,posthoc_arm_coherence_sim,posthoc_offset_plane,posthoc_cn_vs_clock_residual,posthoc_variants_real}.csv -->
+
+## A226 (2026-11-06): stromal host pairing cannot be confirmed in independent cohorts (not scored; too few new patients)
+Fibroblasts 11 patients, endothelium 13, in the new cohorts that pass the A149 rules (MDE 0.38 / 0.40 vs threshold 0.12 /
+0.13). Nearly all public same-patient tumour / normal single-cell studies are already A149 cohorts. The tumour-stroma ↔
+normal-stroma clock-specific pairing stays a post hoc result (A149 note 5), reported as such; its registered-statistic
+pairing (A151 H151.1, 0.860 vs null 0.504) is confirmed only as patient-specific, not as clock-specific.
+<!-- src: paper/exploratory/A226_stroma_pairing_confirm/output/{eligibility,power}.csv; scout/SCOUT.md -->

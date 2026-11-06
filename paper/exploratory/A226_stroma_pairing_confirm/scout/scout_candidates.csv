@@ -1,0 +1,21 @@
+study,source,cancer,paired_patients_metadata,decision,fib_both_registered_rules,fib_both_sensitivity,endo_both_registered_rules,endo_both_sensitivity,reason
+GSE308103,GEO 2025-10,"lung (LUAD, treatment-naive, FFPE snRNA)",23 paired,built,5.0,23.0,5.0,23.0,
+GSE183219,GEO 2022-08,"lung (NSCLC, sorted stromal cells)",12 paired,built,0.0,7.0,8.0,12.0,
+GSE155109,GEO 2020-07,breast (EC-enriched + stroma fractions),"9 patients, tumour+peritumoral",built,0.0,4.0,0.0,3.0,
+OPSCC_b6b5ea88,CELLxGENE Census b6b5ea88,head and neck (OPSCC),7 paired,built,0.0,4.0,0.0,4.0,
+RCC_5af90777,CELLxGENE Census 5af90777 (Li 2022),kidney (ccRCC),8 donors,built,0.0,0.0,0.0,3.0,
+Qian2020_CRC,CELLxGENE Census b617ee1b (Qian 2020 donors),colorectal,7 paired,built,6.0,6.0,0.0,4.0,
+Qian2020_LUAD,CELLxGENE Census b617ee1b (Qian 2020 donors),lung,"4 donors with both",built,0.0,4.0,0.0,4.0,
+GSE244267,GEO,prostate (mesenchymal cells),~8 T/N,not used,,,,,"h5ad has no sample/patient column, barcode suffix to GSM mapping undocumented; ~300 cells per sample"
+829a3cd1 Moorman 2025,on disk / Census,colorectal (+metastasis),14 donors,not used,,,,,epithelial cells only in the Census object (no fibroblasts / endothelium)
+GSE178341 (Pelka),Census 16023185,colorectal,36,excluded,,,,,A149 cohort
+19053a82 Extended gut atlas,Census,colorectal / IBD,9 fibroblast pairs at >= 20 cells,excluded,,,,,"donors are A149 cohorts (SC001/KUL = ERP149257 / GSE144735, Jeong 2021 = GSE150290)"
+1e6a6ef9 LuCA,Census,lung,210 donors,excluded,,,,,no matched normal lung of the same donors in the atlas (tumour disease labels only)
+e3ed2ba4 CRLM atlas,Census,colorectal liver metastasis,6 donors,excluded,,,,,"83 normal fibroblasts in total, 0 donors >= 50 cells both"
+GSE205506,GEO,colorectal dMMR,13 normals,excluded,,,,,normal samples from PD-1 treated patients
+GSE156626,GEO,HCC,3-4 patients,excluded,,,,,no processed matrix in suppl; few patients
+GSE201347,GEO,gastric,9 paired,excluded,,,,,"single 18 GB Seurat rds, not parseable without R (never executed)"
+"GSE308792, GSE222703, GSE196303, GSE278879, GSE292700",GEO,cervical / ccRCC / lung carcinoid / endometrium / LUAD BRCA,2-4 pairs,excluded,,,,,< 4 pairs
+GSE189935,GEO,HBV HCC,9 N / 13 T,excluded,,,,,"Smart-seq2 CD45+ cells (no UMI, no stroma)"
+GSE161529,GEO,breast,tumour 41 / normal 24,excluded,,,,,"normals from reduction mammoplasty / BRCA1 carriers, not paired"
+scRNAseq_database / scBaseCount inventory,on disk,various,,excluded,,,,,"all paired studies already in cancer_sc (A149); remaining: SRP431612 = GSE229253 (A149), SRP367723 (CD45+ only), SRP307611 (3 pairs)"

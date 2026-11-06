@@ -33,7 +33,8 @@ loses it". This needs your review (Phase 8: framing and figures). All numbers: `
     strength is measured.
   - High-proliferation tumours pair less (A175 H175.1, +0.158, clock-specific).
   - Tumour fibroblasts and endothelium follow the patient's normal stroma (A149 note 5, post hoc, about 100 patients each).
-    A confirmatory test in independent cohorts is registered (A226, running).
+    A confirmatory test in independent cohorts (A226) could not be scored: all sizeable public paired studies are already
+    A149 cohorts (11 / 13 new patients). The clock-specific stromal pairing therefore stays post hoc.
   - HCC is less coherent than its own adjacent liver (GSE14520, −0.33).
 - **Corrective (the method's specificity and design discipline applied to the literature):**
   - Clock "prognosis" is proliferation (A191-A198).
@@ -65,7 +66,7 @@ loses it". This needs your review (Phase 8: framing and figures). All numbers: `
   - How strongly should the literature correction be worded? It names published signatures, CYCLOPS magnitude and
     TimeTeller.
   - Should the A220-A222 tests appear as main or Extended Data?
-- **On hold:** the cancer figure and its text. A226 continues.
+- **On hold:** the cancer figure and its text.
 
 ### Q12 (2026-10-27): request brain time-of-death fields? (A141)
 A141 (registered after your Q6 answer):

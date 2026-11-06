@@ -315,3 +315,4 @@ Source for the rows with a figure panel: `paper/exploratory/WP0_integrity/output
 | A225 | H225.1 LumA − others, gate estimator (= A224 H224.1) | L1 | P | +0.101 | - | see A224 | MDE 0.133 | A224_cis_copy_number/output/tests.csv |
 | A225 | H225.2 ARNTL copy loss → coherence of the other 13 genes | L1 | P | not run | - | NOT ESTIMABLE (masking) | - | A225_cn_artefact_or_biology/output/power.csv |
 | A225 | H225.3 same for PER1, TEF, NR1D2 | L1 | S | −0.081, +0.066, +0.054 | Holm 0.88-1.0 | FAIL (MDE 0.18-0.26) | - | A225_cn_artefact_or_biology/output/tests.csv |
+| A226 | H226.1-4 tumour vs normal stroma clock pairing, independent cohorts (fibroblasts, endothelium) | L3 | P | not run | - | NOT SCORED (11 / 13 new patients; MDE 0.38 / 0.40) | threshold 0.12 / 0.13 | A226_stroma_pairing_confirm/output/power.csv |

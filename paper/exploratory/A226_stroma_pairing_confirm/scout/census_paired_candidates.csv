@@ -1,0 +1,11 @@
+ds,cls,n_both,n_t,n_n,dis,tissue,title,coll,doi
+16023185,endothelial,18,47,22,colon adenocarcinoma,large intestine,All Cells,Spatially organized multicellular immune hubs in h,10.1016/j.cell.2021.08.003
+16023185,fibroblast,19,39,30,colon adenocarcinoma,large intestine,All Cells,Spatially organized multicellular immune hubs in h,10.1016/j.cell.2021.08.003
+19053a82,endothelial,7,29,49,colorectal cancer;gastric cancer,colon;esophagus;intestine;larg,Extended+ - 18485 genes,Single-cell integration reveals metaplasia in infl,10.1038/s41586-024-07571-1
+19053a82,fibroblast,9,31,61,colorectal cancer;gastric cancer,colon;esophagus;intestine;larg,Extended+ - 18485 genes,Single-cell integration reveals metaplasia in infl,10.1038/s41586-024-07571-1
+5af90777,endothelial,4,5,6,nonpapillary renal cell carcinoma,adipose tissue;adrenal gland;b,Single-cell transcriptomic datasets of Renal cell carcinoma ,Mapping single-cell transcriptomes in the intra-tu,10.1016/j.ccell.2022.11.001
+b617ee1b,endothelial,10,43,13,breast cancer;colorectal cancer;liver ca,breast;eye;large intestine;liv,A multi-tissue single-cell tumor microenvironment atlas,Dissecting novel myeloid-derived cell states throu,10.1038/s41467-024-49916-4
+b617ee1b,fibroblast,12,52,14,breast cancer;colorectal cancer;liver ca,breast;eye;large intestine;liv,A multi-tissue single-cell tumor microenvironment atlas,Dissecting novel myeloid-derived cell states throu,10.1038/s41467-024-49916-4
+b6b5ea88,endothelial,7,10,7,oropharynx squamous cell carcinoma,digestive system,Single cell RNA sequencing of oropharyngeal squamous cell ca,Characterisation of human papillomavirus (HPV)-pos,10.1186/s12943-024-02191-9
+b6b5ea88,fibroblast,6,9,7,oropharynx squamous cell carcinoma,digestive system,Single cell RNA sequencing of oropharyngeal squamous cell ca,Characterisation of human papillomavirus (HPV)-pos,10.1186/s12943-024-02191-9
+e3ed2ba4,endothelial,5,5,6,colorectal carcinoma || metastatic malig,liver,CRLM-NMP-ATLAS,Ex vivo modelling of human colorectal cancer liver,10.1186/s12943-025-02430-7
