@@ -3674,3 +3674,24 @@ tumours per cell.
   0.025 on S): the lineage effect is not general across cancer types. Not shown: that ER signalling acts on the clock
   (observational; ER and PAM50 are collinear).
 <!-- src: paper/exploratory/A219_subtype_coherence/output/{power,tests,descriptive_per_group,descriptive_per_cohort,descriptive_unmatched,descriptive_cells_stat_and_prolif_imbalance,descriptive_er_within_subtype}.csv -->
+
+## A222 (scored 2026-11-06): clock genes are altered at background rates; PER1 and PER3 losses ride on 17p and 1p36 deletions (H222.1-3 FAIL, powered)
+Power note: `registered_experiments.md`. MC3 PASS-class coding calls, 9,730 samples (448 hypermutators > 1,000 calls
+excluded); GISTIC2 by gene, 26 projects with >= 100 samples (9,681 samples); 1,000 random 14-gene sets.
+- **H222.1 FAIL (mutation selection):** log(non-silent / silent) over the 14 clock genes 1.152 vs null 1.136 (SD 0.145),
+  59th percentile, p 0.41, Holm 1.0, MDE 0.360 (a 1.43-fold excess). Mutation rate per Mb of CDS is near the length- and
+  expression-matched median for every clock gene (DBP and TEF lowest, CIART highest).
+- **H222.2 FAIL (deep-deletion focality):** clock-gene deep-deletion frequency minus its 50-gene flank 0.00019 vs null
+  0.00027 (SD 0.00043), 48th percentile, p 0.52, MDE 0.00107.
+- **H222.3 FAIL (amplification focality, two-sided):** 0.00043 vs null 0.00034 (SD 0.00039), 71st percentile, p 0.58.
+- **Descriptive (registered):** PER1 is lost (GISTIC <= -1) in 37.4 % of tumours and TP53 in 38.2 %; 98.9 % of PER1 losses
+  carry a TP53 loss, and PER1 is lost in 0.66 % of TP53-intact tumours (deep: 91.3 % of PER1 deep deletions carry a TP53
+  deep deletion). PER3 is lost in 26.8 %; 97.7 % of these carry a loss of CHD5 (1p36 tumour-suppressor candidate, same
+  block; choice of reference gene made here) and 93.6 % of TP73. Truncating share of non-silent calls: clock genes 2-32 %
+  vs background median 12.9 %; CLOCK 16 / 50 (98.4th percentile of 10,077 genes) and ARNTL 9 / 39 (92.5th) highest, CRY2
+  1 / 44 (1.1th) lowest. With 14 genes, one at the 98th percentile is expected about one time in five; not read as
+  selection.
+- **Reading (registered):** clock genes are mutated and lost as expected for their length, expression and position.
+  "Frequent clock-gene alteration" reports background rates, and PER1 / PER3 "loss" is 17p (TP53) and 1p36 arm-level
+  deletion. Clock genes are passengers in TCGA tumours.
+<!-- src: paper/exploratory/A222_clock_alterations/output/{power,tests,null_draws,descriptive_genes,descriptive_17p_1p36,descriptive_truncating}.csv -->
