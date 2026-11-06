@@ -4323,3 +4323,10 @@ frequency vs neighbours per project; PER1 loss conditional on TP53 loss (17p); P
 position: passengers, and "frequent alteration" claims report background rates. A pass names a clock gene set under
 selection (which genes drive it is descriptive). **Stop rule:** one amendment. **Code:**
 `paper/exploratory/A222_clock_alterations/`.
+
+**A222 power note (2026-11-06, before any clock-gene statistic; `A222_clock_alterations/output/power.csv`, null draws `null_draws.csv`).**
+MC3: 10,178 samples, 448 hypermutators excluded, 9,730 kept; 19,849 protein-coding genes with expression; GISTIC 26 projects
+(>= 100 samples), 9,681 samples; all 14 clock genes have a full 25-gene flank. H222.1 (R): null mean 1.136, SD 0.145, MDE
+0.360 (a 1.43-fold non-silent / silent excess). H222.2 (deep-deletion focal excess): null mean 0.00027, SD 0.00043, MDE
+0.00107 (0.11 percentage points above the flank). H222.3 (amplification): null mean 0.00034, SD 0.00039, MDE 0.00097. All
+scored. Choices left open: README.
