@@ -4192,3 +4192,12 @@ coherence(bottom proliferation tertile, within cell); P_sub = the same over proj
 **Reading:** H218.1 passes and A >= 0.5 -> the proliferation loss holds within subtype (as SCAN-B); powered fail with the
 upper jackknife bound of A < 0.5 -> it is carried by subtype; otherwise inconclusive. Per-project values descriptive.
 **Stop rule:** one amendment. **Code:** `paper/exploratory/A217_subtype_matched/` (shared).
+
+**A217/A218 power note (2026-11-06, before any observed coherence difference; `A217_subtype_matched/output/{projects,eligibility,counts,power}.csv`).**
+Subtype labels (cBioPortal PanCanAtlas `SUBTYPE`, API 2026-11-06): 22 of the 23 A210 projects have >= 50 % of their primaries labelled (OV 41.9 % does not), but in 10 of them the label equals the
+project name (BLCA, KIRC, KIRP, LIHC, LUAD, LUSC, PAAD, PCPG, PRAD, THCA; OV too), which carries no subtype. Projects entering (>= 50 % and >= 2 levels, BRCA excluded): CESC, COAD, ESCA, GBM, HNSC, LGG, READ, SARC,
+STAD, TGCT, UCEC (coverage 71 % to 98 %; BRCA 89.8 %, reported separately). H217.1 (TP53): 7 projects, 17 cells, 1,189 tumours, null mean 0.0162, null SD 0.0514, MDE 0.128. H217.2 (FGA): 9 projects, 39 cells, 1,579 tumours,
+null mean -0.0002, null SD 0.0329, MDE 0.082. H217.3 (MYC): 4 projects, 9 cells, 387 tumours, null mean -0.0583, null SD 0.0669, MDE 0.166. H218.1 (P_sub): 11 projects, 45 cells, 1,755 tumours in the arms,
+null mean -0.0002, null SD 0.0292, MDE 0.073. All four have MDE <= 0.25 and are scored on power; for H218.1 the registered precondition (observed P_proj below its pseudo 5th percentile) is checked in the
+tests. Choices left open (README): entry requires >= 2 subtype levels; purity tertile within project over all primaries; P_proj on the tumours of the eligible P_sub cells with proliferation tertile within the cell;
+jackknife interval A +/- 1.96 x jackknife SE; original design on projects with an eligible matched cell.
