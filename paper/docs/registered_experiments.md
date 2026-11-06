@@ -3823,3 +3823,51 @@ the known CTs (which genes carry the fed rhythm), as context only.
 **Stop rule:** one amendment, 200 permutations (the A52 setting) and seed 206; no other set or gene subset added after
 the readout.
 **Code:** `paper/exploratory/A206_cry_dko_gate/`.
+
+## A207 (2026-11-06, literature follow-up item 6; written before any CCD or Grabe readout on TCGA; seen: A138 H138.4 per-cancer pairing results, scored 2026-10-27): do co-expression and order-based "tumour clock disruption" readouts coexist with the tumour-normal clock pairing? **TCGA pairs, secondary (Holm over two)**
+**Why.** Shilts 2018 (ΔCCD) and Grabe 2024 (tumours ordered by the paired normal's inferred time; R² ARNTL 0.76 normal vs
+0.11 tumour in LUAD) read loss of co-expression or order as clock disruption. A138 H138.4 found that tumour clock states
+follow the same patient's normal (pooled over 10 cancers, p 1e-4). Nothing in the project has run CCD or the Grabe
+procedure on these pairs (`common/benchmark/ccd.py` only used in the GTEx benchmark).
+**Data and code reused:** the A138 table (`figure_5/scripts/cancer/_shared.py` load_tcga / pair_frames; 10 cancers,
+517 pairs; log expression of the 12 CCD genes and the 14 GTEx genes), `common.benchmark.ccd.ccd` (Shilts reference,
+12 genes), H138.4 per-cancer statistics (`A138_cancer_estimability/output/score/per_unit.csv`, not recomputed).
+- **ΔCCD** per cancer = CCD(tumours) − CCD(normals of the same patients). Null: tumour/normal labels swapped within
+  patient (1,000 swaps, the H138.4 scheme); pooled = mean over cancers weighted by pairs, the same swaps jointly.
+- **Grabe procedure** (on the 14 GTEx clock genes; Grabe's 13-gene list is only partly reported): PCA of the normals'
+  centred log expression, phase = atan2(PC2, PC1); per gene, cosinor R² on that phase in the normals and in the paired
+  tumours; per cancer, ΔR² = median over genes (tumour − normal). Same swaps; pooled as ΔCCD.
+- **H207.1:** pooled ΔCCD > 0 (one-sided swap p < 0.05).
+- **H207.2:** pooled ΔR² < 0 (one-sided swap p < 0.05). **Specificity companion (on the same swaps):** the same ΔR² for
+  200 expression-matched pseudo-clock gene sets (A52 rule, `paired.pseudo_waveforms`, genome counts from
+  `tcga_paired/build.py`); H207.2 counts only if the clock ΔR² is below the 5th percentile of the pseudo-set ΔR².
+**Descriptive:** per cancer ΔCCD, ΔR², the A138 corr and its p, side by side; Spearman across the 10 cancers (n = 10,
+descriptive only).
+**Reading:** H207.1 and/or H207.2 pass together with H138.4 → co-expression or order disruption and tumour-normal clock
+pairing coexist in the same tumours: these readouts do not measure coupling to the patient's clock, and "disrupted"
+must not be read as "uncoupled". Both fail → no disruption at this design; reported as such.
+**Stop rule:** one amendment; no gene list change after the readout. **Code:** `paper/exploratory/A207_ccd_grabe_tcga/`.
+
+## A208 (2026-11-06, literature follow-up item 7; written before any sex-stratified fit; seen: donor counts by sex only, A99 archive result): do women and men differ in organ coupling or offsets? **GTEx, A164 procedure with sex as the label, secondary**
+**Why.** Chronotherapy shows sex x dosing-time interactions (Lévi 2010). A99 (archive) found no sex difference in
+radius (p 0.36) and a timed phase +0.35 h (SE 0.31, female minus male, post hoc). Coupling and offsets by sex at a common
+host spread were never estimated.
+**Data:** `common.gtex.load` (public sex), the two A164 cohorts kept separate: fast (Hardy 1-2, with time of death; 187 men,
+57 women) and ventilated (Hardy 0; 242 / 139). Tissues: >= 20 donors of each sex in the cohort, sex-specific organs out.
+**Procedure:** `compute_a164.py` unchanged except the label (female = case, male = control): matching within cohort on
+Hardy class and age bracket (1:1, women as the smaller group; `_covariates` helpers), `Dataset.contrast` d* per tissue,
+host refitted per matched-set bootstrap (200), label permutations within matched sets (1,000), pooled module d* =
+inverse-variance mean over tissues, then over cohorts; interval half-width from max(bootstrap SE, null SD) (A202,
+`Contrast.equivalence`). Offset: the same for `offset_diff_h` (circular differences, pooled as a weighted mean).
+**Power first (dated note before any d* is read):** MDE_80 = 2.49 x null SD of the pooled d* and of the pooled offset.
+- **H208.1 (coupling):** if MDE <= 0.15, the pooled d* (female − male) lies within ±0.15 (90 % interval, as A164).
+  If MDE > 0.15: not powered, d* reported descriptively only.
+- **H208.2 (offset):** pooled offset difference two-sided permutation p < 0.05; secondary reading against A99's
+  +0.35 h (same sign or not). Equivalence within ±1 h reported if the interval allows.
+**Specificity companion:** on the same permutations, the pooled d* of the 3 lowest-coupling tissues (expected noise) and
+expression-matched pseudo-clock gene sets for the offset (A52 rule, 50 sets) — the clock statistic must exceed their 95th
+percentile for a difference to be called clock-specific.
+**Reading:** H208.1 pass → organ coupling does not differ by sex (within ±0.15); a sex x schedule interaction would then
+not come from coupling. H208.2 pass and companion → a clock-specific sex offset (direction and size stated, no
+per-donor phases released).
+**Stop rule:** one amendment, no tissue subset chosen after the readout. **Code:** `paper/exploratory/A208_sex_coupling/`.
