@@ -4330,3 +4330,12 @@ MC3: 10,178 samples, 448 hypermutators excluded, 9,730 kept; 19,849 protein-codi
 0.360 (a 1.43-fold non-silent / silent excess). H222.2 (deep-deletion focal excess): null mean 0.00027, SD 0.00043, MDE
 0.00107 (0.11 percentage points above the flank). H222.3 (amplification): null mean 0.00034, SD 0.00039, MDE 0.00097. All
 scored. Choices left open: README.
+
+**A221 power note (2026-11-06, before any clock-gene level is computed; `A221_tumour_normal_levels/output/{eligibility,power,null_draws,random_sets}.csv`).**
+13 projects eligible (BRCA 112 pairs, COAD 41, ESCA 13, KICH 25, KIRC 72, KIRP 32, LIHC 50, LUAD 58, LUSC 51, PRAD 52,
+STAD 34, THCA 59, UCEC 22); GTEx recount3 samples per tissue 94 (kidney cortex, shared by KICH / KIRC / KIRP) to 706
+(thyroid); lung shared by LUAD / LUSC, so projects are not independent in H221.2-3. Random 14-gene sets (200): mean paired
+LFC +0.091, mean design difference −0.023. H221.1 (L): null SD 0.065, MDE 0.163 log2. H221.2 (Delta): null SD 0.049, MDE
+0.121 log2. H221.3: 182 gene x project points. All scored. Choices left open (README): CPM on recount3 coverage over
+protein-coding genes; one primary per patient (lowest barcode); random-set candidates mean CPM >= 1; daytime window
+[8, 18) h; Hardy class from the public recount3 GTEx annotation.
