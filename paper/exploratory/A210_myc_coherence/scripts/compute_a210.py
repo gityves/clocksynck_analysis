@@ -199,7 +199,7 @@ for h in blocks:
 # pseudo-clock companion: per block, k-th set -> per-cell differences; T_k = mean over all cells
 rng = np.random.default_rng(1660)
 sets_mb = pd.read_csv(L.A166.OUT / "pseudo_sets_metabric.csv").to_numpy()[: args.npseudo].tolist()
-pseudo = {"H210.1": np.array([np.mean(diffs(LN2 * Xmb[s].to_numpy(float), L.wf_for(s), cells_mb)) for s in sets_mb])}
+pseudo = {"H210.1": np.array([np.mean(diffs(LN2 * Xmb[s].to_numpy(float), L.A166.wf_for(s), cells_mb)) for s in sets_mb])}
 pc = []
 for j, p in enumerate(PROJECTS):
     if not cells_tc[p]:

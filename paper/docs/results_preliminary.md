@@ -3438,3 +3438,20 @@ Data GSE180012 (`$SCCC_DATA/gse180012_phx/`): 24 PHx and 24 sham livers, 3 per t
   the G2M rise is relative within this design and not on the tumour tertile scale; PHx is also an injury; amplitude falls
   moderately (descriptive), so a damped but coherent clock is not excluded.
 <!-- src: paper/exploratory/A211_liver_regeneration/output/{gate,power,tests,cosinor}.csv -->
+
+## A210 (scored 2026-11-06): MYC amplification at matched proliferation: no loss in METABRIC (H210.1 FAIL, powered), clock-specific loss in TCGA (H210.2 PASS); not carried by MYC expression
+- **H210.1 FAIL (METABRIC, primary):** 14 PAM50 x proliferation cells, 1,294 tumours (450 amplified). T (amplified −
+  neutral coherence) +0.038; null mean −0.020, SD 0.052; p 0.86; MDE 0.130; pseudo 70th percentile.
+- **H210.2 PASS (TCGA, secondary):** 30 project x proliferation cells in 13 projects, 2,728 tumours (844 amplified).
+  T −0.129; null mean −0.044, SD 0.034 (so about −0.085 beyond the group-size bias); p 0.005, Holm 0.010, MDE 0.086;
+  pseudo 0.5th percentile (q05 −0.064): clock-specific. 25 of 30 cells and 11 of 13 projects negative (HNSC −0.290, BRCA
+  −0.234, LUAD −0.234; OV +0.008, ESCA +0.024).
+- **Descriptive:** residual proliferation imbalance within cells, amplified − neutral: +0.045 z (METABRIC), +0.101 z
+  (TCGA). Gain − neutral −0.033 / −0.049. MYC expression top − bottom tertile within cells +0.003 / +0.047: no loss.
+- **Reading:** the registered primary fails at a powered design, and TCGA BRCA (−0.234) disagrees with METABRIC (+0.038).
+  The TCGA loss is clock-specific and broad across tumour types, but MYC expression does not show it, so it is not a MYC
+  activity effect; residual proliferation (+0.10 z) or copy-number burden correlated with MYC amplification (cf. A134)
+  are not excluded. MYC amplification is not established as a cause of coherence loss beyond proliferation.
+- **Deviation:** the tests stage first stopped on a helper name (`wf_for` is in `a166_lib`, not `a168_lib`); fixed
+  before any statistic was printed.
+<!-- src: paper/exploratory/A210_myc_coherence/output/{power,tests,descriptive,descriptive_cells,counts}.csv -->
