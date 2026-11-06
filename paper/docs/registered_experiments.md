@@ -3964,3 +3964,10 @@ injury, not proliferation.
 peripheral organs from the same SCN-lesioned (or SCN-clock-deleted) animals was found (E-utilities searches
 "suprachiasmatic lesion", "SCN lesion", "SCNx"; Sonnet scout). Single-tissue SCNx series exist (GSE243858 choroid plexus,
 12 control and 12 SCNx mice every 4 h in DD; GSE300640 brown fat, ZT4/16) but cannot test within-animal inter-organ order.
+
+**A211 gate and power note (2026-11-06, before any observed coherence; `A211_liver_regeneration/output/{gate,power}.csv`).**
+Data: file 1 holds log2(RPKM + 1) for 24 sham and 24 PHx samples (3 per time point, 4-32 h; no raw counts, so Y is ln 2 x
+log2 expression as A168 arrays); surgery 08:00-09:00 (GEO extract protocol). Gate (a) passes: G2M PHx − sham over
+20-32 h +1.05 z, p 0.0005 (2,000 swaps; −1.11 at 4 h rising to +1.39 at 32 h); gate (b) passes: sham clock share 0.673
+vs 0.077, p 0.005. MDE (2,000 swaps within time point): registered 4-32 h 0.064; descriptive 4-16 h 0.137, 20-32 h
+0.040. H211.1 is estimable.
