@@ -4383,3 +4383,35 @@ descriptive). Random lists alone: the share validating (held-out median-split lo
 in KIRC, LGG, METABRIC; 99.5 % SCAN-B). Choices left open (README): in-sample training risk score in the adjusted Cox model
 (same for clock and random lists); covariates observed in < 50 % dropped; lambda.min on CV partial likelihood; no gene
 selected -> C 0.5.
+
+## A224 (2026-11-06, user agreement; written before any clock-gene expression is related to its copy number; seen: A222 (PER1 losses co-occur with TP53 loss in 98.9 %, PER3 with 1p36), A215 H215.1 (TCGA TP53 loss −0.085, clock-specific), A217 (lost at matched subtype), A219 H219.2 (LumA − others +0.276, METABRIC + TCGA BRCA)): does cis copy number of the clock genes carry the TP53 and subtype coherence contrasts, and is the "p53-clock" link positional? **L1 + levels; TCGA, METABRIC**
+**Why.** PER1 sits next to TP53 (17p13.1), PER3 in 1p36, NR1D1 in the ERBB2 amplicon (17q12). Copy-number variation of a
+clock gene between tumours adds non-clock variance to its level and lowers between-tumour coherence most where the genome is
+most altered (TP53-altered, non-luminal-A tumours). A TP53-mutant vs wild-type level contrast also inherits PER1 dosage
+through 17p loss.
+**Time-dependence (user caution).** Clock-gene levels depend on sampling time, so dosage is estimated with phase
+covariates: per tumour, the in-plane phase from the other 13 clock genes (leave-the-gene-out projection on the GTEx
+waveform plane, cohort-centred levels), and log2 level of gene g ~ project + beta_g CN_g + cos + sin of that phase. Dosage
+enters as an additive log offset; a CN_g x (cos, sin) term is fitted descriptively (dosage on amplitude rather than mean).
+CN_g = GISTIC thresholded state (-2..2, numeric; TCGA Xena by gene, METABRIC data_cna.txt).
+**Adjusted expression.** y_sg - beta_g CN_sg, with beta_g pooled within cohort (TCGA: over the A219 / A215 projects;
+METABRIC alone). Pseudo-clock genes are adjusted the same way with their own CN and their own beta (same phase covariates);
+genes without a CN call keep their level.
+- **H224.1 (primary, METABRIC + TCGA BRCA):** A219 H219.2 recomputed on adjusted expression (same cells, permutations, 200
+  pseudo sets adjusted alike). Outcome D_adj; pass = permutation p < 0.05 and above the pseudo q95. Attenuation (D - D_adj)
+  / D with a leave-one-cell-out jackknife, reported.
+- **H224.2 (secondary, TCGA):** A215 H215.1 TP53 contrast (project x proliferation cells) on adjusted expression, same
+  design and companion; outcome T_adj and attenuation.
+- **H224.3 (secondary, TCGA levels):** among tumours with neither PER1 / TP53 loss (GISTIC >= 0 at both) nor PER2 change,
+  TP53 non-silent mutant vs wild-type difference in phase-adjusted log2 PER1 and PER2 (mean of the two, project fixed
+  effects; labels permuted within project, 2,000); two-sided (p53-biology prediction: a mutation effect without 17p loss).
+  Descriptive: the naive mutant vs wild-type contrast over all tumours, and the 2 x 2 (mutation x 17p loss) means.
+Holm over H224.1-3.
+**Power (dated note before scoring):** MDE = 2.49 x null SD; H224.1-2 not scored if MDE > 0.25 (coherence); H224.3 not
+scored if MDE > 0.3 log2. Also before scoring: the fitted beta_g (dosage sanity; expected > 0) and the share of each clock
+gene's between-tumour variance carried by CN.
+**Reading:** H224.1 passes with small attenuation -> the luminal A coherence advantage is not cis copy-number noise; large
+attenuation or a fail -> part of it is genome instability on the clock loci, and the A219 reading weakens accordingly.
+H224.2 near 0 -> the TCGA TP53 loss was positional or compositional (with A217). H224.3 fails powered -> no TP53-mutation
+effect on PER1 / PER2 beyond 17p dosage: "p53 regulates the clock" claims from tumour level contrasts are positional.
+**Stop rule:** one amendment. **Code:** `paper/exploratory/A224_cis_copy_number/`.
