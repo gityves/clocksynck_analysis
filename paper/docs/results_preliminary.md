@@ -3368,3 +3368,21 @@ GSE13093 liver, GTEx human waveform, `paired.reference_gate` (200 permutations, 
   not the pass/fail, is the informative readout of clock loss. Caveat: CRY1/CRY2 are the knocked-out genes, so 2 of
   14 genes carry no signal by construction.
 <!-- src: paper/exploratory/A206_cry_dko_gate/output/{gate,cosinor}.csv -->
+
+## A207 (scored 2026-11-06): co-expression and order "disruption" are present in the same TCGA tumours that follow their normal's clock (H207.1, H207.2 PASS)
+517 pairs, 10 cancers, 1,000 within-patient swaps (seed 207), Holm over two. Implemented by a Sonnet agent; numbers
+checked against the files.
+- **H207.1 PASS:** pooled ΔCCD (tumour − normal, Shilts reference, 12 genes) 0.890 (null mean 0.001), p 0.001, Holm
+  0.002. Per cancer -0.09 (BLCA) to 2.14 (UCEC); 9 of 10 positive. Replicates Shilts 2018 on our table.
+- **H207.2 PASS:** Grabe procedure (normals' PCA phase on the 14 genes, cosinor R² tumour − normal, median over genes)
+  pooled -0.413; swap p 0.001, Holm 0.002; companion: 0 of 200 expression-matched pseudo sets at or below it (pseudo
+  5th percentile -0.360, mean -0.305). **Caveat:** the normals define the phase in-sample, so ΔR² is negative for any
+  gene set (all 200 pseudo sets have swap p ≈ 0.001); the pass rests on the companion only, and part of the clock
+  excess may come from the clock genes having more normal-sample structure to lose.
+- **Descriptive (n = 10 cancers):** Spearman of ΔCCD with the A138 H138.4 pairing corr -0.782 (p 0.0075); ΔR² with
+  corr 0.152 (p 0.68). Cancers whose tumours keep the strongest pairing (LUAD, LIHC, BLCA, PRAD, KIRC: corr 0.42-0.52,
+  p <= 0.005) have positive ΔCCD in 4 of 5 (0.07-1.33).
+- **Reading (registered):** with H138.4, co-expression and order disruption coexist with tumour-normal clock pairing in
+  the same cohorts, so "disrupted" (ΔCCD, Grabe R²) must not be read as "uncoupled". Post hoc observation, not a test:
+  across cancers ΔCCD tracks weaker pairing (rho -0.78), so CCD and pairing share information at the cohort level.
+<!-- src: paper/exploratory/A207_ccd_grabe_tcga/output/{tests,per_cancer,pseudo}.csv -->
