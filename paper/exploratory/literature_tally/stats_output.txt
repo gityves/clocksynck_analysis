@@ -1,0 +1,67 @@
+
+## by cancer group
+group | n | pos | mixed | null | unresolved | headline-positive of resolved
+Colorectal | 18 | 14 | 0 | 2 | 2 | 14/16 (88%)
+Breast | 17 | 13 | 1 | 0 | 3 | 14/14 (100%)
+Lung | 6 | 5 | 1 | 0 | 0 | 6/6 (100%)
+Liver | 6 | 6 | 0 | 0 | 0 | 6/6 (100%)
+Pan-cancer | 5 | 4 | 1 | 0 | 0 | 5/5 (100%)
+Glioma | 5 | 5 | 0 | 0 | 0 | 5/5 (100%)
+Gastric | 5 | 4 | 1 | 0 | 0 | 5/5 (100%)
+Head&neck | 5 | 4 | 0 | 0 | 1 | 4/4 (100%)
+Gyn | 4 | 2 | 1 | 0 | 1 | 3/3 (100%)
+Urologic | 2 | 2 | 0 | 0 | 0 | 2/2 (100%)
+Melanoma | 2 | 2 | 0 | 0 | 0 | 2/2 (100%)
+Haematological | 2 | 2 | 0 | 0 | 0 | 2/2 (100%)
+Pancreatic | 2 | 1 | 0 | 0 | 1 | 1/1 (100%)
+
+## breast vs other
+group | n | pos | mixed | null | unresolved | headline-positive of resolved
+non-breast | 62 | 51 | 4 | 2 | 5 | 55/57 (96%)
+breast | 17 | 13 | 1 | 0 | 3 | 14/14 (100%)
+
+## claim basis
+group | n | pos | mixed | null | unresolved | headline-positive of resolved
+M | 37 | 24 | 3 | 2 | 8 | 27/29 (93%)
+A | 35 | 34 | 1 | 0 | 0 | 35/35 (100%)
+F | 6 | 5 | 1 | 0 | 0 | 6/6 (100%)
+I | 1 | 1 | 0 | 0 | 0 | 1/1 (100%)
+
+## validation {'y': 14, 'n': 49, 'unclear': 16}
+
+## adj_prolif {'partial': 3, 'unclear': 2, 'n': 74}
+
+## adj_subtype {'partial': 8, 'y': 1, 'unclear': 46, 'n': 24}
+
+## random_ctrl {'n': 79}
+
+## self_null {'y': 8, 'partial': 4, 'unclear': 1, 'n': 66}
+
+## funnel (n known)
+<100 19 {'pos': 11, 'unresolved': 6, 'null': 1, 'mixed': 1} 12/13 (92%) median n  
+100-249 18 {'pos': 14, 'unresolved': 2, 'null': 1, 'mixed': 1} 15/16 (94%) median n  
+250-599 5 {'pos': 5} 5/5 (100%) median n  
+>=600 9 {'mixed': 2, 'pos': 7} 9/9 (100%) median n  
+n unknown: 28
+
+ read (F/A/meta_text) 54 {'mixed': 4, 'pos': 48, 'null': 2}
+
+ inferred only 24 {'unresolved': 8, 'pos': 16}
+
+## design
+group | n | pos | mixed | null | unresolved | headline-positive of resolved
+single gene/protein | 52 | 37 | 5 | 2 | 8 | 42/44 (95%)
+signature/LASSO/score | 27 | 27 | 0 | 0 | 0 | 27/27 (100%)
+
+## single-gene series by n<250
+group | n | pos | mixed | null | unresolved | headline-positive of resolved
+n<250 | 33 | 21 | 2 | 2 | 8 | 23/25 (92%)
+n>=250/unk | 4 | 3 | 1 | 0 | 0 | 4/4 (100%)
+
+## breast rows: adjustment
+adj_prolif {'partial': 3, 'unclear': 1, 'n': 13}
+adj_subtype {'partial': 3, 'y': 1, 'unclear': 13}
+validation {'y': 3, 'n': 9, 'unclear': 5}
+breast rows with read basis F: ['Cadenas', 'Li (Anafi, Hammarlund, Clarke)', 'Vlachou (Rand)', 'Vasilyev (Rand, Dallmann)']
+distinct years 2007 2026
+[(2005, 4), (2010, 17), (2015, 25), (2020, 22), (2025, 11)]
