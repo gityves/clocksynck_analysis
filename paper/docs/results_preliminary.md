@@ -3800,3 +3800,26 @@ model does not describe (candidates: copy number correlated with clock-related e
 tumour state, or a property of the pooled TCGA betas); diagnosis pending (A225 post hoc). Until then the A219 H219.2-3
 result stands as scored (clock-specific, three cohorts), with the open caveat that cis-CN adjustment attenuates it for an
 unexplained reason; the A219 qualification above is superseded.
+
+## A225 (scored 2026-11-06): the copy-number question is not resolvable with bulk data; cis dosage noise is excluded as the cause of the luminal A gap, the A224 attenuation stays unexplained
+Gate and power: `registered_experiments.md` (commit 5f97893).
+- **Part A (registered):** with identical clocks and the real joint copy-number profiles, the raw LumA − others D is
+  −0.003 (−1 % of the observed gap); raw and adjusted estimators pass the gate, masked fails (13 % rejections under the null;
+  estimable only in METABRIC).
+- **H225.1** = A224 H224.1 (adjusted estimator; +0.101, not clock-specific). **H225.2 (ARNTL trans test) not estimable**
+  (no cell with enough copy-neutral tumours at the other 13 genes). **H225.3 FAIL** (PER1 −0.081, p 0.29; TEF +0.066, p 0.90;
+  NR1D2 +0.054, p 0.62; MDE 0.18-0.26; pseudo sets estimable in only 5 / 21 / 41 of 200 after masking).
+- **Post hoc diagnosis (`posthoc_*.csv`, `scripts/posthoc_a225.py`):** adjustment leaves LumA unchanged (METABRIC 0.646 →
+  0.637, TCGA BRCA 0.488 → 0.493) and raises the other subtypes (0.369 → 0.520, 0.213 → 0.408). In the simulation the same
+  adjustment raises them by +0.016 / +0.036 only. The simulated copy-number offsets match the real ones in size and in the
+  share lying in the clock plane; the real data differ in copy number correlating with the clock-fitted part of some genes in
+  non-LumA TCGA BRCA tumours (NR1D1 0.32 real vs 0.08 simulated; PER1 0.19 vs 0.06). The attenuation does not depend on how
+  beta is estimated (cohort or pooled betas, with or without phase covariates: D 0.085-0.141). Pseudo-gene sets adjusted
+  alike barely move (q95 0.141 → 0.128), so the adjustment acts on the clock genes specifically.
+- **Reading:** the luminal A gap is not an additive copy-number artefact (part A). In non-luminal-A tumours, copy number at
+  the clock loci is tied to their clock-gene co-variation beyond independent dosage, and removing it restores much of their
+  coherence. Bulk data cannot say whether this is copy number acting on the oscillator (biology) or copy number marking a
+  tumour state that also disorganises clock genes (confounding); the masked and trans designs that would separate them are
+  not estimable at TCGA / METABRIC arm sizes. A219 stands as scored, with this caveat attached; neither "lineage sets the
+  clock" nor "copy-number noise" is supported as the mechanism.
+<!-- src: paper/exploratory/A225_cn_artefact_or_biology/output/{sim_calibration,sim_summary,power,tests,eligibility,posthoc_arm_coherence_real,posthoc_arm_coherence_sim,posthoc_offset_plane,posthoc_cn_vs_clock_residual,posthoc_variants_real}.csv -->
