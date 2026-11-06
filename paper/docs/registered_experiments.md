@@ -4068,3 +4068,14 @@ not explain the coherence results at matched proliferation. Neither result says 
 through the clock: no survival test is registered here (A191-A198 found no clock information beyond proliferation).
 **Stop rule:** one amendment; no cell rule or tertile change after the power note. **Code:**
 `paper/exploratory/A213_heterogeneity_coherence/`.
+
+**A213 power note (2026-11-06, before any observed coherence difference; `A213_heterogeneity_coherence/output/{eligibility,counts,power}.csv`).**
+TCGA: 69 project x proliferation-tertile cells in all 23 projects for both measures (all cells eligible); H213.1
+(subclonal genome fraction, 8,216 primaries with an ABSOLUTE "called" value) 5,499 tumours in the two arms, MDE 0.058
+(null SD 0.0234); H213.2 (FGA, 9,005 primaries with a call) 6,024 tumours, MDE 0.058 (null SD 0.0235). METABRIC H213.3
+(FGA, 1,756 tumours): 15 PAM50 x tertile cells, 1,176 tumours, MDE 0.136 (null SD 0.0545). Null means are about 0 (−0.0001,
+−0.0004, 0.0003) because the arms are equal-sized tertiles. All three are scored (MDE <= 0.25). Choices left open by the
+registration (README): FGA over genes complete in all samples (TCGA 24,776; METABRIC 22,079); tertiles by rank with ties in
+table order (18.7% of called tumours have subclonal fraction 0); proliferation tertile over tumours with the measure; one
+pseudo-set family per TCGA project (all primaries) shared by H213.1 and H213.2, METABRIC the 200 stored A166 sets; S213.4
+cells need >= 10 matched pairs, pairs taken in increasing FGA distance, swap null within pairs.
