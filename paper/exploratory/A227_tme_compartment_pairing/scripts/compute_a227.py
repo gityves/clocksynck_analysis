@@ -233,7 +233,8 @@ def stage_tests(args):
                 wc, oc, _, pc = pool(sc, kind)
                 pooled.append(dict(kind=kind, cancer=ca, patients=int(wc.sum()), cohorts=len(sc), statistic=oc,
                                    pseudo_median=float(np.median(pc)), clock_minus_pseudo_median=oc - float(np.median(pc))))
-    T = pd.DataFrame(tests)
+    T = pd.DataFrame(tests, columns=["kind", "hypothesis", "role", "statistic", "p_pairing", "pseudo_q95"] if not tests else None)
+    T["p_pairing_holm"] = np.nan
     for role in ("primary", "secondary"):
         m = T.role == role
         if m.any():
