@@ -3623,3 +3623,30 @@ subtypes where these lesions are common", not as an effect of the lesion, until 
 projects (PanCanAtlas subtypes) is done. The METABRIC-TCGA discordance is a design difference (subtype strata), not
 cancer type or platform.
 <!-- src: paper/exploratory/A215_checkpoint_coherence/post_hoc_brca_pam50/{brca_pam50,brca_pam50_composition}.csv -->
+
+## A217 / A218 (scored 2026-11-06): at matched molecular subtype the TCGA genomic-state losses are not detected (H217.1-3 FAIL); the proliferation loss is not clock-specific in the subtyped projects (A218 not scored)
+Power note: `registered_experiments.md` (commit 17442cc). PanCanAtlas subtypes from the cBioPortal API (sha256 in
+`$SCCC_DATA/tcga/pancan_subtypes/api/PROVENANCE.md`). 11 projects carry only the project name as subtype; with the
+>= 2-level rule (choice before the tests), 10 projects enter (CESC, COAD, ESCA, GBM, HNSC, LGG, READ, SARC, STAD, TGCT,
+UCEC; BRCA separate).
+| test | cells / tumours | excess at matched subtype | p (Holm) | MDE | pseudo pct | original design, same tumours (excess) |
+|---|---|---|---|---|---|---|
+| H217.1 TP53 | 17 / 1,189 (7 projects) | +0.035 | 0.76 (1.0) | 0.128 | 85.5 | −0.068 |
+| H217.2 FGA | 39 / 1,579 (9) | −0.015 | 0.32 (0.96) | 0.082 | 38.0 | −0.044 |
+| H217.3 MYC | 9 / 387 (4) | +0.033 | 0.70 (1.0) | 0.166 | 34.0 | −0.051 |
+- **All three FAIL.** At matched subtype the point estimates move to 0 or reverse (TP53 −0.068 → +0.035, FGA −0.044 →
+  −0.015, MYC −0.051 → +0.033). The original-design losses on these tumours are themselves below the matched-design MDEs,
+  so the fails bound the lesion effects at about 0.08-0.17 rather than excluding the original sizes. BRCA (descriptive):
+  TP53 −0.188 → −0.007, FGA −0.286 → −0.043, MYC −0.263 → −0.084 (original vs matched excess).
+- **A218 not scored (precondition):** P_proj (proliferation, within project x purity) −0.043 is not below its pseudo 5th
+  percentile (−0.071) in these projects. Descriptive: P_sub −0.061 (pseudo 5.0th percentile), A 1.41 (jackknife range
+  1.16-2.99); per project the larger losses are STAD −0.274, COAD −0.182, HNSC −0.156, CESC −0.154. BRCA: P_sub +0.049 vs
+  P_proj −0.078. The proliferation loss is not smaller within subtype in these projects, but neither value is
+  clock-specific at the registered level.
+- **Reading (registered):** the pan-cancer TCGA genomic-state passes (A210 H210.2, A213 H213.2, A215 H215.1) are read as
+  subtype composition, not lesion effects, in the projects with subtypes and in breast; the 11 projects without subtypes
+  cannot be checked this way. With METABRIC (PAM50 strata, no loss for MYC and FGA, TP53 below MDE), no genomic lesion
+  tested lowers tumour clock coherence beyond molecular subtype and proliferation. Whether subtype carries the proliferation
+  loss is not settled: in breast the loss holds within PAM50 in SCAN-B (A127 H127.1) and not in METABRIC (A166 H166.3);
+  in the other subtyped projects it is not clock-specific either way.
+<!-- src: paper/exploratory/A217_subtype_matched/output/{power,tests,attenuation,attenuation_jackknife,brca_descriptive,descriptive_per_project,arm_composition,projects}.csv -->
