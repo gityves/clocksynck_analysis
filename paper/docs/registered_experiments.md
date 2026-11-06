@@ -4463,3 +4463,18 @@ H225.2 not scored if MDE > 0.15.
 advantage survives without dosage modelling. H225.2 passes -> ARNTL copy loss disorganises the rest of the tumour clock (a
 biological copy-number effect, and the correct estimator is the one validated in A); fails powered -> ARNTL loss acts on its
 own level only. **Stop rule:** one amendment. **Code:** `paper/exploratory/A225_cn_artefact_or_biology/`.
+
+**A225 part A result and power note (2026-11-06, before B / C are scored; `A225_cn_artefact_or_biology/output/{sim_calibration,sim_summary,sim_replicates,power,eligibility}.csv`).**
+Calibration (LumA raw coherence): METABRIC lam 0.318 (0.646 vs target 0.647), TCGA BRCA lam 0.542 (0.486 vs 0.489). True D
+under scenario D defined as the mean D of 200 copy-number-free simulations at the real cell sizes (the population coherence of
+a rank-2 clock is about 1 at any amplitude, so "noise-free" was read this way): pooled 0.158.
+- **V225.1:** mean raw D under N −0.003 (SD 0.086) = −0.012 of the observed +0.276: additive cis dosage noise at the A224
+  betas, CN x phase terms and the real joint CN profiles does not produce a luminal A gap.
+- **V225.2 gate:** raw passes (N: −0.003, rejection 3 %; D: recovery 0.97); adjusted passes (−0.007, 3 %; 0.97); masked
+  fails (rejection 13 % under N; estimable only in METABRIC: TCGA BRCA arms lack pairwise-complete tumours). In the
+  simulation adjusted ≈ raw.
+- **H225.1** uses the adjusted estimator (masked failed): identical to A224 H224.1 (already scored, +0.101, not
+  clock-specific); null SD 0.053, MDE 0.133.
+- **H225.2 (ARNTL) not scored:** 59 cells with both arms >= 10, none estimable after masking the other 13 genes (19-58 % of
+  ARNTL-loss tumours CN-neutral at each other gene). **H225.3:** PER1 (9 cells, 662 tumours, MDE 0.182), TEF (7, 592, 0.193),
+  NR1D2 (5, 303, 0.259) eligible (>= 5 cells); the others not.
