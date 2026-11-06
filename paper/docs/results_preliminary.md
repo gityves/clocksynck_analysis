@@ -3455,3 +3455,16 @@ Data GSE180012 (`$SCCC_DATA/gse180012_phx/`): 24 PHx and 24 sham livers, 3 per t
 - **Deviation:** the tests stage first stopped on a helper name (`wf_for` is in `a166_lib`, not `a168_lib`); fixed
   before any statistic was printed.
 <!-- src: paper/exploratory/A210_myc_coherence/output/{power,tests,descriptive,descriptive_cells,counts}.csv -->
+
+## A209 (scored 2026-11-06): gate plus matched companion makes no false claim, but the no-clock arms were not exchangeable (see A209b)
+- **H209.1 PASS (as registered):** arm N, gate-only false claims 26 of 150 (0.173; A145 had 0.127), with the matched
+  companion 0 of 150 (p 1.4e-9 against 0.127).
+- **H209.2 PASS but vacuous:** in N_resp the gate failed in all 30 replicates (the 2x responsive factor breaks the
+  clock-shape check), so the companion was never needed.
+- **H209.3 PASS:** arm W, targets with c >= 0.5: claims 86 of 90 with the companion vs 90 of 90 without (ratio 0.956);
+  by true c: 0.25 → 0.167 (gate-only 0.733), 0.5 → 0.867, 0.75 and 1.0 → 1.00; no false claim at c 0.
+- **Caveat found after scoring:** with clock amplitude 0, clock genes still received compartment clock-plane noise
+  through their waveform amplitudes; the amplitude-0 pseudo genes did not, so pseudo sets read more coupled (median
+  clock percentile 0 in N and N_resp) and H209.1 is strict by construction. A209b repeats N and N_resp with exchangeable
+  pseudo genes. H209.3 (power) is not affected.
+<!-- src: paper/exploratory/A209_gate_companion/output/{tests,rates,per_target}.csv -->

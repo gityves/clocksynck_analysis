@@ -3979,3 +3979,21 @@ null means are −0.020 and −0.044 (smaller amplified groups read lower cohere
 null, not from T < 0. Choices left open by the registration (README): tertiles over all CNA-called tumours of the
 stratum; Holm over the scored hypotheses; METABRIC pseudo sets = the 200 stored by A166, TCGA pseudo sets per A172
 (seed crc32("A210")).
+
+## A209b (2026-11-06, post hoc to A209 on a simulator asymmetry found after its scoring; written before any A209b run): the A209 false-claim test with non-clock genes exchangeable with the clock genes
+**Why.** In A209 arms N and N_resp the clock amplitude is 0, but the clock genes still receive each compartment's own
+clock-plane noise (psi) through their waveform amplitudes; the 200 extra genes had amplitude 0 and received none, so
+pseudo sets looked more coupled than the clock genes (median clock percentile 0) and the companion was strict by
+construction. In N_resp the gate never passed (0 of 30), so H209.2 did not test the companion.
+**Change (only this):** the extra genes get amplitudes resampled from the 14 clock-gene amplitudes and acrophases
+uniform on the cycle (seed 209), so in the no-clock arms they carry the same compartment noise and shared programs as the
+clock genes; amplitude stays 0 (no rhythm). Arms: N_b (= N), N_resp_b (= N_resp, loading 2 x shared_sd("large")) and
+N_resp1_b (loading 1 x shared_sd("large"), added because the 2x factor made the gate fail every time). Arm W is not
+rerun (A209 H209.3 stands: pseudo genes there have no rhythm either way). Same 30 replicates, pseudo sets, claim rule.
+- **H209b.1 (N_b):** false-claim rate (gate, c > 0.2, above matched q95) <= 0.05 and below 0.127 (one-sided exact
+  binomial p < 0.05).
+- **H209b.2 (N_resp_b and N_resp1_b pooled, 300 targets):** the same with both companions.
+**Descriptive:** gate-only, matched-only (without gate) and full rates per arm; median clock percentile among pseudo sets
+(expected about 0.5 under exchangeability: the check that the fix works).
+**Reading:** pass -> the real-data rule is calibrated against shared non-clock factors when pseudo genes are
+exchangeable; fail -> the rule's false-claim rate is reported as such. **Code:** `compute_a209.py --exchangeable`.
