@@ -3534,3 +3534,37 @@ Data GSE180012 (`$SCCC_DATA/gse180012_phx/`): 24 PHx and 24 sham livers, 3 per t
   the proliferation loss of A176/A212 (in-plane fall, off-plane flat). The A210 MYC result is not explained by FGA.
   Both TCGA passes (A210, A213 H213.2) are secondary: no METABRIC replication.
 <!-- src: paper/exploratory/A213_heterogeneity_coherence/output/{power,tests,s213_4,descriptive,descriptive_spearman,descriptive_per_project}.csv -->
+
+## A214 scout (2026-11-06, step 1 of the pooled single-cell round, not registered): per-cell questions not estimable with public tumour data
+Prompt `paper/docs/prompts/sc_pooled_round.md`. No malignant-vs-normal D difference, amplitude or clone phase was computed.
+- **Inventory.** On disk, 168 patients have >= 100 malignant and >= 100 normal epithelial cells (108 with adjacent-normal
+  epithelium in 24 studies, 115 with in-tumour non-malignant epithelium). Clock UMI per cell (median of per-patient
+  medians): malignant 2.0, adjacent normal 1.0, in-tumour normal 0.5; with the METHOD.md rule (median >= 2) on both
+  groups, 38 patients remain. 3CA unreachable; its Zenodo export lacks patient, malignant and gene labels.
+- **Effect sizes (exact von Mises model).** Per-gene acrophase shifts of SD 2 h lower D to 0.74 of the intact value
+  (1 / 3 / 4 h: 0.92 / 0.51 / 0.30; uniform 0.04), over lam 1.5-2.5 and R 0.25-0.7: the 2 h equivalence bound is
+  −0.26 D (about −1.0 at D 3.9). Damping vs dephasing at a matched pseudobulk amplitude ratio 0.5 / 0.7 / 0.85 differ by
+  0.52-0.83 / 0.39-0.60 / 0.22-0.34 D, and that ratio is not identified without the malignant host coupling (H138.1).
+- **Noise and power.** Split-half D per group (mean 0 by construction) gives per-group SE (rms) malignant 17.8, adjacent
+  normal 25.2, in-tumour normal 23.7. MDE of the pooled paired D difference: 5.1-5.5 (108 patients), 7.3-7.9 (115),
+  5.2-5.4 (168), 4.7-5.9 (38 under the UMI rule), lower bounds (between-patient heterogeneity excluded). Even full
+  scrambling (about −3.8) is below the MDE. SE scales as clock UMI^−0.61 (SE 0.06) x cells^−0.41 (SE 0.06): MDE 1.0 needs
+  about 233 patients at 8 and 100 at 16 clock UMI per cell in both compartments (x 4 with the present tails).
+- **Deep-study scout** (plate chemistries included, user 2026-11-06): no study reaches 8 clock UMI per cell in both
+  compartments. Moorman 2025 (CELLxGENE 829a3cd1, 10x 3' v3, 14 patients, about 15,000 UMI per cell) has median 2 clock
+  UMI per malignant cell (mean 3.28) and 1-2 per normal epithelial cell (1.0-1.5 per 10,000 UMI). No Smart-seq3 /
+  FLASH-seq / VASA-seq / Parse tumour study with malignant and normal epithelium was found.
+- **Reading.** Rewired vs intact gene relations, damping vs dephasing, and their dependence on proliferation are not
+  estimable from public single-cell tumour data; the limit is the depth of the normal epithelium. Clones: no clone calls
+  on disk. A powered answer needs a deep dataset (>= 8-16 clock UMI per cell in both compartments, 100+ patients).
+<!-- src: paper/exploratory/A214_sc_pooled_scout/{inventory/inventory_studies.csv,inventory/inventory_patients.csv,inventory/inventory_deep.csv,output/power/model_rewiring.csv,output/power/model_damp_dephase.csv,output/power/noise_groups.csv,output/power/power.csv,output/power/depth_scaling.csv} -->
+
+## Erratum (2026-11-06) to WP0 item 2 (third part): "per-cell D sees no loss" is not informative
+RP line 325 reads the equal per-cell D (malignant 3.89, normal 3.90, 79 patients) as "no loss". At real depth the paired
+D difference has an MDE of about 5 (A214 scout, 108-168 patients; larger at 79), so equality is uninformative: a 2 h
+rewiring (−1.0) and even full scrambling (−3.8) would go undetected in the paired contrast. What stands: the one-sample
+malignant D (pooled SE about 1.2 over 228 groups) lies well above the scrambled-phase value (0.42 in the calibrated
+simulation), so fully scrambled gene phases within malignant cells remain rejected. The WP0 simulation SDs (0.88 for
+coherent malignant D) understate the real noise of the paired difference; the reconciliation "clock intact within cells"
+(REVIEW 2026-10-28 Q8, STATUS 2026-10-27) should read "not scrambled; finer changes not estimable".
+<!-- src: paper/exploratory/A214_sc_pooled_scout/output/power/{power,noise_groups}.csv; paper/exploratory/WP0_integrity/output/{malignant_downsample,incoherence_sim_calibrated}.csv -->
