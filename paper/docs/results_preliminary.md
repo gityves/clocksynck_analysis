@@ -3421,3 +3421,20 @@ cohort units (vent 24, fast 31), 2,981 matched pairs, 1,000 permutations, 200 bo
   how organs are timed relative to the body's clock; host phase relative to wall time (A99 type) is a separate question
   and is not addressed (untimed readout).
 <!-- src: paper/exploratory/A208_sex_coupling/output/{tests,pooled,companions,power}.csv -->
+
+## A211 (scored 2026-11-06): regenerating liver keeps a coherent clock; synchronous proliferation does not swamp it (H211.1 FAIL, powered)
+Data GSE180012 (`$SCCC_DATA/gse180012_phx/`): 24 PHx and 24 sham livers, 3 per time point, 4-32 h after surgery at
+08:00-09:00; log2(RPKM + 1).
+- **Gate passes:** G2M PHx − sham over 20-32 h +1.05 z, p 0.0005 (−1.11 at 4 h to +1.39 at 32 h); sham clock share 0.673
+  vs 0.077, p 0.005.
+- **H211.1 FAIL (powered):** coherence PHx 0.926 vs sham 0.953, T −0.027, p 0.153 (2,000 swaps within time point), MDE
+  0.064; pseudo-clock 41st percentile (q05 −0.371).
+- **Descriptive:** 4-16 h T −0.017 (p 0.38, MDE 0.137); 20-32 h (replicative) T −0.024 (p 0.073, MDE 0.040); neither
+  near the pseudo q05. Cosinor over the 28 h series (24 h period, descriptive): median clock-gene amplitude 0.68 (PHx)
+  vs 0.89 log2 (sham), median R² 0.40 vs 0.46; median acrophase difference −0.7 h (PER1 −3.6 h, CLOCK −3.2 h).
+- **Reading (registered):** a powered fail with both gates passed: dividing hepatocytes keep their clock co-expression
+  within 0.064 of sham, against tumour losses of −0.12 to −0.34 (A127, A166, A171). With A126 (endometrium), proliferation
+  alone does not reproduce the tumour coherence loss; a tumour-state explanation is favoured. Limits: one mouse dataset;
+  the G2M rise is relative within this design and not on the tumour tertile scale; PHx is also an injury; amplitude falls
+  moderately (descriptive), so a damped but coherent clock is not excluded.
+<!-- src: paper/exploratory/A211_liver_regeneration/output/{gate,power,tests,cosinor}.csv -->
