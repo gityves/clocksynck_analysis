@@ -71,6 +71,26 @@ a critique plus nulls, with one positive finding (host pairing, bulk). Assessmen
    whether swamped tumour clocks change dosing-time response (no dosing-time data yet; A198 null).
 6. **Literature search repeated** (PubMed, bioRxiv 2026) for inter-organ, host-referenced readouts.
 
+## 6. Discussion with the user (2026-11-06)
+
+- **Item 2 (fresh timed cohort):** the user considers heart AM/PM (A174), breast (V25.5/A200) and GTEx restricted to
+  hospital hours (A123) sufficient. Remaining reviewer point: all three were seen before their registered scoring (heart
+  in archive V3, breast first look V25.5, A123 truth shares donors; A123c missed its bar). Downgraded to "would
+  strengthen", stated as a limit.
+- **Item 3 (gate false positives):** claims rest on gate plus matched pseudo-clock (and responsive) companions, not on
+  the gate alone. A145 H145.3 counted gate pass plus c > 0.2 only; the false-claim rate of gate plus companion was
+  never simulated. A small registered check (A145 arm N with a pseudo gene set receiving the shared factor) would close it.
+- **Item 4 (brain death):** read as loss of internal organisation when the central drive is lost. Precedents: SCN
+  lesion destroys inter-tissue phase synchrony within animals (yoo2004periodluciferase, "a form of 'internal
+  desynchronization'"); the SCN is required for synchronisation among tissues (sinturel2021circadian); contrary:
+  tahara2012in (phases similar in rhythmic SCNx organs). Ventilated, non-brain-dead donors share ICU care and
+  continuous feeding and keep the order (A132b 0.678 vs 0.161), and glucocorticoids do not explain it (A136). Caveats:
+  post hoc split; A136 on the same donors; other donor-management hormones (thyroid, vasopressin) not tested. The
+  headline wording changes to "organs keep a shared internal time unless the central drive is lost".
+- **Item 5 (prediction, mechanism):** positives exist (psoriasis, tumour pairing, brain). Proliferation is a
+  correlate, not a shown mechanism: physiological proliferation does not reproduce it (A126), no cell-cycle locking
+  (A187b, exploratory), single-cell and arrest tests not estimable (A195, A196).
+
 ## Limits of this assessment
 
 Numbers are from the verdict table, the ledger and the CSVs re-read here (A145 `h145.csv`, A138 rows, A206, A207); the
