@@ -3601,3 +3601,25 @@ tumours with a status; RB pathway 23.1 % and 5.8 %.
   (excess −0.065 vs −0.072) though below that cohort's MDE. A216 cannot say whether proliferation is a marker: on these
   tumours the within-project proliferation loss itself is not clock-specific at the 5th percentile (TCGA, marginal).
 <!-- src: paper/exploratory/A215_checkpoint_coherence/output/{power,tests,attenuation,descriptive,descriptive_per_project,descriptive_tp53_class,status_fractions}.csv -->
+
+## POST HOC (2026-11-06, user question): the TCGA-only genomic losses in breast are carried by molecular subtype; qualification of A210 H210.2, A213 H213.2 and A215 H215.1
+Question: are METABRIC and TCGA discordant because of cancer type? Within breast alone, TCGA BRCA was the more negative
+in all three (MYC −0.234 vs METABRIC +0.038; FGA −0.290 vs −0.032; TP53 −0.209 vs −0.106), so cancer type is not the
+reason. The registered TCGA cells are project x proliferation tertile; METABRIC cells are PAM50 x proliferation tertile.
+TCGA BRCA recomputed both ways (descriptive, 2,000 within-cell permutations, no pseudo companion):
+
+| contrast | cells: proliferation only (excess, p) | cells: PAM50 x proliferation (excess, p) |
+|---|---|---|
+| MYC amplified vs neutral | −0.205, 0.011 (603 tumours) | −0.084, 0.154 (387) |
+| FGA top vs bottom tertile | −0.291, 0.001 (718) | −0.045, 0.228 (580) |
+| TP53 altered vs intact | −0.191, 0.018 (1,006) | −0.008, 0.470 (696) |
+
+The arms differ strongly in subtype (pooled over tertiles): Basal 36 / 34 / 44 % in the altered or top arm vs 4 / 2 / 3 %
+in the reference arm, LumA 22 / 23 / 16 % vs 74 / 80 / 70 % (MYC / FGA / TP53). At matched subtype the BRCA losses shrink
+by 59-96 % and match METABRIC. Single cancer type, post hoc, per-arm sizes 6-9 cells: not a powered test of "no loss".
+**Consequence for the readings:** the pan-cancer TCGA passes (A210 H210.2, A213 H213.2, A215 H215.1) are not adjusted for
+molecular subtype, which in breast carries most of the effect. They are read as "lower coherence in tumours of the
+subtypes where these lesions are common", not as an effect of the lesion, until a subtype-stratified rerun across TCGA
+projects (PanCanAtlas subtypes) is done. The METABRIC-TCGA discordance is a design difference (subtype strata), not
+cancer type or platform.
+<!-- src: paper/exploratory/A215_checkpoint_coherence/post_hoc_brca_pam50/{brca_pam50,brca_pam50_composition}.csv -->
