@@ -1,0 +1,62 @@
+study,cancer,assay,n_patients,table_mb,source,chemistry,n_eligible_a,mal_cells_a,norm_cells_a,mal_clock_umi_median_a,norm_clock_umi_median_a,n_eligible_b,mal_cells_b,norm_cells_b,mal_clock_umi_median_b,norm_clock_umi_median_b,depth_median_malignant,notes,cophaser_fit_valid,cycling_annotation_possible,n_eligible_either
+ERP130387,breast,droplet (UMI),12.0,1.12,per-cell table,3_prime_gex,,,,,,,,,,,,no copy-number calls: tumour epithelium not split,not fitted,n,
+ERP149257,colorectal,droplet (UMI),9.0,0.7,per-cell table,3_prime_gex,6.0,5192.0,3958.0,4.0,2.0,3.0,2548.0,1466.0,4.0,1.0,11993.0,,y_low,y,6.0
+ERP153272,lung,droplet (UMI),8.0,5.57,per-cell table,3_prime_gex,0.0,0.0,0.0,,,0.0,0.0,0.0,,,15471.0,,not fitted,y,0.0
+ERP156718,lung,droplet (UMI),7.0,0.8,per-cell table,3_prime_gex,,,,,,,,,,,,no copy-number calls: tumour epithelium not split,not fitted,n,
+GSE131907,lung,droplet (UMI),26.0,1.38,per-cell table,,7.0,3741.0,2106.0,2.0,1.0,1.0,582.0,186.0,3.0,2.0,11214.0,,y,y,7.0
+GSE132465,colorectal,droplet (UMI),23.0,0.7,per-cell table,,6.0,4467.0,768.0,1.0,0.0,0.0,0.0,0.0,,,19992.0,,y,y,6.0
+GSE144735,colorectal,droplet (UMI),6.0,0.2,per-cell table,,3.0,1801.0,594.0,1.0,0.0,0.0,0.0,0.0,,,7743.0,,not fitted,y,3.0
+GSE149614,liver,droplet (UMI),10.0,0.68,per-cell table,,1.0,156.0,124.0,2.0,1.0,0.0,0.0,0.0,,,12817.0,,not fitted,y,1.0
+GSE159115,kidney,droplet (UMI),9.0,0.33,per-cell table,,3.0,630.0,2588.0,3.0,3.0,3.0,2437.0,777.0,3.0,2.0,12556.0,,n,y,4.0
+GSE166555,colorectal,droplet (UMI),12.0,0.8,per-cell table,,10.0,5483.0,15728.0,2.0,1.0,8.0,4832.0,4365.0,2.0,1.0,6322.0,,suspect,y,11.0
+GSE178341,colorectal,droplet (UMI),60.0,2.7,per-cell table,SC3Pv2;SC3Pv3,31.0,30121.0,35164.0,1.0,0.0,26.0,34088.0,7293.0,2.0,1.0,19326.0,,y,y,42.0
+GSE181294,prostate,droplet (UMI),18.0,1.44,per-cell table,,3.0,833.0,595.0,2.0,1.0,2.0,325.0,774.0,1.0,1.0,8562.0,,not fitted,y,4.0
+GSE181919,head and neck,droplet (UMI),20.0,0.45,per-cell table,,0.0,0.0,0.0,,,0.0,0.0,0.0,,,23222.0,,y,y,0.0
+GSE183904,gastric,droplet (UMI),28.0,1.7,per-cell table,,5.0,1032.0,3315.0,1.0,1.0,13.0,6066.0,3800.0,1.0,1.0,8881.0,,y,y,14.0
+GSE184362,thyroid,droplet (UMI),6.0,0.94,per-cell table,,1.0,113.0,4358.0,2.0,2.0,1.0,113.0,4322.0,2.0,2.0,3323.0,,not fitted,y,1.0
+GSE200997,colorectal,droplet (UMI),16.0,0.52,per-cell table,,2.0,739.0,586.0,0.0,0.0,3.0,912.0,757.0,1.0,0.0,4490.5,,weak,y,4.0
+GSE203067,esophageal,droplet (UMI),4.0,0.54,per-cell table,,1.0,509.0,126.0,1.0,0.0,2.0,4535.0,319.0,1.0,0.0,13766.5,,not fitted,y,2.0
+GSE212966,pancreatic,droplet (UMI),6.0,0.77,per-cell table,,4.0,2712.0,6304.0,4.0,2.0,1.0,568.0,283.0,3.0,1.0,15344.0,,n,y,4.0
+GSE222315,bladder,droplet (UMI),4.0,0.65,per-cell table,3prime,2.0,7842.0,393.0,1.0,1.0,2.0,7842.0,361.0,1.0,0.0,12952.0,,not fitted,y,2.0
+GSE236696,colorectal,droplet (UMI),6.0,0.92,per-cell table,3prime,0.0,0.0,0.0,,,0.0,0.0,0.0,,,10054.0,,not fitted,y,0.0
+GSE270680,gastric,droplet (UMI),19.0,2.67,per-cell table,3prime;5prime,1.0,174.0,584.0,4.5,2.0,4.0,855.0,830.0,4.0,1.0,10827.0,,n,y,4.0
+GSE271690,colorectal,droplet (UMI),7.0,1.22,per-cell table,3prime,0.0,0.0,0.0,,,0.0,0.0,0.0,,,14286.5,,not fitted,y,0.0
+GSE281736,thyroid,droplet (UMI),6.0,0.8,per-cell table,3prime,2.0,1156.0,2615.0,7.0,3.0,2.0,1156.0,1987.0,7.0,3.0,17243.5,,not fitted,y,2.0
+GSE294300,colorectal,droplet (UMI),18.0,2.28,per-cell table,3prime,6.0,4957.0,2869.0,2.0,2.0,5.0,2572.0,669.0,2.0,1.0,13999.0,,y,y,8.0
+GSE315534,colorectal,droplet (UMI),6.0,1.6,per-cell table,3prime,4.0,10563.0,7450.0,0.0,0.0,4.0,15405.0,7238.0,0.0,0.0,4389.0,,suspect,y,5.0
+GSE326201,liver,droplet (UMI),10.0,1.02,per-cell table,5prime,1.0,142.0,537.0,4.0,2.0,0.0,0.0,0.0,,,21997.0,,not fitted,y,1.0
+GSE335070,ampullary,droplet (UMI),4.0,0.58,per-cell table,3prime,3.0,4543.0,8216.0,5.0,4.0,3.0,4543.0,2702.0,5.0,5.0,12544.0,,weak,y,3.0
+SRP273482,breast,droplet (UMI),9.0,0.34,per-cell table,3_prime_gex,0.0,0.0,0.0,,,0.0,0.0,0.0,,,13044.0,,not fitted,y,0.0
+SRP301444,head and neck,droplet (UMI),18.0,0.89,per-cell table,3_prime_gex,,,,,,,,,,,,no copy-number calls: tumour epithelium not split,not fitted,n,
+SRP309698,cancer (unspecified),,,,no per-cell table on disk,,,,,,,,,,,,,in cancer_sc (pseudobulk) only,not fitted,n,
+SRP327758,esophageal,droplet (UMI),58.0,3.96,per-cell table,3_prime_gex;5_prime_gex;other,1.0,1769.0,283.0,5.0,4.0,25.0,11183.0,9536.0,6.0,0.0,16244.0,,y,y,25.0
+SRP329496,ovarian,droplet (UMI),41.0,7.83,per-cell table,3_prime_gex,,,,,,,,,,,,no copy-number calls: tumour epithelium not split,not fitted,n,
+SRP335254,lung,droplet (UMI),9.0,0.15,per-cell table,3_prime_gex,,,,,,,,,,,,no copy-number calls: tumour epithelium not split,not fitted,n,
+SRP353200,ovarian,,,,no per-cell table on disk,,,,,,,,,,,,,in cancer_sc (pseudobulk) only,not fitted,n,
+SRP407590,cancer (unspecified),droplet (UMI),9.0,0.57,per-cell table,3_prime_gex,,,,,,,,,,,,no copy-number calls: tumour epithelium not split,not fitted,n,
+SRP414286,cancer (unspecified),,,,no per-cell table on disk,,,,,,,,,,,,,in cancer_sc (pseudobulk) only,not fitted,n,
+SRP416180,bladder,droplet (UMI),8.0,0.83,per-cell table,3_prime_gex,1.0,133.0,233.0,2.0,1.0,5.0,15403.0,9161.0,1.0,1.0,9860.0,,y,y,5.0
+SRP429995,breast,,,,no per-cell table on disk,,,,,,,,,,,,,in cancer_sc (pseudobulk) only,not fitted,n,
+SRP467578,liver,droplet (UMI),10.0,1.66,per-cell table,3_prime_gex,,,,,,,,,,,,no copy-number calls: tumour epithelium not split,not fitted,n,
+SRP514981,bladder,,,,no per-cell table on disk,,,,,,,,,,,,,in cancer_sc (pseudobulk) only,not fitted,n,
+SRP539998,cervical,droplet (UMI),12.0,1.32,per-cell table,3_prime_gex,,,,,,,,,,,,no copy-number calls: tumour epithelium not split,not fitted,n,
+SRP567887,esophageal,droplet (UMI),14.0,1.88,per-cell table,3_prime_gex,,,,,,,,,,,,no copy-number calls: tumour epithelium not split,not fitted,n,
+SRP572743,breast,droplet (UMI),5.0,1.06,per-cell table,3_prime_gex,4.0,3255.0,3675.0,9.0,3.0,2.0,689.0,607.0,11.0,2.0,11957.0,,not fitted,y,4.0
+GSE144240,skin,droplet/other (see A149 candidates.md),10.0,,pseudobulk only (no per-cell table),,5.0,3843.0,7694.0,3.7972166998011927,5.777391304347826,,,,,,21433.099828470702,(b) not available in pseudobulks; clock UMI = median over patients of group means,not fitted,y,5.0
+GSE150290,gastric,droplet/other (see A149 candidates.md),23.0,,pseudobulk only (no per-cell table),,1.0,135.0,385.0,0.7037037037037037,1.1324675324675324,,,,,,10968.659961685824,(b) not available in pseudobulks; clock UMI = median over patients of group means,not fitted,y,1.0
+GSE153935,lung,droplet/other (see A149 candidates.md),3.0,,pseudobulk only (no per-cell table),,0.0,0.0,0.0,,,,,,,,,no malignant call: 'tumour:epithelial' used as the tumour group (not copy-number split); (b) not available in pseudobulks; clock UMI = median over patients of group means,not fitted,n,
+GSE160269,esophageal,droplet/other (see A149 candidates.md),58.0,,pseudobulk only (no per-cell table),,0.0,0.0,0.0,,,,,,,,17012.01244813278,no malignant call: 'tumour:epithelial' used as the tumour group (not copy-number split); (b) not available in pseudobulks; clock UMI = median over patients of group means,not fitted,y,
+GSE164789,lung,droplet/other (see A149 candidates.md),29.0,,pseudobulk only (no per-cell table),,10.0,3831.0,5577.0,12.293322981366458,6.108174350821409,,,,,,31734.868073593076,(b) not available in pseudobulks; clock UMI = median over patients of group means,not fitted,y,10.0
+GSE167297,gastric,droplet/other (see A149 candidates.md),5.0,,pseudobulk only (no per-cell table),,2.0,1243.0,316.0,1.3776534336362283,0.67660734327401,,,,,,7762.630744849445,no malignant call: 'tumour:epithelial' used as the tumour group (not copy-number split); (b) not available in pseudobulks; clock UMI = median over patients of group means,not fitted,y,
+GSE176031,prostate,droplet/other (see A149 candidates.md),1.0,,pseudobulk only (no per-cell table),,1.0,1458.0,307.0,2.898491083676269,4.954397394136808,,,,,,6295.947187928669,no malignant call: 'tumour:epithelial' used as the tumour group (not copy-number split); (b) not available in pseudobulks; clock UMI = median over patients of group means,not fitted,y,
+GSE178481,kidney,droplet/other (see A149 candidates.md),6.0,,pseudobulk only (no per-cell table),,0.0,0.0,0.0,,,,,,,,,no malignant call: 'tumour:epithelial' used as the tumour group (not copy-number split); (b) not available in pseudobulks; clock UMI = median over patients of group means,not fitted,n,
+GSE193337,prostate,droplet/other (see A149 candidates.md),4.0,,pseudobulk only (no per-cell table),,3.0,5173.0,1542.0,4.930707512764405,5.837362637362637,,,,,,15691.955729869209,no malignant call: 'tumour:epithelial' used as the tumour group (not copy-number split); (b) not available in pseudobulks; clock UMI = median over patients of group means,not fitted,y,
+GSE199654,esophageal,droplet/other (see A149 candidates.md),11.0,,pseudobulk only (no per-cell table),,0.0,0.0,0.0,,,,,,,,7325.64,no malignant call: 'tumour:epithelial' used as the tumour group (not copy-number split); (b) not available in pseudobulks; clock UMI = median over patients of group means,not fitted,y,
+GSE200972,lung,droplet/other (see A149 candidates.md),4.0,,pseudobulk only (no per-cell table),,4.0,15167.0,13181.0,7.726186890888345,4.702969181143368,,,,,,24723.945598596398,no malignant call: 'tumour:epithelial' used as the tumour group (not copy-number split); (b) not available in pseudobulks; clock UMI = median over patients of group means,not fitted,y,
+GSE229253,lung,droplet/other (see A149 candidates.md),12.0,,pseudobulk only (no per-cell table),,9.0,13898.0,8864.0,7.987704918032787,6.13561320754717,,,,,,6500.943251533742,(b) not available in pseudobulks; clock UMI = median over patients of group means,not fitted,y,9.0
+GSE242299,kidney,droplet/other (see A149 candidates.md),1.0,,pseudobulk only (no per-cell table),,0.0,0.0,0.0,,,,,,,,,no malignant call: 'tumour:epithelial' used as the tumour group (not copy-number split); (b) not available in pseudobulks; clock UMI = median over patients of group means,not fitted,n,
+GSE242889,liver,droplet/other (see A149 candidates.md),5.0,,pseudobulk only (no per-cell table),,4.0,4143.0,999.0,2.2640989982102195,1.8369365828092243,,,,,,13251.442815249267,(b) not available in pseudobulks; clock UMI = median over patients of group means,not fitted,y,4.0
+GSE282701,liver,droplet/other (see A149 candidates.md),6.0,,pseudobulk only (no per-cell table),,4.0,2945.0,832.0,6.227379261905853,6.96600287462908,,,,,,18127.208877284596,(b) not available in pseudobulks; clock UMI = median over patients of group means,not fitted,y,4.0
+GSE293189,bladder,droplet/other (see A149 candidates.md),4.0,,pseudobulk only (no per-cell table),,0.0,0.0,0.0,,,,,,,,2962.258181818182,no malignant call: 'tumour:epithelial' used as the tumour group (not copy-number split); (b) not available in pseudobulks; clock UMI = median over patients of group means,not fitted,y,
+GSE310916,lung,droplet/other (see A149 candidates.md),5.0,,pseudobulk only (no per-cell table),,5.0,10122.0,3471.0,10.199288256227758,7.890083632019116,,,,,,15516.50397000441,no malignant call: 'tumour:epithelial' used as the tumour group (not copy-number split); (b) not available in pseudobulks; clock UMI = median over patients of group means,not fitted,y,
+GSE176078,breast,droplet (UMI),26.0,,author labels (metadata.csv),,0.0,,,,,4.0,3342.0,3369.0,,,8573.0,Wu: tumour samples only (no adjacent normal); (b) = author 'Normal Epithelial' vs 'Cancer Epithelial' (not copy-number); clock UMI not read,y,y,
