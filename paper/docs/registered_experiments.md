@@ -3879,3 +3879,88 @@ docstring of `compute_a208.py`): pooling weights from the permutation null SD (i
 with < 10 matched pairs dropped (none were); sex-specific organs excluded: ovary, uterus, vagina, cervix, fallopian
 tube, prostate, testis and breast (breast is sex-differentiated in GTEx, excluded with them); age matched on the public
 bracket midpoint.
+
+## A209 (2026-11-06, user request after the novelty assessment; written before any A209 run; seen: one arm-N replicate (rep 0) fitted for runtime: gate failed, and one pseudo-set fit gave target couplings about 0.85-0.91): what is the false-claim rate of the gate plus the matched-gene companion, the rule the real-data claims use? **Simulation, method, secondary (Holm over three)**
+**Why.** A145 H145.3 failed: in a no-clock world with a shared non-clock factor, a claim counted as gate pass and c > 0.2
+occurred at 0.127 (CoFE 0.06). Real-data claims also require the clock statistic to beat expression-matched pseudo-clock
+sets (and responsive sets) on the same data. The false-claim rate of that combined rule was never simulated.
+**Simulator (= A145 `lib.cohort`, unchanged design):** 100 donors, 4 anchors (c 0.9), 5 targets (c 0, 0.25, 0.5, 0.75,
+1.0; A145 `design(rep)` offsets and amplitudes), GTEx 14-gene waveform extended by 200 non-clock genes (amplitude 0;
+mesors resampled from the clock-gene mesors plus N(0, 0.3), so pseudo sets are expression-matched by construction).
+30 replicates per arm, seed 209.
+- **Arm N:** A145 arm N: amplitude 0, whole day, shared program iid per gene with sd = A145 `shared_sd("large")`.
+- **Arm N_resp:** arm N plus a responsive factor: per donor f ~ N(0, 1), common to its compartments, added with loading
+  2 x shared_sd("large") to 5 clock genes (PER1, PER2, NR1D1, DBP, TEF) and to a responsive pool of 30 of the 200
+  extra genes; the 9 other clock genes and 170 extra genes get none. (`clocksync.simulate` gains an optional per-gene
+  shared loading vector; default unchanged.)
+- **Arm W:** A145 arm W (clock present, 08-18 h, jitter 1 h, no shared factor), for power.
+**Companion (per replicate, same data):** 100 matched pseudo sets (14 genes drawn from the non-responsive extra genes)
+and, in N_resp, 100 responsive sets (5 genes from the responsive pool in the responsive positions plus 9 non-responsive
+extras); each set renamed to the 14 clock genes (waveform carried, A52 rule) and fitted with the same anchors, gate off.
+**Claim rule (as in real data):** a target is claimed if the clock-gene gate passes, c > 0.2, and its c exceeds the 95th
+percentile of its own c over the matched sets (N, W), and over both matched and responsive sets (N_resp).
+- **H209.1 (arm N):** false-claim rate over 150 targets x replicates <= 0.05 and below A145's 0.127 (one-sided exact
+  binomial p < 0.05 against 0.127).
+- **H209.2 (arm N_resp):** the same with both companions.
+- **H209.3 (arm W, power):** among targets with true c >= 0.5 (90), the claim rate with the companion is >= 0.8 x the
+  gate-and-c rate without it.
+**Descriptive:** gate-only and matched-only claim rates in every arm; per-c claim rates; the companion percentile
+distribution.
+**Reading:** H209.1-2 pass -> the rule used for real-data claims is calibrated against shared non-clock factors,
+including clock-gene-biased ones; H209.3 says what it costs. A failure is reported as the rule's false-claim rate.
+**Stop rule:** one run; loadings, gene lists and the claim rule fixed here. **Code:** `paper/exploratory/A209_gate_companion/`.
+
+## A210 (2026-11-06, user request; written before any copy-number file is read; seen: tumour coherence vs proliferation in METABRIC (A166) and TCGA (A97, A171, A172), MYC never examined): does MYC amplification lower tumour clock coherence at matched proliferation? **METABRIC primary, TCGA secondary (Holm over two)**
+**Why.** Proliferating adenocarcinomas lose clock coherence (A127, A166, A171), but physiological proliferation does not
+reproduce it (A126) and no cell-cycle locking is seen (A187b). MYC represses the clock directly (Altman et al. 2015,
+card missing). Copy number is a natural experiment that separates an oncogenic programme from proliferation as such.
+**Data:**
+- **METABRIC:** `data_cna.txt` from the existing cBioPortal tarball (`$SCCC_DATA/metabric/`, GISTIC thresholded: 2 =
+  amplification, 1 = gain, 0 = neutral); expression, PAM50, scores and pseudo sets exactly as A166.
+- **TCGA:** UCSC Xena `TCGA.PANCAN.sampleMap/Gistic2_CopyNumber_Gistic2_all_thresholded.by_genes` (public), joined on
+  the 15-character primary-tumour barcode; expression as A172 (recount3 loader) for the 11 A97 and 12 A172 eligible
+  projects.
+**Definitions:** amplified = MYC GISTIC 2; neutral = 0; gains (1) and losses out of the tests. Proliferation (G2M mean
+z) and coherence as A166 / A172 (A87 `decompose.components`, groups centred).
+- **H210.1 (METABRIC, primary):** cells PAM50 x proliferation tertile (tertiles within PAM50) with >= 10 amplified and
+  >= 10 neutral tumours; T = mean over cells of coherence(amplified) − coherence(neutral); MYC labels permuted within
+  cell (2,000); one-sided for a loss.
+- **H210.2 (TCGA, secondary):** cells project x proliferation tertile (within project), same rule and statistic.
+**Specificity companion (same permutations):** 200 pseudo-clock sets (A166 construction in METABRIC, A172 in TCGA). A
+pass is "clock-specific" only if T is below their 5th percentile.
+**Power, before the tests (dated note):** MDE = 2.49 x null SD. A hypothesis with MDE > 0.25 is not scored (reported as
+not estimable). Reference sizes: METABRIC ER− −0.229, proliferation −0.123 (A127).
+**Descriptive:** amplified minus neutral proliferation within cells (residual imbalance); gain vs neutral; MYC expression
+top vs bottom tertile within PAM50 x proliferation cells; per-cell T.
+**Reading:** pass, clock-specific -> an oncogenic programme lowers coherence beyond proliferation; fail at a powered
+design -> MYC amplification adds nothing detectable beyond proliferation (bounded by the MDE).
+**Stop rule:** one amendment; no cell rule or threshold change after the power note. **Code:** `paper/exploratory/A210_myc_coherence/`.
+
+## A211 (2026-11-06, user request; written before the expression files are downloaded; seen: GEO sample titles and design text only): does synchronous physiological proliferation swamp the liver clock? **Mouse partial hepatectomy, timed (GSE180012), secondary**
+**Why.** Tumour clock coherence falls with proliferation (A127, A166, A171). If dividing alone swamps the clock, the
+regenerating liver after a two-thirds partial hepatectomy (PHx), whose hepatocytes enter S phase together, should show
+it against sham-operated liver at the same times. A126 (endometrium) did not, at MDE 0.28.
+**Data:** GSE180012: liver every 4 h from 4 to 32 h after PHx or sham (3 replicates per point, per titles), plus PHx in
+the morning or evening read at 4 and 24 h; processed files `GSE180012_processed_data_file_{1,2}.xls.gz` (parse only).
+Main series only for the tests; the morning/evening series descriptive.
+**Manipulation gate (both required, else uninformative):** (a) proliferation (Hallmark G2M mean z, clock genes removed)
+higher in PHx than sham over 20-32 h (one-sided label-swap p < 0.05 within time point); (b) the sham clock is visible:
+`paired.reference_gate` on the sham samples p < 0.05 (200 permuted-acrophase planes).
+- **H211.1:** coherence(PHx) − coherence(sham) over the matched time points (A87 gene coherence of the 14 clock genes,
+  each arm centred within time point is NOT applied: samples centred per arm, so the time-of-day rhythm is the signal);
+  null: arm labels swapped within time point (2,000); one-sided for a loss.
+**Specificity companion (same swaps):** 200 expression-matched pseudo-clock sets (A168 construction). "Clock-specific"
+only if T is below their 5th percentile.
+**Power (dated note before the test):** MDE = 2.49 x null SD; if > 0.3, H211.1 is reported as not estimable.
+**Descriptive:** the same split into 4-16 h (injury, pre-replicative) and 20-32 h (replicative); clock-gene cosinor
+amplitudes and phases per arm over the 28 h series; the morning/evening series.
+**Reading:** H211.1 passes, clock-specific, with the loss in 20-32 h -> synchronous proliferation can swamp a clock in
+normal tissue (the tumour loss need not be malignant); a powered fail with the gate passed -> dividing alone does not
+swamp the liver clock, supporting a tumour-state explanation (with A126). PHx is also an injury: an early loss is read as
+injury, not proliferation.
+**Stop rule:** one amendment. **Code:** `paper/exploratory/A211_liver_regeneration/`.
+
+**Not registered (2026-11-06): SCN-lesion prediction of the brain-death reading.** No public dataset with several
+peripheral organs from the same SCN-lesioned (or SCN-clock-deleted) animals was found (E-utilities searches
+"suprachiasmatic lesion", "SCN lesion", "SCNx"; Sonnet scout). Single-tissue SCNx series exist (GSE243858 choroid plexus,
+12 control and 12 SCNx mice every 4 h in DD; GSE300640 brown fat, ZT4/16) but cannot test within-animal inter-organ order.
