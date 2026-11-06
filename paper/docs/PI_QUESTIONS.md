@@ -6,7 +6,8 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 
 ## Open
 
-### Still with the PI (updated 2026-11-01)
+### Still with the PI (updated 2026-11-06)
+- **Q24** (below): the cancer chapter after A214-A226: structure and claims for the paper.
 - **Q12** (below): brain time-of-death request. The PI reviews and sends the draft themselves; nothing is sent by the agent.
 - **A119:** lung T-cell procurement scout (outward-facing / procurement).
 - **Outcome analyses (C8):** scored as A191 on the user's instruction (2026-11-02): both primaries fail (HR 0.98 and 0.96 per SD); draft in
@@ -20,6 +21,51 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
+
+### Q24 (2026-11-06): the cancer chapter after A214-A226 — structure and claims for the paper
+The user wants **one paper** that includes the cancer chapter, held together by "how the body keeps its time and when it
+loses it". This needs your review (Phase 8: framing and figures). All numbers: `results_preliminary.md` (sections named).
+- **Positive, model-based:**
+  - The tumour clock state matches the same patient's normal tissue (H138.4: 0.365 vs pseudo q95 0.261; 517 pairs, 7 of 10
+    cancers p < 0.01).
+  - The match does not depend on purity (H138.8: low − high +0.025, MDE 0.16), so malignant cells contribute. The shared
+    state partly reflects the shared surgery hour, so the claim is that both tissues keep body time, not that a coupling
+    strength is measured.
+  - High-proliferation tumours pair less (A175 H175.1, +0.158, clock-specific).
+  - Tumour fibroblasts and endothelium follow the patient's normal stroma (A149 note 5, post hoc, about 100 patients each).
+    A confirmatory test in independent cohorts is registered (A226, running).
+  - HCC is less coherent than its own adjacent liver (GSE14520, −0.33).
+- **Corrective (the method's specificity and design discipline applied to the literature):**
+  - Clock "prognosis" is proliferation (A191-A198).
+  - Circadian LASSO signatures are no better than random gene lists; they "validate" exactly where random lists do (A220;
+    KIRC, LGG, METABRIC 100 % of random lists).
+  - Clock-gene mutations and losses occur at background rates; PER1 / PER3 losses ride on 17p (TP53, 98.9 % co-loss) and
+    1p36 (A222).
+  - "Clock genes are downregulated" is partly real in paired samples (PER1-3, CRY2, TEF, RORA; L −0.33) but not for ARNTL,
+    NPAS2 or NR1D1, which GTEx comparators turn into apparent losses, partly through sampling time (A221).
+  - Genomic-lesion effects on coherence are subtype composition (A215-A217).
+  - Literature tally: 0 of 79 clinical claims adjusted for proliferation, 1 for subtype, 0 used random-set controls (draft,
+    abstract level).
+- **Open:**
+  - Breast LumA tumours are more coherent at matched proliferation (A219, 3 cohorts, clock-specific).
+  - Cis copy-number adjustment removes 63 % of that gap (A224), but a simulation shows additive copy-number noise cannot
+    produce it (A225). The copy-number entanglement is real but not resolvable in bulk (biology vs tumour state).
+  - TP53-mutant tumours without 17p loss have lower PER1 / PER2 (A224 H224.3, −0.16 log2), not adjusted for tumour state.
+- **Not estimable:**
+  - Host desynchrony (needs >= 2 normal tissues per cancer patient).
+  - Single-cell per-cell questions (A214: 5-10x more depth needed).
+  - Level-based damping readout (A223).
+- **Proposed shape:**
+  1. Tumours and their stroma keep body time.
+  2. What the field read as clock disruption or prognostic clock information is proliferation, subtype composition,
+     genomic position, design or sampling time; one main figure, the rest in the supplement.
+  3. Open: tumour-state differences in coherence.
+- **Questions:**
+  - Is this structure acceptable?
+  - How strongly should the literature correction be worded? It names published signatures, CYCLOPS magnitude and
+    TimeTeller.
+  - Should the A220-A222 tests appear as main or Extended Data?
+- **On hold:** the cancer figure and its text. A226 continues.
 
 ### Q12 (2026-10-27): request brain time-of-death fields? (A141)
 A141 (registered after your Q6 answer):
