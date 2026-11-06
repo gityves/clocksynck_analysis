@@ -3568,3 +3568,36 @@ simulation), so fully scrambled gene phases within malignant cells remain reject
 coherent malignant D) understate the real noise of the paired difference; the reconciliation "clock intact within cells"
 (REVIEW 2026-10-28 Q8, STATUS 2026-10-27) should read "not scrambled; finer changes not estimable".
 <!-- src: paper/exploratory/A214_sc_pooled_scout/output/power/{power,noise_groups}.csv; paper/exploratory/WP0_integrity/output/{malignant_downsample,incoherence_sim_calibrated}.csv -->
+
+## A215 / A216 (scored 2026-11-06): TP53-altered tumours carry less clock signal at matched proliferation (H215.1 PASS, clock-specific); proliferation does not lower coherence more where p53 is lost (H215.4 FAIL); A216 not scored (precondition)
+Power note: `registered_experiments.md` (commit fec75b7). TCGA MC3 public MAF (sha256 in `$SCCC_DATA/tcga/mc3/PROVENANCE.md`);
+METABRIC mutation panel from the stored cBioPortal tarball. TP53 altered in 41.4 % (TCGA) and 32.9 % (METABRIC) of
+tumours with a status; RB pathway 23.1 % and 5.8 %.
+- **H215.1 PASS, clock-specific (TCGA TP53, primary):** 46 project x proliferation cells in 18 projects, 6,449 tumours;
+  T −0.085 (null −0.013, SD 0.026; excess −0.072); p 0.004, Holm 0.012; MDE 0.066; below all 200 pseudo-clock sets (q05
+  −0.045). 14 of 18 projects negative (KIRC −0.436, CESC −0.380, STAD −0.247, LUSC −0.223, LIHC −0.214, BRCA −0.209; PAAD
+  +0.280, ESCA +0.351). LUAD (−0.132, 3 cells) was not blind (A171).
+- **S215.5 (proliferation-matched pairs, 3,652 tumours in 44 cells):** −0.065, swap-null p 0.0115. Within cells the altered
+  arm is +0.13 z more proliferative; matching on proliferation leaves the loss (−0.065 vs excess −0.072).
+- **H215.2 FAIL (METABRIC TP53):** 12 cells, 1,519 tumours; T −0.106 (null −0.041; excess −0.065), p 0.124, Holm 0.248,
+  MDE 0.139; pseudo 7th percentile. Same direction and size as TCGA, below this cohort's MDE.
+- **H215.3 FAIL (TCGA RB pathway):** 49 cells, 6,586 tumours; T −0.050 (null −0.028; excess −0.022), p 0.203, Holm 0.248,
+  MDE 0.068.
+- **H215.4 FAIL, opposite sign (interaction):** 15 projects, 6,272 tumours; I +0.078 (null −0.051; excess +0.129), p 0.98,
+  MDE 0.155; pseudo 89.5th percentile. The proliferation contrast is not steeper in TP53-altered tumours.
+- **H216.1-2 not scored (registered precondition):** on the eligible tumours, P0 (proliferation contrast within project
+  only) is not below its pseudo 5th percentile: TCGA −0.077 vs q05 −0.080 (marginal), METABRIC (within PAM50) +0.036 vs
+  −0.128. Descriptive only: P1 at matched project x FGA x TP53 −0.030 (TCGA, pseudo 13.5th) and +0.010 (METABRIC);
+  attenuation A 0.38 [−0.08, 1.30] (TCGA; bootstrap with replacement, which can bias coherence as in A149) and
+  uninformative in METABRIC.
+- **Descriptive:** H215.1 components dlog_plane −0.107, dlog_off +0.002 (in-plane fall, off-plane flat: the
+  proliferation pattern of A176 / A212, unlike the FGA off-plane rise of A213). Truncating vs missense: TCGA −0.070 /
+  −0.059, METABRIC −0.160 / −0.195.
+- **Reading (registered branch "H215.1 passes, H215.4 fails"):** TP53 loss is a tumour-state marker with its own
+  clock-specific loss of in-plane signal at matched proliferation, not a modifier of the proliferation effect. The
+  checkpoint hypothesis in its strong form (proliferation lowers coherence only where checkpoints are lost) is not
+  supported; RB-pathway loss shows no loss within MDE 0.068. With A213 (FGA, TCGA only) and A210 (MYC, TCGA only), TP53
+  is the third genomic state with a clock-specific TCGA loss, and the first whose METABRIC estimate has the same size
+  (excess −0.065 vs −0.072) though below that cohort's MDE. A216 cannot say whether proliferation is a marker: on these
+  tumours the within-project proliferation loss itself is not clock-specific at the 5th percentile (TCGA, marginal).
+<!-- src: paper/exploratory/A215_checkpoint_coherence/output/{power,tests,attenuation,descriptive,descriptive_per_project,descriptive_tp53_class,status_fractions}.csv -->
