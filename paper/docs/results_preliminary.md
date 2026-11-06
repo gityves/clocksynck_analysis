@@ -3728,3 +3728,22 @@ Rotation-null MDE of the mean slope 2.8-3.2 (CPTAC 8 types, TCGA 13 projects; li
 morning-peaking PER genes fall while ARNTL / NPAS2 rise stays descriptive: neither a damping readout nor evidence against
 one. Not computed: B at the observed phases.
 <!-- src: paper/exploratory/A223_damping_levels/output/power.csv -->
+
+## A220 (scored 2026-11-06): circadian risk signatures do no better than random gene signatures (H220.1-2 FAIL, powered); the "validation" rate is set by the cohort, not the list
+Power note: `registered_experiments.md` (commit 8df048e). Published-style pipeline (univariate Cox filter, L1-Cox with CV
+penalty, 10 held-out 30 % splits) on GOBP_CIRCADIAN_RHYTHM (137-154 expressed genes) vs 200 size- and expression-matched
+random lists per cohort; 18 TCGA projects with >= 60 OS events, METABRIC, SCAN-B.
+- **H220.1 FAIL (unadjusted held-out C, TCGA):** mean percentile of the circadian list among random lists 0.518 (null 0.5,
+  SD 0.071), p 0.35, Holm 0.70, MDE 0.177.
+- **H220.2 FAIL (incremental C over age, stage, proliferation, subtype):** 0.479, p 0.61, Holm 0.70, MDE 0.177.
+- **H220.3 not scored (MDE 0.535):** percentiles METABRIC 0.775, SCAN-B 0.42 (unadjusted); 0.63, 0.675 (incremental).
+- **Descriptive:** the circadian signature "validates" (median held-out median-split log-rank p < 0.05) in 8 of 20 cohorts
+  (KIRC, LGG, LIHC, LUAD, MESO, UCEC, METABRIC, SCAN-B), exactly where random lists validate often (KIRC, LGG, METABRIC 100 %,
+  SCAN-B 99.5 %, MESO 77 %, LIHC 33 %, LUAD 24 %, UCEC 18 %); in the other 12 random lists validate 0-17 % and the circadian
+  list does not. The 14 core clock genes are worse than random 14-gene lists: percentile 0 in 6 cohorts, <= 0.10 in 12 of
+  20, mean 0.227 (unadjusted C).
+- **Reading (registered):** circadian risk signatures are the Venet effect: they validate where any gene list does
+  (cohorts in which outcome tracks broad transcriptional programs such as proliferation or grade) and add nothing over
+  random lists or over clinical covariates and proliferation. The core clock genes carry less outcome information than a
+  random gene set of the same size (descriptive, post hoc reading of a registered descriptive).
+<!-- src: paper/exploratory/A220_signature_benchmark/output/{power,tests,per_cohort,eligibility}.csv -->

@@ -305,3 +305,6 @@ Source for the rows with a figure panel: `paper/exploratory/WP0_integrity/output
 | A221 | H221.2 GTEx design − paired design, clock vs random | levels | P | Delta −0.229 log2 | 0.005 / Holm 0.010 | PASS (GTEx exaggerates; ARNTL, NPAS2, NR1D1 inverted) | MDE 0.121 | A221_tumour_normal_levels/output/results.csv |
 | A221 | H221.3 design difference vs GTEx daytime offset | levels | S | Spearman +0.203 (182 points) | 0.0005 / Holm 0.0015 | PASS | - | A221_tumour_normal_levels/output/results.csv |
 | A223 | H223.1-3 paired clock-level pattern vs damping predictor (CPTAC primary, without PER1, TCGA) | levels | P | not run | - | NOT ESTIMABLE (power rule) | MDE 2.8-3.2 (limit 0.5) | A223_damping_levels/output/power.csv |
+| A220 | H220.1 circadian LASSO signature vs random lists, held-out C (18 TCGA projects) | outcome | P | mean percentile 0.518 | 0.35 / Holm 0.70 | FAIL (powered) | MDE 0.177 | A220_signature_benchmark/output/tests.csv |
+| A220 | H220.2 same, incremental C over age, stage, proliferation, subtype | outcome | P | 0.479 | 0.61 / Holm 0.70 | FAIL (powered) | MDE 0.177 | A220_signature_benchmark/output/tests.csv |
+| A220 | H220.3 breast (METABRIC, SCAN-B) | outcome | S | 0.63, 0.675 (incremental) | - | NOT SCORED (power rule) | MDE 0.535 | A220_signature_benchmark/output/tests.csv |
