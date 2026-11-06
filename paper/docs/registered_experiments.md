@@ -4516,3 +4516,29 @@ real cohort sizes, calibrated on the A151 pseudo-set spread) 0.154 / 0.162, MDE 
 against the threshold (half the A151 clock − pseudo-median difference) 0.120 / 0.134. Both compartments below 30 patients:
 not scored. Design note: the threshold was too strict for any feasible cohort set (the same method gives MDE 0.127 at
 A151's own 98 patients); the claim nevertheless stays post hoc, as registered.
+
+## A227 (2026-11-06, user agreement; written before any tumour-vs-normal pairing of immune or mural compartments is computed; seen: A149 / A151 / A226 for epithelium, fibroblasts and endothelium (pairing and post hoc clock specificity), A152 (resident vs circulating lymphocyte coupling in normal tissues), the blood-composition result (blood carries diurnal composition, no coherent core clock), the compartment label counts of the A149 pseudobulk files): which tumour-microenvironment compartments keep the same patient's normal-tissue clock state? **L3-like pairing; single-cell, all paired patients**
+**Why.** H138.4 shows bulk tumours share the patient's normal-tissue clock state; stroma does so post hoc (A149 note 5). The
+immune and perivascular compartments have never been tested. Resident compartments should share the host clock more than
+recently recruited ones.
+**Data.** The A149 cohort set (27 cohorts) plus the A226 cohorts, same cell labels (`cancer_sc` labels / A149 marker rules)
+and the same eligibility rules (>= 4 patients with both tumour and normal pseudobulks of the compartment, >= 50 cells,
+sample median UMI >= 1,500, compartment present in >= 60 % of patients or >= 6). Compartments: myeloid, T_NK, B_plasma,
+mural (pericytes / smooth muscle), mast. Fibroblasts and endothelium recomputed on the same set as descriptive anchors only
+(not confirmatory: mostly the same patients).
+**Statistic (A226).** Uncorrected |complex correlation| of tumour vs normal compartment states (GTEx waveform plane, centred
+within cohort), pooled with patient-count weights; within-cohort permutation null (10,000); 200 expression-matched
+pseudo-clock sets (A149 note 2 (iv) construction).
+- **H227.1 / H227.2 (primary: myeloid / T_NK):** pairing > permutation null (one-sided) **and** clock statistic > pseudo q95
+  (p = (1 + #{pseudo >= clock}) / 201); a pass needs both.
+- **H227.3-5 (secondary: B_plasma, mural, mast):** the same.
+Holm over the pairing p of the scored primaries, and separately over the scored secondaries; clock specificity read per
+compartment.
+**Power (dated note before scoring):** patients and cohorts per compartment; MDE = 2.49 x permutation-null SD (null from
+shuffled patient labels only). Not scored if < 40 patients or MDE > 0.25.
+**Descriptive:** per compartment clock statistic minus pseudo median, ordered; the same in the cancer types with >= 12
+patients; fibroblast / endothelial anchors.
+**Reading:** a clock-specific pass -> that compartment keeps the patient's clock state in the tumour. Immune passes carry
+the caveat that tumour and normal immune cells share the same circulation (diurnal trafficking and composition), so they
+mark host time reaching the tumour, not necessarily a local clock. Pairing without clock specificity -> patient-specific
+non-clock structure (as A149 epithelium). **Stop rule:** one amendment. **Code:** `paper/exploratory/A227_tme_compartment_pairing/`.
