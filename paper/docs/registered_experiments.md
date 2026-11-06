@@ -4141,3 +4141,15 @@ own pseudo 5th percentile on these tumours (then there is no proliferation loss 
 - Otherwise inconclusive.
 Residual proliferation imbalance within strata is reported. No survival test. **Stop rule:** as A215. **Code:**
 `paper/exploratory/A215_checkpoint_coherence/` (shared with A215).
+
+**A215/A216 power note (2026-11-06, before any observed coherence difference; `A215_checkpoint_coherence/output/{eligibility,counts,power}.csv`).**
+Status: TCGA MC3 (10,295 sequenced tumours; 8,446 primaries in the 23 projects with a TP53 status, 41.4% altered; 8,423 with an RB-pathway status, 23.1% altered);
+METABRIC (1,699 of 1,756 expression tumours; TP53 32.9% altered, RB pathway 5.8%). Null means are not 0 because the arms are unequal and proliferation-defined.
+H215.1 (TCGA TP53): 18 of 23 projects, 46 cells, 6,449 tumours, null SD 0.0263, MDE 0.066. H215.2 (METABRIC TP53): 12 cells, 1,519 tumours, null SD 0.0561, MDE 0.139.
+H215.3 (TCGA RB pathway): 19 projects, 49 cells, 6,586 tumours, null SD 0.0274, MDE 0.068. H215.4 (interaction): 15 projects, 6,272 tumours, null SD 0.0622, MDE 0.155.
+S215.5 (matched, 44 cells, 3,652 tumours in pairs): null SD 0.0300, MDE 0.075. H216.1 (TCGA, 23 projects, 94 strata, 5,336 tumours in the arms, 7,955 in P0): null SD 0.0221, MDE 0.055.
+H216.2 (METABRIC, 18 strata, 1,032 tumours in the arms, 1,539 in P0): null SD 0.0536, MDE 0.133. All seven have MDE <= 0.25 and are scored on power; for H216.1-2 the registered
+precondition (observed P0 below its pseudo 5th percentile) cannot be evaluated before the tests and is checked there. Choices left open (README): MC3 FILTER kept PASS / wga / native_wga_mix;
+sequenced = barcode in the MAF (METABRIC: `cases_sequenced`); intact requires a copy-number call; H215.4 status permuted within project x pooled proliferation tertile with
+status-specific tertiles recomputed; S215.5 caliper 0.1 SD of the project's score over tumours with TP53 status; P0 on all tertiles of the eligible P1 strata; "residual
+proliferation imbalance" in A216 read as top - bottom FGA, TP53 fraction and purity within strata.
