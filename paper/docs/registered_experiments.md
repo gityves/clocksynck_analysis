@@ -3871,3 +3871,11 @@ percentile for a difference to be called clock-specific.
 not come from coupling. H208.2 pass and companion → a clock-specific sex offset (direction and size stated, no
 per-donor phases released).
 **Stop rule:** one amendment, no tissue subset chosen after the readout. **Code:** `paper/exploratory/A208_sex_coupling/`.
+
+**A208 power note (2026-11-06, before any observed d* or offset; from `A208_sex_coupling/output/power.csv`, 1,000
+permutations).** 55 tissue x cohort units (vent 24, fast 31), 2,981 matched pairs. MDE_80: pooled d* 0.032 (vent 0.041,
+fast 0.050) <= 0.15, so H208.1 is powered; pooled offset 0.17 h (vent 0.23, fast 0.24). Implementation choices (agent,
+docstring of `compute_a208.py`): pooling weights from the permutation null SD (independent of observed values); tissues
+with < 10 matched pairs dropped (none were); sex-specific organs excluded: ovary, uterus, vagina, cervix, fallopian
+tube, prostate, testis and breast (breast is sex-differentiated in GTEx, excluded with them); age matched on the public
+bracket midpoint.
