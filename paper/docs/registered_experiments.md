@@ -3791,3 +3791,35 @@ offset (relative to the anchors' circular mean), coupling and log relative ampli
 between the gene shifts, with lower |z| (if seen); a measured offset is then not attributable to a single loop. Stop
 rule: one amendment, no new scenario after scoring.
 **Code:** `paper/exploratory/A205_partial_shift_gate/`.
+
+## A204b (2026-11-06, post hoc to A204's failed gate, on the user's request; written before any rerun): TimeTeller at the REMAGUS design with the training tissue's mean levels matched
+**Why (post hoc diagnosis, 2 replicates per case, scratch only, not a readout of any H204):** TimeTeller recovers time on
+the A204 simulator (median error 0.94-1.21 h, whole day) when training and test samples share their per-gene mean
+levels, and fails when they carry independent per-gene offsets (`mesor_sd` 0.5, the A204 setting). The A204 gate
+therefore failed on the tissue mismatch, not on TimeTeller itself; the user reports TimeTeller works on GTEx 08-18 h
+after training on the same tissue. The tumour offset convention (internal time = t + 3 h) was confirmed (1.2-1.3 h vs
+5.7-6.4 h with the opposite sign).
+**Design:** A204's TimeTeller arm unchanged except `mesor_sd = 0` for the training and the tumour compartments (tumour
+z 0.7 exp(i 3 h) kept: amplitude and phase differ, mean levels do not). Same seeds, windows, c_T levels, 30 replicates.
+**Gate:** as A204 (F, c_T 0.9, median error <= 3 h). **H204b.4:** as H204.4 (W, c_T 0.9, n 108: slope p < 0.05 in >= 24
+of 30), single test. Readings as registered for H204.4; MDE per window reported. H204.1-H204.3 stay unscored (their
+registration made the whole of A204 conditional on the joint gate); the COFE results remain descriptive.
+**Code:** `compute_a204.py --only tt --mesor-sd 0 --out output/a204b`.
+
+## A206 (2026-11-06, literature follow-up item 4b; written before any expression readout; seen: sample titles and CTs only): is a feeding-rhythmic but clockless liver clock-shaped? **Mouse, Cry1/Cry2 double knockout (Vollmers et al. 2009, GSE13093), secondary**
+**Known at registration:** the cross-compartment gate did not fail in Bmal1 knockouts (A201 aorta: clock share 0.77 -> 0.36,
+p 0.003; A129 hepatocyte KO liver passes). GSE13093 has one tissue, so the cross-compartment gate cannot run; the
+single-set check of the project is `paired.reference_gate` (A52, A83: clock-plane share of the gene x gene covariance
+of gene-centred log expression against 200 permuted-acrophase planes). GTEx human waveform, as for every mouse set.
+**Data:** GSE13093 (`$SCCC_DATA/vollmers2009_GSE13093/`, parsed by `A206_cry_dko_gate/scripts/parse_gse13093.py`): liver,
+log2 MAS5, 14 genes. Sets: Cry DKO restricted feeding (RF, 12 samples, CT24-46 every 2 h), Cry DKO ad libitum (AL, 12,
+same CTs), WT RF hourly CT24-47 split into even CTs (12, the KO design) and odd CTs (12).
+**Power companion (must pass for H206.1 to be read):** both WT RF halves pass reference_gate (p < 0.05).
+- **H206.1:** Cry DKO RF fails reference_gate (p >= 0.05). Pass → a feeding-driven rhythm without a clock does not
+  look clock-shaped to the single-set gate. Fail → feeding alone produces a clock-shaped covariance in liver; the gate
+  cannot separate a fed rhythm from a clock in a single tissue (stated in METHOD.md).
+**Descriptive:** clock share and p of the four sets; Cry DKO AL (expected no rhythm); per-gene cosinor amplitude on
+the known CTs (which genes carry the fed rhythm), as context only.
+**Stop rule:** one amendment, 200 permutations (the A52 setting) and seed 206; no other set or gene subset added after
+the readout.
+**Code:** `paper/exploratory/A206_cry_dko_gate/`.
