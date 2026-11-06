@@ -3971,3 +3971,11 @@ log2 expression as A168 arrays); surgery 08:00-09:00 (GEO extract protocol). Gat
 20-32 h +1.05 z, p 0.0005 (2,000 swaps; −1.11 at 4 h rising to +1.39 at 32 h); gate (b) passes: sham clock share 0.673
 vs 0.077, p 0.005. MDE (2,000 swaps within time point): registered 4-32 h 0.064; descriptive 4-16 h 0.137, 20-32 h
 0.040. H211.1 is estimable.
+
+**A210 power note (2026-11-06, before any observed coherence difference; `A210_myc_coherence/output/{eligibility,counts,power}.csv`).**
+METABRIC: 14 of 15 PAM50 x proliferation cells eligible, 1,294 tumours (450 amplified); TCGA: 30 project x tertile cells
+in 13 projects, 2,728 tumours (844 amplified). MDE (2,000 permutations): H210.1 0.130, H210.2 0.086; both scored. The
+null means are −0.020 and −0.044 (smaller amplified groups read lower coherence), so p values come from the permutation
+null, not from T < 0. Choices left open by the registration (README): tertiles over all CNA-called tumours of the
+stratum; Holm over the scored hypotheses; METABRIC pseudo sets = the 200 stored by A166, TCGA pseudo sets per A172
+(seed crc32("A210")).
