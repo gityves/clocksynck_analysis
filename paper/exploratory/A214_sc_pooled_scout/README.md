@@ -52,4 +52,5 @@ Median regression over the 543 groups: per-group D SE ~ (clock UMI per cell)^-0.
 At 500 cells per group and the same depth in both compartments, patients for MDE 1.0 (about the 2 h bound): 1,264 at 2
 clock UMI per cell, 543 at 4, 233 at 8, 100 at 16 (x 4 if the tails stay as heavy as now: rms SE about 2x the robust
 one). Clock UMI is about 3.5-4 per 10,000 total UMI, so 8-16 clock UMI means roughly 20,000-40,000 UMI per cell. The fit
-covers groups up to about 10 clock UMI per cell; 16 and above are extrapolated. Scout of deep studies: `inventory/INVENTORY_DEEP.md`.
+rests mostly on shallow groups (90 % below 6.8 clock UMI per cell, 99 % below 15, maximum 26): 16 and above are
+near the edge of the data. Scout of deep studies: `inventory/INVENTORY_DEEP.md`.
