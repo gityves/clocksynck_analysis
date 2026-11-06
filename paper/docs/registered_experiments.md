@@ -3997,3 +3997,74 @@ rerun (A209 H209.3 stands: pseudo genes there have no rhythm either way). Same 3
 (expected about 0.5 under exchangeability: the check that the fix works).
 **Reading:** pass -> the real-data rule is calibrated against shared non-clock factors when pseudo genes are
 exchangeable; fail -> the rule's false-claim rate is reported as such. **Code:** `compute_a209.py --exchangeable`.
+
+## A212 (2026-11-06, user request; written before any A212 code is run; seen: the A176 components of all seven contrasts, the A210 and A211 results): can bulk coherence data tell a damped or dephased clock from a rewired one or a swamped one? **Method, plasmode simulation**
+**Why.** A176 H176.1 shows less in-plane clock signal in proliferating and ER− tumours (7 of 7), but H176.2, the test
+for disordered relations, was degenerate, so "swamped, not disordered" was not shown. The reference waveform is shared
+by all tumours. Clonal heterogeneity can lower coherence in two ways the pseudo-clock companion cannot catch, because
+both act on the clock genes only: clones out of phase with each other (bulk damping) and clones whose gene relations
+differ from the reference (rewiring). Within-tumour dephasing and lower per-cell amplitude are the same thing in bulk
+to first order (amplitude factor |E e^{i delta}|), so they are one mechanism here (D).
+**Bases (real tumours, no mechanism added):** B1 = the reference arm of A176 H127.1 (SCAN-B, lowest proliferation
+tertile of each PAM50 x purity stratum); B2 = the reference arm of H166.1 (METABRIC ER+, A166 strata). Y as in A176,
+centred within stratum. Per tumour, clock state beta = Y X (X'X)^-1 (GTEx waveform X), clock part C = beta X', rest
+E = Y − C. Each replicate splits every stratum's tumours at random into halves; the case half gets the mechanism, and
+the A176 statistics (dR, dlog_plane, dlog_off, ds; `decompose.components`, mean over strata) are case minus reference.
+**Mechanisms (case half only):**
+- **D, damping / dephasing:** Y' = rho C + E, rho in {1, 0.9, ..., 0.1}.
+- **S, swamping:** Y' = Y + U L', three non-clock factors, U ~ N(0, 1) per tumour, loadings L ~ N(0, s^2) per gene
+  (redrawn per replicate), s on a grid of 10 values from 0 to 2 x the per-gene SD of E.
+- **W, homogeneous rewiring:** Y' = beta X_w' + E, X_w the waveform with each gene's acrophase shifted by N(0, sigma^2)
+  (one draw per replicate, shared by all case tumours), sigma in {0, 1, ..., 6} h.
+- **H, heterogeneous rewiring (the user's clonal scenario):** as W with an independent shift vector per tumour.
+**Strength matching:** for each base and mechanism, 50 replicates per grid value; the strength whose mean dR equals the
+observed dR of the base's contrast (B1 −0.123, B2 −0.229; A176 `tests.csv`) is found by linear interpolation. If no
+grid value reaches it, the mechanism is recorded as "cannot reach the observed loss" and is run at its strongest value.
+Then 200 replicates per mechanism at the matched strength (seeds SeedSequence([crc32("A212"), base, mechanism, rep])).
+- **V212.1 (primary, B1):** rewiring is separable from damping at matched dR: cross-validated (5-fold) linear
+  discriminant AUC on (dlog_plane, dlog_off) >= 0.9 for both W vs D and H vs D.
+- **V212.2 (B1):** swamping is separable from damping: AUC S vs D >= 0.9.
+- **V212.3 (B2):** V212.1 and V212.2 repeated on B2.
+**Predictions written now:** D lowers dlog_plane with dlog_off near 0; S raises dlog_off; W and H lower dlog_plane and
+raise dlog_off, and lower dR at a smaller plane loss than D.
+**Descriptive (compared with seen data, labelled as such):** the observed (dlog_plane, dlog_off) of H127.1 against the
+B1 clouds and of H166.1 against B2 (Mahalanobis distance to each cloud and its percentile within the cloud); mixtures are
+not fitted.
+**Reading:** V212.1 passes and the observed point sits in the D cloud only -> the coherence loss is less clock amplitude
+in bulk (lower per-cell amplitude or intra-tumour dephasing), not rewired relations; observed in the W/H cloud -> rewired
+relations; V212.1 fails -> bulk data cannot tell rewiring from damping, and the paper says "less clock signal", cause
+open. No mechanism that fits is read as proven: the clouds bound what bulk statistics can distinguish.
+**Stop rule:** one amendment; grids and AUC bar fixed here. **Code:** `paper/exploratory/A212_coherence_mechanisms/`.
+
+## A213 (2026-11-06, user request; written before the ABSOLUTE table is downloaded and before any genome-altered fraction is computed; seen: the A210 results and the header and first two rows of the ABSOLUTE file): is tumour coherence lower in heterogeneous or copy-number-burdened tumours at matched proliferation? **TCGA primary, METABRIC secondary**
+**Why.** Heterogeneity and genome burden go with proliferation, MYC amplification and outcome. If they lower coherence
+at matched proliferation, they are a route by which a shared-waveform model and survival could both depend on tumour
+heterogeneity, and they could carry the A210 TCGA result (MYC expression showed no loss).
+**Data:**
+- **Subclonal genome fraction** (ABSOLUTE, PanCanAtlas `TCGA_mastercalls.abs_tables_JSedit.fixed.txt`, GDC
+  api.gdc.cancer.gov/data/4f277128-f793-4354-a13d-30cc7fe9f6b5; `call status` = called only), joined on the
+  15-character barcode. Purity and ploidy from the same file for descriptives.
+- **Fraction of genome altered (FGA):** fraction of genes with a GISTIC call != 0 in the copy-number matrices already used
+  by A210 (Xena TCGA; METABRIC `data_cna.txt`), over genes called in all samples of the matrix.
+- Expression, projects, proliferation and coherence exactly as A210.
+**Cells:** stratum x proliferation tertile as A210 (TCGA project; METABRIC PAM50), all tumours with the measure. Within
+each cell, the measure's top vs bottom tertile; a cell needs >= 10 tumours per arm. T = mean over cells of
+coherence(top) − coherence(bottom); labels permuted within cell (2,000); one-sided for a loss.
+- **H213.1 (primary):** TCGA, subclonal genome fraction.
+- **H213.2:** TCGA, FGA. **H213.3:** METABRIC, FGA. Holm over the three.
+**Specificity companion (same permutations):** 200 pseudo-clock sets (A210 construction; seeds crc32("A213")). A pass is
+"clock-specific" only if T is below their 5th percentile.
+**Power (dated note before the tests):** MDE = 2.49 x null SD; a hypothesis with MDE > 0.25 is not scored.
+- **S213.4 (sensitivity of A210 H210.2):** within each A210 TCGA cell, amplified tumours matched 1:1 to neutral ones on
+  FGA (nearest neighbour without replacement, caliper 0.05; unmatched dropped); T_MYC on the matched set with labels
+  swapped within pairs (2,000). Read: FGA carries the A210 result if (T_matched − its null mean) is less than half of the
+  A210 excess (T − null mean = −0.085) and p >= 0.05.
+**Descriptive:** Spearman of subclonal fraction with FGA and with proliferation; residual proliferation and purity
+imbalance top − bottom within cells; per-project T; the A176 components (dlog_plane, dlog_off, ds) of each H213
+contrast, placed against the A212 clouds.
+**Reading:** pass, clock-specific -> heterogeneous or burdened tumours carry less clock signal beyond proliferation, a
+shared cause candidate for coherence and outcome; powered fail -> no such loss within the MDE, and heterogeneity does
+not explain the coherence results at matched proliferation. Neither result says that heterogeneity changes outcome
+through the clock: no survival test is registered here (A191-A198 found no clock information beyond proliferation).
+**Stop rule:** one amendment; no cell rule or tertile change after the power note. **Code:**
+`paper/exploratory/A213_heterogeneity_coherence/`.

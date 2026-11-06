@@ -9,7 +9,8 @@ Every citation below was checked against a PubMed Central, publisher, bioRxiv or
 (closest match found, the handoff reference itself not pinned down), **not found**.
 
 Our results referred to (source: `results_preliminary.md`, A174-A181 and STATE section 3):
-cancer coherence loss in proliferating and ER-negative tumours is a swamped clock, not disordered relations
+cancer coherence loss in proliferating and ER-negative tumours is less in-plane clock signal, cause not resolved (correction 2026-11-06: swamped vs damped vs rewired
+not separated; A212)
 (A176, 7 of 7 contrasts, in-plane log-odds falls, off-plane variance rise not clock-specific); C1 host-pairing is
 lower in the high-proliferation tertile in TCGA (A175, secondary because TCGA is already seen; 0.459 vs 0.301,
 D +0.158, p 0.021, clock-specific against pseudo-clock and responsive sets); the coherence loss is not explained by
@@ -29,8 +30,8 @@ compartment against the clock state shared with the same donor's other compartme
 tissue define the reference and no external reference is needed. We add what CCD does not report (to our reading of the
 paper; proliferation was not checked in the full text): a specificity companion on the same permutations
 (pseudo-clock and responsive gene sets), purity strata, proliferation and ER as predictors, external replication
-cohorts and a separation of "less clock signal" from "disordered relations". A176 shows the loss is a swamped
-clock (in-plane variance falls, off-plane rise is not clock-specific), and A175 shows lower pairing with the normal
+cohorts and a separation of "less clock signal" from "disordered relations". A176 shows less in-plane clock signal
+(in-plane variance falls, off-plane rise is not clock-specific; swamped vs damped vs rewired not separated, A212), and A175 shows lower pairing with the normal
 tissue in the high-proliferation tertile in TCGA (secondary; primary replication pending). CCD, being a correlation
 property, cannot make that distinction.
 
@@ -71,7 +72,7 @@ single-cell test of locking is untested, so locking stays a prediction, not a fi
 
 How we differ. Cell-line evidence compares one luminal and one basal line, or a screen of lines, and cannot separate
 lineage from proliferation or from the tumour microenvironment. In SCAN-B and METABRIC the coherence loss in
-ER-negative tumours is swamped-clock, with the in-plane variance fall not clearly clock-specific in the ER contrasts
+ER-negative tumours is less in-plane clock signal (cause not resolved), with the in-plane variance fall not clearly clock-specific in the ER contrasts
 (A176; SCAN-B -0.087, p 0.22) and weaker without PER1/NR1D1. BRCA ER pairing contrast is not estimable at this n
 (A175, MDE 0.408). Acute ER blockade does not reproduce the loss (A168/A169), so we frame ER-negative loss as a
 lineage-state property, not an acute estrogen-signalling effect.

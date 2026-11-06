@@ -2453,6 +2453,11 @@ Fisher-Lee stays > 0.5 in >= 80 %; in the adipose design, JS < 0 in < 5 %."
   the clock-plane variance across tumours shrinks clock-specifically, on top of a generic rise in off-plane variance.
   In ER− tumours the swamping is mostly the generic off-plane rise, and it depends partly on PER1/NR1D1. Wording to
   propose: "less clock signal relative to non-clock variation", not "clock loss".
+- **Correction (2026-11-06):** "swamped, not disordered" is not supported. H176.2, the only test of disordered relations,
+  was not informative, so H176.1 shows less in-plane clock signal and nothing more. It does not separate swamping by
+  non-clock variation from a damped or intra-tumour dephased clock or from rewired gene relations, which all lower the
+  in-plane share and are clock-specific by construction. Wording: "less clock signal (in-plane share) in proliferating
+  and ER− tumours; cause not resolved". Whether bulk data can separate these is registered as A212.
 - **Consequence for A175:** lower clock-plane variance in high-proliferation tumours lowers a pairing correlation by
   itself. So H175.1 (lower tumour-normal pairing) cannot yet be read as "less host following". A spread-matched pairing
   readout (pairing at common tumour clock-plane variance, the d* logic) is needed before the L2 claim. That would be a new
