@@ -25,7 +25,8 @@ the output tables named per row. Wording follows ledger rule 6: convergence, not
 2. **Specificity standard.** Every contrast against expression-matched pseudo-clock and responsive gene sets on the same
    permutations; gates; equivalence bounds. None of the cancer-clock papers carded uses a matched random-set control.
 3. **Biology in cancer.** Tumours pair with their own host clock in bulk; where coherence is lost (proliferating,
-   ER− adenocarcinomas) the tumours carry less in-plane clock signal, cause not resolved (A212, A213); published prognostic clock signals do not add to
+   ER− adenocarcinomas) the tumours carry less in-plane clock signal, cause not resolved (A212, A213; no genomic lesion beyond
+   subtype, A215-A217, section 7); published prognostic clock signals do not add to
    proliferation.
 4. **Biology beyond cancer** (the paper's frame, memory "paper framing"): organs share internal time; brain (and partly
    the gut) apart; relations kept when daily cues are lost; metabolic disease within ±0.15 coupling; psoriasis a
@@ -109,9 +110,39 @@ a critique plus nulls, with one positive finding (host pairing, bulk). Assessmen
   damping or dephasing from rewiring (AUC 0.89-0.91, bar 0.9); A213 finds no loss with subclonal genome fraction (T
   +0.021, MDE 0.058), a clock-specific loss with copy-number burden in TCGA only (−0.063, pseudo 2nd percentile), and
   the A210 MYC result surviving FGA matching (ratio 0.77).
+  **Superseded (same day, section 7):** the TCGA losses for FGA, MYC and TP53 are subtype composition (A217).
 
 ## Limits of this assessment
 
 Numbers are from the verdict table, the ledger and the CSVs re-read here (A145 `h145.csv`, A138 rows, A206, A207); the
 audit's number fixes are not yet applied to the ledger. "Not found in the literature" means not in 148 carded texts and
 two searches.
+
+## 7. Update (2026-11-06, evening): the cancer chapter after A214-A218
+
+Numbers from `results_preliminary.md` (entries A214 scout to A217 / A218) and the output tables named there.
+- **Single cell cannot resolve the mechanism (A214 scout).** Rewired gene relations, damping and dephasing are not
+  estimable in public tumour single-cell data: paired per-cell D has MDE 4.7-7.9 against a 2 h rewiring bound of about 1.0;
+  the normal epithelium has about 1 clock UMI per cell; no deep study (droplet or plate) reaches the 8-16 clock UMI per
+  cell needed. WP0's "per-cell D sees no loss" is corrected to "not scrambled; finer changes not estimable".
+- **No genomic lesion lowers clock signal beyond molecular subtype.** TP53 (A215 H215.1, TCGA −0.085, clock-specific),
+  FGA (A213) and MYC (A210) passed in TCGA with project x proliferation cells only. In TCGA BRCA the altered arms are
+  34-44 % Basal vs 2-4 %, and at matched PAM50 the losses shrink 59-96 % (post hoc). Registered at matched subtype in 10
+  other projects: TP53 +0.035, FGA −0.015, MYC +0.033, all fail (A217; MDE 0.08-0.17). RB pathway (A215 H215.3) and
+  subclonal fraction (A213 H213.1) fail without it. METABRIC, stratified by PAM50 from the start, never showed them: the
+  METABRIC-TCGA discordance was a design difference.
+- **Checkpoint escape is not the link** between proliferation and clock loss: no TP53 x proliferation interaction (A215
+  H215.4, +0.078, opposite sign).
+- **Whether subtype carries the proliferation loss is open:** SCAN-B within PAM50 passes (A127 H127.1), METABRIC fails
+  (A166 H166.3); in the other subtyped TCGA projects the proliferation loss is not clock-specific at all (A216, A218
+  preconditions fail). A219 tests subtype differences at matched proliferation directly (registered, running).
+- **Literature (draft tally, `exploratory/literature_tally/`, 79 studies, mostly abstract level):** 69 of 71 resolved
+  clock-outcome claims positive; none fully adjusted for proliferation, one for subtype, none with a random-gene-set
+  control. Consistent with selective reporting (meta-analysis: 2 of 8 genes survive pooling), not a demonstration.
+
+**Consequence for section 4.** The cancer chapter is a corrective one: tumours follow their own host clock in bulk
+(H138.4); lower clock signal belongs to proliferative and aggressive-subtype tumours rather than to genomic lesions;
+physiological proliferation keeps the clock (A211); the clock adds no prognostic information beyond proliferation; the
+field's positive clock-outcome literature lacks the two controls that remove it. The provocative question for Cell is
+whether "clock disruption in cancer" is largely a composition effect of tumour state; what happens inside tumour cells
+needs deeper single-cell data than exist.

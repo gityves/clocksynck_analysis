@@ -119,3 +119,15 @@ not estimable or post hoc only (not in the main text).
 5. Embryo (row 3.1): n 16 with a borderline clock-shape gate, although the time-of-day inference passes; a second
    developmental dataset would make "before birth" robust.
 6. PI decisions: wording of rows 6.5 and 8.1, and whether to contact the authors before submission.
+
+## Addendum 2026-11-06 (A212-A218; PI review pending; rows above unchanged)
+
+| # | Sentence | Evidence | Limit | Avoid | Status |
+|---|---|---|---|---|---|
+| 6.3a | The proliferation loss is less in-plane signal without added non-clock variance (swamping excluded). | A212 V212.2 AUC 1.000; observed SCAN-B point outside the swamping cloud. | Damping, dephasing and rewiring not separable in bulk (V212.1 AUC 0.89-0.91) nor in public single cell (A214 scout). | "Swamped"; "rewired". | A |
+| 6.7 | Genomic lesions (TP53, copy-number burden, MYC amplification, RB pathway, subclonality) do not lower tumour clock coherence beyond molecular subtype and proliferation. | A217 at matched subtype: TP53 +0.035, FGA −0.015, MYC +0.033 (MDE 0.13, 0.08, 0.17); TCGA BRCA post hoc: losses shrink 59-96 % within PAM50; A215 H215.3 RB −0.022 (MDE 0.068); A213 H213.1 subclonal +0.021 (MDE 0.058); METABRIC (PAM50 strata) no MYC or FGA loss. | Bounds are 0.06-0.17, not 0; 11 TCGA projects have no subtype labels and are unchecked. | "Genomic instability disrupts the clock"; citing A210 H210.2, A213 H213.2, A215 H215.1 as lesion effects. | A (as a bound) |
+| 6.8 | Physiological proliferation leaves the clock coherent. | A211 regenerating liver T −0.027 (MDE 0.064, powered fail); A126 (underpowered). | One mouse dataset; G2M rise not on the tumour scale. | "Proliferation never affects the clock." | B |
+
+**Do not claim (added):** per-cell rewiring or intact gene relations in malignant cells (A214 scout: not estimable;
+WP0 item 2 erratum); checkpoint loss as the link between proliferation and clock loss (A215 H215.4 opposite sign); subtype
+as the carrier of the proliferation loss (A216, A218 not scored; A219 pending).
