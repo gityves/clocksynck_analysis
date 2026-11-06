@@ -3401,3 +3401,23 @@ checked against the files.
   mismatch is an alternative to tumour uncoupling that the REMAGUS analysis does not exclude. The window range of
   REMAGUS is not reported; both windows are assumptions.
 <!-- src: paper/exploratory/A204_orderer_uncoupling/output/a204b/{gate,tests,tt_cells}.csv; A204 output/tt_cells.csv -->
+
+## A208 (scored 2026-11-06): women and men have the same organ coupling and offsets in GTEx (H208.1 PASS, equivalence; H208.2 FAIL, no offset difference)
+A164 procedure with sex as the label (implemented by a Sonnet agent; numbers checked against the files). 55 tissue x
+cohort units (vent 24, fast 31), 2,981 matched pairs, 1,000 permutations, 200 bootstraps with host refit; interval
+± 1.645 x max(bootstrap SE, null SD).
+| | d* (female − male), 90 % | p | offset (h), 90 % | p |
+|---|---|---|---|---|
+| ventilated | +0.021 [-0.011, +0.053] | 0.19 | -0.058 [-0.270, +0.153] | 0.52 |
+| fast | +0.018 [-0.015, +0.051] | 0.36 | +0.154 [-0.024, +0.333] | 0.11 |
+| pooled | +0.020 [-0.003, +0.043] | 0.11 | +0.043 [-0.104, +0.189] | 0.50 |
+- **H208.1 PASS:** pooled d* inside ±0.15 (MDE 0.032). Companion (3 lowest-coupling tissues by male c per cohort):
+  +0.010, p 0.75.
+- **H208.2 FAIL:** no sex offset (p 0.50); equivalent within ±1 h (and within about ±0.2 h). The pseudo-clock companion
+  (50 sets) has |offset| q95 1.29 h, so no clock-specific offset. Same sign as the archive A99 timed +0.35 h, but about
+  zero.
+- **Reading:** organ coupling and organ phase offsets do not differ by sex in GTEx (coupling within ±0.04, offsets within
+  ±0.2 h). A sex x dosing-time interaction in chronotherapy (Lévi 2010) would therefore not come from a sex difference in
+  how organs are timed relative to the body's clock; host phase relative to wall time (A99 type) is a separate question
+  and is not addressed (untimed readout).
+<!-- src: paper/exploratory/A208_sex_coupling/output/{tests,pooled,companions,power}.csv -->

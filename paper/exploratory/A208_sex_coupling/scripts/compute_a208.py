@@ -50,6 +50,7 @@ A164 = PAPER / "exploratory/A164_gtex_metabolic_matched/scripts"
 sys.path.insert(0, str(A164))  # compute_a164 puts paper/ and gtex_cues on the path
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
+from joblib import Parallel, delayed  # noqa: E402
 
 import compute_a164 as A  # noqa: E402  (labels, run_chunks, p2, seed_of, say, Z90, MDE_K)
 import _shared as S  # noqa: E402
@@ -153,8 +154,8 @@ def boot_chunk(pb, anchors, plan, seeds):
 def wmean(x: np.ndarray, w: np.ndarray) -> np.ndarray:
     """Row-wise weighted mean over the last axis, dropping non-finite entries (weights renormalised)."""
     ok = np.isfinite(x)
-    num = np.where(ok, x, 0) @ w if x.ndim == 2 else np.where(ok, x, 0) * w
-    den = ok.astype(float) @ w if x.ndim == 2 else ok * w
+    num = np.where(ok, x, 0) @ w
+    den = ok.astype(float) @ w
     with np.errstate(invalid="ignore", divide="ignore"):
         return num / den
 
@@ -238,6 +239,25 @@ def power(nulls, plans, M, out):
     say("power\n" + P.round(4).to_string(index=False))
 
 
+def _logged(gen):
+    for k, v in enumerate(gen, 1):
+        say(f"pseudo set {k}")
+        yield v
+
+
+def pseudo_offset(i, pseudo, plans, anchors, tw, cw) -> float:
+    """Pooled offset difference of pseudo-clock set i (whole pipeline on the pseudo genes)."""
+    limit_threads(1)
+    est = {}
+    for c in cw:
+        w = pseudo[c][i]
+        pb, _ = gtex.load(tissues=list(plans[c]) + anchors[c], hardy=COH[c], genes=list(w.genes), depth="library_size",
+                          require_tod=(c == "fast"))
+        ds = cs.Dataset(pb, anchors=anchors[c], waveform=w)
+        est[c] = np.array([stat2(ds, A.labels(plans[c][t]), t)[1] for t in plans[c]], float)
+    return pool_estimate(est, tw, cw)[0]
+
+
 def pseudo_sets(hardy, n_sets, seed):
     """n_sets expression-matched pseudo-clock waveforms (genes outside the clock set; match on mean log fraction)."""
     import anndata as ad
@@ -258,6 +278,7 @@ def pseudo_sets(hardy, n_sets, seed):
 
 
 def score(args, out, quick, pbs, dss, plans, anchors, M, nulls):
+    """Observed estimates, bootstrap, pooled tests and companions -> tissues.csv, pooled.csv, companions.csv, tests.csv."""
     n_boot = args.n_boot or (10 if quick else 200)
     n_pseudo = 5 if quick else 50
     boots, obs, trows = {}, {}, []
@@ -267,60 +288,68 @@ def score(args, out, quick, pbs, dss, plans, anchors, M, nulls):
         res = {t: dss[c].contrast(A.labels(plans[c][t]), targets=[t], n_perm=0, n_boot=0, blocks="none").table.loc[t]
                for t in plans[c]}
         obs[c] = np.array([[r.get("d_star", np.nan), r.get("offset_diff_h", np.nan)] for r in res.values()], float)
-        base = {t: np.nanmean([r.get("c_control", np.nan), r.get("c_case", np.nan)]) for t, r in res.items()}
         for k, (t, r) in enumerate(res.items()):
             trows.append(dict(cohort=c, tissue=t, n_pairs=len(plans[c][t]), c_male=r.get("c_control"),
                               c_female=r.get("c_case"), d=r.get("d"), d_star=obs[c][k, 0], offset_h=obs[c][k, 1],
+                              boot_se_d_star=float(np.nanstd(boots[c][:, k, 0], ddof=1)),
+                              boot_se_offset=float(np.nanstd(boots[c][:, k, 1], ddof=1)),
                               null_sd_d_star=float(np.nanstd(nulls[c][:, k, 0], ddof=1)),
-                              null_sd_offset=float(np.nanstd(nulls[c][:, k, 1], ddof=1)), baseline_c=base[t]))
+                              null_sd_offset=float(np.nanstd(nulls[c][:, k, 1], ddof=1))))
     T = pd.DataFrame(trows)
-    T.to_csv(out / "score_tissues.csv", index=False)
-    rows = []
+    T.to_csv(out / "tissues.csv", index=False)
+    rows, pooled = [], {}
     for j, stat in enumerate(STATS):
         null, tw, cw, _ = pooled_null(nulls, j)
         bound = D_BOUND if j == 0 else OFF_BOUND
         D, per = pool_estimate({c: obs[c][:, j] for c in cw}, tw, cw)
         bt = sum(cw[c] * wmean(boots[c][:, :, j], tw[c]) for c in cw)
-        se_b, sd_n = float(np.nanstd(bt, ddof=1)), float(np.nanstd(null, ddof=1))
-        hw = Z90 * max(se_b, sd_n)
-        rows.append(dict(statistic=stat, set="pooled", estimate=D, boot_se=se_b, null_sd=sd_n, lo90=D - hw, hi90=D + hw,
-                         bound=bound, mde_80=MDE_K * sd_n, p_perm=A.p2(D, null), equivalent=bool(D - hw > -bound and D + hw < bound)))
-        for c in cw:
-            nc = wmean(nulls[c][:, :, j], tw[c])
-            bc = wmean(boots[c][:, :, j], tw[c])
-            rows.append(dict(statistic=stat, set=c, estimate=per[c], boot_se=float(np.nanstd(bc, ddof=1)),
-                             null_sd=float(np.nanstd(nc, ddof=1)), p_perm=A.p2(per[c], nc), bound=bound))
-        if j == 0:  # companion 1: the 3 lowest-coupling tissues per cohort, same permutations
-            low = {c: np.argsort(T[T.cohort == c].baseline_c.to_numpy())[:3] for c in cw}
-            lw = {c: np.isin(np.arange(len(plans[c])), low[c]).astype(float) * tw[c] for c in cw}
-            lw = {c: v / v.sum() for c, v in lw.items()}
-            nl = sum(cw[c] * wmean(nulls[c][:, :, 0], lw[c]) for c in cw)
-            Dl, _ = pool_estimate({c: obs[c][:, 0] for c in cw}, lw, cw)
-            rows.append(dict(statistic="d_star_3_lowest_coupling", set="pooled", estimate=Dl, null_sd=float(np.nanstd(nl, ddof=1)),
-                             p_perm=A.p2(Dl, nl), bound=D_BOUND))
-    S_ = pd.DataFrame(rows)
+        pooled[stat] = (D, null, tw, cw)
+        for name, est, nl, bb in [(c, per[c], wmean(nulls[c][:, :, j], tw[c]), wmean(boots[c][:, :, j], tw[c])) for c in cw] \
+                + [("pooled", D, null, bt)]:
+            se_b, sd_n = float(np.nanstd(bb, ddof=1)), float(np.nanstd(nl, ddof=1))
+            se = max(se_b, sd_n)
+            rows.append(dict(statistic=stat, set=name, estimate=est, boot_se=se_b, null_sd=sd_n, se_used=se,
+                             lo90=est - Z90 * se, hi90=est + Z90 * se, bound=bound, mde_80=MDE_K * sd_n,
+                             p_perm=A.p2(est, nl),
+                             equivalent=bool(est - Z90 * se > -bound and est + Z90 * se < bound)))
+    P = pd.DataFrame(rows)
+    P.to_csv(out / "pooled.csv", index=False)
+    # companion 1: the 3 lowest-coupling tissues per cohort by MALE coupling (control arm), same permutations and weights
+    low = {c: np.argsort(T[T.cohort == c].c_male.to_numpy())[:3] for c in cw}
+    lw = {c: np.isin(np.arange(len(plans[c])), low[c]) * pooled["d_star"][2][c] for c in cw}
+    lw = {c: v / v.sum() for c, v in lw.items()}
+    nl = sum(cw[c] * wmean(nulls[c][:, :, 0], lw[c]) for c in cw)
+    Dl, _ = pool_estimate({c: obs[c][:, 0] for c in cw}, lw, cw)
+    comp = [dict(companion="d_star_3_lowest_male_coupling", estimate=Dl, null_sd=float(np.nanstd(nl, ddof=1)),
+                 p_perm=A.p2(Dl, nl), tissues=";".join(f"{c}:{t}" for c in cw
+                                                      for t in np.array(list(plans[c]))[low[c]]))]
     # companion 2: pseudo-clock offsets, whole pipeline on expression-matched gene sets (observed values only)
-    off = S_[(S_.statistic == "offset_h") & (S_.set == "pooled")].iloc[0]
-    tw, cw = pooled_null(nulls, 1)[1:3]
+    tw, cw = pooled["offset_h"][2], pooled["offset_h"][3]
     pseudo = {c: pseudo_sets(COH[c], n_pseudo, A.seed_of("A208pseudo", c, args.seed)) for c in cw}
-    vals = []
-    for i in range(n_pseudo):
-        est = {}
-        for c in cw:
-            w = pseudo[c][i]
-            pb, _ = gtex.load(tissues=list(plans[c]) + anchors[c], hardy=COH[c], genes=list(w.genes), depth="library_size",
-                              require_tod=False)
-            ds = cs.Dataset(pb, anchors=anchors[c], waveform=w)
-            est[c] = np.array([stat2(ds, A.labels(plans[c][t]), t)[1] for t in plans[c]], float)
-        vals.append(pool_estimate(est, tw, cw)[0])
-    vals = np.abs(np.array(vals, float))
-    q95 = float(np.nanquantile(vals, 0.95))
-    S_ = pd.concat([S_, pd.DataFrame([dict(statistic="offset_h_pseudo_abs_q95", set="pooled", estimate=q95,
-                                           bound=OFF_BOUND, equivalent=bool(abs(off.estimate) > q95))])], ignore_index=True)
-    S_["vs_A99_same_sign"] = np.where(S_.statistic == "offset_h", bool(np.sign(off.estimate) == np.sign(A99_OFFSET)), np.nan)
-    S_.to_csv(out / "score_pooled.csv", index=False)
-    pd.DataFrame(dict(abs_pseudo_offset=vals)).to_csv(out / "score_pseudo.csv", index=False)
-    say("score\n" + S_.round(4).to_string(index=False))
+    vals = list(_logged(Parallel(n_jobs=args.jobs, return_as="generator")(
+        delayed(pseudo_offset)(i, pseudo, plans, anchors, tw, cw) for i in range(n_pseudo))))
+    vals = np.array(vals, float)
+    q95 = float(np.nanquantile(np.abs(vals), 0.95))
+    Doff = pooled["offset_h"][0]
+    comp.append(dict(companion="offset_h_pseudo_clock", estimate=Doff, null_sd=np.nan, p_perm=np.nan,
+                     tissues=f"n_sets={len(vals)}; abs_q95={q95:.4f}; median_abs={np.nanmedian(np.abs(vals)):.4f}; "
+                             f"clock_abs_exceeds_q95={bool(abs(Doff) > q95)}"))
+    pd.DataFrame(comp).to_csv(out / "companions.csv", index=False)
+    pd.DataFrame(dict(offset_h=vals)).to_csv(out / "pseudo_offsets.csv", index=False)
+    # verdicts as registered
+    pd_ = P[(P.set == "pooled")].set_index("statistic")
+    d, o = pd_.loc["d_star"], pd_.loc["offset_h"]
+    h1 = ("pass (equivalent within +-0.15)" if d.equivalent else "not shown") if d.mde_80 <= D_BOUND else "not powered (descriptive only)"
+    spec = bool(abs(Doff) > q95)
+    h2 = "pass" if (o.p_perm < 0.05 and spec) else ("offset p < 0.05, not clock-specific" if o.p_perm < 0.05 else "fail")
+    tests = pd.DataFrame([
+        dict(hypothesis="H208.1", statistic="d_star", estimate=d.estimate, lo90=d.lo90, hi90=d.hi90, mde_80=d.mde_80,
+             p_perm=d.p_perm, verdict=h1, companion_3_lowest_male_d_star=Dl, companion_p=comp[0]["p_perm"]),
+        dict(hypothesis="H208.2", statistic="offset_h", estimate=o.estimate, lo90=o.lo90, hi90=o.hi90, mde_80=o.mde_80,
+             p_perm=o.p_perm, verdict=h2, equivalent_within_1h=bool(o.equivalent), pseudo_abs_q95=q95,
+             clock_specific=spec, same_sign_as_A99_plus_0_35h=bool(np.sign(o.estimate) == np.sign(A99_OFFSET)))])
+    tests.to_csv(out / "tests.csv", index=False)
+    say("pooled\n" + P.round(4).to_string(index=False) + "\ntests\n" + tests.round(4).to_string(index=False))
 
 
 def main(argv=None):
