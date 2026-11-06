@@ -3721,3 +3721,10 @@ pipeline). 200 expression-matched random 14-gene sets per project (p floor 0.005
   tumour-vs-GTEx designs is not supported by paired samples. Open (not tested): whether the PER / CRY2 / TEF pattern is a
   damped clock read at daytime surgery (morning-peaking genes fall, evening-peaking genes rise) or adjacent-tissue stress.
 <!-- src: paper/exploratory/A221_tumour_normal_levels/output/{power,results,per_gene_project,share_down,immediate_early,purity,gtex_by_hardy,eligibility}.csv -->
+
+## A223 (2026-11-06): not estimable (power rule); no level-based damping readout at 14 genes
+Rotation-null MDE of the mean slope 2.8-3.2 (CPTAC 8 types, TCGA 13 projects; limit 0.5, complete damping at lam = 1 is
+1). Gene-specific tumour-normal level changes dwarf the phase-predicted pattern at 14 genes, so the A221 observation that
+morning-peaking PER genes fall while ARNTL / NPAS2 rise stays descriptive: neither a damping readout nor evidence against
+one. Not computed: B at the observed phases.
+<!-- src: paper/exploratory/A223_damping_levels/output/power.csv -->

@@ -4369,3 +4369,7 @@ surgery, a level-based readout of tumour damping replicated in an independent co
 Fails powered -> the paired loss is not organised by circadian phase (stress / composition remain). A pass whose best
 window centre is at night argues against the surgery-time model. **Stop rule:** one amendment. **Code:**
 `paper/exploratory/A223_damping_levels/`.
+
+**A223 power note (2026-11-06; `A223_damping_levels/output/power.csv`): not scored.** Rotation null (1,000 offsets): H223.1
+CPTAC (8 types, 14 genes) SD 1.284, MDE 3.20; H223.2 (13 genes) SD 1.261, MDE 3.14; H223.3 TCGA (13 projects) SD 1.127,
+MDE 2.81. All above the 0.5 limit (complete damping at lam = 1 gives B = 1). No B at the observed phases was computed.
