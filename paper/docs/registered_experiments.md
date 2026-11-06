@@ -4237,3 +4237,89 @@ Cells project (cohort) x proliferation tertile; a subtype enters with >= 15 tumo
 2,865 tumours, null mean 0.0152, null SD 0.0488, MDE 0.121. All three have MDE <= 0.25 and are scored. Choices left open (README): proliferation tertile within project over all tumours with a subtype label (before the 15-tumour rule);
 for D each of LumA, LumB, Her2, Basal enters on its own count (LumA and >= 1 other required, the entering others pooled); weighted SD in population form, unweighted mean over cells; METABRIC pseudo sets are the stored A166 sets and
 SCAN-B the stored A127 mean- and variance-matched sets.
+
+## A220 (2026-11-06, user agreement; written before any survival file is downloaded or any signature is fitted; seen: the literature tally (79 claims; LASSO "circadian risk scores" the most common type), Venet 2011, A191-A194 / A198 (single clock scores carry no outcome information beyond proliferation in METABRIC, GSE14520, SCAN-B), A210-A219 TCGA coherence results): are published-style circadian risk signatures better than random gene signatures? **Outcome; TCGA primary, breast secondary**
+**Why.** Most clock-outcome claims are LASSO-Cox signatures built from a "circadian rhythm-related" gene list in one TCGA
+cancer type and validated by a held-out log-rank test. Random gene signatures are prognostic in many cancers, mostly through
+proliferation (Venet 2011). If the clock list does no better than size- and expression-matched random lists, the genre
+reports a property of any gene list, not of the clock.
+**Data.** TCGA recount3 primary tumours (one per patient, as A210); overall survival from TCGA-CDR (Liu 2018, GDC
+PanCanAtlas supplement); stage and age from TCGA-CDR; proliferation metagene of A210; PanCanAtlas subtype where A217 has
+one. METABRIC (cBioPortal, OS), SCAN-B GSE96058 (OS). Eligible project: >= 60 OS events among tumours with expression.
+**Gene lists.** Primary: MSigDB 2024.1 GOBP_CIRCADIAN_RHYTHM, restricted to genes expressed in the project (median
+log2 CPM above the project's 25th percentile of gene medians). Secondary (descriptive): the 14 waveform clock genes.
+**Pipeline (the typical published one).** 10 random 70/30 splits per project stratified by event. In training:
+univariate Cox p < 0.05 filter (if < 5 genes pass, the 5 lowest p); L1-penalised Cox, penalty by 5-fold CV;
+risk score on the held-out 30 %. Outcome per list: held-out Harrell C, mean over splits.
+**Random lists.** 200 per project, same size, matched on expression decile (project median log2 CPM), drawn from
+expressed genes outside the circadian list; proliferation genes not excluded (that is the point); seeds crc32("A220").
+- **H220.1 (primary, unadjusted, TCGA):** P = mean over projects of the clock list's percentile among its random lists;
+  null = the same statistic for each random list ranked among the other 199; one-sided greater.
+- **H220.2 (primary, adjusted, TCGA):** the same on incremental C: held-out C of Cox(age + stage + proliferation [+
+  subtype]) + risk score minus C of the covariate model (both fitted on the training split).
+- **H220.3 (secondary, breast):** H220.2 in METABRIC and SCAN-B (covariates age, PAM50, proliferation; stage / size
+  where recorded), mean of the two percentiles.
+Holm over H220.1-3.
+**Power (dated note before scoring):** MDE = 2.49 x null SD of P; a test with MDE > 0.20 (percentile units) not scored.
+**Descriptive:** per project unadjusted C, percentile and "validated" (held-out median-split log-rank p < 0.05) for the
+clock list and the share of random lists that validate; the 14-gene list; selected genes and their correlation with
+proliferation.
+**Reading:** H220.1 fails powered and random lists validate as often -> circadian risk signatures are the Venet effect
+(any gene list works). H220.1 passes but H220.2 fails -> the clock list beats random lists only through proliferation /
+stage. H220.2 (or H220.3) passes -> clock genes carry outcome information beyond random lists and covariates in those
+cancers: a real lead, to be replicated. **Stop rule:** one amendment. **Code:** `paper/exploratory/A220_signature_benchmark/`.
+
+## A221 (2026-11-06, user agreement; written before any tumour-vs-normal level is computed and before GTEx recount3 is downloaded; seen: H138.4 (tumour-normal clock pairing, coupling only), A173 (PER1 and NR1D1 sampling-sensitive in liver), A146 / A204b (surgery-time effects), GTEx time-of-death results of the atlas chapter (clock phase follows recorded time of death)): are "clock genes downregulated in tumours" real or a design artefact? **Levels; TCGA paired and TCGA vs GTEx**
+**Why.** Many papers report lower PER / CRY / NR1D / DBP / TEF in tumours, often against GTEx (GEPIA-type designs).
+Clock-gene levels depend on sampling time: tumours are taken at daytime surgery, GTEx donors die at any hour and some
+are ventilated for days; PER1 is also an immediate-early gene. A tumour-vs-adjacent-normal pair shares surgery time and
+ischaemia, so it removes these terms.
+**Data.** TCGA recount3 (on disk): primary tumours and solid-tissue normals. GTEx recount3 (same pipeline; downloaded for
+the matched tissues only): BRCA-breast, LUAD/LUSC-lung, KIRC/KIRP/KICH-kidney cortex, LIHC-liver, THCA-thyroid,
+PRAD-prostate, COAD-transverse colon, STAD-stomach, ESCA-oesophagus mucosa, UCEC-uterus. GTEx time of death (v8,
+controlled): held in memory, aggregates only. Eligible project: >= 10 tumour-normal pairs (same patient) and >= 50 GTEx
+samples of the matched tissue.
+**Measures.** log2(CPM + 1), library = protein-coding counts. Per gene: LFC_paired = mean over pairs of tumour - normal;
+LFC_gtex = mean over all tumours - mean over all GTEx samples of the tissue (all Hardy classes, as GEPIA).
+Clock set: the 14 waveform genes. Random sets: 200 per project, 14 genes matched on expression decile (mean over
+tumours and normals), drawn outside the clock set; the same sets for both designs; seeds crc32("A221").
+- **H221.1 (primary, paired):** L = mean over projects of [mean clock LFC_paired - mean matched-set LFC_paired]; percentile
+  against the 200 sets; one-sided lower (clock-specific downregulation at matched surgery time).
+- **H221.2 (primary, design):** Delta = mean over projects of mean clock (LFC_gtex - LFC_paired), same null; two-sided (the
+  GTEx design distorts clock genes specifically).
+- **H221.3 (secondary, mechanism):** across clock genes x projects, Spearman between the design difference (LFC_gtex -
+  LFC_paired) and the GTEx daytime offset (mean in donors with time of death 08-18 h minus mean over all donors of the
+  tissue); genes permuted within project (2,000); one-sided greater.
+Holm over H221.1-3.
+**Power (dated note before scoring):** MDE = 2.49 x null SD on L and Delta (log2 units); not scored if MDE > 0.5.
+**Descriptive:** per gene and project both LFCs; share of clock genes "significantly down" (Welch p < 0.05) in each
+design vs random genes; immediate-early set (FOS, FOSB, JUN, JUNB, EGR1, EGR2, EGR3, IER2, ATF3, NR4A1); GTEx by Hardy
+class; clock level vs ABSOLUTE purity within tumours (composition).
+**Reading:** H221.1 passes -> clock genes are lower in tumours than matched genes at the same surgery time (real
+level loss; composition still to separate via the purity descriptive). H221.1 fails powered -> the downregulation is
+not clock-specific. H221.2 passes -> claims from GTEx designs depend on the comparator; H221.3 passes -> sampling time
+explains part of it. **Stop rule:** one amendment. **Code:** `paper/exploratory/A221_tumour_normal_levels/`.
+
+## A222 (2026-11-06, user agreement; written before any clock-gene mutation or copy-number frequency is computed; seen: A215 / A217 used MC3 and GISTIC for TP53, RB1, MYC and FGA only; textbook positions PER1 17p13.1 (next to TP53) and PER3 1p36): are clock genes selected for alteration in tumours, or passengers? **Genomic; TCGA pan-cancer**
+**Why.** Papers report frequent clock-gene mutation or loss. Mutation counts scale with coding length, expression and
+local mutation rate; copy-number losses ride on arm-level events and on neighbouring tumour suppressors (PER1 next to
+TP53). Selection shows as an excess of non-silent over silent mutations, and as losses more focal at the gene than at
+its neighbours.
+**Data.** MC3 v0.2.8 public MAF (FILTER PASS, as A215); samples with > 1,000 coding mutations excluded (hypermutators);
+GISTIC2 thresholded by gene (Xena, as A215); coding length from GENCODE v29 CDS (downloaded); expression = pan-TCGA
+median log2 CPM (recount3). Clock set: the 14 waveform genes.
+- **H222.1 (primary, mutation):** R = log[(non-silent + 0.5) / (silent + 0.5)] summed over the clock set; null 1,000
+  random 14-gene sets matched on CDS-length decile and expression decile; one-sided greater.
+- **H222.2 (primary, deletion focality):** per gene and project, deep-deletion (-2) frequency minus the median over its
+  25 flanking genes on each side (same chromosome, gene order of the GENCODE coordinates); mean over clock genes and
+  projects; null 1,000 random 14-gene sets; one-sided greater.
+- **H222.3 (secondary, amplification focality):** H222.2 on +2; two-sided.
+Holm over H222.1-3.
+**Power (dated note before scoring):** MDE = 2.49 x null SD of each statistic; reported in the null's units and as a
+percentile shift.
+**Descriptive:** per clock gene: mutation rate per Mb CDS vs matched genes, truncating share, shallow and deep loss
+frequency vs neighbours per project; PER1 loss conditional on TP53 loss (17p); PER3 vs the 1p36 block.
+**Reading:** both primaries fail powered -> clock genes are mutated and lost as expected for their length, expression and
+position: passengers, and "frequent alteration" claims report background rates. A pass names a clock gene set under
+selection (which genes drive it is descriptive). **Stop rule:** one amendment. **Code:**
+`paper/exploratory/A222_clock_alterations/`.
