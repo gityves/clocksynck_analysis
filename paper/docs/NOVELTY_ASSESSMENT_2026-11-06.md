@@ -74,9 +74,10 @@ a critique plus nulls, with one positive finding (host pairing, bulk). Assessmen
 ## 6. Discussion with the user (2026-11-06)
 
 - **Item 2 (fresh timed cohort):** the user considers heart AM/PM (A174), breast (V25.5/A200) and GTEx restricted to
-  hospital hours (A123) sufficient. Remaining reviewer point: all three were seen before their registered scoring (heart
-  in archive V3, breast first look V25.5, A123 truth shares donors; A123c missed its bar). Downgraded to "would
-  strengthen", stated as a limit.
+  hospital hours (A123) sufficient. Breast (user, 2026-11-06): the gate passed at the first analysis (V25.5) and
+  nothing was modified after it, so A200 is a registered rerun with an added control, not a second look that shaped
+  the analysis. Remaining limits: heart was analysed in the archive (V3) before A174; A123 truth shares donors (A123c
+  missed its bar). Downgraded to "would strengthen".
 - **Item 3 (gate false positives):** claims rest on gate plus matched pseudo-clock (and responsive) companions, not on
   the gate alone. A145 H145.3 counted gate pass plus c > 0.2 only; the false-claim rate of gate plus companion was
   never simulated. A small registered check (A145 arm N with a pseudo gene set receiving the shared factor) would close it.
