@@ -3790,3 +3790,13 @@ alike (A224 H224.1) it is +0.101 and no longer above the adjusted pseudo sets (9
 state is the breast tumour-state correlate of clock coherence beyond proliferation" is withdrawn as stated; supportable:
 "luminal A tumours are more clock-coherent, mostly because their clock loci vary less in copy number". H219.3 (SCAN-B) has
 no copy number and is not re-examined; the ER-within-subtype descriptive (A219) is likewise not CN-adjusted.
+
+## Correction to the A224 reading and the A219 qualification (2026-11-06, after A225 part A)
+The A225 simulation (real joint CN profiles, A224 dosage and CN x phase terms, identical clocks in all subtypes) gives a raw
+LumA − others D of −0.003 (−1 % of the observed +0.276), and the adjusted estimator equals the raw one there. Additive cis
+copy-number noise therefore does **not** explain the luminal A gap, and the A224 statement "most of the luminal A coherence
+advantage is cis copy-number noise" is withdrawn. A224's 63 % attenuation on real data comes from something its dosage
+model does not describe (candidates: copy number correlated with clock-related expression within arms, i.e. biology or
+tumour state, or a property of the pooled TCGA betas); diagnosis pending (A225 post hoc). Until then the A219 H219.2-3
+result stands as scored (clock-specific, three cohorts), with the open caveat that cis-CN adjustment attenuates it for an
+unexplained reason; the A219 qualification above is superseded.
