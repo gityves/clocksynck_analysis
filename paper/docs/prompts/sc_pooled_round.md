@@ -74,4 +74,8 @@ Questions, in priority order:
 ## State at handover
 All work is committed (last commit dd2aece, then this prompt). No jobs or subagents are running. Open user-decision
 items elsewhere (not part of this round): genome-burden test beyond A213, Masri GSE73222, Wu 2020 skin/glioblastoma,
-ZeitZeiger, Heyde adipose vs liver feeding, Oscope artefact control, a pure no-clock arm for the gate false-claim rate.
+ZeitZeiger, Heyde adipose vs liver feeding, Oscope artefact control, and a pure no-clock arm for the gate false-claim
+rate. That arm is the A209b design with clock-plane noise psi = 0 in every compartment, so clock and pseudo genes are
+exchangeable. A209b's exchangeability check failed because each compartment's psi is clock-shaped by construction, so no
+unbiased false-claim rate exists yet for gate + matched companion. It needs a registration, and runs in about 15 min with
+`A209_gate_companion/scripts/compute_a209.py`.
