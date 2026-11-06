@@ -3695,3 +3695,29 @@ excluded); GISTIC2 by gene, 26 projects with >= 100 samples (9,681 samples); 1,0
   "Frequent clock-gene alteration" reports background rates, and PER1 / PER3 "loss" is 17p (TP53) and 1p36 arm-level
   deletion. Clock genes are passengers in TCGA tumours.
 <!-- src: paper/exploratory/A222_clock_alterations/output/{power,tests,null_draws,descriptive_genes,descriptive_17p_1p36,descriptive_truncating}.csv -->
+
+## A221 (scored 2026-11-06): clock genes are lower in tumours than in paired normal tissue, but not uniformly; GTEx designs exaggerate the loss and invert it for ARNTL, NPAS2 and NR1D1 (H221.1-3 PASS)
+Power note: `registered_experiments.md` (commit d151634). 13 TCGA projects, 621 tumour-normal pairs, GTEx recount3 (same
+pipeline). 200 expression-matched random 14-gene sets per project (p floor 0.005).
+- **H221.1 PASS (paired, same surgery):** L −0.330 log2 (random sets +0.091 on average, i.e. clock mean −0.238), p 0.005,
+  Holm 0.010, MDE 0.163. Leave-one-gene-out (post hoc, approximate: random baseline kept): −0.265 (without PER1) to −0.384.
+  **Not a uniform loss.** Mean paired LFC over projects: PER1 −1.07, PER3 −0.74, TEF −0.74, CRY2 −0.67, RORA −0.67, PER2
+  −0.38; CRY1 −0.22, NR1D2 −0.20, CLOCK −0.01, ARNTL +0.02; DBP +0.18, NPAS2 +0.30, NR1D1 +0.38, CIART +0.47.
+- **H221.2 PASS (design):** Delta −0.229 log2 (two-sided p 0.005, Holm 0.010, MDE 0.121): against GTEx, clock genes look
+  more downregulated than against the paired normal. The GTEx design moves ARNTL (+0.02 → −1.01), NPAS2 (+0.30 → −0.74),
+  NR1D1 (+0.38 → −0.93) and PER1 (−1.07 → −2.07) down, and PER2, PER3, TEF, NR1D2 up. Share of clock genes "significantly
+  down" per project 7-71 % paired vs 21-86 % against GTEx (random genes 2-56 % vs 23-53 %; `share_down.csv`).
+- **H221.3 PASS (mechanism):** across 182 gene x project points, the design difference follows the GTEx daytime offset
+  (time of death 08-18 h minus all donors), Spearman +0.203, p 0.0005, Holm 0.0015: part of the GTEx distortion is
+  sampling time.
+- **Descriptive:** immediate-early genes are far lower in tumours than paired normal (10 genes; −0.2 to −2.4 log2 per
+  project, 11 of 13 projects below −0.2), so the PER1 / TEF / RORA part of the paired loss may be stress / glucocorticoid
+  response of the adjacent tissue rather than clock. Clock level vs ABSOLUTE purity within tumours: Spearman −0.29 to
+  +0.29, no consistent sign (no simple composition gradient). GTEx by Hardy class: `gtex_by_hardy.csv`.
+- **Reading (registered):** at the same surgery time, clock genes are lower in tumours than matched genes (real level
+  loss), but the loss sits on PER1-3, CRY2, TEF and RORA, while ARNTL, NPAS2, NR1D1, DBP and CIART are flat or higher: not
+  "clock genes are downregulated". GTEx comparators add a clock-specific distortion (−0.23 log2), partly sampling time,
+  which turns ARNTL / NPAS2 / NR1D1 into apparent losses: published BMAL1 / NPAS2 / REV-ERBα "downregulation" from
+  tumour-vs-GTEx designs is not supported by paired samples. Open (not tested): whether the PER / CRY2 / TEF pattern is a
+  damped clock read at daytime surgery (morning-peaking genes fall, evening-peaking genes rise) or adjacent-tissue stress.
+<!-- src: paper/exploratory/A221_tumour_normal_levels/output/{power,results,per_gene_project,share_down,immediate_early,purity,gtex_by_hardy,eligibility}.csv -->
