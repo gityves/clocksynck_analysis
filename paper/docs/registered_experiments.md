@@ -4373,3 +4373,13 @@ window centre is at night argues against the surgery-time model. **Stop rule:** 
 **A223 power note (2026-11-06; `A223_damping_levels/output/power.csv`): not scored.** Rotation null (1,000 offsets): H223.1
 CPTAC (8 types, 14 genes) SD 1.284, MDE 3.20; H223.2 (13 genes) SD 1.261, MDE 3.14; H223.3 TCGA (13 projects) SD 1.127,
 MDE 2.81. All above the 0.5 limit (complete damping at lam = 1 gives B = 1). No B at the observed phases was computed.
+
+**A220 power note (2026-11-06, before any clock-list C-index; `A220_signature_benchmark/output/{eligibility,power,null_percentiles}.csv`).**
+18 TCGA projects with >= 60 OS events (BLCA, BRCA, CESC, COAD, ESCA, GBM, HNSC, KIRC, LGG, LIHC, LUAD, LUSC, MESO, OV, PAAD,
+SARC, STAD, UCEC; 71-262 events); METABRIC 1,756 (1,044 events), SCAN-B 3,073 (289). GOBP_CIRCADIAN_RHYTHM 207 genes, 137-154
+expressed per cohort. 200 random lists per cohort, 10 splits. H220.1: null SD 0.071, MDE 0.177 (percentile units); H220.2:
+SD 0.071, MDE 0.177; both scored. H220.3 (2 cohorts): SD 0.215, MDE 0.535 > 0.20: not scored (per-cohort percentiles
+descriptive). Random lists alone: the share validating (held-out median-split log-rank p < 0.05) is 0-100 % by cohort (100 %
+in KIRC, LGG, METABRIC; 99.5 % SCAN-B). Choices left open (README): in-sample training risk score in the adjusted Cox model
+(same for clock and random lists); covariates observed in < 50 % dropped; lambda.min on CV partial likelihood; no gene
+selected -> C 0.5.
