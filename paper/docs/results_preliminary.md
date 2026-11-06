@@ -3488,3 +3488,26 @@ Data GSE180012 (`$SCCC_DATA/gse180012_phx/`): 24 PHx and 24 sham livers, 3 per t
   companion removes every such claim; a factor biased to responsive clock genes breaks the gate (0 of 60). Not tested,
   and not separable by any method: a shared non-clock factor with the clock genes' own phase pattern.
 <!-- src: paper/exploratory/A209_gate_companion/output/a209b/{tests,rates,per_target}.csv -->
+
+## A212 (scored 2026-11-06): bulk statistics reject swamping for the proliferation loss but cannot tell damping from rewiring (V212.1 FAIL, narrow; V212.2 PASS)
+- **Design (registered, plasmode):** real reference-arm tumours (B1 SCAN-B H127.1, 1,030 tumours in 15 strata; B2 METABRIC
+  ER+ H166.1, 1,498 in 15), random halves, one half given a mechanism at the strength whose mean dR equals the observed
+  dR (B1 −0.123, B2 −0.229): D damping / intra-tumour dephasing, S added non-clock factors, W shared rewiring, H
+  per-tumour rewiring. Matched strengths B1: rho 0.83, S 0.72, W 1.8 h, H 2.2 h; B2: rho 0.83, H 2.5 h; S and W never
+  reach the B2 loss (best −0.197, −0.207; run at their strongest value).
+- **V212.1 FAIL (narrow):** AUC on (dlog_plane, dlog_off), W vs D 0.894, H vs D 0.909; bar 0.9 for both. B2: 0.889 and
+  0.819. Rewired relations and a damped or dephased clock are not reliably separable in bulk.
+- **V212.2 PASS:** swamping vs damping AUC 1.000 on both bases (W, H vs S also 1.000). Added non-clock factors raise
+  off-plane variance strongly (and in-plane variance, through random loadings).
+- **Observed points (descriptive, seen before registration):** SCAN-B proliferation (dlog_plane −0.228, dlog_off
+  +0.020) lies outside the swamping cloud (Mahalanobis 11.6, beyond all 200 replicates) and inside D (73rd percentile),
+  W (22nd) and H (36th). METABRIC ER (−0.153, +0.118) lies outside D and S (100th) and closest to W (77.5th, but W cannot
+  reach the loss) and H (93.5th): no single mechanism fits; mixtures were not fitted.
+- **Reading:** for the proliferation loss, "swamped" is excluded. The clock-plane variance falls without added
+  non-clock variance, which is what a damped or dephased clock (lower per-cell amplitude, or clones or cells out of
+  phase) or mildly rewired gene relations produce; bulk statistics cannot decide between these. Clonal heterogeneity
+  fits either reading, so A213 tests it directly. The ER loss needs a mixture (plane fall plus an off-plane rise that
+  A176 found not clock-specific).
+- **Property of the statistic (README):** dR is not monotone in D, W and H strength (coherence rises again at rho <= 0.4
+  or shifts >= 4-5 h); matched strengths lie on the monotone branch.
+<!-- src: paper/exploratory/A212_coherence_mechanisms/output/{matched,tests,auc_all,observed,grid}.csv -->

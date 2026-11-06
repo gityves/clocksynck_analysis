@@ -277,3 +277,6 @@ Source for the rows with a figure panel: `paper/exploratory/WP0_integrity/output
 | A209 | H209.3 power kept with the companion (c >= 0.5, working hours) | method | S | 86 of 90 vs 90 of 90 (ratio 0.956); c 0.25: 0.167 vs 0.733 | - | PASS | - | A209_gate_companion/output/{tests,rates}.csv |
 | A209b | H209b.1 gate + matched companion false claims, exchangeable-amplitude pseudo genes | method | S | 0 of 150 (gate-only 0.087); clock percentile median 0.010 (check fails, structural) | 1.4e-9 | PASS | - | A209_gate_companion/output/a209b/{tests,rates}.csv |
 | A209b | H209b.2 same with responsive factor (2x and 1x) | method | S | 0 of 300; gate failed 60 of 60 | 2.0e-18 / Holm 4.0e-18 | PASS (gate rejects) | - | A209_gate_companion/output/a209b/tests.csv |
+| A212 | V212.1 rewiring (W, H) separable from damping at matched dR (SCAN-B base, AUC >= 0.9 both) | method | P | AUC W vs D 0.894, H vs D 0.909 | - | FAIL (narrow) | - | A212_coherence_mechanisms/output/{tests,auc_all}.csv |
+| A212 | V212.2 swamping separable from damping (SCAN-B base) | method | S | AUC S vs D 1.000 | - | PASS | - | A212_coherence_mechanisms/output/tests.csv |
+| A212 | V212.3 same on the METABRIC ER+ base | method | S | rewiring: W 0.889, H 0.819 (FAIL); swamping 1.000 (PASS); S and W cannot reach the observed loss | - | split | - | A212_coherence_mechanisms/output/{tests,matched}.csv |
