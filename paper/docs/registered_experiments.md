@@ -4339,3 +4339,33 @@ LFC +0.091, mean design difference −0.023. H221.1 (L): null SD 0.065, MDE 0.16
 0.121 log2. H221.3: 182 gene x project points. All scored. Choices left open (README): CPM on recount3 coverage over
 protein-coding genes; one primary per patient (lowest barcode); random-set candidates mean CPM >= 1; daytime window
 [8, 18) h; Hardy class from the public recount3 GTEx annotation.
+
+## A223 (2026-11-06, user agreement; written after the A221 TCGA per-gene mean paired LFCs were seen (PER1-3, CRY2, TEF, RORA down; ARNTL, NPAS2, NR1D1, DBP, CIART flat or up), before any CPTAC clock-gene level is computed; seen: A186 CPTAC pairs (coupling only, no levels), A27 (surgical glucocorticoids induce PER1)): is the tumour-vs-paired-normal clock-gene level pattern a damped clock read at daytime surgery? **Levels; CPTAC primary (blind), TCGA secondary (not blind)**
+**Why.** If a tumour's clock is damped (amplitude a < 1 relative to its normal tissue) and both are sampled at the same
+daytime hour t, the expected log level difference of clock gene g is -(1 - a) lam amp_g cos(w t - psi_g): genes near their
+peak at surgery fall, genes near their trough rise, and the mean over genes spread around the cycle stays near 0. This
+reads damping from levels alone, independently of coherence. Competing reading: stress or glucocorticoid response of the
+adjacent tissue (PER1, TEF), which predicts losses of response genes, not trough-gene gains.
+**Data.** CPTAC-3 open pairs (A186 cache, 8 types, 713 pairs; types with >= 20 pairs); TCGA A221 pairs (13 projects).
+log2(CPM + 1), protein-coding library (CPTAC: all ENSG genes as cached, documented). Per pair and gene: tumour - normal.
+**Predictor.** x_g = -amp_g C_g / ln 2 with the GTEx waveform (`clocksync.gtex()`, amp_g and psi_g fitted on time of
+death), C_g = mean of cos(w t - psi_g) over t uniform in [8, 18) h (surgery window, as A221 / A204b). Under the model the
+slope of LFC_g on x_g is (1 - a) lam.
+**Statistic.** Per type, OLS slope beta of the mean paired LFC_g (14 genes) on x_g with an intercept (a uniform shift is not
+damping); B = mean of beta over types. Null: phase rotation, psi_g + delta for all genes, delta on a 1-h grid uniform over
+the 23 non-zero offsets plus 977 continuous draws (1,000 total), recomputing x and B; one-sided greater. Seeds
+crc32("A223").
+- **H223.1 (primary, CPTAC):** B > rotation null.
+- **H223.2 (secondary, CPTAC without PER1):** the same on 13 genes (PER1 is a glucocorticoid / surgery gene, A27).
+- **H223.3 (secondary, TCGA, not blind):** H223.1 on the 13 A221 projects.
+Holm over H223.1-3.
+**Power (dated note before scoring):** under the null, B's rotation SD; MDE = 2.49 x SD; not scored if MDE > 0.5 (B = 1 is
+complete damping at lam = 1).
+**Descriptive:** per type beta and R^2; the best-fitting surgery-window centre over a 0-23 h grid (should be daytime if
+the model holds); immediate-early gene LFC per type next to beta; implied (1 - a) with the A-chapter lam of the matched
+GTEx tissue where available.
+**Reading:** H223.1 passes -> the paired level pattern is phase-structured as a damped tumour clock read at daytime
+surgery, a level-based readout of tumour damping replicated in an independent cohort; with H223.2 it does not rest on PER1.
+Fails powered -> the paired loss is not organised by circadian phase (stress / composition remain). A pass whose best
+window centre is at night argues against the surgery-time model. **Stop rule:** one amendment. **Code:**
+`paper/exploratory/A223_damping_levels/`.
