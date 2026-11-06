@@ -3650,3 +3650,27 @@ UCEC; BRCA separate).
   loss is not settled: in breast the loss holds within PAM50 in SCAN-B (A127 H127.1) and not in METABRIC (A166 H166.3);
   in the other subtyped projects it is not clock-specific either way.
 <!-- src: paper/exploratory/A217_subtype_matched/output/{power,tests,attenuation,attenuation_jackknife,brca_descriptive,descriptive_per_project,arm_composition,projects}.csv -->
+
+## A219 (scored 2026-11-06): luminal A breast tumours keep more clock signal than other subtypes at matched proliferation (H219.2-3 PASS, clock-specific); outside breast, subtypes do not differ (H219.1 FAIL, powered)
+Power note: `registered_experiments.md` (commit 726d173). Cells = cohort x proliferation tertile; subtypes with >= 15
+tumours per cell.
+- **H219.1 FAIL (primary, TCGA non-BRCA, 9 projects, 23 cells, 2,388 tumours):** S 0.073 vs null 0.076 (SD 0.010); excess
+  −0.004, p 0.62, Holm 0.62, MDE 0.025; pseudo 14th percentile. At matched proliferation, subtypes of CESC, COAD, ESCA,
+  HNSC, LGG, SARC, STAD, TGCT and UCEC do not differ in clock coherence beyond sampling noise. Unmatched (descriptive):
+  excess +0.014, p 0.13.
+- **H219.2 PASS, clock-specific (METABRIC + TCGA BRCA, 6 cells, 2,526 tumours):** LumA − (LumB + Her2 + Basal) +0.276
+  (null −0.001, SD 0.062), p 0.0005, Holm 0.0015, MDE 0.155; above all 200 pseudo sets (q95 0.141). METABRIC +0.277, TCGA
+  BRCA +0.275. Weighted coherence LumA vs others: METABRIC 0.647 vs 0.369, TCGA BRCA 0.489 vs 0.295.
+- **H219.3 PASS, clock-specific, narrowly (SCAN-B, 3 cells, 2,865 tumours; unmatched ordering seen in A127):** +0.222
+  (excess +0.207), p 0.0005, Holm 0.0015, MDE 0.121; pseudo 97.5th percentile (q95 0.189). LumA 0.706 vs others 0.332.
+- **Descriptive:** between-subtype proliferation imbalance within cells 0.01-0.23 SD. Unmatched breast contrasts +0.218
+  (METABRIC + BRCA) and +0.405 (SCAN-B): matching on proliferation removes half of the SCAN-B gap and little of the
+  METABRIC + BRCA gap. Within Her2-enriched tumours, ER+ vs ER− coherence 0.482 vs 0.275 (METABRIC) and 0.498 vs 0.192
+  (SCAN-B).
+- **Reading (registered):** in breast, luminal A identity goes with more clock signal at equal proliferation, by about 0.2-0.28
+  in coherence, replicated in three cohorts, clock-specifically. With the ER− losses within PAM50 (A127 post hoc, A166
+  H166.2) and the Her2 ER split above, the luminal / ER state is the breast tumour-state correlate of clock coherence,
+  beyond proliferation and beyond any genomic lesion tested (A217). Outside breast no subtype effect is detected (bounded at
+  0.025 on S): the lineage effect is not general across cancer types. Not shown: that ER signalling acts on the clock
+  (observational; ER and PAM50 are collinear).
+<!-- src: paper/exploratory/A219_subtype_coherence/output/{power,tests,descriptive_per_group,descriptive_per_cohort,descriptive_unmatched,descriptive_cells_stat_and_prolif_imbalance,descriptive_er_within_subtype}.csv -->

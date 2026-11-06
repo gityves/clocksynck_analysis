@@ -135,7 +135,8 @@ Numbers from `results_preliminary.md` (entries A214 scout to A217 / A218) and th
   H215.4, +0.078, opposite sign).
 - **Whether subtype carries the proliferation loss is open:** SCAN-B within PAM50 passes (A127 H127.1), METABRIC fails
   (A166 H166.3); in the other subtyped TCGA projects the proliferation loss is not clock-specific at all (A216, A218
-  preconditions fail). A219 tests subtype differences at matched proliferation directly (registered, running).
+  preconditions fail). A219: at matched proliferation, luminal A breast tumours are more coherent than other subtypes by 0.2-0.28, clock-specific in
+  three cohorts; outside breast no subtype effect (bound 0.025). The breast tumour-state correlate is the luminal / ER state.
 - **Literature (draft tally, `exploratory/literature_tally/`, 79 studies, mostly abstract level):** 69 of 71 resolved
   clock-outcome claims positive; none fully adjusted for proliferation, one for subtype, none with a random-gene-set
   control. Consistent with selective reporting (meta-analysis: 2 of 8 genes survive pooling), not a demonstration.
