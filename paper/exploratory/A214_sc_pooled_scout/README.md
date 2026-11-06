@@ -54,3 +54,13 @@ clock UMI per cell, 543 at 4, 233 at 8, 100 at 16 (x 4 if the tails stay as heav
 one). Clock UMI is about 3.5-4 per 10,000 total UMI, so 8-16 clock UMI means roughly 20,000-40,000 UMI per cell. The fit
 rests mostly on shallow groups (90 % below 6.8 clock UMI per cell, 99 % below 15, maximum 26): 16 and above are
 near the edge of the data. Scout of deep studies: `inventory/INVENTORY_DEEP.md`.
+
+## Deep-study scout (`inventory/INVENTORY_DEEP.md`, `inventory_deep.csv`; user: plate chemistries also eligible)
+No study found with >= 8 clock UMI per cell in both compartments. Moorman 2025 (CELLxGENE 829a3cd1, 10x 3' v3, 14
+patients with >= 100 malignant and >= 100 colonocytes; re-read by the lead): about 15,000 UMI per cell but median 2 clock
+UMI per malignant cell (mean 3.28) and 1-2 per normal epithelial cell (mean 2.0-2.2); 1.0-1.5 clock UMI per 10,000, a third
+of our cohorts' density (counting convention). scRNAseq_database: 70 solid-tumour samples (39 studies) at >= 15,000 UMI,
+no cell labels, at most 1-3 samples per study with adjacent normal. Census BD Rhapsody LuCA (9 patients, epithelium 8.9k
+UMI) and the plate studies GSE81861 (CRC, 11) and GSE103322 (HNSCC, 18; reads, few cells) are the only leads; none reaches
+the 100+ patients the depth table asks for. No Smart-seq3 / FLASH-seq / VASA-seq / Parse tumour study with malignant and
+normal epithelium was found (six GEO queries; absence not proven).
