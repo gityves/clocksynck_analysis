@@ -4079,3 +4079,65 @@ registration (README): FGA over genes complete in all samples (TCGA 24,776; META
 table order (18.7% of called tumours have subclonal fraction 0); proliferation tertile over tumours with the measure; one
 pseudo-set family per TCGA project (all primaries) shared by H213.1 and H213.2, METABRIC the 200 stored A166 sets; S213.4
 cells need >= 10 matched pairs, pairs taken in increasing FGA distance, swap null within pairs.
+
+## A215 (2026-11-06, user agreement; written before any mutation file is downloaded or read; seen: A171 GSE72094 LUAD descriptive "TP53 within purity −0.132, p 0.062", the A210, A211, A213 and A197 results, the A214 scout): does checkpoint-deregulated proliferation lower tumour clock coherence? **L1, TCGA primary, METABRIC secondary**
+**Why.** Physiological proliferation keeps a coherent clock (A211 regenerating liver, powered; A126 endometrium), yet
+proliferating tumours carry less in-plane clock signal (A176), and the clock signal adds no survival information beyond
+proliferation (A191-A194). In physiological proliferation the RB and p53 checkpoints are intact, and the clock gates the
+cycle through them (CDKN1A, WEE1). If the tumour loss belongs to proliferation that has escaped checkpoint control rather
+than to division itself, then (i) tumours with p53 or RB-pathway loss carry less clock signal at matched proliferation,
+and (ii) proliferation lowers coherence mainly where checkpoints are lost. The LUAD descriptive above is known, so the TCGA
+LUAD project is not blind; the pan-cancer and METABRIC tests are.
+**Data.** TCGA MC3 public MAF (`mc3.v0.2.8.PUBLIC.maf.gz`, GDC PanCanAtlas, open access) and the A210 GISTIC thresholded
+matrix; METABRIC `data_mutations.txt`, `case_lists/cases_sequenced.txt` and `data_cna.txt` from the stored cBioPortal
+tarball. Expression, projects, proliferation score and coherence exactly as A210 / A213 (TCGA 23 projects; METABRIC PAM50).
+**Definitions (sequenced tumours only: TCGA barcode present in the MAF, METABRIC in `cases_sequenced`):**
+- TP53 altered: >= 1 non-silent TP53 mutation (Missense, Nonsense, Frame_Shift_Del/Ins, In_Frame_Del/Ins, Splice_Site,
+  Translation_Start_Site, Nonstop) or GISTIC −2; intact: none of these.
+- RB pathway altered: a non-silent RB1 or CDKN2A mutation, or GISTIC −2 at RB1 or CDKN2A; intact: none.
+**Cells:** stratum (TCGA project; METABRIC PAM50) x proliferation tertile (within stratum, over tumours with the status);
+a cell needs >= 10 tumours per arm. T = mean over cells of coherence(altered) − coherence(intact); status labels permuted
+within cell (2,000); one-sided for a loss. Arms are unequal, so the null mean is not 0: the excess T − null mean is
+reported and p is taken against the permutation null.
+- **H215.1 (primary):** TCGA, TP53. **H215.2:** METABRIC, TP53. **H215.3:** TCGA, RB pathway. Holm over the three.
+- **H215.4 (secondary, interaction; TCGA TP53):** within project, I = [coherence(top) − coherence(bottom proliferation
+  tertile)] among altered minus the same among intact (tertiles within project x status, >= 10 tumours per tertile arm in
+  both statuses); mean over projects; status permuted within project x proliferation tertile (2,000); one-sided I < 0.
+**Specificity companion (same permutations):** 200 pseudo-clock sets (A213 construction; seeds crc32("A215")); a pass is
+clock-specific only if T (or I) is below their 5th percentile.
+**Sensitivity S215.5:** H215.1 on 1:1 proliferation-matched pairs within cells (nearest neighbour on the continuous
+proliferation score, caliper 0.1 SD of the project's score, without replacement); swap null within pairs.
+**Power (dated note before the tests):** MDE = 2.49 x null SD; a hypothesis with MDE > 0.25 is not scored.
+**Descriptive:** residual proliferation and purity imbalance altered − intact within cells; per-project T; truncating vs
+missense TP53; the A176 components (dlog_plane, dlog_off, ds) placed against the A212 clouds.
+**Reading:**
+- H215.1 (+ H215.2) pass clock-specifically and H215.4 passes: clock loss goes with checkpoint-deregulated proliferation,
+  not with division; this reconciles A211 / A126 with A176.
+- H215.1 passes, H215.4 fails: TP53 loss is a state marker with its own clock loss, not a modifier of the proliferation
+  effect.
+- Powered fails of H215.1-3: checkpoint loss is not the shared cause within the MDE.
+No survival test is registered. **Stop rule:** one amendment; no definition, cell or tertile change after the power note.
+**Code:** `paper/exploratory/A215_checkpoint_coherence/`.
+
+## A216 (2026-11-06, user agreement; written with A215, before any mutation file is read; seen: the proliferation losses of A97 / A171 / A172 / A176, A210, A213): does proliferation still lower tumour coherence at matched tumour state? **L1, TCGA primary, METABRIC secondary**
+**Why.** If tumour proliferation is a marker of an aggressive state rather than the cause of clock loss (A211, A126), its
+association with coherence should shrink when that state is matched.
+**State strata:** TCGA project x FGA tertile (A213) x TP53 status (A215); METABRIC PAM50 x FGA tertile x TP53 status.
+Tertiles within project / PAM50 over sequenced tumours with FGA.
+**Statistic.** P1 = mean over state strata of coherence(top) − coherence(bottom proliferation tertile), tertiles within
+stratum, >= 10 tumours per arm. P0 = the same with strata = project (METABRIC: PAM50) only, on the same tumours (those of
+the eligible P1 strata). Proliferation labels of the top and bottom arms permuted within stratum (2,000); one-sided.
+- **H216.1 (primary):** TCGA, P1 < 0. **H216.2:** METABRIC, P1 < 0. Holm over the two.
+- **Attenuation A = P1 / P0** with a tumour bootstrap within strata (1,000), percentile interval.
+**Specificity companion:** 200 pseudo-clock sets (seeds crc32("A216")); clock-specific if P1 is below their 5th
+percentile.
+**Power (dated note before the tests):** MDE of P1 = 2.49 x null SD; not scored if > 0.25 or if P0 itself is not below its
+own pseudo 5th percentile on these tumours (then there is no proliferation loss to explain).
+**Reading:**
+- H216.1 passes, clock-specific, A >= 0.5: the proliferation loss persists at matched FGA, TP53 and type; these state
+  variables do not carry it (proliferation-linked, or an unmeasured state).
+- Powered fail with the upper end of A's interval < 0.5: the proliferation loss is carried by these state variables;
+  proliferation is a marker.
+- Otherwise inconclusive.
+Residual proliferation imbalance within strata is reported. No survival test. **Stop rule:** as A215. **Code:**
+`paper/exploratory/A215_checkpoint_coherence/` (shared with A215).
