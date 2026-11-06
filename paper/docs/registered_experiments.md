@@ -4201,3 +4201,32 @@ null mean -0.0002, null SD 0.0329, MDE 0.082. H217.3 (MYC): 4 projects, 9 cells,
 null mean -0.0002, null SD 0.0292, MDE 0.073. All four have MDE <= 0.25 and are scored on power; for H218.1 the registered precondition (observed P_proj below its pseudo 5th percentile) is checked in the
 tests. Choices left open (README): entry requires >= 2 subtype levels; purity tertile within project over all primaries; P_proj on the tumours of the eligible P_sub cells with proliferation tertile within the cell;
 jackknife interval A +/- 1.96 x jackknife SE; original design on projects with an eligible matched cell.
+
+## A219 (2026-11-06, user agreement; written before any per-subtype coherence at matched proliferation is computed; seen: SCAN-B coherence per PAM50 without proliferation matching (A127 exploratory: LumA 0.754, Normal 0.663, Basal 0.538, Her2 0.382, LumB 0.267), the A217/A218 results (lesion and proliferation contrasts within subtype, not subtype contrasts), subtype counts per TCGA project): does tumour clock coherence differ between molecular subtypes at matched proliferation? **L1; TCGA subtyped projects primary (blind), breast directional secondary**
+**Why.** A217 found no lesion effect beyond subtype, and the TCGA BRCA arms differed mainly in subtype. If lineage or
+differentiation state (subtype) sets tumour clock coherence, coherence should differ between subtypes of one cancer type at
+equal proliferation. This makes "subtype, not lesion" a direct test rather than an inference from fails.
+**Data.** TCGA: A217 subtypes and projects (CESC, COAD, ESCA, GBM, HNSC, LGG, READ, SARC, STAD, TGCT, UCEC), expression,
+proliferation and coherence as A210 / A217. METABRIC PAM50 (`CLAUDIN_SUBTYPE`, A166 five) and TCGA BRCA PAM50 (A217). SCAN-B
+PAM50 (A127).
+**Cells:** project (METABRIC, SCAN-B: cohort) x proliferation tertile (within project); in a cell a subtype enters with
+>= 15 tumours; a cell needs >= 2 subtypes.
+- **H219.1 (primary, TCGA non-BRCA):** S = mean over cells of the tumour-weighted SD of the subtype coherences around the
+  cell's weighted mean; subtype labels permuted within cell (2,000); one-sided greater (the null mean is > 0 from sampling
+  noise; p against the permutation null, excess reported).
+- **H219.2 (secondary, breast, directional):** D = mean over cells of coherence(LumA) − coherence(LumB + Her2 + Basal pooled;
+  Normal-like left out); one-sided greater; METABRIC and TCGA BRCA pooled (cells from both); labels permuted within cell.
+- **H219.3 (secondary, SCAN-B, not blind for the unmatched ordering):** D as H219.2.
+Holm over H219.1-3.
+**Specificity companion (same permutations):** 200 pseudo-clock sets (A213 / A217 construction; METABRIC and SCAN-B the
+stored A166 / A127 sets; seeds crc32("A219")). Subtypes differ in many genes, so a pass is "clock-specific" only if S (D) is
+above the 95th percentile of the pseudo sets.
+**Power (dated note before the tests):** MDE = 2.49 x null SD (H219.1: on S − null mean); > 0.25 not scored.
+**Descriptive:** subtype coherences per cell and project; the same without proliferation matching; residual proliferation
+imbalance between subtypes within cells; ER within LumB / Her2 where n allows.
+**Reading:** H219.1 passes clock-specifically -> subtype sets clock coherence beyond proliferation in cancer types other than
+breast: lineage or differentiation state is a determinant of tumour clock signal; H219.2-3 pass -> luminal A breast
+tumours keep more clock signal than other subtypes at equal proliferation. Passes that are not clock-specific -> subtypes
+differ in co-expression generally, not in the clock. Powered fails -> subtype does not set coherence at matched
+proliferation, and the A217 fails leave proliferation as the only tumour-state correlate. **Stop rule:** one amendment.
+**Code:** `paper/exploratory/A219_subtype_coherence/`.
