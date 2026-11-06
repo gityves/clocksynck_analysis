@@ -3710,7 +3710,7 @@ pipeline). 200 expression-matched random 14-gene sets per project (p floor 0.005
 - **H221.3 PASS (mechanism):** across 182 gene x project points, the design difference follows the GTEx daytime offset
   (time of death 08-18 h minus all donors), Spearman +0.203, p 0.0005, Holm 0.0015: part of the GTEx distortion is
   sampling time.
-- **Descriptive:** immediate-early genes are far lower in tumours than paired normal (10 genes; −0.2 to −2.4 log2 per
+- **Descriptive:** immediate-early genes are far lower in tumours than paired normal (10 genes; −2.38 to +0.46 log2 per
   project, 11 of 13 projects below −0.2), so the PER1 / TEF / RORA part of the paired loss may be stress / glucocorticoid
   response of the adjacent tissue rather than clock. Clock level vs ABSOLUTE purity within tumours: Spearman −0.29 to
   +0.29, no consistent sign (no simple composition gradient). GTEx by Hardy class: `gtex_by_hardy.csv`.
