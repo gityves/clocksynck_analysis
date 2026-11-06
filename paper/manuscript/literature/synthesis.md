@@ -73,7 +73,7 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 - hollis2025reconstructed: snRNA-seq pseudobulk per cell type, not bulk deconvolution. galinde2023different: does not state a lack of human biomarkers (cite for the 4-level desynchrony taxonomy only).
 
 ## 4. Verification ideas (checked against METHOD.md / registered / results; "new" = not found there)
-- new: COFE's own outputs under simulated 08-18 h sampling (full-cycle labels, random tumour-normal differences) to show the mechanism of false uncoupling (A145 has the coupling MAE, not the mechanism).
+- done (A204, descriptive; A204b): COFE's own outputs under simulated 08-18 h sampling (full-cycle labels, random tumour-normal differences) to show the mechanism of false uncoupling (A145 has the coupling MAE, not the mechanism).
 - new: Wu 2020 skin (154 women × arm/buttock/cheek × epidermis/dermis, untimed): within-person multi-site compartments.
 - new: GTEx brain arg z vs periphery: discriminates Hughey 2016 (~8.5 h, between people) from CHIRAL (few hours).
 - new: ΔCCD next to clocksync coupling on TCGA pairs (A138): do low-coupling tumours have high CCD?
@@ -94,7 +94,7 @@ Our A138 finds a tumour-normal clock match in TCGA pairs; A145 W arm: COFE coupl
 - motivation: Diamantopoulou 2022 (CTC timing driven by host hormones, tumour clock genes not differential) supports host-referenced readout; parallels A138/A149.
 - methods support: pelikan2021venn (Venn comparisons of thresholded lists: 48 % false differential hits) justifies direct permutation contrasts over counting gate-passing units; phillips2020circadian and nikhat2026transcriptional justify pseudobulks (24 h explains ~all variance when pooling ~1,000 cells; 20-70 cells × 3 genes ≈ 1 h): compare with A203 (registered, unscored) when scoring.
 - new: Grabe 2024 procedure (PER3-correlation shifts; tumour ordered by the paired normal's time) on TCGA-LUAD vs clocksync coupling (A171 covers LUAD coherence only).
-- new: tauFisher timed dermis scRNA (GSE223109, fibroblasts vs immune, 4 h over 72 h) as timed truth for cell-type coupling and |z| (V13/A31 are colon/skin, different sets).
+- done: tauFisher timed dermis scRNA (GSE223109) is the V13 cell-type truth set (`common/datasets/skin_dermis_zt`); the earlier "new" label was wrong (checked 2026-11-06).
 - new: gate vs technical cyclic artefacts (Oscope C1 chip position, leng2015oscope).
 - done: ORPHEUS bias under subject-phase error (V14); RADC/brain AD contrasts (A135, A141, mostly not estimable).
 - done: baboon (A36/A40/A41), living skin epidermis/dermis (A37, Del Olmo), forced desynchrony blood (GSE48113), TimeTeller/COFE/CYCLOPS 2.0/CHIRAL benchmark (V2), Manchester breast pairs (A25 V25.5, A146), orderers under working hours (A145, A123).
