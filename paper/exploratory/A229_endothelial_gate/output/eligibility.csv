@@ -1,0 +1,341 @@
+study,cancer,side,kind,hypothesis,patients_endothelial,patients,eligible,reason
+ERP149257,colorectal,tumour,ICAM1,H229.1,7,7,True,
+ERP149257,colorectal,tumour,CD8_share,H229.2,7,7,True,
+ERP149257,colorectal,tumour,VCAM1,H229.3,7,7,True,
+ERP149257,colorectal,tumour,SELE,H229.4,7,7,True,
+ERP149257,colorectal,tumour,TNK_share,H229.5,7,7,True,
+ERP149257,colorectal,adjacent_normal,ICAM1,H229.1,7,7,True,
+ERP149257,colorectal,adjacent_normal,CD8_share,H229.2,7,6,True,
+ERP149257,colorectal,adjacent_normal,VCAM1,H229.3,7,7,True,
+ERP149257,colorectal,adjacent_normal,SELE,H229.4,7,7,True,
+ERP149257,colorectal,adjacent_normal,TNK_share,H229.5,7,6,True,
+ERP153272,lung,tumour,ICAM1,H229.1,5,5,True,
+ERP153272,lung,tumour,CD8_share,H229.2,5,5,True,
+ERP153272,lung,tumour,VCAM1,H229.3,5,5,True,
+ERP153272,lung,tumour,SELE,H229.4,5,5,True,
+ERP153272,lung,tumour,TNK_share,H229.5,5,5,True,
+ERP153272,lung,adjacent_normal,ICAM1,H229.1,5,5,True,
+ERP153272,lung,adjacent_normal,CD8_share,H229.2,5,5,True,
+ERP153272,lung,adjacent_normal,VCAM1,H229.3,5,5,True,
+ERP153272,lung,adjacent_normal,SELE,H229.4,5,5,True,
+ERP153272,lung,adjacent_normal,TNK_share,H229.5,5,5,True,
+GSE131907,lung,tumour,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE131907,lung,tumour,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE131907,lung,tumour,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE131907,lung,tumour,SELE,H229.4,0,0,False,0 endothelial patients
+GSE131907,lung,tumour,TNK_share,H229.5,0,0,False,0 endothelial patients
+GSE131907,lung,adjacent_normal,ICAM1,H229.1,8,8,True,
+GSE131907,lung,adjacent_normal,CD8_share,H229.2,8,8,True,
+GSE131907,lung,adjacent_normal,VCAM1,H229.3,8,8,True,
+GSE131907,lung,adjacent_normal,SELE,H229.4,8,8,True,
+GSE131907,lung,adjacent_normal,TNK_share,H229.5,8,8,True,
+GSE132465,colorectal,tumour,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE132465,colorectal,tumour,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE132465,colorectal,tumour,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE132465,colorectal,tumour,SELE,H229.4,0,0,False,0 endothelial patients
+GSE132465,colorectal,tumour,TNK_share,H229.5,0,0,False,0 endothelial patients
+GSE132465,colorectal,adjacent_normal,ICAM1,H229.1,6,6,True,
+GSE132465,colorectal,adjacent_normal,CD8_share,H229.2,6,6,True,
+GSE132465,colorectal,adjacent_normal,VCAM1,H229.3,6,6,True,
+GSE132465,colorectal,adjacent_normal,SELE,H229.4,6,6,True,
+GSE132465,colorectal,adjacent_normal,TNK_share,H229.5,6,6,True,
+GSE144240,skin,tumour,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE144240,skin,tumour,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE144240,skin,tumour,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE144240,skin,tumour,SELE,H229.4,0,0,False,0 endothelial patients
+GSE144240,skin,tumour,TNK_share,H229.5,0,0,False,0 endothelial patients
+GSE144240,skin,adjacent_normal,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE144240,skin,adjacent_normal,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE144240,skin,adjacent_normal,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE144240,skin,adjacent_normal,SELE,H229.4,0,0,False,0 endothelial patients
+GSE144240,skin,adjacent_normal,TNK_share,H229.5,0,0,False,0 endothelial patients
+GSE144735,colorectal,tumour,ICAM1,H229.1,5,5,True,
+GSE144735,colorectal,tumour,CD8_share,H229.2,5,4,True,
+GSE144735,colorectal,tumour,VCAM1,H229.3,5,5,True,
+GSE144735,colorectal,tumour,SELE,H229.4,5,5,True,
+GSE144735,colorectal,tumour,TNK_share,H229.5,5,4,True,
+GSE144735,colorectal,adjacent_normal,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE144735,colorectal,adjacent_normal,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE144735,colorectal,adjacent_normal,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE144735,colorectal,adjacent_normal,SELE,H229.4,0,0,False,0 endothelial patients
+GSE144735,colorectal,adjacent_normal,TNK_share,H229.5,0,0,False,0 endothelial patients
+GSE150290,gastric,tumour,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE150290,gastric,tumour,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE150290,gastric,tumour,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE150290,gastric,tumour,SELE,H229.4,0,0,False,0 endothelial patients
+GSE150290,gastric,tumour,TNK_share,H229.5,0,0,False,0 endothelial patients
+GSE150290,gastric,adjacent_normal,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE150290,gastric,adjacent_normal,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE150290,gastric,adjacent_normal,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE150290,gastric,adjacent_normal,SELE,H229.4,0,0,False,0 endothelial patients
+GSE150290,gastric,adjacent_normal,TNK_share,H229.5,0,0,False,0 endothelial patients
+GSE164789,lung,tumour,ICAM1,H229.1,24,24,True,
+GSE164789,lung,tumour,CD8_share,H229.2,24,24,True,
+GSE164789,lung,tumour,VCAM1,H229.3,24,24,True,
+GSE164789,lung,tumour,SELE,H229.4,24,24,True,
+GSE164789,lung,tumour,TNK_share,H229.5,24,24,True,
+GSE164789,lung,adjacent_normal,ICAM1,H229.1,28,28,True,
+GSE164789,lung,adjacent_normal,CD8_share,H229.2,28,28,True,
+GSE164789,lung,adjacent_normal,VCAM1,H229.3,28,28,True,
+GSE164789,lung,adjacent_normal,SELE,H229.4,28,28,True,
+GSE164789,lung,adjacent_normal,TNK_share,H229.5,28,28,True,
+GSE166555,colorectal,tumour,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE166555,colorectal,tumour,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE166555,colorectal,tumour,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE166555,colorectal,tumour,SELE,H229.4,0,0,False,0 endothelial patients
+GSE166555,colorectal,tumour,TNK_share,H229.5,0,0,False,0 endothelial patients
+GSE166555,colorectal,adjacent_normal,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE166555,colorectal,adjacent_normal,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE166555,colorectal,adjacent_normal,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE166555,colorectal,adjacent_normal,SELE,H229.4,0,0,False,0 endothelial patients
+GSE166555,colorectal,adjacent_normal,TNK_share,H229.5,0,0,False,0 endothelial patients
+GSE167297,gastric,tumour,ICAM1,H229.1,0,0,False,3 endothelial patients
+GSE167297,gastric,tumour,CD8_share,H229.2,0,0,False,3 endothelial patients
+GSE167297,gastric,tumour,VCAM1,H229.3,0,0,False,3 endothelial patients
+GSE167297,gastric,tumour,SELE,H229.4,0,0,False,3 endothelial patients
+GSE167297,gastric,tumour,TNK_share,H229.5,0,0,False,3 endothelial patients
+GSE167297,gastric,adjacent_normal,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE167297,gastric,adjacent_normal,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE167297,gastric,adjacent_normal,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE167297,gastric,adjacent_normal,SELE,H229.4,0,0,False,0 endothelial patients
+GSE167297,gastric,adjacent_normal,TNK_share,H229.5,0,0,False,0 endothelial patients
+GSE178341,colorectal,tumour,ICAM1,H229.1,24,24,True,
+GSE178341,colorectal,tumour,CD8_share,H229.2,24,24,True,
+GSE178341,colorectal,tumour,VCAM1,H229.3,24,24,True,
+GSE178341,colorectal,tumour,SELE,H229.4,24,24,True,
+GSE178341,colorectal,tumour,TNK_share,H229.5,24,24,True,
+GSE178341,colorectal,adjacent_normal,ICAM1,H229.1,8,8,True,
+GSE178341,colorectal,adjacent_normal,CD8_share,H229.2,8,8,True,
+GSE178341,colorectal,adjacent_normal,VCAM1,H229.3,8,8,True,
+GSE178341,colorectal,adjacent_normal,SELE,H229.4,8,8,True,
+GSE178341,colorectal,adjacent_normal,TNK_share,H229.5,8,8,True,
+GSE181294,prostate,tumour,ICAM1,H229.1,17,17,True,
+GSE181294,prostate,tumour,CD8_share,H229.2,17,17,True,
+GSE181294,prostate,tumour,VCAM1,H229.3,17,17,True,
+GSE181294,prostate,tumour,SELE,H229.4,17,17,True,
+GSE181294,prostate,tumour,TNK_share,H229.5,17,17,True,
+GSE181294,prostate,adjacent_normal,ICAM1,H229.1,12,12,True,
+GSE181294,prostate,adjacent_normal,CD8_share,H229.2,12,12,True,
+GSE181294,prostate,adjacent_normal,VCAM1,H229.3,12,12,True,
+GSE181294,prostate,adjacent_normal,SELE,H229.4,12,12,True,
+GSE181294,prostate,adjacent_normal,TNK_share,H229.5,12,12,True,
+GSE183904,gastric,tumour,ICAM1,H229.1,19,19,True,
+GSE183904,gastric,tumour,CD8_share,H229.2,19,19,True,
+GSE183904,gastric,tumour,VCAM1,H229.3,19,19,True,
+GSE183904,gastric,tumour,SELE,H229.4,19,19,True,
+GSE183904,gastric,tumour,TNK_share,H229.5,19,19,True,
+GSE183904,gastric,adjacent_normal,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE183904,gastric,adjacent_normal,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE183904,gastric,adjacent_normal,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE183904,gastric,adjacent_normal,SELE,H229.4,0,0,False,0 endothelial patients
+GSE183904,gastric,adjacent_normal,TNK_share,H229.5,0,0,False,0 endothelial patients
+GSE200972,lung,tumour,ICAM1,H229.1,0,0,False,3 endothelial patients
+GSE200972,lung,tumour,CD8_share,H229.2,0,0,False,3 endothelial patients
+GSE200972,lung,tumour,VCAM1,H229.3,0,0,False,3 endothelial patients
+GSE200972,lung,tumour,SELE,H229.4,0,0,False,3 endothelial patients
+GSE200972,lung,tumour,TNK_share,H229.5,0,0,False,3 endothelial patients
+GSE200972,lung,adjacent_normal,ICAM1,H229.1,0,0,False,3 endothelial patients
+GSE200972,lung,adjacent_normal,CD8_share,H229.2,0,0,False,3 endothelial patients
+GSE200972,lung,adjacent_normal,VCAM1,H229.3,0,0,False,3 endothelial patients
+GSE200972,lung,adjacent_normal,SELE,H229.4,0,0,False,3 endothelial patients
+GSE200972,lung,adjacent_normal,TNK_share,H229.5,0,0,False,3 endothelial patients
+GSE212966,pancreatic,tumour,ICAM1,H229.1,6,6,True,
+GSE212966,pancreatic,tumour,CD8_share,H229.2,6,6,True,
+GSE212966,pancreatic,tumour,VCAM1,H229.3,6,6,True,
+GSE212966,pancreatic,tumour,SELE,H229.4,6,6,True,
+GSE212966,pancreatic,tumour,TNK_share,H229.5,6,6,True,
+GSE212966,pancreatic,adjacent_normal,ICAM1,H229.1,6,6,True,
+GSE212966,pancreatic,adjacent_normal,CD8_share,H229.2,6,6,True,
+GSE212966,pancreatic,adjacent_normal,VCAM1,H229.3,6,6,True,
+GSE212966,pancreatic,adjacent_normal,SELE,H229.4,6,6,True,
+GSE212966,pancreatic,adjacent_normal,TNK_share,H229.5,6,6,True,
+GSE229253,lung,tumour,ICAM1,H229.1,9,9,True,
+GSE229253,lung,tumour,CD8_share,H229.2,9,4,True,
+GSE229253,lung,tumour,VCAM1,H229.3,9,9,True,
+GSE229253,lung,tumour,SELE,H229.4,9,9,True,
+GSE229253,lung,tumour,TNK_share,H229.5,9,0,False,0 patients with the readout
+GSE229253,lung,adjacent_normal,ICAM1,H229.1,10,10,True,
+GSE229253,lung,adjacent_normal,CD8_share,H229.2,10,8,True,
+GSE229253,lung,adjacent_normal,VCAM1,H229.3,10,10,True,
+GSE229253,lung,adjacent_normal,SELE,H229.4,10,10,True,
+GSE229253,lung,adjacent_normal,TNK_share,H229.5,10,8,True,
+GSE236696,colorectal,tumour,ICAM1,H229.1,4,4,True,
+GSE236696,colorectal,tumour,CD8_share,H229.2,4,4,True,
+GSE236696,colorectal,tumour,VCAM1,H229.3,4,4,True,
+GSE236696,colorectal,tumour,SELE,H229.4,4,4,True,
+GSE236696,colorectal,tumour,TNK_share,H229.5,4,4,True,
+GSE236696,colorectal,adjacent_normal,ICAM1,H229.1,4,4,True,
+GSE236696,colorectal,adjacent_normal,CD8_share,H229.2,4,4,True,
+GSE236696,colorectal,adjacent_normal,VCAM1,H229.3,4,4,True,
+GSE236696,colorectal,adjacent_normal,SELE,H229.4,4,4,True,
+GSE236696,colorectal,adjacent_normal,TNK_share,H229.5,4,4,True,
+GSE242889,liver,tumour,ICAM1,H229.1,4,4,True,
+GSE242889,liver,tumour,CD8_share,H229.2,4,4,True,
+GSE242889,liver,tumour,VCAM1,H229.3,4,4,True,
+GSE242889,liver,tumour,SELE,H229.4,4,4,True,
+GSE242889,liver,tumour,TNK_share,H229.5,4,4,True,
+GSE242889,liver,adjacent_normal,ICAM1,H229.1,5,5,True,
+GSE242889,liver,adjacent_normal,CD8_share,H229.2,5,5,True,
+GSE242889,liver,adjacent_normal,VCAM1,H229.3,5,5,True,
+GSE242889,liver,adjacent_normal,SELE,H229.4,5,5,True,
+GSE242889,liver,adjacent_normal,TNK_share,H229.5,5,5,True,
+GSE271690,colorectal,tumour,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE271690,colorectal,tumour,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE271690,colorectal,tumour,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE271690,colorectal,tumour,SELE,H229.4,0,0,False,0 endothelial patients
+GSE271690,colorectal,tumour,TNK_share,H229.5,0,0,False,0 endothelial patients
+GSE271690,colorectal,adjacent_normal,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE271690,colorectal,adjacent_normal,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE271690,colorectal,adjacent_normal,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE271690,colorectal,adjacent_normal,SELE,H229.4,0,0,False,0 endothelial patients
+GSE271690,colorectal,adjacent_normal,TNK_share,H229.5,0,0,False,0 endothelial patients
+GSE281736,thyroid,tumour,ICAM1,H229.1,6,6,True,
+GSE281736,thyroid,tumour,CD8_share,H229.2,6,6,True,
+GSE281736,thyroid,tumour,VCAM1,H229.3,6,6,True,
+GSE281736,thyroid,tumour,SELE,H229.4,6,6,True,
+GSE281736,thyroid,tumour,TNK_share,H229.5,6,6,True,
+GSE281736,thyroid,adjacent_normal,ICAM1,H229.1,6,6,True,
+GSE281736,thyroid,adjacent_normal,CD8_share,H229.2,6,6,True,
+GSE281736,thyroid,adjacent_normal,VCAM1,H229.3,6,6,True,
+GSE281736,thyroid,adjacent_normal,SELE,H229.4,6,6,True,
+GSE281736,thyroid,adjacent_normal,TNK_share,H229.5,6,6,True,
+GSE282701,liver,tumour,ICAM1,H229.1,6,6,True,
+GSE282701,liver,tumour,CD8_share,H229.2,6,6,True,
+GSE282701,liver,tumour,VCAM1,H229.3,6,6,True,
+GSE282701,liver,tumour,SELE,H229.4,6,6,True,
+GSE282701,liver,tumour,TNK_share,H229.5,6,6,True,
+GSE282701,liver,adjacent_normal,ICAM1,H229.1,6,6,True,
+GSE282701,liver,adjacent_normal,CD8_share,H229.2,6,6,True,
+GSE282701,liver,adjacent_normal,VCAM1,H229.3,6,6,True,
+GSE282701,liver,adjacent_normal,SELE,H229.4,6,6,True,
+GSE282701,liver,adjacent_normal,TNK_share,H229.5,6,6,True,
+GSE294300,colorectal,tumour,ICAM1,H229.1,8,8,True,
+GSE294300,colorectal,tumour,CD8_share,H229.2,8,8,True,
+GSE294300,colorectal,tumour,VCAM1,H229.3,8,8,True,
+GSE294300,colorectal,tumour,SELE,H229.4,8,8,True,
+GSE294300,colorectal,tumour,TNK_share,H229.5,8,8,True,
+GSE294300,colorectal,adjacent_normal,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE294300,colorectal,adjacent_normal,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE294300,colorectal,adjacent_normal,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE294300,colorectal,adjacent_normal,SELE,H229.4,0,0,False,0 endothelial patients
+GSE294300,colorectal,adjacent_normal,TNK_share,H229.5,0,0,False,0 endothelial patients
+GSE310916,lung,tumour,ICAM1,H229.1,0,0,False,3 endothelial patients
+GSE310916,lung,tumour,CD8_share,H229.2,0,0,False,3 endothelial patients
+GSE310916,lung,tumour,VCAM1,H229.3,0,0,False,3 endothelial patients
+GSE310916,lung,tumour,SELE,H229.4,0,0,False,3 endothelial patients
+GSE310916,lung,tumour,TNK_share,H229.5,0,0,False,3 endothelial patients
+GSE310916,lung,adjacent_normal,ICAM1,H229.1,5,5,True,
+GSE310916,lung,adjacent_normal,CD8_share,H229.2,5,5,True,
+GSE310916,lung,adjacent_normal,VCAM1,H229.3,5,5,True,
+GSE310916,lung,adjacent_normal,SELE,H229.4,5,5,True,
+GSE310916,lung,adjacent_normal,TNK_share,H229.5,5,5,True,
+GSE315534,colorectal,tumour,ICAM1,H229.1,5,5,True,
+GSE315534,colorectal,tumour,CD8_share,H229.2,5,5,True,
+GSE315534,colorectal,tumour,VCAM1,H229.3,5,5,True,
+GSE315534,colorectal,tumour,SELE,H229.4,5,5,True,
+GSE315534,colorectal,tumour,TNK_share,H229.5,5,5,True,
+GSE315534,colorectal,adjacent_normal,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE315534,colorectal,adjacent_normal,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE315534,colorectal,adjacent_normal,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE315534,colorectal,adjacent_normal,SELE,H229.4,0,0,False,0 endothelial patients
+GSE315534,colorectal,adjacent_normal,TNK_share,H229.5,0,0,False,0 endothelial patients
+GSE326201,liver,tumour,ICAM1,H229.1,10,10,True,
+GSE326201,liver,tumour,CD8_share,H229.2,10,10,True,
+GSE326201,liver,tumour,VCAM1,H229.3,10,10,True,
+GSE326201,liver,tumour,SELE,H229.4,10,10,True,
+GSE326201,liver,tumour,TNK_share,H229.5,10,10,True,
+GSE326201,liver,adjacent_normal,ICAM1,H229.1,8,8,True,
+GSE326201,liver,adjacent_normal,CD8_share,H229.2,8,8,True,
+GSE326201,liver,adjacent_normal,VCAM1,H229.3,8,8,True,
+GSE326201,liver,adjacent_normal,SELE,H229.4,8,8,True,
+GSE326201,liver,adjacent_normal,TNK_share,H229.5,8,8,True,
+GSE335070,ampullary,tumour,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE335070,ampullary,tumour,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE335070,ampullary,tumour,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE335070,ampullary,tumour,SELE,H229.4,0,0,False,0 endothelial patients
+GSE335070,ampullary,tumour,TNK_share,H229.5,0,0,False,0 endothelial patients
+GSE335070,ampullary,adjacent_normal,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE335070,ampullary,adjacent_normal,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE335070,ampullary,adjacent_normal,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE335070,ampullary,adjacent_normal,SELE,H229.4,0,0,False,0 endothelial patients
+GSE335070,ampullary,adjacent_normal,TNK_share,H229.5,0,0,False,0 endothelial patients
+SRP572743,breast,tumour,ICAM1,H229.1,4,4,True,
+SRP572743,breast,tumour,CD8_share,H229.2,4,4,True,
+SRP572743,breast,tumour,VCAM1,H229.3,4,4,True,
+SRP572743,breast,tumour,SELE,H229.4,4,4,True,
+SRP572743,breast,tumour,TNK_share,H229.5,4,4,True,
+SRP572743,breast,adjacent_normal,ICAM1,H229.1,5,5,True,
+SRP572743,breast,adjacent_normal,CD8_share,H229.2,5,5,True,
+SRP572743,breast,adjacent_normal,VCAM1,H229.3,5,5,True,
+SRP572743,breast,adjacent_normal,SELE,H229.4,5,5,True,
+SRP572743,breast,adjacent_normal,TNK_share,H229.5,5,5,True,
+GSE308103,lung,tumour,ICAM1,H229.1,6,6,True,
+GSE308103,lung,tumour,CD8_share,H229.2,6,6,True,
+GSE308103,lung,tumour,VCAM1,H229.3,6,6,True,
+GSE308103,lung,tumour,SELE,H229.4,6,6,True,
+GSE308103,lung,tumour,TNK_share,H229.5,6,6,True,
+GSE308103,lung,adjacent_normal,ICAM1,H229.1,6,6,True,
+GSE308103,lung,adjacent_normal,CD8_share,H229.2,6,6,True,
+GSE308103,lung,adjacent_normal,VCAM1,H229.3,6,6,True,
+GSE308103,lung,adjacent_normal,SELE,H229.4,6,6,True,
+GSE308103,lung,adjacent_normal,TNK_share,H229.5,6,6,True,
+GSE183219,lung,tumour,ICAM1,H229.1,11,11,True,
+GSE183219,lung,tumour,CD8_share,H229.2,11,0,False,1 patients with the readout
+GSE183219,lung,tumour,VCAM1,H229.3,11,11,True,
+GSE183219,lung,tumour,SELE,H229.4,11,11,True,
+GSE183219,lung,tumour,TNK_share,H229.5,11,0,False,0 patients with the readout
+GSE183219,lung,adjacent_normal,ICAM1,H229.1,8,8,True,
+GSE183219,lung,adjacent_normal,CD8_share,H229.2,8,0,False,0 patients with the readout
+GSE183219,lung,adjacent_normal,VCAM1,H229.3,8,8,True,
+GSE183219,lung,adjacent_normal,SELE,H229.4,8,8,True,
+GSE183219,lung,adjacent_normal,TNK_share,H229.5,8,0,False,0 patients with the readout
+GSE155109,breast,tumour,ICAM1,H229.1,0,0,False,0 endothelial patients
+GSE155109,breast,tumour,CD8_share,H229.2,0,0,False,0 endothelial patients
+GSE155109,breast,tumour,VCAM1,H229.3,0,0,False,0 endothelial patients
+GSE155109,breast,tumour,SELE,H229.4,0,0,False,0 endothelial patients
+GSE155109,breast,tumour,TNK_share,H229.5,0,0,False,0 endothelial patients
+GSE155109,breast,adjacent_normal,ICAM1,H229.1,5,5,True,
+GSE155109,breast,adjacent_normal,CD8_share,H229.2,5,5,True,
+GSE155109,breast,adjacent_normal,VCAM1,H229.3,5,5,True,
+GSE155109,breast,adjacent_normal,SELE,H229.4,5,5,True,
+GSE155109,breast,adjacent_normal,TNK_share,H229.5,5,5,True,
+OPSCC_b6b5ea88,head and neck,tumour,ICAM1,H229.1,0,0,False,0 endothelial patients
+OPSCC_b6b5ea88,head and neck,tumour,CD8_share,H229.2,0,0,False,0 endothelial patients
+OPSCC_b6b5ea88,head and neck,tumour,VCAM1,H229.3,0,0,False,0 endothelial patients
+OPSCC_b6b5ea88,head and neck,tumour,SELE,H229.4,0,0,False,0 endothelial patients
+OPSCC_b6b5ea88,head and neck,tumour,TNK_share,H229.5,0,0,False,0 endothelial patients
+OPSCC_b6b5ea88,head and neck,adjacent_normal,ICAM1,H229.1,7,7,True,
+OPSCC_b6b5ea88,head and neck,adjacent_normal,CD8_share,H229.2,7,7,True,
+OPSCC_b6b5ea88,head and neck,adjacent_normal,VCAM1,H229.3,7,7,True,
+OPSCC_b6b5ea88,head and neck,adjacent_normal,SELE,H229.4,7,7,True,
+OPSCC_b6b5ea88,head and neck,adjacent_normal,TNK_share,H229.5,7,7,True,
+RCC_5af90777,kidney,tumour,ICAM1,H229.1,5,5,True,
+RCC_5af90777,kidney,tumour,CD8_share,H229.2,5,5,True,
+RCC_5af90777,kidney,tumour,VCAM1,H229.3,5,5,True,
+RCC_5af90777,kidney,tumour,SELE,H229.4,5,5,True,
+RCC_5af90777,kidney,tumour,TNK_share,H229.5,5,5,True,
+RCC_5af90777,kidney,adjacent_normal,ICAM1,H229.1,0,0,False,0 endothelial patients
+RCC_5af90777,kidney,adjacent_normal,CD8_share,H229.2,0,0,False,0 endothelial patients
+RCC_5af90777,kidney,adjacent_normal,VCAM1,H229.3,0,0,False,0 endothelial patients
+RCC_5af90777,kidney,adjacent_normal,SELE,H229.4,0,0,False,0 endothelial patients
+RCC_5af90777,kidney,adjacent_normal,TNK_share,H229.5,0,0,False,0 endothelial patients
+Qian2020_CRC,colorectal,tumour,ICAM1,H229.1,5,5,True,
+Qian2020_CRC,colorectal,tumour,CD8_share,H229.2,5,4,True,
+Qian2020_CRC,colorectal,tumour,VCAM1,H229.3,5,5,True,
+Qian2020_CRC,colorectal,tumour,SELE,H229.4,5,5,True,
+Qian2020_CRC,colorectal,tumour,TNK_share,H229.5,5,0,False,0 patients with the readout
+Qian2020_CRC,colorectal,adjacent_normal,ICAM1,H229.1,0,0,False,0 endothelial patients
+Qian2020_CRC,colorectal,adjacent_normal,CD8_share,H229.2,0,0,False,0 endothelial patients
+Qian2020_CRC,colorectal,adjacent_normal,VCAM1,H229.3,0,0,False,0 endothelial patients
+Qian2020_CRC,colorectal,adjacent_normal,SELE,H229.4,0,0,False,0 endothelial patients
+Qian2020_CRC,colorectal,adjacent_normal,TNK_share,H229.5,0,0,False,0 endothelial patients
+Qian2020_LUAD,lung,tumour,ICAM1,H229.1,0,0,False,0 endothelial patients
+Qian2020_LUAD,lung,tumour,CD8_share,H229.2,0,0,False,0 endothelial patients
+Qian2020_LUAD,lung,tumour,VCAM1,H229.3,0,0,False,0 endothelial patients
+Qian2020_LUAD,lung,tumour,SELE,H229.4,0,0,False,0 endothelial patients
+Qian2020_LUAD,lung,tumour,TNK_share,H229.5,0,0,False,0 endothelial patients
+Qian2020_LUAD,lung,adjacent_normal,ICAM1,H229.1,0,0,False,3 endothelial patients
+Qian2020_LUAD,lung,adjacent_normal,CD8_share,H229.2,0,0,False,3 endothelial patients
+Qian2020_LUAD,lung,adjacent_normal,VCAM1,H229.3,0,0,False,3 endothelial patients
+Qian2020_LUAD,lung,adjacent_normal,SELE,H229.4,0,0,False,3 endothelial patients
+Qian2020_LUAD,lung,adjacent_normal,TNK_share,H229.5,0,0,False,3 endothelial patients
