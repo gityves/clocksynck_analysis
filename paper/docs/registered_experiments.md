@@ -4599,3 +4599,33 @@ tumour endothelium vs normal fibroblast 76 / 13 (0.131); same-sample normal T_NK
 H228.5 NK 67 / 9, 0.341, 0.062, 0.155. All five hypotheses scored. GSE308103 lacks CD8B (CD8 = CD8A there). Median T_NK
 fractions per sample, tumour / normal: CD8 T 0.275 / 0.309, CD8-negative T 0.594 / 0.504, NK 0.044 / 0.051, dropped 0.029 /
 0.029. The A149 compartment-presence rule is not applied to subset pseudobulks (>= 50 cells and median UMI rules only).
+
+## A229 (2026-11-07, user agreement; written after A228 was scored and after reading summaries of Wang et al., Cell 2024 (mouse: endothelial clocks time ICAM-1 and gate CD8+ T cell infiltration), before any adhesion gene or T-cell share is related to any clock state; motivated in part by the A228 descriptive endothelial result (tumour T/NK and myeloid vs normal endothelium above pseudo q95), so the choice of endothelium is not blind): do tumour endothelial adhesion genes and the tumour CD8 T share follow the tumour endothelial clock state in human tumours? **L1-like association; single-cell, A227 cohorts**
+**Why.** Wang et al. show in mice that endothelial clocks time adhesion molecules and thereby CD8+ T cell entry into
+tumours. Without sampling times, the human counterpart is: across patients, adhesion-gene expression of tumour endothelium
+and the CD8 share of tumour T cells vary with the tumour endothelial clock state, beyond what matched non-clock gene sets
+give. Spread of clock states comes from surgery hour and patient phase (mostly daytime surgery), which limits power.
+**Data.** The 34 A227 cohorts and tables; tumour endothelial pseudobulk per patient (>= 50 cells, A227 eligibility);
+T/NK subset counts from A228 (`subset_fractions.csv`, tumour samples, summed per patient, patients with >= 50 T/NK cells).
+**State.** z = complex clock state of the tumour endothelial pseudobulk (`clocksync.paired.projector` / `states`, GTEx
+waveform, counts=True, fitted on the tumour endothelial rows of the cohort), centred within cohort x chemistry.
+**Statistic.** Readout y (real), centred within cohort x chemistry: r = |sum y conj(z)| / sqrt(sum y^2 sum |z|^2) (the A227
+statistic with a real second argument), pooled over cohorts with patient-count weights. Null: y permuted across patients
+within cohort (10,000). Clock specificity: z recomputed from 200 expression-matched pseudo-clock sets on the same tumour
+endothelial genome pseudobulks (A227 construction), same y; read as clock-specific only if r > pseudo q95.
+- **H229.1 (primary):** y = log2(CPM + 1) of ICAM1 in the tumour endothelial pseudobulk.
+- **H229.2 (primary):** y = logit of the CD8 T share of tumour T cells, CD8T / (CD8T + CD8neg_T) (A228 rule; +0.5 to
+  both counts).
+- **H229.3 / H229.4 (secondary):** VCAM1, SELE (as H229.1).
+- **H229.5 (secondary):** y = log of the T/NK share of all cells of the tumour sample (sum of compartment cell counts).
+Each: pass = Holm p < 0.05 (primaries and secondaries separately) **and** r > pseudo q95.
+**Descriptive.** Percentile of ICAM1 among 200 expression-matched endothelial genes used as y (are adhesion genes more
+tied to the endothelial clock state than typical endothelial genes?); the same tests in adjacent-normal endothelium; per
+cancer type with >= 12 patients; arg(sum y conj(z)) mapped to the GTEx clock-time axis (implied peak, no prediction).
+**Power (dated note before scoring):** patients and cohorts per test; permutation-null SD (shuffled y only, observed never
+computed); MDE = 2.49 x SD. Not scored if < 40 patients or MDE > 0.25.
+**Reading.** H229.1 pass: human tumour endothelial ICAM1 varies with the endothelial clock state (Wang's gate, in
+humans, untimed). H229.2 pass: the CD8 share of tumour T cells follows the endothelial clock state. Both: the mouse
+mechanism has a human correlate. Not passing: "not detected at MDE x", not a refutation (daytime surgery compresses the
+spread). Association, not causation: a shared systemic cue could move both. **Stop rule:** one amendment. **Code:**
+`paper/exploratory/A229_endothelial_gate/`.

@@ -131,6 +131,15 @@ epidermis-dermis offset instead (A37: untimed -1.69 h vs timed -2.14 h, 11 subje
   immunotherapy-infusion time of day on survival of patients with advanced cancers: a study-level meta-analysis.
   *ESMO Open* 2024;9(2):102220. doi:10.1016/j.esmoop.2023.102220. PMID 38232612. **Verified** (the handoff's
   unspecified "infusion studies"): 13 retrospective studies, 1,663 patients, early infusion OS HR 0.50 (0.42-0.58).
+- Wang C, Zeng Q, ..., Scheiermann C (full author list not retrieved). Circadian tumor infiltration and function of
+  CD8+ T cells dictate immunotherapy efficacy. *Cell* 2024;187(10):2690-2702. doi:10.1016/j.cell.2024.04.015.
+  **Verified from secondary summaries (added 2026-11-07, after A228).** Mouse: tumour CD8+ T cell numbers and function
+  are time-of-day dependent, set by leukocyte and endothelial clocks; endothelial clocks time adhesion molecules
+  (ICAM-1); endothelial Bmal1 deletion flattens the rhythm; CAR-T and anti-PD-1 work better at peak infiltration.
+  Human: correlative only (time-of-day T cell signatures relate to melanoma survival and anti-PD-1 response). Ours:
+  A228 tumour immune states pair with normal endothelium above pseudo q95 (descriptive), not with normal fibroblasts
+  (registered, fails); A229 tests the endothelial adhesion gate and CD8 share against the tumour endothelial clock
+  state in human tumours.
 
 How we differ. Time of day of an intervention is recorded; the physiological internal time of the patient is not,
 and chronotype, shift work and illness move it by hours. Our untimed readout gives internal time on resected
@@ -292,3 +301,4 @@ Tested since (registered A192-A194, `results_preliminary.md`):
 | 25 | Li, Hammarlund, Clarke et al., PNAS 2024 | verified | luminal A, CYCLOPS magnitude, MKI67-adjusted |
 | 26 | TimeTeller survival (Vlachou et al., bioRxiv 2019) | verified (preprint) | REMAGUS, grade 1-2 subgroup |
 | 27 | Ye et al., Cell Syst 2018; Chang and Lai, J Transl Med 2019; Venet et al., PLoS Comput Biol 2011 | candidate | section 10 |
+| 28 | Wang, Zeng, ..., Scheiermann, Cell 2024 | verified (secondary summaries) | section 6; endothelial clock gates CD8 infiltration (mouse) |
