@@ -76,6 +76,10 @@ non-inflamed, same patient:
    / Eshghi (login) for a cleaner blind design; (c) leave the local clause to mouse colon and tumours.
 4. Apply the ledger fixes now?
 - **Agent recommendation:** 1 yes; 2 yes; 3 (a) now, (b) if you can log in; 4 yes.
+- **Done (user, 2026-11-07):** 3 (a) registered and scored as A230. GSE266616 not scored (host gate fails, 8 eligible
+  patients, adjacent references only). TAURUS (non-blind): epithelial offset change +0.58 h, p 0.39, MDE 1.71 h: no
+  mouse-sized shift in inflamed human gut. The fibroblast companion was replaced by the pseudo-clock check before scoring
+  (user decision; two anchors give no leave-one-out companion). Option (b) (Smillie / Eshghi, login) remains.
 
 ### Q24 (2026-11-06): the cancer chapter after A214-A226 — structure and claims for the paper
 The user wants **one paper** that includes the cancer chapter, held together by "how the body keeps its time and when it

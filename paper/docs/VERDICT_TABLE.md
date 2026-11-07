@@ -331,3 +331,6 @@ Source for the rows with a figure panel: `paper/exploratory/WP0_integrity/output
 | A229 | H229.3 VCAM1 (190, 21) | L1 | S | 0.426 (null 0.308; q95 0.402) | 8e-4 / Holm 0.0024; p_clock 0.020 | PASS, clock-specific | MDE 0.083 | A229_endothelial_gate/output/tests.csv |
 | A229 | H229.4 SELE (190, 21) | L1 | S | 0.335 (null 0.306; q95 0.393) | 0.20 / Holm 0.20; p_clock 0.49 | FAIL | MDE 0.087 | A229_endothelial_gate/output/tests.csv |
 | A229 | H229.5 T/NK share of tumour cells (164, 18) | L1 | S | 0.378 (null 0.302; q95 0.371) | 0.024 / Holm 0.048; p_clock 0.040 | PASS, clock-specific (borderline) | MDE 0.093 | A229_endothelial_gate/output/tests.csv |
+| A230 | H230.1 epithelial offset vs stromal host, inflamed vs adjacent (GSE266616, blind) | within-person | P | not run | - | NOT SCORED (gate fails both arms, 8 patients) | offset MDE 3.17 h | A230_ibd_local_offset/output/power_gse266616.csv |
+| A230 | H230.2 epithelial d* (GSE266616) | within-person | S | not run | - | NOT SCORED | d* MDE 0.32 | A230_ibd_local_offset/output/power_gse266616.csv |
+| A230 | H230.3 epithelial offset, inflamed vs non-inflamed (TAURUS, non-blind, 25 patients) | within-person | S | +0.58 h (SE 0.83) | 0.39; p_clock 0.77 | FAIL | offset MDE 1.71 h | A230_ibd_local_offset/output/tests.csv |

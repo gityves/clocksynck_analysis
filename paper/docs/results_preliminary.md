@@ -3922,3 +3922,21 @@ cap (user), peak 32.8 GB, 228 s.
   or the CD8 share specifically. Association, not causation; lung-weighted as in A227 / A228. The implied hours are on
   the GTEx axis of human clock time and are not compared with the mouse ZT of Wang et al.
 <!-- src: paper/exploratory/A229_endothelial_gate/output/{power,tests,pooled,per_cohort,pseudo,matched_genes}.csv -->
+
+## A230 (scored 2026-11-07): no epithelial phase shift against the stroma in inflamed human gut (TAURUS H230.3 FAIL, MDE 1.7 h); GSE266616 not scored
+Power note and design change: `registered_experiments.md` (commits c5ffb1c, 2a8fdc7). GSE266616 (blind): host-only gate
+fails in both arms with 8 eligible patients: **H230.1, H230.2 not scored**. TAURUS (non-blind; stroma seen in A45 / A53):
+25 patients, 82 non-inflamed and 60 inflamed samples, anchors fibroblast + endothelial, gate passes in both arms
+(p_pairing 0.001).
+- **H230.3 FAIL:** epithelial offset change (inflamed − non-inflamed, against the stromal host) +0.58 h (bootstrap SE
+  0.83 h), within-patient swap p 0.39 (10,000); offset MDE 1.71 h. Pseudo-clock check (200 sets): q95 of |offset change|
+  9.22 h, p_clock 0.77 (the pseudo offsets are wide because pseudo sets carry little phase signal; the check is weak for
+  offsets and moot here).
+- **Coupling (descriptive):** epithelial c 0.293 → 0.391, d +0.098 [−0.059, 0.302], d* +0.050, p_star 0.66; pseudo q95
+  of |d*| 0.301.
+- **Reading (registered):** a mouse-sized shift (about 9-12 h, regenerating colon) is not present in inflamed human
+  intestinal epithelium; shifts below about 1.7 h are not excluded. Limits: TAURUS is non-blind, inflamed vs
+  non-inflamed is confounded with treatment timing, chronic inflammation differs from regeneration 17 days after DSS,
+  and the blind cohort could not be scored. The local clause of the headline is not supported by a human gut
+  counterpart; it rests on the mouse colon, psoriasis (A115 descriptive) and tumours.
+<!-- src: paper/exploratory/A230_ibd_local_offset/output/{tests,contrast_taurus,tests_gate_taurus,pseudo,power_taurus,power_gse266616,gate_gse266616}.csv -->
