@@ -4695,3 +4695,110 @@ genome-wide non-inflamed epithelial pseudobulks, seed 230), each fitted with the
 unscored GSE266616 arm, so H230.3 is tested alone) **and** clock > pseudo q95; p_clock = (1 + #{pseudo >= clock}) / 201.
 The d* readout gets the same pseudo check (descriptive). GSE266616 stays not scored. This is a design change recorded
 before scoring, not a post hoc reading; TAURUS remains non-blind (stroma seen in A45 / A53).
+
+## A231 (2026-11-07, user agreement; literature follow-up after the robustness audit; written before any age-stratified fit; seen: donor counts by age arm and cohort only (phenotype table, aggregates), A19 / A180 / A130 results, A208 design and results): do organ coupling or organ phase relations change with age? **GTEx, A208 procedure with age as the label, secondary (Holm over H231.1-3)**
+**Why.** Ageing is in the headline, but our support is a non-detection on own noise (A19 MDE 0.20 per decade; A180
+equivalence failed, 90 % [-0.147, 0.089] vs ±0.0375 per decade); coupling and offsets were never contrasted by age.
+Talamanca et al. (Science 2023) report rhythms that dampen with age. A130 internal minus wall time drifts -0.339 h per
+decade (p 0.054).
+**Data and labels:** `common.gtex` with the protected exact age (in memory only). Cohorts as A164 / A208: fast (Hardy
+1-2) and vent (Hardy 0), kept separate. Old = 60-70 y (case), young = 21-49 y (control); 50-59 y not used. Counts in the
+phenotype table (before tissue filters): fast 126 old / 48 young, vent 105 / 243.
+**Procedure:** `compute_a208.py` with the label replaced: 1:1 matching within cohort, exact on sex and Hardy class,
+nearest ischaemic time (the smaller arm processed first, as A208); tissues with >= 20 donors per arm in the cohort and
+>= 10 matched pairs (all non-cultured tissues; no organ excluded); host = A164 anchors; 1,000 within-set label
+permutations shared across tissues and statistics; 200 matched-set bootstraps with host refit; pooling by inverse null
+variance within then across cohorts; 90 % interval = ± 1.645 x max(bootstrap SE, null SD) (A202).
+**Power first (dated note before any observed statistic):** MDE_80 = 2.49 x null SD for the pooled d* and the pooled
+offset; for Q (H231.3), the SD s of independent per-tissue offset shifts detected with 80 % power at the null q95.
+- **H231.1 (coupling, equivalence):** pooled d* (old − young) within ±0.15 if MDE <= 0.15; else descriptive only.
+- **H231.2 (offset, effect):** pooled offset difference, two-sided permutation p; clock-specific only if |pooled offset|
+  exceeds the q95 of 50 expression-matched pseudo-clock sets (A208 companion). Equivalence within ±1 h reported.
+- **H231.3 (reordering, effect):** Q = Σ_t w_t (offset_diff_t)² over tissues (w_t = 1 / null var), permutation p
+  (one-sided, upper); clock-specific only if Q exceeds the q95 of the same pseudo-clock sets. This is the body-wide
+  desynchrony readout (organs shifting by different amounts), which a pooled mean offset can miss.
+**Companion for d*:** the 3 lowest-coupling tissues per cohort (A208).
+**Descriptive, answering the "GTEx is timed" objection (no pass / fail):**
+- **D231.4 timed comparator (fast cohort):** on the same matched donors, per tissue and arm, a cosinor fit of each clock
+  gene on time of death with the GTEx waveform (tissue phase = the waveform phase shift maximising the likelihood), the
+  tissue phase minus the arm's circular mean over tissues, age difference pooled as H231.2. Reported: the timed pooled
+  offset and its bootstrap SE next to clocksync's, their agreement per tissue (circular correlation), and SE ratio.
+- **D231.5 working hours:** H231.1-3 statistics and D231.4 recomputed on fast donors who died 08-18 h only: estimate,
+  SE and agreement with the full-day values. Shows what each approach keeps when the window is narrow.
+- **D231.6 host spread:** host spread (the common-spread denominator of d*) old vs young per cohort. A body-wide
+  amplitude loss (Talamanca) does not change coupling or offsets; this readout is the closest, confounded in fast by
+  the time-of-death distribution and in vent by the ICU state; descriptive only.
+**Reading:** H231.1 pass: inter-organ coupling does not change with age within ±0.15 (the headline "ageing" clause
+becomes an equivalence for coupling). H231.2 / H231.3 pass with companion: organs shift relative to the body clock
+with age (direction, size); fail with MDE stated: not detected. Results per cohort are reported; the vent cohort is
+the one no timed method can use (wall-time entrainment R 0.15 vs 0.53 in fast deaths, A109c).
+Controlled access: aggregates only (per tissue, per cohort, pooled); no per-donor ages or phases written.
+**Stop rule:** one amendment; no age cut, tissue subset or cohort chosen after the power note. **Code:**
+`paper/exploratory/A231_age_coupling/`.
+
+## A232 (2026-11-07, user agreement; literature follow-up item 3; written before any proliferation score is computed or related to an offset; seen: the GTEx organ offsets (Figure 1 organ map, A92 / A123), never against proliferation): do organs with more proliferation run at a different phase? **GTEx, secondary (Holm over H232.1-3)**
+**Why.** Droin, Paquet & Naef (Nat Phys 2019) explain shifted circadian phases of tissues by their proliferation rates
+(cell cycle coupled to the clock); in mouse, tissue phases correlate with Mki67 and Myc. In humans, no within-donor test
+exists. A97 / A126 / A127 / A166 tested coherence vs proliferation, never the offset.
+**Data:** GTEx v10 (`common.gtex.load`), cohorts fast and vent separate, all non-cultured tissues with >= 50 donors in the
+cohort; clock fit as the organ map (A164 anchors, target anchors on their leave-one-out host), offset_t = arg z_t (h),
+centred on the circular mean over tissues.
+**Proliferation:** per sample, the mean z (across all samples of the cohort, so that tissues are
+comparable) of log CPM of the A97 G2M set (Hallmark G2M, clock genes removed); tissue score = median over its donors.
+MKI67 and MYC log CPM medians reported alongside (secondary readouts, not tested).
+- **H232.1 (primary of A232, fast cohort):** Spearman rho between offset_t and tissue G2M score across tissues ≠ 0;
+  p by 10,000 permutations of the scores over tissues (two-sided). Weighted check (descriptive): weighted slope with
+  w = 1 / bootstrap var of offset_t.
+- **H232.2 (vent cohort):** the same; replication reading = same sign and p < 0.05.
+- **H232.3 (within tissue):** in each tissue of the fast and vent cohorts, donors in the top vs bottom tertile of that
+  tissue's G2M score (within cohort), `Dataset.contrast` offset_diff_h (top − bottom), 1,000 label permutations within
+  tissue, pooled by inverse null variance (A208 pooling); two-sided p. Reading: same sign as H232.1 or not.
+**Specificity (each test, same data):**
+- **clock:** 200 expression-matched pseudo-clock sets (`clocksync.paired.pseudo_waveforms`, kind "matched", seed 232),
+  each through the whole pipeline (offsets per tissue, same scores); the clock |rho| (H232.1-2) or |pooled offset|
+  (H232.3) must exceed the pseudo q95 (a composition artefact would move pseudo-clock offsets too).
+- **proliferation:** 200 random gene sets of the G2M set's size, matched on mean expression (deciles), clock and G2M
+  genes excluded, scored the same way; the G2M |rho| must exceed their q95 (H232.1-2).
+A test is called clock- and proliferation-specific only when p (Holm) < 0.05 and both companions pass.
+**Power (dated note before any rho):** number of tissues per cohort, offset bootstrap SEs, MDE of rho at n tissues
+(80 %, two-sided 0.05) and of the H232.3 pooled offset (2.49 x null SD).
+**Reading:** pass: human organs that proliferate more run at a shifted phase relative to the body clock (direction and
+slope in h per unit score), as predicted by cell-cycle-clock coupling; this also bears on the cancer chapter (the
+proliferation-linked coherence loss). Fail with MDE stated: not detected at this size. Tissue composition differs
+between tissues and is not removed; the pseudo-clock companion guards against expression-driven artefacts only.
+**Stop rule:** one amendment; G2M set, cohorts and tissue filter fixed here. **Code:**
+`paper/exploratory/A232_offset_proliferation/`.
+
+## A233 (2026-11-07, user agreement; robustness audit row 4; written before any condition-stratified fit; seen: case / non-case counts per condition and cohort (phenotype table, aggregates), A164 / A208 designs and results): do chronic conditions other than T2D and obesity change organ coupling or phase relations? **GTEx, A164 procedure, secondary (Holm per hypothesis over conditions)**
+**Why.** "Chronic disease" in the headline rests on T2D and obesity (A164 / A202) and per-row atlas TOSTs (A180). The
+literature reports clock disruption in hypertension (non-dipping blood pressure, vascular clocks), ischaemic heart
+disease, COPD and cigarette smoke (lung clock), and major depression (brain, Li et al. 2013). Citations to be pinned
+in `literature_positioning.md` before writing; they do not change the design.
+**Conditions (protected phenotypes; case = 1, control = 0, unknown excluded)** with counts in the phenotype table
+(vent / fast cases): hypertension MHHTN (188 / 152), ischaemic heart disease MHHRTDIS (56 / 41), COPD MHCOPD (69 / 48),
+major depression MHDPRSSN (63 / 18), smoking MHSMKSTS Yes vs No (259 / 169). Sepsis (9 / 1) and others below the A164
+eligibility are not used.
+**Modules (local readout; fixed here):** hypertension: heart (LV, atrial appendage), arteries (aorta, coronary,
+tibial), kidney cortex; ischaemic heart disease: heart (LV, atrial appendage), coronary artery, aorta; COPD and
+smoking: lung; depression: all brain regions. Companion: tibial nerve and the two skins (A164 COMP), any of them in the
+module (none) excluded.
+**Matching (A164 T2D rule, blind to clock data):** each case to up to 3 controls without replacement, exact on sex and
+Hardy class, nearest age (caliper 5 y), then ischaemic time; balance (SMD of age, ischaemic time, BMI, T2D share)
+reported before any clock readout. A tissue enters with >= 10 matched cases.
+**Estimation:** A164 / A208 (`Dataset.contrast` d* and offset_diff_h per tissue, permutations within matched sets
+(1,000, shared), bootstrap (200, host refit), inverse-null-variance pooling within then across cohorts, A202 interval).
+**Power first (dated note per condition before any observed statistic):** MDE_80 of the body-wide pooled d*, module d*,
+module offset; Q as A231.
+Per condition c:
+- **H233.c.1 (body-wide coupling, equivalence):** all-tissue pooled d* within ±0.15 (if MDE <= 0.15; else descriptive).
+- **H233.c.2 (body-wide reordering):** Q over all tissues (A231 H231.3 definition), one-sided permutation p, Holm over
+  conditions; clock-specific only above the q95 of 50 pseudo-clock sets.
+- **H233.c.3 (local):** module d* and module offset, two-sided permutation p, Holm over conditions (per statistic);
+  "organ-specific" only if module − companion is also p < 0.05 (d*) and the offset beats the pseudo-clock q95 (offset).
+**Reporting per cohort:** vent and fast separately and pooled; the vent cohort is where untimed reading is the only option.
+**Reading:** H233.c.1 pass: body-wide coupling unchanged in condition c within ±0.15; H233.c.2 / c.3 pass with
+companions: body-wide reordering or a local organ shift (named). Fail with MDE: not detected. Comorbidity is not
+removed (hypertension with T2D, smoking with COPD); conditions are not independent and are read separately.
+Controlled access: aggregates only.
+**Stop rule:** one amendment; conditions, modules, matching and cohorts fixed here; no condition added after the power
+note. **Code:** `paper/exploratory/A233_chronic_conditions/` (shares the matched-contrast code with A231).
