@@ -4589,3 +4589,13 @@ other cells dropped. Subset pseudobulks per sample (>= 50 cells), tumour vs adja
 - Same rules for myeloid in Part 1. No myeloid subsets (stop rule).
 **Stop rule:** one amendment; no further marker rules or references after the power note. **Code:**
 `paper/exploratory/A228_immune_body_time/`.
+
+**A228 power note (2026-11-07, before any observed pairing; `A228_immune_body_time/output/{eligibility,power,subset_status,subset_fraction_summary}.csv`, commit a4a78d7).**
+34 A227 cohorts; permutation null from shuffled pairings only (10,000 per cohort). Part 1: H228.1 tumour T_NK vs normal
+fibroblast 118 patients / 17 cohorts, null 0.365 SD 0.043, MDE 0.108; H228.2 tumour myeloid vs normal fibroblast 116 / 17,
+0.370, 0.043, 0.107; descriptive vs normal endothelium T_NK 129 / 18 (MDE 0.104), myeloid 124 / 17 (0.102); positive control
+tumour endothelium vs normal fibroblast 76 / 13 (0.131); same-sample normal T_NK 135 / 18 (0.098), normal myeloid 101 / 16
+(0.117). Part 2: H228.3 CD8 T 191 / 23, null 0.321 SD 0.035, MDE 0.088; H228.4 CD8-negative T 214 / 26, 0.322, 0.034, 0.084;
+H228.5 NK 67 / 9, 0.341, 0.062, 0.155. All five hypotheses scored. GSE308103 lacks CD8B (CD8 = CD8A there). Median T_NK
+fractions per sample, tumour / normal: CD8 T 0.275 / 0.309, CD8-negative T 0.594 / 0.504, NK 0.044 / 0.051, dropped 0.029 /
+0.029. The A149 compartment-presence rule is not applied to subset pseudobulks (>= 50 cells and median UMI rules only).
