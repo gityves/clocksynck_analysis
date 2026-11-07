@@ -43,6 +43,9 @@ loses it". This needs your review (Phase 8: framing and figures). All numbers: `
     or NK. Body time in tumour immune cells is not detected against normal fibroblasts (T/NK 0.441 vs q95 0.458; myeloid
     0.467 vs 0.487), although the endothelial reference (descriptive) and lung are positive; colorectal is at the pseudo
     level throughout.
+  - A229 (Wang et al. Cell 2024 correlate): tumour endothelial VCAM1 (0.426 vs q95 0.402) and, borderline, the tumour T/NK
+    share (0.378 vs 0.371) follow the endothelial clock state clock-specifically (secondaries); ICAM1 and the CD8 share
+    (primaries) do not. Lung-weighted.
 - **Corrective (the method's specificity and design discipline applied to the literature):**
   - Clock "prognosis" is proliferation (A191-A198).
   - Circadian LASSO signatures are no better than random gene lists; they "validate" exactly where random lists do (A220;

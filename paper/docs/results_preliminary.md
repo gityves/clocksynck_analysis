@@ -3894,3 +3894,31 @@ cap (user, machine idle), unchanged code, peak 29.6 GB.
   CD4 / CD8 / NK mixing there; CD8 T cells pair without clock specificity. Composition inside the CD8-negative class (CD4
   naive / memory / Treg, gamma-delta, MAIT) remains possible.
 <!-- src: paper/exploratory/A228_immune_body_time/output/{power,tests,pooled,per_cohort,pseudo,descriptive,subset_fraction_summary}.csv -->
+
+## A229 (scored 2026-11-07): tumour endothelial VCAM1 and the tumour T/NK share follow the tumour endothelial clock state (secondaries H229.3, H229.5 PASS); the primaries, ICAM1 and CD8 share, do not
+Power note: `registered_experiments.md` (commit 233e18f). 21 cohorts with tumour endothelium (of 34); statistic r = |sum y
+conj z| / sqrt(sum y^2 sum |z|^2), within-cohort permutation of y (10,000), 200 pseudo-clock sets for z. 3 workers, 70 GB
+cap (user), peak 32.8 GB, 228 s.
+- **H229.1 FAIL (ICAM1, 190 patients / 21 cohorts):** 0.385 vs null 0.306 (SD 0.035), p 0.015, Holm 0.030; pseudo median
+  0.335, q95 0.404, p_clock 0.11: associated, not clock-specific. ICAM1 ranks at the 87.5th percentile of 200
+  expression-matched endothelial genes used as y.
+- **H229.2 FAIL (CD8 share of tumour T cells, 172 / 20):** 0.312 vs null 0.314, p 0.51: no association.
+- **H229.3 PASS (VCAM1, 190 / 21):** 0.426 vs null 0.308 (SD 0.034), p 8e-4, Holm 0.0024; pseudo q95 0.402, p_clock 0.020:
+  clock-specific.
+- **H229.4 FAIL (SELE):** 0.335 vs 0.306, p 0.20; p_clock 0.49.
+- **H229.5 PASS, borderline (T/NK share of all tumour cells, 164 / 18):** 0.378 vs null 0.302 (SD 0.037), p 0.024, Holm
+  0.048; pseudo q95 0.371, p_clock 0.040.
+- **Implied peaks (descriptive, GTEx clock-time axis, `implied_peak_h`):** ICAM1 18.5 h, VCAM1 20.5 h, SELE 19.0 h (the
+  three adhesion genes agree); T/NK share 4.8 h.
+- **Adjacent-normal endothelium (descriptive):** VCAM1 0.438 (p 0.004; pseudo q95 0.447, p_clock 0.085), ICAM1 0.414
+  (p 0.027; q95 0.453); SELE, CD8 share and T/NK share at null.
+- **Per cancer type (descriptive):** lung carries the adhesion signal (clock minus pseudo median: ICAM1 +0.166, VCAM1
+  +0.196, SELE +0.160; CD8 share +0.140); colorectal is at or below the pseudo level for ICAM1 (−0.077), SELE (−0.065)
+  and CD8 share (−0.089).
+- **Reading (registered rules):** the primaries fail: ICAM1 associates with the endothelial clock state but not beyond
+  matched non-clock gene sets, and the CD8 share does not associate. Two secondaries pass: tumour endothelial VCAM1
+  follows the endothelial clock state clock-specifically, and so, at the margin, does the T/NK share of the tumour. This
+  is a partial human correlate of the Wang et al. (Cell 2024) gate: an adhesion molecule and T-cell abundance, not ICAM1
+  or the CD8 share specifically. Association, not causation; lung-weighted as in A227 / A228. The implied hours are on
+  the GTEx axis of human clock time and are not compared with the mouse ZT of Wang et al.
+<!-- src: paper/exploratory/A229_endothelial_gate/output/{power,tests,pooled,per_cohort,pseudo,matched_genes}.csv -->

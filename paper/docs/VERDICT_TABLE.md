@@ -326,3 +326,8 @@ Source for the rows with a figure panel: `paper/exploratory/WP0_integrity/output
 | A228 | H228.3 CD8 T tumour vs normal (191, 23) | L3 | P | 0.443 (null 0.321; q95 0.491) | 4e-4 / Holm 8e-4; p_clock 0.31 | pairing PASS, not clock-specific | MDE 0.088 | A228_immune_body_time/output/tests.csv |
 | A228 | H228.4 CD8-negative T tumour vs normal (214, 26) | L3 | P | 0.532 (null 0.322; q95 0.501) | 1e-4 / Holm 3e-4; p_clock 0.015 | PASS, clock-specific | MDE 0.084 | A228_immune_body_time/output/tests.csv |
 | A228 | H228.5 NK tumour vs normal (67, 9) | L3 | P | 0.492 (null 0.342; q95 0.543) | 0.011 / Holm 0.011; p_clock 0.19 | pairing PASS, not clock-specific | MDE 0.155 | A228_immune_body_time/output/tests.csv |
+| A229 | H229.1 tumour endothelial ICAM1 vs endothelial clock state (190, 21) | L1 | P | 0.385 (null 0.306; q95 0.404) | 0.015 / Holm 0.030; p_clock 0.11 | FAIL (associated, not clock-specific) | MDE 0.086 | A229_endothelial_gate/output/tests.csv |
+| A229 | H229.2 CD8 share of tumour T cells (172, 20) | L1 | P | 0.312 (null 0.314; q95 0.379) | 0.51 / Holm 0.51; p_clock 0.54 | FAIL | MDE 0.089 | A229_endothelial_gate/output/tests.csv |
+| A229 | H229.3 VCAM1 (190, 21) | L1 | S | 0.426 (null 0.308; q95 0.402) | 8e-4 / Holm 0.0024; p_clock 0.020 | PASS, clock-specific | MDE 0.083 | A229_endothelial_gate/output/tests.csv |
+| A229 | H229.4 SELE (190, 21) | L1 | S | 0.335 (null 0.306; q95 0.393) | 0.20 / Holm 0.20; p_clock 0.49 | FAIL | MDE 0.087 | A229_endothelial_gate/output/tests.csv |
+| A229 | H229.5 T/NK share of tumour cells (164, 18) | L1 | S | 0.378 (null 0.302; q95 0.371) | 0.024 / Holm 0.048; p_clock 0.040 | PASS, clock-specific (borderline) | MDE 0.093 | A229_endothelial_gate/output/tests.csv |
