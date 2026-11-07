@@ -4685,3 +4685,13 @@ d* MDE 0.19. **Design flaw found at the power step:** with two anchors the fibro
 host (needs >= 3 anchors), so the companion clause of H230.1 / H230.3 cannot be evaluated; no observed contrast has
 been computed. `Dataset.contrast` draws random within-patient swaps (no exact enumeration). Decision on the companion
 pending (user).
+
+**A230 design change (2026-11-07, user decision; after the power note, before any observed contrast).** The fibroblast
+companion of H230.1 / H230.3 is not estimable with two anchors. It is replaced by the project's standard specificity
+check: the epithelial |offset_diff_h| (inflamed − reference) must exceed the 95th percentile of the same statistic over
+200 expression-matched pseudo-clock sets (`clocksync.paired.pseudo_waveforms`, kind "matched", log means from the
+genome-wide non-inflamed epithelial pseudobulks, seed 230), each fitted with the same anchors, strata and samples
+(gate off for pseudo sets, as A209). H230.3 pass = permutation p < 0.05 (Holm with H230.2 is moot: H230.2 belongs to the
+unscored GSE266616 arm, so H230.3 is tested alone) **and** clock > pseudo q95; p_clock = (1 + #{pseudo >= clock}) / 201.
+The d* readout gets the same pseudo check (descriptive). GSE266616 stays not scored. This is a design change recorded
+before scoring, not a post hoc reading; TAURUS remains non-blind (stroma seen in A45 / A53).
