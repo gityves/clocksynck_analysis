@@ -3855,4 +3855,11 @@ workers, unchanged code.
   clock-specific. Immune passes carry the registered caveat: tumour and normal immune cells share the circulation (diurnal
   trafficking, composition), so they show host time reaching the tumour, not necessarily a local clock. The gradient
   stroma > myeloid ≈ T/NK > B follows residency. Colorectal immune cells pair without clock specificity (descriptive).
+- **Note on the caveat (2026-11-07, wording only, verdicts unchanged):** a shared circulation does not argue against an
+  internal clock: the shared signal is clock-gene, clock-shaped state beyond matched non-clock genes, so blood would act as
+  a route of entrainment. Pairing does not separate three sources: the cells follow body time, a patient-specific immune
+  clock state not tied to body time, or subset composition. A228 (registered 2026-11-07) tests the first (tumour immune vs
+  normal-tissue fibroblasts) and the third (pairing within CD8, CD8-negative T and NK). Context: in healthy atlases
+  lymphocyte coupling is not clock-specific (A150, 0.094 vs pseudo 0.087), so H227.2 is the project's first registered
+  clock-specific T/NK result.
 <!-- src: paper/exploratory/A227_tme_compartment_pairing/output/{power,tests,pooled,descriptive,per_cohort,eligibility,eligibility_by_cancer}.csv -->
