@@ -179,10 +179,65 @@ def _gse266616(samples):
                    .rename_axis("donor"), donors.assign(site=donors.site))
 
 
-def _taurus(samples):
+def _taurus_iter(samples):
+    """(sample, cells x genes CSR counts, symbols, genome-wide UMI per cell, barcodes) of each TAURUS sample, read in row blocks."""
     import h5py
     from anndata.experimental import read_elem
 
+    with h5py.File(TAURUS_H5, "r") as f:
+        obs = read_elem(f["obs"])
+        var = read_elem(f["var"])
+        sym = (var["gene_symbol"] if "gene_symbol" in var
+               else pd.Series(var.index, index=var.index)).astype(str).to_numpy()
+        smp = obs["sample_id"].astype(str).to_numpy()
+        indptr = f["X/indptr"][:]
+        for s in samples:
+            rows = np.flatnonzero(smp == s)
+            if not len(rows):
+                continue
+            blocks = np.split(rows, np.flatnonzero(np.diff(rows) > 1) + 1)
+            mats = []
+            for b in blocks:
+                a, z = indptr[b[0]], indptr[b[-1] + 1]
+                mats.append(sp.csr_matrix((f["X/data"][a:z], f["X/indices"][a:z], indptr[b[0]:b[-1] + 2] - a),
+                                          shape=(len(b), len(sym))))
+            X = sp.vstack(mats).tocsr()
+            yield s, X, sym, np.asarray(X.sum(1)).ravel(), obs.index[rows].astype(str)
+
+
+GENOME_DIR = DATA / "ibd" / "TAURUS" / "pseudobulk_genome"
+GENOME_CLASSES = ("epithelial", "fibroblast", "endothelial")
+
+
+def genome_taurus(samples=None, classes=GENOME_CLASSES, out=GENOME_DIR) -> None:
+    """Genome-wide pseudobulks (sample x class, `gut:<class>`; same marker classes as `build`, cells >= 50 per pseudobulk, all
+    samples) of TAURUS for the pseudo-clock sets of A230: `counts.npz` (sparse, rows x genes with a non-zero total), `rows.csv`
+    (donor, compartment, n_cells, depth), `genes.csv`."""
+    sm = pd.read_csv(DATA / "ibd" / "TAURUS" / "pseudobulk" / "samples.csv")["sample"].astype(str)
+    rows, mats = [], []
+    for s, X, sym, umi, bc in _taurus_iter(sm if samples is None else samples):
+        comp = marker_compartments(X, sym, umi)
+        for c in classes:
+            i = np.flatnonzero(comp == c)
+            if len(i) < MIN_CELLS:
+                continue
+            mats.append(sp.csr_matrix(X[i].sum(0)))
+            rows.append(dict(donor=s, compartment="gut:" + c, n_cells=len(i), depth=float(umi[i].sum())))
+        print(s, flush=True)
+    M = sp.vstack(mats).tocsc()
+    keep = np.flatnonzero(np.asarray(M.sum(0)).ravel() > 0)
+    out.mkdir(parents=True, exist_ok=True)
+    sp.save_npz(out / "counts.npz", M[:, keep].tocsr())
+    pd.DataFrame(rows).to_csv(out / "rows.csv", index=False)
+    pd.DataFrame({"gene": sym[keep]}).to_csv(out / "genes.csv", index=False)
+
+
+def read_genome(out=GENOME_DIR):
+    """(counts CSR rows x genes, rows table, gene symbols) written by `genome_taurus`."""
+    return sp.load_npz(out / "counts.npz"), pd.read_csv(out / "rows.csv"), pd.read_csv(out / "genes.csv").gene.astype(str).to_numpy()
+
+
+def _taurus(samples):
     sm = pd.read_csv(DATA / "ibd" / "TAURUS" / "pseudobulk" / "samples.csv").set_index("sample")
     sm["arm"] = sm.inflammation.map({"Inflamed": "inflamed", "Non_Inflamed": "reference"})
     sm["ref_type"] = np.where(sm.arm == "reference", "non", "")
@@ -190,31 +245,10 @@ def _taurus(samples):
     if samples is not None:
         sm = sm.loc[samples]
     parts, infos = [], {}
-    with h5py.File(TAURUS_H5, "r") as f:
-        obs = read_elem(f["obs"])
-        var = read_elem(f["var"])
-        sym = (var["gene_symbol"] if "gene_symbol" in var
-               else pd.Series(var.index, index=var.index)).astype(str).to_numpy()
-        smp = obs["sample_id"].astype(str)
-        indptr = f["X/indptr"][:]
-        for s in sm.index:
-            rows = np.flatnonzero(smp.to_numpy() == s)
-            if not len(rows):
-                continue
-            if not (np.diff(rows) == 1).all():  # non-contiguous: read row by row blocks
-                blocks = np.split(rows, np.flatnonzero(np.diff(rows) > 1) + 1)
-            else:
-                blocks = [rows]
-            mats = []
-            for b in blocks:
-                a, z = indptr[b[0]], indptr[b[-1] + 1]
-                mats.append(sp.csr_matrix((f["X/data"][a:z], f["X/indices"][a:z], indptr[b[0]:b[-1] + 2] - a),
-                                          shape=(len(b), len(sym))))
-            X = sp.vstack(mats).tocsr()
-            umi = np.asarray(X.sum(1)).ravel()
-            t, infos[s] = _pseudobulk(X, sym, umi, obs.index[rows].astype(str), s)
-            parts.append(t)
-            print(f"{s}: {infos[s]['n_cells']} cells, median UMI {infos[s]['median_umi']:.0f}", flush=True)
+    for s, X, sym, umi, bc in _taurus_iter(sm.index):
+        t, infos[s] = _pseudobulk(X, sym, umi, bc, s)
+        parts.append(t)
+        print(f"{s}: {infos[s]['n_cells']} cells, median UMI {infos[s]['median_umi']:.0f}", flush=True)
     donors = sm.loc[list(infos)].rename_axis("donor")
     return _finish(parts, pd.DataFrame(infos).T.astype({"n_cells": int, "n_unassigned": int, "median_umi": float})
                    .rename_axis("donor"), donors)
@@ -226,10 +260,14 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("which", choices=["gse266616", "taurus"])
     ap.add_argument("out", help="output directory (pseudobulk.csv, donors.csv)")
+    ap.add_argument("--genome", action="store_true", help="taurus: genome-wide pseudobulks (epithelial, fibroblast, endothelial) instead")
     ap.add_argument("--unpack", action="store_true", help="unpack the GEO tar first (gse266616)")
     a = ap.parse_args()
     if a.unpack and a.which == "gse266616":
         unpack()
+    if a.genome:
+        genome_taurus()
+        sys.exit(0)
     pb, donors = build(a.which)
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)

@@ -11,10 +11,17 @@ Tables: `paper/common/datasets/ibd_gse266616/build.py` (marker classes, >= 50 ce
                   a swapped labelling within patients has the same distribution as permuting the true one, so the null SD is
                   that of the registered test, and the contrast of the true labelling is never computed. The "observed" row
                   of that call belongs to the random swap and is discarded before anything is stored or printed.
-  --stage tests   The registered contrast (H230.1-H230.3) with the true arms. Run only after the dated power note.
+  --stage tests   The contrast with the true arms, as redesigned by the A230 design change (registered_experiments.md; the
+                  fibroblast companion is replaced by a pseudo-clock check): epithelial offset_diff_h and d* (inflamed -
+                  reference, blocks = patient, 10,000 within-patient swaps, host-only gate per arm, no companion). taurus: 200
+                  expression-matched pseudo-clock sets (`pseudo_waveforms`, kind "matched", log means from the genome-wide
+                  non-inflamed epithelial pseudobulks of the eligible samples, seed 230), each fitted with the same anchors,
+                  samples and arms (no gate, n_perm 0) -> `pseudo.csv`; `tests.csv`: pseudo q95 of |offset_diff_h| and |d*|,
+                  p_clock = (1 + #{|pseudo| >= |clock|}) / (1 + n_pseudo), H230.3_pass = p_offset < 0.05 and |clock| > q95.
+                  GSE266616 (not scored) refuses to run without --force. Genome-wide pseudobulks: `build.py taurus x --genome`.
 
     python compute_a230.py --stage power --cohort gse266616|taurus [--jobs 3] [--n-perm 10000] [--n-rep 100]
-    python compute_a230.py --stage tests --cohort gse266616|taurus [--out DIR]
+    python compute_a230.py --stage tests --cohort taurus [--jobs 3] [--out DIR]   (gse266616: --force)
 
 Choices not fixed by the registration (all are data-independent)
 - Pseudobulk tables (one per cohort) are read from `output/data/<cohort>/{pseudobulk,donors}.csv` (`build.py <cohort> <dir>`).
@@ -25,15 +32,8 @@ Choices not fixed by the registration (all are data-independent)
   patient's samples are eligible one by one and the patient needs >= 1 eligible sample in each arm.
 - Permutation count (tests): all within-patient label arrangements if <= 10,000 (drawn at random, `Dataset.contrast` has no
   enumeration, as many draws as arrangements), else 10,000; seed 0. Power stage: always 10,000 random swaps (SD precision). Gate: 1,000 permutations per arm.
-- `targets` = [epithelium, fibroblast] when the companion is estimable (registered: epithelium + companion): `Contrast.module`
-  needs the companion's draws; the epithelial rows are unchanged by it. The companion, an anchor, is read on its
-  leave-one-out host, which needs >= 3 anchors: with fibroblast + endothelial only (no mural) it has no estimate, the
-  companion clause of H230.1 / H230.2 is then not estimable (`companion_estimable` False; epithelium-only MDE reported).
-- Offset difference of epithelium minus companion (module statistic) is wrapped to [-12, 12) h. The offset MDE flag uses the
-  epithelial offset_diff_h SD as registered; the module SD is reported next to it.
-- H230.1 passes if p_offset (epithelium, two-sided) < 0.05 and the module p < 0.05. H230.2: d* change of epithelium
-  (`p_star`) and its companion difference (`Contrast.companion`, same permutations); Holm over H230.2 and H230.3 in
-  `--stage tests` when both cohorts' score files exist (H230.2 gse266616, H230.3 = H230.1 rule in taurus, p = larger of the two p values).
+- Power stage only: `targets` = [epithelium, fibroblast] when the companion is estimable (never, with two anchors); the offset
+  MDE flag uses the epithelial offset_diff_h SD. The companion was dropped from the tests (design change).
 """
 
 from __future__ import annotations
@@ -218,7 +218,53 @@ def holm(p: dict) -> dict:
     return out
 
 
+def pseudo_sets(pbe, d, anchors, n_sets: int, seed: int = 230):
+    """Tables over `n_sets` expression-matched pseudo-clock gene sets (`clocksync.paired.pseudo_waveforms`, kind "matched"): the
+    eligible rows of the epithelial / fibroblast / endothelial pseudobulks with the counts of the pseudo genes read from the
+    genome-wide pseudobulks (`build.read_genome`). log means: genome-wide non-inflamed (reference) epithelial pseudobulks of the
+    eligible samples; genes with a mean count >= 1 (as A53). Returns [(table, waveform)]."""
+    from clocksync.paired import pseudo_waveforms
+
+    sys.path.insert(0, str(PAPER / "common" / "datasets" / "ibd_gse266616"))
+    import build as B
+
+    M, rows, genes = B.read_genome()
+    rows = rows[rows.donor.isin(d.index)].reset_index().rename(columns={"index": "row"})
+    t = pbe[pbe.compartment.isin([EPI, FIB, ENDO])].reset_index(drop=True)
+    r = t.merge(rows, on=["donor", "compartment"], how="left", suffixes=("", "_g"))
+    if r.row.isna().any() or not (r.n_cells == r.n_cells_g).all():
+        raise ValueError("genome-wide pseudobulks do not match the clock pseudobulks")
+    G = M[r.row.to_numpy().astype(int)].tocsc()
+    ref = ((r.compartment == EPI) & (r.donor.map(d.arm) == "reference")).to_numpy()
+    mean_count = np.asarray(G[ref].mean(0)).ravel()
+    lm = pd.Series(np.log(np.asarray((G[ref].multiply(1 / r.depth[ref].to_numpy()[:, None])).mean(0)).ravel() + 1e-12), index=genes)
+    lm = lm[mean_count >= 1]
+    lm = lm[~lm.index.duplicated()]
+    gi = pd.Series(np.arange(len(genes)), index=genes)[~pd.Index(genes).duplicated()]
+    wfs = pseudo_waveforms(lm, n_sets, np.random.default_rng(seed), cs.Dataset(t, anchors=anchors, donors=d).waveform)
+    base = t[["donor", "compartment", "stratum", "n_cells", "depth"]]
+    return [(pd.concat([base, pd.DataFrame(G[:, gi[list(w.genes)].to_numpy()].toarray(), columns=list(w.genes))], axis=1), w)
+            for w in wfs]
+
+
+def pseudo_one(table, wf, d, anchors, lab, blocks) -> tuple:
+    """(|epithelial offset_diff_h|, epithelial d*) of one pseudo set: same anchors, samples and arms; no gate, no permutations."""
+    try:
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            ds = cs.Dataset(table, anchors=anchors, donors=d, waveform=wf)
+            t = ds.contrast(lab, levels=LEVELS, targets=[EPI], blocks=blocks, n_perm=0, n_boot=0,
+                            require_host_gate_each_arm=False).table.loc[EPI]
+        return float(t.offset_diff_h), float(t.d_star)
+    except Exception:  # a pseudo set that cannot be fitted is dropped (counted in n_pseudo)
+        return np.nan, np.nan
+
+
 def stage_tests(cohort: str, a) -> None:
+    """H230.1 / H230.3 as redesigned (A230 design change): epithelial offset change (inflamed - reference) with a
+    within-patient permutation p and the 95th percentile of the same statistic over 200 pseudo-clock sets."""
+    if cohort == "gse266616" and not a.force:
+        raise SystemExit("A230: GSE266616 is not scored (host-only gate fails in both arms, power note); use --force to run anyway")
     out = Path(a.out) if a.out else OUT
     out.mkdir(parents=True, exist_ok=True)
     pb, don = load(cohort)
@@ -228,55 +274,45 @@ def stage_tests(cohort: str, a) -> None:
     lab, blocks = d.arm.astype(str), d.patient.astype(str)
     lab.index = blocks.index = lab.index.astype(str)
     n_perm, n_all = n_perm_for(lab, blocks)
-    n_perm = a.n_perm or n_perm
+    n_perm = a.n_perm or N_PERM_MAX
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        c = ds.contrast(groups=lab, levels=LEVELS, targets=targets_of(ds), companion=COMP if companion_ok(ds) else None, blocks=blocks, n_perm=n_perm,
-                        n_boot=a.n_boot, seed=SEED, require_host_gate_each_arm=True, n_gate=N_GATE)
+        c = ds.contrast(groups=lab, levels=LEVELS, targets=[EPI], blocks=blocks, n_perm=n_perm, n_boot=a.n_boot,
+                        seed=SEED, require_host_gate_each_arm=True, n_gate=N_GATE)
     c.table.to_csv(out / f"contrast_{cohort}.csv")
     pd.DataFrame(c.gate).T.to_csv(out / f"tests_gate_{cohort}.csv")
-    if c.companion is not None:
-        c.companion.to_csv(out / f"companion_{cohort}.csv", index=False)
     if c.null is None:
-        pd.DataFrame([dict(cohort=cohort, status="not estimable (host-only gate failed)")]).to_csv(out / f"score_{cohort}.csv", index=False)
-        holm_files(out)
+        pd.DataFrame([dict(cohort=cohort, status="not estimable (host-only gate failed)")]).to_csv(out / "tests.csv", index=False)
         return
     t = c.table.loc[EPI]
-    if companion_ok(ds):
-        mod = c.module({"epi_minus_fib": lambda x: float(S.wrap(x[EPI] - x[COMP]))}, scales=("offset_diff_h",))
-        mod.to_csv(out / f"module_{cohort}.csv", index=False)
-        comp = c.companion.iloc[0]
-    else:  # companion not estimable: the specificity clause cannot be evaluated
-        mod = pd.DataFrame(dict(value=[np.nan], p=[np.nan]))
-        comp = pd.Series(dict(d_star_minus_companion=np.nan, p_star=np.nan))
     row = dict(cohort=cohort, patients=e["n_patients"], samples=len(d), n_perm=n_perm, arrangements=n_all,
-               offset_diff_h=t.offset_diff_h, p_offset=t.p_offset, module_value=mod.value[0], module_p=mod.p[0],
-               d=t.d, d_star=t.d_star, p_star=t.p_star, d_star_minus_companion=comp.d_star_minus_companion,
-               p_star_companion=comp.p_star, companion_estimable=companion_ok(ds), status=t.status)
-    row["H230.1_rule"] = bool(row["p_offset"] < 0.05 and row["module_p"] < 0.05)  # False when the companion is not estimable
-    pd.DataFrame([row]).to_csv(out / f"score_{cohort}.csv", index=False)
-    holm_files(out)
+               offset_diff_h=t.offset_diff_h, p_offset=t.p_offset, d=t.d, d_star=t.d_star, p_star=t.p_star, status=t.status)
+    if cohort == "taurus":
+        from joblib import Parallel, delayed
 
-
-def holm_files(out: Path) -> None:
-    """Holm over H230.2 (gse266616 d*) and H230.3 (taurus) once both score files exist; a test that is not estimable drops out."""
-    other = {k: out / f"score_{k}.csv" for k in ("gse266616", "taurus")}
-    if all(p.exists() for p in other.values()):
-        g, tr = (pd.read_csv(other[k]).iloc[0] for k in ("gse266616", "taurus"))
-        ps = {"H230.2": g.get("p_star", np.nan), "H230.3": max(tr.get("p_offset", np.nan), tr.get("module_p", np.nan))}
-        ps = {k: float(v) for k, v in ps.items() if np.isfinite(v)}  # a test that is not estimable drops out of the family
-        h = holm(ps)
-        pd.DataFrame([dict(test=k, holm_p=v) for k, v in h.items()]).to_csv(out / "holm.csv", index=False)
+        sets = pseudo_sets(pbe, d, anchors, a.n_pseudo)
+        res = Parallel(n_jobs=a.jobs)(delayed(pseudo_one)(tb, w, d, anchors, lab, blocks) for tb, w in sets)
+        ps = pd.DataFrame(res, columns=["offset_diff_h", "d_star"]).assign(set=[w.name for _, w in sets])
+        ps.to_csv(out / "pseudo.csv", index=False)
+        for k, v in (("offset", abs(row["offset_diff_h"])), ("d_star", abs(row["d_star"]))):
+            x = ps["offset_diff_h" if k == "offset" else "d_star"].abs().dropna()
+            row[f"pseudo_q95_{k}"] = float(np.quantile(x, 0.95))
+            row[f"p_clock_{k}"] = float((1 + (x >= v).sum()) / (1 + len(x)))
+        row["n_pseudo_ok"] = int(ps.offset_diff_h.notna().sum())
+        row["H230.3_pass"] = bool(row["p_offset"] < 0.05 and abs(row["offset_diff_h"]) > row["pseudo_q95_offset"])
+    pd.DataFrame([row]).to_csv(out / "tests.csv", index=False)
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--stage", choices=["power", "tests"], required=True)
     ap.add_argument("--cohort", choices=["gse266616", "taurus"], required=True)
-    ap.add_argument("--jobs", type=int, default=1, help="workers of the coupling MDE (at most 3 today)")
+    ap.add_argument("--jobs", type=int, default=1, help="workers (coupling MDE, pseudo sets; at most 3 today)")
     ap.add_argument("--n-perm", type=int, default=0, help="override the permutation count (smoke runs)")
     ap.add_argument("--n-rep", type=int, default=100, help="replicates per damping level of the coupling MDE (0: skip)")
     ap.add_argument("--n-boot", type=int, default=200)
+    ap.add_argument("--n-pseudo", type=int, default=200, help="tests (taurus): pseudo-clock sets")
+    ap.add_argument("--force", action="store_true", help="tests: run GSE266616 although it is not scored")
     ap.add_argument("--out", default=None, help="tests: output directory (default output/)")
     a = ap.parse_args()
     limit_threads(1 if a.jobs > 1 else 4)
