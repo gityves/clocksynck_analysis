@@ -4636,3 +4636,40 @@ Null from y shuffled within cohort only (10,000). Tumour side: H229.1 ICAM1 190 
 T/NK share 164 / 18 (0.093). All scored. Adjacent-normal (descriptive): 144-155 patients, MDE 0.094-0.097. Exclusions: 10
 cohorts without a tumour endothelial pseudobulk, 3 with < 4 endothelial patients; GSE183219 out of H229.2 (1 patient with >= 50
 T/NK cells); 3 cohorts out of H229.5 (no T_NK pseudobulk). Implied peak = arg(sum y z) in hours (`clocksync.stats.HOURS`).
+
+## A230 (2026-11-07, user agreement; written before GSE266616 is downloaded or any of its counts are read, and before any epithelial offset is computed in TAURUS; seen: the GEO sample metadata of GSE266616 (14 patients with inflamed and adjacent-to-inflamed or non-inflamed samples at the same site, scout `exploratory/scouts_2026-11-07/ibd_scout.md`), TAURUS stromal results A45 / A53 (stromal coupling 0.80-0.91 in both states, phases unchanged), the mouse regenerating-colon result (Carmona-Alcocer et al., Nat Commun 2026; A21 archive: epithelium −8.95 h untimed vs −9.03 h timed)): is the epithelial clock offset from the patient's stromal host in inflamed human intestine? **Within-person contrast; single cell; GSE266616 blind primary, TAURUS non-blind secondary**
+**Why.** Q25: local desynchrony after injury needs no cue conflict in mice (regenerating colon). Its human counterpart is
+an epithelial offset against the same tissue's stroma that differs between inflamed and non-inflamed tissue of the same
+patient.
+**Data.**
+- **GSE266616** (Crohn's disease, terminal ileum and ascending colon; epithelial and lamina-propria fractions in one
+  library; 10x 3' v3.1; processed counts from GEO; `$SCCC_DATA/gse266616/` with PROVENANCE.md). Arms: inflamed vs the
+  same patient's adjacent-to-inflamed or non-inflamed sample at the same site ("reference"); one pair per patient and
+  site; if a patient has both sites, both pairs enter with patient as the permutation block.
+- **TAURUS** (on disk, `taurus` dataset; inflamed vs non-inflamed, UC + CD): non-blind secondary.
+**Labels and pseudobulks (fixed now).** No author annotation is used. Cells classed by the `cancer_sc` marker rules
+(epithelial, fibroblast, endothelial, mural, myeloid, T_NK, B_plasma, mast); doublet-like cells (two class scores within
+the rule's margin) dropped as in `cancer_sc`. Pseudobulk per sample x class, >= 50 cells; sample kept if median UMI per
+cell >= 1,500. Unit (resection) = sample; donor table carries patient, site and arm.
+**Model.** `clocksync.Dataset` with fixed stromal-vascular anchors (fibroblast, endothelial; mural if present in >= 60 %
+of samples), strata = site; `Dataset.contrast(groups = arm, levels = ("reference", "inflamed"), targets =
+["epithelial"], companion = "fibroblast" (read on its leave-one-out host), blocks = patient, n_perm = all within-patient
+label swaps if <= 10,000 else 10,000 random, require_host_gate_each_arm = True)`.
+- **H230.1 (primary):** epithelial offset change |offset_diff_h| (inflamed − reference) > permutation null (two-sided,
+  within-patient swaps), **and** larger than the companion's offset change on the same permutations (`Contrast.module`,
+  epithelial − fibroblast offset difference, two-sided p < 0.05).
+- **H230.2 (secondary):** epithelial coupling change d* (inflamed − reference) ≠ 0, with the companion difference on the
+  same permutations.
+- **H230.3 (secondary, non-blind):** H230.1 in TAURUS (same rules, blocks = patient).
+Holm over H230.2-H230.3.
+**Gate.** Host-only gate in each arm (`require_host_gate_each_arm`); a failed gate makes the contrast not estimable.
+**Power (dated note before scoring; no observed contrast computed).** Eligible patients (both arms with epithelium and
+>= 2 anchors), median UMI, cells per class; offset MDE = 2.49 x SD of offset_diff_h under within-patient label swaps
+(permutation draws only); coupling MDE via `power.mde`. **Not scored** if < 6 eligible patients, or offset MDE > 6 h
+(the mouse effect is about 9-12 h), or the gate fails in either arm.
+**Reading.** H230.1 pass: inflamed human intestinal epithelium runs at a different phase from its own stroma than
+non-inflamed epithelium of the same patient: a human local desynchrony without cue conflict. Fail with MDE <= 6 h: a
+mouse-sized shift is not present; smaller shifts not excluded. "Adjacent-to-inflamed" is not strictly non-inflamed,
+which biases toward no difference. Not scored: the local clause stays supported by mouse colon and tumours only.
+**Stop rule:** one amendment; no other label rule, anchor set or arm definition after the power note. **Code:**
+`paper/exploratory/A230_ibd_local_offset/`.
