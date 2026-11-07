@@ -31,6 +31,9 @@ About 150 ledger numbers were checked against CSVs (two Sonnet agents, key value
 8. **Gate false positives are omitted next to the rows that rest on gate passes.** A145 H145.3: in no-clock simulations
    the gate passes 4 of 30 and false-claims 0.127 vs CoFE 0.06 (L898-899). A154 V154.1 fails narrowly. Rows 1.3, 3.1 and
    7.2 rely on gate passes.
+   **Update 2026-11-07:** the claim rule (gate + matched pseudo-clock companion) makes 0 of 150 false claims in the same
+   no-clock arm (A209, A209b; gate alone 26 and 13 of 150) and keeps 86 of 90 true couplings >= 0.5. State the gate-alone
+   rate next to the companion rate; rows without a companion (A174) are checked against surgery windows.
 9. **Row 7.1 says the reverse of its source, and mislabels A124.** "Blood time signal follows cell composition" vs RP:
    composition removes 6 % and the explanation is "only weakly supported" (L3194-3195). A124 (night shift) is a muscle
    study (GSE106800, 11 subjects, L1263), not blood: its null is a power limit (MDE 7.3 h), not a blood limit.
@@ -292,7 +295,7 @@ Undersold:
 | section | objection | answered by recorded results? |
 |---|---|---|
 | 0 | "Brain-dead donors show body-wide desynchrony, so your headline is false." | Not answered; the only answer is to include it (section 7). |
-| 1 | "Your gate passes shared non-clock structure (A145 H145.3 0.127 false-claim vs CoFE 0.06; A154 V154.1)." | Partly: A154 N1 map (factor raises pass rate to ≤ 0.10-0.14); matched pseudo-clock companions for most rows. Not for A174, V25.5 gates without companions. |
+| 1 | "Your gate passes shared non-clock structure (A145 H145.3 0.127 false-claim vs CoFE 0.06; A154 V154.1)." | Partly: A154 N1 map (factor raises pass rate to ≤ 0.10-0.14); matched pseudo-clock companions for most rows. Not for A174, V25.5 gates without companions. **Update 2026-11-07:** answered for the claim rule: gate + companion 0 of 150 false claims (A209, A209b); V25.5 now has its companion (A200); A174 is checked against surgery windows. |
 | 1 | "A conserved waveform is assumed across tissues and people." | Not answered: A139 failed (L852-854). |
 | 1 | "Post-mortem GTEx is not physiology (agonal state, ischaemia)." | Partly: A143 quality adjustment, A109 procurement checks, living cohorts (A113, A174, A200). |
 | 2 | "Coupling c is biased low and depends on host spread; comparisons are not like-for-like." | Partly: A154/A162 document the bias; d* used for contrasts; raw c should not be compared. |

@@ -147,3 +147,36 @@ physiological proliferation keeps the clock (A211); the clock adds no prognostic
 field's positive clock-outcome literature lacks the two controls that remove it. The provocative question for Cell is
 whether "clock disruption in cancer" is largely a composition effect of tumour state; what happens inside tumour cells
 needs deeper single-cell data than exist.
+
+## 8. Update (2026-11-07): gate false positives, the tumour microenvironment, and what item 1 is for
+
+Numbers from `results_preliminary.md` (A209, A209b, A227-A229, A151 note 2, A111, A129) and `VERDICT_TABLE.md`.
+- **Item 3 (gate false positives) is closed for the claim rule actually used.** In the A145 no-clock arm, gate-only
+  false claims were 26 of 150 (A209) and 13 of 150 with clock-like non-clock genes (A209b); with the matched pseudo-clock
+  companion, 0 of 150 in both, and 0 of 300 with a clock-gene-biased factor (the gate itself rejects it). Power kept at
+  c >= 0.5 under working hours: 86 of 90 vs 90 of 90; the cost is at weak coupling (c 0.25: 0.167 vs 0.733). Residual,
+  for the method text: (i) a non-clock factor with the clock genes' own phase pattern is not separable by any method;
+  (ii) the no-clock arm is not fully exchangeable (structural, A209b), so the simulated rate is strict; (iii) A174
+  (heart) has no companion but is checked against the AM / PM surgery windows. Section 3 row "Fewer false clocks":
+  **yes with the companion** (gate alone: no).
+- **The cancer chapter now has a cell-type-resolved positive (A227-A229).** Tumour compartments keep the same patient's
+  normal-tissue clock state beyond matched non-clock genes: myeloid 0.581 vs pseudo q95 0.548 (169 patients) and T/NK
+  0.539 vs 0.510 (227), registered (A227); inside T/NK the pairing holds for CD8-negative T cells (0.532 vs 0.501, 214),
+  not CD8 T or NK, so it is not CD4 / CD8 / NK mixing (A228). Stroma: post hoc origin (A151 note 2: fibroblasts 0.699 vs
+  0.542, endothelium 0.701 vs 0.527), reproduced in pre-specified analyses on overlapping patients (A227 anchors 0.686 /
+  0.677; A228 control tumour endothelium vs normal fibroblasts 0.642 vs 0.544), independent confirmation not possible
+  (A226); stroma keeps the signal in colorectal, where immune compartments do not. Body time in immune cells against a
+  different cell type is not detected with the registered fibroblast reference (A228 H228.1-2 fail; endothelial
+  reference above q95, descriptive). Human correlate of Wang et al. (Cell 2024): tumour endothelial VCAM1 (0.426 vs q95
+  0.402) and, borderline, the tumour T/NK share (0.378 vs 0.371) follow the endothelial clock state clock-specifically;
+  ICAM1 and the CD8 share, the primaries, do not (A229). Lung-weighted throughout. Section 4 changes from "a critique
+  plus nulls, with one positive finding" to "a critique plus a layered positive: the tumour microenvironment keeps the
+  patient's body time", and adds a provocative question: does body time reach tumours through the vasculature?
+- **Item 1 (desynchrony positive) is a biological, not a methodological, gap.** The method already detects imposed
+  desynchrony with known truth: day-restricted feeding (Xin, untimed offset change tracks the timed +10.1 h liver shift,
+  Fisher-Lee 0.988, H111.1 PASS; Manella 0.986, not testable with 3 tissues), hepatocyte Bmal1 KO (liver coupling 0.967
+  -> 0.676, d* −0.287, companions flat, A129), heart AM / PM (A174), breast internal time (A200), the aorta shift after
+  a 6 h advance (A201). What is missing is the case the headline is about and the main objection names (claims ledger
+  section 0): a disease-relevant shift (jet lag, shift work) in which organs re-entrain at different speeds. The
+  in-house multi-organ jet-lag data would provide it without a new experiment (owner and PI agreement); a new wet-lab
+  experiment is one option, not a requirement. Without it, the headline states the limit.
