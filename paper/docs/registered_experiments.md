@@ -4629,3 +4629,10 @@ humans, untimed). H229.2 pass: the CD8 share of tumour T cells follows the endot
 mechanism has a human correlate. Not passing: "not detected at MDE x", not a refutation (daytime surgery compresses the
 spread). Association, not causation: a shared systemic cue could move both. **Stop rule:** one amendment. **Code:**
 `paper/exploratory/A229_endothelial_gate/`.
+
+**A229 power note (2026-11-07, before any observed association; `A229_endothelial_gate/output/{eligibility,power}.csv`, commit 87ebf4f).**
+Null from y shuffled within cohort only (10,000). Tumour side: H229.1 ICAM1 190 patients / 21 cohorts, null 0.306 SD 0.035, MDE
+0.086; H229.2 CD8 share 172 / 20, 0.315, 0.036, 0.089; H229.3 VCAM1 190 / 21 (MDE 0.083); H229.4 SELE 190 / 21 (0.087); H229.5
+T/NK share 164 / 18 (0.093). All scored. Adjacent-normal (descriptive): 144-155 patients, MDE 0.094-0.097. Exclusions: 10
+cohorts without a tumour endothelial pseudobulk, 3 with < 4 endothelial patients; GSE183219 out of H229.2 (1 patient with >= 50
+T/NK cells); 3 cohorts out of H229.5 (no T_NK pseudobulk). Implied peak = arg(sum y z) in hours (`clocksync.stats.HOURS`).
