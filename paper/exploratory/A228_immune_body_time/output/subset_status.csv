@@ -1,0 +1,35 @@
+study,cancer,subset_status
+ERP149257,colorectal,ok
+ERP153272,lung,ok
+GSE131907,lung,ok
+GSE132465,colorectal,ok
+GSE144240,skin,ok
+GSE144735,colorectal,ok
+GSE150290,gastric,ok
+GSE164789,lung,ok
+GSE166555,colorectal,ok
+GSE167297,gastric,ok
+GSE178341,colorectal,ok
+GSE181294,prostate,ok
+GSE183904,gastric,ok
+GSE200972,lung,ok
+GSE212966,pancreatic,ok
+GSE229253,lung,ok
+GSE236696,colorectal,ok
+GSE242889,liver,ok
+GSE271690,colorectal,ok
+GSE281736,thyroid,ok
+GSE282701,liver,ok
+GSE294300,colorectal,ok
+GSE310916,lung,ok
+GSE315534,colorectal,ok
+GSE326201,liver,ok
+GSE335070,ampullary,ok
+SRP572743,breast,ok
+GSE308103,lung,ok; genes absent: CD8B
+GSE183219,lung,ok
+GSE155109,breast,ok
+OPSCC_b6b5ea88,head and neck,ok
+RCC_5af90777,kidney,ok
+Qian2020_CRC,colorectal,ok
+Qian2020_LUAD,lung,ok
