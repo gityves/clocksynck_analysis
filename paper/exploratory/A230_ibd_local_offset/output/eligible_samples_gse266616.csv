@@ -1,0 +1,17 @@
+donor,gsm,tissue,condition,age,treatment,region,patient,site,arm,ref_type,patient_site,n_cells,median_umi,n_unassigned,kept,sample_ok
+HA60TI_ad,GSM8252519,terminal_ileum,CD,70,no,adjacent,HA60,TI,reference,adjacent,HA60|TI,5437,5623.0,487,True,True
+HA60TI_inf,GSM8252520,terminal_ileum,CD,70,no,inf,HA60,TI,inflamed,adjacent,HA60|TI,4980,5905.5,504,True,True
+HA66AC_ad,GSM8252529,ascending_colon,CD,32,anti_IL12_IL23,adjacent,HA66,AC,reference,adjacent,HA66|AC,4676,7381.0,441,True,True
+HA66AC_inf,GSM8252530,ascending_colon,CD,32,anti_IL12_IL23,inf,HA66,AC,inflamed,adjacent,HA66|AC,8839,3776.0,839,True,True
+HA68TI_ad,GSM8252531,terminal_ileum,CD,63,no,adjacent,HA68,TI,reference,adjacent,HA68|TI,7767,6356.0,419,True,True
+HA68TI_inf,GSM8252532,terminal_ileum,CD,63,no,inf,HA68,TI,inflamed,adjacent,HA68|TI,5618,6844.5,504,True,True
+HA70TI_ad,GSM8252533,terminal_ileum,CD,38,anti_TNFalpha,adjacent,HA70,TI,reference,adjacent,HA70|TI,6573,6331.0,449,True,True
+HA70TI_inf,GSM8252534,terminal_ileum,CD,38,anti_TNFalpha,inf,HA70,TI,inflamed,adjacent,HA70|TI,5594,6723.0,467,True,True
+HA79TI_ad,GSM8252535,terminal_ileum,CD,24,anti_IL12_IL23,adjacent,HA79,TI,reference,adjacent,HA79|TI,6136,5976.0,413,True,True
+HA79TI_inf,GSM8252536,terminal_ileum,CD,24,anti_IL12_IL23,inf,HA79,TI,inflamed,adjacent,HA79|TI,7187,4429.0,590,True,True
+HA82TI_ad,GSM8252537,terminal_ileum,CD,21,anti_TNFalpha,adjacent,HA82,TI,reference,adjacent,HA82|TI,8562,3346.0,880,True,True
+HA82TI_inf,GSM8252538,terminal_ileum,CD,21,anti_TNFalpha,inf,HA82,TI,inflamed,adjacent,HA82|TI,5678,5183.0,579,True,True
+HA102AC_ad,GSM8647246,ascending_colon,CD,44,anti-TNF,adjacent,HA102,AC,reference,adjacent,HA102|AC,6184,4418.5,893,True,True
+HA102AC_inf,GSM8647247,ascending_colon,CD,44,anti-TNF,inf,HA102,AC,inflamed,adjacent,HA102|AC,4310,6926.0,525,True,True
+HA104AC_ad,GSM8647248,ascending_colon,CD,48,anti_IL12_IL23,adjacent,HA104,AC,reference,adjacent,HA104|AC,4545,7262.0,838,True,True
+HA104AC_inf,GSM8647249,ascending_colon,CD,48,anti_IL12_IL23,inf,HA104,AC,inflamed,adjacent,HA104|AC,5756,5187.5,622,True,True

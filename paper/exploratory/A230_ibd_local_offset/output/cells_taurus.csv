@@ -1,0 +1,17 @@
+compartment,arm,samples,median_cells,min_cells,median_mean_umi_per_cell
+gut:B_plasma,inflamed,60,1056.5,309,7229.208215184182
+gut:B_plasma,reference,82,720.5,112,5733.260904289518
+gut:T_NK,inflamed,60,1005.0,261,2674.998690575165
+gut:T_NK,reference,81,538.0,51,1895.537356321839
+gut:endothelial,inflamed,60,261.0,66,6131.575527195577
+gut:endothelial,reference,82,184.5,52,4441.7057165861515
+gut:epithelial,inflamed,60,697.5,100,10847.716592116298
+gut:epithelial,reference,82,2061.0,138,10391.817695425594
+gut:fibroblast,inflamed,60,203.0,51,4122.225108225108
+gut:fibroblast,reference,82,488.0,53,2453.2139801375097
+gut:mast,inflamed,5,69.0,55,2189.7971014492755
+gut:mast,reference,3,52.0,51,1949.7254901960785
+gut:mural,inflamed,29,97.0,51,4338.2692307692305
+gut:mural,reference,38,75.0,50,2703.0945076694707
+gut:myeloid,inflamed,55,151.0,54,5433.69298245614
+gut:myeloid,reference,41,86.0,50,4717.802721088436
