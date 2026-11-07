@@ -39,6 +39,10 @@ loses it". This needs your review (Phase 8: framing and figures). All numbers: `
   - Tumour myeloid and T/NK cells keep the patient's normal-tissue clock state, clock-specifically (A227, registered: myeloid
     0.581 vs pseudo q95 0.548, 169 patients; T/NK 0.539 vs 0.510, 227 patients); B / plasma and mast pair without clock
     specificity. Gradient stroma > myeloid ≈ T/NK > B follows residency; immune passes may reflect shared circulation.
+  - A228: the clock-specific T/NK pairing holds within CD8-negative T cells (0.532 vs q95 0.501, 214 patients), not CD8 T
+    or NK. Body time in tumour immune cells is not detected against normal fibroblasts (T/NK 0.441 vs q95 0.458; myeloid
+    0.467 vs 0.487), although the endothelial reference (descriptive) and lung are positive; colorectal is at the pseudo
+    level throughout.
 - **Corrective (the method's specificity and design discipline applied to the literature):**
   - Clock "prognosis" is proliferation (A191-A198).
   - Circadian LASSO signatures are no better than random gene lists; they "validate" exactly where random lists do (A220;

@@ -3863,3 +3863,34 @@ workers, unchanged code.
   lymphocyte coupling is not clock-specific (A150, 0.094 vs pseudo 0.087), so H227.2 is the project's first registered
   clock-specific T/NK result.
 <!-- src: paper/exploratory/A227_tme_compartment_pairing/output/{power,tests,pooled,descriptive,per_cohort,eligibility,eligibility_by_cancer}.csv -->
+
+## A228 (scored 2026-11-07): tumour immune states pair with normal fibroblasts but not clock-specifically (H228.1-2 fail); within T/NK, CD8-negative T cells keep the clock-specific pairing (H228.4 PASS), CD8 T and NK do not
+Power note: `registered_experiments.md` (commit 9fbe4a8). 34 A227 cohorts; statistic, permutation null (10,000), 200
+pseudo-clock sets and pooling as A227. First run killed for memory (2 workers, 30 GB cap); rerun with 3 workers under a 70 GB
+cap (user, machine idle), unchanged code, peak 29.6 GB.
+- **H228.1 FAIL (tumour T_NK vs normal fibroblast, 118 patients / 17 cohorts):** 0.441 vs null 0.366 (SD 0.043), p 0.044,
+  Holm 0.044; pseudo median 0.394, q95 0.458, p_clock 0.15: pairing without clock specificity.
+- **H228.2 FAIL (tumour myeloid vs normal fibroblast, 116 / 17):** 0.467 vs 0.370, p 0.015, Holm 0.029; pseudo q95 0.487,
+  p_clock 0.11: not clock-specific.
+- **Descriptive, vs normal endothelium:** T_NK 0.481 (q95 0.470, p_clock 0.035), myeloid 0.510 (q95 0.465, p_clock 0.005),
+  both above pseudo q95 (not registered tests).
+- **Positive control (tumour endothelium vs normal fibroblast, 76 / 13):** 0.642 vs pseudo q95 0.544, p_clock 0.005: two
+  body-time compartments pair clock-specifically across cell types, so the cross-compartment design can detect it.
+- **Same-sample normal immune vs normal fibroblast (ambient not excluded):** T_NK 0.490 (q95 0.504, p_clock 0.090); myeloid
+  0.590 (q95 0.555, p_clock 0.025).
+- **H228.4 PASS (CD8-negative T, 214 / 26):** 0.532 vs null 0.322 (SD 0.033), p 1e-4, Holm 3e-4; pseudo median 0.438, q95
+  0.501, p_clock 0.015: clock-specific.
+- **H228.3 (CD8 T, 191 / 23):** pairing 0.443 vs 0.321, p 4e-4, Holm 8e-4; pseudo q95 0.491, p_clock 0.31: **not
+  clock-specific**.
+- **H228.5 (NK, 67 / 9):** 0.492 vs 0.342, p 0.011, Holm 0.011; pseudo q95 0.543, p_clock 0.19: **not clock-specific**.
+- **Per cancer type (descriptive, >= 12 patients):** colorectal at or below its pseudo median in every cross test (T_NK vs
+  fibroblast −0.022, myeloid −0.009) and for CD8 T (−0.012); lung positive throughout (T_NK vs fibroblast +0.114, myeloid
+  +0.244, CD8-negative T +0.220, positive control +0.313).
+- **Reading (registered rules):** body time in the tumour immune compartments is not detected against normal fibroblasts
+  (MDE 0.108; excess over null 0.076 for T_NK). By the registered rule this is "not detected", not evidence for a
+  patient-specific immune trait; the endothelial reference, descriptive, is clock-specific for both, and lung carries the
+  cross-compartment signal while colorectal sits at the pseudo level. Part 2 is the case the registration did not foresee
+  (one of H228.3 / H228.4 passes): the clock-specific T/NK pairing survives inside CD8-negative T cells, so it is not
+  CD4 / CD8 / NK mixing there; CD8 T cells pair without clock specificity. Composition inside the CD8-negative class (CD4
+  naive / memory / Treg, gamma-delta, MAIT) remains possible.
+<!-- src: paper/exploratory/A228_immune_body_time/output/{power,tests,pooled,per_cohort,pseudo,descriptive,subset_fraction_summary}.csv -->

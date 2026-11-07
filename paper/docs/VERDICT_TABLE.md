@@ -321,3 +321,8 @@ Source for the rows with a figure panel: `paper/exploratory/WP0_integrity/output
 | A227 | H227.3 same, B / plasma (172, 22) | L3 | S | 0.420 (null 0.338; q95 0.465) | 0.010 / Holm 0.020; p_clock 0.30 | pairing PASS, not clock-specific | MDE 0.087 | A227_tme_compartment_pairing/output/tests.csv |
 | A227 | H227.5 same, mast (50, 8) | L3 | S | 0.514 (null 0.390; q95 0.549) | 0.036 / Holm 0.036; p_clock 0.17 | pairing PASS, not clock-specific | MDE 0.165 | A227_tme_compartment_pairing/output/tests.csv |
 | A227 | H227.4 mural | L3 | S | not run | - | NOT SCORED (37 patients) | MDE 0.189 | A227_tme_compartment_pairing/output/power.csv |
+| A228 | H228.1 tumour T/NK vs normal fibroblast clock pairing (118, 17) | L3 | P | 0.441 (null 0.366; q95 0.458) | 0.044 / Holm 0.044; p_clock 0.15 | FAIL (pairing, not clock-specific) | MDE 0.108 | A228_immune_body_time/output/tests.csv |
+| A228 | H228.2 tumour myeloid vs normal fibroblast (116, 17) | L3 | P | 0.467 (null 0.370; q95 0.487) | 0.015 / Holm 0.029; p_clock 0.11 | FAIL (pairing, not clock-specific) | MDE 0.107 | A228_immune_body_time/output/tests.csv |
+| A228 | H228.3 CD8 T tumour vs normal (191, 23) | L3 | P | 0.443 (null 0.321; q95 0.491) | 4e-4 / Holm 8e-4; p_clock 0.31 | pairing PASS, not clock-specific | MDE 0.088 | A228_immune_body_time/output/tests.csv |
+| A228 | H228.4 CD8-negative T tumour vs normal (214, 26) | L3 | P | 0.532 (null 0.322; q95 0.501) | 1e-4 / Holm 3e-4; p_clock 0.015 | PASS, clock-specific | MDE 0.084 | A228_immune_body_time/output/tests.csv |
+| A228 | H228.5 NK tumour vs normal (67, 9) | L3 | P | 0.492 (null 0.342; q95 0.543) | 0.011 / Holm 0.011; p_clock 0.19 | pairing PASS, not clock-specific | MDE 0.155 | A228_immune_body_time/output/tests.csv |
