@@ -4549,3 +4549,43 @@ non-clock structure (as A149 epithelium). **Stop rule:** one amendment. **Code:*
 B_plasma 172 / 22, 0.339, 0.035, 0.087; mast 50 / 8, 0.390, 0.066, 0.165; mural 37 / 7 (MDE 0.189): **not scored** (< 40
 patients). Anchors: fibroblast 93 / 16 (MDE 0.119), endothelial 101 / 14 (0.114). Scored: H227.1-3, H227.5. Patients are not
 de-duplicated across A149 and A226 cohorts (Qian 2020 donor overlap with A149 unconfirmed; README).
+
+## A228 (2026-11-07, user agreement; written after A227 was scored (T_NK 0.539 vs pseudo q95 0.510; myeloid 0.581 vs 0.548) and before any cross-compartment or T/NK-subset pairing is computed or any subset label is called; seen: A150 (healthy lymphocyte coupling 0.094 vs pseudo 0.087), A152, A159, A140 (TNBC immune gate fails), fibrotic-lung T-cell loss of host loading, the blood-composition result): does the tumour immune clock state carry body time, and is the T/NK pairing a composition effect? **L3-like pairing; single-cell, A227 cohorts**
+**Why.** A227 pairing is positive if a patient's immune clock state is shared between tumour and normal tissue. Three sources
+give that: (i) the cells follow body time (surgery hour, host phase); (ii) a patient-specific immune clock state not tied to
+body time (recirculating clones, a T-cell trait); (iii) diurnal or patient-specific subset composition (CD4 / CD8 / NK) whose
+clock-gene profiles differ. (i) predicts that the tumour immune state also pairs with the same patient's normal-tissue stroma,
+which follows body time (A150, A151 post hoc); (ii) and (iii) do not. (iii) predicts that pairing vanishes within subsets.
+Tumour immune cells and normal stroma come from different samples, so ambient RNA cannot create cross-compartment pairing.
+**Data.** The 34 A227 cohorts, A227 tables, labels and eligibility (>= 4 patients with both pseudobulks, >= 50 cells,
+sample median UMI >= 1,500). Statistic, permutation null (10,000, normal-side rows shuffled within cohort), 200
+expression-matched pseudo-clock sets and pooling exactly as A227.
+**Part 1, cross-compartment (does the immune state carry body time?).** Reference = the patient's adjacent-normal
+fibroblast pseudobulk (the strongest host compartment in healthy tissue, A150).
+- **H228.1 (primary):** tumour T_NK vs adjacent-normal fibroblast: pairing > permutation null **and** clock statistic >
+  pseudo q95.
+- **H228.2 (primary):** tumour myeloid vs adjacent-normal fibroblast: the same.
+- **Descriptive:** the same against adjacent-normal endothelium (replication); tumour endothelium vs adjacent-normal
+  fibroblast (positive control: two compartments that both follow body time); adjacent-normal T_NK / myeloid vs
+  adjacent-normal fibroblast (same sample, ambient not excluded; reported only).
+**Part 2, within T/NK subsets (is the T/NK pairing composition?).** Per-cell marker rule inside the A227 T_NK compartment,
+raw counts, fixed now: CD3 = CD3D + CD3E + CD3G, CD8 = CD8A + CD8B; **CD8 T**: CD3 >= 1 and CD8 >= 1 and CD4 = 0; **CD8-negative
+T** (mostly CD4, plus gamma-delta / MAIT): CD3 >= 1 and CD8 = 0; **NK**: CD3 = 0 and KLRF1 + NCAM1 + FCGR3A + GNLY + NKG7 >= 2;
+other cells dropped. Subset pseudobulks per sample (>= 50 cells), tumour vs adjacent-normal of the same subset.
+- **H228.3:** CD8 T tumour vs normal; **H228.4:** CD8-negative T; **H228.5:** NK. Each: pairing > null **and** clock > pseudo
+  q95 (pseudo sets rebuilt on the subset pseudobulks).
+- **Descriptive:** per patient and sample, subset fractions (CD8 / CD8-negative / NK / dropped) in tumour and normal.
+**Holm** over the scored hypotheses of Part 1 and, separately, of Part 2; clock specificity read per hypothesis.
+**Power (dated note before scoring):** patients and cohorts per test; permutation-null SD from shuffled pairings only; MDE
+= 2.49 x SD. Not scored if < 40 patients or MDE > 0.25.
+**Reading.**
+- H228.1 pass: tumour T/NK cells carry body time (source (i)); the circulation is then a route of entrainment, not an
+  alternative to a clock. H228.1 not passing while A227 H227.2 passed: not evidence for (ii); reported as "not detected
+  at MDE x" (the cross statistic is expected to be smaller than the within-type one even under (i), because T/NK coupling
+  to the host is low).
+- H228.3 and H228.4 both pass: the T/NK pairing is not subset composition (composition inside a subset, e.g. naive vs
+  effector, remains possible). Neither passing with adequate power: composition not excluded; A227 H227.2 is then read
+  as "T/NK compartment state", not "T-cell clock".
+- Same rules for myeloid in Part 1. No myeloid subsets (stop rule).
+**Stop rule:** one amendment; no further marker rules or references after the power note. **Code:**
+`paper/exploratory/A228_immune_body_time/`.
