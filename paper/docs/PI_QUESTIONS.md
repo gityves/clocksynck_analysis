@@ -34,7 +34,10 @@ loses it". This needs your review (Phase 8: framing and figures). All numbers: `
   - High-proliferation tumours pair less (A175 H175.1, +0.158, clock-specific).
   - Tumour fibroblasts and endothelium follow the patient's normal stroma (A149 note 5, post hoc, about 100 patients each).
     A confirmatory test in independent cohorts (A226) could not be scored: all sizeable public paired studies are already
-    A149 cohorts (11 / 13 new patients). The clock-specific stromal pairing therefore stays post hoc.
+    A149 cohorts (11 / 13 new patients). Proposed wording (user agreed, 2026-11-07): post hoc origin, reproduced in
+    pre-specified analyses on overlapping patients (A227 anchors: fibroblasts 0.686 vs q95 0.539, endothelium 0.677 vs
+    0.512; A228 control: tumour endothelium vs normal fibroblasts 0.642 vs 0.544), independent confirmation not possible
+    (A226). Stroma keeps the signal in colorectal, where immune compartments do not.
   - HCC is less coherent than its own adjacent liver (GSE14520, −0.33).
   - Tumour myeloid and T/NK cells keep the patient's normal-tissue clock state, clock-specifically (A227, registered: myeloid
     0.581 vs pseudo q95 0.548, 169 patients; T/NK 0.539 vs 0.510, 227 patients); B / plasma and mast pair without clock
