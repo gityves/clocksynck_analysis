@@ -4769,6 +4769,15 @@ between tissues and is not removed; the pseudo-clock companion guards against ex
 **Stop rule:** one amendment; G2M set, cohorts and tissue filter fixed here. **Code:**
 `paper/exploratory/A232_offset_proliferation/`.
 
+**A232 power note (2026-11-07, before any rho or observed top-vs-bottom offset; `A232_offset_proliferation/output/power.csv`,
+`tissue_offsets.csv`).** Tissues with >= 50 donors: fast 38 (median 150.5 donors), vent 30 (221). Median offset
+bootstrap SE 0.195 h (fast) and 0.197 h (vent); between-tissue offset SD 1.61 h and 0.61 h, so offset reliability 0.98
+and 0.70. MDE of Spearman rho (80 %, two-sided 0.05; Bonett-Wright approximation, checked by simulation): fast 0.46,
+vent 0.52 (0.62 after attenuation by offset noise): only strong associations are detectable, tissues being the unit.
+H232.3 pooled within-tissue offset MDE 0.13 h (fast 0.18, vent 0.21; null SD 0.053 h pooled). G2M set: MSigDB Hallmark
+G2M v2024.1 (200 genes after removing clock genes, 199 in GTEx); A97 used v2026.1, not on disk (version differs).
+Implementation choices in the docstring of `compute_a232.py`. All tests powered as registered; scoring proceeds.
+
 ## A233 (2026-11-07, user agreement; robustness audit row 4; written before any condition-stratified fit; seen: case / non-case counts per condition and cohort (phenotype table, aggregates), A164 / A208 designs and results): do chronic conditions other than T2D and obesity change organ coupling or phase relations? **GTEx, A164 procedure, secondary (Holm per hypothesis over conditions)**
 **Why.** "Chronic disease" in the headline rests on T2D and obesity (A164 / A202) and per-row atlas TOSTs (A180). The
 literature reports clock disruption in hypertension (non-dipping blood pressure, vascular clocks), ischaemic heart
