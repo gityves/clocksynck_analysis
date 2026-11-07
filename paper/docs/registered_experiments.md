@@ -4673,3 +4673,15 @@ mouse-sized shift is not present; smaller shifts not excluded. "Adjacent-to-infl
 which biases toward no difference. Not scored: the local clause stays supported by mouse colon and tumours only.
 **Stop rule:** one amendment; no other label rule, anchor set or arm definition after the power note. **Code:**
 `paper/exploratory/A230_ibd_local_offset/`.
+
+**A230 power note (2026-11-07, before any observed contrast; `A230_ibd_local_offset/output/{power,gate,cells,eligible_samples}_*.csv`, commit 6710885).**
+GSE266616: 17 inflamed / adjacent pairs (17 patients; the GEO `patient` field is malformed for 3, patient taken from the
+title), all references adjacent-to-inflamed (none non-inflamed); all 85 samples pass median UMI >= 1,500; 8 patients
+eligible (epithelium and >= 2 anchors in both samples); mural in 9 % of samples, so anchors = fibroblast + endothelial.
+Host-only gate fails in both arms (p_pairing 0.052 reference, 0.170 inflamed; one anchor pair, 8 donors): **H230.1 and
+H230.2 not scored** (registered rule). Offset MDE 3.17 h. TAURUS: 25 eligible patients (82 non-inflamed, 60 inflamed
+samples), mural 45 % so anchors = fibroblast + endothelial; gate passes in both arms (p_pairing 0.001); offset MDE 1.71 h;
+d* MDE 0.19. **Design flaw found at the power step:** with two anchors the fibroblast companion has no leave-one-out
+host (needs >= 3 anchors), so the companion clause of H230.1 / H230.3 cannot be evaluated; no observed contrast has
+been computed. `Dataset.contrast` draws random within-patient swaps (no exact enumeration). Decision on the companion
+pending (user).
