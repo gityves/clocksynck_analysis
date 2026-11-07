@@ -7,6 +7,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 ## Open
 
 ### Still with the PI (updated 2026-11-06)
+- **Q25** (below): the headline: two kinds of desynchrony; robustness audit; human local (IBD) test.
 - **Q24** (below): the cancer chapter after A214-A226: structure and claims for the paper.
 - **Q12** (below): brain time-of-death request. The PI reviews and sends the draft themselves; nothing is sent by the agent.
 - **A119:** lung T-cell procurement scout (outward-facing / procurement).
@@ -21,6 +22,60 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
+
+### Q25 (2026-11-07): the headline — two kinds of desynchrony, and how much "robust" is tested
+
+**Proposal (user and agent, 2026-11-07).** Separate two kinds of desynchrony:
+- **Body-wide (between organs):** in mice it follows conflicting cues (day feeding, abrupt light shifts) or loss of the
+  central drive (SCN lesion, Yoo 2004). We detect an imposed one with known truth (Xin day feeding, H111.1 PASS,
+  Fisher-Lee 0.988). In humans only brain death breaks the inter-organ order (A132b, post hoc: 0.161 vs 0.678).
+- **Local (inside a tissue):** follows injury, regeneration, inflammation or transformation, with no cue conflict.
+  Known-truth exemplar: regenerating mouse distal colon after DSS (Carmona-Alcocer et al., Nat Commun 2026), epithelium
+  shifted against the stroma, recovered blind (−8.95 h untimed vs −9.03 h timed; A21 archive, qualified). Human
+  candidates: psoriasis (A115 descriptive; A183 not clock-specific), tumours (stroma keeps host time, A227-A229).
+- **Candidate headline:** "Human organs keep a shared internal time through ageing, chronic disease, cancer and the loss
+  of daily cues; it breaks body-wide only when the central drive is lost, and otherwise only locally." Provocative
+  question: body-wide desynchrony may require conflicting cues or loss of central drive, which mouse models impose and
+  most human chronic disease does not. The in-house jet-lag data (conflicting cues) would then be the test of a
+  prediction (transient desynchrony expected), not a missing control.
+
+**Audit of the "robust" clauses** (`exploratory/scouts_2026-11-07/robustness_audit.md`, subagent, 22 rows; key numbers
+re-checked against `results_preliminary.md`, some line references may be off by a line or two):
+- **Equivalence shown (registered):** T2D d* +0.019, 90 % [−0.037, +0.076], obesity +0.004 [−0.083, +0.091], both
+  inside ±0.15 (A164 re-read after A202); sex d* +0.020 [−0.003, +0.043] (A208, not yet in the ledger).
+- **Not detected only:** ageing (A180 equivalence fails: γ 90 % [−0.147, 0.089] vs ±0.0375 per decade); disease atlases
+  (A153 no primaries; "coupling preserved in disease" cannot be stated as tested); loss of daily cues: coupling above
+  the pseudo null passes in ventilated donors (H109.1, excess 0.310) but the registered order test fails (H109.2 rho
+  0.261, p 0.165; reading "a shared donor state rather than clocks with preserved phase relations"); "keeps the order"
+  rests on Hardy 4 (secondary, rho 0.784) and the post hoc A132b split. ICU continuous feeding is not a measured
+  variable.
+- **Untested:** night shift and forced desynchrony (MDE 7.3 h and 13.1 h), human jet lag, season, other GTEx diseases.
+- **Counter-cases:** brain death (contradicts the current ledger headline, CL:30); psoriasis uninvolved skin already
+  late (A115), so not purely lesion-local.
+- **Ledger fixes found (to apply after your decision):** FINDINGS_MAP still quotes pre-A202 A164 intervals; A190 cited
+  at status B though withdrawn; A121 attribution; A124 is muscle, not blood; A54 −1.43 h is the post hoc value (discovery
+  −1.50 h); SCN-specific Bmal1 KO (no coupling loss, VIP-Cre, 6 vs 6) absent from the ledger.
+
+**Consequence.** As written, "keeps a shared time through ageing ... and the loss of daily cues" overstates the
+evidence: only metabolic disease and sex are equivalence-backed. Honest version: "Inter-organ coupling is unchanged
+within ±0.15 in metabolic disease; no body-wide desynchrony was detected with ageing, chronic disease or cancer at the
+stated MDEs; the inter-organ order breaks when the central drive is lost."
+
+**Human local test (scout, `exploratory/scouts_2026-11-07/ibd_scout.md`).** Epithelium-vs-stroma offset, inflamed vs
+non-inflamed, same patient:
+- TAURUS (on disk, 29 patients): stroma read in A45/A53 (coupling 0.80-0.91 in both states); the epithelial offset was
+  never read, so a readout is non-blind, secondary only; confounded with treatment timing.
+- GSE266616 (Crohn's, open, 3.7 GB): 14 patients with inflamed + adjacent-to-inflamed (1 strictly non-inflamed);
+  epithelium and lamina propria in one library; depth unchecked.
+- Smillie 2019 (~18 UC) and Eshghi (~18 UC): Single Cell Portal login (PI step, Q19).
+
+**Questions.**
+1. Adopt the two-kind framing and the honest headline wording above?
+2. Make the jet-lag data a registered prediction test of the body-wide clause (owner's agreement)?
+3. Human local test: (a) GSE266616 blind, inflamed vs adjacent, plus TAURUS as non-blind secondary; (b) acquire Smillie
+   / Eshghi (login) for a cleaner blind design; (c) leave the local clause to mouse colon and tumours.
+4. Apply the ledger fixes now?
+- **Agent recommendation:** 1 yes; 2 yes; 3 (a) now, (b) if you can log in; 4 yes.
 
 ### Q24 (2026-11-06): the cancer chapter after A214-A226 — structure and claims for the paper
 The user wants **one paper** that includes the cancer chapter, held together by "how the body keeps its time and when it
