@@ -118,6 +118,8 @@ def timed_boot_chunk(pb, tod, plan, seeds):
 def readouts(args, out, quick, cohorts, suffix, placebo, pseudo: bool):
     """Estimates, tests and timed comparator on `cohorts` (full: vent + fast; D231.5: fast, 08-18 h). Returns a dict of tables."""
     plans, dss, anchors, pbs, M, Bt = ML.build(DESIGN, cohorts, quick=quick, tissues=args.tissues, tag="gtex_age")
+    if not plans:  # no tissue meets the eligibility rule (D231.5: few young fast donors die 08-18 h)
+        return dict(empty=True, M=M)
     if placebo:
         plans = ML.placebo_plans(plans, args.seed + 7)
     nulls = ML.nulls_of("age", plans, dss, out, quick, args.n_perm, args.jobs, args.seed, suffix)
@@ -233,6 +235,15 @@ def score(args, out, quick):
     wh = ML.load_cohorts(args.subsample, args.seed, hours=(8, 18))
     wh = {"fast": wh["fast"]}
     r5 = readouts(args, out, quick, wh, "_wh", args.placebo, False)
+    if r5.get("empty"):
+        pd.concat(tt, ignore_index=True).to_csv(out / "score_d231_4_timed.csv", index=False)
+        pd.concat(sp, ignore_index=True).to_csv(out / "score_d231_6_spread.csv", index=False)
+        r5["M"].to_csv(out / "score_d231_5_eligibility.csv", index=False)
+        pd.DataFrame([dict(readout="D231.5", set="fast", status="not estimable: no tissue with >= 20 donors per arm "
+                                                                  "and >= 10 matched pairs among 08-18 h deaths")]
+                     ).to_csv(out / "score_d231_5_workinghours.csv", index=False)
+        say("tests\n" + tests.round(4).to_string(index=False))
+        return
     tt.append(timed_table(r5, "fast_08_18h"))
     sp.append(spread_table(r5, "fast_08_18h"))
     pd.concat(tt, ignore_index=True).to_csv(out / "score_d231_4_timed.csv", index=False)

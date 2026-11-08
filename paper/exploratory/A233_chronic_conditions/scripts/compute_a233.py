@@ -126,7 +126,7 @@ def score(args, out, quick, cohorts):
             nm = {c: nulls[c][:, :, 0] for c in cwm}
             on = {c: obs[c][:, 0] for c in cwm}
             null_diff = wm(nm, twm, sm) - wm(nm, twc, sc)
-            o_diff = float(wm(on, twm, sm) - wm(on, twc, sc))
+            o_diff = np.asarray(wm(on, twm, sm) - wm(on, twc, sc)).item()  # (1,) array -> scalar
             mc.update(module_minus_companion_d_star=o_diff, p_module_minus_companion=A.p2(o_diff, null_diff))
         comps.append(mc)
         ps = ML.pseudo_clock(plans, {c: anchors[c] for c in plans}, n_pseudo, args.jobs, args.seed)

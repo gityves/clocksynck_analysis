@@ -3963,3 +3963,61 @@ vent 33 compartments, 381 donors; p_pairing 0.001). G2M = Hallmark v2024.1 (199 
   offset by more than about 0.14 h. Tissues are the unit (MDE rho 0.46-0.52), so a modest cross-tissue link is not
   excluded.
 <!-- src: paper/exploratory/A232_offset_proliferation/output/{score_tests,score_gate,score_pseudo_clock,score_random_sets,score_tissues,power}.csv -->
+
+## A231 (scored 2026-11-08): inter-organ coupling and organ phase relations do not change with age in GTEx (H231.1 PASS equivalence; H231.2-3 FAIL, not detected)
+Power note: `registered_experiments.md` (commit 4d6708a). Old 60-70 y vs young 21-49 y, 1:1 matched within cohort;
+54 tissue x cohort units (vent 25, fast 29), 1,861 matched pairs. Holm over H231.1-3.
+| | estimate (old − young) | 90 % interval | MDE_80 | p (Holm) | verdict |
+|---|---|---|---|---|---|
+| H231.1 pooled d* | +0.003 | [-0.027, 0.033] | 0.037 | 0.84 (1.0) | PASS: equivalent within ±0.15 |
+| vent / fast d* | -0.015 / +0.021 | [-0.058, 0.028] / [-0.016, 0.058] | 0.051 / 0.052 | 0.47 / 0.32 | equivalent in both |
+| H231.2 pooled offset | -0.045 h | [-0.27, 0.18] h | 0.20 h | 0.61 (1.0) | FAIL; equivalent within ±1 h |
+| vent / fast offset | +0.032 / -0.113 h | [-0.33, 0.40] / [-0.37, 0.14] | 0.28 / 0.27 h | 0.78 / 0.30 | |
+| H231.3 Q (reordering) | 54.5 (null mean 54.0, q95 73.5) | - | shift SD 0.45 h | 0.44 (1.0) | FAIL |
+- **Companions:** d* in the 3 lowest-coupling tissues per cohort +0.016 (p 0.71). Pseudo-clock |offset| q95 1.54 h, so
+  the offset companion could not have certified a shift below that size; no test reached it.
+- **D231.4 timed comparator (fast, same matched donors, 29 tissues):** cosinor-on-time-of-death pooled offset +0.39 h
+  (bootstrap SE 0.36) vs clocksync -0.11 h (SE 0.15); timed SE / clocksync SE 2.32. Per-tissue agreement circular
+  correlation 0.64 (Pearson 0.65). The two estimates differ by 0.50 h, within their joint noise; clocksync is 2.3 times
+  more precise on the same donors although they are timed.
+- **D231.5 working hours: not estimable.** Among fast donors who died 08-18 h, no tissue has >= 20 donors per age arm
+  and >= 10 matched pairs (young fast donors: 48 in total; eligibility counts in `score_d231_5_eligibility.csv`). The
+  registered narrow-window comparison of the two approaches cannot be made on the age contrast. Code fix after the
+  first scoring run crashed on the empty set: the guard records the status and the counts; no estimate was seen.
+- **D231.6 host spread (descriptive):** fast: median spread old 3.92 vs young 4.09 (median log ratio -0.03; old lower in
+  62 % of 29 tissues); vent: old 0.42 vs young 0.34 (log ratio +0.23; old lower in 8 % of 25). No consistent
+  amplitude loss with age in the shared clock state; confounded by time of death (fast) and ICU state (vent).
+- **Caveat:** T2D is more frequent in the old arm (median |SMD| 0.46 fast / 0.79 vent) and not adjusted; T2D leaves
+  coupling unchanged within ±0.15 (A164 / A202).
+- **Reading (registered rules):** the "ageing" clause of the headline becomes an equivalence for coupling: pooled d*
+  old − young is within ±0.033 (90 %), in both cohorts, including the ventilated donors that no timed method can read.
+  A mean organ shift relative to the body clock larger than 0.20 h, or organ-specific shifts with SD above 0.45 h, would
+  have been detected 80 % of the time; none was seen. This does not contradict reports of rhythm dampening with age
+  (Talamanca et al. 2023): amplitude loss shared by organs leaves coupling and offsets unchanged by construction.
+<!-- src: paper/exploratory/A231_age_coupling/output/{score_tests,score_pooled,score_companion_d_star,score_pseudo,score_d231_4_timed,score_d231_5_eligibility,score_d231_5_workinghours,score_d231_6_spread,power,balance_summary}.csv -->
+
+## A233 (scored 2026-11-08): hypertension, ischaemic heart disease, COPD, depression and smoking leave body-wide coupling unchanged (H233.c.1 PASS x5); no body-wide reordering or local organ shift detected (H233.c.2-3 FAIL x5)
+Power note: `registered_experiments.md` (commit 4d6708a). Up to 3 matched controls per case within cohort; vent and
+fast pooled. Holm over the five conditions per statistic.
+| condition | body-wide d* [90 %] (MDE) | Q p (Holm) | module d* (MDE), p (Holm) | module offset h (MDE), p (Holm) | module − companion d*, p |
+|---|---|---|---|---|---|
+| hypertension | -0.001 [-0.021, 0.019] (0.028) | 0.23 (1.0) | +0.015 (0.054), 0.48 (1.0) | +0.17 (0.28), 0.15 (0.61) | +0.048, 0.26 |
+| ischaemic heart disease | +0.009 [-0.017, 0.035] (0.035) | 0.97 (1.0) | -0.014 (0.087), 0.68 (1.0) | +0.20 (0.51), 0.34 (1.0) | -0.037, 0.53 |
+| COPD | -0.017 [-0.043, 0.009] (0.035) | 0.32 (1.0) | +0.143 (0.22), 0.11 (0.56) | +0.04 (1.45), 0.96 (1.0) | +0.139, 0.15 |
+| depression | +0.010 [-0.029, 0.049] (0.048) | 0.20 (1.0) | +0.104 (0.43), 0.59 (1.0) | +1.99 (3.07), 0.11 (0.56) | +0.140, 0.43 |
+| smoking | +0.008 [-0.013, 0.030] (0.030) | 0.89 (1.0) | -0.074 (0.17), 0.28 (1.0) | -0.34 (1.21), 0.49 (1.0) | -0.093, 0.22 |
+- **H233.c.1:** body-wide d* is equivalent to zero within ±0.15 for all five conditions; all 90 % intervals lie within
+  ±0.05. **H233.c.2:** no condition reorders organ offsets (Q below the null q95 in all five). **H233.c.3:** no module
+  coupling or offset change; the lung (COPD, smoking) and brain (depression, one fast unit) readouts are weak (module
+  offset MDE 1.2-3.1 h) and only exclude large local effects. Pseudo-clock |offset| q95 3.2-10.0 h.
+- **Descriptive per-cohort values (not tests):** hypertension module d* in vent +0.109 (p 0.004) but -0.032 in fast
+  (pooled +0.015); the vent hypertension arm keeps an age imbalance (median |SMD| 0.54). Body-wide pooled offset (not a
+  registered test): hypertension +0.12 h (p 0.040), depression +0.22 h (p 0.048); neither is corrected for the
+  comparisons made and both are below 0.25 h.
+- **Caveats:** comorbidity not removed (hypertension with T2D, SMD 0.66 / 0.72 vent / fast; smoking with COPD). BMI
+  imbalance in COPD fast (0.49) and hypertension fast (0.35).
+- **Reading (registered rules):** the "chronic disease" clause of the headline now rests on seven conditions (T2D and
+  obesity from A164 / A202, plus these five): none changes inter-organ coupling by more than about 0.05 in d*, and none
+  reorders organ phases detectably (organ-specific shift SD MDE 0.31-0.58 h). Local effects in lung and brain are not
+  excluded below about 1 h.
+<!-- src: paper/exploratory/A233_chronic_conditions/output/{score_tests,score_pooled,score_companion_module_minus_companion,score_pseudo_*,power,balance_summary}.csv -->
