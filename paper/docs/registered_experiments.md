@@ -4736,6 +4736,17 @@ Controlled access: aggregates only (per tissue, per cohort, pooled); no per-dono
 **Stop rule:** one amendment; no age cut, tissue subset or cohort chosen after the power note. **Code:**
 `paper/exploratory/A231_age_coupling/`.
 
+**A231 power note (2026-11-08, before any observed statistic; `A231_age_coupling/output/{power,balance_summary,eligible_summary}.csv`).**
+Eligible tissue x cohort units: vent 25 (1,212 matched pairs, median 47 per tissue), fast 29 (649, median 23); pooled 54
+units, 1,861 pairs. MDE_80: pooled d* 0.037 (vent 0.051, fast 0.052), far below ±0.15, so H231.1 is powered; pooled
+offset 0.20 h (vent 0.28, fast 0.27); Q: per-tissue shift SD 0.45 h (vent 0.51, fast 0.64; null Q mean 54.0, q95 73.5).
+Balance after matching (median |SMD| over tissues): ischaemic time 0.05 / 0.09 (fast / vent), BMI 0.13 / 0.15; T2D is
+not a matching variable and stays imbalanced (0.46 / 0.79, max 1.03), older donors carrying more T2D. T2D leaves
+coupling unchanged within ±0.15 (A164 / A202), so this is stated as a caveat, not adjusted. Implementation choices in
+the docstrings of `compute_a231.py` and `matched_label.py` (score stage checked end to end on placebo labels only).
+The power stage ran twice concurrently by mistake; a single rerun from the cached null draws gave byte-identical
+`power.csv`. Scoring proceeds as registered.
+
 ## A232 (2026-11-07, user agreement; literature follow-up item 3; written before any proliferation score is computed or related to an offset; seen: the GTEx organ offsets (Figure 1 organ map, A92 / A123), never against proliferation): do organs with more proliferation run at a different phase? **GTEx, secondary (Holm over H232.1-3)**
 **Why.** Droin, Paquet & Naef (Nat Phys 2019) explain shifted circadian phases of tissues by their proliferation rates
 (cell cycle coupled to the clock); in mouse, tissue phases correlate with Mki67 and Myc. In humans, no within-donor test
@@ -4811,3 +4822,17 @@ removed (hypertension with T2D, smoking with COPD); conditions are not independe
 Controlled access: aggregates only.
 **Stop rule:** one amendment; conditions, modules, matching and cohorts fixed here; no condition added after the power
 note. **Code:** `paper/exploratory/A233_chronic_conditions/` (shares the matched-contrast code with A231).
+
+**A233 power note (2026-11-08, before any observed statistic; `A233_chronic_conditions/output/{power,balance_summary,eligible_summary}.csv`).**
+Eligible tissues vent / fast and matched cases: hypertension 30 / 39 (1,987 / 1,675), ischaemic heart disease 26 / 35
+(793 / 864), COPD 29 / 35 (806 / 758), depression 29 / 9 (848 / 98), smoking 30 / 40 (2,036 / 1,547). Pooled MDE_80
+(body-wide d*, offset h, Q shift SD h; module d*, offset h; module tissues): hypertension 0.028, 0.14, 0.31; 0.054,
+0.28 (10); ischaemic heart disease 0.035, 0.18, 0.44; 0.087, 0.51 (7); COPD 0.035, 0.18, 0.44; 0.222, 1.45 (lung, 2);
+depression 0.048, 0.28, 0.58; 0.431, 3.07 (1 brain tissue unit); smoking 0.030, 0.15, 0.34; 0.166, 1.21 (lung, 2).
+H233.c.1 is powered for all five conditions. The lung (COPD, smoking) and brain (depression) local readouts are weak
+(module d* MDE > 0.15, offset MDE > 1 h); they are scored as registered and read with their MDE. Balance after matching
+(median |SMD|): age <= 0.16 except hypertension in vent (0.54, max 0.60; the 5 y caliper does not remove it); BMI 0.49
+(COPD fast) and 0.35 (hypertension fast, max 0.97); ischaemic time 0.40 (COPD vent); T2D 0.66 / 0.72 for hypertension
+(vent / fast). Comorbidity is not removed, as registered; A231 reads the age contrast directly. Implementation choices
+in the docstring of `compute_a233.py`. The power stage ran twice concurrently by mistake (later copy stopped); a single
+rerun from the cached null draws gave byte-identical `power.csv`. Scoring proceeds as registered.
