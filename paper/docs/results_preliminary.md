@@ -3940,3 +3940,26 @@ fails in both arms with 8 eligible patients: **H230.1, H230.2 not scored**. TAUR
   and the blind cohort could not be scored. The local clause of the headline is not supported by a human gut
   counterpart; it rests on the mouse colon, psoriasis (A115 descriptive) and tumours.
 <!-- src: paper/exploratory/A230_ibd_local_offset/output/{tests,contrast_taurus,tests_gate_taurus,pseudo,power_taurus,power_gse266616,gate_gse266616}.csv -->
+
+## A232 (scored 2026-11-07): tissue offsets track proliferation in fast deaths, but not clock-specifically, and not in ventilated donors or within tissues (H232.1-3 FAIL)
+Power note: `registered_experiments.md` (commit 01b7f0c). Gate passes in both cohorts (fast 38 tissues, 244 donors;
+vent 33 compartments, 381 donors; p_pairing 0.001). G2M = Hallmark v2024.1 (199 genes in GTEx, clock genes removed).
+| | n tissues | estimate | p (Holm) | pseudo-clock q95 | random-set q95 | specific |
+|---|---|---|---|---|---|---|
+| H232.1 fast, Spearman offset vs G2M | 38 | rho 0.425 | 0.0089 (0.027) | 0.499 | 0.355 | no (clock check fails) |
+| H232.2 vent | 30 | rho -0.068 | 0.72 (0.88) | 0.415 | 0.105 | no |
+| H232.3 within tissue, top − bottom G2M tertile | 68 units | +0.044 h | 0.44 (0.88) | 1.27 h | - | no |
+- **H232.1:** the rank association passes Holm and beats random expression-matched gene sets (G2M 0.425 vs random q95
+  0.355; random-set median 0.292), but offsets from expression-matched pseudo-clock genes correlate with G2M about as
+  strongly: |pseudo rho| ≥ 0.425 in 10 % of 200 sets (q95 0.499). Weighted slope 0.70 h per unit score. By the
+  registered rule this is not a clock-specific association. The random-set median of 0.29 shows that fast-death tissue
+  offsets align with a general axis of tissue expression.
+- **H232.2:** no association in ventilated donors (between-tissue offset SD 0.61 h, reliability 0.70; MDE 0.52).
+- **H232.3:** within tissues, donors with more proliferation are not phase-shifted (+0.044 h, MDE 0.137 h; fast +0.056,
+  vent +0.027). Same sign as H232.1. The pseudo-clock |q95| (1.27 h) is wide, so this companion is weak here.
+- **Reading (registered rules):** the Droin et al. (2019) prediction that proliferating organs run at a shifted clock
+  phase is not supported in human GTEx: a cross-tissue association exists in fast deaths but cannot be separated from
+  a tissue-expression artefact, it is absent in ventilated donors, and within tissues proliferation does not shift the
+  offset by more than about 0.14 h. Tissues are the unit (MDE rho 0.46-0.52), so a modest cross-tissue link is not
+  excluded.
+<!-- src: paper/exploratory/A232_offset_proliferation/output/{score_tests,score_gate,score_pseudo_clock,score_random_sets,score_tissues,power}.csv -->

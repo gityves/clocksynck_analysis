@@ -334,3 +334,6 @@ Source for the rows with a figure panel: `paper/exploratory/WP0_integrity/output
 | A230 | H230.1 epithelial offset vs stromal host, inflamed vs adjacent (GSE266616, blind) | within-person | P | not run | - | NOT SCORED (gate fails both arms, 8 patients) | offset MDE 3.17 h | A230_ibd_local_offset/output/power_gse266616.csv |
 | A230 | H230.2 epithelial d* (GSE266616) | within-person | S | not run | - | NOT SCORED | d* MDE 0.32 | A230_ibd_local_offset/output/power_gse266616.csv |
 | A230 | H230.3 epithelial offset, inflamed vs non-inflamed (TAURUS, non-blind, 25 patients) | within-person | S | +0.58 h (SE 0.83) | 0.39; p_clock 0.77 | FAIL | offset MDE 1.71 h | A230_ibd_local_offset/output/tests.csv |
+| A232 | H232.1 offset vs G2M across tissues, fast (38 tissues) | L3 | S | rho 0.425; pseudo-clock q95 0.499; random q95 0.355 | 0.0089 / Holm 0.027 (m=3) | FAIL (not clock-specific) | MDE rho 0.46 | A232_offset_proliferation/output/score_tests.csv |
+| A232 | H232.2 the same, vent (30 tissues) | L3 | S | rho -0.068 | 0.72 / Holm 0.88 | FAIL | MDE rho 0.52 | A232_offset_proliferation/output/score_tests.csv |
+| A232 | H232.3 within-tissue top vs bottom G2M tertile offset, pooled (68 units) | L3 | S | +0.044 h | 0.44 / Holm 0.88 | FAIL | MDE 0.137 h | A232_offset_proliferation/output/score_tests.csv |
