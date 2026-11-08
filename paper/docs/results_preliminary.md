@@ -4065,3 +4065,14 @@ clock is ahead (advance). The A130 registration read "slope < 0" as "earlier wit
 significant, opposite in sign to A234 (+0.64 h per decade, same convention, D234.0 checked). The phrase "direction as
 the epidemiology and as A94" (A113 / A130 entry above) and the ledger row citing it are wrong as worded.
 <!-- src: paper/exploratory/A113_living_time/output/{a130_summary,a113_summary}.csv; code paper/exploratory/A113_living_time/scripts/compute_living_time.py -->
+
+### 2026-11-08 scout: no independent timed living cohort can replicate A234 (no hypothesis; nothing downloaded)
+Floor as A130 (>= 30 subjects with age, range >= 25 y, known sampling clock time). GEO metadata checked directly for the
+best lead, Wu et al. 2018 skin: GSE112660 (298 samples) and GSE139301 (533) list sex, tissue and collection time but **no
+age**; the time-ordered arm is 20 men aged 21-49 y, and many population samples have collection time "NA". Others fail
+on n, age range or recorded time: GSE326530 (20 subjects), GSE113883 TimeSignature (11), BodyTime (no age), sleep and
+forced-desynchrony blood studies (GSE39445, GSE48113, GSE56931: young adults), GSE85358 skin (young vs old, no time),
+del Olmo 2022 skin (population arm n 154, 20-74 y, no recorded times; timed arm 20 subjects, 21-49 y). Large blood
+cohorts (Framingham, BIOS, EGCUT, GENOA) record age but no draw-time variable was found; access is controlled
+(outward-facing, not pursued). A130 (54 subjects; null SD 0.20 h per decade, as precise as A234's 0.25 because living
+subjects carry repeated timed samples) stays the only living comparison, and it disagrees in sign.
