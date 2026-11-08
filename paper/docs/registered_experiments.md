@@ -4836,3 +4836,48 @@ H233.c.1 is powered for all five conditions. The lung (COPD, smoking) and brain 
 (vent / fast). Comorbidity is not removed, as registered; A231 reads the age contrast directly. Implementation choices
 in the docstring of `compute_a233.py`. The power stage ran twice concurrently by mistake (later copy stopped); a single
 rerun from the cached null draws gave byte-identical `power.csv`. Scoring proceeds as registered.
+
+## A234 (2026-11-08, user agreement; follow-up of A231; written before any internal-time-by-age readout in GTEx; seen: A231 per-tissue offsets (fast brain regions old − young mean -1.15 h, 9 of 10 negative; other tissues -0.06 h), fast-donor counts by Hardy class x exact-age band and by brain region (aggregates), A130, archive `legacy/desync/01_gtex_organs` (timed phase advance 0.35 h per decade, bracket age, "young fast deaths are mostly violent, Hardy 1")): does internal time drift from external time with age, and does the brain drift differently from the body? **GTEx fast deaths, secondary (Holm over H234.1 and H234.3; H234.2 post hoc)**
+**Why.** Chronotype advances with age (epidemiology). The ageing evidence so far: A130 in living humans (-0.339 h per
+decade, p 0.054) and an archive GTEx cosinor estimate that is entangled with death type (fast deaths under 40 y: 14
+Hardy 1, 7 Hardy 2; 40-70 y: 20 Hardy 1, 203 Hardy 2) and used bracket age. A231 cannot see a shared drift (offsets are
+relative to the donor's body clock), and its brain offsets suggest the brain falls behind the body with age.
+**Sign convention (fixed here).** Internal time = the clocksync host phase of the donor (h); Δ = internal − recorded
+time of death (circular, h). The host phase increases with time of day (waveform convention; A113 H113.1: single-sample
+phase vs ZT Fisher-Lee +0.82), so Δ > 0 means the internal clock is ahead of the wall clock, and **a positive slope on
+age is a phase advance with age** (earlier chronotype). Checked in the data before any age readout (D234.0). Note: A130
+registered "slope < 0 (earlier with age)" with Δ computed the same way (internal − wall), so its label looks inverted
+(its -0.339 h per decade would be a delay); to be confirmed in the A130 code and corrected in `results_preliminary.md`.
+**Data.** `common.gtex.load`, fast deaths (Hardy 1-2) with time of death; protected exact age (`AGE`) and sex in memory
+only. Counts: 244 fast donors (22-70 y), 241 with >= 5 body tissues, 197 with >= 3 brain regions.
+**Hosts (two separate fits on the fast cohort, untimed).**
+- Body host: `cs.Dataset` on the A81 / A92 body tissues (`_shared.BODY`, 12 peripheral tissues; no brain, no pituitary)
+  as anchors; donors with >= 5 of them.
+- Brain host: brain regions with >= 100 fast donors, spinal cord excluded (follows the body, A143): amygdala, anterior
+  cingulate, caudate, cerebellar hemisphere, cerebellum, cortex, frontal cortex BA9, hippocampus, hypothalamus, nucleus
+  accumbens, putamen (11), all as anchors; donors with >= 3 of them.
+- Host phase per donor from `Fit.host`; each fit's constant frame offset cancels in the slope.
+**Estimator (all three tests).** Circular-linear regression Δ_i = μ_s(i) + β·age_i (von Mises likelihood, i.e. maximise
+Σ cos(Δ_i − μ_s − β age_i)), stratum s = Hardy class x sex; β in h per decade. Null: age permuted within strata
+(10,000; two-sided p). 90 % interval ± 1.645 x max(donor-bootstrap SE (200, hosts refitted), null SD). MDE_80 = 2.80 x
+null SD (two-sided 0.05).
+- **D234.0 (direction check, before any age readout):** Fisher-Lee correlation of each host phase with time of death
+  must be positive; if negative, that host's phases are negated before Δ. Wall-time alignment R per host reported.
+- **H234.1 (body, timed reference):** β of Δ_body = body host − time of death on age ≠ 0. Read against the archive prior
+  (+0.35 h per decade if the archive sign holds). Sensitivity: Hardy 2 only (176-210 donors, few under 40); bracket age
+  instead of exact age (archive comparability).
+- **H234.2 (brain vs body, untimed; POST HOC: the pattern was seen in A231):** β of Δ_bb = brain host − body host on age,
+  donors with both hosts, each donor counted once (answers the shared-donor problem of the A231 per-region readout).
+  Companions: 50 expression-matched pseudo-clock sets (`clocksync.paired.pseudo_waveforms`, kind "matched", seed 234)
+  through both hosts, |β| must exceed their q95; brain host without the two cerebellar regions (anchor dependence, WP0
+  item 8). A231 predicts β < 0 (brain behind body with age; -1.15 h over the old - young midpoint gap of about 3
+  decades). Reported as post hoc whatever the result.
+- **H234.3 (brain, timed reference):** β of Δ_brain = brain host − time of death on age ≠ 0.
+**Power (dated note before any observed β):** donors per test, null SD and MDE_80 of β, R of each host with time of death.
+**Reading.** H234.1 pass: body internal time drifts with age relative to clock time (advance if β > 0), with death type
+and sex held fixed; fail with MDE: not detected at this size. H234.3 with H234.1 and H234.2 decide whether brain and body
+drift together, apart (brain keeps clock time while the body advances, or the reverse), or neither. Time of death has
+recording errors and fast deaths are not living subjects; constant offsets cancel, age-related reporting errors do not.
+Controlled access: aggregates only (β, intervals, nulls); no per-donor phases or ages written.
+**Stop rule:** one amendment; hosts, strata, age variable and donor filters fixed here. **Code:**
+`paper/exploratory/A234_internal_time_age/`.
