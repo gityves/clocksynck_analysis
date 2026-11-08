@@ -4881,3 +4881,12 @@ recording errors and fast deaths are not living subjects; constant offsets cance
 Controlled access: aggregates only (β, intervals, nulls); no per-donor phases or ages written.
 **Stop rule:** one amendment; hosts, strata, age variable and donor filters fixed here. **Code:**
 `paper/exploratory/A234_internal_time_age/`.
+**A234 power note (2026-11-08, before any observed β; `A234_internal_time_age/output/{power,direction,counts}.csv`).**
+D234.0: both hosts run with time of death in the registered direction (Fisher-Lee body 0.380, brain 0.372; none
+negated); wall-time alignment R 0.62 (body, 233 donors) and 0.62 (brain, 196). Donors: H234.1 233 (Hardy 1 / 2: 31 / 202;
+19 under 40 y), H234.2 192, H234.3 196. Null SD of β (10,000 age permutations within Hardy x sex) and MDE_80: H234.1
+0.249 / 0.70 h per decade, H234.2 0.234 / 0.66, H234.3 0.302 / 0.85. **Underpowered against the expected sizes:** power
+about 0.29 at the archive prior (0.35 h per decade) for H234.1, about 0.37 at the A231-implied brain − body drift
+(-0.38 h per decade) for H234.2; only drifts of about 0.7 h per decade or more are detectable. Scored as registered and
+read with the MDE. The pseudo-clock companion is weak: pseudo hosts carry no time-of-day signal, so their β scatter up to
+the estimator bound (±3.05 h per decade; placebo check). Code checked end to end on shuffled ages only (`--placebo`).
