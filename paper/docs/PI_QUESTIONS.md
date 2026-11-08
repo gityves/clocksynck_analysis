@@ -7,6 +7,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 ## Open
 
 ### Still with the PI (updated 2026-11-06)
+- **Q26** (below): A130 sign label looks inverted; A234 finds an age advance in GTEx.
 - **Q25** (below): the headline: two kinds of desynchrony; robustness audit; human local (IBD) test.
 - **Q24** (below): the cancer chapter after A214-A226: structure and claims for the paper.
 - **Q12** (below): brain time-of-death request. The PI reviews and sends the draft themselves; nothing is sent by the agent.
@@ -22,6 +23,18 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
+
+### Q26 (2026-11-08): A130 direction label looks inverted; A234 finds the age advance in GTEx
+
+- **Question:** confirm the A130 sign reading below, and whether the ageing clause can now say "internal time advances
+  with age (GTEx), organisation unchanged (A231)".
+- **On hold:** the erratum wording for A130 and any ageing sentence in the paper; nothing else.
+- **Evidence:** A130 computes internal − wall time; with internal phase rising with clock time (H113.1), its -0.339 h per
+  decade is a delay (not significant), although registered and summarised as "earlier with age". A234 (registered,
+  same convention, direction checked in the data): body +0.64 h per decade (Holm 0.010), brain +0.99 (Holm 0.002), brain
+  − body -0.01 (post hoc); estimate probably inflated at low power. Living cohorts (A130: 42 breast-surgery women in
+  hospital hours + 12 men) and GTEx fast deaths then disagree in sign. See `results_preliminary.md` A234 and the A130
+  sign note.
 
 ### Q25 (2026-11-07): the headline — two kinds of desynchrony, and how much "robust" is tested
 

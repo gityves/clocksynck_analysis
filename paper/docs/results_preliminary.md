@@ -4021,3 +4021,47 @@ fast pooled. Holm over the five conditions per statistic.
   reorders organ phases detectably (organ-specific shift SD MDE 0.31-0.58 h). Local effects in lung and brain are not
   excluded below about 1 h.
 <!-- src: paper/exploratory/A233_chronic_conditions/output/{score_tests,score_pooled,score_companion_module_minus_companion,score_pseudo_*,power,balance_summary}.csv -->
+
+## A234 (scored 2026-11-08): internal time advances relative to clock time with age in GTEx fast deaths, in body and brain alike (H234.1 PASS, H234.3 PASS; H234.2 post hoc, no brain − body drift)
+Power note: `registered_experiments.md` (commit 03239e5). Δ = internal (untimed host phase) − recorded time of death;
+β > 0 = advance with age; strata Hardy x sex; 10,000 age permutations; 200 donor bootstraps with hosts refitted (all
+succeeded). Holm over H234.1 and H234.3.
+| | n | β (h per decade) | 90 % interval | MDE_80 | p (Holm) | verdict |
+|---|---|---|---|---|---|---|
+| H234.1 body − clock | 233 | +0.64 | [0.17, 1.11] | 0.70 | 0.010 (0.010) | PASS: advance |
+| H234.3 brain − clock | 196 | +0.99 | [0.49, 1.49] | 0.85 | 0.001 (0.002) | PASS: advance |
+| H234.2 brain − body (post hoc) | 192 | -0.01 | [-0.44, 0.41] | 0.66 | 0.96 | no drift detected |
+- **Sensitivities:** Hardy 2 only: body +0.65 (p 0.050, 202 donors), brain +1.04 (p 0.005, 175); bracket age (archive
+  comparability): body +0.55 (p 0.022); brain host without the cerebellar regions: brain − body -0.02 (p 0.92), brain −
+  clock +1.04 (p 0.002).
+- **Pseudo-clock companion (registered for H234.2 only):** uninformative as anticipated in the power note; pseudo hosts
+  carry no time-of-day signal (Fisher-Lee with time of death ≤ 0.022), and their β sit at the estimator bound (|β| q95
+  3.05; at the bound in 22-48 % of sets). The timed tests' specificity rests on D234.0 instead (both hosts follow time of
+  death, Fisher-Lee 0.38 / 0.37).
+- **Post hoc check (time of death vs age; chosen after scoring):** host phases are shrunk toward the mean, so an
+  age-related time-of-death distribution could mimic a drift. Age is not associated with time of death (circular-linear
+  R 0.05, permutation p 0.74 (body donors) / 0.80 (brain donors)), and adding cos / sin of time of death to a linear
+  version of the model leaves β unchanged (body 0.570 → 0.576; brain 0.830 → 0.814). Script in the scratchpad; not part
+  of the registered outputs.
+- **H234.2 vs A231:** counting each donor once and using a brain-only host, the brain does not drift relative to the
+  body (-0.01 h per decade, MDE 0.66). The A231 per-region pattern (brain regions old − young -1.15 h vs the A164 host)
+  is not confirmed; it came from 10 regions on the same 20-25 matched pairs, read against a host that includes cortex
+  and cerebellum.
+- **Caveats:** the estimate is larger than the archive prior (0.35 h per decade) at low power (about 0.29 at the prior),
+  so its size is probably inflated (winner's curse); the interval includes 0.35. Fast deaths only; time-of-death
+  recording errors that change with age are not excluded; young fast donors are few (19 under 40 y).
+- **Reading (registered rules):** with death type and sex held fixed and exact age, the shared internal time of GTEx
+  donors runs ahead of clock time by about 0.5-1 h per decade of age, in the body and in the brain, and the brain keeps
+  its phase relation to the body. Together with A231 (coupling and organ offsets unchanged with age): ageing shifts the
+  timing of the whole body clock, not its organisation. Direction as the chronotype epidemiology (Roenneberg et al.
+  2004; to be verified before citing).
+<!-- src: paper/exploratory/A234_internal_time_age/output/{score_tests,score_sensitivity,score_pseudo,power,direction,counts}.csv -->
+
+### 2026-11-08 sign note on A130 (pending PI confirmation, Q26)
+A130 computes Δ = internal − wall time (`compute_living_time.py`, `IT.cdiff(a, b) = a − b`). Internal phase increases
+with clock time (H113.1 adipose Fisher-Lee +0.82 vs ZT; V25.5 error 1.1 h after the offset), so Δ > 0 means the internal
+clock is ahead (advance). The A130 registration read "slope < 0" as "earlier with age"; that label is inverted: its
+-0.339 h per decade (one-sided p 0.054 for a negative slope) is a **delay** with age in the living cohorts, not
+significant, opposite in sign to A234 (+0.64 h per decade, same convention, D234.0 checked). The phrase "direction as
+the epidemiology and as A94" (A113 / A130 entry above) and the ledger row citing it are wrong as worded.
+<!-- src: paper/exploratory/A113_living_time/output/{a130_summary,a113_summary}.csv; code paper/exploratory/A113_living_time/scripts/compute_living_time.py -->
