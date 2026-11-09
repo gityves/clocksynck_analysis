@@ -37,7 +37,7 @@ or their amplitude ratios. Such a change still passes the gate and is read as an
    with P = I − 11ᵀ/G (centring over genes), X̃ = PX, W_k = diag(w_kg), w_kg = 1 / (1/c̄_kg + τ²) (c̄_kg the median
    count of gene g in compartment k, τ² = 0.05), and Poisson covariance V_ik = L_k diag(1/max(n_ikg, 0.5)) L_kᵀ.
    Height λ and peak φ of the fitted cosine are β.
-3. *Figure C, the clock plane.* L_k 1 = 0 and L_k X = I, so E[β̂_ik] = λ_ik (sin φ_ik, cos φ_ik) + L_k m_k: the common
+3. *Figure C, the clock plane.* L_k 1 = 0 and L_k X = I, so β̂_ik ≈ λ_ik (sin φ_ik, cos φ_ik) + L_k m_k + noise: the common
    shift s_ik is gone and the gene baselines add one constant per compartment. A compartment's donors form an arc
    (hospital hours cover part of the cycle); a platform or cell-type offset moves the whole arc, not its shape.
 
