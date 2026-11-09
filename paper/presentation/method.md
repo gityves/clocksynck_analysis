@@ -52,6 +52,17 @@ or their amplitude ratios. Such a change still passes the gate and is read as an
   the hepatocyte arc moved by a constant offset; panel B's donor ringed, with the arrow from the fibroblast mean (+)
   that B's cosine encodes (length λ, direction φ).
 
+**Video (alternative to figure B, or before it):** `figures/projection_animation/` (`scripts/projection_animation.py`,
+64 s; `proj_01.mp4` … `proj_20.png`, one clip and one still per step). Text on screen only.
+1-2. The 14 genes over the day; a sample at internal phase φ; each gene is high when φ is near its peak ψ_g.
+3-4. Remove the baseline m_g, divide by A_g: every gene reads cos(φ − ψ_g).
+5-6. Place each gene at ψ_g: one cosine, peaking at φ; it follows φ around the day.
+7-8. A noisy sample: the weighted least-squares cosine (the package's projector); weights w_g A_g² against the
+     unweighted fit (simulated sample: weighted 15.2 h, unweighted 16.2 h, true 15.0 h).
+9-10. In data the baseline is the mean over donors; with sampling 10-18 h that mean still oscillates (0.83 of a full
+     cosine, peak 14 h). Subtracting it: donors at 10 / 14 / 18 h read 6.6 / 14.0 / 21.4 h, heights 0.93 / 0.17 / 0.93.
+     Same as the clock plane: points on an arc seen from the arc's mean. Leads to M2 (μ_k is not the cycle centre).
+
 **Speaker notes**
 - Drawing convention as in the video: phase 0 on top, turning clockwise; β₁ = λ sin φ is horizontal. The package
   stores (cos, sin); the order of the two components is a convention.
