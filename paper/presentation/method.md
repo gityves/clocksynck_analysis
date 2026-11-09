@@ -13,14 +13,15 @@ waveform.
 
 **Model of the counts** (donor i, compartment k, gene g; n counts, D genome-wide depth):
 
-$$\log \mathbb{E}[n_{ikg}] = \log D_{ik} + s_{ik} + m_{kg} + \mathrm{amp}_g\,\lambda_{ik}\cos(\varphi_{ik} - \psi_g)$$
+$$\log \mathbb{E}[X_{ikg}] = \log N_{ik} + s_{ik} + m_{kg} + \mathrm{amp}_g\,\lambda_{ik}\cos(\varphi_{ik} - \psi_g)$$
 
 | term | what it is | status |
 |---|---|---|
-| ψ_g, amp_g | gene acrophase and relative amplitude | **fixed** (GTEx), assumed the same in every donor, compartment and condition |
-| λ_ik, φ_ik | clock amplitude and phase of this pseudobulk: β_ik = λ_ik (sin φ_ik, cos φ_ik) | **free**, one per pseudobulk |
-| s_ik | common shift of all genes (depth definition, RNA content, capture) | **free**, cancels (centring over genes) |
-| m_kg | gene baseline of the compartment (cell type, platform, any per-gene constant) | **free**, per compartment × stratum; becomes a constant shift of β, absorbed by μ_k (M2) |
+| $$N_{ik}$$ | Sequencing depth | **free**, one per pseudobulk |
+| $$s_{ik}$$ | common shift of all genes (depth definition, RNA content, capture) | **free**, cancels (centring over genes) |
+| $$m_{kg}$$ | gene baseline of the compartment (cell type, platform, any per-gene constant) | **free**, per compartment × stratum; becomes a constant shift of β, absorbed by μ_k |
+| $$λ_{ik}, φ_{ik}$$ | clock amplitude and phase of this pseudobulk: $$β_{ik} = λ_{ik} (sin φ_{ik}, cos φ_{ik})$$ | **free**, one per pseudobulk |
+| $$ψ_g, amp_g$$ | gene acrophase and relative amplitude | **fixed** (GTEx), assumed the same in every donor, compartment and condition |
 
 Not allowed by the model: genes of one compartment or condition changing timing relative to each other (ψ_g differs)
 or their amplitude ratios. Such a change still passes the gate and is read as an offset plus lower |z| and c (A205).
@@ -51,8 +52,9 @@ or their amplitude ratios. Such a change still passes the gate and is read as an
 **Speaker notes**
 - Drawing convention as in the video: phase 0 on top, turning clockwise; β₁ = λ sin φ is horizontal. The package
   stores (cos, sin); the order of the two components is a convention.
-- The waveform was fitted on GTEx with time of death: shared acrophases, a mesor and an amplitude per tissue
-  (`waveform.fit_waveform`, `data/human_clock_gtex.npz`). Core genes: NR1D1 3.6 h, DBP 8.5 h, PER2 11.7 h, CRY1 17.9 h,
+- The waveform was fitted on GTEx fast deaths (Hardy 1-2; 244 donors, 5,611 samples, cultured cells excluded; v10 counts,
+  v8 time of death) against clock time of death (0 = midnight): shared acrophases, a mesor and an amplitude per tissue
+  (`waveform.fit_waveform`; `clocksync/src/clocksync/data/gtex_waveform.npz`, provenance in its `meta` field). Core genes: NR1D1 3.6 h, DBP 8.5 h, PER2 11.7 h, CRY1 17.9 h,
   ARNTL 21.0 h; largest relative amplitudes ARNTL 0.50, NPAS2 0.33, NR1D1 0.32 (`cs.gtex().table()`). Only relative
   acrophases matter: the zero cancels with the offsets. Time of death is a noisy phase (`talamanca2023sexdimorphic`);
   that noise enters the waveform, not the per-donor readout.
