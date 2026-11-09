@@ -8,46 +8,71 @@ check on results, shown after the readout, not part of the gate. Code references
 
 ## M1. Projection: each pseudobulk becomes one point in the clock plane
 
-**Message:** the 14 clock genes of one donor × compartment are summarised by one complex number β, read on a fixed
-reference waveform.
+**Message:** the 14 clock genes of one donor × compartment are summarised by one point β, read on a fixed reference
+waveform.
 
-**Bullets**
-- Pseudobulk: one per donor × compartment; summed counts of 14 clock genes and the genome-wide depth.
-- Log fractions y_g = log(count_g / depth), centred over genes: a common shift (depth, capture, RNA content) cancels.
-- Weighted least squares on the reference plane X_g = amp_g (cos ψ_g, sin ψ_g): one β = λ e^{iφ} per pseudobulk, with
-  its Poisson covariance V.
-- Linear, and the same for every pseudobulk of a compartment: a constant offset (platform, cell-type baseline) moves
-  the whole compartment by a constant, which the model absorbs (μ_k, next slide).
-- Concept: gene acrophases fixed and shared, amplitude and means free per context, as in CoPhaser
-  \cite{paychere2025cophaser}.
+**Model of the counts** (donor i, compartment k, gene g; n counts, D genome-wide depth):
 
-**Visual:** `figures/projection/projection.png` (script `scripts/projection.py`, simulated).
-- A: the GTEx reference waveform, 14 arrows (angle acrophase, length relative amplitude).
-- B: one fibroblast pseudobulk, gene log fractions minus the compartment mean (bars) and the plane fit (dots).
-- C: the clock plane, three compartments × 30 donors sampled 08-18 h, 2 SD Poisson ellipses; each cloud is an arc of its
-  cycle; a constant per-gene offset moves the hepatocyte cloud rigidly.
+$$\log \mathbb{E}[n_{ikg}] = \log D_{ik} + s_{ik} + m_{kg} + \mathrm{amp}_g\,\lambda_{ik}\cos(\varphi_{ik} - \psi_g)$$
+
+| term | what it is | status |
+|---|---|---|
+| ψ_g, amp_g | gene acrophase and relative amplitude | **fixed** (GTEx), assumed the same in every donor, compartment and condition |
+| λ_ik, φ_ik | clock amplitude and phase of this pseudobulk: β_ik = λ_ik (sin φ_ik, cos φ_ik) | **free**, one per pseudobulk |
+| s_ik | common shift of all genes (depth definition, RNA content, capture) | **free**, cancels (centring over genes) |
+| m_kg | gene baseline of the compartment (cell type, platform, any per-gene constant) | **free**, per compartment × stratum; becomes a constant shift of β, absorbed by μ_k (M2) |
+
+Not allowed by the model: genes of one compartment or condition changing timing relative to each other (ψ_g differs)
+or their amplitude ratios. Such a change still passes the gate and is read as an offset plus lower |z| and c (A205).
+
+**Bullets** (in the order of the figures)
+1. *Figure A, reference waveform.* 14 clock genes, each with an acrophase ψ_g and a relative amplitude amp_g, fitted
+   once on GTEx and kept fixed: gene loadings are not identifiable from untimed, hospital-hours data. Fixed shared
+   acrophases with free amplitude and means per context, as in CoPhaser \cite{paychere2025cophaser}.
+2. *Figure B, one pseudobulk → one β.* Log fractions y_ikg = log(max(n_ikg, 0.5) / D_ik), centred over genes, fitted
+   by weighted least squares on the plane X_g = amp_g (sin ψ_g, cos ψ_g):
+
+   $$\hat\beta_{ik} = \arg\min_\beta \sum_g w_{kg}\,\big(\tilde y_{ikg} - \tilde X_g\beta\big)^2 = (\tilde X^\top W_k \tilde X)^{-1}\tilde X^\top W_k\,P\,y_{ik} \equiv L_k\,y_{ik}$$
+
+   with P = I − 11ᵀ/G (centring over genes), X̃ = PX, W_k = diag(w_kg), w_kg = 1 / (1/c̄_kg + τ²) (c̄_kg the median
+   count of gene g in compartment k, τ² = 0.05), and Poisson covariance V_ik = L_k diag(1/max(n_ikg, 0.5)) L_kᵀ.
+   Height λ and peak φ of the fitted cosine are β.
+3. *Figure C, the clock plane.* L_k 1 = 0 and L_k X = I, so E[β̂_ik] = λ_ik (sin φ_ik, cos φ_ik) + L_k m_k: the common
+   shift s_ik is gone and the gene baselines add one constant per compartment. A compartment's donors form an arc
+   (hospital hours cover part of the cycle); a platform or cell-type offset moves the whole arc, not its shape.
+
+**Visual:** three one-panel figures, shown in order (`scripts/projection.py`, simulated, 150 × 120 mm each).
+- `figures/projection/projection_A.png`: the GTEx waveform, one point per gene (angle ψ_g, radius amp_g).
+- `figures/projection/projection_B.png`: one fibroblast pseudobulk: (log fraction − baseline) / amplitude against
+  acrophase, which falls on one cosine; point area = weight in the fit; λ and φ marked.
+- `figures/projection/projection_C.png`: β₁, β₂ of 30 donors × 3 compartments sampled 08-18 h, 2 SD Poisson ellipses;
+  the hepatocyte arc moved by a constant offset; panel B's donor ringed.
 
 **Speaker notes**
-- The waveform was fitted once on GTEx with time of death: shared acrophases, a mesor and an amplitude per tissue
+- Drawing convention as in the video: phase 0 on top, turning clockwise; β₁ = λ sin φ is horizontal. The package
+  stores (cos, sin); the order of the two components is a convention.
+- The waveform was fitted on GTEx with time of death: shared acrophases, a mesor and an amplitude per tissue
   (`waveform.fit_waveform`, `data/human_clock_gtex.npz`). Core genes: NR1D1 3.6 h, DBP 8.5 h, PER2 11.7 h, CRY1 17.9 h,
-  ARNTL 21.0 h; largest relative amplitudes ARNTL 0.50, NPAS2 0.33, NR1D1 0.32 (`cs.gtex().table()`). Only the
-  relative acrophases matter: the zero cancels with the offsets.
-- Why fixed: gene loadings are not identified from between-donor covariance when sampling does not cover the day
-  (METHOD.md §1). Refitting gene timing failed in simulation (A139: V139.1 and V139.2 FAIL), so the conserved waveform
-  is stated as an assumption.
-- The choice of waveform does not drive the GTEx organ map: A123 uses a cross-fitted waveform; with the all-donor
+  ARNTL 21.0 h; largest relative amplitudes ARNTL 0.50, NPAS2 0.33, NR1D1 0.32 (`cs.gtex().table()`). Only relative
+  acrophases matter: the zero cancels with the offsets. Time of death is a noisy phase (`talamanca2023sexdimorphic`);
+  that noise enters the waveform, not the per-donor readout.
+- Why fixed: refitting gene timing failed in simulation (A139: V139.1 and V139.2 FAIL), so the conserved waveform is
+  stated as an assumption (METHOD.md §1).
+- The waveform choice does not drive the GTEx organ map: A123 uses a cross-fitted waveform; with the all-donor
   waveform, offsets 0.945 and amplitudes 0.970 (unchanged).
+- In figure B, low-amplitude genes (PER1, CRY2, NR1D2) scatter most after division by their amplitude; they also
+  weigh least.
 - The angle of one β is not a time: the compartment's centre is unknown and, in hospital hours, is not the centre of
-  the cycle (panel C: each cloud is an 8-10 h arc). This is why a model is needed (M2).
+  the cycle (figure C). This is why the model of M2 is needed.
 
 **Limits**
 - 14 genes, one human waveform (GTEx global; per-tissue waveforms exist, `cs.gtex("Lung")`).
-- The gate tests for a clock, not for the waveform: loops shifted unequally pass it and return an offset that is not
-  the average gene shift, with lower |z| and c (A205, V205.1 PASS, V205.2 FAIL).
+- The conserved waveform is an assumption; violations are not flagged by the gate (A205: V205.1 PASS, V205.2 FAIL).
 
-<!-- src: waveform: clocksync.gtex().table() (data/human_clock_gtex.npz); A123 sensitivity: results_preliminary.md
-A123; A139: paper/exploratory/A139_waveform_refit/output/{v139,d139_3,gene_level,failures}.csv; A205:
-paper/exploratory/A205_partial_shift_gate/output/{tests,cells,per_rep}.csv; projection: _core/plane.py -->
+<!-- src: waveform: clocksync.gtex().table() (data/human_clock_gtex.npz); projection: _core/plane.py (projector,
+gene_weights, project), _core/study.py (tau2 = 0.05); A123 sensitivity: results_preliminary.md A123; A139:
+paper/exploratory/A139_waveform_refit/output/{v139,d139_3,gene_level,failures}.csv; A205:
+paper/exploratory/A205_partial_shift_gate/output/{tests,cells,per_rep}.csv -->
 
 ---
 
