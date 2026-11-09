@@ -10,11 +10,9 @@ psi_g from the GTEx waveform, clocksync.gtex()). Steps:
  7. a real sample is noisy (Poisson counts plus gene noise): the weighted least-squares cosine gives phi_hat and
     lam_hat, i.e. beta;
  8. weights: after division by A_g, low-amplitude and low-count genes are noisiest; the fit weighs gene g by
-    w_g A_g^2 (w_g = 1 / (1/c_g + tau^2), the package's gene weight), against the unweighted fit;
- 9. in data the baseline is the compartment's mean over donors; with donors sampled 10-18 h that mean still
-    oscillates: cbar cos(14 h - psi), cbar = sin(D)/D = 0.83 for a uniform window of half-width D = 4 h;
-10. subtracting it spreads the apparent peaks: donors at 10 / 14 / 18 h read 6.6 / 14.0 / 21.4 h, with relative
-    heights 0.93 / 0.17 / 0.93 (dial: hand = the donor's vector minus the mean vector, as in the clock plane).
+    w_g A_g^2 (w_g = 1 / (1/c_g + tau^2), the package's gene weight), against the unweighted fit.
+The baseline is removed for display only: the package projects y itself, so beta keeps the constant L m (absorbed
+later by the compartment centre mu_k).
 Fitting (y_g - m_g) / A_g with weights w_g A_g^2 is the package's projection (WLS of y_g on A_g (cos psi_g, sin psi_g)
 with weights w_g): the fits use clocksync's projector (`_core.plane.projector`), applied to y - m. The sample is
 simulated (depth DEPTH, gene noise TAU_SIM, seed SEED); illustrative, not fitted to data.
@@ -41,10 +39,6 @@ PX_W = 1920
 H24 = 24 / (2 * np.pi)
 PHI0 = 15.0  # internal phase of the sample (h)
 DEPTH, TAU_SIM, TAU2, SEED = 4e5, 0.05, 0.05, 47  # seed: weighting visibly helps (phase)
-WINDOW = (10.0, 18.0)  # hospital hours of steps 9-10
-DONORS = {10.0: "#CC79A7", 14.0: "#D55E00", 18.0: "#009E73"}  # donor phase (h): colour
-HALF = (WINDOW[1] - WINDOW[0]) / 2 / H24
-CBAR = np.sin(HALF) / HALF  # mean of cos over a uniform window, relative to its centre
 SHOW = {"ARNTL": pf.OKABE_ITO[0], "NR1D1": pf.OKABE_ITO[1], "PER2": pf.OKABE_ITO[2]}
 INK, MUTED, FAINT, FIT = "#222222", pf.GREY, "#b4b4b4", pf.OKABE_ITO[4]
 CLIP = 2.7  # display limit of the scaled values (noisy low-amplitude genes go beyond)
@@ -61,7 +55,7 @@ STEPS = [  # caption, sub-caption, equation, seconds of transition, seconds of h
      r"$y_g(t) = m_g + A_g \cos(t - \psi_g)$", 3.0, 2.5),
     ("A sample is taken at one internal phase φ", "each gene is high when φ is close to its peak time ψ$_g$",
      r"$y_g = m_g + A_g \cos(\varphi - \psi_g)$", 6.0, 2.0),
-    ("Remove the baseline", "in data: each gene's mean over the compartment's donors",
+    ("Remove the baseline", "for display: the projection keeps it as one constant shift per compartment",
      r"$y_g - m_g = A_g \cos(\varphi - \psi_g)$", 2.0, 2.5),
     ("Divide by the amplitude", "every gene now swings between −1 and +1",
      r"$(y_g - m_g)\,/\,A_g = \cos(\varphi - \psi_g)$", 2.0, 2.5),
@@ -73,10 +67,6 @@ STEPS = [  # caption, sub-caption, equation, seconds of transition, seconds of h
      r"$\hat\beta = \arg\min_\beta \sum_g w_g A_g^2 \left(\tilde y_g - \lambda\cos(\varphi - \psi_g)\right)^2$", 3.0, 3.0),
     ("Noisy genes count less", "after dividing by $A_g$, low-amplitude and low-count genes are noisiest (point area = weight)",
      r"weight $= w_g A_g^2$,   $w_g = 1 / (1/\bar c_g + \tau^2)$", 3.0, 4.0),
-    ("In data, the baseline is the mean over donors", "donors sampled 10-18 h: their mean still oscillates (dashed)",
-     r"mean $= m_g + 0.83\,A_g \cos(14\,\mathrm{h} - \psi_g)$", 3.0, 3.0),
-    ("Subtracting it spreads the peaks", "8 h of sampling become apparent peaks from 6.6 to 21.4 h; the middle donor flattens",
-     r"$\cos(\varphi_i - \psi) - 0.83\cos(14\,\mathrm{h} - \psi)$", 4.0, 4.0),
 ]
 YLIM = {"raw": (-2.1, 2.4), "centred": (-0.7, 0.7), "unit": (-1.45, 1.45), "noisy": (-3.0, 3.0)}
 
@@ -124,8 +114,6 @@ def ylim_at(s, u):
         return lerp(YLIM["centred"], YLIM["unit"], ease(u))
     if s == 6:
         return lerp(YLIM["unit"], YLIM["noisy"], ease(u / 0.4))
-    if s == 8:
-        return lerp(YLIM["noisy"], YLIM["unit"], ease(u / 0.4))
     return YLIM["noisy"] if s == 7 else YLIM["unit"]
 
 
@@ -143,13 +131,8 @@ def build(data):
     S["dial_pts"] = dial.scatter(PSI, np.ones_like(PSI), s=40, c=COL, edgecolor="white", linewidth=0.8, zorder=3)
     S["hand"] = dial.plot([0, 0], [0, 0.85], color=INK, lw=2.4, solid_capstyle="round", zorder=4)[0]
     S["hand_w"] = dial.plot([0, 0], [0, 0.85], color=FIT, lw=2.0, ls=(0, (4, 2)), zorder=4)[0]
-    S["window"] = dial.bar(np.mean(WINDOW) / H24, 1.25, width=2 * HALF, color="#eeeeee", zorder=0)[0]
-    S["donor_hands"] = {d: dial.plot([0, 0], [0, 0.85], color=c, lw=2.4, solid_capstyle="round", zorder=4)[0]
-                        for d, c in DONORS.items()}
-    S["donor_labs"] = {d: dial.text(0, 0, f"{d:.0f} h", ha="center", va="center", fontsize=12, color=c)
-                       for d, c in DONORS.items()}
-    S["dial_labs"] = [dial.text(PSI[GENES.index(g)], 1.17, g, ha="center", va="center", fontsize=11, color=c)
-                      for g, c in SHOW.items()]
+    for g, c in SHOW.items():
+        dial.text(PSI[GENES.index(g)], 1.17, g, ha="center", va="center", fontsize=11, color=c)
     S["phi_lab"] = dial.text(0, 0.55, "φ", fontsize=15, color=INK, ha="center", va="center")
     # main axes
     t = np.linspace(0, 24, 241)
@@ -158,8 +141,6 @@ def build(data):
     S["psi_curve"] = ax.plot(t, np.zeros_like(t), color=INK, lw=2.2, zorder=2)[0]
     S["fit_w"] = ax.plot(t, np.zeros_like(t), color=FIT, lw=2.6, zorder=3)[0]
     S["fit_u"] = ax.plot(t, np.zeros_like(t), color=MUTED, lw=1.8, ls=(0, (5, 3)), zorder=3)[0]
-    S["donor_curves"] = {d: ax.plot(t, np.zeros_like(t), color=c, lw=2.2, zorder=3)[0] for d, c in DONORS.items()}
-    S["mean_curve"] = ax.plot(t, np.zeros_like(t), color=INK, lw=2.0, ls=(0, (5, 3)), zorder=3)[0]
     S["dots"] = ax.scatter(np.zeros(len(A)), np.zeros(len(A)), s=60, c=COL, edgecolor="white", linewidth=0.9, zorder=4)
     S["labels"] = {g: ax.text(0, 0, g, fontsize=11, color=c, ha="left", va="center", zorder=5) for g, c in SHOW.items()}
     S["unw_lab"] = ax.text(0, 0, "unweighted", fontsize=11, color=MUTED, ha="left", va="top", zorder=5)
@@ -170,8 +151,7 @@ def build(data):
     S["xlab_p"] = ax.text(0.5, -0.13, "peak time of each gene, ψ (h)", transform=ax.transAxes, ha="center", va="top",
                           fontsize=13)
     S["ylab"] = [ax.text(-0.075, 0.5, lab, transform=ax.transAxes, rotation=90, ha="center", va="center", fontsize=13)
-                 for lab in ("log expression (centred)", "log expression − baseline", "(log expression − baseline) / amplitude",
-                             "(log expression − donor mean) / amplitude")]
+                 for lab in ("log expression (centred)", "log expression − baseline", "(log expression − baseline) / amplitude")]
     # captions
     S["cap"] = [(cap.text(0.0, 0.92, c, fontsize=19, color=INK, va="top", transform=cap.transAxes),
                  cap.text(0.0, 0.52, sc, fontsize=13, color=MUTED, va="top", transform=cap.transAxes),
@@ -197,7 +177,6 @@ def update(S, ax, data, s, u):
     if sp == 0:
         x = np.full(len(A), phi % 24)
     ax.set_ylim(*ylim_at(s, u))
-    gone = 1 - on(8, s, u, 0.0, 0.4)  # steps 9-10 keep only the donors' cosines
     # day curves: fade out while the genes spread
     t = np.linspace(0, 24, 241)
     ca = 1 - on(4, s, u, 0.0, 0.4)
@@ -207,55 +186,35 @@ def update(S, ax, data, s, u):
     S["cursor"].set_xdata([phi % 24] * 2)
     S["cursor"].set_alpha(ca)
     S["psi_curve"].set_ydata(np.cos(p - t / H24))
-    S["psi_curve"].set_alpha(on(4, s, u, 0.6, 1.0) * (1 - 0.65 * nz) * gone)
+    S["psi_curve"].set_alpha(on(4, s, u, 0.6, 1.0) * (1 - 0.65 * nz))
     # dots: area = weight in step 8
     size = (1 - ws) * 70 + ws * np.maximum(260 * weight / weight.max(), 10)
     S["dots"].set_offsets(np.column_stack([x, y]))
     S["dots"].set_sizes(size)
-    S["dots"].set_alpha(gone)
     for g, txt in S["labels"].items():
         i = GENES.index(g)
         txt.set_position((x[i] + 0.35, y[i] + (0.06 if sp < 1 else 0.0)))
-        txt.set_alpha(on(0, s, u, 0.6, 1.0) * gone)
+        txt.set_alpha(on(0, s, u, 0.6, 1.0))
     # fits
     lw, pw = fits["weighted"]
     lu, pu = fits["unweighted"]
     S["fit_w"].set_ydata(lw * np.cos(pw / H24 - t / H24))
-    S["fit_w"].set_alpha(on(6, s, u, 0.6, 1.0) * gone)
+    S["fit_w"].set_alpha(on(6, s, u, 0.6, 1.0))
     S["fit_u"].set_ydata(lu * np.cos(pu / H24 - t / H24))
-    S["fit_u"].set_alpha(on(7, s, u, 0.4, 1.0) * gone)
+    S["fit_u"].set_alpha(on(7, s, u, 0.4, 1.0))
     S["unw_lab"].set_position(((pu + 1.0) % 24, lu * 1.0 + 0.45))
-    S["unw_lab"].set_alpha(on(7, s, u, 0.6, 1.0) * gone)
-    # steps 9-10: donors in hospital hours, minus their mean
-    da9, k = on(8, s, u, 0.4, 1.0), on(9, s, u)
-    centre = np.mean(WINDOW) / H24
-    S["mean_curve"].set_ydata((1 - k) * CBAR * np.cos(centre - t / H24))
-    S["mean_curve"].set_alpha(da9 * (1 - 0.7 * k))
-    S["window"].set_alpha(da9)
-    for d, ln in S["donor_curves"].items():
-        ln.set_ydata(np.cos(d / H24 - t / H24) - k * CBAR * np.cos(centre - t / H24))
-        ln.set_alpha(da9)
-        v = np.exp(1j * d / H24) - k * CBAR * np.exp(1j * centre)
-        S["donor_hands"][d].set_data([np.angle(v)] * 2, [0, 0.85 * abs(v)])
-        S["donor_hands"][d].set_alpha(da9)
-        S["donor_labs"][d].set_position((np.angle(v), 0.85 * abs(v) + 0.17))
-        S["donor_labs"][d].set_alpha(da9)
+    S["unw_lab"].set_alpha(on(7, s, u, 0.6, 1.0))
     # dial
     S["hand"].set_xdata([p, p])
-    S["hand"].set_alpha(gone)
-    S["phi_lab"].set_alpha(gone)
     S["phi_lab"].set_position((p + 0.25, 0.55))
     resp = on(1, s, u, 0.0, 0.1)
     S["dial_pts"].set_sizes(40 + resp * 160 * (1 + np.cos(p - PSI)) / 2)
     S["hand_w"].set_xdata([pw / H24] * 2)
-    S["hand_w"].set_alpha(on(6, s, u, 0.6, 1.0) * gone)
-    S["dial_pts"].set_alpha(gone)
-    for txt in S["dial_labs"]:
-        txt.set_alpha(gone)
+    S["hand_w"].set_alpha(on(6, s, u, 0.6, 1.0))
     # axis labels and captions
     S["xlab_t"].set_alpha(1 - sp)
     S["xlab_p"].set_alpha(sp)
-    ya = [1 - on(2, s, u), on(2, s, u) * (1 - on(3, s, u)), on(3, s, u) * (1 - on(9, s, u)), on(9, s, u)]
+    ya = [1 - on(2, s, u), on(2, s, u) * (1 - on(3, s, u)), on(3, s, u)]
     for txt, a in zip(S["ylab"], ya):
         txt.set_alpha(a)
     for j, texts in enumerate(S["cap"]):
