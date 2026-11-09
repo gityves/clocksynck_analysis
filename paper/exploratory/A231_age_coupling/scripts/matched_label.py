@@ -181,8 +181,10 @@ def load_cohorts(subsample=None, seed=0, hours=None) -> dict:
     return out
 
 
-def build(design: Design, cohorts: dict, tissues=None, quick=False, tag="gtex"):
-    """plans, datasets, anchors, pseudobulks (plan tissues + anchors), matching and balance tables of one design."""
+def build(design: Design, cohorts: dict, tissues=None, quick=False, tag="gtex", anchor_set=None):
+    """plans, datasets, anchors, pseudobulks (plan tissues + anchors), matching and balance tables of one design.
+    anchor_set: host anchor tissues (default: the A164 anchors `S.TISSUES`)."""
+    anchor_set = S.TISSUES if anchor_set is None else tuple(anchor_set)
     plans, dss, anchors, pbs, mrows, brows = {}, {}, {}, {}, [], []
     for c, (pb, q, _) in cohorts.items():
         plan, m, b = make_plan(design, q, pb, c, tissues, quick)
@@ -190,8 +192,8 @@ def build(design: Design, cohorts: dict, tissues=None, quick=False, tag="gtex"):
         brows += b
         if not plan:
             continue
-        pbc = pb[pb.compartment.isin(set(plan) | set(S.TISSUES))].reset_index(drop=True)
-        anchors[c] = [a for a in S.TISSUES if a in set(pbc.compartment)]
+        pbc = pb[pb.compartment.isin(set(plan) | set(anchor_set))].reset_index(drop=True)
+        anchors[c] = [a for a in anchor_set if a in set(pbc.compartment)]
         plans[c], pbs[c] = plan, pbc
         dss[c] = cs.Dataset(pbc, anchors=anchors[c], name=f"{tag}_{design.name}_{c}")
     return plans, dss, anchors, pbs, pd.DataFrame(mrows), pd.DataFrame(brows)
