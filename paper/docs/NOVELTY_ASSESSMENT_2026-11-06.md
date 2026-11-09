@@ -51,6 +51,14 @@ the output tables named per row. Wording follows ledger rule 6: convergence, not
    descriptive). Before claiming priority, search brain-death and coma physiology (loss of temperature, cortisol,
    melatonin or blood-pressure rhythms): such work would precede us on loss of rhythms but not on inter-organ
    relations.
+   *Search done (2026-11-09, six web searches, abstracts and summaries only, not carded):* nothing on clock genes or
+   inter-organ relations in brain-dead donors, or on peripheral clocks in human hypothalamic lesions. Found: brain
+   injury, coma and disorders of consciousness lose or flatten melatonin, cortisol and temperature rhythms, and the
+   loss predicts outcome (e.g. PMC6766891, PMC5444311); craniopharyngioma alters 24 h temperature and sleep-wake rhythms
+   (PMC12713956); one brain-death case report whose day-night temperature cycle persisted after brain death (PubMed
+   8622799; may reflect the ICU environment, read before citing). Priority on inter-organ order holds pending a PubMed
+   check of "pituitary function in brain-stem-dead donors"; cite the clinical rhythm-loss work as the systemic
+   precedent.
 
 ## 3. Can we show we do better? Where yes, where no
 
