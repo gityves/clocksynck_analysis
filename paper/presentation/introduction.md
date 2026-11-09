@@ -335,3 +335,38 @@ why hospital-hours samples are usable.
    cards (`iarc2020night`, `straif2007carcinogenicity`) are in the bib but not carded.
 3. **Slide 4.4:** name CoFE and TimeTeller on the slide, or describe them as "orderer-based" and "supervised" only?
 4. **Length:** 15 slides. Merge 1.1 + 1.2 and 2.1 + 2.2 for a short talk?
+
+---
+
+## Backing for slides 4.2-4.5: how published methods cope with hospital hours, and what we tested
+
+Literature column from the cards; our column from the output tables (numbers re-read 2026-11-09). W = deaths or samples
+08-18 h, F = whole day. Offsets = GTEx 40-tissue organ map, circular r with the timed truth (i) (A123b).
+
+| method | how the authors handle hospital hours | our test | outcome | status |
+|---|---|---|---|---|
+| CYCLOPS \cite{anafi2017cyclops} | night phases attributed to shift workers (15-20 %); > 250 samples; tumours projected onto the normals' eigengenes | A123b; A199; A140 | offsets W -0.296 (F 0.115) vs clocksync 0.945; magnitude vs timed clock strength Spearman 0.020 W, 0.055 F, so coverage is not the reason; simulator gate fails with a shared non-clock factor (median r 0.058) | A123b H123.4 PASS (registered S); A199 H199.1 FAIL (coverage effect not detected); A140 gate fail |
+| CYCLOPS 2.0 \cite{li2024tumor} | covariates; optional timed seeds; tumours projected onto the normals; benchmarked under temporal bias (SI only) | A123b (run untimed) | in A123b, row "cyclops" above. Timed seeds and tumour projection not tested | partly tested |
+| CHIRAL \cite{talamanca2023sexdimorphic} | built on GTEx, whose deaths cover the day; no hospital-hours claim | A123b; A145 | offsets W -0.165 vs F 0.877; simulation coupling MAE W 0.097 vs clocksync 0.060 | known, descriptive |
+| CoFE \cite{ananthasubramaniam2025rhythm} | CV minimum as validity signal; full-cycle TCGA labels noted; tumour-normal differences read as uncoupling | A123b; A145; A204 | offsets W genome-wide -0.283, clock genes -0.417 (F 0.139, 0.856); simulation MAE W 0.206; 08-18 h labels fill the circle (largest gap 0.83 h vs 11.0 h true), CV minimum interior in every run; coupled vs uncoupled tumours AUC 0.666 W vs 0.928 F | A123b PASS; A204 descriptive only (stopped by the TimeTeller gate) |
+| TimeTeller \cite{vasilyev2026robust} | supervised on healthy timed data; off-window samples reassigned to a working-day secondary peak; lasso day/night check | A123b; A204; A204b | offsets W 0.754 (F 0.950): it does **not** fail in hospital hours. A coupled tumour (c 0.9) correlates with sampling time at n 108 in 30 of 30 simulations, so REMAGUS r ≈ 0 is not explained by the narrow window alone; a training/tumour mean-level mismatch is an alternative (post hoc). The reassignment step was not tested | A204b H204b.4 PASS (post hoc to A204's failed gate) |
+| CCD \cite{shilts2018evidence} | avoids ordering; works on 8 h windows | A207 | ΔCCD 0.890 (p 0.001) replicated, in the same TCGA tumours that follow their normal's clock (A138) | not a failure; phase-blind by design |
+| Grabe 2024 \cite{grabe2024quantification} | chronotypes and shift workers "rescue the representation of the circadian day"; tumour ordered by its paired normal | A207 | ΔR² -0.413 (PASS on the pseudo-set companion only; normals define the phase in-sample) | partial-coverage assumption not tested |
+| DCPR \cite{han2025dcpr} | own benchmark on 14-18 h spans: degrades | none | - | not tested |
+| supervised blood predictors \cite{hughey2016zeitzeiger, braun2018universal, wittenbrink2018high, laing2017blood} | trained on timed series, no coverage needed | none (TimeTeller is the only supervised method we ran) | - | not tested |
+
+**What this supports:**
+- Untimed orderers lose the organ map in hospital hours on real data (A123b). A post hoc check with reflection and stretch
+  allowed gives the same result: CHIRAL 0.165, CoFE clock genes 0.417, CYCLOPS 0.296 vs clocksync 0.945.
+- **Against it:** in a clock-gene-only simulation (A145), two-step orderers nearly match clocksync in 08-18 h (CYCLOPS
+  MAE 0.074 vs 0.060, H145.1 FAIL after Holm). The advantage rests on real data (A123b), not on A145.
+- The supervised TimeTeller works in hospital hours (A123b, A204b), so "every method fails" is wrong. The case is
+  narrower: untimed orderers fail, and supervised predictors need timed training data from the same tissue.
+- "Published uncoupling is an artefact" is shown for CoFE only descriptively (A204), and for TimeTeller only as a
+  post hoc alternative explanation (A204b).
+- Not tested: the shift-worker argument, projecting tumours onto normals, CYCLOPS 2.0 timed seeds, TimeTeller's
+  reassignment, DCPR, and Grabe under partial coverage.
+
+<!-- src: exploratory/A123_working_hours/output/a123b/{h123_4,tests,posthoc_reflect}.csv; A145_two_step/output/h145.csv;
+A199_cyclops_working_hours/output/tests.csv; A140_dip_cyclops/output/q1rev/simulator_gate_core.csv;
+A204_orderer_uncoupling/output/{gate,cofe_cells,auc}.csv, a204b/tests.csv; A207_ccd_grabe_tcga/output/tests.csv -->
