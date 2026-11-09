@@ -283,7 +283,9 @@ appear on this slide; no per-donor times.
 - CYCLOPS 2.0: tumour and paired-normal phases agree in strong-clock luminal A tumours ✓, poorly overall
   \cite{li2024tumor}; noise in weak clocks predicts the same.
 
-**Visual:** schematic: a 10-18 h band of samples forced onto a full circle → random tumour-normal differences.
+**Visual:** `figures/hospital_hours_ordering/hospital_hours_ordering.png` (`scripts/hospital_hours_ordering.py`,
+illustrative simulation): 10-18 h samples ordered as if they covered 24 h; true tumour - normal difference 0 h, inferred
+differences spread by several hours (circular SD 3.3 h in the simulation).
 
 **Notes:** this is a reason for the method, not a result. Our own tests (A145, A204) belong in the results section.
 
