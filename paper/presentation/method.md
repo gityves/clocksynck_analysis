@@ -37,17 +37,20 @@ or their amplitude ratios. Such a change still passes the gate and is read as an
 
    with P = I − 11ᵀ/G (centring over genes), X̃ = PX, W_k = diag(w_kg), w_kg = 1 / (1/c̄_kg + τ²) (c̄_kg the median
    count of gene g in compartment k, τ² = 0.05), and Poisson covariance V_ik = L_k diag(1/max(n_ikg, 0.5)) L_kᵀ.
-   Height λ and peak φ of the fitted cosine are β.
+   In the figure, each gene's log fraction is taken relative to the compartment's mean over donors and divided by its
+   fixed reference amplitude amp_g: the model then predicts one cosine λ cos(φ − ψ_g) for all genes. Its height λ and
+   peak φ are β relative to the compartment's mean (by linearity, L_k (y_ik − ȳ_k) = β̂_ik − mean β̂_k).
 3. *Figure C, the clock plane.* L_k 1 = 0 and L_k X = I, so β̂_ik ≈ λ_ik (sin φ_ik, cos φ_ik) + L_k m_k + noise: the common
    shift s_ik is gone and the gene baselines add one constant per compartment. A compartment's donors form an arc
    (hospital hours cover part of the cycle); a platform or cell-type offset moves the whole arc, not its shape.
 
 **Visual:** three one-panel figures, shown in order (`scripts/projection.py`, simulated, 150 × 120 mm each).
 - `figures/projection/projection_A.png`: the GTEx waveform, one point per gene (angle ψ_g, radius amp_g).
-- `figures/projection/projection_B.png`: one fibroblast pseudobulk: (log fraction − baseline) / amplitude against
-  acrophase, which falls on one cosine; point area = weight in the fit; λ and φ marked.
+- `figures/projection/projection_B.png`: one fibroblast pseudobulk: (log fraction − compartment mean) / reference
+  amplitude against acrophase, which falls on one cosine; point area = weight in the fit; λ and φ marked.
 - `figures/projection/projection_C.png`: β₁, β₂ of 30 donors × 3 compartments sampled 08-18 h, 2 SD Poisson ellipses;
-  the hepatocyte arc moved by a constant offset; panel B's donor ringed.
+  the hepatocyte arc moved by a constant offset; panel B's donor ringed, with the arrow from the fibroblast mean (+)
+  that B's cosine encodes (length λ, direction φ).
 
 **Speaker notes**
 - Drawing convention as in the video: phase 0 on top, turning clockwise; β₁ = λ sin φ is horizontal. The package
@@ -62,8 +65,13 @@ or their amplitude ratios. Such a change still passes the gate and is read as an
   stated as an assumption (METHOD.md §1).
 - The waveform choice does not drive the GTEx organ map: A123 uses a cross-fitted waveform; with the all-donor
   waveform, offsets 0.945 and amplitudes 0.970 (unchanged).
-- In figure B, low-amplitude genes (PER1, CRY2, NR1D2) scatter most after division by their amplitude; they also
-  weigh least.
+- Figure B, how to read it: x = the gene's reference acrophase; y = how far this donor's gene sits from the
+  compartment's average, in units of the gene's reference amplitude. If the donor's clock is ahead of or behind the
+  compartment average, genes peaking at that phase are up and the opposite ones down, all by the same scaled amount:
+  one cosine. Low-amplitude genes (PER1, CRY2, NR1D2) scatter most after the division; they also weigh least.
+- Why the compartment mean: gene baselines are unknown, but constant within a compartment. Subtracting the
+  compartment mean removes them; by linearity this is the same as taking β relative to the cloud's mean in C. That
+  mean is not the centre of the cycle in hospital hours (M2).
 - The angle of one β is not a time: the compartment's centre is unknown and, in hospital hours, is not the centre of
   the cycle (figure C). This is why the model of M2 is needed.
 

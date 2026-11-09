@@ -3,10 +3,13 @@ shown in order beside the bullets.
 
 A. The reference: the 14 genes of the GTEx waveform (clocksync.gtex()), one point per gene at angle = acrophase psi_g,
    radius = relative amplitude amp_g. Fixed, never re-estimated. Its zero is a reference phase, not clock time.
-B. One pseudobulk (one donor's fibroblasts): each gene's log fraction minus its baseline, divided by its amplitude,
-   against its acrophase. The model says these fall on one cosine, lam cos(phi - psi); its height and peak are beta.
-   Point area is the gene's weight in the fit (w_g amp_g^2 in this scaling), so the low-amplitude genes, which scatter
-   most, count least. The curve is the package's beta (minus the baseline term L m), not refitted here.
+B. One pseudobulk (one donor's fibroblasts) against its compartment: each gene's log fraction minus the compartment's
+   mean over donors (computable on real data), divided by the gene's fixed reference amplitude amp_g, against its
+   acrophase psi_g. The model says these fall on one cosine, lam cos(phi - psi); the curve is the package's beta minus
+   the compartment's mean beta (exact by linearity: L (y - mean y) = beta - mean beta), not refitted here. Its height
+   lam and peak phi are the arrow from the cloud's mean to the ringed donor in C. Point area is the gene's weight in
+   the fit (w_g amp_g^2 in this scaling): low-amplitude genes scatter most and count least. Gene centring (which removes
+   the per-sample common shift s_ik) is not drawn: s_ik = 0 in this simulation (shift_sd 0).
 C. The clock plane: beta of every donor of three compartments, 2 SD Poisson ellipses (V). Each cloud is an arc (08-18 h
    of its cycle) around its compartment's baseline; a constant per-gene offset b (platform, cell-type baseline) moves
    the whole cloud by L b (hepatocytes: ghost -> solid). Baselines are set for readability (BASE): the gene-mesor term
@@ -47,8 +50,13 @@ BASE = {  # panel C: where each compartment's cloud sits (display coordinates, p
     "hepatocyte (before)": np.array([1.2, 2.9]),
 }
 COLOR = dict(zip(COMPS, pf.OKABE_ITO))
-DONOR = 4  # the fibroblast pseudobulk of panel B (ringed in C)
 INK, MUTED = "#222222", pf.GREY
+
+
+def donor(st):
+    """Panel B's fibroblast pseudobulk (ringed in C): the one farthest from its cloud's mean, so the arrow reads."""
+    b = st.beta[st.compartment == "fibroblast"]
+    return int(np.argmax(np.hypot(*(b - b.mean(0)).T)))
 
 
 def face(b):
@@ -88,10 +96,11 @@ def panel_reference(ax, wf):
 
 
 def panel_profile(ax, wf, st):
-    i = np.flatnonzero(st.compartment == "fibroblast")
-    y = np.log(np.maximum(st.counts[i][DONOR], 0.5) / st.depth[i][DONOR]) - wf.mesor  # minus the gene baseline
+    i, d = np.flatnonzero(st.compartment == "fibroblast"), donor(st)
+    logf = np.log(np.maximum(st.counts[i], 0.5) / st.depth[i][:, None])
+    y = logf[d] - logf.mean(0)  # minus the compartment's mean over donors
     amp, psi = np.asarray(wf.amp), np.mod(wf.psi, 2 * np.pi)
-    b = st.beta[i][DONOR] - st.L["fibroblast"] @ wf.mesor  # the package's beta without the baseline term
+    b = st.beta[i][d] - st.beta[i].mean(0)  # the package's beta minus the cloud's mean
     lam, phi = np.hypot(*b), np.arctan2(b[1], b[0])
     w = 1.0 / (1.0 / np.maximum(np.median(st.counts[i], 0), 0.5) + st.tau2)  # the package's gene weights
     grid = np.linspace(0, 2 * np.pi, 300)
@@ -102,17 +111,17 @@ def panel_profile(ax, wf, st):
     peak = np.mod(phi, 2 * np.pi) * HOURS
     ax.annotate("", xy=(peak, lam), xytext=(peak, 0), arrowprops=dict(arrowstyle="<->", color=INK, lw=1.2,
                                                                        mutation_scale=10, shrinkA=0, shrinkB=0))
-    ax.annotate("λ", (peak, lam / 2), xytext=(6, 0), textcoords="offset points", ha="left", va="center", fontsize=12)
+    ax.annotate("λ", (peak, lam / 2), xytext=(-6, 0), textcoords="offset points", ha="right", va="center", fontsize=12)
     ax.annotate("φ", (peak, 0), xytext=(0, -6), textcoords="offset points", ha="center", va="top", fontsize=12)
     ax.set_xlim(0, 24)
     ax.set_xticks([0, 6, 12, 18, 24])
     lim = 1.6 * lam
     ax.set_ylim(-lim, lim)
     ax.set_xlabel("gene acrophase ψ (h)")
-    ax.set_ylabel("(log fraction − baseline) / amplitude")
+    ax.set_ylabel("(log fraction − compartment mean)\n/ reference amplitude")
     pf.place_labels(ax, psi * HOURS, np.clip(y / amp, -lim, lim), list(wf.genes), fontsize=9, color=MUTED,
                     clearance=1.5)
-    title(ax, "One pseudobulk → one β")
+    title(ax, "One pseudobulk → one β (vs its compartment)")
 
 
 def ellipse(ax, centre, cov, color, alpha=1.0):
@@ -124,7 +133,7 @@ def ellipse(ax, centre, cov, color, alpha=1.0):
 
 
 def panel_plane(ax, wf, st):
-    pts = []
+    pts, d = [], donor(st)
     for k, (_, marker) in COMPS.items():
         i = st.compartment == k
         b = st.beta[i] - st.L[k] @ wf.mesor  # the arc z_k e^(i t_s) + noise, around 0
@@ -139,13 +148,20 @@ def panel_plane(ax, wf, st):
         for c, v in zip(p, st.V[i]):
             ellipse(ax, c, v, COLOR[k], alpha=0.45)
         ax.scatter(*p.T, s=40, marker=marker, color=COLOR[k], edgecolor="white", linewidth=0.7, zorder=3, label=k)
-        if k == "fibroblast":
-            ax.scatter(*p[DONOR], s=170, facecolor="none", edgecolor=INK, linewidth=1.3, zorder=4)
+        if k == "fibroblast":  # panel B's donor, and the arrow from the cloud's mean that B's cosine encodes
+            m = p.mean(0)
+            ax.scatter(*m, s=90, marker="+", color=INK, linewidth=1.6, zorder=4)
+            ax.add_patch(FancyArrowPatch(m, p[d], arrowstyle="-|>", mutation_scale=11, color=INK, lw=1.1, zorder=4,
+                                         shrinkA=2, shrinkB=7))
+            ax.scatter(*p[d], s=170, facecolor="none", edgecolor=INK, linewidth=1.3, zorder=4)
+            mean_at, mean_seg = m, [m, p[d]]
     z = a + BASE["hepatocyte"] - BASE["hepatocyte (before)"]  # cloud mean before -> after
     ax.add_patch(FancyArrowPatch(a, z, arrowstyle="-|>", mutation_scale=14, color=INK, lw=1.4, zorder=4, shrinkA=4,
                                  shrinkB=4))
     pf.place_labels(ax, [(a[0] + z[0]) / 2], [(a[1] + z[1]) / 2], ["constant offset\n(platform, baseline)"],
                     obstacles=np.vstack(pts), segments=np.array([[a, z]]), fontsize=10, color=INK)
+    pf.place_labels(ax, [mean_at[0]], [mean_at[1]], ["mean"], obstacles=np.vstack(pts),
+                    segments=np.array([mean_seg]), prefer=[np.pi], fontsize=10, color=INK)
     ax.set_aspect("equal", adjustable="datalim")
     ax.set_xticks([])
     ax.set_yticks([])
@@ -170,7 +186,7 @@ def main():
         if failed:
             print(f"{key}: labels not placed:", list(failed))
     i = st.compartment == "fibroblast"
-    b = st.beta[i][DONOR] - st.L["fibroblast"] @ wf.mesor
+    b = st.beta[i][donor(st)] - st.beta[i].mean(0)
     print(f"panel B donor: lam {np.hypot(*b):.2f}, phi {np.mod(np.arctan2(b[1], b[0]), 2 * np.pi) * HOURS:.1f} h")
 
 
