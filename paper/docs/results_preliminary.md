@@ -4076,3 +4076,30 @@ del Olmo 2022 skin (population arm n 154, 20-74 y, no recorded times; timed arm 
 cohorts (Framingham, BIOS, EGCUT, GENOA) record age but no draw-time variable was found; access is controlled
 (outward-facing, not pursued). A130 (54 subjects; null SD 0.20 h per decade, as precise as A234's 0.25 because living
 subjects carry repeated timed samples) stays the only living comparison, and it disagrees in sign.
+
+## A235 (scored 2026-11-09): no metabolic-organ phase shift in T2D or obesity; the multi-hour advance of high-fat-fed mice is excluded in fast deaths (H235.1 FAIL x2, equivalent within ±1 h)
+Fast-death module (liver, both adiposes, skeletal muscle; A164 host), case − control offset, > 0 = advanced:
+
+| condition | fast offset (h), 90 % | one-sided p / Holm | MDE | module − companion (h), p | vent offset (h), 90 % |
+|---|---|---|---|---|---|
+| T2D | +0.02 [−0.25, 0.30] | 0.46 / 0.46 | 0.37 | +0.46, 0.069 | +0.14 [−0.43, 0.70] |
+| obesity | +0.20 [−0.23, 0.64] | 0.22 / 0.44 | 0.64 | +0.35, 0.20 | +0.07 [−0.70, 0.83] |
+
+- **H235.1 FAIL for both** (no advance detected); both 90 % intervals lie within ±1 h, so a shift of an hour or more,
+  and the multi-hour liver advance of high-fat-fed mice, is excluded in fast deaths. The pseudo-clock q95 is wide
+  (2.7 h, 4.9 h): the specificity companion would not have confirmed a small shift.
+- **Module − companion** is positive in both (+0.46 h, p 0.069; +0.35 h, p 0.20), not significant; the companion
+  tissues (nerve, skins) drift slightly the other way in T2D (nerve −0.71 h).
+- **Sensitivity host without the module anchors:** fast T2D +0.12 [−0.18, 0.42], obesity +0.19 [−0.28, 0.65]; unchanged,
+  so absorption of a shared metabolic shift by the host does not hide one.
+- **H235.2 (vent, descriptive):** no shift either; with no shift in fast deaths the negative control is uninformative
+  about the feeding route.
+- **Descriptive:** liver in fast deaths −0.57 h (T2D, 25 sets) and −0.53 h (obesity, 18 sets), the opposite sign to the
+  mouse advance, single tissue, no test. Module coupling unchanged (pooled d* T2D +0.016 [−0.026, 0.058], obesity +0.001
+  [−0.078, 0.081], agreeing with A164). Module log z2 ratio (relative amplitude, case vs control): T2D −0.003 (fast),
+  −0.047 (vent); obesity −0.101, −0.127 (no null; a possible mild amplitude loss in obesity, untested).
+- **Reading:** human metabolic disease does not reproduce the mouse high-fat-diet phase phenotype at the organ level,
+  within ±0.3-0.6 h. Not a contradiction of the mouse work: the mouse shift needs rest-phase feeding, which obese people
+  do not systematically have and which terminal illness removes; T2D and obesity are not separated (BMI imbalance
+  0.68 in the T2D fast design).
+<!-- src: paper/exploratory/A235_metabolic_offset/output/{score_tests,score_tissues,score_pooled,score_z2,score_pseudo_t2d,score_pseudo_obese}.csv -->
