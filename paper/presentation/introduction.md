@@ -283,7 +283,10 @@ appear on this slide; no per-donor times.
 - CYCLOPS 2.0: tumour and paired-normal phases agree in strong-clock luminal A tumours ✓, poorly overall
   \cite{li2024tumor}; noise in weak clocks predicts the same.
 
-**Visual:** `figures/hospital_hours_ordering/hospital_hours_ordering.png` (`scripts/hospital_hours_ordering.py`,
+**Visual:** `figures/hospital_hours_cosine/hospital_hours_cosine.png` (`scripts/hospital_hours_cosine.py`, illustrative
+simulation): clock genes seen only in 10-18 h; spread over a full cycle by an orderer, a full cosine with a smaller
+amplitude also fits (R² 0.69-0.81 vs 0.53-0.94 for the true fragment). Alternative:
+`figures/hospital_hours_ordering/hospital_hours_ordering.png` (`scripts/hospital_hours_ordering.py`,
 illustrative simulation): 10-18 h samples ordered as if they covered 24 h; true tumour - normal difference 0 h, inferred
 differences spread by several hours (circular SD 3.3 h in the simulation).
 
