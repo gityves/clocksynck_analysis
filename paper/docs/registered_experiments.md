@@ -4890,3 +4890,41 @@ about 0.29 at the archive prior (0.35 h per decade) for H234.1, about 0.37 at th
 (-0.38 h per decade) for H234.2; only drifts of about 0.7 h per decade or more are detectable. Scored as registered and
 read with the MDE. The pseudo-clock companion is weak: pseudo hosts carry no time-of-day signal, so their β scatter up to
 the estimator bound (±3.05 h per decade; placebo check). Code checked end to end on shuffled ages only (`--placebo`).
+
+## A235 (2026-11-09, user agreement; follow-up of the mouse high-fat-diet literature; written before any metabolic-organ offset is computed for T2D or obesity; seen: A164 coupling results (T2D module d* +0.019, obesity +0.004; `a164_tissues.csv` holds no offsets), A233 offsets for five other conditions, A164 matching and balance tables; the archive A47 outputs were not re-read for offsets): are metabolic organs phase-shifted relative to the body clock in T2D and obesity? **GTEx, A164 matching, A233 estimation; fast deaths primary, vent negative control (Holm over T2D and obesity)**
+**Why.** In mice a high-fat diet advances peripheral clocks, the liver most clearly, against an almost unchanged SCN
+(Pendergast et al. 2013; also Kohsaka et al. 2007, Eckel-Mahan et al. 2013; from memory, to be pinned in
+`literature_positioning.md` before writing; they do not change the design). The shift is carried mostly by food eaten in
+the rest phase (Hatori et al. 2012). A164 tested coupling only, so the mouse prediction (an organ offset, not a loss of
+coupling) was never tested in humans.
+**Expected direction:** module tissues advanced relative to the host in cases (offset_diff_h > 0; `Dataset.contrast`
+convention: case minus control, > 0 advanced). The expected human size is unknown and probably far below the mouse
+shift: obese people do not systematically eat in their biological night, and terminal illness removes the feeding cue.
+**Labels and matching (A164, blind to clock data):** T2D cases vs non-diabetic controls, up to 3 controls per case;
+obesity BMI >= 30 vs 18.5 <= BMI < 25, T2D donors excluded, 1:1. Exact on sex and Hardy class, age caliper 5 y,
+nearest age then ischaemic time. Balance (SMD of age, ischaemic time, BMI, T2D share, sex) reported before any clock
+readout. A tissue enters with >= 10 matched cases in the cohort.
+**Module:** liver, subcutaneous and visceral adipose, pancreas, skeletal muscle (A164 MET). **Companion:** tibial nerve
+and the two skins (A164 COMP). Host: A164 anchors; a module tissue that is an anchor is read on its leave-one-out host.
+**Estimation (A233):** per tissue `Dataset.contrast` offset_diff_h and d*; 1,000 permutations within matched sets,
+shared across tissues; 200 matched-set bootstraps with host refit; inverse-null-variance pooling over module tissues;
+90 % interval ± 1.645 x max(bootstrap SE, null SD).
+**Power first (dated note before any observed statistic):** MDE_80 = 2.49 x null SD of the fast module offset, vent and
+pooled, per condition.
+- **H235.1 (primary, advance):** fast-cohort module offset > 0, one-sided permutation p, Holm over T2D and obesity.
+  Clock-specific only if it exceeds the q95 of |module offset| over 50 expression-matched pseudo-clock sets (fast,
+  A233 companion). "Metabolic-specific" only if the fast module − companion offset, on the same permutations, is also
+  > 0 at one-sided p < 0.05. The two-sided p and the equivalence within ±1 h are reported.
+- **H235.2 (negative control, descriptive):** vent-cohort module offset and its 90 % interval (no feeding rhythm in
+  ventilated care; prediction: no shift). A shift of the same size in vent argues against the feeding route.
+**Descriptive (no pass / fail):** pooled (vent + fast) module offset; per-tissue offsets (liver named); module log z2
+ratio (relative amplitude, the damping readout, case vs control) per cohort.
+**Sensitivity (registered, not a test):** H235.1 recomputed with a host that excludes the module tissues (anchors =
+A164 anchors minus skeletal muscle and the two adiposes), so a shift shared by all metabolic organs is not partly
+absorbed by the host.
+**Reading:** H235.1 pass with companions: metabolic organs run advanced relative to the body clock in condition c,
+consistent with the mouse result (size stated against the mouse shift). Fail with MDE: a shift larger than the MDE is
+not present in fast deaths; a mouse-sized shift is excluded only if the 90 % interval excludes it. The feeding route
+is not tested beyond H235.2. Controlled access: aggregates only.
+**Stop rule:** one amendment; conditions, module, cohorts and sign fixed here; no tissue subset chosen after the power
+note. **Code:** `paper/exploratory/A235_metabolic_offset/` (A231 / A233 matched-contrast code).
