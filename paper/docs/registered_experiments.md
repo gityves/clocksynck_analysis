@@ -4928,3 +4928,15 @@ not present in fast deaths; a mouse-sized shift is excluded only if the 90 % int
 is not tested beyond H235.2. Controlled access: aggregates only.
 **Stop rule:** one amendment; conditions, module, cohorts and sign fixed here; no tissue subset chosen after the power
 note. **Code:** `paper/exploratory/A235_metabolic_offset/` (A231 / A233 matched-contrast code).
+
+**A235 power note (2026-11-09, before any observed statistic; `A235_metabolic_offset/output/{power,power_mc,matching,balance_summary,eligible_summary}.csv`).**
+Module tissues per cohort: fast liver, both adiposes and skeletal muscle (pancreas out: 5 T2D and 3 obese cases);
+vent all five. Matched cases in the module (fast / vent): T2D 156 / 201, obesity 111 / 240. MDE_80 of the module
+offset (A164 host; fast / vent / pooled): T2D 0.37 / 0.53 / 0.30 h, obesity 0.64 / 0.82 / 0.50 h; fast module −
+companion offset 0.71 h (T2D) and 1.03 h (obesity). Sensitivity host without the module anchors: fast 0.42 h (T2D) and
+0.70 h (obesity). H235.1 is powered for shifts of about 0.4 h (T2D) and 0.6 h (obesity), well below the multi-hour
+liver advance of high-fat-fed mice; the expected human size is unknown. Module d* MDE <= 0.16 everywhere (descriptive
+here, A164 tested coupling). Balance after matching (median |SMD|): age <= 0.25, ischaemic time <= 0.23; BMI
+imbalanced in the T2D design (fast 0.68, vent 0.23; cases heavier, as in A164; T2D and obesity are not separable in
+this design and are read together). Code checked end to end on placebo labels only (`--placebo`, subsample). Scoring
+proceeds as registered.
