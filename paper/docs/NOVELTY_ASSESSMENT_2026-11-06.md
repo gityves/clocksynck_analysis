@@ -22,6 +22,15 @@ the output tables named per row. Wording follows ledger rule 6: convergence, not
    same person's other compartments share, from samples taken once in hospital hours. No carded method estimates this
    (synthesis §2; closest precedent: Grabe 2024 tumour vs own normal, without coupling, gate or interval). The
    literature search was limited (positioning §9); repeat before submission.
+   **Level of inference (user, 2026-11-09).** c and arg z are parameters shared across the donors of a group, and every
+   test passes when the relation holds on average across donors; only the reference (each donor's own host) is
+   individual. A mixture of coupled and uncoupled donors cannot be told from uniform partial coupling. This is the same
+   level as CHIRAL (talamanca2023sexdimorphic), whose per-donor phases could equally give a population test of tissue
+   scatter around the donor phase when donors span 24 h (A145: CHIRAL 0.877 on whole-day sampling). Novelty is
+   therefore the estimand (coupling and offset estimated, not assumed fixed), its validity under hospital hours
+   (A123b) and the specificity standard, not a first within-person measurement. Wording: "population-level estimates
+   of within-person clock relations, referenced to each donor's own host"; never "per person" or "individual
+   desynchrony".
 2. **Specificity standard.** Every contrast against expression-matched pseudo-clock and responsive gene sets on the same
    permutations; gates; equivalence bounds. None of the cancer-clock papers carded uses a matched random-set control.
 3. **Biology in cancer.** Tumours pair with their own host clock in bulk; where coherence is lost (proliferating,
@@ -31,6 +40,17 @@ the output tables named per row. Wording follows ledger rule 6: convergence, not
 4. **Biology beyond cancer** (the paper's frame, memory "paper framing"): organs share internal time; brain (and partly
    the gut) apart; relations kept when daily cues are lost; metabolic disease within ±0.15 coupling; psoriasis a
    local delay.
+5. **Central drive and inter-organ order in humans (candidate first, 2026-11-09).** Brain-dead donors lose the
+   inter-organ phase order that fast deaths and ventilated non-brain-dead donors keep (A132b, post hoc: 0.161 vs
+   0.678; not explained by glucocorticoids, A136 H136.3). This matches the mouse SCN-lesion result that the SCN is
+   needed for synchrony among organs (yoo2004periodluciferase, sinturel2021circadian; contrary tahara2012in) and is, as
+   far as the carded texts and two web searches show, the first human observation of it: GTEx-wide work assumes or
+   reports synchrony without a central-drive contrast (talamanca2023sexdimorphic, ruben2018database), and brain-death
+   transcriptomics found does not look at clock genes. Wording: "consistent with", not "verifies": post hoc split, a
+   group-level statement, SCN status unknowable, other donor-management hormones untested (memory: brain death stays
+   descriptive). Before claiming priority, search brain-death and coma physiology (loss of temperature, cortisol,
+   melatonin or blood-pressure rhythms): such work would precede us on loss of rhythms but not on inter-organ
+   relations.
 
 ## 3. Can we show we do better? Where yes, where no
 
