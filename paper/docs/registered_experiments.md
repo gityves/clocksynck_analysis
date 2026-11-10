@@ -4999,3 +4999,37 @@ with a direct glucocorticoid drive. H236.3 fails: the state is shared with cue-r
 **Limits:** four batches, one embryo per time and batch; batch, age and sequencing run are confounded; no light
 schedule recorded. **Stop rule:** one amendment; statistics, gene sets, weights and the drift model fixed here; no
 lineage chosen after the power note. **Code:** `paper/exploratory/A236_embryo_running_clock/`.
+
+**A236 power note (2026-11-10, before any observed rho, numerator or S1; `A236_embryo_running_clock/output/{power,power_info}.csv`, 2,000 data sets per scenario).**
+Plasmode on the 77 cell types present in all 16 embryos: fitted batch intercepts and drifts kept, gene-level residual
+blocks (embryo x cell type x gene) of the timed model rescaled by sqrt(16 / 9) and reassigned between embryos (random
+permutation and sign). **Deviation 1 (planted signal):** the noise-corrected fitted 24-h power is positive in only 35
+of the 77 cell types, so planting it per cell type along the fitted orientation would select on noise. The signal is
+planted instead with one orientation common to the cell types and a 24-h power of lambda x the expected noise power
+of each cell type's harmonics, lambda = 0.25, 0.5, 1, 2 and the observed ratio 0.72 (untruncated, summed over cell
+types; the only observed quantity computed).
+**Deviation 2 (null of H236.1, forced by the plasmode):** the registered acrophase-permutation null is not valid here.
+With no time-locked signal it rejects in 0.41 of the data sets, and in 0.07-0.20 with harmonics on a permuted-acrophase
+design: the untimed variation between embryos is itself clock-shaped (the A108 gate), and with 16 embryos it leaks
+into the fitted harmonics by chance, so S1 is high without any time-locked signal (null mean 0.37). A permutation of clock times would have the same defect in reverse (no power). The null of S1 is
+therefore the plasmode without time-locked signal (10,000 data sets, residual blocks reassigned between embryos), on
+the 77 complete cell types where it is defined: critical value 0.651, size 0.054, rejection 0.029-0.042 under
+non-clock harmonics, power for a clock-plane axis 0.65 / 0.92 / 0.98 / 1.00 / 1.00 at lambda 0.25 / 0.5 / 0.72 / 1 /
+2. H236.1 now reads: the time-locked harmonics are more clock-shaped than the untimed variation of the same embryos
+leaves by chance. The same null (rebuilt for each gene set and model) serves H236.1b and the no-drift sensitivity;
+the acrophase p is reported beside it, and S1 on all 100 cell types is descriptive. With cell-type-specific
+amplitudes the gene weights hold S1 of a pure clock-plane signal slightly below 1 (0.996 for the planted axis).
+**H236.2, critical value replaced as registered:** with t_3 the size is 0.047 with no signal but 0.12-0.14 under an
+axis and 0.07-0.11 under non-clock harmonics (four batches; the jackknife underestimates the variance of a ratio).
+The critical value is the largest simulated 95 % quantile over the null scenarios, t = 4.76 (axis, lambda 0.5),
+instead of 2.35; the p value is the rank of the observed t in that scenario's 2,000 draws. Size at this value: 0.007
+(no signal), 0.035-0.050 (axis), 0.019-0.033 (non-clock harmonics). Power: rho 1, 0.16 / 0.25 / 0.33 / 0.40 / 0.58;
+rho 0.5, 0.07 / 0.12 / 0.14 / 0.16 / 0.19 at the five lambda. **H236.2 is underpowered at the observed signal size
+(0.33 for a perfect rotation): a failure is uninformative and will not be read as "an axis".** Expected rho is
+attenuated by noise in the denominator (mean 0.37 for a true rho of 1 at lambda 0.72), so the noise-corrected rho is
+the estimate to read. **Deviation 3:** because the critical value is defined on the 77 complete cell types, they
+carry the primary H236.2 and the 100 cell types become the sensitivity (the registration had them the other way
+round); the sensitivities are read against the same critical value (approximate).
+**Clarification (H236.3):** R has no drift term, so its "no drift" sensitivity is void; its counterpart is R after
+residualisation on embryonic day (the A108 sensitivity), for the clock set and every pseudo set.
+Scoring proceeds with these three deviations, all fixed before any observed statistic.
