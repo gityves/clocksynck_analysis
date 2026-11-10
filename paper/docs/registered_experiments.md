@@ -4940,3 +4940,62 @@ here, A164 tested coupling). Balance after matching (median |SMD|): age <= 0.25,
 imbalanced in the T2D design (fast 0.68, vent 0.23; cases heavier, as in A164; T2D and obesity are not separable in
 this design and are read together). Code checked end to end on placebo labels only (`--placebo`, subsample). Scoring
 proceeds as registered.
+
+## A236 (2026-11-10, user agreement; follow-up of A108 / A108b / A108c; written before any gene-level time-of-day coefficient, any signed-area or polarisation statistic, any responsive pseudo-set and any matched pseudo-set beyond the three of A108 are computed, and before the genome-wide pseudobulks are built; seen: every A108 / A108b / A108c / A121 result (H108.1 R 0.516, p 0.016; gate p_pairing 0.001, p_acrophase 0.083; three matched pseudo sets R 0.19 / 0.33 / 0.19; D1 glucocorticoid score p 0.26) and a post hoc look on 2026-11-10 at the host states per clock time (host-state covariance eigenvalue ratio 0.058; median error 0.4 h at 0 h against 2.0-5.5 h at 6, 12 and 18 h; axial concentration 0.67): is the time-of-day state of the late mouse embryo a running clock? **Qiu 2024, E15.0-E18.75, 16 embryos; secondary (development section); H236.2 is post hoc in motivation**
+**Why.** A108 showed that the untimed host phase of late embryos follows the time of collection (R 0.516). The user's
+reading: maternal cues act as a zeitgeber on a clock that already runs, as light does in adults. The post hoc look
+says the data do not show this yet: the host states lie almost on one line and the alignment is carried by the 0 h
+embryos, which is what a single cue-driven axis would give (R ~ 0.5 at four evenly spaced times). Three properties
+separate "a time-of-day state" from "a running clock", and none was tested: the gene content of the time-locked
+signal, its second dimension (rotation), and its specificity against cue-responsive genes. Entrained and driven
+oscillators cannot be separated cross-sectionally: no outcome below shows self-sustained rhythms.
+**Data and design (fixed by A108):** late window, 16 embryos in 4 batches (one E-day and its sequencing runs each),
+each batch with one embryo at 0, 6, 12 and 18 h; cell types by the A108 rule (>= 50 cells, present in >= 75 % of the
+embryos; 100, of which 77 in all 16); 14 clock genes; GTEx global waveform, as in A108.
+**Timed model (all three parts).** Per cell type, a response is regressed on batch intercepts, a linear within-batch
+drift (t - 9 h) and cos wt, sin wt (w = 2 pi / 24 h). The drift term is there because age and clock time move
+together within a batch (A108 limits): a developmental trend plus a one-dimensional oscillation would otherwise
+imitate a rotation. With four evenly spaced times the drift is identified by the alternating contrast (0 - 6 + 12 -
+18 h), so a 12-h harmonic is assumed absent. The model without the drift term is reported as a sensitivity.
+- **H236.1 (primary, gene content):** the 24-h harmonics of the 14 clock genes lie in the clock plane. Response:
+  log fractions centred over genes (`centred_log_fraction`); per gene, common cos / sin coefficients (a_g, b_g) over
+  cell types with cell-type-specific intercepts and drifts, weights `gene_weights` of the cell type. Statistic:
+  S1 = (a'Pa + b'Pb) / (a'a + b'b), P the projector on the clock plane (`_core.study.plane`). Null: 10,000 waveforms
+  with acrophases permuted over genes (`Waveform.permuted`), one-sided. S1 does not depend on rotation: an axis in
+  the clock plane passes.
+  **H236.1b (secondary, beyond the direct glucocorticoid targets):** the same without PER1 and PER2 (12 genes,
+  re-centred), p < 0.05; with it the H108.1 statistic without the two genes (`drop_genes`), R and permutation p.
+- **H236.2 (primary, rotation; post hoc in motivation):** the time-locked component turns in the adult direction.
+  Response: clock-plane state of each cell type as a complex number; fitted c_k (cos) and s_k (sin). Polarisation
+  rho = 2 sum_k w_k Im(s_k conj(c_k)) / sum_k w_k (|c_k|^2 + |s_k|^2), w_k = 1 / residual mean square of cell type k
+  (full fit, fixed): 1 for a circular rotation in the adult direction, 0 for an axis, -1 for the reverse; the
+  numerator has expectation zero under an axis at any angle and under no signal, whatever the noise covariance; it
+  needs no phase alignment between cell types. Test: leave-one-batch-out jackknife t of rho (4 batches, 3 df),
+  one-sided rho > 0. Time permutations are not used: they are not valid for the composite null "axis".
+- **H236.3 (primary, specificity):** H108.1's R exceeds the q95 of both 200 expression-matched and 200 responsive
+  pseudo-clock sets (`clocksync.paired.pseudo_waveforms`; glucocorticoid and immediate-early genes), each scored as
+  H108.1 on genome-wide pseudobulks. "Clock-specific" only above both. The genome-wide cell type x embryo
+  pseudobulks of the late window are rebuilt from the GEO count matrices (six runs, streamed and parsed only, no raw
+  matrix stored; clock-gene columns checked for equality with the stored panel; genes with mean count >= 1 enter the
+  matching). If the rebuild fails, the 67-gene panel gives a descriptive answer only.
+Holm over the three primary tests.
+**Power first (dated note before any observed statistic):** gene-level plasmode on the cell types present in all 16
+embryos: fitted intercepts and drifts, residuals of the timed model reassigned between embryos as whole blocks
+(random permutation and sign, rescaled for the fitted degrees of freedom), and a planted clock-plane signal of the
+noise-corrected fitted 24-h power per cell type. Scenarios: no signal and axis (size of H236.2), rotation with rho 1
+and 0.5 (power of H236.2), axis (power of H236.1), harmonics of the same size on a permuted-acrophase design (size of
+H236.1). If the size of H236.2 exceeds 0.07, its critical value is replaced by the simulated 95 % quantile, stated in
+the note. The observed rho, its numerator and S1 are not printed before the note is committed.
+**Descriptive (no pass / fail):** per-gene amplitude and acrophase against the reference (BMAL1 arm against the
+E-box / D-box arm); leave-one-gene-out range of S1 and R; rho with a noise-corrected denominator, per trajectory
+(hepatocytes and cardiomyocytes named, where a clock is expected first) and leave-one-batch-out; share of pseudo sets
+with a timed p < 0.05. **Sensitivity:** all three without the drift term; H236.2 on the 77 complete cell types.
+**Reading:** all three pass: the late embryo carries a time-of-day-locked state with the gene content of the clock,
+turning in the adult direction, not shared by cue-responsive genes: a running clock at population level; entrained
+or driven stays open. H236.1 and H236.3 pass, H236.2 fails: a clock-shaped, clock-specific time-of-day axis; rotation
+not shown, read against the power note (a failed test is uninformative below the stated power). H236.1 fails: the
+wording stays "time-of-day state". H236.1 passes and H236.1b fails: the axis is carried by PER1 and PER2, compatible
+with a direct glucocorticoid drive. H236.3 fails: the state is shared with cue-responsive genes.
+**Limits:** four batches, one embryo per time and batch; batch, age and sequencing run are confounded; no light
+schedule recorded. **Stop rule:** one amendment; statistics, gene sets, weights and the drift model fixed here; no
+lineage chosen after the power note. **Code:** `paper/exploratory/A236_embryo_running_clock/`.
