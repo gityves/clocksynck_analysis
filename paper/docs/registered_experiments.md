@@ -5033,3 +5033,185 @@ round); the sensitivities are read against the same critical value (approximate)
 **Clarification (H236.3):** R has no drift term, so its "no drift" sensitivity is void; its counterpart is R after
 residualisation on embryonic day (the A108 sensitivity), for the clock set and every pseudo set.
 Scoring proceeds with these three deviations, all fixed before any observed statistic.
+
+## A237 (2026-11-10, user agreement: "you can go ahead, you can download data if needed ... if you have ideas of datasets / ways to find clocks in published human embryos"; registered together with A238 and A239, before any clock statistic is computed on Cardoso-Moreira 2019, Garcia-Alonso 2022 or Kang 2011, prenatal or postnatal; seen: the sample sheets and design tables of the scout (`scouts_2026-11-10/FETAL_SCOUT.md`), the detection (median expression) of the clock genes per organ and period (`prep_fetal_bulk/output/clock_detection_cardoso.csv`), the linking of libraries to individuals (expression of non-clock genes only), the adult feasibility below, every A189 / A181 / A236 result, a post hoc re-read of A189 with the signed coherence (`A189_fetal_within/output/h189_1_signed_posthoc.csv`) and the shift simulation below): do human prenatal organs carry a clock, alone and shared across the organs of one fetus? **Cardoso-Moreira 2019, bulk RNA-seq, 4-20 wpc, 7 organs, 207 prenatal libraries; secondary (development section)**
+**Why.** The human developmental result of the paper is one organ in one cohort (A189, fetal adrenal, 7 fetuses) and
+the mouse counterpart was downgraded (A236). The scout found three open designs in other organs with enough
+individuals; this one is the only one with several organs per fetus (the paper's question, asked in development:
+A181 could not estimate it in Cao 2020) and with postnatal samples of the same organs on the same platform.
+**Common design of A237-A239 (`paper/common/development.py`; fixed before scoring).**
+1. *Adjustment (A236 lesson).* Log fractions, log((count + 0.5) / depth), are residualised gene by gene within each
+   compartment on the covariates of the amendment (age trend, sex, ...); every pseudo-clock gene set receives the
+   same adjustment. Age-related change of the clock genes is thereby not read as a clock, and an age-dependent clock
+   amplitude is not modelled.
+2. *L1, one compartment across individuals:* signed coherence C (`clocksync.decompose.signed_coherence`, added for
+   this purpose): the coherence of the clock genes with the reference waveform after a per-sample offset is fitted
+   out, sign kept. Null: 10,000 per-gene permutations of the residuals, one-sided. Reason: the unsigned R used so
+   far (A189) reads a shift common to the clock genes of a sample (depth, composition, RNA quality) as coherence. In
+   simulation without any clock (`feasibility_fetal/output/shift_artefact.csv`, 200 data sets per scenario) a common
+   shift of sd 0.2 passes the permutation test of R in 0.625 (n 10) and 1.000 (n 40) of the data sets, against 0.050
+   and 0.035 for C; with a clock both detect it (C 1.000 at every shift; R 0.690 at n 10 with the shift). R is
+   reported beside C, not tested.
+3. *L2, the compartments of one individual:* `Dataset.gate` on the adjusted table, free host, compartments with >= 5
+   individuals, strata as stated (cross-covariances centred and pairings permuted within strata), 10,000
+   permutations. The p of the readout is the larger of p_pairing and p_acrophase.
+4. *Companions (both required):* 200 expression-matched and 200 responsive pseudo-clock sets
+   (`clocksync.paired.pseudo_waveforms`; genes with mean count >= 1 in the samples of the test), adjusted and scored
+   as the clock set: C for L1; for L2 the gate's `pairing_z` (shared clock-plane covariance standardised by its
+   pairing null; 1,000 permutations, same seed). Clock-specific: the clock statistic exceeds the q95 of both.
+5. *Verdict (`development.verdicts`, families written in each scoring script):* Holm within the L1 family of a
+   hypothesis; an L2 readout is a hypothesis of its own. PASS: Holm p < 0.05 and clock-specific. p < 0.05 without
+   clock-specificity is reported as "not clock-specific" (a state shared with other genes, not shown to be the
+   clock). A gate that is not estimable has no verdict.
+6. *Negatives:* a readout is negative when its unadjusted p is >= 0.05; it is informative only where the adult pass
+   rate of the readout is >= 0.8 (D1b rule) and its positive control, where one is defined, passes. Even then it
+   reads "no adult-like clock organisation detected" (limits). Unadjusted p < 0.05 that does not survive Holm:
+   "suggestive, not established", neither a pass nor a negative.
+7. *Feasibility (D1b):* adult material cut to the fetal design. Each fetal individual is replaced by one adult donor
+   with the same compartments, who receives its age, sex and stratum, so that the adjustment costs the same degrees
+   of freedom; pass = the registered permutation test at alpha 0.05 (500 permutations), without the Holm step and
+   without the companions, whose cost is not calibrated.
+**Data and design (fixed).** E-MTAB-6814 CPM matrix; counts recovered as CPM / smallest non-zero CPM of the library;
+one row per gene symbol; 14 clock genes, GTEx waveform. Organs: forebrain, hindbrain, heart, kidney, liver, ovary,
+testis. The matrix does not name its libraries: each prenatal column was assigned to a library of Supplementary
+Table 2, hence to an individual, from non-clock genes (`prep_fetal_bulk/scripts/link_cardoso_individuals.py`; 152 of
+207 columns linked; leave-one-individual-out: 0 wrong of 1,183 decisions, 0.047 undecided). One linked liver library
+has the other sex than its individual (the source disagrees with itself) and is treated as unlinked. L1 uses every
+column (organ, age and sex are exact); L2 uses the linked ones. Covariates, per organ: polynomial of age in weeks
+(degree 3 where the range exceeds 8 weeks, else 2) and sex. L2 strata: 4-8 | 9-12 | 13-20 wpc. Seed 237.
+- **H237.1 (primary, L2):** a clock state shared across the organs of one fetus, `organs:9-20wpc`: 26 individuals
+  with >= 2 linked organs (10 with 2, 6 with 3, 7 with 4, 3 with 5), 81 libraries, 7 organs (forebrain 14, heart 17,
+  hindbrain 12, kidney 8, liver 14, ovary 5, testis 11 individuals); strata 9-12 wpc 15, 13-20 wpc 11. The range is
+  the one where the adult pass rate reaches 0.8 (below); it excludes the first trimester's first half, where no clock
+  is expected.
+- **H237.2 (primary, L1, Holm over 6):** signed coherence across individuals at 4-20 wpc in heart (34), liver (37),
+  forebrain (32), hindbrain (33), kidney (27) and ovary (18).
+- **H237.3 (secondary, L1, Holm over 7; onset):** the same before and after the first trimester where the adult pass
+  rate is >= 0.8: 4-8 wpc in heart (14), liver (16), hindbrain (16), kidney (9); 13-20 wpc in heart (9), liver (10),
+  kidney (10).
+- **Positive control (scored with the hypotheses, read first):** postnatal libraries of the same organs (neonate to
+  senior, one individual each), L1 with a quadratic of the stage rank and sex: forebrain (21 individuals), hindbrain (25), heart (10),
+  kidney (9) and liver (12), each a family of its own (adult pass rates 0.880-1.000, below); testis (13; 0.465) is
+  descriptive. Same criteria (p < 0.05
+  and clock-specific). The postnatal individuals died at unrecorded times.
+**Power first (done; GTEx donors who died at 08-18 h, terminations being done in hospital hours; 200 subsamples;
+`scouts_2026-11-10/feasibility_fetal/output/passrates_cm_day_sex.csv`).** Each
+fetal individual is stood for by one GTEx donor with its organs (forebrain: frontal cortex BA9; hindbrain: cerebellum;
+heart: left ventricle; kidney: cortex). Adjusted pass rates at alpha 0.05: H237.1 `organs:9-20wpc` 0.825 (95 % CI
+0.765-0.875: the interval reaches below 0.8). H237.2: heart, liver, hindbrain and kidney 1.000, forebrain 0.965,
+ovary 0.940 (at the Holm threshold of the worst rank, 0.05 / 6: 0.995 for the first four, forebrain 0.680, ovary
+0.850). H237.3: 4-8 wpc heart 0.990, liver 0.985, hindbrain 0.985, kidney 0.875; 13-20 wpc heart 0.870, liver 0.960,
+kidney 0.870 (worst rank, 0.05 / 7: 0.850, 0.860, 0.850, 0.670; 0.580, 0.725, 0.660). Controls: forebrain 0.880,
+hindbrain 1.000, heart 0.955, kidney 0.895, liver 0.975. Below 0.8, hence descriptive: testis (prenatal 0.215-0.760,
+postnatal 0.465), forebrain at 4-8 and 13-20 wpc (0.640 each), ovary at 4-8 (0.680) and 9-20 wpc (0.775), L2 at 4-20
+(0.630), 13-20 (0.165) and 4-8 wpc (0.140). With the unsigned R (first run, no sex covariate,
+`passrates_cm_day.csv`) the 4-20 wpc rates were 0.055 in forebrain, 0.495 in kidney and 0.730 in heart, against
+0.970, 1.000 and 1.000 for C at the same designs (`passrates_cm_day_L1.csv`).
+**Descriptive (no pass / fail):** testis at every range; every L1 window not named above (9-20 wpc; forebrain and
+ovary windows); L2 at 4-20, 13-20 and 4-8 wpc (adult pass rates 0.630, 0.165 and 0.140: uninformative if negative); `organs_all` (unlinked
+columns at their guess: an upper bound on what linking could add); the RNA quality number as a further covariate
+(`:rqn`); unsigned R; leave-one-gene-out range of C; share of pseudo sets with p < 0.05.
+**Reading (A237-A239 together).** Primary hypotheses: H237.1, H237.2, H238.1, H238.2, H239.1, H239.2 (14 primary
+readouts). No correction is applied across hypotheses, so one isolated pass is read as A189 was: suggestive, one
+cohort. The developmental claim of the paper is strengthened only by (i) H237.1, a clock state shared across the
+organs of a fetus, or (ii) the same organ system passing in two datasets (brain: H237.2 forebrain or hindbrain with
+H239.1 or H239.2; gonad: H237.2 ovary with H238.1 or H238.2), or (iii) an L1 pass that survives Holm with both
+companions in an organ whose postnatal control passes. H237.3: late passes and early fails at an informative design:
+compatible with an onset during the second trimester, not a test of it (the difference is not tested). All primary
+readouts fail where controls pass: no adult-like clock organisation is detectable in human fetal organs at these
+designs; the adrenal result of A189 stays a single observation and the paper says so. Any of these outcomes goes to
+the PI before the paper plan changes.
+**Limits.** (1) Sampling time is not recorded and terminations are done in hospital hours: a positive needs clock
+phases that differ between individuals, as they do in adults sampled in such a window (the calibration); a fetal
+clock entrained tightly to maternal time, or of low amplitude, would be missed and a negative cannot tell these from
+no clock. (2) The companions' cost in sensitivity is not calibrated. (3) Bulk tissue: composition changes with age;
+the adjustment removes its smooth part only. (4) L2 rests on the linking; a wrong link can only weaken it. (5)
+Feasibility uses adult organs at adult amplitude and GTEx read depth. (6) Organs of one fetus share handling and RNA
+quality: a gate passing its permutations but not the companions is "not clock-specific".
+**Stop rule:** one scoring run per amendment; organs, ranges, covariates, strata, statistics and families fixed here
+and in `FAMILIES` of each script; any further cut is a new amendment. **Code:**
+`paper/exploratory/A237_fetal_organs/scripts/score_a237.py`, `paper/common/development.py`.
+
+## A238 (2026-11-10, same agreement and same state of knowledge as A237; written before any clock statistic is computed on Garcia-Alonso 2022; seen: the pseudobulk sheet (donor, class, cells, depth, age, sex, assay), the detection of the clock genes per class (`prep_fetal_gonad/output/clock_detection_*.csv`) and the adult feasibility below): do the cell classes of the human fetal gonad carry a clock, alone and shared within one gonad? **Garcia-Alonso 2022, scRNA 10x 5', 6-21 wpf, 50 donors; secondary (development section)**
+**Why.** The largest open human fetal single-cell cohort by donors: three to seven times the n of the adrenal positive
+of A189, with stromal and endothelial classes (where the host is carried in adults) and several classes per donor,
+which Cao 2020 did not have (A181). Its age range reaches the second trimester, where A189 found the adrenal clock.
+**Data and design (fixed; common design of A237).** CELLxGENE collection 661a402a, female and male gonad datasets;
+donor x class pseudobulks with >= 200 cells of the four classes present in both sexes: mesenchymal-stromal,
+supporting (granulosa / Sertoli lineage), surface epithelial, endothelial (`prep_fetal_gonad/scripts/prep_gonad.py`;
+germ cells, immune and other classes are not used: too few donors or one sex only). 14 clock genes, GTEx waveform.
+Covariates, per class: quadratic age trend of each sex, sex, assay (5' v1 / v2); 6 columns in the pooled tests. The
+per-sex trend was chosen after the first feasibility run (one common trend), on the argument that testis and ovary
+diverge from 6-8 weeks, before any fetal statistic; the feasibility was rerun with it. L2 strata: sex x (before | from
+13 wpf). Seed 238.
+- **H238.1 (primary, L1, Holm over 4):** signed coherence across donors, pooled sexes, in mesenchymal-stromal (47
+  donors), supporting (46), epithelial (33; 28 female, 5 male) and endothelial (24).
+- **H238.2 (primary, L2):** shared clock state across the four classes of one gonad, `classes4:all`: 47 donors with
+  >= 2 of the four classes (11 with 2, 19 with 3, 17 with 4; 147 pseudobulks; per class 45 / 46 / 33 / 23 donors;
+  strata female early 16, female late 13, male early 7, male late 11).
+**Power first (done, `scouts_2026-11-10/feasibility_fetal/output/passrates_gonad_sextrend.csv`, 200 subsamples).** No
+adult gonad atlas is in the project: adult breast nuclei (10x 3' v3 stratum) stand in, fibroblasts for the stroma,
+epithelium for the supporting cells, endothelium for endothelium and mural cells for the surface epithelium (which
+has no adult counterpart; this fixes the number of compartments and their depth, not the biology). Each fetal donor
+is replaced by an adult donor with its classes, thinned to the fetal depths, with its age, sex and assay labels. Pass
+rates at alpha 0.05, adjusted as registered: L1 stromal 1.000, supporting 0.995, epithelial 0.985, endothelial 0.930
+(at the Holm threshold of the worst rank, 0.05 / 4: 1.000, 0.895, 0.815, 0.840); L2 `classes4:all` 1.000. With heart
+nuclei (pool large enough for two L1 jobs only): 1.000 and 1.000. The companions are not part of the calibration.
+**Descriptive (no pass / fail):** every test per sex and from 13 wpf (the first run, with one age trend, gave adult
+pass rates of 0.650-0.745 for endothelium per sex or from 13 wpf, 0.740 for epithelium from 13 wpf and 0.660 for
+`classes4` in males: uninformative if negative; the others 0.870-1.000, `passrates_gonad.csv`); `classes3` (without
+the surface epithelium) and the stromal-supporting pair; unsigned R; leave-one-gene-out range of C. The 2024 gonad
+and reproductive-tract dataset (11 gonad donors) is not used.
+**Reading.** As A237. A pass of H238.1 in a class is a clock-shaped, clock-specific order of the clock genes across
+gonads; a pass of H238.2 is a state shared by the cell classes of a gonad beyond what matched and cue-responsive
+genes share. If the L2 gate passes its permutations but not the companions, the shared state is not shown to be the
+clock (ambient RNA, dissociation and handling are shared by the classes of one library): reported as "not
+clock-specific". A negative at these pass rates reads "no adult-like clock organisation detected in the fetal gonad",
+with the limits below.
+**Limits.** Sampling times are not recorded; a negative is informative only if fetal clock phases differ between
+donors as adult ones do (limits of A237). The adult stand-ins are other tissues and nuclei, not cells; the classes of
+one donor come from the same libraries. Two assay versions, confounded with nothing by design but unequal (38 / 12
+donors). **Stop rule:** one scoring run; classes, covariates, strata and families fixed here (`FAMILIES` in the
+script). **Code:** `paper/exploratory/A238_fetal_gonad/scripts/score_a238.py`.
+
+## A239 (2026-11-10, same agreement and same state of knowledge as A237; written before any clock statistic is computed on Kang 2011, prenatal or postnatal; seen: the sample sheet (brain, region, stage, age, sex, PMI, pH, RIN), the presence and median intensity of the clock genes (`prep_fetal_bulk/output/clock_detection_kang.csv`) and the adult feasibility below): do the regions of the human brain share a clock state before birth as they do after? **Kang 2011, exon arrays, 16 regions per brain, 20 prenatal and 32 postnatal brains; secondary (development section)**
+**Why.** The only open dataset with many compartments per individual on both sides of birth, on one platform: the
+postnatal brains are a positive control for the design, the arrays and the statistic, which neither A189 nor A237 /
+A238 have for L2. The gate passes across the brain regions of adult donors cut to this design (feasibility below):
+the prenatal test asks whether such a shared state exists before birth. It also reaches the third trimester and the
+first postnatal year.
+**Data and design (fixed; common design of A237).** GSE25219 gene-level table (log2 intensities), which has
+no PER3 and no NR1D1: 12 clock genes, GTEx waveform without the two. The 16 regions sampled at every stage from
+stage 3 on (A1C, AMY, CBC, DFC, HIP, IPC, ITC, M1C, MD, MFC, OFC, S1C, STC, STR, V1C, VFC); samples of one brain and
+region averaged (hemispheres); brains with >= 6 of the 16 regions; 2^log2 intensity stands for a count at a constant
+depth. Covariates, per region: polynomial of log age (degree 2 for the prenatal and the postnatal group, 1 for the
+sub-groups) and sex. L2 strata: stages 1-3 | 4-6 | 7 | 8-9 | 10-11 | 12-15. L1 is computed on the mean over the
+regions of a brain (one value per brain). Seed 239.
+- **Positive control (scored with the hypotheses, read first):** postnatal brains (32; stages 8-15, 4 months to 82
+  years; strata 6 / 7 / 19 brains; 481 brain x region means, 26-32 brains per region): L2 `regions:postnatal` and L1
+  `brain_mean:postnatal`, same criteria as the hypotheses (p < 0.05 and clock-specific).
+- **H239.1 (primary, L2):** shared clock state across the regions of one prenatal brain, `regions:prenatal`: 20
+  brains (stages 2-7, 8-37 pcw; 11 female, 9 male; strata 4 / 14 / 2 brains), 285 brain x region means, 14-20 brains
+  per region.
+- **H239.2 (primary, L1):** signed coherence of the brain means across the 20 prenatal brains, `brain_mean:prenatal`.
+**Power first (done, `scouts_2026-11-10/feasibility_fetal/output/passrates_kang_all.csv`, 100 subsamples).** GTEx
+brain donors with >= 6 of 13 regions (290 donors, deaths at any hour, the 12 genes), cut to the number of brains of
+each group with the ages and strata of the Kang brains (sex was not among the covariates of the calibration: one
+parameter more per region in the registered analysis). Pass rates at alpha 0.05: `regions:prenatal` 0.96,
+`brain_mean:prenatal` 1.00, `regions:postnatal` 0.98, `brain_mean:postnatal` 1.00; descriptive groups 0.89-0.98.
+This calibration is RNA-seq: array noise, RNA quality and the companions are not in it, which is why the postnatal
+control decides whether a prenatal negative can be read.
+**Descriptive (no pass / fail):** trajectory of both readouts over 13-22 pcw (14 brains), infancy and childhood (13)
+and from 13 years (19); both readouts with RIN added to the covariates (prenatal and postnatal); unsigned R;
+leave-one-gene-out range of C.
+**Reading.** Control passes and H239.1 passes: the regions of the human brain share a clock-specific state before
+birth. Control passes, H239.1 and H239.2 fail: no adult-like shared clock state in the prenatal brain at a design
+where the postnatal one is detected (informative, with the limits below); the descriptive trajectory then says where
+it appears, without a test. Control fails: the arrays or the design do not carry the readout; the prenatal results
+are uninformative whatever they are. A gate passing its permutations but not the companions is "not clock-specific"
+(post-mortem interval, pH and RNA quality are shared by the regions of a brain).
+**Limits.** Post-mortem brains with unrecorded time of death at every age; prenatal and postnatal brains differ in
+cause of death and tissue handling; 4 of the 20 prenatal brains are at 8-12 pcw and 2 at 35-37 pcw, so the prenatal
+group is essentially 13-22 pcw; 12 genes instead of 14; cell composition changes with age within a region (age
+adjustment only). **Stop rule:** one scoring run; regions, groups, covariates, strata and families fixed here
+(`FAMILIES` in the script). **Code:** `paper/exploratory/A239_fetal_brain/scripts/score_a239.py`.

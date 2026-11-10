@@ -7,6 +7,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 ## Open
 
 ### Still with the PI (updated 2026-11-10)
+- **Q31** (below): the unsigned gene coherence R reads a shift common to the clock genes as a clock; replace it by the signed coherence paper-wide?
 - **Q30** (below): the mouse embryo timing positive (A108) is not clock-specific (A236): how the paper words it.
 - **Q29** (below): which confirmation first for the Q25 headline: timed brain cohorts, living skin cohort, jet-lag data.
 - **Q28** (below): brain death: one descriptive table of single-organ clock integrity; full-n number and caveats.
@@ -27,6 +28,30 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
+
+### Q31 (2026-11-10): the unsigned gene coherence R and a shift common to the clock genes
+
+- **Question:** the L1 statistic of the paper, the gene coherence R of `clocksync.decompose.components`, is unsigned
+  and fits no per-sample offset. A shift common to the clock genes of a sample (depth, composition, RNA quality,
+  normalisation) is then read as coherence: in simulation without any clock, a common shift of sd 0.2 (log units)
+  passes the per-gene permutation test of R in 0.625 of the data sets at n 10 and in 1.000 at n 40, and the shift
+  hides a real clock at small n (pass rate 0.690 at n 10 against 1.000 without shift). A signed coherence with the
+  offset fitted out (`clocksync.decompose.signed_coherence`, added with tests) stays at its nominal level (0.050,
+  0.035) and keeps full sensitivity (1.000 at every shift). Do we (i) replace R by the signed coherence in every L1
+  result of the paper (re-scoring, labelled as an audit, not as new tests), (ii) keep R and add the signed value as a
+  companion column where a claim rests on R, or (iii) keep R as it is and state the limit?
+- **On hold:** nothing already scored is changed. The new fetal amendments (A237-A239) are registered on the signed
+  statistic. An audit amendment (D1b feasibility and the L1 / `d_coherence` results: A109-A111, A126, A127, A134,
+  A135, A140, A161, A176, A179, A184, A189, A190, A212, A213, A215, A219, A225, C4 A195, the cancer coherence
+  chapter and the figure 4 / 5 decompositions) is not registered before the answer.
+- **Evidence:** `scouts_2026-11-10/feasibility_fetal/output/shift_artefact.csv` (200 simulated data sets per
+  scenario). On adult GTEx material cut to the Cardoso-Moreira design the sensitivity of the two statistics differs
+  strongly in some organs (forebrain, n 32: pass rate 0.055 unsigned, 0.970 signed; kidney, n 27: 0.495 and 1.000;
+  `feasibility_fetal/output/passrates_cm_day.csv` and `passrates_cm_day_L1.csv`). The one positive that rests on R
+  alone, the fetal adrenal of A189, is unchanged by the signed statistic (post hoc: C 0.926, p 0.0001, Holm 0.0009,
+  above both companions, leave-one-gene-out minimum 0.904; `A189_fetal_within/output/h189_1_signed_posthoc.csv`).
+- **My recommendation:** (i), as one registered audit amendment with the list of affected results fixed in advance;
+  pass / fail verdicts that change are reported as errata. The gate (L2) and the coupling estimates do not use R.
 
 ### Q30 (2026-11-10): the mouse embryo "time-of-day state" after A236
 
