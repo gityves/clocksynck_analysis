@@ -6,7 +6,10 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 
 ## Open
 
-### Still with the PI (updated 2026-11-06)
+### Still with the PI (updated 2026-11-10)
+- **Q29** (below): which confirmation first for the Q25 headline: timed brain cohorts, living skin cohort, jet-lag data.
+- **Q28** (below): brain death: one descriptive table of single-organ clock integrity; full-n number and caveats.
+- **Q27** (below): contrasts "at a common spread" (d*) are biased at unequal host spread; simulation and reporting.
 - **Q26** (below): A130 sign label looks inverted; A234 finds an age advance in GTEx.
 - **Q25** (below): the headline: two kinds of desynchrony; robustness audit; human local (IBD) test.
 - **Q24** (below): the cancer chapter after A214-A226: structure and claims for the paper.
@@ -23,6 +26,44 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
+
+### Q29 (2026-11-10): which confirmation first for the Q25 headline
+
+- **Question:** the fresh review (`REVIEW_2026-11-10.md` §3-§4) keeps the Q25 headline but finds that its break arm
+  rests on one post hoc contrast (A132b) and its robustness arm on GTEx alone. Which confirmation do we pursue first:
+  (a) timed post-mortem brain cohorts (GSE71620, Chen 2016: age 16-96, two areas; GSE45642, Li 2013: six regions,
+  controls vs MDD), (b) a living skin cohort (Wu 2020: 154 women, three sites x two layers, untimed), or (c) the
+  in-house jet-lag data?
+- **On hold:** registration of D2-D4 of the review (the planned A117 was never registered); nothing already scored.
+- **Evidence:** review §3.1 ("Missing for Cell") and §4 (D2, D4, with power arguments). (a) would also replicate or
+  refute the A234 brain advance on other donors (31 subjects under 40 y against 13 in GTEx), which bears on Q26.
+  Without (a), (b) or (c) the review's frank reading is a Nature Methods paper.
+
+### Q28 (2026-11-10): brain death, one descriptive companion and the number shown
+
+- **Question:** within the decision "descriptive, no mechanism amendments", (i) is one registered descriptive table in
+  scope: within-tissue clock-gene coherence and amplitude in organ donors vs ventilated post-mortem donors (are the
+  single-organ clocks intact while their mutual order is lost)? (ii) Should the main number be the full-n readout
+  (rho 0.093, 298 organ donors) rather than one equal-n subsample (0.161), with donor management (steroid and hormone
+  protocols, time to procurement) named as an open alternative?
+- **On hold:** the wording "first human observation consistent with SCN-lesion work"; no analysis is started.
+- **Evidence:** review §2.2 and §4 (D5). The registered H132.1 / H132.2 failed; A132b is post hoc; A136 H136.3 uses the
+  same donors; A136 H136.1 (glucocorticoid exposure) did not pass its gate (p 0.098). Order lost with rhythms kept is
+  the SCN-lesion picture (Yoo 2004); damped clocks would be a different result, and no readout separates them yet.
+
+### Q27 (2026-11-10): contrasts at a common host spread (d*) are biased when the arms differ in spread
+
+- **Question:** may a calibration amendment be registered (simulation at the real designs of A164, A231, A233 and the
+  fibrotic-lung contrasts; candidate arm-specific correction), and if d* moves, do we keep the registered numbers with a
+  corrected sensitivity column, or re-register the equivalence family on the corrected estimator?
+- **On hold:** any sentence stating that d* "removes the sampling spread"; MDEs of contrasts with unequal spread. No
+  published number is changed.
+- **Evidence:** review §1, M1 (`_core/host.py:216, 226`; `dataset.py:481-505`). The pooled-prior host posterior means
+  are over-shrunk in the arm with the narrower spread, so its |z| and d* read low although the coupling is the same.
+  Post hoc feasibility simulation (not a result; `exploratory/scouts_2026-11-10/`): truth d* = 0, bias -0.11 to -0.19 at a spread ratio
+  of e^-0.8 to e^-1.0 with a noisy host, ≤ 0.07 at e^-0.3 to e^-0.45, none at equal spread. Exposure of the equivalence
+  claims is small (median log spread ratio between -0.32 and +0.24 in A231 / A233); the bias runs against the
+  fibrotic-lung T-cell loss; 31 % of 4,214 rows in the exploratory contrast tables have |log V ratio| > 0.4.
 
 ### Q26 (2026-11-08): A130 direction label looks inverted; A234 finds the age advance in GTEx
 
