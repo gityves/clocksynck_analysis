@@ -219,7 +219,7 @@ Source for the rows with a figure panel: `paper/exploratory/WP0_integrity/output
 | A42 / A103 | brain vs periphery r* | brain 0.639 [0.59, 0.71]; sheep 0.625 [0.36, 0.87]; baboon 0.97 | - | H103.1, H103.2 pass; sheep passes, baboon readout 1 fails | - | Fig 2 |
 | A85 (corrected) | immune cue-following | immune 0.182 vs structural 0.095 | 0.002 | PASS after the 2026-10-22 correction (A122 then shows it is not cue-specific) | - | Fig 2 |
 | A104 | H104.1 / H104.2 (strong clocks decoupled) | rho +0.734 (predicted < 0) | 1.00 (rho < 0) | H104.1 not supported, H104.2 not replicated | - | Fig 2 |
-| A108 | H108.1 (embryo late window) | R 0.52; window gate p_acrophase 0.08 | 0.016 | passes narrowly; 'from E15' not established | - | Fig 2 |
+| A108 | H108.1 (embryo late window) | R 0.52; window gate p_acrophase 0.08 | 0.016 | passes narrowly; 'from E15' not established; not clock-specific (A236) | - | Fig 2 |
 | A91 | rhythmic genes follow internal time | liver clock excess 2,691 vs time excess -14.5 | - | pass | - | Fig 3 |
 | A94 | H94.1-H94.3 (age effects to 70 y) | no age effect | - | all FAIL (no age effect) | - | Fig 4 |
 | A19 (rerun 2026-10-30) | H19.1 age amplitude | gamma -0.029 (SE 0.072) | 0.682 | not supported | MDE 0.201 per decade | Fig 4 |
@@ -348,3 +348,7 @@ Source for the rows with a figure panel: `paper/exploratory/WP0_integrity/output
 | A234 | H234.2 brain − body host vs age (192; post hoc, not counted) | L3 | S | -0.01 h per decade | 0.96 | post hoc: no drift | MDE 0.66 | A234_internal_time_age/output/score_tests.csv |
 | A235 | H235.1 T2D metabolic-module offset, fast deaths (156 sets; advance predicted) | L2 | S | +0.02 h, 90 % [-0.25, 0.30] | one-sided 0.46 / Holm 0.46 (m=2) | FAIL (equivalent within ±1 h) | MDE 0.37 | A235_metabolic_offset/output/score_tests.csv |
 | A235 | H235.1 obesity metabolic-module offset, fast deaths (111 sets) | L2 | S | +0.20 h, 90 % [-0.23, 0.64] | one-sided 0.22 / Holm 0.44 | FAIL (equivalent within ±1 h) | MDE 0.64 | A235_metabolic_offset/output/score_tests.csv |
+| A236 | H236.1 embryo time-locked clock-gene harmonics lie in the clock plane (Qiu, 77 cell types) | other | P | S1 0.069; plasmode null mean 0.368, q95 0.657 | 0.975 / Holm 0.975 (m=3) | FAIL (informative; no drift 0.278, p 0.47) | power 0.98 | A236_embryo_running_clock/output/h236_1_content.csv |
+| A236 | H236.1b the same without PER1, PER2 | other | S | S1 0.059; H108.1 without them R 0.435 (p 0.053) | 0.99 | FAIL | - | A236_embryo_running_clock/output/h236_1_content.csv |
+| A236 | H236.2 time-locked clock-plane component rotates in the adult direction (post hoc in motivation) | other | P | rho 0.015, jackknife t 0.31 against simulated 4.76 | 0.43 / Holm 0.85 | FAIL (uninformative) | power 0.33 at rho 1 | A236_embryo_running_clock/output/h236_2_rotation.csv |
+| A236 | H236.3 H108.1's R above matched and responsive pseudo-clock sets | other | P | R 0.516; matched 93.0th pct (q95 0.533), responsive 81.5th (q95 0.617) | 0.19 / Holm 0.57 | FAIL (H108.1 not clock-specific; 18.5 % / 41 % of pseudo sets reach p < 0.05) | - | A236_embryo_running_clock/output/h236_3_companions.csv |

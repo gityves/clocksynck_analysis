@@ -7,6 +7,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 ## Open
 
 ### Still with the PI (updated 2026-11-10)
+- **Q30** (below): the mouse embryo timing positive (A108) is not clock-specific (A236): how the paper words it.
 - **Q29** (below): which confirmation first for the Q25 headline: timed brain cohorts, living skin cohort, jet-lag data.
 - **Q28** (below): brain death: one descriptive table of single-organ clock integrity; full-n number and caveats.
 - **Q27** (below): contrasts "at a common spread" (d*) are biased at unequal host spread; simulation and reporting.
@@ -26,6 +27,22 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
+
+### Q30 (2026-11-10): the mouse embryo "time-of-day state" after A236
+
+- **Question:** A236 tested whether the late-embryo timing positive (A108 H108.1, R 0.52, p 0.014) reflects a running
+  clock. All three registered tests fail: the time-locked variation of the clock genes is not clock-shaped (S1 0.069,
+  null mean 0.368; power 0.98), no rotation is seen (rho 0.015; power only 0.33) and the alignment is not specific
+  (18.5 % of expression-matched and 41 % of responsive pseudo-clock sets reach p < 0.05; R at the 93rd and 81.5th
+  percentile). Does the paper (i) drop the embryo timing panel, (ii) keep it with the companions and the wording
+  "time-of-day information, not clock-specific; age and clock time confounded within litter age", or (iii) keep only
+  the untimed gate of the late window (p_pairing 0.001) as the developmental mouse statement?
+- **On hold:** any use of H108.1 as evidence of a functioning embryonic clock, and the idea of placing embryo organs
+  on external time from the inferred phase. Nothing else depends on it; the human fetal adrenal positive (A189) passed
+  both companions and stands.
+- **Evidence:** `results_preliminary.md` (A236); `A236_embryo_running_clock/output/h236_primary.csv`. The design is
+  the limit (one embryo per clock time and litter age, 18 h in 6-h steps): a data set crossing age and clock time
+  would be needed to ask the question properly.
 
 ### Q29 (2026-11-10): which confirmation first for the Q25 headline
 

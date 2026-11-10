@@ -4103,3 +4103,59 @@ Fast-death module (liver, both adiposes, skeletal muscle; A164 host), case − c
   do not systematically have and which terminal illness removes; T2D and obesity are not separated (BMI imbalance
   0.68 in the T2D fast design).
 <!-- src: paper/exploratory/A235_metabolic_offset/output/{score_tests,score_tissues,score_pooled,score_z2,score_pseudo_t2d,score_pseudo_obese}.csv -->
+
+## A236 (scored 2026-11-10): the time-of-day state of the late mouse embryo is not shown to be a running clock, and H108.1 is not clock-specific (H236.1 FAIL, informative; H236.2 FAIL, uninformative; H236.3 FAIL)
+
+Qiu 2024, E15.0-E18.75, 16 embryos in 4 batches, one embryo per batch at 0, 6, 12 and 18 h. Timed model: batch
+intercepts, linear within-batch drift, cos and sin. Three deviations fixed in the power note before any observed
+statistic (`registered_experiments.md`, A236): plasmode null for S1 (the acrophase null rejects in 0.41 of data sets
+with no time-locked signal), simulated critical value for the rotation test, primaries on the 77 cell types present in
+all embryos.
+
+| test | statistic | value | critical value | p / Holm | power at the observed signal size |
+|---|---|---|---|---|---|
+| H236.1 gene content | S1, share of the time-locked harmonics in the clock plane | 0.069 | 0.657 (null mean 0.368) | 0.975 / 0.975 | 0.98 (clock-plane axis) |
+| H236.2 rotation | jackknife t of the polarisation rho (rho 0.015) | 0.31 | 4.76 | 0.43 / 0.85 | 0.33 (rho 1), 0.14 (rho 0.5) |
+| H236.3 specificity | R of H108.1 against pseudo-clock sets | 0.516 | 0.617 (responsive q95; matched 0.533) | 0.19 / 0.57 | - |
+
+- **H236.1 FAIL, informative.** The 24-h harmonics of the 14 clock genes do not lie in the clock plane: S1 0.069, in
+  the lowest 2.5 % of what the embryos' untimed variation gives by chance. Without the drift term S1 is 0.278 against
+  a null mean of 0.283 (p 0.47); on all 100 cell types 0.062; leaving one gene out 0.052-0.271. A clock-plane axis of
+  the size seen in the plane would have passed in 0.98 of the simulations.
+  **H236.1b:** without PER1 and PER2, S1 0.059 (p 0.99; no drift 0.304, p 0.53). H108.1 without the two genes: R 0.435,
+  p 0.053 (with them 0.516, p 0.014), so the alignment is not carried by the direct glucocorticoid targets; leaving one
+  gene out, R ranges from 0.338 (without NPAS2) to 0.589 (without ARNTL).
+- **Per gene (descriptive).** Drift model: NPAS2 (amplitude 0.45, peak 4.1 h) and CIART (0.22, 2.3 h) dominate; PER1
+  peaks at 2.3 h and the other 11 genes between 14.1 and 17.0 h (amplitude <= 0.18). Peaks near 3 h and 15 h are the
+  direction in which the drift term moves the harmonics (cos and sin shift by the same amount), so these harmonics
+  are dominated by the contrast of 0 and 12 h against 6 and 18 h: NPAS2 is +0.28 at 6 h and -0.15, -0.09, -0.04 at 0,
+  12 and 18 h. The design cannot tell a non-linear age effect from a 12-h component there. The antiphase of the two
+  arms (11.4 h; reference 12.9 h) is NPAS2 alone: ARNTL and CLOCK peak with the E-box arm (15.7, 15.8 h).
+  Without the drift term the E-box and D-box outputs (PER1, PER2, NR1D1, NR1D2, DBP, TEF) peak at 14.4-17.9 h and
+  ARNTL, CLOCK, CRY1 and CIART at 23.1-0.8 h, with small amplitudes (ARNTL 0.024 against 0.504 in the reference, PER3
+  0.003 against 0.273). The order resembles the adult one, but the share in the plane is what untimed variation gives
+  (post hoc reading, no claim).
+- **H236.2 FAIL, uninformative (power 0.33).** rho 0.015 (noise-corrected 0.037; leave-one-batch-out -0.031 to 0.040;
+  all cell types 0.010); the time-locked share of the clock-plane harmonics is 0.42. At this signal size the plasmode
+  gives rho -0.03 (sd 0.25) for an axis, 0.00 (sd 0.07) with no signal and 0.37 (sd 0.22) for a perfect rotation: the
+  observed value sits with the first two, 1.6 sd below the third (post hoc). Without the drift term rho is 0.267
+  (noise-corrected 0.98; t 1.80, p 0.19): the configuration the drift term was registered against (an age trend plus
+  an axis imitates a rotation), not evidence of rotation. Named lineages, single cell types and no test: hepatocytes
+  0.67 (se 0.91), cardiomyocytes 0.52 (se 0.31); trajectories with >= 5 cell types -0.14 (white blood cells) to 0.19.
+- **H236.3 FAIL.** On genome-wide pseudobulks (24,204 genes with mean count >= 1), R 0.516 is the 93.0th percentile of
+  200 expression-matched sets (q95 0.533) and the 81.5th of 200 responsive sets (q95 0.617). The timed test reaches
+  p < 0.05 in 18.5 % of the matched and 41 % of the responsive sets (nominal 5 %). After residualisation on embryonic
+  day: R 0.533, above the matched q95 (0.499; 97.5th percentile) but not the responsive one (0.612; 87.0th); 13.5 %
+  and 27 % of the sets reach p < 0.05. Limit: expression matching leaves the same 14 responsive genes in every set (27
+  available), so the 200 responsive sets are assignments of one gene set to the waveform, not independent draws.
+- **Reading (as registered).** H236.1 fails: the wording stays "time-of-day state". H236.3 fails: the state is shared
+  with cue-responsive genes, and to a lesser degree with arbitrary genes of the same expression. The reason is in the
+  design: within a batch clock time and age move together (18 h in 6-h steps), so any gene with a developmental trend
+  is time-locked, and permuting clock times does not remove it. **Consequence for A108:** H108.1 (R 0.52, p 0.014)
+  stands as scored but is not clock-specific; it does not show a functioning clock and cannot serve to place embryo
+  organs on external time. The fetal adrenal positive (A189) passed both companions and is not affected.
+- **What this does not show.** It is not evidence against an embryonic clock: the rotation test has little power, the
+  cardiomyocyte and hepatocyte estimates are positive, and entrained and driven oscillators cannot be separated
+  cross-sectionally. Showing a running clock here needs a design in which age and clock time are crossed, or more
+  than one cycle per litter age. PI question Q30.
+<!-- src: paper/exploratory/A236_embryo_running_clock/output/{h236_primary,h236_1_content,h236_1_genes,h236_1_genes_nodrift,h236_1_profiles,h236_1_arms,h236_1b_timed,h236_2_rotation,h236_3_companions,h236_3_sets,power,power_info}.csv; build $SCCC_DATA/natexp/qiu2024/genome_late/PROVENANCE.md -->

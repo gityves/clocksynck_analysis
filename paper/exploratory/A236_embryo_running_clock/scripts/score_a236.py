@@ -244,6 +244,18 @@ def content(fr, drop=(), drift=True, n_null=10_000, seed=0, complete=True) -> tu
     return row, tab
 
 
+def profiles(fr) -> pd.DataFrame:
+    """Descriptive (post hoc): per gene, the mean over batches and complete cell types (gene weights) of the
+    gene-centred log fraction at each clock time, centred within batch and cell type."""
+    k = np.isfinite(fr.Y[:, :, 0]).all(0)
+    Yc = fr.Y[:, k] - fr.Y[:, k].mean(2, keepdims=True)
+    for b in np.unique(fr.batch):
+        Yc[fr.batch == b] -= Yc[fr.batch == b].mean(0)
+    w = fr.wg[k] / fr.wg[k].sum(0)
+    return pd.DataFrame({f"{h:g} h": np.einsum("nkg,kg->g", Yc[fr.t == h], w) / np.sum(fr.t == h)
+                         for h in np.unique(fr.t)}, index=pd.Index(GENES, name="gene")).reset_index()
+
+
 def arms(tab) -> dict:
     """Peak time (h) of each arm's summed harmonic and their difference (12 h: antiphase)."""
     h = (tab.a + 1j * tab.b).set_axis(tab.gene)
@@ -367,7 +379,7 @@ def genome(fr=None):
         order = np.argsort(-X.mean(0), kind="stable")
         keep = np.sort(order[~pd.Series(sym[order]).duplicated().to_numpy()])
         rows = win[["donor", "compartment", "stratum", "n_cells", "depth"]].reset_index(drop=True)
-        assert np.array_equal(X[:, [list(sym[keep]).index(g) for g in GENES]], win[GENES].to_numpy(float)), \
+        assert np.array_equal(X[:, keep[[list(sym[keep]).index(g) for g in GENES]]], win[GENES].to_numpy(float)), \
             "clock-gene counts differ from the stored table"
         G.update(X=X[:, keep], sym=sym[keep], rows=rows)
     return G["X"], G["rows"], G["sym"]
@@ -432,8 +444,9 @@ def score(fr):
     # H236.1 and H236.1b
     r1, genes = content(fr)
     r1b, _ = content(fr, drop=GC_CLOCK, seed=1)
+    nd, genes_nd = content(fr, drift=False, seed=2)
     tests = [dict(test="H236.1", **r1), dict(test="H236.1b without PER1, PER2", **r1b),
-             dict(test="H236.1 sens: no drift term", **content(fr, drift=False, seed=2)[0]),
+             dict(test="H236.1 sens: no drift term", **nd),
              dict(test="H236.1b sens: no drift term", **content(fr, drop=GC_CLOCK, drift=False, seed=3)[0]),
              dict(test="descriptive: all cell types", **content(fr, complete=False)[0]),
              dict(test="descriptive: all cell types, without PER1, PER2", **content(fr, drop=GC_CLOCK,
@@ -461,16 +474,40 @@ def score(fr):
     t1, t2, t3 = pd.DataFrame(tests), pd.DataFrame(rot), pd.DataFrame(timed)
     t1.to_csv(OUT / "h236_1_content.csv", index=False)
     genes.to_csv(OUT / "h236_1_genes.csv", index=False)
+    genes_nd.to_csv(OUT / "h236_1_genes_nodrift.csv", index=False)
+    prof = profiles(fr)
+    prof.to_csv(OUT / "h236_1_profiles.csv", index=False)
     t3.to_csv(OUT / "h236_1b_timed.csv", index=False)
     pd.DataFrame([arms(genes)]).to_csv(OUT / "h236_1_arms.csv", index=False)
     t2.to_csv(OUT / "h236_2_rotation.csv", index=False)
-    for t in (t1, t3, genes, pd.DataFrame([arms(genes)]), t2):
+    for t in (t1, t3, genes, genes_nd, prof, pd.DataFrame([arms(genes)]), t2):
         print(t.round(4).to_string(index=False), "\n")
+
+
+def primary() -> pd.DataFrame:
+    """The three primary tests with Holm-adjusted p values, from the stage outputs. H236.3: the larger of the two
+    one-sided ranks of the clock set's R among the matched and the responsive pseudo sets."""
+    from clocksync.stats import holm
+    c, r = pd.read_csv(OUT / "h236_1_content.csv"), pd.read_csv(OUT / "h236_2_rotation.csv")
+    t, k = pd.read_csv(OUT / "h236_3_sets.csv"), pd.read_csv(OUT / "h236_3_companions.csv").iloc[0]
+    obs = t.R[t.kind == "clock"].iloc[0]
+    rank = {kind: (1 + np.sum(t.R[t.kind == kind] >= obs)) / (1 + np.sum(t.kind == kind))
+            for kind in ("matched", "responsive")}
+    tab = pd.DataFrame([
+        dict(test="H236.1", statistic="S1", value=c.S1[0], critical=c.sim_null_q95[0], p=c.p_sim[0]),
+        dict(test="H236.2", statistic="jackknife t of rho", value=r.t[0], critical=r.t_crit_sim[0], p=r.p_sim[0]),
+        dict(test="H236.3", statistic="R", value=obs, critical=max(k.matched_q95, k.responsive_q95),
+             p=max(rank.values()))])
+    tab["p_holm"] = holm(tab.p.to_numpy())
+    tab["pass"] = (tab.value > tab.critical) & (tab.p_holm < 0.05)
+    tab["p_matched"], tab["p_responsive"] = [np.nan, np.nan, rank["matched"]], [np.nan, np.nan, rank["responsive"]]
+    tab["responsive_distinct_genes"] = len(set(";".join(t.genes[t.kind == "responsive"]).split(";")))
+    return tab
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("stage", choices=["power", "score", "companions"])
+    ap.add_argument("stage", choices=["power", "score", "companions", "primary"])
     ap.add_argument("--jobs", type=int, default=4)
     ap.add_argument("--n-sim", type=int, default=2000)
     ap.add_argument("--n-pseudo", type=int, default=200)
@@ -491,6 +528,10 @@ def main():
         print(pd.Series(info).to_string())
     elif a.stage == "score":
         score(fr)
+    elif a.stage == "primary":
+        tab = primary()
+        tab.to_csv(OUT / "h236_primary.csv", index=False)
+        print(tab.round(4).to_string(index=False))
     else:
         sfx = "_check" if a.check else ""
         t, summary = companions(a.jobs, 4 if a.check else a.n_pseudo, 200 if a.check else 1000)
