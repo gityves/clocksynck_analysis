@@ -175,6 +175,25 @@ it. The host is never fitted on the compartments being tested, so a disrupted ta
 
 **Model** (M2): β_ik = μ_k + z_k f_i + e_ik, with f_i ~ N(0, Σ_f), e_ik ~ N(0, σ_k² I + V_ik), z_ref = 1.
 
+Split in two slides: M4a, the EM (video below, bullet 1); M4b, the readout (figures B and C, bullets 2-3).
+
+**Video, slide M4a** (`figures/em_animation/`, `scripts/em_animation.py`, 48 s; `em_01.mp4` … `em_16.png`, one
+clip and one still per step; text on screen only). Left the data (3 anchors × 6 patients), right the host plane; the
+model is written at the bottom with the term of each step highlighted, and the step's formula under it.
+1. The data: known β_ik, V_ik; unknown μ_k, z_k, σ_k², f_i, Σ_f.
+2. Start: μ_k the compartment mean (cross), z_k = 1 (arrow pointing to 0 h), σ_k² and Σ_f wide.
+3. E-step: each compartment's guess of the host, ĝ_ik = z_k⁻¹(β_ik − μ_k) (small markers in the host plane;
+   endothelial guesses are off because z_E = 1 is wrong).
+4. E-step: the guesses combined, f̂_i = S_i Σ_k w_ik ĝ_ik, S_i = (Σ_f⁻¹ + Σ_k w_ik)⁻¹, w_ik = |z_k|²/(σ_k² + v_ik)
+   (exact for isotropic V; the package uses the 2 × 2 form), with S_i and Σ_f as ellipses.
+5. M-step: μ_k and z_k by least squares of β on the host (the host pattern, hollow markers, shifted, turned and
+   scaled onto each compartment; residual lines).
+6. M-step: σ_k² (dotted circles: what is left beyond V_ik) and Σ_f.
+7. Twenty iterations: z_E turns to its value, the guesses of each patient agree.
+8. Result: f̂_i and S_i, the regressor of M4b.
+The E and M steps are the package's (`factor._EM.estep / mstep`), from the guess of step 2; SQUAREM is not shown.
+Fitted: |z_E| 0.80 at 3.1 h, |z_S| 0.87 at 1.2 h (true 0.75 at 3 h, 0.90 at 1 h; 6 patients).
+
 **Bullets** (in the order of the figures)
 1. *Figure A, step 1: the host, by EM on the anchors only.* f_i is latent, so the fit alternates:
    - E-step: given the parameters, each donor's host posterior is Gaussian, mean f̂_i and covariance S_i (closed
