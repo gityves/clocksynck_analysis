@@ -103,8 +103,66 @@ Add on the last still or on M4: c_k = |z_k|² V / (|z_k|² V + 2σ_k²), with V 
 
 ## M3. Gate: is a shared, clock-shaped state observable?
 
-Two nulls on the cross-covariances of compartment pairs projected on the clock plane: shuffled donor pairing and
-permuted acrophases (`Dataset.gate`). A failed gate is uninformative. To write.
+**Message:** before any model is fitted, a model-free test asks whether the compartments of a donor share variation,
+and whether that shared variation lies in the clock plane. Both are needed; a failed gate is uninformative, never
+"decoupled".
+
+**Bullets** (in the order of the figures)
+1. *Figure A, what the gate looks at.* For each pair of compartments k, l, the gene × gene cross-covariance across the
+   donors they share, of the gene-centred log fractions:
+
+   $$C_{kl} = \frac{1}{n_{kl}-1}\sum_i (y_{ik} - \bar y_k)(y_{il} - \bar y_l)^\top$$
+
+   Measurement noise is independent between compartments, so C_kl keeps only what they share. A shared clock gives
+   C_kl = X z_k Σ_f z_l* Xᵀ: rank 2, inside the clock plane; genes peaking together co-vary, opposite genes
+   anti-co-vary.
+2. *Figure B, is there shared signal in the clock plane?* With P the orthogonal projector on the clock plane:
+
+   $$\text{clock\_cov} = \sum_{k<l} \lVert P\,C_{kl}\,P \rVert_F^2$$
+
+   Null 1: donors shuffled within each compartment (each keeps its data, the pairing is lost).
+3. *Figure C, is the shared signal clock-shaped?*
+
+   $$\text{clock\_share} = \frac{\text{clock\_cov}}{\sum_{k<l} \lVert C_{kl} \rVert_F^2}$$
+
+   Null 2: planes built from acrophases shuffled across genes (any 2-D gene pattern, not the clock's).
+4. Pass = both p < 0.05. Each null alone can be fooled: clocks that are not shared have a clock-shaped (high-share)
+   but unpaired covariance; a shared non-clock factor is paired but not clock-shaped.
+
+**Visual:** three one-panel figures (`scripts/gate.py`, simulated, 150 × 120 mm each; 30 donors × 3 compartments,
+deaths 08-18 h, 1,000 permutations).
+- `figures/gate/gate_A.png`: fibroblast × hepatocyte cross-correlation, genes ordered by acrophase (correlation for
+  display; the gate uses the covariance). Blocks, not bands: with 08-18 h deaths the host spread is elongated.
+- `figures/gate/gate_B.png`: clock_cov relative to the pairing null (grey), three cohorts; filled = p < 0.05.
+  Shared clock p < 0.001; clocks not shared p = 0.469; shared non-clock factor p < 0.001.
+- `figures/gate/gate_C.png`: clock_share against the acrophase null. Shared clock 0.88 (null mean 0.10), p < 0.001;
+  clocks not shared 0.53, p < 0.001; shared non-clock factor 0.01 (null mean 0.03), p = 0.582.
+
+**Speaker notes**
+- Model-free: no host, no EM, no coupling; only the 14-gene covariances and the waveform's acrophases. It runs on the
+  gene-centred log fractions, not on β, and P is unweighted.
+- Why cross-covariances and not each compartment's own covariance: within a compartment, Poisson noise and the
+  compartment's own clock add variance in the plane; between compartments only shared variation survives in
+  expectation.
+- Specificity (A154, N0, no clock): pass rate 0.040-0.085 over 8 designs (mildly anti-conservative at 100 donors,
+  K 8, single-cell depth). With a shared non-clock factor (N1): at most about 0.10-0.14.
+- Sensitivity is limited: under strong shared non-clock structure 0.26-0.415 of true clocks pass (A154, P arm); adult
+  GTEx at the fetal organ-presence design passes 0.20-0.21 (A181). Hence: a failed gate is never evidence of absent or
+  decoupled clocks.
+- In A145, the gate passed 4 of 30 no-clock replicates (0.133; H145.3 fail): the gate alone is not a specificity
+  guarantee; the pseudo-clock companion (after the readout) is the second check.
+
+**Limits**
+- Needs several donors sharing compartments (A181: the design, not depth, limited the fetal data).
+- A conserved-waveform violation (genes shifting relative to each other) still passes (A205); the gate tests clock
+  shape, not the exact waveform.
+
+<!-- src: gate: _core/study.py (Study.gate, cross_covariances, plane), dataset.py (Dataset.gate), _core/controls.py
+(shuffle_pairing), waveform.py (permuted); figure numbers: printed by scripts/gate.py; A154, A181, gate sensitivity
+statement, A145 H145.3: results_preliminary.md (exploratory/A154_gate_calibration/output/summary.csv,
+v154_1_n0.csv, n1_map.csv; A181_fetal_depth/output/v181_1_passrates.csv) -->
+
+---
 
 ## M4. Fit: host by EM on anchors, then every compartment read against it
 
