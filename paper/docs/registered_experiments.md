@@ -5314,3 +5314,80 @@ chosen after seeing A189; the same 7 adrenals enter every pair, so the pairs are
 null accounts for it); adult stand-ins at 08-18 h; no age adjustment in the primary.
 **Stop rule:** one scoring run; organs, `min_shared`, companions and correction fixed here (`TESTS`, `FAMILIES` in
 the script). **Code:** `paper/exploratory/A241_fetal_adrenal_host/scripts/{feasibility_a241.py,score_a241.py}`.
+
+## A242 (2026-11-11, user: "Yes go ahead", to "register the open-data adrenal replication as A242, starting with that power calculation"; written before any clock statistic is computed on these fetal data; seen: the sample sheets and the design tables (`output/design_cohorts.csv`, `design.csv`), the median count of each clock gene per cohort (`output/clock_detection.csv`), the adult feasibility below, a dry run of the companion gene sets (gene lists only, no statistic), every result of A189, A190 and A237-A241; the surrogate components of the Schroder libraries are computed by the script and were not inspected): does the clock of the human fetal adrenal replicate in open data from other laboratories? **Nine open cohorts, 59 fetal adrenals; L1; secondary (development section)**
+**Why.** The fetal adrenal of Cao 2020 is the one human prenatal positive (A189: 7 fetuses, 89-122 days; signed
+coherence C 0.926, p 0.0001, post hoc). Three other datasets are negative in other organs (A237-A239) and exclude a
+clock of 0.75-1 times the adult one (A240). One organ in one cohort cannot carry a section (Q32); the scout found
+open fetal adrenal data from eight other laboratories and ENCODE, none of which shares a fetus with Cao 2020.
+**Data and design (fixed; `prep_adrenal.py`, `score_a242.py`).** One whole-adrenal pseudobulk per fetus and cohort:
+all cells of the fetus summed (the organ-level pseudobulk of A189), bulk libraries as released. Samples of one source
+with the same stated age are one fetus unless the source names them as different individuals. 14 clock genes, GTEx
+waveform, signed coherence C (`common.development`, design points 1, 2, 4 and 5 of A237). Seed 242.
+- *Cohorts (fetuses; age as stated by the source, in weeks):* `encode_pa` (ENCODE polyA RNA-seq, 4; 12.1-15.4, post
+  conception), `kameneva` (GSE147821, 10x, 11; 6-14, post conception), `dong` (GSE137804, 10x, 4; 8.4-14.6), `wang`
+  (GSE167860, 10x, 10; 7-14, gestational), `han` (GSE134355, Microwell-seq, 2; 12 and 14), `sasaki` (GSE193672 and
+  GSE291218, 10x, 7; 5-19, post fertilisation; three samples deposited in both series are counted once), `roost`
+  (GSE66302, DeepSAGE, 3; 9.4-22), `kildisiute` (Kildisiute 2021 processed object, 10x, 5; 8-21), `schroder`
+  (GSE196700, targeted transcriptome, 13 bulk adrenals of the first and second trimester, no age per sample; three
+  sequencing batches of 4, 7 and 2).
+- *Pooling.* Log fractions are residualised gene by gene on a cohort indicator and a common polynomial of age; only
+  cohorts with >= 2 fetuses in a test enter it (a single fetus has no residual). The 10,000 per-gene permutations of
+  the null are done within cohort (`development.coherence(strata=)`, added for this amendment): cohorts differ in
+  platform, depth and noise, so their fetuses are not exchangeable. A deviation from A237-A239 (one cohort each),
+  fixed before scoring. Companions: 200 expression-matched and 200 responsive pseudo-clock sets among the genes with
+  a mean count >= 1 and present in every cohort of the test, same adjustment; clock-specific: C above the q95 of both.
+- **H242.1 (primary; the replication; Holm over its 2 readouts):**
+  `late`: fetuses from 12 weeks, the age range of A189 (12.7-17.4 weeks): 19 fetuses in 7 cohorts (encode_pa 4,
+  kameneva 3, wang 3, sasaki 3, dong 2, han 2, roost 2); cohort indicator and a linear age trend (7 covariates).
+  `schroder`: the 13 bulk adrenals; batch indicator and the first principal component of the log fractions of the
+  non-clock genes (mean count >= 50, batch regressed out; `development.surrogates`) in place of the unrecorded age;
+  permutations within batch.
+- **H242.2 (secondary; onset):** `early`: fetuses before 12 weeks: 25 fetuses in 5 cohorts (kameneva 8, wang 7,
+  sasaki 4, kildisiute 4, dong 2); cohort indicator and a quadratic age trend (6 covariates).
+- **PASS** (`development.verdicts`): Holm p < 0.05 within the hypothesis and clock-specific. p < 0.05 without
+  clock-specificity: "not clock-specific". Unadjusted p < 0.05 lost at Holm: "suggestive, not established".
+**Power first (done; `feasibility_a242.py`, 538 s; `output/feasibility_passrates.csv`; 200 subsamples, 500
+permutations within cohort).** Each fetus is stood for by one distinct GTEx adrenal gland (93 donors who died at
+08-18 h) that receives its cohort, age and depth; the adult clock-gene counts are thinned gene by gene to what the
+cohort captures (cohort median count of the gene x relative depth of the fetus; where the adult library holds fewer
+reads the targets of the gene are lowered over the cohort, which the cohort indicator absorbs: 35 % of the fetus x
+gene targets of `late`). Adult pass rates at alpha 0.05: `late` 0.995 (95 % CI 0.972-1.000), `schroder` 0.990
+(0.964-0.999), `early` 1.000 (0.982-1.000); at the Holm threshold of the worse rank (0.025): `late` 0.985, `schroder`
+0.965. With the adult clock scaled (`simulate.scale_clock`) to 0.75: 0.930, 0.895, 1.000; to 0.5: 0.375, 0.410,
+0.560. False-positive rate (every clock gene permuted across the drawn donors on its own): 0.040 (0.017-0.077),
+0.075 (0.043-0.121), 0.065 (0.035-0.109): the nominal 0.05 lies in each interval. The other designs: `all` 1.000
+(0.75: 1.000; 0.5: 0.670), `late:deep` 0.985, `kameneva` 0.995, `wang` 0.985, `schroder:pc0` 1.000, `schroder:pc2`
+0.970. `late` is kept with its two shallow cohorts (han, roost: median clock-gene count < 100): leaving them out
+does not raise the adult pass rate.
+**Descriptive (no pass / fail):** `all` (every age, 46 fetuses in 8 cohorts, quadratic age trend); `late:deep`;
+`late` without each cohort in turn (`late:-<cohort>`); `kameneva` (11) and `wang` (10) alone; `schroder:pc0` and
+`schroder:pc2`; unsigned R; leave-one-gene-out range of C; the position of the fetal C in the adult subsamples of
+the feasibility (`feasibility_subsamples.csv`).
+**Reading.** `late` PASS: the fetal adrenal clock is replicated in fetuses from other laboratories and platforms, at
+the age of A189; the adrenal becomes a two-dataset positive, the exception to the prenatal negatives is real, and
+the development section can state it (to the PI: Q32). `schroder` PASS alone: suggestive support on a third platform
+with unknown ages, not the replication. `late` negative (unadjusted p >= 0.05; informative: adult pass rate 0.995,
+0.930 at 0.75 of the adult clock): A189 is not replicated; an adrenal clock of at least three quarters of the adult
+one, with phases that differ between the fetuses of a cohort, is excluded at 12-22 weeks in these cohorts, and A189
+stays a single-cohort observation that the paper must present as unreplicated (or drop: PI). Not clock-specific: a
+state shared with expression-matched or glucocorticoid-responsive genes (the adrenal makes the glucocorticoid), not
+shown to be the clock. H242.2: `early` negative with `late` positive is compatible with an onset near the end of
+the first trimester, not a test of it; `early` positive: the adrenal clock is present before 12 weeks.
+**Limits.** (1) Sampling times are not recorded. The cohort indicator removes what the fetuses of a cohort share: a
+laboratory that collects at one hour of the day contributes nothing, and only phase differences within a cohort are
+read. (2) Age conventions differ between sources (post conception, post fertilisation, gestational, not stated):
+up to two weeks of ambiguity at the 12-week boundary and in the common age trend. (3) Fetus identity rests on the
+sources' sample sheets (same-age samples merged). (4) Sex is not adjusted (not given by every source; 11 residual
+degrees of freedom in `late`). (5) Whole-adrenal pseudobulks: cortex, medulla and blood proportions vary between
+fetuses; the age trend removes their smooth part and the companions guard the rest. (6) Eight of the nine cohorts
+count 3' tags or amplicons, one (ENCODE) full-length reads; Kildisiute's counts are recovered from ambient-corrected
+log-normalised values. (7) Feasibility uses adult adrenals at adult amplitude; the surrogate component of the
+adult libraries may carry time of death, which makes the `schroder` pass rate conservative. (8) The ENCODE fetuses
+come from the same tissue programme as Cao 2020 (different fetuses and assay): `late:-encode_pa` shows what rests on
+them. (9) Excluded before scoring: ENCODE long-read libraries (1.5-9 reads per clock gene, two clock genes absent),
+single-fetus cohorts in a window, GSE64283 (no gene quantification), sources that release reads or alignments only.
+**Stop rule:** one scoring run; cohorts, windows, covariates, permutation scheme, companions and families fixed here
+and in `FAMILIES`; any further cut is a new amendment. **Code:**
+`paper/exploratory/A242_fetal_adrenal_replication/scripts/{prep_adrenal.py,feasibility_a242.py,score_a242.py}`,
+`paper/common/development.py`.

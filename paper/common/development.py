@@ -83,14 +83,25 @@ def _y(tab, wf):
     return y - y.mean(0)
 
 
-def coherence(tab: pd.DataFrame, wf, n_perm: int = 0, rng=None) -> tuple[float, float, float]:
+def _permuted(y, groups, rng):
+    """Every column of y permuted on its own, within the row groups (index arrays)."""
+    out = y.copy()
+    for i in groups:
+        for j in range(y.shape[1]):
+            out[i, j] = y[rng.permutation(i), j]
+    return out
+
+
+def coherence(tab: pd.DataFrame, wf, n_perm: int = 0, rng=None, strata: str | None = None) -> tuple[float, float, float]:
     """Signed coherence C of one adjusted compartment, its one-sided p against per-gene permutations of the rows (nan
-    when n_perm = 0) and the 95th percentile of that null."""
+    when n_perm = 0) and the 95th percentile of that null. `strata`: column of `tab` within whose levels the rows are
+    permuted (cohorts of a pooled compartment, which are not exchangeable with each other)."""
     y = _y(tab, wf)
     obs = signed_coherence(y, wf)
     if not n_perm:
         return obs, np.nan, np.nan
-    null = np.array([signed_coherence(np.column_stack([rng.permutation(c) for c in y.T]), wf) for _ in range(n_perm)])
+    groups = [np.arange(len(y))] if strata is None else list(tab.groupby(strata, sort=False).indices.values())
+    null = np.array([signed_coherence(_permuted(y, groups, rng), wf) for _ in range(n_perm)])
     return obs, (1 + np.sum(null >= obs)) / (1 + n_perm), float(np.quantile(null, .95))
 
 
@@ -117,12 +128,25 @@ def log_mean(counts: pd.DataFrame, depth, min_count: float = 1.0) -> pd.Series:
     return lm[x.mean(0) >= min_count]
 
 
-def l1_test(counts, obs, cov, wf, n_perm: int, n_pseudo: int, seed) -> dict:
+def surrogates(counts: pd.DataFrame, depth, Z=None, n: int = 1, exclude=(), min_count: float = 50.0) -> np.ndarray:
+    """Surrogates of an unrecorded covariate (developmental age, composition): the first `n` principal components
+    (samples x n, unit variance) of the log fractions of the genes with mean count >= `min_count`, `exclude` (the
+    clock genes) left out, after the regression of every gene on Z."""
+    x = counts.drop(columns=[g for g in exclude if g in counts]).to_numpy(float)
+    x = x[:, np.nan_to_num(x.mean(0)) >= min_count]
+    y = np.log((x + 0.5) / np.asarray(depth, float)[:, None])
+    y = residual(y, np.empty((len(y), 0)) if Z is None else Z)
+    u = np.linalg.svd(y - y.mean(0), full_matrices=False)[0][:, :n]
+    return u / u.std(0)
+
+
+def l1_test(counts, obs, cov, wf, n_perm: int, n_pseudo: int, seed, strata: str | None = None) -> dict:
     """L1 of one compartment (the rows of `obs`) with its companions and the leave-one-gene-out range.
-    `seed`: list of ints (the three streams are [.., 0] permutations, [.., 1] matched, [.., 2] responsive)."""
+    `seed`: list of ints (the three streams are [.., 0] permutations, [.., 1] matched, [.., 2] responsive);
+    `strata`: column of `obs` within whose levels the permutations are done (`coherence`)."""
     genes = list(wf.genes)
     tab, k = adjust(table(counts, obs, genes), genes, cov)
-    r, p, q95 = coherence(tab, wf, n_perm, np.random.default_rng([*seed, 0]))
+    r, p, q95 = coherence(tab, wf, n_perm, np.random.default_rng([*seed, 0]), strata)
     row = dict(n=len(obs), k=k, C=r, p=p, null_q95=q95, R_unsigned=unsigned(tab, wf))
     lm = log_mean(counts.loc[obs.index], obs.depth)
     for j, kind in enumerate(("matched", "responsive"), 1):
@@ -179,8 +203,9 @@ def _task(t):
     kind, name = t[:2]
     counts, obs, wf, seed = _S["counts"], _S["obs"], _S["wf"], _S["seed"]
     if kind == "L1":
-        rows, cov = _S["l1"][name]
-        return t, l1_test(counts, obs[rows], cov, wf, _S["n_perm"], _S["n_pseudo"], [seed, 1, list(_S["l1"]).index(name)])
+        rows, cov, *strata = _S["l1"][name]
+        return t, l1_test(counts, obs[rows], cov, wf, _S["n_perm"], _S["n_pseudo"],
+                          [seed, 1, list(_S["l1"]).index(name)], *strata)
     rows, cov = _S["l2"][name]
     if kind == "L2":
         return t, shared(_S["tab"][name], wf, _S["n_perm"], seed)
@@ -189,7 +214,8 @@ def _task(t):
 
 def score(counts, obs, l1: dict, l2: dict, wf, seed: int, n_perm: int = 10000, n_pseudo: int = 200,
           n_perm_pseudo: int = 1000, jobs: int = 4) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    """Run L1 tests ({name: (rows, cov)}, rows a boolean mask of `obs` selecting one compartment) and L2 tests
+    """Run L1 tests ({name: (rows, cov)} or (rows, cov, strata), rows a boolean mask of `obs` selecting one
+    compartment, strata a column of `obs` within which the permutations are done) and L2 tests
     ({name: (rows, cov)}, several compartments; `obs.stratum` gives the strata) with their companions.
     Returns the L1 table (`l1_test` rows), the L2 table (`l2_row` rows) and the pseudo-set gates of the L2 tests."""
     from clocksync.config import limit_threads
@@ -232,7 +258,7 @@ def main(doc: str, load, tests, wf, seed: int, out, families: dict | None = None
     design = pd.DataFrame([dict(kind=k, test=name, n_samples=int(rows.sum()), n_individuals=obs[rows].donor.nunique(),
                                 compartments=obs[rows].compartment.nunique(), n_covariates=cov(obs[rows]).shape[1],
                                 strata=obs[rows].stratum.nunique() if k == "L2" else 1)
-                           for k, d in (("L1", l1), ("L2", l2)) for name, (rows, cov) in d.items()])
+                           for k, d in (("L1", l1), ("L2", l2)) for name, (rows, cov, *_) in d.items()])
     design.to_csv(out / "design.csv", index=False)
     print(design.to_string(index=False), flush=True)
     if a.design:

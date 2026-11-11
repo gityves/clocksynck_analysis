@@ -87,3 +87,28 @@ def test_score_runs_l1_and_l2_with_companions():
 
 def test_holm():
     assert np.allclose(dev.holm([0.01, 0.04, 0.03]), [0.03, 0.06, 0.06])
+
+
+def test_pooled_cohorts_are_permuted_within_cohort():
+    counts, obs = series(amplitude=1.0)
+    obs = obs[obs.compartment == "liver"].copy()
+    rng = np.random.default_rng(5)
+    obs["cohort"] = rng.permutation(np.repeat(list("abcd"), N // 4))
+    platform = pd.DataFrame(rng.normal(0, 1, (4, counts.shape[1])), index=list("abcd"), columns=counts.columns)
+    counts = np.round(counts.loc[obs.index] * np.exp(platform.loc[obs.cohort].to_numpy()))  # capture per platform
+    cov = lambda g: dev.design(g, "age", 2, ("cohort",))  # noqa: E731
+    r = dev.l1_test(counts, obs, cov, WF, 200, 20, [1], "cohort")
+    assert r["p"] < 0.05 and r["clock_specific"] and r["k"] == 6
+    assert dev.l1_test(counts, obs, COV, WF, 200, 20, [1])["C"] < r["C"]  # platform offsets left in hide the clock
+    y, groups = rng.normal(size=(N, 3)), list(obs.reset_index().groupby("cohort").indices.values())
+    yp = dev._permuted(y, groups, rng)
+    assert not np.allclose(yp, y) and all(np.allclose(np.sort(yp[i], 0), np.sort(y[i], 0)) for i in groups)
+
+
+def test_surrogates_recover_an_unrecorded_trend():
+    counts, obs = series(amplitude=1.0)
+    obs = obs[obs.compartment == "liver"]
+    a = (obs.age - 12) / 5
+    pc = dev.surrogates(counts.loc[obs.index], obs.depth, n=2, exclude=WF.genes)
+    assert pc.shape == (N, 2) and np.allclose(pc.std(0), 1)
+    assert abs(np.corrcoef(pc[:, 0], a + 0.3 * a ** 2)[0, 1]) > 0.9
