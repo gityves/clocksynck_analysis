@@ -71,7 +71,7 @@ def panel_why(ax, sim):
                     fontsize=11, color=color, annotation_clip=False)
     ax.set_xlim(-0.01, 0.31)
     ax.set_ylim(-0.02, 1)
-    ax.set_xlabel("donor effects shared by all compartments\n(sd, log expression)")
+    ax.set_xlabel("donor effects (sex, genotype, ...) shared by all\ncompartments (sd, log expression)")
     ax.set_ylabel("coupling c (clock genes)")
 
 
