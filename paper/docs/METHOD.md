@@ -117,6 +117,7 @@ inconclusive (A144 part 2). Resolution depends on clock UMI per cell; eligibilit
 | MASLD hepatocyte coupling (A38) | 0.68 -> 0.54, n.s. (MDE 0.45) | `desync/validation/masld/` |
 | Farm-animal GTEx (A34) | sheep gate passes (343 animals, 45 tissues); tissue phase order not conserved with human (r -0.19) | `desync/validation/farm_gtex/` |
 | Gene-specific partial shifts in one compartment (A205; Saini 2013 pattern, loop genes +6 h, others +12 h) | gate passes (100 %); offset not bounded by the gene shifts (12.9-14.3 h); incoherence lowers c and abs(z): a lower amplitude does not separate a damped from an internally incoherent clock | `paper/exploratory/A205_partial_shift_gate/output/` |
+| Shift common to the clock genes of a sample (2026-11-10; simulation, 200 data sets per scenario) | without a clock, a common shift of sd 0.2 passes the permutation test of the unsigned coherence R in 0.625 (n 10) and 1.000 (n 40) of the data sets; the signed coherence with a per-sample offset fitted out (`decompose.signed_coherence`) passes in 0.050 and 0.035 and detects a clock in 1.000 at every shift (R: 0.690 at n 10). Earlier L1 results use R (PI question Q31) | `paper/exploratory/scouts_2026-11-10/feasibility_fetal/` (`shift_artefact.csv`) |
 
 ## 8. Not identified, not implemented
 - **Not identified without times:** absolute amplitude and phase, the host's own ageing, and per-gene waveforms.
@@ -131,5 +132,9 @@ inconclusive (A144 part 2). Resolution depends on clock UMI per cell; eligibilit
   under the model, not numerically).
 - Per-cell dispersion null: 10 permuted-acrophase planes; "D above its null" is a point comparison, not a test.
 - Covariate model: the package accepts >= 10 rows; the A19 rule of >= 30 donors is enforced by the drivers.
+- Developmental series (A237-A239, `paper/common/development.py`): log fractions are residualised gene by gene within
+  a compartment on an age polynomial, sex and assay before L1 or the gate; pseudo-clock sets receive the same
+  adjustment; L1 uses the signed coherence; the gate is compared with pseudo sets on `Gate.pairing_z` (shared
+  clock-plane covariance standardised by its pairing null).
 - `sccc.api` defaults (200 gate permutations, 200 bootstraps, 40 MDE replicates) are lower than the paper settings
   (1000, 500, 100).

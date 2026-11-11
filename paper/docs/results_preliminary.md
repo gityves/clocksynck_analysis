@@ -4159,3 +4159,112 @@ all embryos.
   cross-sectionally. Showing a running clock here needs a design in which age and clock time are crossed, or more
   than one cycle per litter age. PI question Q30.
 <!-- src: paper/exploratory/A236_embryo_running_clock/output/{h236_primary,h236_1_content,h236_1_genes,h236_1_genes_nodrift,h236_1_profiles,h236_1_arms,h236_1b_timed,h236_2_rotation,h236_3_companions,h236_3_sets,power,power_info}.csv; build $SCCC_DATA/natexp/qiu2024/genome_late/PROVENANCE.md -->
+
+## A237-A239 (scored 2026-11-11): no adult-like clock organisation detected before birth in human organs, gonad cell classes or the brain; the postnatal L1 controls all pass (every prenatal primary FAIL; H239.1 uninformative)
+
+Three open datasets, one common design (age and sex adjustment, signed coherence C for L1, stratified gate for L2,
+expression-matched and responsive pseudo-clock companions; `registered_experiments.md`, A237), registered together
+before any clock statistic (commit `11aac5c`), one scoring run each. "Adult pass rate": the feasibility on adult
+material cut to the design (alpha 0.05, no companions). Percentiles: clock statistic among 200 matched / 200
+responsive pseudo sets.
+
+**A237, Cardoso-Moreira 2019 (bulk RNA-seq, 7 organs, 4-20 wpc; postnatal samples of the same organs as control).**
+
+| readout | n | statistic | p / Holm | matched / responsive pct | adult pass rate | verdict |
+|---|---|---|---|---|---|---|
+| control, postnatal forebrain | 21 | C 0.539 | 0.0143 | 99.0 / 99.5 | 0.880 | PASS |
+| control, postnatal hindbrain | 25 | C 0.828 | 0.0001 | 100 / 100 | 1.000 | PASS |
+| control, postnatal heart | 10 | C 0.841 | 0.0001 | 100 / 100 | 0.955 | PASS |
+| control, postnatal kidney | 9 | C 0.708 | 0.0009 | 100 / 100 | 0.895 | PASS |
+| control, postnatal liver | 12 | C 0.714 | 0.0014 | 100 / 100 | 0.975 | PASS |
+| H237.1 L2, organs of one fetus, 9-20 wpc | 26 | clock share 0.071 (null mean 0.027); pairing z -0.60 | p_pairing 0.669, p_acrophase 0.008 | 7.5 / 2.5 | 0.825 | FAIL |
+| H237.2 heart, 4-20 wpc | 34 | C -0.094 | 0.444 / 1.0 | 54.0 / 58.5 | 1.000 | FAIL |
+| H237.2 liver | 37 | C 0.387 | 0.042 / 0.253 | 94.0 / 92.0 | 1.000 | FAIL (suggestive, not established; not clock-specific) |
+| H237.2 forebrain | 32 | C 0.339 | 0.058 / 0.289 | 93.5 / 89.5 | 0.965 | FAIL |
+| H237.2 hindbrain | 33 | C 0.259 | 0.129 / 0.516 | 78.5 / 80.0 | 1.000 | FAIL |
+| H237.2 kidney | 27 | C -0.350 | 0.768 / 1.0 | 20.0 / 8.5 | 1.000 | FAIL |
+| H237.2 ovary | 18 | C -0.194 | 0.571 / 1.0 | 31.5 / 34.5 | 0.940 | FAIL |
+| H237.3 4-8 wpc: heart, liver, hindbrain, kidney | 14, 16, 16, 9 | C 0.081, -0.485, 0.411, 0.121 | 0.293, 0.889, 0.040, 0.296 / Holm 1.0, 1.0, 0.278, 1.0 | hindbrain 91.0 / 97.0 | 0.990, 0.985, 0.985, 0.875 | FAIL (hindbrain: suggestive, not established; not clock-specific) |
+| H237.3 13-20 wpc: heart, liver, kidney | 9, 10, 10 | C -0.155, 0.203, 0.034 | 0.614, 0.155, 0.379 / Holm 1.0, 0.932, 1.0 | - | 0.870, 0.960, 0.870 | FAIL |
+
+- **The controls pass on unrecorded times at n 9-25.** The five postnatal controls are clock-specific (all sets
+  below the clock in four organs); leave-one-gene-out C 0.295-0.918. Postnatal testis (descriptive, adult pass rate
+  0.465): C 0.682, p 0.0026, clock-specific.
+- **H237.1 FAIL, informative within the registered limits** (adult pass rate 0.825, CI 0.765-0.875; no L2 control in
+  this dataset). The clock-plane share of the shared covariance is above its acrophase null (p 0.008) but the
+  individuals do not share it more than mis-paired ones (p_pairing 0.669), and other gene sets share more: 19.5 % of
+  matched and 19.0 % of responsive sets reach p_pairing < 0.05. Other ranges (descriptive, adult pass rates
+  0.140-0.630): p_pairing 0.393 (4-20), 0.757 (13-20), 0.423 (4-8 wpc); with the unlinked columns 0.345-0.641.
+- **H237.2 / H237.3 FAIL.** No organ survives Holm. Two unadjusted p < 0.05 (liver 4-20 wpc, hindbrain 4-8 wpc), neither
+  above the q95 of both pseudo sets: "suggestive, not established" by the registered rule. The other negatives
+  (unadjusted p >= 0.05) are informative: adult pass rates 0.870-1.000 and the control of the organ passes (ovary has
+  no control).
+- **Descriptive.** 9-20 wpc windows: C -0.270 to 0.314, p >= 0.090. Testis 4-20 wpc: C 0.157, p 0.181. With the RNA
+  quality number as a covariate: forebrain C 0.605, p 0.0044, above both companions (100th / 99.0th percentile; 26
+  of the 32 libraries have the number; leave-one-gene-out 0.358-0.715); liver C 0.418, p 0.035 (96.5 / 93.0); the
+  other organs p >= 0.103; the L2 gate at 9-20 wpc p_pairing 0.077, p_acrophase 0.0007 (pairing z 1.61; 78.5th /
+  95.0th percentile). A covariate chosen as a sensitivity: no claim, a lead for the fetal forebrain at most.
+- **Unsigned R against C in real data.** Postnatal forebrain: R 0.123, C 0.539. Prenatal heart 13-20 wpc: R 0.493, C
+  -0.155; liver 9-20 wpc: R 0.510, C -0.148. The two statistics disagree in both directions, as in the simulation.
+
+**A238, Garcia-Alonso 2022 (fetal gonad, scRNA, 50 donors, 6-21 wpf, four cell classes).**
+
+| readout | n | statistic | p / Holm | matched / responsive pct | adult pass rate | verdict |
+|---|---|---|---|---|---|---|
+| H238.1 mesenchymal-stromal | 47 | C 0.037 | 0.272 / 0.815 | 65.5 / 64.5 | 1.000 | FAIL |
+| H238.1 supporting | 46 | C -0.269 | 0.667 / 0.815 | 24.0 / 22.0 | 0.995 | FAIL |
+| H238.1 endothelial | 24 | C 0.523 | 0.014 / 0.056 | 97.5 / 98.5 | 0.930 | FAIL (suggestive, not established; clock-specific) |
+| H238.1 epithelial | 33 | C -0.038 | 0.376 / 0.815 | 52.0 / 56.5 | 0.985 | FAIL |
+| H238.2 L2, four classes of one gonad | 47 | clock share 0.049 (null mean 0.042); pairing z 1.11 | p_pairing 0.137, p_acrophase 0.312 | 19.0 / 1.5 | 1.000 | FAIL |
+
+- **H238.1 FAIL.** Endothelium is the closest: above both companions, leave-one-gene-out C 0.325-0.601, Holm 0.056.
+  Per sex and age (descriptive, adult pass rates 0.650-0.745): male C 0.447 (n 11, p 0.031), female 0.263 (n 13, p
+  0.159), from 13 wpf -0.016 (n 13, p 0.445): not carried by the later gonads. Stroma, supporting cells and
+  epithelium are informative negatives (p >= 0.272; no positive control in this dataset).
+- **H238.2 FAIL, informative.** The cell classes of one gonad share non-clock states strongly (68.5 % of matched and
+  95.0 % of responsive sets reach p_pairing < 0.05) and the clock set less than most of them. Descriptive: three
+  classes p_pairing 0.815, stromal-supporting pair 0.151; females p_pairing 0.030 with p_acrophase 0.222 (not a gate
+  pass; 39.5th / 10.0th percentile).
+
+**A239, Kang 2011 (exon arrays, 16 brain regions, 20 prenatal and 32 postnatal brains, 12 clock genes).**
+
+| readout | n | statistic | p / Holm | matched / responsive pct | adult pass rate | verdict |
+|---|---|---|---|---|---|---|
+| control L1, postnatal brain mean | 32 | C 0.756 | 0.0003 | 99.5 / 100 | 1.00 | PASS |
+| control L2, regions of one postnatal brain | 32 | clock share 0.314 (null mean 0.112); pairing z 95.10 | p_pairing 0.0001, p_acrophase 0.0036 | 95.0 / 62.0 (q95 95.03 / 122.74) | 0.98 | gate passes, not clock-specific: control not met |
+| H239.1 L2, regions of one prenatal brain | 20 | clock share 0.059 (null mean 0.070); pairing z 14.08 | p_pairing 0.0001, p_acrophase 0.535 | 30.5 / 2.5 | 0.96 | FAIL, uninformative (control L2 not met) |
+| H239.2 L1, prenatal brain mean | 20 | C -0.166 | 0.582 | 37.0 / 42.5 | 1.00 | FAIL, informative |
+
+- **Control L1 PASS, H239.2 FAIL (informative).** Trajectory of the brain mean (descriptive): 13-22 pcw C 0.047 (n
+  14, p 0.412); infancy and childhood C 0.735 (n 13, p 0.0029; 99.5th / 99.0th percentile); from 13 years C 0.663 (n
+  19, p 0.0074; 100th / 100th). With RIN as a covariate: prenatal C -0.500 (p 0.881), postnatal 0.763 (p 0.0001).
+  Unsigned R of the prenatal brains is 0.699 with C -0.166.
+- **Control L2 not met, so H239.1 is uninformative as registered.** The postnatal gate passes both permutation tests
+  but its pairing z is not above the responsive sets (62.0th percentile; 92.0th with RIN). Every pseudo set of every
+  group reaches p_pairing < 0.05 (share 1.00): the regions of a brain share any gene set (brain identity, post-mortem
+  interval, RNA quality), so the pairing statistic cannot single out the clock in this design. Post hoc reading, no
+  claim: what differs between the groups is the clock shape of the shared covariance, the clock-plane share against
+  its acrophase null: prenatal 0.059 against 0.070 (p 0.535), 13-22 pcw 0.057 against 0.078 (p 0.584), infancy and
+  childhood 0.232 against 0.082 (p 0.0078), from 13 years 0.253 against 0.104 (p 0.0079), postnatal 0.314 against
+  0.112 (p 0.0036).
+
+**Reading (as registered for A237-A239 together).** None of the three conditions that would strengthen the
+developmental claim is met: no shared state across the organs of a fetus (H237.1), no organ system passing in two
+datasets (brain: forebrain, hindbrain and the Kang brain mean all fail; gonad: ovary and the four classes fail), no
+L1 pass surviving Holm with both companions. With the L1 control passing in all six postnatal sets (five organs by
+RNA-seq, the brain by arrays), the result is: no adult-like clock organisation is detected in human prenatal organs
+at designs where adult and postnatal material pass; in the brain, the coherence across individuals is absent before
+birth and present from infancy (descriptive trajectory). The fetal adrenal of A189 stays a single observation. Not
+established but worth a replication: gonad endothelium (Holm 0.056, clock-specific), forebrain with the RNA quality
+covariate (descriptive).
+**Limits.** A negative needs clock phases that differ between individuals as they do in adults sampled in hospital
+hours: fetal clocks entrained tightly to maternal time and collected in a narrow window, or clocks of low amplitude,
+would be missed and cannot be told from no clock. The companions' cost is not calibrated; a Holm step is not in the
+feasibility (worst-rank rates in the registration). Bulk composition changes with age (smooth part removed only).
+PI question Q32.
+
+**Post hoc: A189 with the signed coherence (not a registered test).** Fetal adrenal (n 7): C 0.926 (R 0.734), p
+0.0001 (floor of 10,000 permutations), Holm over the nine compartments 0.0009, above both companions (q95 0.497
+matched, 0.478 responsive; 100th percentile of both), leave-one-gene-out minimum 0.904. The eight other
+compartments: C -0.310 to 0.321, p >= 0.129. The A189 verdicts are unchanged by the statistic.
+<!-- src: paper/exploratory/A237_fetal_organs/output/{verdicts,l1,l2,l2_pseudo,design}.csv; paper/exploratory/A238_fetal_gonad/output/{verdicts,l1,l2,l2_pseudo,design}.csv; paper/exploratory/A239_fetal_brain/output/{verdicts,l1,l2,l2_pseudo,design}.csv; paper/exploratory/scouts_2026-11-10/feasibility_fetal/output/passrates_{cm_day_sex,gonad_sextrend,kang_all}.csv; paper/exploratory/A189_fetal_within/output/h189_1_signed_posthoc.csv -->

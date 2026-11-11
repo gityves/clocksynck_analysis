@@ -6,7 +6,8 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 
 ## Open
 
-### Still with the PI (updated 2026-11-10)
+### Still with the PI (updated 2026-11-11)
+- **Q32** (below): three human fetal datasets give no adult-like clock organisation before birth (A237-A239): how the development section reads.
 - **Q31** (below): the unsigned gene coherence R reads a shift common to the clock genes as a clock; replace it by the signed coherence paper-wide?
 - **Q30** (below): the mouse embryo timing positive (A108) is not clock-specific (A236): how the paper words it.
 - **Q29** (below): which confirmation first for the Q25 headline: timed brain cohorts, living skin cohort, jet-lag data.
@@ -28,6 +29,30 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
+
+### Q32 (2026-11-11): the human developmental section after A237-A239
+
+- **Question:** three open human datasets were scored on a common registered design (age and sex adjustment, signed
+  coherence, both companions): organs of one fetus (Cardoso-Moreira, 4-20 wpc), gonad cell classes (Garcia-Alonso,
+  6-21 wpf), brain regions (Kang, 8-37 pcw). No prenatal primary readout passes; the postnatal L1 control passes in
+  all six sets (five organs and the brain, n 9-32, unrecorded times); in the brain the coherence across individuals
+  is absent before birth (C -0.166, p 0.58; 13-22 pcw 0.047) and present in infancy and childhood (C 0.735, p 0.003)
+  and from 13 years (0.663, p 0.007). Does the paper (i) state this as its developmental result ("the clock
+  organisation read by the method is not detected before birth in seven organs, four gonad cell classes and the
+  brain, and is present from infancy; the fetal adrenal of A189 is the one exception, in 7 fetuses"), (ii) move
+  development to the supplement, or (iii) first seek a replication of the adrenal positive, which needs controlled
+  access (Kildisiute 2021 and del Valle 2023, EGA: an access request, your decision)?
+- **On hold:** any further fetal amendment: the adrenal replication, a follow-up of the two leads (gonad endothelium,
+  Holm 0.056 and clock-specific; fetal forebrain with the RNA quality covariate, descriptive C 0.605, p 0.004), an L2
+  companion that works when every gene set is shared (Kang: the postnatal gate passes but is not above the
+  responsive sets, so H239.1 is uninformative as registered).
+- **Evidence:** `results_preliminary.md` (A237-A239); `A237_fetal_organs`, `A238_fetal_gonad`,
+  `A239_fetal_brain/output/verdicts.csv`. Main limit: a negative needs clock phases that differ between fetuses as
+  they do between adults sampled in hospital hours; clocks entrained tightly to maternal time and collected in a
+  narrow window, or of low amplitude, would be missed.
+- **My recommendation:** (i), worded as "not detected" with that limit, with the Kang trajectory as the figure panel
+  (same platform on both sides of birth) and the Cardoso-Moreira postnatal controls beside the prenatal organs; (iii)
+  only if you want the adrenal exception to carry weight.
 
 ### Q31 (2026-11-10): the unsigned gene coherence R and a shift common to the clock genes
 
