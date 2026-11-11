@@ -276,6 +276,46 @@ compartments' numbers, and compare groups only on quantities that do not depend 
    - donor labels permuted within blocks, the same permutations for every compartment and for the specificity
      companion (M6).
 
+**All variables** (i donor, k compartment, g gene, q stratum; backup slide or handout)
+
+| variable | description | how it is obtained |
+|---|---|---|
+| *data* | | |
+| y_ig | log fraction of clock gene g, log(count / genome-wide depth), centred over genes | measured |
+| w_kg | gene weight, 1/(1/μ_kg + α), μ_kg the median count, α = 0.05 | formula, per compartment |
+| L_k | 2 × G projector on the clock plane (weighted least squares on the waveform X) | formula from w_k and X |
+| β_ik | clock-plane state of the pseudobulk, L_k y_i | formula (projection) |
+| V_ik | its measurement covariance (2 × 2), L_k diag(1/count) L_kᵀ | formula (delta method, Poisson) |
+| *step 1: host (EM on the anchors)* | | |
+| μ_k | anchor's mean state (one per stratum) | EM, M-step |
+| z_k | anchor's loading on the host (complex: amplitude and turn), z_ref = 1 | EM, M-step |
+| σ_k² | anchor's own noise (variance per coordinate, beyond V_ik) | EM, M-step |
+| Σ_f | host spread over donors, prior covariance of f_i (2 × 2) | EM, M-step: mean(f̂ f̂ᵀ + S) |
+| f̂_i | donor's host state, posterior mean | EM, E-step |
+| S_i | its posterior covariance (2 × 2) | EM, E-step |
+| *step 2: readout (per compartment, on the host; anchors on their leave-one-out host)* | | |
+| μ_{k,q} | compartment's mean state per stratum | WLS on f̂ |
+| ẑ_k, cov ẑ | loading and its sampling covariance | WLS on f̂ |
+| σ²_ML | own noise, maximum likelihood | alternated with the WLS (Fisher scoring) |
+| *derived (formulas from the readout)* | | |
+| \|z_k\|² (`z2`) | shared amplitude squared, debiased | \|ẑ\|² − tr cov ẑ, floored at 0 |
+| σ_k² (`psi`) | own noise, debiased | σ²_ML + p/(m − p)(σ²_ML + v̄) |
+| V | host spread over k's donors | tr(cov f̂ + mean S) |
+| c_k (`coupling`) | share of k's clock variance carried by the host | \|z\|²V / (\|z\|²V + 2σ²) |
+| rel. amplitude (`rel_amplitude`) | k's clock swing relative to the others | \|ẑ_k\| over the geometric mean of all compartments' (or over the reference's) |
+| offset (`offset_h`) | k's phase relative to the others, h (> 0: advanced) | arg ẑ_k minus the circular mean (or the reference's), × 24/2π |
+| own amplitude (`own_amplitude`) | k's total clock swing, shared + own | √(\|z\|²V + 2σ²) |
+| host phase, radius (`phase_h`, `radius`) | angle and distance of f̂_i around the cohort mean | formula from f̂_i |
+| boundary (`boundary_type`) | estimate at a boundary: c a lower bound (psi_floor) or loading at noise level (z2_truncated) | rule on σ²_ML and \|z\|² |
+| intervals (`*_lo`, `*_hi`) | 95 % ranges | donor bootstrap, host refitted |
+| *group contrasts (`Dataset.contrast`)* | | |
+| Δc (`d`) | c_case − c_ref, host fitted on pooled anchors | formula, per group readout |
+| V0 | common spread: V on the pooled donors | formula |
+| Δc* (`d_star`) | Δc with each group's \|z\|², σ² at V0 | formula |
+| log ratios (`log_z2_ratio`, `log_psi_ratio`) | what changed: shared amplitude or own noise | formula |
+| offset difference (`offset_diff_h`) | phase shift between groups, h | arg(z_case / z_ref) × 24/2π |
+| p values | against group labels permuted within blocks, host fixed | permutation |
+
 **How c and V are obtained** (per compartment k, `host.on_host`; speaker notes or a backup slide)
 1. *Regression.* β_ik = μ_{k,q} + z_k f̂_i + e_ik over k's donors, weighted least squares with weights
    (σ_k² I + V_ik)⁻¹, alternating with the ML σ_k² (Fisher scoring) until both are stable. Gives ẑ_k, its 2 × 2
