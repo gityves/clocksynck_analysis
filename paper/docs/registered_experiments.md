@@ -5215,3 +5215,102 @@ cause of death and tissue handling; 4 of the 20 prenatal brains are at 8-12 pcw 
 group is essentially 13-22 pcw; 12 genes instead of 14; cell composition changes with age within a region (age
 adjustment only). **Stop rule:** one scoring run; regions, groups, covariates, strata and families fixed here
 (`FAMILIES` in the script). **Code:** `paper/exploratory/A239_fetal_brain/scripts/score_a239.py`.
+
+## A240 (2026-11-11, user: "it would be very unlikely for human foetus that the collection time are very synchronized ... Register the two others"; a calibration on adult material, post hoc with respect to A237-A239, whose results are all seen; written before any adult pass rate at a reduced amplitude or in a narrower window is computed, except the code check of the script (3 subsamples per readout at scales 1, 0.5 and 0 and in both windows, `output/*_check.csv`: no pass at scale 0 in any readout)): how small, or how synchronised, would a fetal clock have to be to stay undetected in A237-A239? **Amplitude and collection-window bound; adult material at the fetal designs; secondary (development section)**
+**Why.** The negatives of A237-A239 read "no adult-like clock organisation detected" because the feasibility used
+adult clocks at adult amplitude, with adult donors who died at 08-18 h. Two alternatives were left open (limits of
+A237): a fetal clock of lower amplitude, and fetal clock phases closer to each other than adult ones in such a window.
+This amendment turns each informative negative into a number: the largest clock, relative to the adult one, that the
+design would have missed.
+**Data and design (fixed).** No fetal expression value is read. The registered feasibility runs are repeated on the
+same subsamples and seeds (`scouts_2026-11-10/feasibility_fetal`: `passrates_cm_day_sex.csv`,
+`passrates_gonad_sextrend.csv`, `passrates_kang_all.csv`), with the adult clock scaled: in every tissue or cell class
+of the adult pool, the clock-plane state of each sample, centred over the pool, is multiplied by a
+(`clocksync.simulate.scale_clock`, added for this purpose, clocksync 721115e; counts by binomial thinning, arrays in
+log2 intensity). Grid a = 1, 0.75, 0.5, 0.35, 0.25, 0.15, 0. Pass = the registered permutation test at alpha 0.05 on
+the adjusted data (500 permutations), without Holm and without companions, as in the feasibility. 200 subsamples per
+readout and scale (Kang RNA-seq arm: the first 100 are the registered ones). Seed 240 for the thinning.
+- *Readouts (21):* H237.1 `organs:9-20wpc`; the six H237.2 and the seven H237.3 L1 readouts; the four H238.1 classes
+  and H238.2 `classes4:all` (adult breast nuclei, thinned to the fetal depths); H239.2 `brain_mean:prenatal` (GTEx
+  brains, 12 genes). H239.1 is left out (its postnatal control was not clock-specific).
+- *Array arm:* the 32 postnatal brain means of Kang 2011 (the passed L1 control of A239), 20 per subsample (the
+  prenatal n), registered adjustment, clock scaled in log2 intensity: the bound on the platform of the prenatal
+  negative.
+- *Window arm (the user's question):* the 13 Cardoso-Moreira L1 readouts at a = 1 with the adult pool restricted to
+  GTEx deaths at 08-14 h (177 donors; 12 readouts with a pool >= 1.5 x the fetal n: all but kidney 4-20 wpc) and at
+  08-12 h (113 donors; 10 readouts: also without liver and hindbrain 4-20 wpc), against the registered 08-18 h (294
+  donors).
+**Readouts of the amendment (no pass / fail; a calibration).**
+- **a80** per readout: the smallest a of the grid with a pass rate >= 0.8 at it and at every larger a. Statement
+  licensed for a negative readout whose control passed: "an adult-organised clock of at least a80 times the adult
+  between-individual clock variation would have been detected in 8 of 10 such cohorts". Reported with the pass-rate
+  curve and its exact 95 % CI; a50 beside it.
+- **Window:** pass rate per readout at 08-14 h and 08-12 h against 08-18 h.
+- Descriptive: `below_obs`, the share of adult subsamples whose statistic is at or below the fetal C already scored
+  (A237-A239 `l1.csv`), per scale, and a_excl, the smallest a with `below_obs` <= 0.05 at it and at every larger a;
+  `kept`, the share of the clock-gene counts left after thinning.
+**Checks (stop the reading of a readout if they fail).** At a = 1 every subsample reproduces the registered pass /
+fail (the script stops otherwise). At a = 0 no clock-plane variation is left beyond counting noise, so the pass rate
+must be at or below the nominal 0.05 (the plane is emptier than chance); if it exceeds 0.05 the scaling has failed for
+that readout and its bound is not reported.
+**Reading.** a is a bound on the product (amplitude) x (spread of phases between individuals), relative to adults
+dying at 08-18 h (breast donors: unrecorded times; GTEx brains: any hour): a clock at full amplitude with phases half
+as spread, and a clock of half the amplitude with adult spread, are the same point of the curve. The window arm
+separates the two partly: if the pass rates hold at 08-12 h, a collection restricted to a morning theatre list does
+not explain the negatives. The suggestive readouts (liver 4-20 wpc, hindbrain 4-8 wpc, gonad endothelium) get curves
+but no bound claim: they are not negatives. No readout of this amendment makes a fetal negative a positive or the
+reverse; the outcome changes one sentence of the limits ("a fetal clock below a80 of the adult one is not excluded").
+**Limits.** (1) Conservative by construction, by an unknown margin: the scaling removes the non-clock variation of
+the clock plane together with the clock (a real clock of relative size a would sit on the full in-plane noise, which
+the coherence counts in its favour), and thinning removes counts (`kept`). The pass rate at a is a lower bound of the
+detection rate of a clock of relative size a, and a80 an upper bound of the smallest detectable clock; `below_obs`
+is biased the same way. (2) Adult tissues, stand-ins and depths; fetal
+waveform assumed to be the GTEx one. (3) The companions are not calibrated. (4) GTEx time of death is not a
+collection time, and a 4-6 h window of deaths still holds chronotype spread; the true fetal collection protocols
+were not checked. (5) Array subsamples overlap (20 of 32 brains): their CI is not valid. (6) a_excl uses the fetal
+statistics already seen and is descriptive.
+**Stop rule:** one run; grid, readouts, windows and criteria fixed here. **Code:**
+`paper/exploratory/A240_fetal_amplitude/scripts/amplitude_bound.py`.
+
+## A241 (2026-11-11, user: "Register the two others"; written before any clock statistic of an organ x adrenal pair is computed in Cao 2020; seen: A189 (the adrenal is the one L1 positive: this is why it is chosen as host, post hoc), A190, A181 and the archive A107b free-host gates on the same fetuses (not estimable or failed), A237-A239, the sample sheet, the adult calibration below, the adrenal marker fractions of the other organs (median 0.001-0.016 of the adrenal's, maximum 0.077) and a dry run of the script on one expression-matched pseudo gene set): do the organs of a human fetus share the clock state of its adrenal? **Cao 2020, sci-RNA-seq3, the 7 fetuses with an adrenal (89-122 days); secondary (development section)**
+**Why.** The fetal adrenal is the only compartment with a clock-specific order of the clock genes (A189). If the
+adrenal clock runs and other organs follow it (or the same maternal cue), the clock state of an organ should covary
+with that of the adrenal of the same fetus even where the organ alone shows nothing at L1 (3-6 fetuses). A181 asked
+this with a free host and could not estimate it; here the host is fixed to the compartment known to carry a clock.
+**Data and design (fixed).** Genome-wide whole-organ pseudobulks (`natexp/cao2020/genome/pseudobulk_organ.h5ad`), >=
+1,000 cells, fetuses with an adrenal pseudobulk (7). 14 clock genes, GTEx waveform. Host-restricted gate,
+`Dataset.gate(targets=organs, hosts=["Adrenal"], min_shared=3)`: only organ x adrenal cross-covariances; pairing null
+= the fetuses of each organ permuted; 10,000 permutations; p = the larger of p_pairing and p_acrophase. No age
+adjustment (3-6 fetuses per organ; an age-driven shared programme is caught by the companions). Seed 241.
+- **H241.1 (L2, the only hypothesis):** `organs6`: lung (6 fetuses with an adrenal), heart (4), liver (4), cerebellum
+  (3), cerebrum (3), muscle (3): 23 organ pseudobulks, 6 organ x adrenal pairs. The organs are those with an adult
+  stand-in in the calibration; `min_shared` 3 is the variant with the highest adult pass rate at the fetal depths
+  (below).
+- *Companions (both required):* 200 expression-matched and 200 responsive pseudo-clock sets, same gate (1,000
+  permutations, same seed), compared on `pairing_z`; clock-specific: above the q95 of both.
+- *Adrenal RNA (required; A190 lesson):* per fetus and organ, the fraction a of adrenal cortex marker counts (STAR,
+  CYP11A1, CYP17A1, CYP21A2, CYP11B1, NR5A1) relative to the adrenal of the same fetus (an upper bound); the expected
+  adrenal-derived clock-gene counts are subtracted and the gate is rerun (`organs6:corrected`).
+- **PASS:** p < 0.05, clock-specific, and p < 0.05 on the corrected counts. p < 0.05 without clock-specificity: "not
+  clock-specific". p < 0.05 lost after correction: "not shown (adrenal RNA)".
+**Power first (done, `output/passrates.csv`; 200 subsamples, 500 permutations).** Each of the 7 fetuses is stood for
+by one GTEx donor (death at 08-18 h) with an adrenal and the stand-in organs of that fetus (frontal cortex BA9 for
+cerebrum, left ventricle, skeletal muscle), thinned to the fetal depths. Adult pass rates: `min_shared` 3: 0.140 (95
+% CI 0.095-0.196); 4: 0.125; 5 (lung only): 0.060; unthinned 0.130, 0.135, 0.065. p_acrophase < 0.05 in 0.98 of the
+subsamples and p_pairing < 0.05 in 0.14 (`min_shared` 3): the shape is seen, the pairing of 7 individuals is not.
+**The design is not powered: an adult clock shared with the adrenal would be missed in 6 of 7 such cohorts.** It is
+registered and scored once all the same, at the user's request, with the reading fixed in advance.
+**Descriptive (no pass / fail):** `organs6+placenta` (placenta 5 fetuses; marker correction not valid there: the
+placenta expresses CYP11A1), with companions; one organ at a time (`only:<organ>`); the lung on log fractions
+residualised on a linear age trend within organ (`only:Lung:age`); the marker fractions. Phase offsets of the organs
+against the adrenal are estimated only in a later amendment, and only if H241.1 passes.
+**Reading.** Fail (expected in 86 % of adult-like cohorts): uninformative, never "the organs do not follow the
+adrenal"; the question stays open and needs more fetuses with an adrenal. PASS: suggestive evidence that organs of a
+mid-gestation fetus share a clock-specific state with its adrenal; one cohort, 7 fetuses, a host chosen after A189:
+to the PI before any use, and a replication cohort becomes necessary. Not clock-specific or lost after correction: a
+shared non-clock state or adrenal RNA, reported as such.
+**Limits.** 7 fetuses; organs of one fetus share dissociation, batch and RNA quality (companions); the host was
+chosen after seeing A189; the same 7 adrenals enter every pair, so the pairs are not independent (the permutation
+null accounts for it); adult stand-ins at 08-18 h; no age adjustment in the primary.
+**Stop rule:** one scoring run; organs, `min_shared`, companions and correction fixed here (`TESTS`, `FAMILIES` in
+the script). **Code:** `paper/exploratory/A241_fetal_adrenal_host/scripts/{feasibility_a241.py,score_a241.py}`.
