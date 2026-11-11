@@ -175,4 +175,53 @@ EM (SQUAREM) on the anchor compartments gives each donor's host state; each comp
 
 ## M5. Simulation: known parameters recovered
 
-To write. Then the pseudo-clock companion (A150 as the example) before the results.
+To write.
+
+## M6. Pseudo-clock companion: is the coupling specific to clock genes?
+
+**Message:** coupling measures what a compartment shares with its donor's host, and a donor's compartments share more
+than a clock. The same pipeline is run on expression-matched non-clock genes; a coupling is called clock-specific
+only above theirs (Δc = c_clock − c_pseudo).
+
+**Bullets** (in the order of the figures)
+1. *Figure A, why it is needed.* Genotype (eQTL), sex, age, agonal state, ambient RNA: anything shared by a donor's
+   compartments moves the 14 clock genes too, and its share in the clock plane is read as coupling. In simulation, a
+   compartment with its own, unshared clock reads c ≈ 0 without such donor effects, and c 0.32 (median of 5) with a
+   donor effect of sd 0.3 on log expression, while the gate still passes (4 of 5 runs at sd 0.3; the anchors share a
+   clock). The gate is pooled
+   over pairs; the readout is per compartment and is not protected by it.
+2. *Figure B, the companion.* Pseudo-clock sets: 14 non-clock genes matched to the clock genes on mean expression
+   (quantile bins), given the clock genes' amplitudes and acrophases (`paired.pseudo_waveforms`), each run through the
+   same projection, host fit and readout. Registered test (A150, 5 atlases, 53 compartments): mean coupling 0.393
+   with clock genes against 200 pseudo sets, mean 0.242, 95th percentile 0.313; p 0.010.
+3. *Figure C, per family.* Above the pseudo 95th percentile: fibroblast 0.670 (pseudo median 0.302), endothelial
+   0.520 (0.187), epithelial 0.517 (0.265), myeloid 0.328 (0.148). Not distinguishable from pseudo-clocks: lymphocyte
+   0.069 (0.071), mural 0.613 (0.401, q95 0.705), parenchyma and neuron (one compartment each, wide q95).
+
+**Visual:** three one-panel figures (`scripts/companion.py`, 150 × 120 mm each).
+- `figures/companion/companion_A.png`: simulated (30 donors × 4 compartments, deaths 08-18 h, anchors fibroblast and
+  endothelial, 5 seeds per value): coupling against the sd of donor effects shared by all compartments; a shared clock
+  (hepatocyte, c ≈ 0.5 throughout) and an unshared clock (lymphocyte, 0.01 at sd 0 → 0.32 at sd 0.3).
+- `figures/companion/companion_B.png`: A150 histogram of 200 pseudo-set means, the clock-gene mean, the 95th
+  percentile.
+- `figures/companion/companion_C.png`: A150 per family: clock-gene median (diamond, filled above the pseudo 95th
+  percentile) and the pseudo median-to-95th-percentile range (grey).
+
+**Speaker notes**
+- Where it is used: on the readouts mostly (A150 coupling; pairing and offsets in A227-A229, A187); on the gate's
+  `pairing_z` in the developmental series (A237-A239). It is run by the paper's drivers, not inside `Dataset.gate`.
+- It is conservative: pseudo genes carry no rhythm, so their coupling is all donor sharing; clock genes carry both.
+  A compartment below the pseudo q95 is "not clock-specific at this design", not "uncoupled".
+- Example in real data: tumour B / plasma cells pair with the patient's normal tissue (pairing 0.420 vs 0.338,
+  p 0.010) but pseudo sets pair as much (q95 0.465): pairing without clock specificity (A227 H227.3).
+- Two constructions exist: A150 and A159 differ in pseudo-set construction (myeloid Δc 0.180 on A150, about 0.07 on
+  A159); quote each with its method.
+- A responsive companion (glucocorticoid and immediate-early genes, `kind="responsive"`) asks whether a shared pulse
+  would move as much as the clock genes.
+
+<!-- src: A150: paper/exploratory/A150_atlas_specificity/output/{h150_1.csv,pseudo_pooled.csv,per_family.csv}
+(class-fixed rerun, results_preliminary.md "Reruns of possibly stale results"); A227: results_preliminary.md H227.3;
+A159 vs A150: same rerun entry; simulation: printed by scripts/companion.py; pseudo sets: clocksync paired.py
+(pseudo_waveforms), _core/controls.py (pseudo_clock_genes) -->
+
+Then the results.
