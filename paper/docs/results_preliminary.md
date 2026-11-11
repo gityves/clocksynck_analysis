@@ -4296,3 +4296,47 @@ calibration before any organ x adrenal statistic (commit `fb27d58`), one scoring
   fetuses with an adrenal and other organs than any open dataset holds (Cao: 7).
 - Code `paper/exploratory/A241_fetal_adrenal_host/scripts/{feasibility_a241.py (637 s), score_a241.py (1,664 s)}`.
 <!-- src: paper/exploratory/A241_fetal_adrenal_host/output/{verdicts,l2,l2_pseudo,contamination,design_fetal,passrates,design}.csv -->
+
+## A240 (scored 2026-11-11): the fetal negatives exclude a clock of 0.75 to 1 times the adult one, not a smaller one; a 4 h window of collection does not explain them
+
+Adult material at the fetal designs of A237-A239 (same subsamples and seeds as the registered feasibility), with the
+adult clock scaled by a (`clocksync.simulate.scale_clock`) or the GTEx pool restricted to deaths in a narrower window;
+no fetal expression value is read. A calibration without pass / fail, registered before any scaled or windowed pass
+rate (commit `fb27d58`), one run. 200 subsamples per readout and setting, 500 permutations, alpha 0.05.
+
+- **Checks met.** At a = 1 every subsample reproduces the registered pass / fail (0 differing of 200 in the 14
+  Cardoso-Moreira and the 5 gonad readouts, 0 of 100 in the Kang RNA-seq readout). At a = 0 the pass rate is 0.000 in
+  all 21 readouts.
+- **a80 (smallest a detected in >= 0.8 of the cohorts at it and above): 0.75 in 11 readouts, 1.0 in 10.** Of the 18
+  negatives: 0.75 in 9 (heart 4-20 and 4-8 wpc, liver 4-8 wpc, hindbrain 4-20 wpc, kidney 4-20 wpc, the L2 of the
+  organs of one fetus, gonad stroma, the L2 of the gonad classes, prenatal brain mean on RNA-seq; pass rates at 0.75:
+  0.830-0.995) and 1.0 in 9 (heart, liver and kidney 13-20 wpc, kidney 4-8 wpc, forebrain and ovary 4-20 wpc, gonad
+  supporting and epithelial classes, brain mean on the Kang arrays; pass rates at 0.75: 0.365-0.715). a50 is 0.75 in
+  17 readouts, 0.5 in 2 (heart 4-20 wpc, L2 organs) and 1.0 in 2 (forebrain, arrays).
+- **Below 0.75 the designs are blind.** Pass rate at a = 0.5: 0.000-0.745 (median 0.200; below 0.5 in 19 of 21
+  readouts, the exceptions being heart 4-20 wpc, 0.745, and the L2 of the organs, 0.675); at a = 0.35: at most 0.110;
+  at a = 0.25: at most 0.005.
+- **On the platform of the prenatal brain negative (Kang arrays, 20 of the 32 postnatal brains):** 0.950 at a = 1,
+  0.365 at 0.75, 0.000 at 0.5.
+- **Window arm: restricting the adult deaths to 08-14 h or 08-12 h costs nothing.** 08-14 h (177 donors, 12
+  readouts): pass rates 0.865-1.000, difference to the registered 08-18 h window -0.055 to +0.080 (median 0.000);
+  08-12 h (113 donors, 10 readouts): 0.895-1.000, difference 0.000 to +0.085 (median +0.020). The median coherence
+  changes by -0.073 to +0.054 and -0.061 to +0.049.
+- **Descriptive.** Share of the clock-gene counts kept by the thinning, a = 0.75 to 0: 0.90-0.69 (organs), 0.81-0.48
+  (gonad stand-ins), 0.92-0.73 (GTEx brain). a_excl (smallest a at which <= 0.05 of the adult subsamples fall at or
+  below the fetal C): 0.25 (liver 4-8 wpc) to 1.0 (forebrain 4-20 wpc, hindbrain 4-8 wpc). The three suggestive
+  readouts sit inside the adult distribution at a reduced or full clock: share of adult subsamples at or below the
+  fetal C, liver 4-20 wpc 0.765 at a = 0.5; hindbrain 4-8 wpc 0.200 at 0.75; gonad endothelium 0.660 at 0.75 and
+  0.140 at 1 (no a_excl). No bound is claimed for them.
+- **Reading (as registered).** The informative negatives of A237-A239 exclude, in 8 of 10 such cohorts, a clock
+  organised as in adults whose between-individual variation is at least 0.75 (9 readouts) or 1.0 (9 readouts) times
+  the adult one; a clock of half the adult size would mostly have been missed and is not excluded. a bounds
+  (amplitude) x (phase spread between individuals), but the adult rates hold in a 4 h window of deaths, so a
+  collection restricted to a morning list does not explain the negatives; a lower amplitude, or phases more alike
+  between fetuses than between adults at one clock time, stay open. No fetal verdict changes.
+- **Limits (registered).** Conservative by construction, by an unknown margin (the scaling removes the non-clock
+  variation of the clock plane with the clock; thinning removes counts): the pass rate at a is a lower bound of the
+  detection rate, a80 an upper bound of the smallest detectable clock. Adult stand-ins and waveform; companions not
+  calibrated; GTEx time of death is not a collection time; the array subsamples overlap (CI not valid).
+- Code `paper/exploratory/A240_fetal_amplitude/scripts/amplitude_bound.py` (6,091 s, 8 workers).
+<!-- src: paper/exploratory/A240_fetal_amplitude/output/{bound,curve,check_cm,check_gonad,check_kang}.csv; verdicts of A237-A239: A237_fetal_organs, A238_fetal_gonad, A239_fetal_brain/output/verdicts.csv -->

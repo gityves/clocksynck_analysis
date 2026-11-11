@@ -7,7 +7,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 ## Open
 
 ### Still with the PI (updated 2026-11-11)
-- **Q32** (below): three human fetal datasets give no adult-like clock organisation before birth (A237-A239): how the development section reads.
+- **Q32** (below): three human fetal datasets give no adult-like clock organisation before birth (A237-A239): how the development section reads. Updated with the size of the clock the negatives exclude (A240), A241 and the open adrenal data.
 - **Q31** (below): the unsigned gene coherence R reads a shift common to the clock genes as a clock; replace it by the signed coherence paper-wide?
 - **Q30** (below): the mouse embryo timing positive (A108) is not clock-specific (A236): how the paper words it.
 - **Q29** (below): which confirmation first for the Q25 headline: timed brain cohorts, living skin cohort, jet-lag data.
@@ -53,6 +53,20 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **My recommendation:** (i), worded as "not detected" with that limit, with the Kang trajectory as the figure panel
   (same platform on both sides of birth) and the Cardoso-Moreira postnatal controls beside the prenatal organs; (iii)
   only if you want the adrenal exception to carry weight.
+- **Update 2026-11-11 (A240, A241; nothing new on hold).** (a) *What the negatives exclude* (A240, adult material
+  at the fetal designs with the clock scaled): a clock organised as in adults of at least 0.75 (9 of the 18
+  negatives) or 1.0 (9) times the adult between-individual variation would have been seen in 8 of 10 such cohorts; a
+  clock of half the adult size is detected in 0.000-0.745 of them (median 0.200) and is not excluded. The bound is
+  conservative by construction. Adult pass rates are unchanged when the deaths are restricted to 08-14 h or 08-12 h
+  (0.865-1.000): a narrow collection window does not explain the negatives. Proposed wording for (i): "no clock of
+  adult size and organisation is detected before birth; a clock below about three quarters of the adult one is not
+  excluded". (b) *Adrenal as host inside Cao 2020* (A241): fails and is uninformative (adult pass rate 0.140 at 7
+  fetuses); it says nothing on which organs follow the adrenal. (c) *Option (iii) needs less than stated above:*
+  the processed fetal adrenal object of Kildisiute 2021 is open (7 samples, w8-w21), as are Kameneva 2021
+  (GSE147821, 13 samples, weeks 6-14) and Dong 2020 (GSE137804, 6 samples); only the raw reads and del Valle 2023
+  are behind EGA (EGAD00001008345). Few samples lie in the age range of the Cao adrenals (12.7-17.4 weeks); a
+  replication would be a new amendment with its own power calculation, not registered. Links:
+  `scouts_2026-11-10/FETAL_SCOUT.md` (addendum).
 
 ### Q31 (2026-11-10): the unsigned gene coherence R and a shift common to the clock genes
 
