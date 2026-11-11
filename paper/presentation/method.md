@@ -253,10 +253,12 @@ deaths 08-18 h; anchors fibroblast, endothelial, smooth muscle; 500 bootstraps).
 compartments' numbers, and compare groups only on quantities that do not depend on the sampling window.
 
 **Bullets**
-1. *Per donor: the host state* f̂_i (with S_i), a point in the clock plane: its phase is the donor's internal time,
-   up to one constant for the whole cohort (in the frame of the reference anchor); its radius is not an amplitude
-   (shrunk by the prior). Used as the regressor of every compartment, and in aggregate only: the host spread V, the
-   coverage of the day (Rayleigh R of host phases), and validation against a recorded time where one exists.
+1. *Per donor: the host state* f̂_i (with S_i), a point in the clock plane (units of the reference anchor, centred over
+   donors). Its position orders the donors along their internal time; its angle (`phase_h`) is measured around the
+   cohort's mean, so it reads as a clock time, up to one constant, only when the cohort covers the day (under hospital
+   hours the centre lies inside the arc). Its radius is not an amplitude (shrunk by the prior). Used as the regressor
+   of every compartment, and in aggregate only: the host spread V, the coverage of the day (Rayleigh R of host
+   phases), and validation against a recorded time where one exists.
 2. *Per compartment k*, from β_ik = μ_k + z_k f̂_i + e_ik:
 
    | output | symbol | read as | used for |
@@ -274,8 +276,39 @@ compartments' numbers, and compare groups only on quantities that do not depend 
    - donor labels permuted within blocks, the same permutations for every compartment and for the specificity
      companion (M6).
 
-**Visual:** the table of bullet 2 on the slide (five rows), the formula of c above it; to the right `figures/fit/fit_C.png`
-(c against the truth), or a clock face of the offsets and amplitudes. Bullet 3 can be its own line under the table.
+**How c and V are obtained** (per compartment k, `host.on_host`; speaker notes or a backup slide)
+1. *Regression.* β_ik = μ_{k,q} + z_k f̂_i + e_ik over k's donors, weighted least squares with weights
+   (σ_k² I + V_ik)⁻¹, alternating with the ML σ_k² (Fisher scoring) until both are stable. Gives ẑ_k, its 2 × 2
+   covariance cov ẑ, and σ²_ML. The regressor is the posterior mean f̂_i, not a noisy point estimate: regressing on
+   E[f | anchors] leaves the slope unattenuated (regression calibration), as long as k is not in the host (hence the
+   leave-one-out host for anchors).
+2. *Signal.* |z_k|² = |ẑ_k|² − tr cov ẑ, truncated at 0. |ẑ|² overestimates |z|² by its sampling variance
+   (E|ẑ|² = |z|² + tr cov ẑ); after truncation a 0 means "loading at noise level" (`boundary_type` z2_truncated).
+3. *Own noise.* σ_k² = σ²_ML + p/(m − p)·(σ²_ML + v̄), with p the number of regression parameters (2 per stratum
+   intercept + 2 for z), m = 2 × donors the number of observations, v̄ the mean measurement variance. The ML residual
+   variance is low by p/m of the total residual, and all of it falls on σ² because V_ik is known. σ²_ML at its floor:
+   c is a lower bound (`boundary_type` psi_floor).
+4. *Host spread over k's donors.* V = tr( cov(f̂_i) + mean_i S_i ), f̂ centred within strata, over the donors that
+   have compartment k. Law of total variance: Var f = Var E[f | data] + E Var[f | data]; cov f̂ alone is too small
+   because the prior shrinks f̂, and mean S puts back what the shrinkage removed. V is per compartment because each
+   compartment has its own donors.
+5. *Coupling.* The variance of k's clock state in the plane splits into tr(z_k Σ z_kᵀ) = |z_k|² V (z is a rotation
+   times a scale) and tr(σ_k² I) = 2σ_k²; measurement noise V_ik is excluded:
+   c_k = |z_k|² V / (|z_k|² V + 2σ_k²).
+6. *Gauge.* The host's scale and rotation are fixed only by the reference (z_ref = 1). Replacing f by a·f changes z to
+   z/a and V to |a|²V: |z|² V, and so c, do not change. |z| and arg z are reported relative to the reference (or the
+   mean over compartments). In `Fit.table`, z2 and V of an anchor are on its leave-one-out host (another gauge):
+   only their product is comparable across rows (in the simulation fibroblast z2 1.90, V 0.264; others V ≈ 0.51).
+7. *Intervals.* Donor bootstrap, the host refitted in every replicate, all five steps repeated.
+
+**Visual:** `figures/outputs/outputs.png` (`scripts/outputs.py`, wide; the simulated fit of M4, point estimates):
+- left, *per donor*: the host states f̂_i with S_i (1 SD), one highlighted; dashed: cov f̂ + mean S at 1 SD; its trace
+  is V (0.51);
+- middle, *per compartment* (macrophage): the data, the host pattern (grey, z = 1) and the fitted z_k f̂ (blue), the
+  host pattern turned by arg z_k (+2.7 h) and scaled by |z_k| (0.62); arrows z = 1 and z_k from μ_k; dotted σ_k;
+- right, *coupling*: per compartment, |z_k|²V (colour) and 2σ_k² (grey) stacked; c is the coloured share
+  (fibroblast 0.89, endothelial 0.86, smooth muscle 0.86, hepatocyte 0.93, macrophage 0.64, lymphocyte 0.00).
+The table of bullet 2 can sit under it, or replace bullet 2 on the slide; bullet 3 as one line.
 
 **Speaker notes**
 - Constant offsets are not identified: the absolute phase of the host is set by the reference anchor, so a single
