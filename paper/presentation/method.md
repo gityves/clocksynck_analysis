@@ -151,6 +151,10 @@ deaths 08-18 h, 1,000 permutations).
   decoupled clocks.
 - In A145, the gate passed 4 of 30 no-clock replicates (0.133; H145.3 fail): the gate alone is not a specificity
   guarantee; the pseudo-clock companion (after the readout) is the second check.
+- The pseudo-clock companion is not inside `Dataset.gate`: it is run by the paper's drivers (`paired.pseudo_waveforms`:
+  expression-matched non-clock genes given the clock genes' amplitudes and acrophases), mostly on the readouts (A150
+  coupling; pairing and offsets in A227-A229, A187), and on the gate itself in some amendments (A237-A239: gate
+  `pairing_z` against pseudo sets).
 
 **Limits**
 - Needs several donors sharing compartments (A181: the design, not depth, limited the fetal data).
