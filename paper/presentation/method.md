@@ -170,8 +170,63 @@ v154_1_n0.csv, n1_map.csv; A181_fetal_depth/output/v181_1_passrates.csv) -->
 
 ## M4. Fit: host by EM on anchors, then every compartment read against it
 
-EM (SQUAREM) on the anchor compartments gives each donor's host state; each compartment is then regressed on it (z,
-σ², c, |z|, arg z; anchors on their leave-one-out host; donor bootstrap with the host refitted). To write.
+**Message:** two steps. The anchors define each donor's host clock state; every compartment is then read against
+it. The host is never fitted on the compartments being tested, so a disrupted target cannot pull it.
+
+**Model** (M2): β_ik = μ_k + z_k f_i + e_ik, with f_i ~ N(0, Σ_f), e_ik ~ N(0, σ_k² I + V_ik), z_ref = 1.
+
+**Bullets** (in the order of the figures)
+1. *Figure A, step 1: the host, by EM on the anchors only.* f_i is latent, so the fit alternates:
+   - E-step: given the parameters, each donor's host posterior is Gaussian, mean f̂_i and covariance S_i (closed
+     form, pooling all of that donor's anchors, each weighted by (σ_k² I + V_ik)⁻¹);
+   - M-step: given those moments, μ_k and z_k by weighted least squares, then σ_k², and Σ_f = mean(f̂ f̂ᵀ + S);
+   - exact likelihood, accelerated by SQUAREM. Anchors are learned (A17: stromal-vascular; neurons in CNS).
+2. *Figure B, step 2: the readout, a regression on the host.* Each compartment k, anchor or not:
+
+   $$\beta_{ik} = \mu_{k,q} + z_k\,\hat f_i + e_{ik}$$
+
+   weighted least squares with one intercept per stratum q (σ_k² iterated). An anchor is read on the host fitted
+   without it (leave-one-out, needs ≥ 3 anchors), so its own noise does not enter its regressor.
+3. *Figure C, the outputs*, with 95 % donor-bootstrap intervals (the host refitted in every replicate):
+
+   $$c_k = \frac{|z_k|^2 V}{|z_k|^2 V + 2\sigma_k^2},\qquad V = \mathrm{tr}\big(\mathrm{cov}(\hat f) + \overline{S}\big)$$
+
+   coupling c (share of k's clock variation carried by host time), relative amplitude |z_k| and offset arg z_k
+   (reported relative to the mean over compartments, or to a reference). Small-sample corrections: |z|² minus
+   tr cov(ẑ), σ² raised by the regression's degrees of freedom.
+
+**Visual:** three one-panel figures (`scripts/fit.py`, simulated, 150 × 120 mm each; 40 donors × 6 compartments,
+deaths 08-18 h; anchors fibroblast, endothelial, smooth muscle; 500 bootstraps).
+- `figures/fit/fit_A.png`: the host f̂_i with 2 SD posterior ellipses, coloured by the true sampling hour (not used
+  by the method): the host orders the donors along the arc of their hours.
+- `figures/fit/fit_B.png`: observed β (centred) against the fitted z_k f̂_i, both coordinates; hepatocyte c 0.93 on
+  the diagonal, macrophage 0.64 around it, lymphocyte (own clock, unshared) 0.00: ẑ ≈ 0, all its variation off the
+  line.
+- `figures/fit/fit_C.png`: c with intervals against the truth. Targets: hepatocyte 0.931 [0.876, 0.967], true 0.938;
+  macrophage 0.641 [0.524, 0.759], true 0.634; lymphocyte 0.000 [0.000, 0.076], true 0. Anchors read low: 0.86-0.89
+  against 0.92-0.96. Offsets (h, vs fibroblast): endothelial 3.01 (true 3.0), smooth muscle 1.15 (1.0), hepatocyte
+  −3.85 (−4.0), macrophage 2.72 (2.0); amplitudes 0.69, 0.90, 1.14, 0.62 (true 0.75, 0.90, 1.15, 0.60).
+
+**Speaker notes**
+- Why two steps rather than one joint EM over all compartments: a target that is disrupted (disease, tumour) would
+  enter the host it is compared with. Anchors are chosen before the target is scored.
+- Why |z|² and σ² together: c is the signal share; |z| alone mixes coupling with amplitude, σ² alone with depth.
+- c depends on the host spread V, i.e. on the sampling window: compare c within a fit, or across groups only at a
+  common spread (d*) or on z2 / psi (rules in CLAUDE.md).
+- c is attenuated: the host is estimated from a few noisy anchors. A162: estimates are about 0.87-0.92 of the truth
+  with anchors at c 0.8 (0.80-0.88 at 0.6), and intervals undercover at high c (median coverage 0.18 at c_target 0.9,
+  c_anchor 0.8). Anchors on the leave-one-out host read 0.68-0.73 for a true 0.8. Hence absolute c is reported
+  without intervals, as ranks, Δc and d*; contrasts are unaffected.
+- Boundary: if the ML σ² is at its floor, c is a lower bound (test inversion at the real design); if |z|² minus its
+  noise is ≤ 0, c reads 0 because the loading is noise, not because the compartment is uncoupled.
+- A155: reading an anchor on a host that contains it inflates its |z| by 13-20 % with 3 anchors; hence the
+  leave-one-out readout (the default).
+
+<!-- src: _core/factor.py (fit, _EM), _core/host.py (host, _hosts, on_host, readout_z, estimates), dataset.py
+(Dataset.fit); figure numbers: printed by scripts/fit.py; A162, A155: results_preliminary.md
+(exploratory/A154_gate_calibration/output/a162/summary.csv; A155_anchor_self_inclusion/output/summary_bias.csv) -->
+
+---
 
 ## M5. Simulation: known parameters recovered
 
