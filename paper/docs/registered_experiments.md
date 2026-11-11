@@ -5391,3 +5391,138 @@ single-fetus cohorts in a window, GSE64283 (no gene quantification), sources tha
 and in `FAMILIES`; any further cut is a new amendment. **Code:**
 `paper/exploratory/A242_fetal_adrenal_replication/scripts/{prep_adrenal.py,feasibility_a242.py,score_a242.py}`,
 `paper/common/development.py`.
+
+## A243 (2026-11-11, user: "okay, register 1 and 2 and write a prompt for a new agent to launch them"; staged: the hypotheses, statistic, eligibility rules, families and readings are fixed here, the cohort list and the adult power go in a design addendum committed before any clock statistic is computed on the new cohorts; seen: every result of A189 (Cao 2020 organs, signed C: heart 0.140, lung 0.116, liver 0.114, p >= 0.29), A237 (Cardoso-Moreira, 4-20 wpc: heart C -0.094, liver 0.387, kidney -0.350), A240 and A242; no other fetal data of these organs): is a clock of the size read in the fetal adrenal present in the heart, kidney, lung or liver before birth when open cohorts are pooled? **Four organs, pooled open cohorts; L1; secondary (development section)**
+**Why.** The fetal adrenal carries a clock-shaped covariation between fetuses in ten cohorts (A189, A242), at
+between half and three quarters of the adult between-individual clock variation. The negatives of the other organs
+(A189, A237-A239) exclude a clock of 0.75 to 1 times the adult one only (A240): a clock of the adrenal's size would
+have been missed, so "the adrenal starts first" is not shown (Q32). Pooling cohorts with a cohort indicator and
+within-cohort permutations (A242) is the one design that reaches half the adult size (`all` of A242: adult pass rate
+0.670 at 0.5 with 46 fetuses). This amendment applies it to four organs with open fetal data from several
+laboratories.
+**Fixed now.**
+- *Organs:* heart, kidney, lung, liver. Other organs met by the scout are reported, not scored.
+- *Cohort eligibility* (applied to metadata only): (E1) human embryonic or fetal tissue of the organ, not cultured,
+  not an organoid, no stated anomaly of the organ; (E2) open gene-level counts (UMI, tag or read counts; expected
+  counts of a quantifier accepted), bulk or single-cell (all cells of a fetus summed); no FASTQ mapping, no
+  controlled access, no source that releases normalised values only unless the counts are recoverable exactly as for
+  Kildisiute in A242; (E3) an age stated per sample; (E4) the 14 clock genes present and a median count per clock
+  gene >= 20 (median over genes of the cohort medians); (E5) >= 2 fetuses in the readout; (E6) a fetus present in two
+  sources is counted once, in the deeper one. Cao 2020 (organ pseudobulks with >= 1,000 cells, as A241) and
+  Cardoso-Moreira 2019 (prenatal libraries with a resolved individual, as A237) are cohorts of the pool; both were
+  scored alone before (negative).
+- *Unit, statistic, pooling:* as A242. One whole-organ pseudobulk or bulk library per fetus and cohort (samples of
+  one source with the same stated age are one fetus unless the source names different individuals; several parts of
+  one organ are summed); 14 clock genes, GTEx waveform, signed coherence C; log fractions residualised gene by gene
+  on a cohort indicator and a common age polynomial; 10,000 per-gene permutations within cohort; 200
+  expression-matched and 200 responsive pseudo-clock sets among the genes with a mean count >= 1 present in every
+  cohort of the readout; clock-specific: C above the q95 of both. Seed 243. `paper/common/development.py`.
+- *Readouts per organ:* `<organ>:all` (every fetus; quadratic age), `<organ>:late` (from 12 weeks; linear age),
+  `<organ>:early` (before 12 weeks; quadratic age): the windows and covariates of A242.
+- *Power first* (as `feasibility_a242.py`): each fetus stood for by one GTEx donor of the adult organ (heart left
+  ventricle, kidney cortex, lung, liver; deaths at 08-18 h; distinct donors within a cohort) thinned gene by gene to
+  the clock-gene counts of its cohort; adult clock at 1, 0.75 and 0.5 (`simulate.scale_clock`) and without a clock
+  (clock genes permuted across the drawn donors); 200 subsamples, 500 permutations within cohort, alpha 0.05. A
+  readout is scored only if its adult pass rate at the full clock is >= 0.8 (D1b rule); otherwise it is "not
+  estimable" and its fetal statistic is not computed.
+- **H243.1 (primary):** `<organ>:all` for each organ scored; Holm over the organs scored.
+- **H243.2 (secondary; onset):** `<organ>:late` and `<organ>:early` for each organ scored; Holm over the readouts
+  scored.
+- **PASS** (`development.verdicts`): Holm p < 0.05 within the hypothesis and clock-specific. p < 0.05 without
+  clock-specificity: "not clock-specific". Unadjusted p < 0.05 lost at Holm: "suggestive, not established".
+- *Descriptive (no pass / fail):* `<organ>:all:new` (without Cao 2020 and Cardoso-Moreira 2019); `<organ>:all`
+  without each cohort in turn; each cohort with >= 10 fetuses alone; unsigned R; leave-one-gene-out range; the
+  position of the fetal C among the adult subsamples at 1, 0.75 and 0.5 (as `position_a242.py`), beside that of the
+  adrenal (`all` of A242).
+**Design addendum (before scoring; `### A243 design addendum`, committed with the prep and feasibility scripts).**
+The cohorts found and those excluded, each with the rule that excludes it; per cohort and window: accession, assay,
+age convention, fetuses, depth, median clock-gene counts; the design table (fetuses, cohorts, covariates per
+readout); the adult pass rates at 1, 0.75, 0.5 and without a clock; the readouts scored; a dry run of the companion
+gene lists. Nothing else may be chosen there.
+**Reading.** `<organ>:all` PASS: a clock-shaped covariation between fetuses is present in that organ before birth,
+in pooled cohorts, as in the adrenal; the developmental result becomes "present in several organs, below the adult
+size", and the earlier negatives are read as bounds on size (to the PI, Q32). Negative (unadjusted p >= 0.05) with an
+adult pass rate >= 0.8 at 0.5: a clock of half the organ's adult size is excluded; the organ is behind the adrenal
+(whose signal lies between 0.5 and 0.75 of its own adult size), and "the adrenal is ahead of <organ>" can be stated
+for the ages covered. Negative with >= 0.8 at 0.75 only: three quarters excluded, the comparison with the adrenal
+stays open. Negative below that: bound as in A240, nothing new. Not clock-specific: a state shared with matched or
+responsive genes, not shown to be the clock. H243.2 orders nothing by itself: a window is read with its own adult
+pass rate.
+**Limits.** (1) to (4) of A242 (unrecorded times and the cohort indicator; age conventions; fetus identity; no sex
+adjustment). (5) Cao 2020 and Cardoso-Moreira 2019 were scored before on their own: `all:new` shows what the new
+cohorts give. (6) Sizes are relative to each organ's own adult clock variation in GTEx; the adult stand-in is one
+part of the organ (left ventricle, kidney cortex). (7) The fetal liver is a haematopoietic organ at these ages:
+its whole-organ pseudobulk is largely blood cells, which carry no coherent core clock in the adult; a liver result
+is of that mixture. (8) Whole-organ pseudobulks: cell composition varies between fetuses; the age trend and the
+companions are the control. (9) New data: at most 60 GB, within the 500 GB cap.
+**Stop rule:** one addendum, one scoring run; any further cut is a new amendment. **Code:**
+`paper/exploratory/A243_fetal_organs_pooled/scripts/` (prep, feasibility, score, position), on
+`paper/common/development.py` and the scripts of A242.
+
+## A244 (2026-11-11, user: "okay, register 1 and 2 and write a prompt for a new agent to launch them"; staged: hypotheses, classes, marker lists, families and readings are fixed here, the per-cell classifier thresholds, the design table and the adult power go in a design addendum committed before any clock statistic is computed on a cell class; seen: every result of A242 on the whole adrenals of the same fetuses, A189, A190 and its post hoc checks; no per-cell data of these cohorts beyond the summed counts): is the clock-shaped covariation of the fetal adrenal carried by the cortex, by the medulla, or by both? **Six single-cell cohorts of A242, 39 fetuses; L1 per cell class; secondary (development section)**
+**Why.** A242 reads the adrenal as one sample per fetus. A whole-organ signal can come from the steroidogenic
+cortex (the adult adrenal clock), from the neural-crest-derived medulla, from both, or from the proportions of the
+classes varying between fetuses (limit 5 of A242). Within Cao 2020 the classes could not be separated: the shallow
+classes were about one third cortex RNA (A190, post hoc). The six single-cell cohorts of A242 allow the split with
+a cohort indicator, and droplet data may carry less foreign RNA.
+**Fixed now.**
+- *Cohorts:* the single-cell cohorts of A242: `kameneva` (11 fetuses), `wang` (10), `sasaki` (7), `kildisiute` (5),
+  `dong` (4), `han` (2); the three bulk cohorts cannot be split. Fetuses, ages and cells as in `prep_adrenal.py`.
+- *Classes, by marker counts per cell; clock genes and pseudo-clock sets are never read by the classifier:*
+  `cortex` (steroidogenic; the A190 list: STAR, CYP11A1, CYP17A1, CYP21A2, CYP11B1, NR5A1); `medulla` (neural
+  crest-derived: chromaffin cells, sympathoblasts, Schwann cell precursors: CHGA, CHGB, TH, DBH, PHOX2B, STMN2,
+  ELAVL4, SOX10, PLP1); `stroma` (descriptive: COL1A1, COL1A2, COL3A1, PDGFRB, PECAM1, CDH5); blood cells (HBG1,
+  HBG2, HBA1, HBB, PTPRC) are left out. One per-cell rule on the marker fractions for every cohort; a cell that
+  meets two classes or none is left out.
+- *Unit:* one pseudobulk per fetus and class with >= 200 cells of the class (A190); a cohort enters a readout with
+  >= 2 such fetuses.
+- *Statistic, pooling:* as the `all` readout of A242: signed coherence C across fetuses; cohort indicator and a
+  common quadratic age trend; 10,000 per-gene permutations within cohort; both companions (200 sets each) among the
+  genes with a mean count >= 1 present in every cohort; clock-specific: C above the q95 of both. Seed 244.
+- *RNA of the other class (the A190 limit):* per fetus, a = fraction of the other class's marker counts in the class
+  pseudobulk, relative to that fraction in the other class's pseudobulk of the same fetus (an upper bound of the
+  foreign share); the expected foreign clock-gene counts are subtracted (floored at 0, rounded; as
+  `score_a241.contamination`) and the readout is rerun (`<class>:corrected`). Reported per cohort: a and the
+  expected foreign share of the clock-gene counts. A class whose median foreign share of the clock-gene counts
+  exceeds 0.5 is "confounded" and has no verdict.
+- *Power first:* GTEx adrenal glands thinned to the clock-gene counts of each class and cohort
+  (`feasibility_a242.py`), adult clock at 1, 0.75 and 0.5 and without a clock; 200 subsamples. A class is scored
+  only if its adult pass rate at the full clock is >= 0.8; otherwise "not estimable", not computed.
+- **H244.1 (primary; Holm over the classes scored):** `cortex`, `medulla`. **PASS:** Holm p < 0.05, clock-specific,
+  and p < 0.05 in `<class>:corrected`; with the last condition failing: "not shown (RNA of the other class)". p <
+  0.05 without clock-specificity: "not clock-specific"; unadjusted p < 0.05 lost at Holm: "suggestive, not
+  established".
+- **H244.2 (secondary; conditional):** cortex and medulla of one fetus share a clock state: gate over the two
+  classes on the corrected, cohort- and age-adjusted counts (`development.shared`; p = the larger of p_pairing and
+  p_acrophase; companions on `pairing_z`), fetuses with both pseudobulks. Scored only if, on adult material cut to
+  the design (two GTEx tissues of one donor, adrenal gland and one other fixed in the addendum, thinned to the class
+  counts), the pass rate is >= 0.8 and the false-positive rate with mis-paired donors has 0.05 inside its 95 % CI;
+  otherwise "not estimable", not computed.
+- *Descriptive (no pass / fail):* `stroma`; each class in the windows of A242 (`late`, `early`); each class without
+  each cohort in turn; unsigned R; leave-one-gene-out range; the position of each fetal C among its adult
+  subsamples; a depth-matched comparison (the deeper class of each cohort thinned gene by gene to the clock-gene
+  counts of the shallower one; median C over 100 thinnings; difference cortex minus medulla with a 95 % interval from
+  1,000 resamplings of the fetuses within cohort).
+**Design addendum (before scoring; `### A244 design addendum`, committed with the prep and feasibility scripts).**
+The per-cell rule and its thresholds, set on the marker counts alone; agreement with the published cell annotation
+where a source releases one; per cohort and class: fetuses with >= 200 cells, cells, depth, median clock-gene
+counts; a per class and cohort; the design table; the adult pass rates; the readouts scored; for H244.2 the second
+adult tissue and its calibration. Nothing else may be chosen there.
+**Reading.** A localisation within the fetuses of A242, not a further replication. Both classes PASS: the
+covariation is present in the steroidogenic and in the neural-crest lineage; it is not cortex-only and not an effect
+of class proportions. Cortex PASS, medulla negative (unadjusted p >= 0.05) at an adult pass rate >= 0.8: the cortex
+carries it; a medullary clock of the size given by the power table is excluded. Medulla PASS lost after correction,
+or confounded: not separable from cortex RNA, as in A190. Cortex negative at an adult pass rate >= 0.8: the
+whole-adrenal result of A242 is not found within the steroidogenic cells and may rest on the proportions of the cell
+classes; A242 is then qualified in the docs and goes back to the PI (Q32). H244.2 PASS: the two lineages of one
+fetus share a clock state (a coupled organ clock); negative at >= 0.8: no shared state of adult strength; not
+estimable: no statement.
+**Limits.** (1) The same fetuses as A242 (39 of the 46 of its `all` readout). (2) Marker-defined classes; the
+medulla forms during the ages covered, so its cells are few in the youngest fetuses and its composition
+(sympathoblasts, chromaffin cells, precursors) changes with age. (3) The foreign-RNA correction is a marker-based
+upper bound (A190: approximate); Kildisiute's counts are already ambient-corrected. (4) The adult stand-in is the
+whole adrenal gland for both classes. (5) The classes differ in cells and depth: their C are compared only in the
+depth-matched descriptive. (6) Limits 1 to 4 of A242.
+**Stop rule:** one addendum, one scoring run; any further cut is a new amendment. **Code:**
+`paper/exploratory/A244_fetal_adrenal_classes/scripts/` (prep, feasibility, score), on
+`paper/common/development.py`, `score_a241.py` (contamination) and the scripts of A242.

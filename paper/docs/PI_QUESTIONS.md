@@ -84,6 +84,9 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
   liver), which is the only way to compare organs at equal power and ask which starts first; (2) cortex against
   medulla within the pooled adrenals, with the ambient-RNA limit of A190; (3) leave-one-cohort-out of the
   before-12-weeks readout (not registered in A242, so post hoc).
+- **Update 2026-11-11 (2): (1) and (2) are registered on the user's instruction, as A243 and A244** (staged: a design
+  addendum with the cohorts and the adult power is committed before any fetal statistic; not scored). (3) stays
+  open. Their outcome will be added here; the wording of the developmental section remains your decision.
 
 ### Q31 (2026-11-10): the unsigned gene coherence R and a shift common to the clock genes
 
