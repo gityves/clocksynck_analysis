@@ -35,8 +35,9 @@ A negative at a design with adult power >= 0.8 is informative; below, it is not.
 Not retained: limb (Zhang 2024; 25 donors but <= 10 wpf), first-trimester brain (Braun 2023; 26 donors, <= 15 wpf,
 12 GB; covered by rank 1 and 3), HDBR brain E-MTAB-4840 (190 individuals but FASTQ only: no mapping in this project),
 GSE66302 (17 fetuses, DeepSAGE, processed data not located), BrainSpan RNA-seq (same donors as Kang, RPKM only).
-Controlled access, would need a request (ask the user first): fetal adrenal single-cell data of Kildisiute 2021 (7
-glands, EGA) and del Valle 2023 (4 glands, EGA), fetal brain eQTL cohorts (O'Brien 2018, 120 brains, EGA; Walker 2019,
+Controlled access, would need a request (ask the user first): raw fetal adrenal single-cell data of Kildisiute 2021
+and del Valle 2023 (both in EGAD00001008345, Sanger DAC; correction 2026-11-11: the processed Kildisiute object is
+open, see below), Jansky 2021 (EGAD00001006624), fetal brain eQTL cohorts (O'Brien 2018, 120 brains, EGA; Walker 2019,
 201 donors; BrainVar, 176 donors, Synapse terms not checked). No public fetal or neonatal human dataset with a
 recorded time of collection was found.
 
@@ -111,3 +112,14 @@ p 0.0001; `A189_fetal_within/output/h189_1_signed_posthoc.csv`).
 2. Feasibility on adult material cut to each design (D1b rule: pass rate >= 0.8). Done (above).
 3. Register one amendment per dataset, with an age adjustment, age-stratified permutations and both companions:
    A237 (Cardoso-Moreira), A238 (Garcia-Alonso), A239 (Kang), `paper/docs/registered_experiments.md`.
+
+**Addendum 2026-11-11: fetal adrenal data for a replication of A189 (links checked; nothing requested, no amendment
+registered).** Open: Kildisiute 2021 processed object, https://www.neuroblastomacellatlas.org/
+(`adr_all_cellxgene.h5ad`, downloaded for a design check, `natexp/kildisiute2021/PROVENANCE.md`: 57,972 fetal adrenal
+cells, 7 samples at 5 gestational ages, w8 to w21, log-normalised values with the total count per cell); Kameneva
+2021, GEO GSE147821 (13 samples, weeks 6-14, 10x matrices per sample); Dong 2020, GEO GSE137804 (6 fetal adrenal
+samples, ~4 to 14 PCW). Against the age of the Cao adrenals (89-122 days, 12.7-17.4 weeks): Kildisiute's samples
+lie on either side (<= w11, w21), Dong has two in range (13+2, 14+4 PCW), Kameneva's oldest reach week 14 (ages per
+sample and their convention not checked). The accession
+printed in Kildisiute 2021 (EGAD0000100637) is one digit short; ENA PRJEB41516 holds the tumour and organoid reads
+only.

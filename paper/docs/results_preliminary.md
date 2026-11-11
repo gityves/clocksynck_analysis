@@ -4268,3 +4268,31 @@ PI question Q32.
 matched, 0.478 responsive; 100th percentile of both), leave-one-gene-out minimum 0.904. The eight other
 compartments: C -0.310 to 0.321, p >= 0.129. The A189 verdicts are unchanged by the statistic.
 <!-- src: paper/exploratory/A237_fetal_organs/output/{verdicts,l1,l2,l2_pseudo,design}.csv; paper/exploratory/A238_fetal_gonad/output/{verdicts,l1,l2,l2_pseudo,design}.csv; paper/exploratory/A239_fetal_brain/output/{verdicts,l1,l2,l2_pseudo,design}.csv; paper/exploratory/scouts_2026-11-10/feasibility_fetal/output/passrates_{cm_day_sex,gonad_sextrend,kang_all}.csv; paper/exploratory/A189_fetal_within/output/h189_1_signed_posthoc.csv -->
+
+## A241 (scored 2026-11-11): whether the organs of a fetus share the clock state of its adrenal cannot be read in Cao 2020 (H241.1 FAIL, uninformative: adult pass rate 0.14)
+
+Cao 2020, the 7 fetuses with an adrenal pseudobulk (89-122 days), whole organs with >= 1,000 cells; host-restricted
+gate (organ x adrenal cross-covariances only, `min_shared` 3), 10,000 permutations; registered with its adult
+calibration before any organ x adrenal statistic (commit `fb27d58`), one scoring run.
+
+- **Power first: the design is not powered.** Adult donors (GTEx, deaths at 08-18 h) cut to the design and thinned
+  to the fetal depths pass in 0.140 of 200 subsamples (95 % CI 0.095-0.196; `min_shared` 4: 0.125; 5: 0.060). The
+  clock shape is seen (p_acrophase < 0.05 in 0.98 of the subsamples), the pairing of 7 individuals is not (p_pairing
+  < 0.05 in 0.14).
+- **H241.1 FAIL, uninformative.** `organs6` (lung 6, heart 4, liver 4, cerebellum 3, cerebrum 3, muscle 3 fetuses;
+  6 organ x adrenal pairs): clock share 0.162 (null mean 0.042), p_acrophase 0.0071, p_pairing 0.706, pairing z
+  -0.61 (31.5th percentile of the matched, 39.0th of the responsive pseudo sets; 7.5 % and 2.5 % of them reach
+  p_pairing < 0.05). After removal of the expected adrenal RNA: p_pairing 0.685, p_acrophase 0.0068. The fetal
+  result has the profile of the adult calibration (shape seen, pairing not): it does not separate "the organs follow
+  the adrenal" from "they do not".
+- **Adrenal RNA in the other organs is small.** Adrenal cortex marker fraction relative to the adrenal of the same
+  fetus, in the six organs: median 0.001-0.016 per organ (maximum 0.077, heart); expected share of the clock-gene counts: median
+  0.001-0.025 per organ, at most 0.101 for one gene (ARNTL, heart). Unlike the classes within the adrenal (A190),
+  whole organs are not confounded by adrenal RNA.
+- **Descriptive.** With the placenta (5 fetuses; 7 pairs): p_pairing 0.602, p_acrophase 0.0012, pairing z -0.32
+  (36.0th / 34.5th percentile). One organ at a time: p_pairing 0.165 (cerebrum, 3 fetuses) to 1.0; lung with a
+  linear age adjustment 0.256.
+- **Reading (as registered):** uninformative, never "the organs do not follow the adrenal". The question needs more
+  fetuses with an adrenal and other organs than any open dataset holds (Cao: 7).
+- Code `paper/exploratory/A241_fetal_adrenal_host/scripts/{feasibility_a241.py (637 s), score_a241.py (1,664 s)}`.
+<!-- src: paper/exploratory/A241_fetal_adrenal_host/output/{verdicts,l2,l2_pseudo,contamination,design_fetal,passrates,design}.csv -->
