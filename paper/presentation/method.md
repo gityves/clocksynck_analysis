@@ -35,8 +35,9 @@ or their amplitude ratios. Such a change still passes the gate and is read as an
 
    $$\hat\beta_{ik} = \arg\min_\beta \sum_g w_{kg}\,\big(\tilde y_{ikg} - \tilde X_g\beta\big)^2 = (\tilde X^\top W_k \tilde X)^{-1}\tilde X^\top W_k\,P\,y_{ik} \equiv L_k\,y_{ik}$$
 
-   with P = I − 11ᵀ/G (centring over genes), X̃ = PX, W_k = diag(w_kg), w_kg = 1 / (1/c̄_kg + τ²) (c̄_kg the median
-   count of gene g in compartment k, τ² = 0.05), and Poisson covariance V_ik = L_k diag(1/max(n_ikg, 0.5)) L_kᵀ.
+   with P = I − 11ᵀ/G (centring over genes), X̃ = PX, W_k = diag(w_kg), w_kg = 1 / (1/μ_kg + α)
+   (inverse variance of a log count under NB variance μ + αμ²; μ_kg the median count of gene g in compartment k,
+   α = 0.05, `tau2` in the code), and Poisson covariance V_ik = L_k diag(1/max(n_ikg, 0.5)) L_kᵀ.
    In the figure, each gene's log fraction is taken relative to the compartment's mean over donors and divided by its
    fixed reference amplitude amp_g: the model then predicts one cosine λ cos(φ − ψ_g) for all genes. Its height λ and
    peak φ are β relative to the compartment's mean (by linearity, L_k (y_ik − ȳ_k) = β̂_ik − mean β̂_k).

@@ -10,7 +10,8 @@ psi_g from the GTEx waveform, clocksync.gtex()). Steps:
  7. a real sample is noisy (Poisson counts plus gene noise): the weighted least-squares cosine gives phi_hat and
     lam_hat, i.e. beta;
  8. weights: after division by A_g, low-amplitude and low-count genes are noisiest; the fit weighs gene g by
-    w_g A_g^2 (w_g = 1 / (1/c_g + tau^2), the package's gene weight), against the unweighted fit.
+    w_g A_g^2 (w_g = 1 / (1/mu_g + alpha), the package's gene weight:
+    NB variance mu + alpha mu^2 on the log scale), against the unweighted fit.
 The baseline is removed for display only: the package projects y itself, so beta keeps the constant L m (absorbed
 later by the compartment centre mu_k).
 Fitting (y_g - m_g) / A_g with weights w_g A_g^2 is the package's projection (WLS of y_g on A_g (cos psi_g, sin psi_g)
@@ -66,7 +67,7 @@ STEPS = [  # caption, sub-caption, equation, seconds of transition, seconds of h
     ("A real sample is noisy: fit the best cosine", r"weighted least squares over the 14 genes gives $\hat\varphi$ and $\hat\lambda$",
      r"$\hat\beta = \arg\min_\beta \sum_g w_g A_g^2 \left(\tilde y_g - \lambda\cos(\varphi - \psi_g)\right)^2$", 3.0, 3.0),
     ("Noisy genes count less", "after dividing by $A_g$, low-amplitude and low-count genes are noisiest (point area = weight)",
-     r"weight $= w_g A_g^2$,   $w_g = 1 / (1/\bar c_g + \tau^2)$", 3.0, 4.0),
+     r"weight $= w_g A_g^2$,   $w_g = 1 / (1/\mu_g + \alpha)$", 3.0, 4.0),
 ]
 YLIM = {"raw": (-2.1, 2.4), "centred": (-0.7, 0.7), "unit": (-1.45, 1.45), "noisy": (-3.0, 3.0)}
 
