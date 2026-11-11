@@ -247,6 +247,54 @@ deaths 08-18 h; anchors fibroblast, endothelial, smooth muscle; 500 bootstraps).
 
 ---
 
+## M4b. Outputs: what each donor and each compartment gets, and what the analyses use
+
+**Message:** one fit gives a host state per donor and four numbers per compartment. The analyses use the
+compartments' numbers, and compare groups only on quantities that do not depend on the sampling window.
+
+**Bullets**
+1. *Per donor: the host state* f̂_i (with S_i), a point in the clock plane: its phase is the donor's internal time,
+   up to one constant for the whole cohort (in the frame of the reference anchor); its radius is not an amplitude
+   (shrunk by the prior). Used as the regressor of every compartment, and in aggregate only: the host spread V, the
+   coverage of the day (Rayleigh R of host phases), and validation against a recorded time where one exists.
+2. *Per compartment k*, from β_ik = μ_k + z_k f̂_i + e_ik:
+
+   | output | symbol | read as | used for |
+   |---|---|---|---|
+   | coupling | c_k = \|z_k\|²V / (\|z_k\|²V + 2σ_k²) | share of k's clock variation that follows the host | ranking compartments within a fit; differences between groups |
+   | relative amplitude | \|z_k\| | k's clock swing relative to the reference (or the mean) | organ map; loss of amplitude in disease |
+   | phase offset | arg z_k (h) | how far ahead of the reference k's clock runs (> 0: advanced, it reads later) | organ map; phase shifts in disease |
+   | own noise | σ_k² (`psi`) | k's clock variation not shared with the host | why c changes: amplitude lost or noise gained |
+   | host spread | V | how much of the day the donors span | not a property of k: the denominator to control |
+
+3. *Comparing groups* (`Dataset.contrast`): one host on the pooled anchors, then per compartment and group:
+   - Δc = c_case − c_ref, and Δc* at a common spread V0 (each group's |z|² and σ² with the same V0), which removes a
+     difference in sampling windows between groups;
+   - log ratios of |z|² and σ² (does the clock weaken, or does the noise grow?) and the offset difference (h);
+   - donor labels permuted within blocks, the same permutations for every compartment and for the specificity
+     companion (M6).
+
+**Visual:** the table of bullet 2 on the slide (five rows), the formula of c above it; to the right `figures/fit/fit_C.png`
+(c against the truth), or a clock face of the offsets and amplitudes. Bullet 3 can be its own line under the table.
+
+**Speaker notes**
+- Constant offsets are not identified: the absolute phase of the host is set by the reference anchor, so a single
+  donor's host phase is relative to the cohort, not a clock time. Phase offsets between compartments need no
+  absolute phase.
+- c alone is not comparable between cohorts: it grows with V. The same compartment reads lower in a cohort sampled
+  over a narrower window. Hence Δc* (common V0), or |z|² and σ² separately.
+- Δc says whether something changed; the |z|² and σ² ratios say what changed (amplitude loss vs added noise), which
+  is what the biology needs.
+- Per-donor host states are never released for GTEx (controlled time of death): only aggregates (V, R, correlations).
+- Package columns (`Fit.table`): coupling (+ lo, hi), rel_amplitude, log_amp_rel, offset_h (+ lo, hi), z2, psi, V,
+  own_amplitude = √(|z|²V + 2σ²), boundary; `Fit.host`: x, y, phase, radius; `Fit.host_cov`, `Fit.sigma_f`.
+  `Contrast.table`: c per group, d, d_star, p, p_star, log_z2_ratio, log_psi_ratio, offset_diff_h, p_offset.
+
+<!-- src: results.py (Fit, Contrast docstrings), dataset.py (fit, contrast: V0 = V of the pooled host, d_star from
+each group's z2 and psi at V0) -->
+
+---
+
 ## M5. Simulation: known parameters recovered
 
 To write.
