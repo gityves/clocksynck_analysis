@@ -7,7 +7,7 @@ The host state is centred over patients (sum_i f_i = 0), so mu_k is the mean of 
 in hospital hours it is not the centre of the cycle. Fibroblasts (the reference, z_F = 1) appear first, sampled in
 hospital hours; then the fitted terms are introduced one at a time: the compartment centre mu_k, the patient phase
 theta_i and amplitude A_i, the compartment loading z_k (endothelial, hepatocyte: rotated by phi_k, scaled by |z_k|),
-the compartment noise sigma_k^2, and the full equation. All values are illustrative, not fitted.
+the compartment's unshared variance sigma_k^2, and the full equation. All values are illustrative, not fitted.
 
 Output (paper/presentation/figures/model_animation/, 1920 x 864, the slide below its title): the full video
 model_animation.mp4, and the same content split for slides, in order: model_01.mp4 (the transition of step 1),
@@ -61,7 +61,7 @@ STEPS = [  # caption, sub-caption, seconds of transition, seconds of hold
     (r"$A_i$: the patient's amplitude", r"its distance from $\mu_k$; patient 4 has a weaker clock", 1.5, 3.0),
     ("Endothelial cells: the same patients", r"moved to $\mu_\mathrm{E}$, rotated by $\varphi_\mathrm{E}$, scaled by $|z_\mathrm{E}|$", 4.0, 3.0),
     ("Hepatocytes", r"rotated by $\varphi_\mathrm{H}$, scaled by $|z_\mathrm{H}|$" + "\n" + r"fibroblasts are the reference: $z_\mathrm{F} = 1$", 3.0, 3.0),
-    (r"$\sigma_k^2$: each compartment's own noise", "hepatocytes follow the shared time less closely", 1.5, 3.0),
+    (r"$\sigma_k^2$: each compartment's unshared variance", "hepatocytes follow the shared time less closely", 1.5, 3.0),
     ("The model", "fitted without any sampling time: absolute time cancels", 1.5, 5.0),
 ]
 
@@ -194,7 +194,7 @@ def build():
                                                boxstyle="round,pad=0,rounding_size=3", fc=HIGHLIGHT, ec="none", zorder=0))
         A["eq"].append((e, box))
     # step 7 adds the noise distribution, step 8 the labelled model
-    e7 = pf.equation(eqa, (0.0, 0.26), [r"e_{ik} \sim \mathcal{N}(0,\ ", (r"\sigma_k^2", "compartment\nnoise", INK),
+    e7 = pf.equation(eqa, (0.0, 0.26), [r"e_{ik} \sim \mathcal{N}(0,\ ", (r"\sigma_k^2", "unshared\nvariance", INK),
                                          r"\,\mathbb{I}_2 +", (r"V_{ik}", "Poisson\nnoise", INK), ")"],
                      ha="left", size=18, gap=1.0, label_size=12, marks="none")
     for _, lab, _ in e7.labels:
@@ -206,7 +206,7 @@ def build():
     e8 = pf.equation(eqa, (0.5, 0.5), [r"\beta_{ik}", "=", (r"\mu_k", "centre", INK), "+",
                                        dict(tex=r"z_k", label="compartment\n" + r"$|z_k|,\ \varphi_k$", color=INK, side="above"),
                                        (r"f_i", "patient\n" + r"$A_i,\ \theta_i$", INK), "+",
-                                       (r"e_{ik}", "noise\n" + r"$\sigma_k^2$", INK)], size=24, gap=12, label_size=14, label_sep=6, marks="none")
+                                       (r"e_{ik}", "unshared\n" + r"$\sigma_k^2$", INK)], size=24, gap=12, label_size=14, label_sep=6, marks="none")
     t8 = eqa.text(0.5, 0.08, r"reference: $z_\mathrm{F} = 1$" + "\nreadouts per compartment: coupling, $|z_k|$, $\\varphi_k$",
                   ha="center", va="bottom", fontsize=12, color=MUTED, transform=eqa.transAxes)
     A["eq8"] = (e8, t8)

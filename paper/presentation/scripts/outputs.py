@@ -7,8 +7,8 @@ B. Per compartment (here macrophage), centred on its mean mu_k: its states beta_
    a compartment with z = 1, the reference, would show) and the fitted z_k f_hat (colour): the host pattern turned by
    arg z_k (the phase offset) and scaled by |z_k| (relative amplitude). Both patterns are drawn as curves: donors
    ordered along the host's long axis (no sampling time used), averaged in 7 equal-count bins. The dotted
-   circle (1 SD) is sigma_k, its own noise. The arrows are z = 1 (grey) and z_k, at 1.8 host SD times |z|.
-C. Coupling, per compartment: the clock variance it shares with the host, |z_k|^2 V (colour), and its own, 2 sigma_k^2
+   circle (1 SD) is sigma_k, its unshared variance. The arrows are z = 1 (grey) and z_k, at 1.8 host SD times |z|.
+C. Coupling, per compartment: the clock variance it shares with the host, |z_k|^2 V (colour), and its unshared variance, 2 sigma_k^2
    (grey); c is the shared share. Anchors read on their leave-one-out host.
 
 Drawing convention (as the videos): phase 0 on top, turning clockwise; the package stores (cos, sin). Simulation and
@@ -105,7 +105,7 @@ def panel_compartment(ax, st, fit, lim):
     ends = face(curve @ Mz.T)[[0, -1]]
     end = ends[np.argmax(ends[:, 0])]
     ax.add_patch(Circle(end, np.sqrt(t.psi), fill=False, ec=INK, lw=1, ls=":", zorder=4))
-    ax.annotate(r"$\sigma_k$: own noise", end, xytext=(0, -np.sqrt(t.psi) / lim * 160 - 6), textcoords="offset points",
+    ax.annotate(r"$\sigma_k$: unshared variance", end, xytext=(0, -np.sqrt(t.psi) / lim * 160 - 6), textcoords="offset points",
                 ha="center", va="top", fontsize=11, color=INK)
     ax.annotate("+: $\\mu_k$; grey: host pattern (z = 1)\ncolour: $z_k \\hat f$, turned and scaled; dots: data", (0, -0.95 * lim),
                 ha="center", fontsize=10, color=MUTED)
@@ -129,7 +129,7 @@ def panel_coupling(ax, fit):
     ax.tick_params(axis="y", length=0)
     ax.spines["left"].set_visible(False)
     ax.set_xlim(0, 1.3 * float((sig + own).max()))
-    ax.set_xlabel(r"clock variance: shared $|z_k|^2 V$ (colour) + own $2\sigma_k^2$ (grey)")
+    ax.set_xlabel(r"clock variance: shared $|z_k|^2 V$ (colour) + unshared $2\sigma_k^2$ (grey)")
     ax.set_title(r"coupling $c_k = |z_k|^2 V \,/\, (|z_k|^2 V + 2\sigma_k^2)$", fontsize=13, color=INK)
 
 

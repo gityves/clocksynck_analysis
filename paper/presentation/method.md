@@ -205,7 +205,7 @@ Fitted: |z_E| 0.80 at 3.1 h, |z_S| 0.87 at 1.2 h (true 0.75 at 3 h, 0.90 at 1 h;
    $$\beta_{ik} = \mu_{k,q} + z_k\,\hat f_i + e_{ik}$$
 
    weighted least squares with one intercept per stratum q (σ_k² iterated). An anchor is read on the host fitted
-   without it (leave-one-out, needs ≥ 3 anchors), so its own noise does not enter its regressor.
+   without it (leave-one-out, needs ≥ 3 anchors), so its unshared variance does not enter its regressor.
 3. *Figure C, the outputs*, with 95 % donor-bootstrap intervals (the host refitted in every replicate):
 
    $$c_k = \frac{|z_k|^2 V}{|z_k|^2 V + 2\sigma_k^2},\qquad V = \mathrm{tr}\big(\mathrm{cov}(\hat f) + \overline{S}\big)$$
@@ -266,13 +266,13 @@ compartments' numbers, and compare groups only on quantities that do not depend 
    | coupling | c_k = \|z_k\|²V / (\|z_k\|²V + 2σ_k²) | share of k's clock variation that follows the host | ranking compartments within a fit; differences between groups |
    | relative amplitude | \|z_k\| | k's clock swing relative to the reference (or the mean) | organ map; loss of amplitude in disease |
    | phase offset | arg z_k (h) | how far ahead of the reference k's clock runs (> 0: advanced, it reads later) | organ map; phase shifts in disease |
-   | own noise | σ_k² (`psi`) | k's clock variation not shared with the host | why c changes: amplitude lost or noise gained |
+   | unshared variance | σ_k² (`psi`) | variation of k's clock state between donors that the host does not explain, beyond counting noise | why c changes: amplitude lost or unshared variance gained |
    | host spread | V | how much of the day the donors span | not a property of k: the denominator to control |
 
 3. *Comparing groups* (`Dataset.contrast`): one host on the pooled anchors, then per compartment and group:
    - Δc = c_case − c_ref, and Δc* at a common spread V0 (each group's |z|² and σ² with the same V0), which removes a
      difference in sampling windows between groups;
-   - log ratios of |z|² and σ² (does the clock weaken, or does the noise grow?) and the offset difference (h);
+   - log ratios of |z|² and σ² (does the clock weaken, or does the unshared variance grow?) and the offset difference (h);
    - donor labels permuted within blocks, the same permutations for every compartment and for the specificity
      companion (M6).
 
@@ -289,17 +289,17 @@ compartments' numbers, and compare groups only on quantities that do not depend 
 | *step 1: host (EM on the anchors)* | | |
 | μ_k | anchor's mean state (one per stratum) | EM, M-step |
 | z_k | anchor's loading on the host (complex: amplitude and turn), z_ref = 1 | EM, M-step |
-| σ_k² | anchor's own noise (variance per coordinate, beyond V_ik) | EM, M-step |
+| σ_k² | anchor's unshared variance (per coordinate, beyond V_ik) | EM, M-step |
 | Σ_f | host spread over donors, prior covariance of f_i (2 × 2) | EM, M-step: mean(f̂ f̂ᵀ + S) |
 | f̂_i | donor's host state, posterior mean | EM, E-step |
 | S_i | its posterior covariance (2 × 2) | EM, E-step |
 | *step 2: readout (per compartment, on the host; anchors on their leave-one-out host)* | | |
 | μ_{k,q} | compartment's mean state per stratum | WLS on f̂ |
 | ẑ_k, cov ẑ | loading and its sampling covariance | WLS on f̂ |
-| σ²_ML | own noise, maximum likelihood | alternated with the WLS (Fisher scoring) |
+| σ²_ML | unshared variance, maximum likelihood | alternated with the WLS (Fisher scoring) |
 | *derived (formulas from the readout)* | | |
 | \|z_k\|² (`z2`) | shared amplitude squared, debiased | \|ẑ\|² − tr cov ẑ, floored at 0 |
-| σ_k² (`psi`) | own noise, debiased | σ²_ML + p/(m − p)(σ²_ML + v̄) |
+| σ_k² (`psi`) | unshared variance, debiased | σ²_ML + p/(m − p)(σ²_ML + v̄) |
 | V | host spread over k's donors | tr(cov f̂ + mean S) |
 | c_k (`coupling`) | share of k's clock variance carried by the host | \|z\|²V / (\|z\|²V + 2σ²) |
 | rel. amplitude (`rel_amplitude`) | k's clock swing relative to the others | \|ẑ_k\| over the geometric mean of all compartments' (or over the reference's) |
@@ -312,7 +312,7 @@ compartments' numbers, and compare groups only on quantities that do not depend 
 | Δc (`d`) | c_case − c_ref, host fitted on pooled anchors | formula, per group readout |
 | V0 | common spread: V on the pooled donors | formula |
 | Δc* (`d_star`) | Δc with each group's \|z\|², σ² at V0 | formula |
-| log ratios (`log_z2_ratio`, `log_psi_ratio`) | what changed: shared amplitude or own noise | formula |
+| log ratios (`log_z2_ratio`, `log_psi_ratio`) | what changed: shared amplitude or unshared variance | formula |
 | offset difference (`offset_diff_h`) | phase shift between groups, h | arg(z_case / z_ref) × 24/2π |
 | p values | against group labels permuted within blocks, host fixed | permutation |
 
@@ -324,7 +324,7 @@ compartments' numbers, and compare groups only on quantities that do not depend 
    leave-one-out host for anchors).
 2. *Signal.* |z_k|² = |ẑ_k|² − tr cov ẑ, truncated at 0. |ẑ|² overestimates |z|² by its sampling variance
    (E|ẑ|² = |z|² + tr cov ẑ); after truncation a 0 means "loading at noise level" (`boundary_type` z2_truncated).
-3. *Own noise.* σ_k² = σ²_ML + p/(m − p)·(σ²_ML + v̄), with p the number of regression parameters (2 per stratum
+3. *Unshared variance.* σ_k² = σ²_ML + p/(m − p)·(σ²_ML + v̄), with p the number of regression parameters (2 per stratum
    intercept + 2 for z), m = 2 × donors the number of observations, v̄ the mean measurement variance. The ML residual
    variance is low by p/m of the total residual, and all of it falls on σ² because V_ik is known. σ²_ML at its floor:
    c is a lower bound (`boundary_type` psi_floor).
@@ -356,7 +356,13 @@ The table of bullet 2 can sit under it, or replace bullet 2 on the slide; bullet
   absolute phase.
 - c alone is not comparable between cohorts: it grows with V. The same compartment reads lower in a cohort sampled
   over a narrower window. Hence Δc* (common V0), or |z|² and σ² separately.
-- Δc says whether something changed; the |z|² and σ² ratios say what changed (amplitude loss vs added noise), which
+- Unshared variance σ_k² (defined once on the slide): variation of the compartment's clock state between donors that
+  the host does not explain, beyond counting noise. Biological (a clock not following the host, composition within
+  the compartment, local effects) and technical beyond Poisson (gene overdispersion, cell sampling in small
+  pseudobulks, batch within a stratum): V_ik is Poisson only by default (`plane.project`). So c also drops for
+  noisier pseudobulks, and a rise of σ² in a contrast is read biologically only with cell numbers per pseudobulk
+  checked or matched between arms.
+- Δc says whether something changed; the |z|² and σ² ratios say what changed (amplitude loss vs added unshared variance), which
   is what the biology needs.
 - Per-donor host states are never released for GTEx (controlled time of death): only aggregates (V, R, correlations).
 - Package columns (`Fit.table`): coupling (+ lo, hi), rel_amplitude, log_amp_rel, offset_h (+ lo, hi), z2, psi, V,

@@ -145,7 +145,7 @@ STEPS = [  # caption, sub-caption, highlighted terms of the model, formula of th
      r"$\mu_k$ shifts it, $z_k$ turns and scales it, to best fit the points",
      [2, 4], r"$(\mu_k, z_k) = \arg\min \sum_i \mathbb{E}\,\|\beta_{ik} - \mu_k - z_k f_i\|^2_{W_{ik}}$",
      3.0, 3.0),
-    ("M-step: the noise and the host spread", r"$\sigma_k^2$: what is left around the fit, beyond $V_{ik}$;  "
+    ("M-step: the unshared variance and the host spread", r"$\sigma_k^2$: what is left around the fit, beyond $V_{ik}$;  "
                                               r"$\Sigma_f$: the spread of the host states",
      [7], r"$\mathbb{E}\,\|e_{ik}\|^2 = 2\sigma_k^2 + \mathrm{tr}\,V_{ik}, \quad "
           r"\Sigma_f = \frac{1}{n}\sum_i (\hat f_i \hat f_i^{\top} + S_i)$", 2.0, 3.0),

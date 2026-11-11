@@ -6,7 +6,7 @@ A. Step 1, the host: EM on the anchor compartments only (fibroblast, endothelial
    donors along the arc of their hours.
 B. Step 2, the readout: each compartment regressed on the host, beta_ik = mu_k + z_k f_i + e_ik. Observed state
    (beta_ik minus the compartment's mean) against the fitted z_k f_i (minus its mean), both plane coordinates pooled.
-   A compartment that follows the host lies on the diagonal; its scatter around it is its own noise sigma_k^2 plus
+   A compartment that follows the host lies on the diagonal; its scatter around it is its unshared variance sigma_k^2 plus
    measurement noise. A compartment with its own, unshared clock has z near 0: all its variation is off the line.
 C. The outputs: coupling c with its 95 % donor-bootstrap interval (host refitted in each replicate) against the true
    coupling of the simulation, z2 V / (z2 V + 2 psi_total) with V the spread of the true sampling phases and psi_total
@@ -65,7 +65,7 @@ def true_coupling(st, hours):
     V = np.trace(np.cov(np.c_[np.cos(th), np.sin(th)].T))  # spread of the true host (fibroblast units)
     out = {}
     for k, (c, _) in COMPS.items():
-        psi = c.psi + TAU ** 2 * np.trace(st.L[k] @ st.L[k].T) / 2  # own noise + gene noise in the plane
+        psi = c.psi + TAU ** 2 * np.trace(st.L[k] @ st.L[k].T) / 2  # unshared variance: compartment + gene noise in the plane
         z2 = abs(c.z) ** 2 if c.coupled else 0.0
         out[k] = z2 * V / (z2 * V + 2 * psi)
     return out
