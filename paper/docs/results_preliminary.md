@@ -4340,3 +4340,60 @@ rate (commit `fb27d58`), one run. 200 subsamples per readout and setting, 500 pe
   calibrated; GTEx time of death is not a collection time; the array subsamples overlap (CI not valid).
 - Code `paper/exploratory/A240_fetal_amplitude/scripts/amplitude_bound.py` (6,091 s, 8 workers).
 <!-- src: paper/exploratory/A240_fetal_amplitude/output/{bound,curve,check_cm,check_gonad,check_kang}.csv; verdicts of A237-A239: A237_fetal_organs, A238_fetal_gonad, A239_fetal_brain/output/verdicts.csv -->
+
+## A242 (scored 2026-11-11): the clock of the human fetal adrenal replicates in open data from other laboratories, from 12 weeks and before (H242.1 `late` PASS, `schroder` PASS; H242.2 `early` PASS), at a size below the adult one
+
+Nine open cohorts, 59 fetal adrenals (one whole-adrenal pseudobulk or bulk library per fetus), none from Cao 2020;
+L1 signed coherence C across fetuses, pooled over cohorts: cohort indicator and a common age polynomial regressed
+out gene by gene, 10,000 per-gene permutations within cohort, both companions (200 sets each) among the genes
+present in every cohort. Registered with its adult power calculation before any fetal clock statistic (commit
+`5520253`). The scoring run stopped at the verdict step after writing `l1.csv` (a table without L2 tests was not
+handled by `development.verdicts`); after the fix the same command was rerun with the same seed and gave an
+identical `l1.csv` (same sha256): one set of results.
+
+- **Power first: every registered readout is powered.** GTEx adrenal glands (93 donors, deaths at 08-18 h) standing
+  for the fetuses, thinned to the clock-gene counts of each cohort, 200 subsamples, test at alpha 0.05: `late` 0.995
+  (95 % CI 0.972-1.000; 0.930 at 0.75 of the adult clock, 0.375 at 0.5; without a clock 0.040), `schroder` 0.990
+  (0.895; 0.410; 0.075), `early` 1.000 (1.000; 0.560; 0.065).
+- **H242.1 `late` PASS** (fetuses from 12 weeks, the age range of A189; 19 fetuses of 7 cohorts: ENCODE 4, Kameneva
+  3, Wang 3, Sasaki 3, Dong 2, Han 2, Roost 2): C 0.552, p 0.022 (Holm 0.022; null q95 0.462), clock-specific (99.0th
+  percentile of the matched, 98.0th of the responsive pseudo sets; q95 0.409 and 0.420); leave-one-gene-out C
+  0.356 (without NR1D1) to 0.643.
+- **H242.1 `schroder` PASS** (13 bulk adrenals without recorded age, 3 sequencing batches; batch and one surrogate
+  component of the non-clock genes regressed out): C 0.651, p 0.0024 (Holm 0.0048; null q95 0.406), clock-specific
+  (100th percentile of both; q95 0.372 and 0.396); leave-one-gene-out 0.380 (without ARNTL) to 0.854.
+- **H242.2 `early` PASS** (before 12 weeks, 5 to 11 weeks as stated; 25 fetuses of 5 cohorts: Kameneva 8, Wang 7,
+  Sasaki 4, Kildisiute 4, Dong 2): C 0.732, p 0.0007 (null q95 0.400), clock-specific (100th percentile of both; q95
+  0.355 and 0.363); leave-one-gene-out 0.608 (without NR1D1) to 0.878.
+- **Descriptive (as registered).** No single cohort carries `late`: without one cohort at a time C 0.495 to 0.607,
+  p 0.0099 to 0.046, clock-specific every time (97.0th percentile or above); the weakest is without ENCODE (C 0.495,
+  p 0.046), whose fetuses come from the same tissue programme as Cao 2020. Without the two shallow cohorts
+  (`late:deep`, 15 fetuses): C 0.634, p 0.0071. Every fetus with an age (`all`, 46 fetuses, 8 cohorts): C 0.750, p
+  0.0006 (100th percentile of both). Schroder without and with two surrogate components: C 0.893 (p 0.0001) and 0.626
+  (p 0.0056). Unsigned R: 0.584 (`late`), 0.658 (`schroder`), 0.070 (`early`).
+- **The two cohorts large enough to be scored alone do not pass:** Kameneva (11 fetuses, 6-14 weeks) C 0.158, p 0.246
+  (76.0th / 80.0th percentile); Wang (10 fetuses, 7-14 weeks) C 0.331, p 0.071 (93.5th / 90.5th). Adult pass rates
+  at these designs are 0.995 and 0.985 for the full adult clock, 0.890 and 0.860 at 0.75, 0.360 and 0.330 at 0.5: a
+  clock of adult size is excluded in each of them; one of half the adult size is not. The positive is a pooled one.
+- **Size against adults** (share of the 200 adult subsamples with C at or below the fetal value; adult median C):
+  `late` 3.0 % at the full adult clock (0.821), 16.5 % at 0.75 (0.703), 83.5 % at 0.5 (0.358); `schroder` 18.5 %,
+  49.0 %, 94.0 %; `early` 6.5 %, 45.0 %, 100 %; Kameneva alone 0.0 %, 2.0 %, 16.5 %; Wang alone 0.5 %, 5.0 %, 47.5 %.
+  The fetal coherence lies between that of half and of three quarters of the adult between-individual clock
+  variation in the pooled readouts, lower in the two single cohorts. Size here is amplitude and spread of phases
+  between fetuses together.
+- **Reading (as registered).** `late` PASS: the clock-shaped covariation of the fetal adrenal (A189, Cao 2020, 7
+  fetuses) is replicated across laboratories at the same age, on platforms and fetuses independent of Cao 2020: a
+  two-dataset positive, to the PI (Q32). `schroder` PASS supports it on a third design. `early` PASS: the signal is
+  present before 12 weeks. Not shown: that the adrenal starts before other organs. The negatives of A237-A239
+  exclude a clock of 0.75 to 1 times the adult one (A240), and the adrenal signal read here is itself below 0.75 in
+  `late`: a clock of this size in another organ would have been missed by those designs.
+- **Limits.** Collection times are unrecorded and the cohort indicator removes what the fetuses of a cohort share;
+  ages follow three conventions (up to 2 weeks apart); no sex adjustment; whole-adrenal pseudobulks (cell
+  composition varies between fetuses; the matched and responsive companions are the control); `late` rests on p
+  0.022 with 11 residual degrees of freedom; no leave-one-cohort-out was registered for `early`, of which Kameneva
+  and Wang make 15 of 25 fetuses; adult stand-ins for power and size (35 % of the fetus x gene targets of `late`
+  capped by the adult depth).
+- Code `paper/exploratory/A242_fetal_adrenal_replication/scripts/{prep_adrenal.py (4 min 53 s), feasibility_a242.py
+  (538 s, 8 workers), score_a242.py (42 s, 8 workers, peak 15.6 GB), position_a242.py}`; pooled cohorts with
+  within-cohort permutations and surrogate covariates in `paper/common/development.py` (tests added).
+<!-- src: paper/exploratory/A242_fetal_adrenal_replication/output/{verdicts,l1,design,design_cohorts,feasibility_passrates,feasibility_design,position_in_adult}.csv; paper/results/logs/jobs.tsv -->

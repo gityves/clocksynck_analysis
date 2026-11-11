@@ -89,6 +89,13 @@ def test_holm():
     assert np.allclose(dev.holm([0.01, 0.04, 0.03]), [0.03, 0.06, 0.06])
 
 
+def test_verdicts_without_l2():
+    l1 = pd.DataFrame(dict(test=["a", "b"], n=9, C=[0.8, 0.5], p=[0.01, 0.03], matched_pct=[100.0, 90.0],
+                           responsive_pct=100.0, clock_specific=[True, False]))
+    v = dev.verdicts(l1, pd.DataFrame(), {"H": ["a", "b"]})
+    assert list(v.verdict) == ["PASS", "not clock-specific"] and np.allclose(v.p_holm, [0.02, 0.03])
+
+
 def test_pooled_cohorts_are_permuted_within_cohort():
     counts, obs = series(amplitude=1.0)
     obs = obs[obs.compartment == "liver"].copy()

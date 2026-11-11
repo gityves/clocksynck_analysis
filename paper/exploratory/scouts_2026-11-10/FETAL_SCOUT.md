@@ -123,3 +123,11 @@ lie on either side (<= w11, w21), Dong has two in range (13+2, 14+4 PCW), Kamene
 sample and their convention not checked). The accession
 printed in Kildisiute 2021 (EGAD0000100637) is one digit short; ENA PRJEB41516 holds the tumour and organoid reads
 only.
+
+**Addendum 2026-11-11 (2): replication registered and scored (A242).** Nine open cohorts with >= 2 fetal adrenals
+(ENCODE polyA RNA-seq; Kameneva 2021, GSE147821; Dong 2020, GSE137804; Wang 2022, GSE167860; Han 2020, GSE134355;
+Sasaki, GSE193672 and GSE291218; Roost 2015, GSE66302; Kildisiute 2021 processed object; Schroder 2022, GSE196700),
+59 fetuses, all open, nothing requested; `PROVENANCE.md` per source under `natexp/`. Design, adult power and
+outcome: `paper/docs/registered_experiments.md` (A242), `paper/docs/results_preliminary.md` (A242): all three
+registered readouts pass.
+

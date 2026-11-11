@@ -7,7 +7,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 ## Open
 
 ### Still with the PI (updated 2026-11-11)
-- **Q32** (below): three human fetal datasets give no adult-like clock organisation before birth (A237-A239): how the development section reads. Updated with the size of the clock the negatives exclude (A240), A241 and the open adrenal data.
+- **Q32** (below): three human fetal datasets give no adult-like clock organisation before birth (A237-A239): how the development section reads. Updated with the size of the clock the negatives exclude (A240), A241 and **the replication of the fetal adrenal clock on open data (A242, PASS): option (iii) is done, the recommendation changes**.
 - **Q31** (below): the unsigned gene coherence R reads a shift common to the clock genes as a clock; replace it by the signed coherence paper-wide?
 - **Q30** (below): the mouse embryo timing positive (A108) is not clock-specific (A236): how the paper words it.
 - **Q29** (below): which confirmation first for the Q25 headline: timed brain cohorts, living skin cohort, jet-lag data.
@@ -67,6 +67,23 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
   are behind EGA (EGAD00001008345). Few samples lie in the age range of the Cao adrenals (12.7-17.4 weeks); a
   replication would be a new amendment with its own power calculation, not registered. Links:
   `scouts_2026-11-10/FETAL_SCOUT.md` (addendum).
+- **Update 2026-11-11 (A242: option (iii) done on open data, no access request).** Nine open cohorts, 59 fetal
+  adrenals, none from Cao 2020, pooled with a cohort indicator and within-cohort permutations; adult power 0.99-1.00.
+  All three registered readouts pass and are clock-specific: from 12 weeks (19 fetuses, 7 cohorts) C 0.552, p 0.022;
+  13 bulk adrenals of a ninth cohort C 0.651, p 0.0024 (Holm 0.0048); before 12 weeks (25 fetuses, 5 cohorts) C
+  0.732, p 0.0007. No cohort carries the result alone (leave one out: p 0.0099-0.046). Against adult stand-ins the
+  fetal coherence lies between half and three quarters of the adult between-individual clock variation; the two
+  cohorts scored alone do not pass (Kameneva p 0.246, Wang p 0.071). *What it changes:* the adrenal positive is no
+  longer one cohort of 7 fetuses but two registered positives over ten cohorts. *What it does not show:* that the
+  adrenal runs first; the negatives of the other organs exclude a clock of 0.75-1 times the adult one (A240) and the
+  adrenal signal is itself below that. *My recommendation now:* (i) with the adrenal as a replicated positive: "a
+  clock-shaped covariation between fetuses is present in the adrenal from the first trimester (ten cohorts, 66
+  fetuses), below the adult size; no clock of adult size is detected before birth in seven other organs, the gonad
+  and the brain"; the Kang trajectory stays the figure panel. *For your decision (each a new amendment, nothing
+  started):* (1) the same pooled design for another organ with several open fetal cohorts (heart, kidney, lung,
+  liver), which is the only way to compare organs at equal power and ask which starts first; (2) cortex against
+  medulla within the pooled adrenals, with the ambient-RNA limit of A190; (3) leave-one-cohort-out of the
+  before-12-weeks readout (not registered in A242, so post hoc).
 
 ### Q31 (2026-11-10): the unsigned gene coherence R and a shift common to the clock genes
 

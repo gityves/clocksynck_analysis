@@ -136,6 +136,10 @@ inconclusive (A144 part 2). Resolution depends on clock UMI per cell; eligibilit
 - Developmental series (A237-A239, `paper/common/development.py`): log fractions are residualised gene by gene within
   a compartment on an age polynomial, sex and assay before L1 or the gate; pseudo-clock sets receive the same
   adjustment; L1 uses the signed coherence; the gate is compared with pseudo sets on `Gate.pairing_z` (shared
-  clock-plane covariance standardised by its pairing null).
+  clock-plane covariance standardised by its pairing null). Cohorts from different laboratories are pooled (A242) with a
+  cohort indicator in the adjustment and per-gene permutations within cohort (`coherence(strata=)`), companions among
+  the genes present in every cohort; where no age is recorded, principal components of the non-clock genes stand for
+  it (`development.surrogates`). Adult calibration at the A242 designs: false-positive rate 0.035-0.075 (nominal
+  0.05 inside every CI), as with permutations across all individuals (0.040-0.080).
 - `sccc.api` defaults (200 gate permutations, 200 bootstraps, 40 MDE replicates) are lower than the paper settings
   (1000, 500, 100).

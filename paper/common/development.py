@@ -282,8 +282,9 @@ def verdicts(l1: pd.DataFrame, l2: pd.DataFrame, families: dict) -> pd.DataFrame
     the q95 of both pseudo sets); a gate that is not estimable has no verdict."""
     cols = ["test", "level", "n", "stat", "p", "matched_pct", "responsive_pct", "clock_specific"]
     a = l1.assign(level="L1", stat=l1.C) if len(l1) else pd.DataFrame(columns=cols)
-    b = l2.reindex(columns=[*l2.columns, *(c for c in ("p_pairing", "p_acrophase", "pairing_z", "n", "matched_pct",
-                                                        "responsive_pct", "clock_specific") if c not in l2)])
+    b = l2.reindex(columns=[*l2.columns, *(c for c in ("test", "p_pairing", "p_acrophase", "pairing_z", "n",
+                                                        "matched_pct", "responsive_pct", "clock_specific")
+                                           if c not in l2)])  # an empty table (no L2 test) has no column
     b = b.assign(level="L2", stat=b.pairing_z, p=b[["p_pairing", "p_acrophase"]].astype(float).max(axis=1, skipna=False))
     t = pd.concat([a[cols], b[cols]]).set_index("test")
     rows = []
