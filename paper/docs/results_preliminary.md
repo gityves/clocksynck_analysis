@@ -4537,3 +4537,34 @@ sets, 200 matched gene sets; null mean of S 0.120.
   in the tumour) but for all gene sets alike, without a specificity control, in one cohort of 42 already used for
   A146 and A200: a hint that tumours lose hour-of-day structure broadly, not evidence of a drug-specific window.
 <!-- src: paper/exploratory/A249_chrono_window/output/{power,score_tests,score_genes,score_descriptive,score_pseudo,score_matched}.csv -->
+
+## A250 (scored 2026-11-12): the A249 asymmetry does not replicate as a clock-specific result in CPTAC (H250.1 detected, not clock-specific; H250.2 FAIL); NFIL3 alone replicates (H250.4); the window stays unreadable (H250.5)
+
+- Data: 686 CPTAC-3 tumour-normal pairs, 7 types (A186 pool); one scoring run (ok, 403 s). Null mean of S about 0.086.
+  Power rules met (MDE of S_T: set O 0.021, set C 0.015; Delta(O, C) 0.023).
+- **H250.1 detected, not clock-specific (registered reading: a patient-level state shared by the two samples, not shown
+  to be the clock):** set O in the tumour against the normal-sample state, S_T 0.109 (null 0.086, SD 0.008), p 0.006;
+  pseudo-clock sets median 0.107, q95 0.131 (p_clock 0.42); matched genes q95 0.108 (p_matched 0.055). The excess over
+  the null is 0.023, against 0.042 in TCGA.
+- **H250.2 FAIL:** set C is detected in the tumour (S_T 0.097, p 0.036; not clock-specific, p_clock 0.57; not beyond
+  matched genes, p 0.46), and Delta(O, C) is 0.012 (p 0.099; 90 % interval -0.005 to 0.031; MDE 0.023).
+- **H250.3 FAIL:** Delta(O, F) 0.012 (p 0.036, Holm 0.072); Delta(O, K) 0.012 (p 0.106). Set F S_T 0.097 (p 0.008,
+  p_clock 0.58); set K 0.097 (p 0.066).
+- **H250.4:** NFIL3 PASS (r 0.155, null 0.086, p 0.0007, Holm 0.002; implied peak 18.9 h, TCGA 19.0 h); RORC FAIL
+  (0.091, p 0.39); ARNTL2 FAIL (0.111, p 0.092, Holm 0.18; implied peak 21.8 h, TCGA 20.7 h).
+- **H250.5 (window, second attempt): precondition FAIL again:** set O S_N 0.115, p 0.004, not clock-specific (pseudo
+  q95 0.125, p_clock 0.16; beyond matched genes, p 0.010). Set C S_N 0.095 (p 0.11); D -0.002 (-0.020 to 0.018).
+  The normal half stays unreadable from tumour-sample states.
+- Descriptive: per type S_T of set O from 0.064 (SKCM) to 0.153 (PDAC), LUAD (215 pairs) 0.089; STAD (27 pairs, not
+  pooled) 0.212. Same-sample readouts (confounded): set O 0.233 normal, 0.218 tumour. By G2M tertile, S_T of set O 0.180
+  (low) and 0.174 (high), set C 0.148 and 0.164 (smaller strata, higher null: compare within tertile only). TCGA and
+  CPTAC combined by pairs: set O S_T 0.132, set C 0.106. No purity strata (no table on disk).
+- **Reading (registered rules):** in CPTAC every gene set of the tumour, clock-controlled or not, follows the state
+  read in the normal sample slightly above the permutation null, and states built from non-clock gene sets do as well
+  as the clock state (pseudo median 0.107 against 0.109 observed). The cross-sample association is therefore a
+  patient-level state shared by the two samples (as H186.1 found for the pairing itself in CPTAC), not shown to be the
+  clock; the clock-specific excess of TCGA is not reproduced, and the asymmetry between clock output and drug handling
+  shrinks from 0.045 to 0.012. The A249 descriptive result stays descriptive and is not to be worded as a finding.
+  What does replicate is one gene: NFIL3 in the tumour follows the normal sample's clock state in both cohorts, at the
+  same implied hour (about 19 h).
+<!-- src: paper/exploratory/A250_cptac_window/output/{power,score_tests,score_contrasts,score_genes,score_genes3,score_descriptive,score_pseudo,score_matched}.csv -->
