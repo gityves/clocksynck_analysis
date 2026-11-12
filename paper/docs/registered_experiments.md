@@ -5818,3 +5818,66 @@ P247.0 is weakly informative (a healthy-brain pass rate of 0.24 to 0.61 at this 
 0.97 for malignant cells tied to myeloid cells as healthy oligodendrocytes are to microglia, H247.2 of 0.21 to 0.65.
 H247.4 (methylation call) stays unscored by the letter of the power rule. No pseudo-clock calibration is possible (45-gene
 atlases).
+
+## A249 (2026-11-12, DRAFT awaiting user agreement, nothing computed; user: "yes go ahead and draft hypothesis 1"; staged: gene sets, states, statistics, hypotheses, families and readings are fixed here, eligibility and power go in a dated note before any observed association; seen: A138 H138.4 (tumour and normal clock states of a patient pair, 0.365, clock-specific), A151, A207, A221 (clock-gene levels, tumour vs normal), A229, A246 (programs do not follow the tumour's clock state; in adjacent-normal tissue they do, at the line), A247 (same-sample pairing is not clock-specific), archive A100 (drug targets in healthy GTEx tissue); NOT seen: any non-clock gene of a tumour or normal sample against the clock state of the patient's other sample): are drug-relevant genes on body time in normal tissue and off it in the tumour of the same patient? **TCGA tumour-normal pairs primary, single-cell cohorts and the timed breast cohort secondary; L1-like association across samples (A229 statistic); secondary (cancer section)**
+**Why.** Timed chemotherapy rests on a difference between host and tumour: toxicity pathways of normal tissue follow
+the day while the tumour's do not, so that a dosing hour can spare the host (Levi et al. 2010, which names the genes
+of set C below; Levi et al. 2024). The premise comes from rodents and cell lines, trials are mixed (Sancar and Van
+Gelder 2021), and it has not been tested in patients: tissue is taken once, in working hours, without a usable time.
+A patient's two samples are taken at the same operation. Body time can therefore be read from one sample and a
+gene from the other, which removes the same-sample covariation that made A247 unreadable.
+**Data.** `common/datasets/tcga_paired` (recount3 counts; one primary tumour and one solid-tissue normal per patient),
+the cancers and pairs of H138.4. Secondary: the A151 single-cell cohorts (patients with fibroblast pseudobulks in
+both the tumour and the adjacent-normal sample); GSE233242 (42 breast patients, tumour and normal, recorded
+resection hour).
+**States.** z_N, z_T: complex clock state of the normal and of the tumour sample (`clocksync.paired`, GTEx waveform,
+counts, one projector per cancer as H138.4), centred within cancer.
+**Gene sets (fixed now, from the literature; no data used).**
+- *C, chronopharmacology* (genes named in Levi et al. 2010 for 5-FU, irinotecan, platinum handling and apoptosis):
+  DPYD, TYMS, TOP1, UGT1A1, CES1, CES2, ABCB1, ABCC2, CYP3A4, ERCC1, XPA, BCL2, BAX, TP53, WEE1.
+- *K, cell-cycle gating and repair* (Matsuo et al. 2003; Fu et al. 2002; Grechez-Cassiau et al. 2008;
+  Gonzalez-Aponte et al. 2025): WEE1, CCNB1, CDK1, MYC, CCND1, GADD45A, MDM2, CDKN1A, MGMT.
+- *F, approved drug targets:* the Human Protein Atlas list of A100 (`$SCCC_DATA/drug_targets`).
+- *O, clock-controlled genes outside the 14-gene waveform (positive control):* BHLHE40, BHLHE41, NFIL3, HLF, RORC,
+  ARNTL2.
+A gene enters a cancer with a median count >= 10 in both sample types; a set enters with >= half of its genes
+(>= 100 genes for F) in >= 5 cancers.
+**Statistic.** Per gene and cancer, r of A229 between y (log2(CPM + 1), centred within cancer) and a state; pooled
+over cancers with patient-count weights; a set's S is the mean of r over its genes. Two cross-sample readouts:
+S_N = S(y of the normal sample, z_T) (is the normal tissue's gene on the body time read in the tumour?) and
+S_T = S(y of the tumour sample, z_N). Null: patients of y permuted within cancer, one permutation for all genes
+(10,000; seed 249). Clock specificity: the state recomputed from 200 expression-matched pseudo-clock sets (A227
+construction), above their q95. Typical genes: 200 expression-matched gene sets of the same size as y, above their
+q95 ("beyond typical genes"). Window: D = S_N - S_T with a 90 % interval from 2,000 patient bootstraps within
+cancer (states not refitted).
+- **P249.0 (precondition):** set O, S_N: p < 0.05 and clock-specific (body time read in the tumour sample orders
+  clock-controlled genes of the normal sample). If it fails, everything below is uninformative.
+- **H249.1 (primary):** set C is on body time in normal tissue: S_N, p < 0.05, clock-specific and beyond typical genes.
+- **H249.2 (primary; the window):** H249.1 passes, S_T of set C is not detected (p >= 0.05) at an MDE below the
+  excess of S_N over its null mean, and the 90 % interval of D excludes 0. z_T is the noisier reading of body time
+  (H138.4), which works against S_N, so the asymmetry is conservative for a window.
+- **H249.3 (secondary):** the same two tests for sets K and F (Holm over the two sets, per test).
+- **H249.4 (secondary; cell-type resolved):** single cell, body time from the fibroblasts of the other sample: set C
+  in normal epithelium against the tumour-sample fibroblast state, and in malignant cells against the normal-sample
+  fibroblast state; same statistics.
+- **H249.5 (secondary; timed):** GSE233242: mean over the genes of set C of the two-term cosinor t modulus against the
+  recorded resection hour, normal minus tumour, hours permuted across patients (the window against a clock on the wall).
+**Descriptive (no pass / fail).** Per gene S_N, S_T and implied peak; per cancer with >= 30 pairs; the same-sample
+readouts (y and z of one sample), labelled as confounded; set O in the tumour (S_T): are clock-controlled genes
+themselves off body time in tumours; S_N and S_T against tumour purity tertiles (ABSOLUTE, on disk).
+**Power first (dated note, no observed association):** pairs and cancers per set; null SD and MDE (2.49 x SD) of S_N,
+S_T; not scored with < 100 pairs (TCGA), < 40 patients (single cell) or an MDE above 0.10; for H249.5 the null SD only.
+**Reading.** H249.1 and H249.2 pass: in patients, genes that handle anticancer drugs are on body time in normal
+tissue and not in the tumour: the first direct support of the chronotherapy premise in human tissue. H249.1 passes
+and S_T passes too: these genes stay on body time in the tumour; there is no window at the transcript level (in
+line with the mixed trials), although timing could still matter for toxicity alone. H249.1 fails with P249.0
+passing: these genes are not detectably on body time in human normal tissue in working hours; the rodent premise is
+not seen at the MDE. The comparison of sets C, K and F says whether any of this is particular to drug handling.
+**Limits.** (1) Bulk samples: a gene of the tumour sample is read in a mixture of malignant and other cells (purity
+descriptive; H249.4 resolves cell types on fewer patients). (2) Surgery in working hours compresses the spread of
+body time; both sides are compressed alike. (3) "Normal" is tumour-adjacent tissue. (4) Transcripts, not enzyme
+activity or drug levels. (5) A patient-level state other than time that moves clock genes in one sample and a gene
+in the other would pass; the pseudo-clock sets are the control. (6) Set C is a literature list drawn up for
+colorectal chemotherapy; several genes are liver- or gut-specific and will drop out elsewhere.
+**Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A249_chrono_window/scripts/` (on
+`common/datasets/tcga_paired`, the H138.4 states and `compute_a229.py`).
