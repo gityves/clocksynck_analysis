@@ -6060,3 +6060,13 @@ carries a wound response from the first; the responsive companion is the control
 rotation: a full-amplitude clock that stalls and a damped clock that turns give the same value. (5) Arrays and
 normalised counts are used as deposited.
 **Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A252_elapsed_time/scripts/`.
+
+**A252 power note (2026-11-12, before any observed change of a clock-gene state; `A252_elapsed_time/output/{power,design}.csv`).**
+Units (person x visit or leg) and later time points: GSE118280 30 units (15 men x 2 visits), +3.67 and +10.33 h; GSE231509 21,
++1 h; GSE252357 13, +1.75 / 4.25 / 9.25 h; GSE142401 38, +4 h; GSE151066 19, +0.67 / 3.67 h; GSE273041 20, +3 / 5 h; GSE303983 45,
++2.25 h; GSE120862 28 (7 persons x 2 legs x 2 training states), +2 / 5 h. All 14 clock genes present (13 in GSE4386). Null of
+rho (time labels permuted within unit, 10,000): H252.1 SD 0.215, MDE 0.53; H252.2 SD 0.237, MDE 0.59; H252.3 adipose SD 0.276,
+MDE 0.69; H252.3 muscle SD 0.304, MDE 0.76: above 0.7, **not scored** (its value is printed by the script and is reported
+as descriptive only; the Holm family of H252.3 reduces to adipose). Deviation: GSE4386 is deposited on the linear scale
+and is log2-transformed (descriptive dataset). Code run only with time labels shuffled within unit (`--placebo --smoke`).
+Choices not fixed by the registration are in the script docstring. Scoring proceeds as registered.
