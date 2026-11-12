@@ -6215,3 +6215,13 @@ GSE73439 (51 women, both gates p 0.005, MDE 0.16) and GSE133979 (32 patients, 13
 also unverified) and leaves H255.3, which pools 83 persons (null SD 0.052, MDE 0.129). Co-twin pairs are counted at
 scoring. Code run only with persons shuffled within tissue (`--placebo --smoke`). Choices not fixed by the registration are
 in the script docstring. Scoring proceeds as registered.
+
+**A254 power note (2026-11-12, before any lesional-minus-non-lesional value; `A254_paired_lesions/output/power.csv`).**
+All five datasets pass the gate (p 0.005 to 0.015; clock share 0.32 to 0.83 in non-lesional tissue) with unflagged
+coherence: periodontitis 69 pairs (13 clock genes), osteoarthritis 33, carotid plaque 32, uterine fibroid 30,
+hidradenitis 20. Label-swap null (10,000) of the offset: SD 0.33 h (MDE 0.83 h), 0.66 (1.65), 0.86 (2.15), 1.03 (2.56), 0.66
+(1.64). The fibroid's own test exceeds 2.5 h and is **not scored** (it stays in the pooled test). Pooled offset (184
+pairs): null SD 0.275 h, MDE 0.69 h (limit 1.0): H254.1 is scored; a psoriasis-sized delay (1.4 h) is well inside reach.
+Person links were checked with sex genes at preparation (concordance 0.94 to 1.00 where informative). Code run only
+with labels swapped at random per person (`--placebo --smoke`). Choices not fixed by the registration are in the script
+docstring. Scoring proceeds as registered.

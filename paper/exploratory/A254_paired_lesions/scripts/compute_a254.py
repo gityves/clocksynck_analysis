@@ -67,7 +67,9 @@ class Pair:
         case, ref = case.loc[u].astype(float), ref.loc[u].astype(float)
         if placebo:
             sw = np.random.default_rng([SEED, 9, sum(map(ord, key))]).random(len(u)) < 0.5
-            case, ref = case.where(~sw, ref, axis=0), ref.where(~sw, case, axis=0)
+            a, b = case.to_numpy().copy(), ref.to_numpy().copy()
+            a[sw], b[sw] = ref.to_numpy()[sw], case.to_numpy()[sw]
+            case, ref = pd.DataFrame(a, index=case.index, columns=case.columns), pd.DataFrame(b, index=ref.index, columns=ref.columns)
         if self.counts:
             case["depth"], ref["depth"] = case.sum(1), ref.sum(1)
         self.key, self.case, self.ref, self.n = key, case, ref, len(u)
