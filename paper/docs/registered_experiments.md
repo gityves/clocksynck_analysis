@@ -6204,3 +6204,14 @@ body time across persons, a between-person positive control.
 control). (2) Women only, arrays. (3) The cell line differs from tissue in more than time (culture, EBV); it bounds
 the genetic part only for genes expressed in it. (4) Whether co-twins were sampled together is not recorded per pair.
 **Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A255_living_tissues/scripts/`.
+
+**A255 power note (2026-11-12, before any observed pairing; `A255_living_tissues/output/{gates,power}.csv`).**
+MuTHER: 680 women with fat and skin, 794 with fat and cell line, 679 with skin and cell line; 14 clock genes. Gates:
+fat passes (clock share 0.348 against 0.102, p 0.010), skin passes (0.205 against 0.066, p 0.015); the cell line shows no
+clock-shaped covariance (0.042 against 0.065, p 0.75), as expected of cultured cells. Null (women permuted, 10,000): fat-skin
+null mean 0.034, SD 0.018, MDE 0.044 (limit 0.10); fat-cell line MDE 0.042; skin-cell line MDE 0.045. Surgical cohorts:
+GSE73439 (51 women, both gates p 0.005, MDE 0.16) and GSE133979 (32 patients, 13 clock genes, both gates p 0.005, MDE
+0.21) enter; GSE24883 fails its gates (p 0.78 and 0.13; 8 clock genes left after missing probes; its person link was
+also unverified) and leaves H255.3, which pools 83 persons (null SD 0.052, MDE 0.129). Co-twin pairs are counted at
+scoring. Code run only with persons shuffled within tissue (`--placebo --smoke`). Choices not fixed by the registration are
+in the script docstring. Scoring proceeds as registered.

@@ -18,6 +18,7 @@ Choices not fixed by the registration
 - A clock gene absent from a cohort is dropped from the waveform there.
 - Companion sets: drawn from the mean over the two tissues (MuTHER: fat and skin) of the mean log expression; the same gene
   sets in all tissues of a cohort; set j is pooled across the surgical cohorts.
+- A surgical cohort with a failed gate in either tissue leaves the pooled test (registered power rule).
 - H255.2: women resampled with replacement (2,000); each r on the resampled women having both tissues.
 - H255.4: one twin pair = two women listed as each other's co-twin; the order within a pair is randomised once (seed);
   null: the second twins permuted over pairs (10,000); the difference to the cell line is bootstrapped over twin pairs.
@@ -153,6 +154,9 @@ def run(args):
         gates += [dict(cohort=a, tissue=k, persons=len(c.t[k]), clock_genes=len(c.wf.genes), **c.gate(k, 10 + i)) for i, k in enumerate(c.t)]
     G = pd.DataFrame(gates)
     G.to_csv(OUT / "gates.csv", index=False)
+    failed = [a for a in SURG if (G[G.cohort == a].p >= 0.05).any()]   # registered: a cohort with a failed gate is not scored
+    S = {a: c for a, c in S.items() if a not in failed}
+    say("surgical cohorts dropped (gate):", failed)
     rng = np.random.default_rng([SEED, 2])
     nul = {p: perm_null(Z[p[0]], Z[p[1]], n_perm, rng) for p in mp}
     ZS = {a: c.Z() for a, c in S.items()}
