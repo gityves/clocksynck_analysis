@@ -6010,3 +6010,53 @@ before this note: modulus 1.62 (epidermis) and 0.99 (dermis) against null q95 0.
 permutations; men's dermis-minus-epidermis offset -2.0 h (-3.2 to -1.0). The positive control therefore passes on seen
 data; nothing of the women was seen (their statistics in that run are on shuffled women). Choices not fixed by the
 registration are in the script docstring. Scoring proceeds as registered.
+
+## A252 (2026-11-12, registered under the user's instruction of 2026-11-12 ("1 looks great ... work autonomously ... register the tests, download data"); staged: datasets, assumed clock times, statistic, hypotheses, families and readings are fixed here, eligibility and power go in a dated note before any observed change of a clock-gene state; seen: the scout `scouts_2026-11-12/repeat_biopsy_scout.md` (sample sheets, time points, presence and median percentile of the clock genes); NOT seen: any expression value compared between time points; none of the datasets below was used before in this project or its archive (GSE106800, used in A124, is excluded)): does the clock state of a living person's tissue advance by the elapsed time between two biopsies of the same day? **Ten repeat-biopsy studies (adipose, muscle; atrium and liver graft descriptive); L1 state change within person; secondary by registration (method validation in the living, Fig. 1)**
+**Why.** Every human validation of the readout so far is across persons (GTEx deaths, one breast cohort, the timed men
+of A251). Clinical studies that take a biopsy, intervene and take another hours later give a within-person test: the
+same tissue of the same person, so gene-specific levels cancel, and the state must move along the clock's circle by
+15 degrees per hour. Deviations are of interest (exercise, meals, surgery), but the first question is whether the
+rotation is seen at all.
+**Data and clock times (fixed now).** Elapsed hours as in the scout sheets. Clock time of the first biopsy: stated for
+GSE118280 (adipose, 08:40, then 12:20 and 19:00; 15 men, two diet visits); assumed 09:30 for GSE231509 (muscle,
+arrival 09:00 fasted; +1 h after a meal) and 09:00 for the other morning fasted protocols: GSE252357 (muscle; rest
+arm and resistance-exercise arm; +1.75, 4.25, 9.25 h; the 24 h point is not used), GSE142401 (adipose, +4 h after a
+meal), GSE151066 (muscle, +0.67, 3.67 h, cycling), GSE273041 (muscle, +3, 5 h, 3 h run), GSE303983 (adipose, +2.25 h:
+exercise session plus 1.5 h), GSE120862 (muscle, +2, 5 h, exercised and resting leg). Descriptive only (no clock
+time, no elapsed time, or not the same body): GSE4386 (atrium, start and end of bypass surgery), GSE75432 (muscle,
+before and >= 2 h after knee surgery), GSE151648 (liver graft before and after transplantation).
+**State.** Per sample z = L y, with y the log expression of the clock genes present (arrays: log2 x ln 2; counts:
+ln(count + 1)) and L the unweighted projector of the GTEx waveform (`clocksync` `projector`; L 1 = 0, so depth and
+array scale cancel). Unit = person x visit (or x leg).
+**Statistic.** For a unit and a later time point k, delta = z_k - z_0 and the predicted chord
+c_k = exp(i w (t0 + D_k)) - exp(i w t0) (w = 2 pi / 24 h, t0 clock time of the first biopsy, D_k elapsed hours).
+rho = sum Re(delta conj(c)) / sum |c|^2 over units and time points of a dataset, and with pooled sums over datasets:
+the amplitude of the rotation in units of the GTEx waveform (1 = the GTEx amplitude, 0 = no rotation; negative =
+moving backwards). Null: time-point labels permuted within unit (10,000; all assignments when fewer). Companions: rho
+from 200 expression-matched pseudo-clock sets and 200 responsive sets carrying the waveform's phases (per dataset, from
+its genome-wide means); "clock-specific" only above the q95 of both.
+- **H252.1 (primary):** GSE118280 (exact clock times): rho > 0, p < 0.05, clock-specific.
+- **H252.2 (secondary):** the seven other datasets pooled (assumed clock times): rho > 0, p < 0.05, clock-specific.
+- **H252.3 (secondary):** by tissue among those seven: muscle (5 datasets) and adipose (2), Holm over the two.
+- **H252.4 (secondary; without the genes a meal or stress moves directly):** H252.1 and H252.2 with PER1 and NR1D1
+  removed from the waveform: rho > 0, p < 0.05 (Holm over the two).
+**Descriptive (no pass / fail).** rho per dataset and time point; the implied clock time of the interval's midpoint
+(direction of the mean delta) against the protocol's; rho against elapsed time; t0 moved by +/- 2 h; rest against
+exercise (GSE252357 arms, GSE120862 legs): difference of the mean delta at matched times with a permutation p (arms
+are 5 vs 8 persons and 7 persons: no claim); the three descriptive datasets: modulus and direction of the mean delta
+against the companions.
+**Power first (dated note, no observed change):** units and time points per dataset; clock genes present; null SD and
+MDE (2.49 x SD) of rho for H252.1-3. Not scored if the MDE exceeds 0.7 (a rotation with the GTEx amplitude must be
+detectable with margin).
+**Reading.** H252.1 passes clock-specifically: within a living person the readout advances with the day, the first
+within-person validation, and rho is the tissue's amplitude relative to GTEx. H252.2 passes too: it holds across
+tissues and laboratories with protocol times only. A pass that the responsive sets match: a state change shared with
+stress or feeding genes, not shown to be the clock's rotation. A fail at the MDE: the rotation is not seen within
+persons over 1 to 10 h, which would question state changes read as time. H252.4 says whether PER1 and NR1D1 carry it.
+**Limits.** (1) Every interval contains an intervention or a meal; only the rest arm of GSE252357 (5 persons) has
+none, so a pass is "elapsed time plus what happened in it". (2) Assumed clock times (H252.2-3) are protocol guesses;
+an error of 2 h turns the prediction by 30 degrees (cos 0.87). (3) A second biopsy of the same muscle or fat depot
+carries a wound response from the first; the responsive companion is the control. (4) rho mixes amplitude and
+rotation: a full-amplitude clock that stalls and a damped clock that turns give the same value. (5) Arrays and
+normalised counts are used as deposited.
+**Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A252_elapsed_time/scripts/`.
