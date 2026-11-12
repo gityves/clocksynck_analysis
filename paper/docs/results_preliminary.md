@@ -4602,3 +4602,43 @@ sets, 200 matched gene sets; null mean of S 0.120.
   0.4 h. This is the living-cohort support the robustness arm lacked; it is one cohort, women only, on arrays, and age
   (20-74 y) is not public, so no age contrast is possible.
 <!-- src: paper/exploratory/A251_skin_sites/output/{gates,power,score_tests,score_pairs,score_offsets,score_timed,score_descriptive}.csv -->
+
+## A252 (scored 2026-11-12): within a living person, the clock state of adipose tissue and muscle advances with the hours between two biopsies, in the predicted direction and clock-specifically (H252.1 PASS, H252.2 PASS, H252.3 adipose PASS, H252.4 PASS x2); the implied time of day tracks the protocol's within about an hour
+
+- Data: eight repeat-biopsy studies (184 + 30 units, 334 within-person changes), none used before; one scoring run.
+  rho is the amplitude of the rotation in units of the GTEx waveform (0 = no rotation).
+- **H252.1 PASS, clock-specific (primary; GSE118280, adipose, exact clock times 08:40, 12:20, 19:00; 15 men x 2
+  visits):** rho 1.265 (null SD 0.215, p 0.0001); matched sets q95 0.109, responsive sets median 0.232, q95 0.738 (no set
+  of 200 reaches it in either). By interval: +3.67 h rho 1.44, +10.33 h rho 1.23.
+- **H252.2 PASS, clock-specific (seven studies with assumed morning times):** rho 2.970 (null SD 0.237, p 0.0001);
+  matched q95 0.205; responsive median 0.401, q95 1.201. With the assumed first-biopsy time moved by -2 / +2 h: 2.67 / 2.48.
+- **H252.3:** adipose (2 studies) PASS, rho 2.221 (p 0.0001; matched q95 0.351; responsive q95 2.120, p_responsive
+  0.045: clock-specific, narrowly). Muscle (5 studies): **not scored** (power rule, MDE 0.76); descriptive value 3.218
+  (responsive q95 1.147).
+- **H252.4 PASS x2 (without PER1 and NR1D1):** GSE118280 rho 1.058 (responsive q95 0.292); seven studies 3.566
+  (responsive q95 1.516); Holm p 0.0002 each.
+- Direction (descriptive): the clock time of the interval's midpoint implied by the mean change, against the
+  protocol's, per study and time point (14 points): GSE118280 10.1 vs 10.5 h and 11.1 vs 13.8 h; GSE252357 9.3 / 11.4 /
+  13.3 vs 9.9 / 11.1 / 13.6 h; GSE151066 9.4 / 10.9 vs 9.3 / 10.8 h; GSE273041 9.6 / 10.7 vs 10.5 / 11.5 h; GSE120862 9.3 /
+  11.3 vs 10.0 / 11.5 h; GSE231509 10.7 vs 10.0; GSE142401 11.8 vs 11.0; GSE303983 10.4 vs 10.1 h. Thirteen of 14 within
+  1 h; within a study the implied time moves later with the later biopsy in all six studies with two or more
+  intervals.
+- Size (descriptive): rho per study and interval 1.2 to 6.5; adipose 1.2-1.4 with exact times, 1.2 and 4.8 with
+  assumed times; muscle 1.5 to 6.5. The clock-plane change is larger than a rotation with the GTEx amplitude.
+- Rest against exercise (descriptive, no claim): GSE252357 rest arm (5 persons, no intervention but breakfast) rho
+  2.886, exercise arm 3.095, difference p 0.50; GSE120862 resting leg 2.646, exercised leg 2.300, p 0.41.
+- Surgery and transplantation (descriptive, no clock or elapsed time): modulus of the mean change in atrium during
+  bypass surgery 1.68 (matched q95 1.78; responsive median 7.71), in muscle around knee surgery 0.79 (matched q95
+  1.15; responsive median 1.48), in the liver graft across transplantation 1.02 (matched q95 1.90; responsive median
+  2.41): no clock-plane change beyond matched gene sets, while stress-responsive sets move several-fold more.
+- **Reading (registered rules):** the first within-person validation: between two biopsies of one day the state moves
+  along the clock's circle, in the direction and at the time of day the protocol predicts, in two tissues and eight
+  laboratories, beyond expression-matched and stress-responsive gene sets and without PER1 and NR1D1. The resting arm
+  moves as the exercised one, so at these n exercise is not needed for it and does not detectably add to it. Limits as
+  registered: every interval but one holds a meal or an intervention; clock times of seven studies are protocol
+  guesses (the result is stable to +/- 2 h); rho mixes amplitude and rotation. rho well above 1 says the living
+  tissues' clock amplitude exceeds the GTEx waveform's (post-mortem, attenuated: review M2), or that the morning hours
+  carry a larger change than a sinusoid allows; it is not an estimate of elapsed time. The three surgical datasets
+  show no clock-specific change, but without times they cannot say whether the clock stalls under surgery or cold
+  storage.
+<!-- src: paper/exploratory/A252_elapsed_time/output/{design,power,score_tests,score_datasets,score_descriptive}.csv -->
