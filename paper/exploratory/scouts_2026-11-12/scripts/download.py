@@ -40,6 +40,7 @@ if __name__ == "__main__":
      "GSE10334": ("paired_lesion", [sm("GSE10334")], "Gingiva, periodontitis-affected vs unaffected sites, Affymetrix U133 Plus 2."),
      "GSE16134": ("paired_lesion", [sm("GSE16134")], "Gingiva, periodontitis-affected vs unaffected sites, Affymetrix U133 Plus 2."),
      "GSE26051": ("paired_lesion", [sm("GSE26051")], "Tendinopathy lesional vs non-lesional tendon, Affymetrix U133 Plus 2."),
+     "GSE39491": ("paired_lesion", [sm("GSE39491")], "Barrett metaplasia vs matched squamous oesophagus and gastric cardia, same BE patients, Affymetrix U133A 2.0 (premalignant lesion)."),
      "GSE119717": ("paired_lesion", [sm("GSE119717"), su("GSE119717","GSE119717_Non-normalized_data.txt.gz")], "AAA: dilated vs non-dilated perivascular adipose tissue of the same subject, plus omental and subcutaneous fat (cross-listed in living_multitissue)."),
      "GSE24293": ("living_multitissue", [sm("GSE24293")], "Greenawalt/MGH RYGB liver, Agilent two-colour (log ratio vs pool)."),
      "GSE24294": ("living_multitissue", [sm("GSE24294")], "Greenawalt/MGH RYGB omental fat, Agilent two-colour (log ratio vs pool)."),
@@ -50,7 +51,7 @@ if __name__ == "__main__":
      "GSE320593": ("living_multitissue", [sm("GSE320593"), su("GSE320593","GSE320593_AT.counts.csv.gz"), su("GSE320593","GSE320593_liver.counts.csv.gz")], "Liver and subcutaneous adipose biopsies with/without perioperative dexamethasone, surgical vs non-surgical, RNA-seq counts."),
      "GSE133979": ("living_multitissue", [sm("GSE133979"), su("GSE133979","GSE133979_Rectus_Abdominis_Muscle_variance_stabilized_counts.txt.gz"), su("GSE133979","GSE133979_Subcutaneous_adipose_variance_stabilized_counts.txt.gz")], "Rectus abdominis muscle and SAT, PDAC cachexia vs controls (cancer patients)."),
     }
-    ADD = {'GSE43292': 'GPL6244', 'GSE57218': 'GPL6947', 'GSE10334': 'GPL570', 'GSE16134': 'GPL570', 'GSE26051': 'GPL570', 'GSE119717': 'GPL10558', 'GSE24883': 'GPL4133', 'GSE24293': 'GPL4372', 'GSE24294': 'GPL4372', 'GSE24297': 'GPL4372', 'GSE24335': 'GPL4372'}
+    ADD = {'GSE39491': 'GPL571', 'GSE43292': 'GPL6244', 'GSE57218': 'GPL6947', 'GSE10334': 'GPL570', 'GSE16134': 'GPL570', 'GSE26051': 'GPL570', 'GSE119717': 'GPL10558', 'GSE24883': 'GPL4133', 'GSE24293': 'GPL4372', 'GSE24294': 'GPL4372', 'GSE24297': 'GPL4372', 'GSE24335': 'GPL4372'}
     for w in which:
         g, f, n = J[w]
         if w in ADD: f = f + [gpl(ADD[w])]

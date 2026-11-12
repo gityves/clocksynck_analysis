@@ -6070,3 +6070,47 @@ MDE 0.69; H252.3 muscle SD 0.304, MDE 0.76: above 0.7, **not scored** (its value
 as descriptive only; the Holm family of H252.3 reduces to adipose). Deviation: GSE4386 is deposited on the linear scale
 and is log2-transformed (descriptive dataset). Code run only with time labels shuffled within unit (`--placebo --smoke`).
 Choices not fixed by the registration are in the script docstring. Scoring proceeds as registered.
+
+## A253 (2026-11-12, registered under the user's instructions of 2026-11-12 ("Draft the amendment for depression"; then "you can register and run the depression amendment if you believe it has a good chance of passing, otherwise don't bother"); the lead's judgement: the cohorts found hold about 67 depressed and 65 control donors with three to six regions each, enough to see a clear loss of region relations if there is one, and both outcomes are usable (REVIEW_2026-11-10 D2 b); staged: cohorts, statistics, hypotheses, families and readings are fixed here, the precondition and power go in a dated note before any case-control value; seen: the scout `scouts_2026-11-12/psych_transplant_scout.md` (sample sheets, donors per group and region, presence and median percentile of the clock genes); the card `li2013circadian` (weaker rhythms in depression by time of death; the patients of that study are not public); WP0 item 8 and A141 (brain disease contrasts depend on the host anchor; the statistics below use no host); NOT seen: any clock statistic of these cohorts): are the clock relations between brain regions of one person changed in major depression or psychosis? **GSE80655, GSE102556, GSE53987 (depression); GSE80655, GSE202537, GSE53987 (schizophrenia and bipolar disorder); post-mortem, 3 to 6 regions per donor; L2 / L3 pairwise, anchor-free; secondary by registration (candidate human desynchrony test, Q29 a)**
+**Why.** Depression is the human disease for which internal desynchrony is most often proposed, and the evidence is
+weaker rhythms against time of death (Li 2013), which cannot tell a shifted patient from regions out of step with
+each other. Region pairs of one donor can: both regions were taken at the same death, so their relation needs no
+time. By the ledger's definition (rule 3) internal desynchrony is a change of the phase offset between compartments;
+a lower pairing is loss of shared clock structure.
+**Data.** GSE80655 (counts; anterior cingulate, DLPFC, nucleus accumbens; 24 donors each of control, depression,
+bipolar disorder, schizophrenia); GSE102556 (log FPKM; six regions; 22 controls, 26 depression; the 18 BA25 libraries
+without a GEO row take the diagnosis of their donor); GSE53987 (arrays; BA46, hippocampus, striatum; donors linked by
+identical age, sex, PMI and pH); GSE202537 (counts; caudate, putamen, nucleus accumbens; 36 controls, 28
+schizophrenia, 8 bipolar psychosis; time of death recorded). "Psychosis" = schizophrenia and bipolar disorder pooled.
+**States.** Per sample the clock-plane state of the genes present (GTEx waveform, unweighted projector as A252),
+centred within cohort x region x group.
+**Statistics (per cohort, group and region pair; donors with both regions).** Pairing r (A227 `raw_stat`) and offset
+(arg of the cross-moment, h). R_g: mean of r over the cohort's region pairs (weights = donors).
+D = R_control - R_case and A = mean over region pairs of |offset_case - offset_control| (wrapped; weights = case
+donors), each pooled over the family's cohorts with weights = case donors. Null: diagnosis labels permuted among the
+donors of a cohort (cases of the family and controls only; 10,000; seed 253). Companions: D and A from 200
+expression-matched pseudo-clock sets and 200 responsive sets; "clock-specific" only above the q95 of both. Interval
+of D: 90 %, 2,000 bootstraps of donors within cohort x group.
+- **P253.0 (precondition):** the controls' regions share a clock state: R_control pooled over the four cohorts, p <
+  0.05 against donors permuted within region, and clock-specific. If it fails, everything below is uninformative.
+- **H253.1 (primary; depression, offsets):** A > its null, p < 0.05, clock-specific.
+- **H253.2 (primary; depression, pairing):** D > 0, p < 0.05, clock-specific. Holm over H253.1-2.
+- **H253.3-4 (secondary; psychosis):** the same two tests, Holm over the two.
+- **Equivalence reading of D** (if H253.2 or H253.4 fails): "kept" if the 90 % interval of D lies below 0.15.
+**Descriptive.** Per cohort and per diagnosis (schizophrenia and bipolar apart); r and offset per region pair and
+group; clock-plane variance per group (a lower spread lowers r without any desynchrony: flagged if the log ratio
+exceeds 0.3 in absolute value); GSE202537: modulus and acrophase of the complex cosinor of the state on time of death
+per group and region; D by suicide (GSE102556) if both arms hold >= 10 cases.
+**Power first (dated note, no case-control value):** donors per group, cohort and pair; P253.0; null SD and MDE (2.49
+x SD) of D and of A per family. Not scored if P253.0 fails or the MDE of D for depression exceeds 0.20.
+**Reading.** H253.1 passes clock-specifically: regions of depressed (or psychotic) donors keep other phase relations
+than controls': internal desynchrony in a human disease, the positive the paper lacks, to be replicated. H253.2
+alone: the regions share less clock structure, without a shift between them (noise or damping; the variance
+descriptive says which is more likely). Both fail with D "kept": region relations are preserved in depression within
+the bound, so the weaker rhythms against time of death are a shift of the whole brain against the day or of the
+patients' time of death, which fits the paper's thesis. Fails without the bound: not resolved.
+**Limits.** (1) Diagnosis is confounded with suicide, medication, brain pH and agonal state; pH and PMI are
+descriptive covariates only. (2) Death at any hour gives the spread; groups may differ in their hours of death. (3)
+Three to six regions, none of them the SCN. (4) GSE53987 donors are linked by inference; GSE102556 is FPKM. (5) Pooled
+"psychosis" mixes two diagnoses. (6) Lower RNA quality in cases lowers r: the companions are the control.
+**Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A253_psych_regions/scripts/`.
