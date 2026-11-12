@@ -5702,3 +5702,61 @@ qualify, not the statistic. (5) Methylation status is known for about half of th
 (6) Association, not causation; no surgery times.
 **Stop rule:** one power note, one scoring run; Wang 2022 (GSE174554, tumour / normal calls only) is not used here.
 **Code:** `paper/exploratory/A247_glioma/scripts/` (on `compute_a227.py`, `compute_a229.py`, `score_a241.contamination`).
+
+## A248 (2026-11-12, DRAFT awaiting user agreement, nothing computed; user: "draft the glucocorticoid T-cell amendment", after remarking that glucocorticoid control of T-cell localisation is solid in the literature and that the A245 T-cell result is unexpected; staged: readouts, predicted hours, statistics, families and readings are fixed here, the power goes in a dated note before any observed statistic; seen: every result of A245 on the 26 tissues, including the per-tissue peaks of T-cell content (pooled 16.4 h, lung 12.6 h, 19 of 26 tissues between 9 and 21 h; phase-free p 0.077) and of the adhesion genes; NOT seen: any readout of GTEx whole blood, any glucocorticoid-response score in GTEx, any naive or effector marker score): does T-cell content of human blood follow the published glucocorticoid-driven rhythm in GTEx, do tissues carry a glucocorticoid-response rhythm, and is tissue T-cell content tied to it? **GTEx fast deaths, recorded time; blood positive control and glucocorticoid score blind, tissue T-cell hour post hoc to A245; other; secondary**
+**Why.** A245 tested T-cell content at an hour taken from A229 (4.8 h) and found the opposite sign. That hour did not
+come from the redistribution literature. In healthy men blood T-cell counts peak at night and fall in the day, 3 h
+behind cortisol, by redistribution of naive cells (to bone marrow, through CXCR4): CD3+ acrophase 02:10 h (SEM 20
+min), amplitude 388 on a mesor of 1,902 cells per microlitre, nadir about 14:00 h; naive CD4+ 02:41 h, naive CD8+
+02:09 h (night-to-day change -41 % and -46 %); effector CD8+ 15:34 h (SEM 116 min); cortisol maximum about 08:00 h
+(cosinor acrophase 10:40 h), correlation with T-cell counts maximal at a 3 h delay (r -0.65) (Dimitrov et al., Blood
+2009, Table 1, Table 2 and Results, read in PMC2686184; 14 men, 24 h, sampled every 1.5 to 3 h). Blocking cortisol
+synthesis or the glucocorticoid receptor blunts the morning fall of naive T cells (Besedovsky et al., FASEB J 2014;
+abstract only); in mice the rhythm is lost without the T-cell glucocorticoid receptor (Shimba et al., Immunity 2018;
+abstract only). Cards for the three papers are written before the result entry. A tissue sampled in bulk holds
+blood and resident cells: if its T-cell signal is blood, it peaks at night; if cells that leave blood by day are
+found in tissue, it peaks by day (what A245 hints at, post hoc).
+**Data.** As A245 (GTEx v10, fast deaths with a time of death, the 233 donors of A245, same covariates, strata and
+permutation scheme), plus whole blood (excluded from A245) as its own compartment. Code: the functions of
+`compute_a245.py`.
+**Readouts** (log2(CPM + 1), mean over genes): T-cell content (CD3D, CD3E, CD2, TRAC, as A245); glucocorticoid
+response GC (TSC22D3, FKBP5, DDIT4, ZBTB16, KLF9: the A146 set; PER1 left out, a clock gene); naive (CCR7, SELL,
+LEF1, TCF7) and cytotoxic effector (GZMB, PRF1, CX3CR1, FGFBP2) scores, descriptive.
+**Statistics.** S, R and the permutation null of A245 (10,000 permutations of time within Hardy x sex; seed 248);
+blood is one compartment, so S is its t. Matched companion: 200 expression-matched gene sets of the same size
+(A245 rule); beyond typical genes only above their q95. Association of two readouts in the same sample: partial
+correlation of T-cell content with GC given the covariates, mean of Fisher z over tissues; null: the GC vector
+permuted across donors within Hardy x sex (shared across tissues); companion: GC replaced by 200 matched 5-gene
+sets, on the same samples.
+- **H248.1 (primary; blind; positive control of the readout):** blood T-cell content peaks at 02:10 h (S > 0,
+  recorded time).
+- **H248.2 (primary; blind):** the GC score of the 26 tissues peaks at 10:40 h, the cortisol acrophase (S > 0,
+  recorded time); a transcript lag of up to 3 h costs at most 30 % of the projection. Holm over H248.1-2.
+- **H248.3 (secondary; blind):** in blood, T-cell content is lower where GC is higher (partial correlation < 0).
+- **H248.4 (secondary; POST HOC to A245, labelled as such wherever reported):** tissue T-cell content peaks at
+  14:00 h, the blood nadir (S > 0 over the 26 tissues, recorded time). Holm over H248.3-4.
+Pass: Holm p < 0.05 and above the matched q95.
+**Descriptive (no pass / fail).** GC in blood and per tissue (peak, amplitude); partial correlation of T-cell content
+with GC over the 26 tissues, with and without cos / sin of time among the covariates (does a donor's glucocorticoid
+state relate to tissue T-cell content beyond the hour?); naive and effector scores in blood against 02:09-02:41 h
+and 15:34 h; every readout against internal time (the A245 host) and D = S(internal) - S(recorded); ventilated
+donors; blood T-cell content after residualising on a neutrophil score (CSF3R, FCGR3B, CXCR2).
+**Power first (dated note, no observed statistic):** donors with blood; null SD and MDE (2.49 x SD) of every test;
+for H248.1 the log2 amplitude at the MDE beside the published one (a peak 20 % above the mesor, about 0.27 log2
+units, if the share of T-cell RNA follows the count).
+**Reading.** H248.1 pass: the GTEx readout recovers the known human rhythm; A245's failure is then about the A229
+hour, not about the ability to see T-cell rhythms in these donors. H248.1 fail at an MDE below the published
+amplitude: the readout or these donors (post-mortem, terminal stress, relative RNA shares) do not carry the known
+rhythm, and no T-cell statement from GTEx, A245 included, should be read as biology. H248.2 pass: a
+glucocorticoid-response rhythm at the cortisol hour is visible across human tissues without sampling times being
+controlled; with H248.3, the glucocorticoid link of the blood rhythm is seen in the same samples. H248.4 pass
+(post hoc): tissue T-cell content is in antiphase to blood, as cells leaving blood by day would give; it needs an
+independent cohort before it is a claim. H248.4 fail with H248.1 passing: bulk tissue content does not mirror the
+blood rhythm at that size.
+**Limits.** (1) RNA shares, not cell counts: a T-cell score in blood falls when neutrophils rise (neutrophil
+sensitivity only). (2) Death is not a resting baseline: cortisol rises with terminal stress, and the hour of death
+is tied to its cause (strata Hardy x sex only). (3) Bone marrow, the proposed daytime destination of naive T cells,
+is not in GTEx; lymphoid organs are not targets. (4) The published hours come from 14 young men under a fixed sleep
+schedule; donors differ in age, sex and habits. (5) H248.4 and the tissue descriptives are not blind. (6) Controlled
+access: aggregates only.
+**Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A248_glucocorticoid_tcells/scripts/`.
