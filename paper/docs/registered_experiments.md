@@ -5628,6 +5628,19 @@ state and a program together. (3) Not blind to A227-A229 on the same patients; l
 **Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A246_tme_clock_state/scripts/` (on
 `A229_endothelial_gate/scripts/compute_a229.py` and the A146 program definitions).
 
+**A246 power note (2026-11-12, before any observed association; `A246_tme_clock_state/output/{eligibility,power}.csv`; script written by a Sonnet agent, numbers re-read in the table).**
+Null from y shuffled within cohort only (10,000; one ordering of a cohort's patients per iteration, shared by all
+programs). Tumour side, state (a) endothelial: P1-P3 134 patients / 18 cohorts (MDE 0.104-0.106), P9 73 / 9 (0.143), P4 and
+P10 164 / 18 (0.092, 0.093), P5, P6 and P8 169 / 19 (0.089-0.092). State (b) own compartment: P1-P3 298 / 31 (0.071-0.073),
+P9 162 / 16 (0.097), P4 and P10 318 / 29 (0.070), P5, P6 and P8 314 / 29 (0.070-0.071). All nine programs are scored on
+both states. Omnibus T: null SD 0.340 (a) and 0.349 (b), MDE 0.85 and 0.87 (T units; the SD is close to 1 / sqrt(9), so
+the programs are nearly independent under the null). Adjacent-normal side (descriptive): 75-263 patients per program,
+all scored. P9 (CD274) loses 14 cohorts to the count rule; 10 to 12 cohorts have no tumour endothelial pseudobulk.
+Choices not fixed by the registration (script docstring): abundance denominators are the cells of the A227 tables
+(as H229.5), patients with < 100 such cells dropped for P4-P6, P8, P10; malignant compartment = copy-number calls where
+the cohort has them, else tumour epithelium; a program needs half of its genes; z-scores over the patients with the
+compartment. Code tested only on shuffled y (`--placebo`, 3 cohorts). Scoring proceeds as registered.
+
 ## A247 (2026-11-12, user agreement 2026-11-12 ("yes go ahead with A247") to the draft committed as 729a317, text unchanged; nothing computed; staged: classes, statistics, hypotheses, families and readings are fixed here, eligibility, the healthy-brain calibration and the power go in a dated note before any clock statistic is computed on GBmap; seen: the scout `exploratory/scouts_2026-11-12/glioma_scout.md` (cells, patients, summed clock-gene UMI and MGMT UMI per class; no clock statistic, no gene-by-gene clock counts), every carcinoma result (A138 H138.1: malignant coupling c 0.076; A149, A151, A227-A229), the brain results A135 / A141 / WP0 Q3 (no principled brain reference; glia against neurons is anchor-dependent), the cards `dong2019targeting` and `gonzalezaponte2025circadian`): do glioma cells share a clock state with the patient's own non-malignant brain cells, and does MGMT follow that state? **Extended GBmap (CELLxGENE), droplet data; L3-like pairing within the tumour sample and L1-like association; secondary (cancer section)**
 **Why.** Glioblastoma stem cells keep robust clocks in culture and depend on BMAL1 / CLOCK (Dong et al. 2019), unlike
 carcinoma cells, whose clock state is barely tied to the patient's other cells (A138 H138.1). MGMT promoter
