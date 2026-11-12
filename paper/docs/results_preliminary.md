@@ -4425,4 +4425,55 @@ permutations of time within Hardy x sex; S = mean over tissues of the t at the p
   VCAM1 only on an uncorrected descriptive p of 0.032 (a midday peak, about 7 h from the prediction), which is not a
   claim. Not a refutation of the mouse gate: bulk tissue, post-mortem donors, and the T-cell score includes blood.
   A229's implied peaks stay descriptive and should not be quoted as hours.
+- **Note (2026-11-12, after A248):** the blood positive control of A248 fails, so H245.2 is uninformative about T-cell
+  biology (see A248); the registered verdict above is unchanged.
 <!-- src: paper/exploratory/A245_trafficking_gtex/output/{power,tissues,direction,score_tests,score_descriptive,score_per_tissue,score_sweep,score_matched,score_pseudo}.csv -->
+
+## A246 (scored 2026-11-12): tumour-microenvironment programs do not follow the clock state of the tumour at any phase (H246.1 FAIL; H246.2 associated but not clock-specific)
+Power note: `registered_experiments.md` (commit 0f251fd). A227 cohorts; A229 statistic, 10,000 shared permutations, 200
+pseudo-clock sets; nine programs scored on both states. Script by a Sonnet agent; numbers re-read in `tests.csv`.
+- **H246.1 FAIL (state = tumour endothelial clock; 73-169 patients per program):** omnibus T -0.121 (null SD 0.340, MDE
+  0.85), p 0.63; pseudo median 0.230, q95 0.825. No program below unadjusted p 0.05 (smallest: myeloid share 0.360 vs
+  null 0.307, p 0.078).
+- **H246.2 FAIL, not clock-specific (state = the program's own compartment; 162-318 patients):** omnibus T 1.268, p
+  0.0003, Holm 0.0006, but pseudo-clock median 1.378 and q95 2.107 (p_clock 0.58): programs covary with the state of
+  matched non-clock gene sets of their compartment as much as with its clock state.
+- **H246.3 (programs):** only proliferation in malignant cells against their own state reaches Holm (r 0.378 vs null
+  0.287, p 0.001, Holm 0.013), not clock-specific (pseudo q95 0.393, p_clock 0.12). All others fail.
+- **Descriptive:** per cancer type the endothelial omnibus is between -0.379 (liver) and +0.043 (gastric), prostate
+  +0.902 (85 program-patients, null SD 0.461); breast cohorts -0.130. Circular correlation of the implied peaks with the
+  hours A146 transferred from the mouse: 0.302 (endothelial state), 0.855 (own state; nine programs, no test, and the
+  associations it rests on are not clock-specific). Adjacent-normal tissue: endothelial-state omnibus 1.101 (p 0.0015;
+  pseudo q95 1.072, p_clock 0.055, at the line), with T-cell activation (r 0.430, p_clock 0.020) and PD-L1 (0.464,
+  p_clock 0.040) leading; own-state omnibus 1.149, not clock-specific (pseudo q95 1.873).
+- **Reading (registered rules):** with A146 part 2, no clock-state organisation of these programs is detected in
+  tumours, now without the mouse-to-human phase transfer and without a per-patient time estimate. The recorded-time
+  result of A146 part 1 stands alone, as a hospital-clock effect that needs a second timed cohort. The own-compartment
+  association is a generic covariation of expression states. The adjacent-normal pattern repeats the descriptive
+  finding of A146 part 1 (programs follow body time in normal tissue, not in the tumour); it is descriptive and at the
+  pseudo-clock line (D7: 1,000 sets before any wording).
+<!-- src: paper/exploratory/A246_tme_clock_state/output/{power,eligibility,tests,pooled,per_cohort,pseudo,matched_sets}.csv -->
+
+## A248 (scored 2026-11-12): GTEx blood does not show the published night peak of T cells (positive control H248.1 FAIL); glucocorticoid score and tissue T-cell hour not detected
+Power note: `registered_experiments.md` (commit 79aa1f4). 208 donors with blood, 26 tissues, 10,000 permutations.
+- **H248.1 FAIL (blood T-cell content at 02:10 h):** t -1.347 (null SD 1.007, MDE 2.51 = 0.274 log2, the published
+  amplitude), one-sided p 0.91; fitted peak 15.3 h (phase-free p 0.34); -1.467 after residualising on the neutrophil
+  score. Descriptive: naive score fitted peak 2.9 h (amplitude 0.048 log2, p 0.30 at 02:25 h); effector score fitted
+  peak 13.3 h (0.199 log2; p 0.080 at 15:34 h).
+- **H248.2 FAIL (GC score of 26 tissues at 10:40 h):** S 0.821 (null SD 0.641, MDE 1.60), p 0.10, Holm 0.20; above the
+  matched q95 (0.675); fitted peak 7.9 h. Internal time: S 0.112.
+- **H248.3 FAIL (blood, T-cell content vs GC):** partial r -0.011, p 0.45 (MDE 0.175).
+- **H248.4 FAIL (post hoc to A245; tissue T-cell content at 14:00 h):** S 0.526 (null SD 0.316), p 0.045, Holm 0.090;
+  below the matched q95 (0.632); fitted peak 16.4 h.
+- **Descriptive:** tissue T-cell content against GC in the same sample: partial r -0.048 (p 0.024), -0.046 given the
+  hour (p 0.036). Blood GC: fitted peak 11.9 h, amplitude 0.037 log2 (p 0.31). Ventilated donors (354, recorded time):
+  GC of 29 tissues S 1.895 at 10:40 h (p 0.0015, fitted peak 10.7 h); blood and tissue T-cell content null (p 0.60,
+  0.80). In ventilated care morning drug rounds (steroids) are an alternative to endogenous cortisol.
+- **Reading (registered rules):** the positive control is not met: the rhythm of blood T cells that is established
+  in living subjects (Dimitrov et al. 2009) is not recovered from RNA shares in the blood of fast-death donors, at a
+  power of about 0.8 for the full published amplitude. By the registered reading, no T-cell statement from GTEx
+  bulk tissue, A245's H245.2 included, is to be read as biology: A245's T-cell failure says the A229 hour is not
+  seen in these data, not that tissue T-cell content lacks a daily rhythm. The glucocorticoid score points to the
+  morning (fitted 7.9 h, beyond matched genes) but is not detected at this size; the tissue T-cell peak near 16 h
+  stays a post hoc hint.
+<!-- src: paper/exploratory/A248_glucocorticoid_tcells/output/{power,compartments,score_tests,score_descriptive,score_per_compartment,score_matched}.csv -->
