@@ -5954,3 +5954,49 @@ Delta(O, C) null SD 0.0092, MDE 0.023 (limit 0.045); Delta(O, F) MDE 0.019; Delt
 met: an effect of half the TCGA size is detectable. No purity table of CPTAC is on disk, so the purity strata of the
 descriptive part are omitted. Code run only on shuffled patients (`--placebo --smoke`). Choices not fixed by the
 registration are in the script docstring. Scoring proceeds as registered.
+
+## A251 (2026-11-12, registered under the user's instruction of 2026-11-12 to "work autonomously ... register the tests, download data" on the directions of REVIEW_2026-11-10 §4 (D4) and Q29 (b); staged: compartments, statistics, hypotheses, families and readings are fixed here, gates and power go in a dated note before any observed pairing or offset; seen: the scout `scouts_2026-11-12/brain_skin_scout.md` (sample sheet, batches, probe sets of the clock genes and their median intensity percentile); the 2026-11-08 metadata check (no age in GEO); NOT seen: any clock statistic, any expression value compared between compartments or persons; Wu 2020's own results are known from the card `wu2020population` (a population phase predictor; no within-person pairing is reported)): do skin compartments of distant body sites of a living person share one clock state? **Wu 2020 (del Olmo), GSE139301 + GSE139300, 154 women, 3 sites x 2 layers, untimed clinic biopsies, HG-U219 arrays; L2 pairwise; secondary by registration (robustness arm, living cohort)**
+**Why.** The paper's statements on a shared internal time rest on post-mortem GTEx (A109, A150). Review item 2
+("missing for Cell"): one living cohort. Here each woman gives epidermis and dermis from forearm, buttock and cheek at
+one visit, without a recorded time: the design the method is built for. Each compartment was hybridised in its own
+batch, so a pairing across compartments cannot come from a shared array batch.
+**Data.** Women: 154 (137 with all six compartments). Timed arm: 20 men, forearm, both layers, at 0, 6, 12 and 18 h.
+Probe set of a gene, per layer series: among its probe sets the one with the highest mean over the women's samples,
+restricted to those ending in `_at` without `_s_` / `_x_` when any exists. Age is not public: no age contrast.
+**States.** Per sample, the clock-plane state of the 14 genes (GTEx waveform, arrays: unweighted projector,
+`clocksync.paired.states`), centred within compartment (women) or within compartment and man (timed arm).
+**Statistic.** Pair of compartments a, b: r = |sum z_a conj(z_b)| / sqrt(sum |z_a|^2 sum |z_b|^2) over the women with
+both (A227 `raw_stat`); a family of pairs is pooled with weights = women. Null: women permuted independently within
+each compartment (10,000; seed 251). Companions on the same statistic: 200 expression-matched pseudo-clock sets and 200
+responsive sets (`pseudo_waveforms`, means from the layer's genome-wide probe sets collapsed by the same rule);
+"clock-specific" only above the q95 of both. Offset of a pair: arg of the cross-moment (h), 90 % interval from 2,000
+bootstraps of women.
+- **P251.0 (positive control, timed men):** in each layer, the state follows the collection time: modulus of the
+  complex cosinor of the state on clock time (states centred within man), against times permuted within man (10,000);
+  p < 0.05 in both layers. If it fails in both, the platform does not read the clock and everything below is
+  uninformative.
+- **H251.1 (primary):** the same layer at different body sites shares a clock state: the six pairs (three site pairs
+  x two layers) pooled, p < 0.05 and clock-specific.
+- **H251.2 (secondary):** epidermis and dermis share it: (a) at the same site (three pairs), (b) at different sites
+  (six pairs); each p < 0.05 and clock-specific (Holm over the two).
+- **H251.3 (secondary; one time across the body surface):** every same-layer site-pair offset has its 90 % interval
+  within +/- 1.5 h (equivalence; passes only if all six do).
+- **H251.4 (secondary; offset against timed truth):** the dermis-minus-epidermis offset of the women's forearm lies
+  within the 90 % bootstrap interval of the same offset in the timed men (difference of the two cosinor acrophases,
+  men resampled), or the two differ by less than 1 h.
+**Descriptive.** Each of the 15 pairs (r, companions, offset); clock-plane variance per compartment; without PER1
+and NR1D1; the reference gate of each compartment (`reference_gate`); cheek (sun-exposed) against the two other sites.
+**Power first (dated note, no observed pairing):** women per pair; gate per compartment; null SD and MDE (2.49 x SD)
+of each pooled r; bootstrap SE of offsets is part of scoring. Not scored if fewer than four compartments pass the gate
+or the MDE of H251.1 exceeds 0.10.
+**Reading.** H251.1 passes clock-specifically: in living people, skin at sites a metre apart is on one internal time,
+the first living-cohort support for the shared-time statement, from clinic-hours biopsies. Passes but not above the
+companions: a person-level state shared across sites (age is a candidate: 20-74 y, not available), not shown to be the
+clock. Fails at the MDE: site clocks are not detectably shared here, which would restrict the GTEx statement to
+post-mortem tissue. H251.3: offsets within 1.5 h support "one time"; H251.4 ties the untimed offset to a timed one.
+**Limits.** (1) One cohort, women only, arrays. (2) The spread of collection times is unknown; a narrow window lowers
+r but does not create it. (3) Age and other traits vary between women and could move clock genes: the companions are
+the control, and age cannot be adjusted. (4) Epidermis and dermis come from one biopsy (laser microdissection): a
+cross-layer pairing at the same site shares the biopsy; cross-site pairings do not. (5) Layers were normalised
+separately; statistics use centred states only.
+**Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A251_skin_sites/scripts/`.
