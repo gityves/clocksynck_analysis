@@ -6000,3 +6000,13 @@ the control, and age cannot be adjusted. (4) Epidermis and dermis come from one 
 cross-layer pairing at the same site shares the biopsy; cross-site pairings do not. (5) Layers were normalised
 separately; statistics use centred states only.
 **Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A251_skin_sites/scripts/`.
+
+**A251 power note (2026-11-12, before any observed pairing or offset of the women; `A251_skin_sites/output/{power,gates}.csv`).**
+All six compartments pass the reference gate (clock share 0.59-0.76 against a null mean of 0.09-0.12; p 0.005, the floor
+of 200 permutations). Women per pair 146 to 150. Null (women permuted within compartment, 10,000): H251.1 null mean 0.072,
+SD 0.017, MDE 0.041 (limit 0.10); H251.2a SD 0.023, MDE 0.058; H251.2b SD 0.017, MDE 0.041. Scored. **Disclosure:** the code
+test (`--placebo --smoke`, women shuffled within compartment) does not shuffle the timed men, so P251.0 was seen there
+before this note: modulus 1.62 (epidermis) and 0.99 (dermis) against null q95 0.46 and 0.31, p at the floor of 200
+permutations; men's dermis-minus-epidermis offset -2.0 h (-3.2 to -1.0). The positive control therefore passes on seen
+data; nothing of the women was seen (their statistics in that run are on shuffled women). Choices not fixed by the
+registration are in the script docstring. Scoring proceeds as registered.
