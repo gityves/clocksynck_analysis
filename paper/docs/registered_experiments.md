@@ -5895,3 +5895,52 @@ deviation from "malignant cells" in the registration, forced by the data. *Timed
 >= 1 in both tissues: C 12, K 9, O 6, F 475; null SD of normal minus tumour modulus 0.460 (C), 0.527 (K), 0.538 (O), 0.307
 (F). Code run only on shuffled patients (`--placebo --smoke`). Choices not fixed by the registration are in the script
 docstring. Scoring proceeds as registered.
+
+## A250 (2026-11-12, DRAFT, not registered: awaiting user agreement; user: "draft the confirmatory test on CPTAC pairs"; nothing computed; staged: gene sets, states, statistics, hypotheses, families and readings are fixed here, eligibility and power go in a dated note before any observed association; seen: every result of A249 in TCGA, including the descriptive ones that motivate this amendment (set O in the tumour against the normal sample's state: S_T 0.162, p 0.0001, pseudo q95 0.147, matched q95 0.136; set C S_T 0.117, set F 0.122; per gene NFIL3 0.206, RORC 0.195, ARNTL2 0.160; per cancer), A186 (CPTAC pair counts, gates and tumour-normal pairing of the clock states, by proliferation tertile), the A223 power table; NOT seen: any non-clock gene of a CPTAC sample against the clock state of the patient's other sample): are a tumour's clock-controlled genes on the patient's body time while its drug-handling genes are not? **CPTAC-3 tumour-normal pairs, patients independent of TCGA; confirmatory for the descriptive result of A249; L1-like association across samples (A229 statistic); secondary (cancer section)**
+**Why.** In A249 the registered window test could not be read (the tumour sample was too poor a reader of body time),
+but the other direction gave a descriptive result: read against the body time of the patient's normal sample, the
+tumour's clock-controlled genes outside the 14-gene panel follow it, clock-specifically, and the tumour's
+drug-handling genes and drug targets do not. Both halves were seen before being stated, so neither is a finding.
+CPTAC-3 holds more pairs than TCGA from other patients, centres and pipelines; the hypotheses, sets and thresholds
+below are fixed from TCGA and tested once.
+**Data.** The CPTAC-3 pairs of A186 (`A186_cptac_c1/output/cache`, raw GDC STAR counts, aliquots summed): the 7
+types of its pool (LUAD, CCRCC, LSCC, SKCM, HNSCC, PDAC, UCEC; 686 pairs, all gated). STAD (27 pairs) is descriptive.
+**States.** z_N, z_T as `a186_lib.states` (GTEx waveform, one projector per type), centred within type.
+**Gene sets.** C, K, F and O of A249, unchanged. A gene enters a type with a median count >= 10 in both sample
+types; a set enters with >= half of its genes (>= 100 for F) in >= 4 types.
+**Statistic.** As A249: per gene and type, r of A229 between y (log2(CPM + 1), centred within type) and a state,
+pooled with patient-count weights; S is the mean of r over a set. S_T = S(y of the tumour sample, z_N), S_N = S(y of
+the normal sample, z_T). Null: patients of y permuted within type, one permutation for all genes and sets (10,000;
+seed 250). Clock specificity: above the q95 of 200 expression-matched pseudo-clock sets (A227 construction). Beyond
+typical genes: above the q95 of 200 expression-matched gene sets of the same size. Contrast of two sets:
+Delta = S_T(O) - S_T(X), one-sided p from the same permutations (which carry the set-size bias of each S), and a 90 %
+interval from 2,000 patient bootstraps within type (states not refitted).
+- **H250.1 (primary; replication):** set O, S_T: p < 0.05, clock-specific and beyond typical genes.
+- **H250.2 (primary; the asymmetry):** H250.1 passes; set C, S_T is not detected (p >= 0.05) at an MDE below 0.042
+  (the excess of set O over its null mean in TCGA); and Delta(O, C) has p < 0.05 with a 90 % interval excluding 0.
+- **H250.3 (secondary):** the same asymmetry for X = F and X = K (Holm over the two).
+- **H250.4 (secondary; genes):** NFIL3, RORC and ARNTL2 in the tumour sample against z_N, each p < 0.05 (Holm over
+  the three; gene-level null from the same permutations).
+- **H250.5 (secondary; the window of A249, second attempt in independent pairs):** P249.0 as registered (set O,
+  S_N: p < 0.05 and clock-specific); only if it passes, H249.1 and H249.2 as registered in A249. If it fails again,
+  the normal half stays unreadable from tumour-sample states and this is stated as such.
+**Descriptive (no pass / fail).** Per gene S_T, S_N and implied peak, beside the TCGA values; per type; STAD; the
+same-sample readouts, labelled as confounded; S_T of sets O and C by tertile of tumour G2M score (A186 labels) and,
+if a purity table is on disk at the power note, by purity tertile; TCGA and CPTAC combined (weighted by pairs).
+**Power first (dated note, no observed association):** pairs and types per set; genes eligible; null SD and MDE
+(2.49 x SD) of S_T, S_N and of each Delta. Not scored if the MDE of S_T for set O exceeds 0.042 or that of
+Delta(O, C) exceeds 0.045 (the TCGA difference): the replication could then not see an effect of the TCGA size.
+**Reading.** H250.1 and H250.2 pass: in two independent sets of patients, clock output in the tumour stays on the
+patient's body time while the transcripts that handle anticancer drugs do not follow it. This is half of the
+chronotherapy premise (the tumour side offers no timed target at the transcript level); the normal side stays open
+unless H250.5 reads it. H250.1 passes and set C is detected too: drug handling in tumours is on body time in CPTAC,
+the TCGA null was a power or cohort matter. H250.1 fails at an adequate MDE: the TCGA result does not replicate and
+is dropped from the text. H250.1 passes without clock specificity: a patient-level state shared by the two samples,
+not shown to be the clock (as H186.1).
+**Limits.** (1) Bulk: a gene of the tumour sample is read in malignant and other cells; clock output carried by the
+stroma of the tumour sample would pass H250.1 (H249.4 could not resolve this: 61 patients). (2) Tumour and normal of
+a patient share the operation, and often the processing batch: the pseudo-clock sets are the control. (3) "Not on
+body time" for set C is a bound at the MDE, never proof of absence; several set C genes are liver- or gut-specific.
+(4) Set O has six genes. (5) Surgery in working hours compresses body time. (6) Transcripts, not activity.
+**Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A250_cptac_window/scripts/` (on
+`a186_lib` and the functions of `compute_a249.py`).
