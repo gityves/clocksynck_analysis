@@ -5771,3 +5771,27 @@ null SD 0.316, MDE 0.79 (0.059 log2). H248.3: null SD of Fisher z 0.071, MDE par
 times and shuffled GC only (`--placebo`, subsample; unstratified GC shuffles fall outside the null's central 95 % in 6.3 %
 of 400 draws, null SD 0.084 against 0.085). Choices not fixed by the registration are in the script docstring. Scoring
 proceeds as registered.
+
+**A247 power note (2026-11-12, before any observed statistic on GBmap; `A247_glioma/output/{power,eligibility,calibration,foreign_rna,prep_summary,patients}.csv`; scripts by a Sonnet agent, tables re-read). NOT SCORED YET: the calibration below goes to the user first.**
+Pseudobulks with >= 100 cells: malignant 129 patients, myeloid 162, mature oligodendrocyte 65, T/NK 76. Null from
+shuffled rows only (10,000). P247.0 myeloid vs oligodendrocyte: 53 patients / 8 strata, null 0.373 (SD 0.068), MDE 0.168.
+H247.1 malignant vs myeloid: 105 / 11, MDE 0.118. H247.2 malignant vs oligodendrocyte: 42 / 5, MDE 0.186. H247.3 MGMT vs
+myeloid state: 85 / 10, MDE 0.140. H247.4 MGMT vs own state: 93 / 10, MDE 0.127; methylation call vs myeloid state: 75
+patients / 7 strata (32 methylated, 43 unmethylated), MDE 0.69 on the z scale (0.32 of the state's RMS): the 0.25 rule
+was written for correlations and does not apply; by the letter it is not scored. MGMT labels: M, Meth = methylated; UM,
+Un, NM = unmethylated; NT and unknown = no call (36 / 60 / 86 of 182 patients; no conflict). Foreign-RNA bound (median a):
+0.014-0.027 between malignant, myeloid and oligodendrocyte pseudobulks, except malignant RNA in oligodendrocytes 0.110
+(maximum 0.61); myeloid RNA in T/NK 0.258.
+**Calibration on healthy brain (microglia vs oligodendrocytes of control donors, thinned to the P247.0 design; 200
+subsamples, 500 permutations):** pass rate 0.225 [0.169, 0.289] (PsychAD HBCC, 119 donors) and 0.170 [0.121, 0.229]
+(PsychAD MSSM, 222); with donors mis-paired 0.145 [0.099, 0.202] and 0.120 [0.078, 0.173], above the nominal 0.05; at the
+atlases' own depth the pass rate is 0.935 (HBCC) and 0.315 (MSSM). SEA-AD has too few control donors (44, 45); no
+pseudo-clock companion (the atlases on disk hold a 45-gene panel). Agent's diagnostic (not in the tables): with one
+common thinning depth the mis-paired rate is 0.05 and the pass rate 0.05. Two consequences: (i) at GBmap depth a
+healthy brain passes P247.0 little more often than mis-paired donors do, so a negative P247.0 is uninformative; (ii)
+when the two classes of a patient share their depth, the within-stratum permutation p of the pairing statistic is
+anti-conservative (state moduli covary although phases do not), so a positive p alone is not trustworthy either; the
+pseudo-clock companions, which share the depth structure, are then the only valid control.
+**Choices not fixed by the registration** (docstrings): cells flagged `is_primary_data` False kept (each cell occurs
+once in the extended file); projector per class and stratum; pseudo-clock sets drawn once per test; stratum = study x
+suspension; foreign-RNA share clipped to [0, 1]. Code run only on shuffled pairings (`--placebo`).
