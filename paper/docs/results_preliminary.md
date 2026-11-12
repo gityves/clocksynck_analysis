@@ -4477,3 +4477,32 @@ Power note: `registered_experiments.md` (commit 79aa1f4). 208 donors with blood,
   morning (fitted 7.9 h, beyond matched genes) but is not detected at this size; the tissue T-cell peak near 16 h
   stays a post hoc hint.
 <!-- src: paper/exploratory/A248_glucocorticoid_tcells/output/{power,compartments,score_tests,score_descriptive,score_per_compartment,score_matched}.csv -->
+
+## A247 (scored 2026-11-12): in glioma, cell classes of one tumour sample pair, but no more on clock genes than on matched genes (precondition P247.0 FAIL; H247.1-2 uninformative); MGMT does not follow the myeloid clock state (H247.3 FAIL)
+Power note and note 1: `registered_experiments.md` (commits b6521de, 88fc3e5; the calibration was corrected before scoring and
+a partial leak of the pairings is disclosed there). Extended GBmap, droplet libraries, pseudobulks with >= 100 cells; 10,000
+permutations within study x assay; 200 matched and 200 responsive pseudo-clock sets. Scripts by a Sonnet agent; numbers
+re-read in `tests.csv`.
+- **P247.0 FAIL (myeloid vs oligodendrocyte, 53 patients / 8 strata):** pairing 0.499 vs null 0.373 (SD 0.068), p 0.035;
+  matched sets median 0.506, q95 0.645 (p 0.54); responsive q95 0.628 (p 0.71): not clock-specific; after the foreign-RNA
+  correction 0.465 (p 0.088).
+- **H247.1 (malignant vs myeloid, 105 / 11):** 0.502 vs null 0.297 (SD 0.047), p 0.0003, Holm 0.0006; matched median 0.461,
+  q95 0.594 (p 0.30); responsive q95 0.597 (p 0.39): pairing, not clock-specific; corrected 0.383 (p 0.037).
+- **H247.2 (malignant vs oligodendrocyte, 42 / 5):** 0.432 vs null 0.326, p 0.086, Holm 0.086; matched q95 0.632; corrected
+  0.295 (p 0.67): fail.
+- **H247.3 FAIL (MGMT in malignant cells vs myeloid state, 85 / 10):** r 0.282 vs null 0.314 (SD 0.056, MDE 0.140), p 0.70;
+  MGMT at the 22.5th percentile of matched malignant genes. **H247.4 (MGMT vs the malignant cells' own state, 93 / 10):**
+  0.242 vs 0.302, p 0.88. The methylation-call test was not scored (power rule).
+- **Descriptive:** T/NK vs myeloid 0.570 vs null 0.288 (p 0.0001), matched median 0.499, q95 0.679: not clock-specific
+  (myeloid RNA bound in T/NK 0.258). Host gate on myeloid + oligodendrocyte anchors (51 patients): p_pairing 0.002,
+  p_acrophase 0.064, pairing z 4.12 below both companion q95 (13.96, 16.37): no coupling estimate.
+- **Reading (registered rules):** the precondition is not met, so H247.1-2 say nothing about a glioma clock tied to
+  the patient's brain cells. What the data do show is that classes of one dissociated tumour share an expression state
+  that matched non-clock gene sets carry as strongly as clock genes (matched medians 0.46-0.51 against permutation
+  nulls of 0.30-0.37): same-sample covariation (ambient RNA, handling, patient state), not a clock readout. A
+  within-sample design cannot isolate the clock here; the carcinoma pairings that are clock-specific (A151, A227) compare
+  tumour with a separate normal sample. Dong et al.'s culture result is neither supported nor contradicted. MGMT
+  expression shows no association with the clock state of the tumour's myeloid cells or of the malignant cells at an
+  MDE of 0.13-0.14; with the precondition failing, whether that state carries body time is itself unshown, so this is
+  "not detected", not evidence against a timed MGMT.
+<!-- src: paper/exploratory/A247_glioma/output/{power,eligibility,tests,pooled,per_study,pseudo,matched_genes,descriptive,coupling,foreign_rna,foreign_clock_share,calibration_null_P247.0_all,calibration_null_H247.1_all,calibration_null_H247.2_all}.csv -->
