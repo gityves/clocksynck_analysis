@@ -88,14 +88,14 @@ def target(t: str) -> bool:
     return not (t.startswith("Cells -") or t.startswith("Brain") or t in ("Whole Blood", "Spleen"))
 
 
-def load_lcpm(hardy):
+def load_lcpm(hardy, keep=target):
     """(log2(CPM + 1) samples x genes as float32, gene names, sample frame: donor, tissue, ischaemic_h) of target tissues."""
     import anndata as ad
     a = ad.read_h5ad(gtex.LABELLED, backed="r")
     try:
         o = a.obs
         tis = o.tissue.astype(str)
-        idx = np.flatnonzero(o.DTHHRDY.isin(list(hardy)).to_numpy() & o.tod.notna().to_numpy() & tis.map(target).to_numpy())
+        idx = np.flatnonzero(o.DTHHRDY.isin(list(hardy)).to_numpy() & o.tod.notna().to_numpy() & tis.map(keep).to_numpy())
         X = a.X[idx]
         X = X.toarray() if hasattr(X, "toarray") else np.asarray(X)
         genes = np.asarray(a.var_names)
