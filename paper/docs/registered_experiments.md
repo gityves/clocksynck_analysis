@@ -5627,3 +5627,65 @@ state and a program together. (3) Not blind to A227-A229 on the same patients; l
 (5) Ambient RNA shared within a sample is controlled by the pseudo-clock sets only.
 **Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A246_tme_clock_state/scripts/` (on
 `A229_endothelial_gate/scripts/compute_a229.py` and the A146 program definitions).
+
+## A247 (2026-11-12, DRAFT awaiting user agreement, nothing computed; user: "draft the glioma amendment"; staged: classes, statistics, hypotheses, families and readings are fixed here, eligibility, the healthy-brain calibration and the power go in a dated note before any clock statistic is computed on GBmap; seen: the scout `exploratory/scouts_2026-11-12/glioma_scout.md` (cells, patients, summed clock-gene UMI and MGMT UMI per class; no clock statistic, no gene-by-gene clock counts), every carcinoma result (A138 H138.1: malignant coupling c 0.076; A149, A151, A227-A229), the brain results A135 / A141 / WP0 Q3 (no principled brain reference; glia against neurons is anchor-dependent), the cards `dong2019targeting` and `gonzalezaponte2025circadian`): do glioma cells share a clock state with the patient's own non-malignant brain cells, and does MGMT follow that state? **Extended GBmap (CELLxGENE), droplet data; L3-like pairing within the tumour sample and L1-like association; secondary (cancer section)**
+**Why.** Glioblastoma stem cells keep robust clocks in culture and depend on BMAL1 / CLOCK (Dong et al. 2019), unlike
+carcinoma cells, whose clock state is barely tied to the patient's other cells (A138 H138.1). MGMT promoter
+methylation calls vary with the hour of surgery between 10:00 and 18:00, and MGMT oscillates in synchronised glioma
+lines (Gonzalez-Aponte et al. 2025); no tissue clock readout exists in patients. No glioma cohort has been analysed.
+**Data.** Extended GBmap, droplet libraries only (Smart-seq2 out), published annotation. Classes: `malignant`
+(annotation_level_1 Neoplastic), `myeloid` (TAM-BDM, TAM-MG, Mono, DC; neutrophils and mast cells out),
+`oligodendrocyte` (mature oligodendrocytes only: OPC are left out, since OPC-like malignant cells mislabelled as OPC
+would create pairing). One pseudobulk per patient x class with >= 100 cells; strata = study x assay (cells /
+nuclei); a study enters a test with >= 4 patients holding both pseudobulks. Duplicated cells (`is_primary_data`
+False) once.
+**States and statistics.** Complex clock state z per pseudobulk (`clocksync.paired`, GTEx waveform, counts, projector
+fitted per class and study, centred within stratum), as A227. *Pairing* of two classes of one patient: the A227
+statistic, pooled over studies with patient-count weights; null: rows of the second class permuted across patients
+within stratum (10,000; seed 247). *Association* of a real readout y with a state: the A229 statistic r, same null.
+**Clock specificity.** 200 expression-matched pseudo-clock sets (A227 construction) and 200 responsive pseudo-clock
+sets (the stress- and glucocorticoid-responsive construction of A109 H109.1-R / A242; most patients receive
+dexamethasone before surgery): clock-specific only above the q95 of both.
+**RNA of the other class (same sample).** As A244: per patient, the share of class b's marker counts found in the
+class a pseudobulk relative to class b's own (markers, never clock genes: myeloid PTPRC, CSF1R, C1QA, C1QB, TYROBP;
+oligodendrocyte MBP, PLP1, MOG, MOBP; malignant SOX2, PTPRZ1, EGFR) bounds the foreign share; the expected foreign
+clock-gene counts are subtracted and the test rerun (`:corrected`). A pass must hold in `:corrected`.
+- **P247.0 (precondition, scored first):** myeloid vs oligodendrocyte pairing is above the null (p < 0.05) and
+  clock-specific: two non-malignant classes of a tumour-bearing brain share a clock state. If it fails, H247.1-2 are
+  reported but read as uninformative.
+- **H247.1 (primary):** malignant vs myeloid pairing. **H247.2 (primary):** malignant vs oligodendrocyte pairing.
+  Holm over the two; pass = Holm p < 0.05, clock-specific, and p < 0.05 in `:corrected`.
+- **H247.3 (primary, MGMT):** y = log2(CPM + 1) of MGMT in the malignant pseudobulk (>= 10 MGMT UMI), centred within
+  stratum, against the myeloid state of the same patient (a state not read from the cells that express y). Pass: p <
+  0.05 and clock-specific.
+- **H247.4 (secondary):** the same against the malignant cells' own state; and the methylation call against the
+  myeloid state: T = |mean z (methylated) - mean z (unmethylated)| pooled over strata holding both calls, labels
+  permuted within stratum, both companions (the untimed counterpart of the hour-of-surgery effect). Holm over the two.
+**Descriptive (no pass / fail).** MGMT percentile among 200 expression-matched malignant genes used as y; implied
+peak of MGMT (`implied_peak_h`); H247.3 within methylation status; cells and nuclei separately; primary vs recurrent;
+T/NK vs myeloid pairing; clocksync coupling c of the malignant class on a host anchored on myeloid and
+oligodendrocyte cells, beside the carcinoma value of H138.1 (only if the gate and its companions pass); per study
+with >= 12 patients.
+**Power first (dated note, no observed statistic on GBmap).** Patients and studies per test; null SD from shuffled
+pairings only; MDE = 2.49 x SD; a test is not scored with < 40 patients or MDE > 0.25 (A227 rule). Calibration on
+healthy brain: microglia vs oligodendrocyte pairing in an on-disk control atlas (PsychAD or SEA-AD controls),
+pseudobulks thinned to the cells and clock-gene counts of the GBmap design; the pass rate (200 subsamples) says
+whether a negative P247.0 would be informative; without such an atlas on disk the note says so and P247.0 stands on
+its MDE. The coding of the MGMT labels is fixed there from the metadata alone.
+**Reading.** H247.1 or H247.2 pass (with P247.0): glioma cells stay on the clock state of the patient's brain cells,
+as their retained clock in culture predicts and unlike carcinoma cells; the loss of host coupling is then a property
+of carcinomas, not of malignancy. Fail below the MDE with P247.0 passing: glioma cells are not tied to the patient's
+glia at that size, as in carcinomas, although their clock runs in culture. P247.0 failing: no statement; the
+calibration says whether tumour-bearing brain differs from healthy brain at this depth. H247.3 pass: MGMT expression
+varies with the body time read in the tumour, the first in-patient support for a clock-timed MGMT. H247.4
+(methylation) pass: the call depends on the clock state at resection, the claim of Gonzalez-Aponte et al. without
+recorded hours. Fails are read with their MDE: daytime surgery compresses the spread of states.
+**Limits.** (1) Both classes come from one sample: shared ambient RNA and handling; the pseudo-clock sets and the
+`:corrected` rerun are the controls, the marker bound is approximate (A190). (2) Dexamethasone, temozolomide and
+radiotherapy are not recorded; stage is unknown for most patients. (3) No host anchor learned for brain
+(neurons and endothelium are too rare here): pairing between classes, not coupling to a host, is the readout.
+(4) Published malignant calls (copy-number based) and labels; sorted or enriched studies change which patients
+qualify, not the statistic. (5) Methylation status is known for about half of the patients, with mixed codes.
+(6) Association, not causation; no surgery times.
+**Stop rule:** one power note, one scoring run; Wang 2022 (GSE174554, tumour / normal calls only) is not used here.
+**Code:** `paper/exploratory/A247_glioma/scripts/` (on `compute_a227.py`, `compute_a229.py`, `score_a241.contamination`).
