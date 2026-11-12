@@ -4661,3 +4661,33 @@ sets, 200 matched gene sets; null mean of S 0.120.
   depression needs living tissue or a design in which the responsive companion is low; public post-mortem brain is
   not it. The skin cohort (A251) shows the contrast: there the clock pairing exceeds the responsive sets.
 <!-- src: paper/exploratory/A253_psych_regions/output/{design,precondition,power}.csv -->
+
+## A255 (scored 2026-11-12): fat and skin of a living woman share a clock state that her cultured cell line does not carry (H255.1 PASS, H255.2 PASS); two tissues taken at one operation share it in two surgical cohorts (H255.3 PASS); co-twins share it across persons beyond their cell lines (H255.4 PASS x2), identically in monozygotic and dizygotic pairs
+
+- Data: MuTHER (E-TABM-1140), 680 women with fat and skin (one punch biopsy), 794 / 679 with a lymphoblastoid cell line;
+  GSE73439 (subcutaneous and omental fat, 51 women) and GSE133979 (rectus muscle and subcutaneous fat, 32 patients).
+  GSE24883 left the pool at the power note (gates fail). One scoring run.
+- Gates: fat p 0.010, skin p 0.015; the cell line has no clock-shaped covariance (share 0.042 against 0.065, p 0.75).
+- **H255.1 PASS, clock-specific (primary):** fat-skin r 0.533 (null 0.034, SD 0.018, p 0.0001); matched sets median 0.121,
+  q95 0.304 (p 0.010); responsive sets median 0.200, q95 0.325 (p 0.005). Without PER1 and NR1D1: 0.387. Offset fat minus
+  skin +0.11 h (-0.15 to 0.41).
+- **H255.2 PASS (primary; beyond the genome):** fat-cell line r 0.042 (p 0.24), skin-cell line 0.066 (p 0.055), neither
+  above its companions (matched medians 0.147 and 0.105). r(fat, skin) minus their mean: 0.479 (90 % 0.432 to 0.510).
+- **H255.3 PASS, clock-specific (surgical cohorts pooled, 83 persons):** r 0.686 (null 0.139, SD 0.052, p 0.0001; matched
+  q95 0.396, responsive q95 0.530). GSE73439 0.648 (responsive q95 0.570), GSE133979 0.747 (responsive q95 0.533).
+- **H255.4 PASS x2 (co-twins):** co-twin states pair in fat 0.520 (357 pairs) and skin 0.589 (271), p 0.0001 each; in the
+  cell line 0.384 (359 pairs, p 0.0001). Tissue minus cell line: fat +0.135 (0.058 to 0.211), skin +0.205 (0.130 to
+  0.282). By zygosity: fat 0.522 (MZ) / 0.520 (DZ); skin 0.587 / 0.591; cell line 0.407 / 0.373.
+- Descriptive, unexplained: without PER1 and NR1D1 the skin-cell line pairing is 0.248 (fat-cell line 0.074); no
+  companion was computed for these.
+- **Reading (registered rules):** two organs of a living person, sampled once without a recorded time, share a
+  clock state, beyond expression-matched and stress-responsive genes, in a twin cohort and in two surgical cohorts.
+  The woman's own cell line, which carries her genome but not her body time, does not share it: the pairing is not
+  constitutive clock-gene expression. With A251 this is the living counterpart of the GTEx statement (A109, A150).
+  Co-twins share a clock state across persons to the same degree whether monozygotic or dizygotic, so that sharing
+  is not genetic; twins usually attend together, which fits shared visit time, but their cell lines also pair
+  (0.38), so part of it is shared laboratory handling of a twin pair, and only the excess over the cell line (0.14
+  and 0.20) is attributable to the visit. Limits: fat and skin are from one punch biopsy (the responsive companion,
+  q95 0.325, bounds what shared handling of the biopsy gives); women only; arrays; the 0.248 above shows that the
+  cell-line control is not flat under every gene subset.
+<!-- src: paper/exploratory/A255_living_tissues/output/{gates,power,score_tests,score_twins,score_descriptive}.csv -->
