@@ -5760,3 +5760,14 @@ is not in GTEx; lymphoid organs are not targets. (4) The published hours come fr
 schedule; donors differ in age, sex and habits. (5) H248.4 and the tissue descriptives are not blind. (6) Controlled
 access: aggregates only.
 **Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A248_glucocorticoid_tcells/scripts/`.
+
+**A248 power note (2026-11-12, before any observed statistic; `A248_glucocorticoid_tcells/output/{power,compartments}.csv`).**
+208 of the 233 donors have whole blood; 26 tissues as A245. Null SD and MDE_80 (10,000 permutations): H248.1 blood T-cell
+content 1.007 (t units), MDE 2.51, i.e. an amplitude of 0.274 log2 units, the size of the published rhythm (about 0.27 if
+RNA share follows the count): power is about 0.8 only for the full published amplitude, so a failure of the positive
+control is informative only for an undiminished rhythm. H248.2 GC over 26 tissues: null SD 0.641 (the score is strongly
+shared between the tissues of a donor), MDE 1.60, amplitude 0.172 log2 in the median tissue. H248.4 tissue T-cell content:
+null SD 0.316, MDE 0.79 (0.059 log2). H248.3: null SD of Fisher z 0.071, MDE partial r 0.175. Code checked on shuffled
+times and shuffled GC only (`--placebo`, subsample; unstratified GC shuffles fall outside the null's central 95 % in 6.3 %
+of 400 draws, null SD 0.084 against 0.085). Choices not fixed by the registration are in the script docstring. Scoring
+proceeds as registered.
