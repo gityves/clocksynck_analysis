@@ -4506,3 +4506,34 @@ re-read in `tests.csv`.
   MDE of 0.13-0.14; with the precondition failing, whether that state carries body time is itself unshown, so this is
   "not detected", not evidence against a timed MGMT.
 <!-- src: paper/exploratory/A247_glioma/output/{power,eligibility,tests,pooled,per_study,pseudo,matched_genes,descriptive,coupling,foreign_rna,foreign_clock_share,calibration_null_P247.0_all,calibration_null_H247.1_all,calibration_null_H247.2_all}.csv -->
+
+## A249 (scored 2026-11-12): the chronotherapy window cannot be read in TCGA pairs (precondition P249.0 FAIL; H249.1-2 not shown); the tumour's clock-controlled genes follow the body time read in the normal sample, its drug-handling genes do not (descriptive); in the timed breast cohort the hour is seen in normal tissue more than in the tumour, for every gene set (H249.5, p 0.030 for set C)
+Power note: `registered_experiments.md` (commit fc069bb). TCGA: 517 pairs, 10 cancers; S_N = normal-sample genes against the
+tumour-sample clock state, S_T = tumour-sample genes against the normal-sample state; 10,000 permutations, 200 pseudo-clock
+sets, 200 matched gene sets; null mean of S 0.120.
+- **P249.0 FAIL (set O, clock-controlled genes, S_N):** 0.134 (null SD 0.011), p 0.096; pseudo-clock q95 0.156 (p_clock 0.48);
+  matched q95 0.136. The clock state of the tumour sample does not order clock-controlled genes of the normal sample:
+  the normal-side readouts below are uninformative.
+- **H249.1 FAIL (set C, S_N):** 0.120 (p 0.50; MDE 0.023), below the pseudo-clock median (0.136). **H249.2 not shown:** S_T of
+  set C 0.117 (p 0.70; MDE 0.018); D +0.003 [-0.024, 0.024].
+- **H249.3 FAIL:** K S_N 0.128 (p 0.20), S_T 0.116 (p 0.67); F (761 drug targets) S_N 0.122 (p 0.41), S_T 0.122 (p 0.36).
+- **Descriptive, the readable direction (body time from the normal sample):** the tumour's clock-controlled genes follow
+  it: set O S_T 0.162 (p 0.0001; pseudo-clock q95 0.147, p_clock 0.015; matched q95 0.136, p 0.005), led by NFIL3 (r 0.206),
+  RORC (0.195) and ARNTL2 (0.160); D for set O -0.028 [-0.051, 0.007]. Lung, thyroid, kidney and liver carry it (S_T 0.16-0.22).
+  With the same reader, the tumour's drug-handling genes do not (set C 0.117, set F 0.122, both at the null).
+  Same-sample readouts are higher throughout (0.18-0.24) and confounded.
+- **H249.4 (single cell, 61 patients in 13 cohorts of 4 to 7):** nothing detected (set O S_N 0.525 vs null 0.492, p 0.13;
+  set C S_T 0.534, p 0.13; no companion passed); blocks too small to carry a claim.
+- **H249.5 (GSE233242, 42 patients, recorded hour):** mean cosinor modulus of set C 2.416 in normal tissue and 1.458 in
+  the tumour, difference 0.958 (null SD 0.460), one-sided p 0.030. The same direction in every set: K 0.785 (p 0.065), O
+  0.742 (p 0.082), F 0.556 (475 genes; normal 1.871, tumour 1.314; p 0.047). No matched-gene companion was registered here.
+- **Reading (registered rules):** the window is not shown and, in TCGA, not testable: the tumour sample is too poor a
+  reader of body time for the normal tissue's genes (the asymmetry noted at registration; the precondition fails). Read
+  the other way, the result is informative about the tumour: its clock-controlled output genes are on the patient's
+  body time, clock-specifically and beyond matched genes, which extends the tumour-normal pairing of the 14 clock genes
+  (H138.4) to genes outside the waveform; its drug-handling genes and drug targets are not, at an MDE of 0.011-0.018
+  against an excess of 0.042 for the clock-controlled set. Whether the same genes are on body time in normal tissue is
+  the missing half. The timed breast cohort points that way (the hour is visible in normal tissue and near the null
+  in the tumour) but for all gene sets alike, without a specificity control, in one cohort of 42 already used for
+  A146 and A200: a hint that tumours lose hour-of-day structure broadly, not evidence of a drug-specific window.
+<!-- src: paper/exploratory/A249_chrono_window/output/{power,score_tests,score_genes,score_descriptive,score_pseudo,score_matched}.csv -->
