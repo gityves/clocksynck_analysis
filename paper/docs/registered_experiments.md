@@ -5944,3 +5944,13 @@ body time" for set C is a bound at the MDE, never proof of absence; several set 
 (4) Set O has six genes. (5) Surgery in working hours compresses body time. (6) Transcripts, not activity.
 **Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A250_cptac_window/scripts/` (on
 `a186_lib` and the functions of `compute_a249.py`).
+
+**A250 power note (2026-11-12, before any observed association; `A250_cptac_window/output/power.csv`).**
+Null from patients of y permuted within type only (10,000). The 7 CPTAC types of the A186 pool, 686 pairs (45 to 215
+per type; states reproduce `a186_lib.states`). Genes scored / eligible in >= 4 types: C 15 / 14, K 9 / 9, O 6 / 6, F 784 /
+687 of 854; all sets enter. Null mean of S about 0.086. Null SD and MDE of S_T: O 0.0084, MDE 0.021 (limit 0.042); C
+0.0059, MDE 0.015 (below 0.042, as H250.2 requires); K MDE 0.018; F MDE 0.009. MDE of S_N: O 0.024, C 0.019. Contrasts:
+Delta(O, C) null SD 0.0092, MDE 0.023 (limit 0.045); Delta(O, F) MDE 0.019; Delta(O, K) MDE 0.024. Both power rules are
+met: an effect of half the TCGA size is detectable. No purity table of CPTAC is on disk, so the purity strata of the
+descriptive part are omitted. Code run only on shuffled patients (`--placebo --smoke`). Choices not fixed by the
+registration are in the script docstring. Scoring proceeds as registered.
