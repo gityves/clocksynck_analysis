@@ -5526,3 +5526,92 @@ depth-matched descriptive. (6) Limits 1 to 4 of A242.
 **Stop rule:** one addendum, one scoring run; any further cut is a new amendment. **Code:**
 `paper/exploratory/A244_fetal_adrenal_classes/scripts/` (prep, feasibility, score), on
 `paper/common/development.py`, `score_a241.py` (contamination) and the scripts of A242.
+
+## A245 (2026-11-12, DRAFT awaiting user agreement, nothing computed; user: "draft 1 and 2 as amendments"; staged: hypotheses, readouts, statistic, families and readings are fixed here, the tissue list and the power go in a dated note before any observed statistic; seen: every result of A229 (tumour endothelium: VCAM1 clock-specific, ICAM1 not, implied peaks ICAM1 18.5 h, VCAM1 20.5 h, SELE 19.0 h, T/NK share 4.8 h; lung-weighted), A146 parts 1-2 and checks, A227, A228; the card `wang2024circadian`; no adhesion gene or leukocyte marker has been read against time of death or host phase in GTEx by this author, and no genome-wide GTEx rhythm table of the repository was opened for these genes): do endothelial adhesion genes and the T-cell content of healthy human tissues follow the time of day predicted by A229? **GTEx fast deaths, recorded and internal time; other; secondary (cancer section, companion of A229)**
+**Why.** In mice the endothelial clock times ICAM-1 and thereby leukocyte entry into tumours (Wang et al., Cell 2024).
+The human counterpart so far is A229: two secondaries pass, both primaries fail, in tumours resected in working
+hours, without times. A229's implied peaks were descriptive. GTEx gives recorded times over the whole day, an
+untimed host per donor and tissues from other people: the implied peaks become predictions.
+**Data.** GTEx v10 counts, fast deaths (Hardy 1-2) with a time of death (`common.gtex.load`). Target tissues: every
+non-cultured tissue except the brain regions, whole blood and spleen, with >= 40 such donors (list fixed in the power
+note). Internal time: the untimed body host of A234 (12 body tissues, >= 5 per donor, GTEx waveform, phase oriented
+by D234.0); when the target tissue is one of the 12, the host is refitted without it.
+**Readouts** (per donor x tissue, log2(CPM + 1), mean over genes for a score):
+- adhesion genes VCAM1, ICAM1, SELE, each as the residual of its regression on an endothelial content score (PECAM1,
+  CDH5, VWF) within tissue;
+- T-cell content: CD3D, CD3E, CD2, TRAC (P7 of A146); leukocyte content: PTPRC.
+**Statistic.** Per tissue, the OLS slope t of y on cos(2 pi (time - h) / 24), h the predicted peak, with Hardy x sex
+indicators, age and ischaemic time as covariates; S = mean of t over tissues. Null: times permuted across donors
+within Hardy x sex, the same permutation for all tissues (10,000; seed 245), one-sided. Phase-free companion
+statistic R = |mean over tissues of the complex cosinor t| on the same permutations (a common phase, not the
+predicted one). Each statistic is computed against recorded time and against internal time.
+**Specificity (same permutations).** Per readout, S for 200 expression-matched genes (gene readouts) or 200
+expression-matched 4-gene sets (T-cell score), same tissues, same h: the readout is "beyond typical genes" only if S
+exceeds their q95. Internal time only: the host refitted on 50 expression-matched pseudo-clock sets (A234 rule),
+clock-specific only above their q95.
+- **H245.1 (primary):** VCAM1, h = 20.5 h, recorded time, S > 0.
+- **H245.2 (primary):** T-cell content, h = 4.8 h, recorded time, S > 0.
+- **H245.3 (secondary):** ICAM1 (18.5 h), SELE (19.0 h), recorded time.
+- **H245.4 (secondary):** H245.1 and H245.2 against internal time; D = S(internal) - S(recorded) with a 90 % interval
+  from 2,000 donor bootstraps (the A146 question in healthy tissue: hospital clock or body clock).
+Pass: Holm p < 0.05 within the family (primaries; secondaries) and S above the matched q95.
+**Descriptive (no pass / fail).** R for every readout; per-tissue amplitude and peak (lung named, as A229 is
+lung-weighted); PTPRC; ventilated donors (Hardy 0) against internal time; T-cell content after residualising on HBB
+(blood in the sample); offset sweep of h (+-2, 4, 6 h).
+**Power first (dated note, no observed statistic):** tissues and donors; null SD of S and R per readout; MDE_80 =
+2.49 x null SD; the amplitude (log2 units) that MDE corresponds to in the median tissue. A hypothesis is scored only
+with >= 10 tissues.
+**Reading.** H245.1 pass: VCAM1 of healthy human tissues varies over the day at the hour the tumour endothelial clock
+state implied; the gate has a human, timed correlate outside tumours. H245.2 pass: tissue T-cell content peaks in
+the predicted late night. Both with H245.4 favouring internal time: body time, not the hospital clock, carries it
+(the opposite of A146 part 1 in tumours). R passes while S fails: a daily pattern at another hour; A229's implied
+peaks do not transfer. Fail below the MDE: not detected at that size in bulk tissue, not a refutation of the mouse
+mechanism.
+**Limits.** (1) Bulk tissue: endothelial expression is not separated from other cells beyond the content score; the
+T-cell score includes intravascular blood, whose lymphocyte count is itself circadian, so H245.2 cannot tell entry
+into tissue from blood content (HBB sensitivity only). (2) Post-mortem donors; time of death is associated with the
+cause of death (strata Hardy x sex only). (3) The predictions come from tumour endothelium, lung-weighted, and are not
+blind to A229. (4) Controlled access: aggregates only.
+**Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A245_trafficking_gtex/scripts/`
+(`common.gtex`, the A234 host).
+
+## A246 (2026-11-12, DRAFT awaiting user agreement, nothing computed; user: "draft 1 and 2 as amendments"; staged: programs, state, statistic, families and readings are fixed here, eligibility and power go in a dated note before any observed association; seen: A146 parts 1-2 and checks (programs against recorded time pass in breast; against internal time not detected, largest t: T-cell activation 1.83, PD-L1 1.31), every result of A227, A228 and A229 on the same cohorts, including H229.5 (T/NK share, pass) and the per-cancer pattern (lung positive, colorectal at the pseudo level); no program below has been related to any clock state): do tumour-microenvironment programs follow the clock state of the tumour, at any phase? **Single cell, A227 cohorts; L1-like association (A229 statistic); other; secondary (cancer section)**
+**Why.** A146 part 2 asked whether ten programs follow internal time at phases transferred from a mouse atlas (mouse
+CT - 5 h) and on a noisy per-patient time. Its failure is conditional on both. The A229 statistic needs neither: it
+asks whether a readout varies with a clock state across patients at any phase, against expression-matched
+pseudo-clock sets. A229 applied it to three adhesion genes and two cell shares only.
+**Data.** The 34 A227 cohorts and tables; pseudobulks per patient x compartment with >= 50 cells (A227 eligibility).
+**Programs** (genes, scores and residual definitions of A146; scored in the compartment of A146 part 2): P1
+proliferation, P2 MHC-I, P3 interferon response, P9 PD-L1 in malignant cells; P4 T-cell activation and P10 PD-1
+(residuals on T abundance) in T/NK; P5 myeloid antigen presentation and P6 phagocytosis (residuals on myeloid
+abundance) in myeloid cells; P8 myeloid share of all tumour cells. P7 (T-cell share) is H229.5 and is not rescored.
+A program enters with a median pseudobulk count >= 10 summed over its genes; no program gene is a clock gene.
+**States.** (a) *Body time in the tumour:* z of the tumour endothelial pseudobulk, exactly as A229. (b) *Own clock:*
+z of the compartment in which the program is scored (same construction, fitted on that compartment's rows; P8 on
+myeloid). Both centred within cohort x chemistry.
+**Statistic.** r of A229 per program and state, pooled over cohorts with patient-count weights; null: patients of y
+permuted within cohort, the same permutation for all programs (10,000; seed 246). Omnibus per state: T = mean over
+programs of (r - null mean) / null SD. Clock specificity: z recomputed from 200 expression-matched pseudo-clock sets
+(A227 construction); a program or the omnibus is clock-specific only above the pseudo q95.
+- **H246.1 (primary):** omnibus T > 0 with state (a).
+- **H246.2 (primary):** omnibus T > 0 with state (b). Holm over the two.
+- **H246.3 (secondary):** each program with each state; Holm over the programs within a state.
+Pass: Holm p < 0.05 and above the pseudo q95.
+**Descriptive (no pass / fail).** Percentile of each program among 200 expression- and size-matched gene sets of its
+compartment used as y; implied peak per program (`implied_peak_h`, as A229) beside the hour A146 transferred from
+the mouse, and their circular correlation over programs; per cancer type with >= 12 patients; the same tests in
+adjacent-normal samples; breast cohorts alone (the cancer of A146 part 1).
+**Power first (dated note, no observed association):** patients and cohorts per program and state; null SD; MDE =
+2.49 x SD; a program is not scored with < 40 patients or MDE > 0.25 (A229 rule), the omnibus not with < 5 programs.
+**Reading.** H246.1 pass: programs of the tumour microenvironment vary with the body time read in the tumour's own
+endothelium, in untimed human resections; with the implied peaks agreeing with the mouse order, the mouse
+organisation holds in humans and A146 part 2 failed on the transferred phases or the time estimate. H246.2 pass
+without H246.1: programs follow the clock state of their own cells, not the body time of the tumour. Both fail below
+the MDE: with A146 part 2, no clock-state organisation of these programs is detected at any phase; the
+recorded-time result of A146 part 1 then stands alone as a hospital-clock effect awaiting a second timed cohort.
+**Limits.** (1) Daytime surgery compresses the spread of states. (2) Association: a systemic cue can move a clock
+state and a program together. (3) Not blind to A227-A229 on the same patients; lung is expected to carry any signal.
+(4) State (b) in malignant cells rests on a weak clock signal (A138 H138.1); a negative there is read with its MDE.
+(5) Ambient RNA shared within a sample is controlled by the pseudo-clock sets only.
+**Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A246_tme_clock_state/scripts/` (on
+`A229_endothelial_gate/scripts/compute_a229.py` and the A146 program definitions).
