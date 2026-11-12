@@ -4642,3 +4642,22 @@ sets, 200 matched gene sets; null mean of S 0.120.
   show no clock-specific change, but without times they cannot say whether the clock stalls under surgery or cold
   storage.
 <!-- src: paper/exploratory/A252_elapsed_time/output/{design,power,score_tests,score_datasets,score_descriptive}.csv -->
+
+## A253 (2026-11-12): clock relations between brain regions in depression and psychosis are not readable in public post-mortem cohorts: the controls' region pairing is matched by stress-responsive genes (P253.0 FAIL; H253.1-4 NOT SCORED)
+
+- Data: GSE80655, GSE102556, GSE53987, GSE202537; 68 depressed, 122 psychotic and 65-79 control donors, 3 to 6 regions each.
+  The depression patients of Li 2013 (GSE45642) were never deposited (controls only).
+- **P253.0 FAIL (controls only):** regions of one control donor share a clock-plane state: R 0.734 against a
+  donor-permutation null of 0.182 (SD 0.026, p 0.0001) and above every expression-matched pseudo-clock set (median
+  0.387, q95 0.549, p 0.005). Stress-responsive sets reach the same level (median 0.648, q95 0.758; p_responsive 0.139).
+- Power was not the limit: MDE of the pairing difference 0.134 (depression) and 0.168 (psychosis); of the offset
+  statistic 0.34 and 0.41 h.
+- **H253.1-4 not scored** (registered rule). The scoring stage was not run. Leak disclosed in the power note: the
+  code test printed the pairing per true group (not offsets); it is not reported here and supports no statement.
+- **Reading:** between regions of a post-mortem brain, donors share a state that glucocorticoid and immediate-early
+  genes carry as strongly as clock genes (agonal state, pH, death circumstances), so a case-control difference in
+  region pairing could not be attributed to the clock. This is the brain counterpart of the tumour lesson (a strong
+  non-clock axis between persons) and agrees with WP0 item 8 and A141. A human test of internal desynchrony in
+  depression needs living tissue or a design in which the responsive companion is low; public post-mortem brain is
+  not it. The skin cohort (A251) shows the contrast: there the clock pairing exceeds the responsive sets.
+<!-- src: paper/exploratory/A253_psych_regions/output/{design,precondition,power}.csv -->

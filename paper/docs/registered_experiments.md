@@ -6114,3 +6114,16 @@ descriptive covariates only. (2) Death at any hour gives the spread; groups may 
 Three to six regions, none of them the SCN. (4) GSE53987 donors are linked by inference; GSE102556 is FPKM. (5) Pooled
 "psychosis" mixes two diagnoses. (6) Lower RNA quality in cases lowers r: the companions are the control.
 **Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A253_psych_regions/scripts/`.
+
+**A253 power note (2026-11-12; `A253_psych_regions/output/{design,precondition,power}.csv`): NOT SCORED, precondition fails.**
+Donors: depression 68 cases and 65 controls in three cohorts; psychosis 122 and 79. Power would have sufficed (label
+permutation, 10,000): D null SD 0.054, MDE 0.134 (depression; limit 0.20) and 0.168 (psychosis); A null SD 0.14 and
+0.17 h (MDE 0.34 and 0.41 h). **P253.0 fails:** the controls' regions share a state far above the donor-permutation
+null (R_control 0.734, null mean 0.182, SD 0.026, p 0.0001) and above every expression-matched set (median 0.387, q95
+0.549), but not above the stress-responsive sets (median 0.648, q95 0.758; p_responsive 0.139). By the registered
+rule the case-control tests are not scored: a pairing that responsive genes match cannot be read as a clock relation.
+**Disclosures.** (1) The code test (`--placebo --smoke`) shuffled the labels of the tests but its descriptive block
+used the true groups, so the pairing R per true group and cohort (not the offsets) was printed and seen before this
+note, with GSE53987 still on the wrong (linear) scale; no decision above depends on it, and the precondition uses
+controls only. (2) GSE53987 is deposited on the linear scale and is now log2-transformed (deviation). The scoring
+stage was not run.
