@@ -5795,3 +5795,26 @@ pseudo-clock companions, which share the depth structure, are then the only vali
 **Choices not fixed by the registration** (docstrings): cells flagged `is_primary_data` False kept (each cell occurs
 once in the extended file); projector per class and stratum; pseudo-clock sets drawn once per test; stratum = study x
 suspension; foreign-RNA share clipped to [0, 1]. Code run only on shuffled pairings (`--placebo`).
+
+**A247 note 1 (2026-11-12, user: "go ahead with option 1"; before any observed statistic is computed by the tests stage): the calibration of the power note was flawed; corrected, the registered null is calibrated and nothing in the tests changes.**
+(i) *Flaw.* `compute_a247.thin` thinned every clock gene of a healthy donor to the count of the same gene in a GBmap
+patient. Where the atlas is deeper than GBmap this replaces the donor's clock-gene pattern by the GBmap patient's. The
+rates of the power note (`calibration.csv`: pass 0.225 / 0.170, mis-paired 0.145 / 0.120) therefore describe GBmap
+patterns with binomial noise, not healthy brain, and its two consequences are withdrawn. (ii) *Disclosure.* Through
+that flaw, those rates and a first run of `calibrate_null.py` with the same thinning (mis-paired rates of 0.10-0.19 and
+pass rates of 0.18-0.40 for the P247.0 and H247.1 designs) are noisy functions of the real GBmap pairings: they hint
+that the observed statistics of P247.0 and H247.1 are not far above their permutation nulls. No choice below was made
+from them. (iii) *Corrected calibration* (`calibrate_null.py`, one thinning probability per sample so that the donor
+keeps its own pattern; 200 subsamples, 500 permutations; `output/calibration_null_<design>_<assay>.csv`). Registered
+statistic and permutation null, rate of p < 0.05 with donors mis-paired, PsychAD HBCC / MSSM: P247.0 design 0.070 / 0.050;
+H247.1 design 0.065 / 0.070; H247.2 design 0.075 / 0.060 (each from 200 subsamples; 95 % binomial intervals of about
++-0.035 include 0.05). True pairs at GBmap depth: P247.0 0.610 / 0.240; H247.1 design (microglia at the myeloid depth,
+oligodendrocytes at the malignant depth) 0.965 / 0.435; H247.2 design 0.645 / 0.210; at the atlases' own depth 0.950 /
+0.345 (P247.0 design), so the two atlases differ in the strength of glial pairing itself. Variants tried on the
+corrected calibration (unit-modulus states, states residualised on their clock-gene count, permutation within depth
+blocks) are no better calibrated and less powerful; residualising on both counts and a sign-flip null are invalid.
+(iv) *Decision.* The registered statistic, null, companions and pass rules stand unchanged. Readings added: a negative
+P247.0 is weakly informative (a healthy-brain pass rate of 0.24 to 0.61 at this depth); H247.1 has a power of 0.44 to
+0.97 for malignant cells tied to myeloid cells as healthy oligodendrocytes are to microglia, H247.2 of 0.21 to 0.65.
+H247.4 (methylation call) stays unscored by the letter of the power rule. No pseudo-clock calibration is possible (45-gene
+atlases).
