@@ -6225,3 +6225,31 @@ pairs): null SD 0.275 h, MDE 0.69 h (limit 1.0): H254.1 is scored; a psoriasis-s
 Person links were checked with sex genes at preparation (concordance 0.94 to 1.00 where informative). Code run only
 with labels swapped at random per person (`--placebo --smoke`). Choices not fixed by the registration are in the script
 docstring. Scoring proceeds as registered.
+
+## A256 (2026-11-12, registered under the user's instruction of 2026-11-12 (autonomous work on direction 1); follow-up of A252, whose results are all seen (rho 1.27 with exact times, 2.97 in seven studies, direction within 1 h at 13 of 14 points; rest arm of GSE252357 rho 2.89 on 5 persons); staged: statistic, hypotheses and readings are fixed here, the dataset list with arms, elapsed hours and assumed clock times goes in a design addendum committed before any expression value of these datasets is read; NOT seen: any expression value of the candidate datasets (rows 16 to 25 of `scouts_2026-11-12/repeat_biopsy_scout.md`: GSE40589, GSE9105, GSE7146, GSE59088, GSE220899, GSE202295, GSE164081, GSE163356, GSE43219, GSE126296; none downloaded yet)): does the within-person rotation of the clock state replicate in fresh studies, and is it seen when nothing is done between the biopsies? **Fresh repeat-biopsy studies; L1 state change within person; secondary by registration (replication of A252)**
+**Why.** A252 passed, but (i) seven of its eight studies were scored with assumed clock times after one registration,
+and (ii) every interval but one small arm (5 persons) contained a meal, exercise or surgery, so "elapsed time" and
+"what happened in it" are not separated. Infusion studies have saline arms in which fasted persons lie still between
+two biopsies: elapsed time alone.
+**Statistic.** rho of A252, unchanged (same projector, chords, permutation of time labels within unit, matched and
+responsive companions, seed 256). Clock time of the first biopsy: as stated by the study, otherwise 09:00.
+- **H256.1 (primary; nothing done):** units of arms without exercise, meal, insulin, glucose or drug between the
+  biopsies (saline infusion or rest), pooled: rho > 0, p < 0.05, clock-specific.
+- **H256.2 (primary; replication):** all fresh units pooled: rho > 0, p < 0.05, clock-specific. Holm over H256.1-2.
+- **H256.3 (secondary; direction):** over all dataset x time-point cells, the implied clock time of the interval's
+  midpoint lies within 2 h of the protocol's in more cells than under time labels permuted within unit (count as
+  statistic, p < 0.05).
+- **H256.4 (secondary; does an intervention add to it):** rho of the intervention arms minus rho of the
+  nothing-done arms in studies that have both, arm labels permuted over persons within study; two-sided.
+**Descriptive.** rho per dataset, arm and time point; without PER1 and NR1D1; rho against elapsed hours.
+**Design addendum first (dated, no expression value read):** datasets retained (>= 8 persons with a first and a later
+biopsy on the same day, per-sample matrix public, clock genes present), arms and their class (nothing done /
+intervention), elapsed hours, clock times; then the power note (null SD and MDE of rho; H256.1 is not scored with
+fewer than 10 units or an MDE above 1.0, H256.2 with an MDE above 0.7).
+**Reading.** H256.1 passes: the state advances within a person when nothing is done: elapsed time itself. H256.2
+passes: A252 replicates on studies chosen before their data were opened. H256.1 fails at an adequate MDE while H256.2
+passes: the change needs the intervention (meal or activity as the driver, not time alone), which would change the
+reading of A252. H256.4 says whether interventions add to or subtract from the rotation.
+**Limits.** As A252 (protocol clock times, amplitude and rotation mixed, repeated biopsy); saline arms are fasted,
+so "nothing done" still includes continued fasting.
+**Stop rule:** one design addendum, one power note, one scoring run. **Code:** `paper/exploratory/A256_elapsed_replication/scripts/`.

@@ -4710,7 +4710,7 @@ sets, 200 matched gene sets; null mean of S 0.120.
   hidradenitis -0.227 (p 0.37): none clock-specific alone. Fibroid -0.791 (p 0.025; outside both companions; not
   scored).
 - Descriptive: the second periodontitis series (GSE10334, 64 persons; overlap with the first undocumented) gives offset
-  -0.13 h (-0.71 to 0.63) and r -0.481 (p 0.0001). Barrett mucosa against the same patient's squamous oesophagus
+  -0.13 h (-0.71 to 0.63) and r -0.481 (p 0.0003). Barrett mucosa against the same patient's squamous oesophagus
   0.00 h and r +0.151; against gastric cardia +0.64 h and r +0.124. Without PER1 and NR1D1 the offsets stay within
   their intervals.
 - **Reading (registered rules):** lesions of four non-skin tissues stay on the time of the person's own tissue:
