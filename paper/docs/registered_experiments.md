@@ -6127,3 +6127,80 @@ used the true groups, so the pairing R per true group and cohort (not the offset
 note, with GSE53987 still on the wrong (linear) scale; no decision above depends on it, and the precondition uses
 controls only. (2) GSE53987 is deposited on the linear scale and is now log2-transformed (deviation). The scoring
 stage was not run.
+
+## A254 (2026-11-12, registered under the user's instruction of 2026-11-12 ("3 seems great ... work autonomously ... register the tests, download data"); staged: datasets, estimator, hypotheses, families and readings are fixed here, gates and power go in a dated note before any lesional-minus-non-lesional value; seen: the scout `scouts_2026-11-12/lesion_multitissue_scout.md` (sample sheets, pair counts, presence and median percentile of the clock genes); every psoriasis and eczema result (A54-A59, A115, A183: lesion delayed by about 1.4 h, at the specificity line, not specific against eczema), A230 (inflamed gut: not detected); NOT seen: any expression value of these datasets compared between lesion and non-lesion): is a clock delay of the lesion against the same person's unaffected tissue a general property of chronic lesions outside the skin? **Periodontitis, osteoarthritis, carotid plaque, uterine fibroid, hidradenitis; paired samples of one procedure; L3 (offset) and clock-plane variance; secondary by registration (claim "where clocks break, they break locally")**
+**Why.** The local-break claim rests on psoriasis, where the lesion runs about 1.4 h behind the person's own
+unaffected skin. If chronic lesions of other tissues show a shift against their own tissue, the claim is general; if
+none does at an adequate bound, the psoriatic delay is a property of that skin disease.
+**Data (pairs = persons with a lesional and a non-lesional sample of the same tissue from one procedure).**
+GSE16134 (periodontitis-affected vs healthy gingival sites of one mouth, 69 persons; several affected sites of a
+person are averaged on the log scale); GSE57218 (osteoarthritic vs preserved cartilage of one joint, 33); GSE43292
+(carotid plaque vs adjacent intact artery, 32); GSE192352 (leiomyoma vs own myometrium, 30; counts; a benign tumour,
+kept as its own row); GSE151243 (hidradenitis lesion vs perilesional skin, 20; counts). Descriptive only: GSE10334
+(periodontitis, 64 persons; overlap with GSE16134 undocumented), GSE39491 (Barrett mucosa vs the same patient's
+squamous oesophagus, 40: a different epithelium). Excluded: GSE26051 (different tendons), GSE119717 (fat depots, two
+clock genes missing).
+**Estimator.** `clocksync.paired` as A183: both samples of a dataset on one projector (GTEx waveform; counts or
+arrays), states centred within sample type; offset = arg of the complex correlation of the paired states (h;
+negative = lesion delayed); r = log ratio of the clock-plane variance, lesion over non-lesion. Null: the two labels
+swapped per person (10,000; seed 254). Companions: the same from 200 expression-matched and 200 responsive
+pseudo-clock sets per dataset.
+- **Gate:** a dataset enters with >= 20 pairs and a reference gate of its non-lesional samples at p < 0.05.
+- **H254.1 (primary; the psoriasis direction, pooled):** the pooled offset of the gated datasets (weighted resultant,
+  weights = pairs) is negative: one-sided swap p < 0.05, and below the q05 of the pooled offsets of both companions.
+- **H254.2 (secondary; each disease):** offset different from 0, two-sided swap p, Holm over the gated datasets;
+  "clock-specific" if |offset| exceeds the q95 of |offset| of both companions.
+- **H254.3 (secondary; clock signal):** r different from 0 per dataset (two-sided swap p, Holm) and pooled
+  (inverse-variance); "clock-specific" if outside the central 90 % of both companions.
+**Descriptive.** Coherence of the pair, bootstrap interval of each offset, without PER1 and NR1D1, GSE10334 and
+GSE39491 (both control tissues) with the same readouts.
+**Power first (dated note, no lesional-minus-non-lesional value):** pairs, gate, coherence flag (`ccorr`), swap-null SD
+and MDE (2.49 x SD) of each offset and of the pooled one. H254.1 is not scored if the pooled MDE exceeds 1.0 h or
+fewer than three datasets pass the gate; a dataset's own test is not scored with an MDE above 2.5 h.
+**Reading.** H254.1 passes clock-specifically: lesions of several tissues run late against the person's own tissue,
+and the local break is a general feature of chronic lesions. Fails with a pooled MDE below 1 h: no psoriasis-sized
+delay outside skin; the claim stays a skin statement. H254.2 can single out one disease in either direction. H254.3:
+lesions that lose or gain clock-plane variance (as tumours lose it).
+**Limits.** (1) Offsets are read from the covariance over persons, so they need a spread of procedure times; the
+gate tests that the non-lesional tissue shows it. (2) Lesion and normal tissue differ in cell composition; a
+composition axis that is clock-shaped would mimic an offset; the companions are the control. (3) Arrays, small n per
+disease. (4) "Non-lesional" tissue of a diseased organ is not healthy tissue. (5) No disease here is psoriasis-like
+in mechanism; a null does not bear on psoriasis itself.
+**Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A254_paired_lesions/scripts/`.
+
+## A255 (2026-11-12, registered under the same instruction ("4 seems great"); staged: cohorts, statistics, hypotheses and readings are fixed here, gates and power go in a dated note before any observed pairing; seen: the scout `scouts_2026-11-12/lesion_multitissue_scout.md` (sample sheets; no metabolic phenotype is public in any multi-tissue living cohort, and the bariatric cohort of Greenawalt has no person key, so the obesity / diabetes contrast of A164 / A235 cannot be repeated in the living); A251 (skin compartments of living women share a clock state); NOT seen: any expression value of these cohorts): do two different tissues of a living person share a clock state, and is it more than what the person's genome alone would give? **MuTHER twins (E-TABM-1140: subcutaneous fat, skin, lymphoblastoid cell line; 856 women) primary; three surgical two-tissue cohorts secondary; L2 pairwise; secondary by registration (robustness arm, living cohorts)**
+**Why.** A251 shows a shared state within one organ (skin sites and layers). The paper's statement is about organs.
+MuTHER has fat and skin of 681 living women, and a built-in control no other cohort offers: a lymphoblastoid cell
+line of the same woman, grown in culture, carries her genome but not her body time. Clock genes have cis-regulatory
+variants that act across tissues, so a pairing of two tissues could be genetic; the cell line measures that part.
+**Data.** MuTHER processed matrices (log2, one column per woman and tissue). Surgical cohorts: GSE73439 (subcutaneous
+and omental fat, 51 women, caesarean or gynaecological surgery), GSE133979 (rectus muscle and subcutaneous fat, 33
+patients, abdominal surgery), GSE24883 (subcutaneous and visceral fat, 32 women; two-colour ratios; pairing by title
+index, unverified).
+**States and statistic.** As A251: clock-plane state per sample (GTEx waveform, unweighted projector), centred within
+tissue (and cohort); pairing r of two tissues over the persons with both; null: persons permuted within tissue
+(10,000; seed 255); companions: 200 expression-matched and 200 responsive pseudo-clock sets; "clock-specific" only
+above the q95 of both.
+- **Gate:** reference gate of fat and of skin (p < 0.05).
+- **H255.1 (primary):** fat and skin of a woman share a clock state: r > null, p < 0.05, clock-specific.
+- **H255.2 (primary; beyond the genome):** r(fat, skin) exceeds the mean of r(fat, cell line) and r(skin, cell
+  line): difference > 0 with a 90 % bootstrap interval (2,000, women) excluding 0. Holm over H255.1-2 for the p of
+  H255.1 only (H255.2 is an interval).
+- **H255.3 (secondary; surgical cohorts):** the three cohorts pooled (weights = persons): r > null, p < 0.05,
+  clock-specific.
+- **H255.4 (secondary; co-twins):** in fat and in skin, the states of co-twins pair (r over twin pairs, the order
+  within a pair randomised; null: co-twins permuted) more than in the cell line (difference with a bootstrap interval
+  over twin pairs), Holm over the two tissues. Twins usually attend the clinic together, so this reads shared visit
+  time plus shared genome; the cell line reads the genome.
+**Descriptive.** r(tissue, cell line) with companions; co-twin pairing by zygosity (monozygotic, dizygotic) per
+tissue; fat-skin offset with a bootstrap interval; without PER1 and NR1D1; each surgical cohort.
+**Power first (dated note, no observed pairing):** persons per pair, gates, null SD and MDE of each r. Not scored if
+a gate fails (that tissue) or the MDE of H255.1 exceeds 0.10.
+**Reading.** H255.1 and H255.2 pass: two organs of a living person share a clock state that her cell line does not
+carry: body time, not genotype. H255.1 passes and H255.2 fails: the shared state is at least partly the person's
+constitutive clock-gene levels, and the GTEx statement inherits that caveat. H255.4: co-twins sharing a visit share
+body time across persons, a between-person positive control.
+**Limits.** (1) Fat and skin come from one punch biopsy; time to freezing is shared (the responsive companion is the
+control). (2) Women only, arrays. (3) The cell line differs from tissue in more than time (culture, EBV); it bounds
+the genetic part only for genes expressed in it. (4) Whether co-twins were sampled together is not recorded per pair.
+**Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A255_living_tissues/scripts/`.

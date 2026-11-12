@@ -173,6 +173,31 @@ def d_GSE133979():
     c, n = clock_report(ad, None)
     finish("GSE133979", t, d, "tissue", ["skeletal muscle (rectus abdominis)","subcutaneous adipose"], "cancer-surgery patients (PDAC vs benign controls); cachexia study; VST not counts", c, n, "VST, adipose file")
 
+def d_muther():
+    import csv, zipfile
+    t = "living_multitissue"; f = P("E-TABM-1140", t, "E-TABM-1140.sdrf.txt")
+    R = list(csv.reader(open(f), delimiter="\t")); h = R[0]; ix = lambda k: h.index(k)
+    seen = {}
+    for r in R[1:]:
+        seen.setdefault(r[ix("Source Name")], r)
+    rows = []
+    for k, r in seen.items():
+        part = r[ix("Characteristics[organism part]")]
+        rows.append(dict(sample_id=k, title=k, patient_id=r[ix("Characteristics[Individual]")], patient_id_source="SDRF Characteristics[Individual] (TWPID)",
+            tissue={"fat":"subcutaneous adipose (punch biopsy)","skin":"skin (punch biopsy)","blood":"lymphoblastoid cell line (LCL, from blood; cell line)"}[part],
+            status="healthy-ish UK twin (no disease field)", group=f"twin {r[ix('Characteristics[twin zygosity]')]}; co-twin {r[ix('Characteristics[co-twin]')]}", sex=r[ix("Characteristics[Sex]")],
+            platform="Illumina HumanHT-12 v3 (A-MEXP-1171)", data_type="log2 normalised intensity (per-individual columns, replicates merged)", batch="",
+            matrix_column=k))
+    d = pd.DataFrame(rows)
+    zf = zipfile.ZipFile(P("E-TABM-1140", t, "E-TABM-1140.processed.2.zip"))
+    with zf.open(zf.infolist()[0]) as fh:
+        m = pd.read_csv(fh, sep="\t", index_col=0, skiprows=[1], low_memory=False)
+    sym = read_annot(P("GSE57218", "paired_lesion", "GPL6947.annot.gz")); sym.index = sym.index.astype(str); m.index = m.index.astype(str)
+    c, n = clock_report(m, sym)
+    d2 = d[d.tissue.str.startswith(("subcut", "skin"))]
+    finish("E-TABM-1140", t, d, "tissue", ["subcutaneous adipose (punch biopsy)", "skin (punch biopsy)"],
+           f"all women (twins); no BMI/T2D/NAFLD field in the sample sheet; LCL is a cell line, not a tissue; fat matrix used for the clock-gene summary; {int(d.groupby('patient_id').tissue.nunique().eq(3).sum())} women have all three", c, n, "fat file only, probes mapped via GPL6947 (HT-12 v3) annotation")
+
 def d_greenawalt():
     t = "living_multitissue"; parts = []
     sx = {}
@@ -207,7 +232,7 @@ def d_greenawalt():
 
 FUNCS = {"GSE43292":d_GSE43292,"GSE57218":d_GSE57218,"GSE10334":lambda:d_gingiva("GSE10334"),"GSE16134":lambda:d_gingiva("GSE16134"),
          "GSE26051":d_GSE26051,"GSE151243":d_GSE151243,"GSE192352":d_GSE192352,"GSE119717":d_GSE119717,"GSE39491":d_GSE39491,
-         "GSE73439":d_GSE73439,"GSE24883":d_GSE24883,"GSE320593":d_GSE320593,"GSE133979":d_GSE133979,"greenawalt":d_greenawalt}
+         "GSE73439":d_GSE73439,"E-TABM-1140":d_muther,"GSE24883":d_GSE24883,"GSE320593":d_GSE320593,"GSE133979":d_GSE133979,"greenawalt":d_greenawalt}
 if __name__ == "__main__":
     for w in (sys.argv[1:] or FUNCS):
         try: FUNCS[w]()
