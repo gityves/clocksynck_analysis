@@ -5575,6 +5575,18 @@ blind to A229. (4) Controlled access: aggregates only.
 **Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A245_trafficking_gtex/scripts/`
 (`common.gtex`, the A234 host).
 
+**A245 power note (2026-11-12, before any observed statistic; `A245_trafficking_gtex/output/{power,tissues,direction}.csv`).**
+233 fast-death donors with a time of death and a body host; 26 target tissues with 41 to 216 donors (11 read on a
+leave-one-out host). Hosts read time of death (Fisher-Lee 0.380 full, 0.360-0.401 leave-one-out; none negated). Null SD of
+S (10,000 permutations within Hardy x sex) and MDE_80, recorded / internal time: VCAM1 0.405 / 0.405, MDE 1.01 / 1.01
+(amplitude 0.105 / 0.115 log2 units in the median tissue); T-cell content 0.312 / 0.315, MDE 0.78 / 0.78 (0.054 / 0.055);
+ICAM1 0.490 / 0.486, MDE 1.22 / 1.21 (0.150 / 0.158); SELE 0.454 / 0.448, MDE 1.13 / 1.11 (0.224 / 0.236). Null q95 of R:
+0.76-1.19. All hypotheses are scored (26 tissues >= 10). Code checked on shuffled times only (`--placebo`, subsample):
+the fast t agrees with statsmodels OLS, the identity path equals the permutation path, and unstratified shuffles are
+rejected at 5.0 % / 5.3 % against the stratified null. Choices not fixed by the registration are listed in the script
+docstring (donor set, strata merging, matched companions, bootstrap without host refit, Holm over the four
+secondaries). Scoring proceeds as registered.
+
 ## A246 (2026-11-12, user agreement 2026-11-12 ("yes go ahead") to the draft committed as 66fccf5, text unchanged; nothing computed; staged: programs, state, statistic, families and readings are fixed here, eligibility and power go in a dated note before any observed association; seen: A146 parts 1-2 and checks (programs against recorded time pass in breast; against internal time not detected, largest t: T-cell activation 1.83, PD-L1 1.31), every result of A227, A228 and A229 on the same cohorts, including H229.5 (T/NK share, pass) and the per-cancer pattern (lung positive, colorectal at the pseudo level); no program below has been related to any clock state): do tumour-microenvironment programs follow the clock state of the tumour, at any phase? **Single cell, A227 cohorts; L1-like association (A229 statistic); other; secondary (cancer section)**
 **Why.** A146 part 2 asked whether ten programs follow internal time at phases transferred from a mouse atlas (mouse
 CT - 5 h) and on a noisy per-patient time. Its failure is conditional on both. The A229 statistic needs neither: it
