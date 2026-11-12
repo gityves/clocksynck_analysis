@@ -5881,3 +5881,17 @@ in the other would pass; the pseudo-clock sets are the control. (6) Set C is a l
 colorectal chemotherapy; several genes are liver- or gut-specific and will drop out elsewhere.
 **Stop rule:** one power note, one scoring run. **Code:** `paper/exploratory/A249_chrono_window/scripts/` (on
 `common/datasets/tcga_paired`, the H138.4 states and `compute_a229.py`).
+
+**A249 power note (2026-11-12, before any observed association; `A249_chrono_window/output/power.csv`).**
+Null from patients of y permuted within block only (10,000). *TCGA:* the 10 gated cancers of H138.4, 517 pairs (19 to 112
+per cancer; states reproduce `q3_lib.tcga_states`). Genes scored / eligible in >= 5 cancers: C 15 / 14, K 9 / 9, O 6 / 6, F
+761 / 623 of 854. Null mean of S about 0.120; null SD and MDE of S_N / S_T: C 0.0092 / 0.0070, MDE 0.023 / 0.018; K MDE 0.024 /
+0.021; O 0.027 / 0.025; F 0.016 / 0.011. All sets scored. *Single cell (H249.4):* 13 cohorts hold patients with both
+fibroblast and both epithelial pseudobulks, 61 patients in blocks of 4 to 7; null mean of S about 0.50 (blocks of four
+patients), MDE 0.058-0.074 (C, K, O) and 0.025 (F): scored by the letter (>= 40 patients, MDE <= 0.10), but with blocks
+this small the statistic is dominated by its small-sample bias and only the companions can carry a claim. The tumour
+side is all tumour epithelium (the genome-wide tables have no copy-number split), not called malignant cells: a
+deviation from "malignant cells" in the registration, forced by the data. *Timed (H249.5):* 42 patients; genes with TPM
+>= 1 in both tissues: C 12, K 9, O 6, F 475; null SD of normal minus tumour modulus 0.460 (C), 0.527 (K), 0.538 (O), 0.307
+(F). Code run only on shuffled patients (`--placebo --smoke`). Choices not fixed by the registration are in the script
+docstring. Scoring proceeds as registered.
