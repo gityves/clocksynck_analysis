@@ -132,3 +132,41 @@ not estimable or post hoc only (not in the main text).
 **Do not claim (added):** per-cell rewiring or intact gene relations in malignant cells (A214 scout: not estimable;
 WP0 item 2 erratum); checkpoint loss as the link between proliferation and clock loss (A215 H215.4 opposite sign); subtype
 as the carrier of the proliferation loss (A216, A218 not scored); a general lineage effect across cancer types (A219 H219.1).
+
+## Addendum 2026-11-12 (cancer synthesis after A224, A227-A229, A245-A250; PI review pending; rows above unchanged)
+
+**Tally of the cancer rows of `VERDICT_TABLE.md` (about 80, by verdict text).** 29 null at the stated MDE; 16 pass; 16
+not estimable (power rule or failed precondition); 14 detected but not clock-specific. Of the 16 passes, those still
+standing are of two kinds: the tumour sample shares the patient's clock state (H138.4, H151.1, H227.1, H228.4, H200.1;
+H229.5 at the line) and clock-gene levels differ in tumours (H207.1, H221.1). Passes that were contrasts between tumour
+groups (H127.1, H166.2, H175.1, H210.2, H215.1, H219.2) later failed a robustness check or lost clock specificity (A178,
+A185, A186, A217, A224); H213.2 has no follow-up.
+
+| # | Sentence | Evidence | Limit | Avoid | Status |
+|---|---|---|---|---|---|
+| 6.2a | Within the tumour, myeloid cells and CD8-negative T cells share the clock state of the patient's normal tissue, as fibroblasts do. | A227 H227.1: 0.581 vs null 0.361, pseudo q95 0.548 (169 patients, 24 cohorts); A228 H228.4: 0.532 vs 0.322, pseudo q95 0.501 (214, 26); A151 H151.1 0.860. | CD8 T, NK and the cross-compartment pairings are detected but not clock-specific (A228 H228.1-3, H228.5). Malignant cells: coupling 0.076 (H138.1), pairing not clock-specific (A149 H149.1). | "Malignant cells are entrained"; "malignant cells are uncoupled". | A |
+| 6.10 | No tumour program tested follows the tumour's or the patient's clock state: microenvironment programs, endothelial adhesion genes, drug-handling genes, drug targets, cell-cycle and repair genes, MGMT. | A246 H246.1 T −0.121 (MDE 0.85); H246.2 not clock-specific; A229 H229.1 not clock-specific, H229.2 fail; A249 set C S_T 0.117, F 0.122 (null 0.120; MDE 0.018, 0.011); A250 set C 0.097, F 0.097 (null 0.086, p_clock 0.57, 0.58); A247 H247.3-4 (MDE 0.13-0.14). Exceptions: T/NK share (A229 H229.5, borderline); NFIL3 in two cohorts (A249, A250 H250.4: 0.155 vs 0.086, Holm 0.002, implied peak 18.9 and 19.0 h). | A bound at each MDE, on untimed surgical samples. The positive controls of the same designs fail (A249 / A250 precondition: clock-controlled genes of normal tissue not read from the tumour state; A248 blood T cells in GTEx), so these are "not readable", not "not rhythmic". | "Tumour programs are not under clock control"; "there is no chronotherapy window". | B (as a limit statement) |
+| 6.11 | Across a patient's two samples, clock-controlled genes of the tumour follow the clock state of the normal tissue in TCGA; this is not clock-specific in CPTAC. | A249 descriptive: set O S_T 0.162 vs 0.120, pseudo q95 0.147, matched q95 0.136 (517 pairs); A250 H250.1: 0.109 vs 0.086, p 0.006, pseudo median 0.107, q95 0.131 (686 pairs). | Descriptive in TCGA, not replicated as clock-specific: not for the main text. | Any wording of an asymmetry between clock output and drug handling (A250 H250.2: Delta 0.012, p 0.099). | C |
+| 6.6a | Row 6.6 stands on recorded time only: the hour of surgery is seen in normal breast tissue more than in the tumour, for every gene set tested. | A249 H249.5: set C modulus 2.416 normal vs 1.458 tumour, p 0.030; K 0.065, O 0.082, F 0.047 (42 patients). | One cohort (GSE233242), already used in A146 and A200; no matched-gene companion; not set-specific. | "Drug-handling genes lose their rhythm in tumours." | C |
+| 6.9a | Correction to row 6.9: on cis-copy-number-adjusted expression the luminal A excess is 0.101 against 0.276 and is not clock-specific. | A224 H224.1: attenuation 63 %, pseudo 92nd percentile; H224.2 TP53 −0.052 (p 0.097). | See the verdict table for the status of A224. | Citing 6.9 without this row. | B → to be decided by the PI |
+
+**Why the negatives (reading, not a result).** (1) Between patients, time of day is a small axis in tumours: purity,
+stroma, proliferation and copy number move clock genes and thousands of others together, so pairings pass against
+permutation and fail against pseudo-clock sets (the 14 rows above). Surgery hours compress body time further. (2) The
+reader of body time is too noisy for genes downstream of the clock: tumour and normal states pair at 0.365 (H138.4) and
+clock-controlled genes share about 0.22-0.24 with the state of their own sample (same-sample readouts of A249 / A250,
+confounded upward), which puts their expected cross-sample excess near the MDE of A249 (0.025-0.027); weaker rhythms are
+below it by design. This back-of-envelope figure is not a registered number. (3) Where the positive control fails, a
+negative is uninformative (rule 1). (4) Copy number and proliferation confound contrasts between tumour groups (A224,
+A217, A186). (5) Three published human claims do not hold beyond proliferation (rows 6.5; A194, A220). (6) The premises
+are from mouse designs with 24 h sampling.
+
+**Do not claim (added):** a chronotherapy window or its absence (A249, A250: the normal half is unreadable in two
+cohorts); a clock in glioma cells tied to the patient's glia (A247: precondition fails); adhesion-gene or T-cell rhythms
+in healthy human tissue at the hours implied by A229 (A245: fail; H245.2 uninformative after A248); any statement that
+tumour-microenvironment programs follow the internal clock (A246).
+
+**What would change this:** recorded sampling times. The only hour-of-day signals in tumours come from the one timed
+cohort (A146 H146.2, A200, A249 H249.5). The 108 REMAGUS biopsy times (Vasilyev et al. 2026; files
+`Remagus_Actual_Time.csv` and `GSM_to_number.xlsx`, not public) would give a second one; asking for them is outward-facing
+(user's decision).
