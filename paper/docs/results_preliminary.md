@@ -4397,3 +4397,32 @@ identical `l1.csv` (same sha256): one set of results.
   (538 s, 8 workers), score_a242.py (42 s, 8 workers, peak 15.6 GB), position_a242.py}`; pooled cohorts with
   within-cohort permutations and surrogate covariates in `paper/common/development.py` (tests added).
 <!-- src: paper/exploratory/A242_fetal_adrenal_replication/output/{verdicts,l1,design,design_cohorts,feasibility_passrates,feasibility_design,position_in_adult}.csv; paper/results/logs/jobs.tsv -->
+
+## A245 (scored 2026-11-12): adhesion genes and T-cell content of healthy GTEx tissues do not follow the hours implied by A229 (H245.1-4 FAIL, powered)
+Power note: `registered_experiments.md` (commit 511753c). 233 fast-death donors, 26 tissues (41-216 donors), 10,000
+permutations of time within Hardy x sex; S = mean over tissues of the t at the predicted hour, R = phase-free companion.
+- **H245.1 FAIL (VCAM1, 20.5 h, recorded time):** S -0.242 (null SD 0.405, MDE 1.01), one-sided p 0.73; matched-gene
+  q95 0.691.
+- **H245.2 FAIL (T-cell content, 4.8 h, recorded time):** S -0.680 (null SD 0.312, MDE 0.78), p 0.99: opposite in sign
+  to the prediction; unchanged after residualising on HBB (-0.686).
+- **H245.3 FAIL (recorded time):** ICAM1 (18.5 h) S 0.204, p 0.34; SELE (19.0 h) S 0.259, p 0.29.
+- **H245.4 FAIL (internal time):** VCAM1 S -0.646 (p 0.95; pseudo-clock q95 1.419), T-cell content S -0.405 (p 0.90;
+  pseudo q95 0.674). D = S(internal) - S(recorded): VCAM1 -0.404 [-0.918, 0.135], T cells +0.275 [-0.179, 0.792]
+  (90 %, 2,000 donor bootstraps, hosts not refitted): neither axis is favoured.
+- **Phase-free (descriptive, uncorrected):** against recorded time VCAM1 R 1.054 (null q95 0.977, p 0.032), T-cell
+  content 0.699 (q95 0.764, p 0.077), PTPRC 0.698 (p 0.076), ICAM1 0.452 (p 0.66), SELE 0.386 (p 0.69); against internal
+  time none below p 0.10 (ICAM1 1.027, p 0.11). Peak of the mean complex t over tissues (recorded time): VCAM1 13.6 h,
+  T-cell content 16.4 h. Median cosinor amplitude over tissues: VCAM1 0.143, T-cell content 0.095 log2 units. Lung
+  (176 donors): VCAM1 peak 14.2 h (amplitude 0.120), T-cell content 12.6 h (0.131). Offset sweep: recorded-time S of
+  VCAM1 is largest at -6 h (0.97) and of T-cell content never above 0.02.
+- **Ventilated donors (descriptive, internal time, 354 donors, 29 tissues; no pseudo-clock companion):** R 3.544 for
+  VCAM1, 1.808 for T-cell content, 1.719 for ICAM1 (p 0.0005-0.0025); S at the predicted hours -3.241 (VCAM1), +1.207
+  (T cells). In ventilated donors the host state also carries illness and treatment, and the adhesion genes are
+  inflammation-inducible: not read as a clock effect.
+- **Reading (registered rules):** the hours implied by the tumour endothelial clock state in A229 do not transfer to
+  healthy tissue sampled over the whole day: at the predicted hours no readout is detected, with MDEs of 0.05 (T cells)
+  to 0.11 (VCAM1) log2 units of amplitude in the median tissue. The registered "R passes while S fails" case holds for
+  VCAM1 only on an uncorrected descriptive p of 0.032 (a midday peak, about 7 h from the prediction), which is not a
+  claim. Not a refutation of the mouse gate: bulk tissue, post-mortem donors, and the T-cell score includes blood.
+  A229's implied peaks stay descriptive and should not be quoted as hours.
+<!-- src: paper/exploratory/A245_trafficking_gtex/output/{power,tissues,direction,score_tests,score_descriptive,score_per_tissue,score_sweep,score_matched,score_pseudo}.csv -->
