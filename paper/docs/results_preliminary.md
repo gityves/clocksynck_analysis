@@ -4691,3 +4691,36 @@ sets, 200 matched gene sets; null mean of S 0.120.
   q95 0.325, bounds what shared handling of the biopsy gives); women only; arrays; the 0.248 above shows that the
   cell-line control is not flat under every gene subset.
 <!-- src: paper/exploratory/A255_living_tissues/output/{gates,power,score_tests,score_twins,score_descriptive}.csv -->
+
+## A254 (scored 2026-11-12): no psoriasis-sized clock delay of the lesion in periodontitis, osteoarthritis, carotid plaque, fibroid or hidradenitis (H254.1 FAIL, powered: pooled offset +0.01 h, MDE 0.69 h; H254.2 FAIL x4); lesions carry less clock-plane variance than the person's own tissue, clock-specific at the line when pooled (H254.3)
+
+- Data: five paired datasets, 184 persons; every non-lesional tissue passes the clock gate (p 0.005-0.015). Lesion and own
+  tissue share a clock state in all (coherence 0.45 to 0.77). One scoring run.
+- **H254.1 FAIL (primary, powered):** pooled offset lesion minus non-lesion +0.01 h (null SD 0.275 h; one-sided delay p
+  0.52; MDE 0.69 h); companions: matched q05 -0.75 h, responsive q05 -0.67 h. A delay of the psoriatic size (1.4 h) is
+  excluded for these lesions taken together.
+- **H254.2 FAIL x4 (each disease, two-sided, Holm over four):** periodontitis -0.15 h (90 % -0.66 to 0.47; p 0.66);
+  osteoarthritis +0.04 (-1.65 to 0.94; p 0.96); carotid plaque +0.53 (-1.05 to 2.34; p 0.56); hidradenitis -1.07 (-1.79 to
+  -0.14; p 0.085, Holm 0.34; one-sided delay p 0.042; not clock-specific: companions' |offset| q95 6.9 and 4.4 h).
+  Uterine fibroid +1.19 h (-0.43 to 3.01), not scored (MDE 2.56 h).
+- **H254.3 (clock-plane variance, lesion over non-lesion, log ratio r):** pooled r -0.417 (SE 0.088; p 0.0001), below the
+  q05 of both companions (matched -0.404, responsive -0.272): **PASS, clock-specific at the line.** Per disease (Holm
+  over four): periodontitis -0.453 (p 0.0001, Holm 0.0004; inside the companions' range: matched q05 -0.864, responsive
+  q05 -0.495); carotid plaque -0.545 (p 0.003, Holm 0.010; matched q05 -0.670); osteoarthritis +0.089 (p 0.74);
+  hidradenitis -0.227 (p 0.37): none clock-specific alone. Fibroid -0.791 (p 0.025; outside both companions; not
+  scored).
+- Descriptive: the second periodontitis series (GSE10334, 64 persons; overlap with the first undocumented) gives offset
+  -0.13 h (-0.71 to 0.63) and r -0.481 (p 0.0001). Barrett mucosa against the same patient's squamous oesophagus
+  0.00 h and r +0.151; against gastric cardia +0.64 h and r +0.124. Without PER1 and NR1D1 the offsets stay within
+  their intervals.
+- **Reading (registered rules):** lesions of four non-skin tissues stay on the time of the person's own tissue:
+  no shift, with a pooled bound of 0.7 h. The psoriatic delay is therefore not a general property of chronic
+  lesions; within this set only hidradenitis, the one inflammatory skin disease, points the psoriasis way (-1.07 h,
+  20 persons, not significant after Holm, not clock-specific), which is consistent with the delay being a feature of
+  inflamed skin (A183: psoriasis and eczema alike). What lesions do share is a lower clock-plane variance (pooled
+  ratio exp(-0.417) = 0.66), the direction seen in tumours; it is clock-specific only when pooled and at the line,
+  and matched gene sets also lose variance in single diseases, so it reads as less clock signal in lesional tissue,
+  cause open (composition, damping). For the claim "where clocks break, they break locally": the break is a loss
+  of clock signal in the lesion, not a general desynchrony of the lesion from the body; the phase shift is specific
+  to inflamed skin.
+<!-- src: paper/exploratory/A254_paired_lesions/output/{power,score_datasets,score_pooled,score_descriptive}.csv -->
