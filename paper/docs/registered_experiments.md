@@ -6307,3 +6307,35 @@ change of its amplitude cannot both be read from one chord per condition; s is t
 Light, sleep and meals all shift together in the protocol; "behaviour" means all of them. (5) Biopsies on the third
 day of the misaligned protocol: a slow adjustment would read as a small s.
 **Stop rule:** one scoring run. **Code:** `paper/exploratory/A257_nightshift_muscle/scripts/`.
+
+## A258 (2026-11-13, user: "Go for 1, 2 and 3" (item 1 of REVIEW_2026-11-10 §6.4: D1, PI question Q27); a calibration, not a biological test; seen: the review's post hoc feasibility table (12 seeds: d* bias -0.11 to -0.19 at log V ratio -0.8 to -1.0 with anchor noise 0.05-0.15, <= 0.07 at -0.3 to -0.45, none at equal spread) and the observed log V ratios of the equivalence families (A231 medians -0.03 / +0.23, A233 -0.32 to +0.24, largest single tissue 0.76); nothing of the correction below has been computed): how biased are group contrasts at unequal host spread, and does an arm-specific host prior remove the bias? **Simulation (`clocksync.simulate`), then a sensitivity column on the equivalence families; method (Q27)**
+**Why.** `Dataset.contrast` regresses each arm on host posterior means shrunk by one pooled prior; in the arm with the
+narrower host spread the loading, z2 and d* are pulled toward 0 (review M1). The equivalence claims (sex, age,
+obesity, T2D, five chronic conditions) are read at a bound of +/- 0.15 on d*, so the size of the bias at their designs
+decides whether they hold as stated.
+**Candidate correction (fixed now; an option, the default is unchanged).** For the donors of an arm: with the pooled
+prior Sigma and each donor's posterior mean f and covariance S_post, the shrinkage K = I - S_post Sigma^-1 gives the
+unshrunk anchor estimate r = K^-1 f and its measurement covariance S = K^-1 Sigma - Sigma; the arm's prior Sigma_g =
+cov(r, centred within stratum) - mean(S), projected onto positive semi-definite matrices; the arm's posterior means and
+covariances follow from Sigma_g (empirical Bayes per arm). The arm's loading, psi and V are read on them; V0 (the
+common spread of d*) stays the pooled one. `clocksync`: `on_host(..., prior="arm")`, `Dataset.contrast(...,
+host_prior="arm")`, with a unit test (noisy anchors, unequal windows).
+**Simulation design (fixed now).** `clocksync.simulate` with the compartments of the review (three anchors, one target
+at coupling as there); two arms; reference window 6-18 h, case window 6-18 / 8-16 / 10-14 / 11-13 h; anchor noise psi
+0.002 / 0.05 / 0.15; donors per arm 40 / 80 / 200; 100 seeds per cell (seed 258). Truth: equal coupling and loading in
+both arms (d* = 0, log z2 ratio = 0). A power arm: the target's coupling lowered by 0.15 in the case arm at 80 donors.
+Outputs per cell and estimator (pooled, arm): mean and SEM of d*, d, log z2 ratio and observed log V ratio; RMSE;
+size of the label-permutation test (200 permutations, 30 seeds per cell at 80 donors) and power in the power arm.
+- **V258.1 (bias):** pooled estimator: mean d* bias per cell, reported against the observed log V ratio.
+- **V258.2 (correction accepted if all hold):** with the arm prior, |mean d* bias| <= 0.02 in every cell with anchor
+  psi <= 0.15 and log V ratio >= -1.0 (the range of the real designs); RMSE not above the pooled estimator's by more
+  than 10 % at equal spread; power in the power arm not below the pooled estimator's by more than 0.05.
+- **V258.3 (real designs):** a bias table indexed by the observed log V ratio and anchor reliability; for every row
+  of the equivalence families of A164 / A202, A208, A231, A233 and A235, the expected bias at its observed log V ratio
+  (interpolated from V258.1), flagged when it exceeds 0.05.
+- **Part 2, only if V258.2 passes (a separate dated note before it is run):** the equivalence families recomputed
+  with `host_prior="arm"` as a sensitivity column; registered numbers and verdicts unchanged; a row whose 90 %
+  interval leaves +/- 0.15 under the correction is reported as "not robust to the spread correction".
+**Reading.** V258.1 sets how far the pooled numbers can be trusted at each design; V258.2 decides whether the paper
+reports a corrected column; V258.3 lists the rows to flag. A failed V258.2 leaves the flag table as the answer.
+**Code:** `paper/exploratory/A258_spread_bias/scripts/`; `clocksync` changes committed in its repository with a test.
