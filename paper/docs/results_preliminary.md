@@ -4776,6 +4776,12 @@ sets, 200 matched gene sets; null mean of S 0.120.
   intervals and companions; the angle here is larger (2.7 h against about 1.6 h implied by the cosine) because the
   gene table includes the eight platform aliases and the projector is fitted over all arrays. Limits: not blind; two
   clock times per condition; 11 men; day 3 of the protocol.
+- **Scope (note 2026-11-13):** A257 uses only the clock-plane projection of the method (per-sample state on the GTEx
+  waveform) with a timed, within-person reference; it has one compartment, so no host state, coupling, relative
+  amplitude, inter-compartment offset, gate or d* is estimated. H257.1 validates the projection step (the state tracks
+  clock time within a person, as A252 / A256); it is not a positive control for host-referenced inference, and as a
+  not-blind analysis it is not a pre-specified control of anything. Its place is a biological result (peripheral
+  response to misalignment), with H257.1 beside A252 / A256 in Fig. 1.
 <!-- src: paper/exploratory/A257_nightshift_muscle/output/{score_tests,score_descriptive}.csv -->
 
 ## A244 (scored 2026-11-13): the clock-shaped covariation of the fetal adrenal is carried by the cortex (H244.1 cortex PASS, also after foreign-RNA correction); the medulla shows none at full adult power (H244.1 medulla FAIL); the shared state of the two classes is not estimable (H244.2)
