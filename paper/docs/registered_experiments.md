@@ -6272,3 +6272,11 @@ uses GSE40589 (five clamp or GIP arms against saline alone; the same persons, so
 person) and GSE59088 (recovery arms against control; labels permuted over persons), pooled. Person links: verified by
 sex genes in GSE9105 and GSE126296; by title or characteristics in the male-only studies; in GSE40589 only by the
 "replicate" number of the sample description (unverified).
+
+**A256 power note (2026-11-13, before any observed state change; `A256_elapsed_replication/output/{design,power}.csv`).**
+166 units in 17 arms of seven studies. H256.2 (all fresh units): null SD of rho 0.239, MDE 0.60 (limit 0.7): scored.
+H256.1 (nothing done: 13 units, saline alone 7 and rest alone 6): null SD 1.03, MDE 2.57, above the limit of 1.0: **not
+scored**; its value is printed by the script and reported as descriptive only, and the Holm family reduces to H256.2.
+The question "does the state advance when nothing is done" therefore stays open in public data; H256.4 (interventions
+against nothing done) is reported with its permutation p but rests on the same 13 units. Code run only with time
+labels shuffled within unit (`--placebo --smoke`). Choices not fixed by the registration are in the script docstring.
