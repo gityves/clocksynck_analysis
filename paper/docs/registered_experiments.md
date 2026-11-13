@@ -6253,3 +6253,22 @@ reading of A252. H256.4 says whether interventions add to or subtract from the r
 **Limits.** As A252 (protocol clock times, amplitude and rotation mixed, repeated biopsy); saline arms are fasted,
 so "nothing done" still includes continued fasting.
 **Stop rule:** one design addendum, one power note, one scoring run. **Code:** `paper/exploratory/A256_elapsed_replication/scripts/`.
+
+**A256 design addendum (2026-11-13, before any expression value of these datasets is read; table and protocol quotes in `A256_elapsed_replication/design_addendum_draft.md`, prepared by a Sonnet agent with `prep_a256.py`, no clock statistic).**
+Retained (7): GSE40589 (subcutaneous fat, 8 persons, six crossover arms, 0 and +4 h, morning fasted; two-colour log
+ratios, used as deposited: the base of the logarithm scales rho but no p), GSE9105 (muscle, insulin clamp, +1.5 and +5 h;
+12 persons; PER1 and CIART not on the array), GSE59088 (muscle; the same-day pair is 13:00 and 15:30, +2.5 h, clock time
+stated; rest-only control and two arms that exercised before the first biopsy; 6 persons each), GSE220899 (muscle,
+resistance exercise, +4 and +7 h, two bouts per person), GSE202295 (muscle, first biopsy right after cycling, +3 h of
+rest; 35 persons), GSE163356 (muscle, interval exercise, +4 h; two sessions), GSE126296 (muscle, sprints, +3.67 h; 14
+persons). Rejected: GSE7146 (6 persons per protocol and platform), GSE164081 (no per-sample matrix), GSE43219 (rest
+biopsy on another day). Clock time of the first biopsy 09:00 by the registered default except GSE59088 (13:00).
+**Arm classes (decided here).** *Nothing done* (H256.1): saline infusion alone (GSE40589 INF_NACL, 7 units) and rest
+alone (GSE59088 control, 6 units): 13 units. *Recovery*: exercise ended before the first biopsy and only fasting rest
+lies between the biopsies (GSE59088 endurance and resistance, GSE202295): by the letter of the registration these would
+count as nothing done; they are kept out of H256.1 because the earlier exercise may still act, and H256.1 with them
+included is reported as a sensitivity (descriptive). *Intervention*: everything else. H256.2 pools all units. H256.4
+uses GSE40589 (five clamp or GIP arms against saline alone; the same persons, so arm labels are permuted within
+person) and GSE59088 (recovery arms against control; labels permuted over persons), pooled. Person links: verified by
+sex genes in GSE9105 and GSE126296; by title or characteristics in the male-only studies; in GSE40589 only by the
+"replicate" number of the sample description (unverified).
