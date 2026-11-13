@@ -69,7 +69,7 @@ ones built on clock genes recover it. The method keeps the map in both designs.
 **Figures**
 - `figures/gtex_sweep/gtex_sweep.png` (`scripts/gtex_sweep.py`): median offset and amplitude error per method against the
   number of donors (10-80), whole day vs 08-18 h, from the Figure 1 GTEx benchmark (8 tissues, 10 draws per n; truth:
-  cosinor on the recorded times of all fast deaths). In hospital hours clocksync's offset error stays 0.34-0.50 h from
+  cosinor on the recorded times of all fast deaths). In hospital hours clocksync's offset error stays 0.35-0.56 h from
   10 to 80 donors; every orderer, TimeTeller and the timed oracle start near 1.6-2.2 h at 10 donors. Amplitudes: all
   methods comparable, except the timed oracle in hospital hours (a 10 h window cosinor).
 - `figures/gtex_dip/gtex_dip.png` (`scripts/gtex_dip_compute.py`, `scripts/gtex_dip.py`): CHIRAL's published donor internal
@@ -78,9 +78,9 @@ ones built on clock genes recover it. The method keeps the map in both designs.
   the recorded time of death, the DIP gives 0.68 (all fast deaths) but 0.23 within 08-18 h; clocksync's internal time 0.60
   and 0.59. Within hospital hours the DIP barely orders the donors; clocksync's hospital-hours internal time does.
 
-**Caveats for the figures:** the sweep and the DIP comparison are post hoc and descriptive (presentation figures). The sweep
-ran on 2026-10-25, before the leave-one-out anchor default (clocksync c266e20, 2026-11-01); CYCLOPS and CoFE genome-wide
-were run only at 80 donors (3 draws) for cost.
+**Caveats for the figures:** the sweep and the DIP comparison are post hoc and descriptive (presentation figures). clocksync's
+sweep runs were refitted on current code (c4dde99, leave-one-out anchors; 2026-11-14); the other methods' runs are
+unchanged from 2026-10-25. CYCLOPS and CoFE genome-wide were run only at 80 donors (3 draws) for cost.
 
 **Speaker notes**
 - The orderers' working-hours failure is not a reflection or stretch artefact: allowing the better direction and a

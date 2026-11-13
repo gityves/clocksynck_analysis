@@ -1,7 +1,7 @@
 """Slide figure (results, R1.2): error of the GTEx organ map against the number of donors, whole day vs hospital hours.
 
-GTEx benchmark of Figure 1 (`results/figure_1/scripts/method/compute_gtex_benchmark.py`, post hoc figure design, run
-2026-10-25): a draw is n donors from all fast deaths (Hardy 1-2; `full`, whole day) or from those who died 08-18 h (`window`);
+GTEx benchmark of Figure 1 (`results/figure_1/scripts/method/compute_gtex_benchmark.py`, post hoc figure design; clocksync
+refitted 2026-11-14 on current code, other methods run 2026-10-25): a draw is n donors from all fast deaths (Hardy 1-2; `full`, whole day) or from those who died 08-18 h (`window`);
 8 tissues (Muscle - Skeletal the reference). Each method gives per-tissue offsets and relative amplitudes, scored against the
 timed truth: per-tissue cosinor of the clock genes on the recorded time of death of all fast deaths, rank-1 complex SVD.
 Per draw: median over tissues of |offset error| (h) and |log2 amplitude error|; plotted: median over draws (line, dot) and
