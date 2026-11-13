@@ -35,6 +35,12 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 
 ### Q32 (2026-11-11): the human developmental section after A237-A239
 
+- **Update 2026-11-13 (A244, scored):** the fetal adrenal signal is cortical (C 0.608, Holm 0.0076, clock-specific, also
+  after foreign-RNA correction); the medulla shows none at adult power 1.000. Below adult size; strongest before 12 weeks.
+  Suggested wording: "a clock-shaped covariation between fetuses is present in the steroidogenic adrenal cortex from the
+  first trimester, below adult size; none is detected in the medulla". A243 (other organs, pooled) is still registered,
+  not run; it needs a scout and up to 60 GB.
+
 - **Question:** three open human datasets were scored on a common registered design (age and sex adjustment, signed
   coherence, both companions): organs of one fetus (Cardoso-Moreira, 4-20 wpc), gonad cell classes (Garcia-Alonso,
   6-21 wpf), brain regions (Kang, 8-37 pcw). No prenatal primary readout passes; the postnatal L1 control passes in
@@ -163,6 +169,12 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
   the SCN-lesion picture (Yoo 2004); damped clocks would be a different result, and no readout separates them yet.
 
 ### Q27 (2026-11-10): contrasts at a common host spread (d*) are biased when the arms differ in spread
+
+- **Update 2026-11-13 (A258, on the user's instruction):** bias measured (none at equal spread; -0.11 to -0.27 at log V ratio
+  -0.8 to -1.0 with a noisy host); the arm-specific prior (`contrast(host_prior="arm")`) removes most of it but fails the
+  registered acceptance, so no corrected column; the label-permutation test is anti-conservative at unequal spread.
+  Flagged rows (expected bias > 0.05): A231 0-3 of 54, A233 6-33 of 302, A235 5-55 of 262. Recommendation: keep the
+  registered numbers, mark the flagged rows, drop "d* removes the spread", and register a spread-matched null.
 
 - **Question:** may a calibration amendment be registered (simulation at the real designs of A164, A231, A233 and the
   fibrotic-lung contrasts; candidate arm-specific correction), and if d* moves, do we keep the registered numbers with a
