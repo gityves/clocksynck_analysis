@@ -4724,3 +4724,30 @@ sets, 200 matched gene sets; null mean of S 0.120.
   of clock signal in the lesion, not a general desynchrony of the lesion from the body; the phase shift is specific
   to inflamed skin.
 <!-- src: paper/exploratory/A254_paired_lesions/output/{power,score_datasets,score_pooled,score_descriptive}.csv -->
+
+## A256 (scored 2026-11-13): the within-person rotation of the clock state replicates in seven fresh studies (H256.2 PASS, clock-specific; H256.3 PASS: 17 of 20 cells within 2 h of the protocol's time of day); the arms in which nothing is done are too few to be scored (H256.1 NOT SCORED, 13 units) but point the same way; interventions do not detectably add to it (H256.4)
+
+- Data: seven studies not opened before the design addendum, 166 units in 17 arms (muscle, subcutaneous fat); one
+  scoring run. rho as A252 (amplitude of the rotation in units of the GTEx waveform).
+- **H256.2 PASS, clock-specific (all fresh units):** rho 2.533 (null SD 0.239, p 0.0001, Holm 0.0002); matched sets q95
+  0.275, responsive sets median -0.380, q95 0.779 (no set of 200 reaches it in either). Without PER1 and NR1D1: 2.967. Per
+  study: 3.39 (GSE40589; log base of the deposited ratios unknown, so its size is not comparable), 0.86 (GSE9105, no
+  PER1 on the array), 2.08, 3.03, 2.28, 1.81, 0.81.
+- **H256.3 PASS (direction):** the time of day implied by the mean change lies within 2 h of the protocol's midpoint in
+  17 of 20 dataset x arm x time-point cells (5.2 expected under permuted labels; p 0.0001). The three outside: GSE59088
+  resistance (17.8 vs 14.3 h) and endurance (16.3 vs 14.3 h, 2.03 h off), GSE163356 session 9 (13.4 vs 11.0 h).
+- **H256.1 NOT SCORED (power rule: 13 units, MDE 2.57 against a limit of 1.0).** Descriptive: rho 2.668 (permutation p
+  0.0003; matched q95 0.560, responsive q95 0.512; without PER1 and NR1D1 1.873). Saline alone for 4 h in fasted, supine
+  persons: rho 2.92, implied midpoint 11.1 h against 11.0 h (7 units); rest alone from 13:00 to 15:30: rho 1.95, implied
+  12.5 h against 14.3 h (6 units).
+- **H256.4 (interventions against nothing done; GSE40589 and GSE59088):** difference of rho +0.653 (null mean 0.206, SD
+  0.472; two-sided p 0.35): not detected, on 13 nothing-done units. By class over all studies (descriptive): nothing
+  done 2.67, recovery after exercise 2.26, intervention 2.57.
+- **Reading (registered rules):** A252 replicates on studies fixed before their data were opened: the clock state
+  moves along the circle between two biopsies of a day, in the predicted direction, beyond matched and
+  stress-responsive gene sets and without PER1 and NR1D1, in 16 studies overall (A252 and A256). Whether elapsed time
+  alone suffices could not be tested at the registered power; what there is (saline and rest arms, 13 units) shows
+  the same rotation as the intervention arms, and insulin clamps, GIP, exercise and recovery do not detectably change
+  it. Together with the rest arm of A252 (5 persons, rho 2.89) the evidence for "time alone" is three small arms that
+  agree, not a registered pass. Limits as registered; fasting continues in every nothing-done arm.
+<!-- src: paper/exploratory/A256_elapsed_replication/output/{design,power,score_tests,score_cells,score_descriptive}.csv -->
