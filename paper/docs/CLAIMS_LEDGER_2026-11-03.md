@@ -170,3 +170,27 @@ tumour-microenvironment programs follow the internal clock (A246).
 cohort (A146 H146.2, A200, A249 H249.5). The 108 REMAGUS biopsy times (Vasilyev et al. 2026; files
 `Remagus_Actual_Time.csv` and `GSM_to_number.xlsx`, not public) would give a second one; asking for them is outward-facing
 (user's decision).
+
+## Addendum 2026-11-13 (A251-A255: living cohorts, within-person validation, lesions; PI review pending; rows above unchanged)
+
+| # | Sentence | Evidence | Limit | Avoid | Status |
+|---|---|---|---|---|---|
+| 1.6 | Within a living person the readout advances with the day: between two biopsies of one day the clock state moves along the circle in the predicted direction. | A252 H252.1 (adipose, exact clock times, 15 men x 2 visits): rho 1.265, null SD 0.215, above all 200 matched and 200 responsive sets; H252.2 (seven studies, muscle and adipose, assumed morning times): 2.970; without PER1 and NR1D1 1.058 and 3.566; implied time of day within 1 h of the protocol's at 13 of 14 points. | Every interval but one small arm holds a meal or an intervention (A256 registered to test "nothing done" arms and to replicate); seven studies use protocol clock times; rho mixes amplitude and rotation and exceeds 1. | "The method measures elapsed time"; any hour estimate from rho. | A |
+| 2.5 | In living people sampled once in clinic hours, tissues share one clock state: skin layers at three body sites, fat and skin, two fat depots, muscle and fat. | A251 H251.1 (154 women, same layer at different sites): r 0.628 vs null 0.072, matched q95 0.380, responsive q95 0.420; H251.2 0.813 / 0.594. A255 H255.1 (MuTHER, 680 women, fat-skin): 0.533 vs 0.034, matched q95 0.304, responsive q95 0.325; H255.3 (two surgical cohorts, 83 persons): 0.686, responsive q95 0.530. | Women only in the two large cohorts; arrays; fat and skin of MuTHER come from one punch biopsy; ages not public (no age contrast); time spread unknown. | "Organs of living people are synchronised" without the scope (skin, fat, muscle). | A |
+| 2.6 | The shared state is body time, not the person's constitutive clock-gene expression: her cultured cell line does not carry it. | A255 H255.2: r(fat, skin) minus mean r(tissue, cell line) 0.479 (0.432 to 0.510); fat-cell line 0.042 (p 0.24), skin-cell line 0.066 (p 0.055); the cell line fails the clock gate (p 0.75). Co-twins pair across persons alike in MZ and DZ pairs (fat 0.522 / 0.520; skin 0.587 / 0.591), above their cell lines by 0.135 and 0.205. | Without PER1 and NR1D1 the skin-cell line pairing is 0.248 (descriptive, no companion): the control is not flat under every gene subset. Co-twin cell lines pair at 0.384 (shared handling). | "Clock phase is not heritable" (not tested: this is state sharing at a visit). | A |
+| 1.7 | An untimed offset agrees with a timed one in the same study: dermis runs behind epidermis by 1.6 h (untimed women) and 2.0 h (timed men). | A251 H251.4: -1.58 h (-1.81 to -1.34) vs -1.98 h (-3.15 to -0.95). | One layer pair, one study; the men's control was seen in a code test before the power note (disclosed). | — | A/B |
+| 2.7 | Skin sites differ by at most about 1.5 h; the cheek runs latest. | A251 H251.3: offsets -1.54 to +0.73 h; registered equivalence within 1.5 h fails for one of six pairs. | Each compartment is one array batch; exposure, site and composition not separable. | "Sun exposure delays the skin clock." | C (descriptive) |
+| 6.1a | The psoriatic delay is not a general property of chronic lesions: lesions of gum, cartilage, artery and uterus stay on the time of the person's own tissue. | A254 H254.1: pooled offset +0.01 h, MDE 0.69 h (184 pairs, all gated); per disease -0.15, +0.04, +0.53 h; hidradenitis (skin) -1.07 h (-1.79 to -0.14), Holm 0.34. | Bound 0.7 h pooled, 0.8 to 2.2 h per disease; arrays; "non-lesional" is tissue of a diseased organ. | "Inflammation delays the clock"; citing hidradenitis as a replication. | A (as a bound) |
+| 6.12 | Lesional tissue carries less clock signal than the person's own unaffected tissue. | A254 H254.3: pooled log variance ratio -0.417 (SE 0.088, p 0.0001), below the q05 of matched (-0.404) and responsive (-0.272) sets; periodontitis -0.453 (replicated in a second series, -0.481), plaque -0.545. | Clock-specific only when pooled and at the line; composition not separated; no single disease is clock-specific. | "Lesions lose their clock." | B |
+
+**Do not claim (added):** altered clock relations between brain regions in depression or psychosis, or their
+preservation (A253: not scored; in control brains stress-responsive genes pair across regions as strongly as clock
+genes, R 0.734 vs responsive q95 0.758; the depression patients of Li 2013 are not public); an age effect in the
+living (ages of the skin and twin cohorts are not public); a graft adopting the recipient's time (no usable public
+data, second search); a metabolic contrast in living multi-tissue cohorts (no cohort with phenotype and person key).
+
+**Effect on the headline (section 0) and on "Missing for Cell" (REVIEW_2026-11-10 §3.1).** Item 2 (a living cohort
+for the robustness arm) is met for the shared-state claim by two large living cohorts and two surgical ones, with a
+genetic control; not for the equivalence claims (sex, age, disease), which remain GTEx-only. Fig. 1 gains a
+within-person validation (row 1.6). Item 1 (a confirmation of the break arm or a human desynchrony positive) is
+unchanged: the brain route is closed (A253).
