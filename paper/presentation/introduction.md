@@ -125,9 +125,10 @@ under laboratory protocols.
 
 - Mistimed sleep cuts rhythmic blood transcripts from 6.4 % to 1.0 % \cite{archer2014mistimed}; a simulated night shift
   dampens most blood rhythms rather than shifting them \cite{kervezee2018simulated}.
-- After an inverted behavioural cycle, the muscle clock keeps its original pattern ("had not adapted to the behavioral
-  rhythm"), with lower insulin sensitivity \cite{wefers2018circadian}; misalignment raises glucose and lowers leptin
-  \cite{scheer2009adverse}.
+- After 3.5 days of a 12 h-shifted behavioural cycle, the muscle clock keeps its original pattern, blunted ("had not
+  adapted to the behavioral rhythm"), with lower insulin sensitivity \cite{wefers2018circadian}. Re-read within subjects
+  (A257, not blind), the muscle clock moves by only 2.7 h (90 % interval 1.8 to 3.6 h; 11 men) and keeps 0.23 (0.06
+  to 0.41) of its 07:00 to 19:00 excursion. Misalignment raises glucose and lowers leptin \cite{scheer2009adverse}.
 - Long-term rotating night work is associated with breast cancer (≥ 30 y: RR 1.36) and heart disease (≥ 10 y: HR 1.18)
   \cite{schernhammer2001rotating, vetter2016association}, though large studies find no increased cancer risk
   \cite{sancar2021clocks}.
