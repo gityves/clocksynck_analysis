@@ -4751,3 +4751,29 @@ sets, 200 matched gene sets; null mean of S 0.120.
   it. Together with the rest arm of A252 (5 persons, rho 2.89) the evidence for "time alone" is three small arms that
   agree, not a registered pass. Limits as registered; fasting continues in every nothing-done arm.
 <!-- src: paper/exploratory/A256_elapsed_replication/output/{design,power,score_tests,score_cells,score_descriptive}.csv -->
+
+## A257 (scored 2026-11-13; not blind, A124 scored the same data): after a 12 h shift of behaviour, the human muscle clock moves by only 2.7 h and its daily excursion falls to about a quarter (H257.1 PASS, H257.2 partial shift, H257.3 PASS)
+
+- Data: GSE106800 (Wefers 2018), vastus lateralis at 07:00 and 19:00 after an aligned and after a 12 h-misaligned
+  protocol; 12 aligned units, 11 subjects with all four arrays. One scoring run.
+- **H257.1 PASS, clock-specific (positive control):** in the aligned condition the state moves from 07:00 to 19:00
+  along the predicted chord: rho 1.336 (exact null over 4,096 swaps, SD 0.393, p 0.0002); matched sets q95 0.137,
+  responsive sets median 0.014, q95 0.458 (no set of 200 reaches it).
+- **H257.2 partial shift (registered reading):** the change from 07:00 to 19:00 under misalignment is turned by s =
+  +2.68 h against the aligned change (90 % interval 1.81 to 3.59 h): it excludes 0 and 12 h and is not inside +/- 3 h.
+  Without PER1 and NR1D1: +3.51 h. Per subject: 10 of 11 positive (-1.39 to +6.57 h). The muscle clock is about 2.7 h
+  ahead of its aligned position (a 12 h shift has no direction of its own, so "towards behaviour" cannot be read from
+  the sign).
+- **H257.3 PASS (damping):** projected on the aligned chord, the misaligned change is R = 0.233 of the aligned one (90 %
+  0.060 to 0.414); rho 1.322 vs 0.309, exact one-sided p 0.001; the difference (1.01) exceeds the q95 of the matched
+  (0.238) and responsive (0.509) companions. A rotation of 2.7 h alone would leave cos(40 deg) = 0.77 of it: most of the
+  loss is amplitude.
+- **Reading:** in human muscle, three days of 12 h-shifted sleep, light, activity and meals move the clock by only
+  2.7 h, against 12 h of behaviour, and flatten its 07:00 to 19:00 excursion to about a quarter. The muscle clock
+  therefore stays close to central (light-entrained) time and loses amplitude rather than following behaviour: tissue
+  misalignment in this design is a damped peripheral clock that lags the shift, not a peripheral clock re-set by
+  feeding and activity. This formalises the A124 descriptive (same direction, cosine 0.91; amplitude 3.20 -> 1.67) with
+  intervals and companions; the angle here is larger (2.7 h against about 1.6 h implied by the cosine) because the
+  gene table includes the eight platform aliases and the projector is fitted over all arrays. Limits: not blind; two
+  clock times per condition; 11 men; day 3 of the protocol.
+<!-- src: paper/exploratory/A257_nightshift_muscle/output/{score_tests,score_descriptive}.csv -->
