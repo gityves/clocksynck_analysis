@@ -6,7 +6,10 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 
 ## Open
 
-### Still with the PI (updated 2026-11-11)
+### Still with the PI (updated 2026-11-13)
+- **New 2026-11-13:** results A245-A256 and what they change are summarised in `REVIEW_2026-11-10.md` §6; decisions asked there:
+  the luminal A row after A224, whether to request ages (Wu 2020) and TwinsUK phenotypes (MuTHER), whether A243 is run (Q32),
+  and the wording of the cancer chapter (Q24) after the synthesis in the ledger addendum of 2026-11-12.
 - **Q32** (below): three human fetal datasets give no adult-like clock organisation before birth (A237-A239): how the development section reads. Updated with the size of the clock the negatives exclude (A240), A241 and **the replication of the fetal adrenal clock on open data (A242, PASS): option (iii) is done, the recommendation changes**.
 - **Q31** (below): the unsigned gene coherence R reads a shift common to the clock genes as a clock; replace it by the signed coherence paper-wide?
 - **Q30** (below): the mouse embryo timing positive (A108) is not clock-specific (A236): how the paper words it.
@@ -129,6 +132,13 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
   would be needed to ask the question properly.
 
 ### Q29 (2026-11-10): which confirmation first for the Q25 headline
+
+- **Update 2026-11-13 (user's instruction of 2026-11-12: (a) and (b) both).** (b) done: A251, PASS, clock-specific (154
+  living women, skin sites and layers), and extended to two organs with a genetic control (A255, MuTHER, PASS); no age
+  contrast (ages not public). (a) age: the archive already holds it on the same data (A3); (a) depression: not
+  scorable (A253: the patients of Li 2013 are not public, and in four other cohorts responsive genes pair across
+  regions as strongly as clock genes). (c) the in-house jet-lag data remain the open route to a desynchrony test. See
+  `REVIEW_2026-11-10.md` §6 for the full update and the list of data to request.
 
 - **Question:** the fresh review (`REVIEW_2026-11-10.md` §3-§4) keeps the Q25 headline but finds that its break arm
   rests on one post hoc contrast (A132b) and its robustness arm on GTEx alone. Which confirmation do we pursue first:
