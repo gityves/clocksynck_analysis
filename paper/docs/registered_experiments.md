@@ -6339,3 +6339,27 @@ size of the label-permutation test (200 permutations, 30 seeds per cell at 80 do
 **Reading.** V258.1 sets how far the pooled numbers can be trusted at each design; V258.2 decides whether the paper
 reports a corrected column; V258.3 lists the rows to flag. A failed V258.2 leaves the flag table as the answer.
 **Code:** `paper/exploratory/A258_spread_bias/scripts/`; `clocksync` changes committed in its repository with a test.
+
+### A244 design addendum (2026-11-13, before any clock statistic on a cell class; full tables in `A244_fetal_adrenal_classes/design_addendum_draft.md` and `output/`, prepared by a Sonnet agent with `prep_a244.py`, `design_a244.py`, `feasibility_a244.py`, checked by the lead)
+- **Per-cell rule (set on marker counts alone; clock genes never read):** a class is met when its marker count is >= 3
+  and its marker fraction (marker UMIs / cell UMIs) is >= 0.005 (cortex, medulla, stroma) or >= 0.1 (blood); a cell is
+  assigned to the single class among cortex, medulla and stroma it meets if it meets no other of the four. Constants
+  from the valleys of the marker-fraction histograms and mixture boundaries (0.004-0.007). 448,931 cells: cortex
+  71,257, medulla 29,227, stroma 40,736, left out 307,711.
+- **Agreement with published annotations:** Kildisiute purity cortex 0.991, medulla 0.999, stroma 0.990 (recall 0.624,
+  0.861, 0.227); Dong purity 0.766 (cortex holds endothelial and capsular cells with ambient steroidogenic RNA), 0.963,
+  0.934. The other four cohorts have no annotation on disk.
+- **Design (fetuses with >= 200 cells of the class):** cortex 34 fetuses in 6 cohorts (kameneva 10, wang 9, sasaki 5,
+  kildisiute 5, dong 3, han 2; median clock-gene count per cohort 19.5 to 334); medulla 30 in 6 (wang 10, kameneva 7,
+  dong 4, sasaki 4, kildisiute 3, han 2; 4.75 to 118); both classes 26.
+- **Foreign RNA:** median a 0.0064 (cortex) and 0.0164 (medulla); expected foreign share of the clock-gene counts 0.009
+  and 0.013 (largest cohort: dong medulla 0.060): no class is confounded. The reference of a (the other class's
+  pseudobulk of the fetus) is taken at any size, as the registration states; for 26 of 33 cortex and 26 of 30 medulla
+  fetuses it has >= 200 cells; the `:corrected` readouts restricted to those are reported as descriptive.
+- **Adult power (93 GTEx adrenals, 200 subsamples):** pass rate at the full clock cortex 1.000, medulla 1.000 (0.75:
+  0.995, 0.910; 0.5: 0.520, 0.335; shuffled 0.055 each); 14 % of the cortex targets capped. **H244.1 scores `cortex` and
+  `medulla`** (all ages, cohorts with >= 2 fetuses, cohort indicator and quadratic age, permutations within cohort);
+  windows `late` (cortex 0.910, medulla 0.570) and `early` are descriptive as registered.
+- **H244.2: not estimable, not computed.** Second adult tissue fixed by rule before any fetal statistic: the A241
+  stand-in tissue sharing most 08-18 h donors with the adrenal, excluding blood: skeletal muscle (80 donors). Adult
+  pass rate 0.395 (0.327-0.466) at the full clock, mis-paired false-positive rate 0.040 (0.017-0.077): below 0.8.
