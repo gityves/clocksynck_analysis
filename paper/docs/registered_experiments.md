@@ -6280,3 +6280,30 @@ scored**; its value is printed by the script and reported as descriptive only, a
 The question "does the state advance when nothing is done" therefore stays open in public data; H256.4 (interventions
 against nothing done) is reported with its permutation p but rests on the same 13 units. Code run only with time
 labels shuffled within unit (`--placebo --smoke`). Choices not fixed by the registration are in the script docstring.
+
+## A257 (2026-11-13, user: "Go for 1, 2 and 3" (item 2 of REVIEW_2026-11-10 §6.4); **NOT BLIND**: the same data were scored in A124, whose descriptives are seen: the core state moves between 07:00 and 19:00 in the same direction in both conditions (cosine 0.91) with about half the amplitude under misalignment (3.20 -> 1.67); the within-person statistic of A252 / A256 is seen to work in 16 other studies): after a 12 h shift of behaviour, does the human muscle clock stay on central time or follow behaviour? **GSE106800 (Wefers 2018), 12 men, vastus lateralis at 07:00 and 19:00 after an aligned and after a misaligned protocol; L1 within person; secondary by registration; formalises a seen descriptive with intervals and companions**
+**Why.** The only public human misalignment design in a solid tissue. A124 asked about a between-gene-set offset
+(MDE 7.3 h) and could not resolve it. The within-person change of the clock state between the two biopsy times of a
+condition has a predicted direction: if the muscle clock follows behaviour shifted by s hours, the change from 07:00
+to 19:00 turns by s hours (s = 12 h: it reverses).
+**Data and states.** Series matrix and probe map of A124 (main probe sets, mean log2 per gene, canonical names with
+the eight platform aliases of the A124 sensitivity); 11 subjects with all four arrays (RAS9 enters H257.1 only).
+State z = L y, unweighted GTEx projector over all arrays, y = log2 x ln 2. Unit = subject x condition; delta = z(19:00) -
+z(07:00).
+**Statistics.**
+- **H257.1 (positive control):** aligned units: rho of A252 with t0 = 07:00 and 12 h elapsed; exact null over the
+  swaps of the two time labels within unit (2^12); matched and responsive companions (200 each, from the arrays'
+  genome-wide means); pass: p < 0.05 and above the q95 of both. If it fails, H257.2-3 are uninformative.
+- **H257.2 (primary; where the muscle clock sits):** shift s = arg(sum over subjects of delta_mis conj(delta_ctl)) /
+  w, in hours in (-12, 12]; 90 % interval from 2,000 bootstraps of subjects. Readings fixed now: interval inside
+  [-3, 3] h: "stays on central time" (follows behaviour by less than a quarter of the shift); interval excluding 0 and
+  12: "partial shift of s h"; interval containing 12 (or -12): "follows behaviour". Otherwise "not resolved".
+- **H257.3 (secondary; damping):** R = rho_mis / rho_ctl (both against the aligned chord); exact within-subject swap of
+  the condition labels for rho_ctl - rho_mis > 0 (one-sided, 2^11); 90 % bootstrap interval of R.
+**Descriptive.** s without PER1 and NR1D1; the companions' rho_ctl - rho_mis; per subject the angle of delta_mis
+against delta_ctl.
+**Limits.** (1) Not blind (above). (2) Two clock times per condition, 12 h apart: a rotation of the state and a
+change of its amplitude cannot both be read from one chord per condition; s is the angle only. (3) 11 subjects. (4)
+Light, sleep and meals all shift together in the protocol; "behaviour" means all of them. (5) Biopsies on the third
+day of the misaligned protocol: a slow adjustment would read as a small s.
+**Stop rule:** one scoring run. **Code:** `paper/exploratory/A257_nightshift_muscle/scripts/`.
