@@ -34,8 +34,10 @@ died outside 08-18 h only (disjoint from the test set).
 3. Why (post hoc): the estimate reproduces across disjoint donor halves (0.873), the night-only truth does not (its
    halves agree at 0.544). The shortfall comes from the truth's noise, not from the estimate.
 
-**Figure (to build):** A. untimed offset against truth (i) offset, one dot per tissue, the diagonal. B. same for
-log2 amplitude. C. split-half agreement: estimate halves vs truth (iii) halves (two distributions).
+**Figure:** `figures/gtex_organ_map/gtex_organ_map.png` (`scripts/gtex_organ_map.py`), the CHIRAL-paper organ map
+(angle: tissue offset, radius: relative amplitude, upper half of the clock face, -6 to +6 h) for A. the timed truth (i),
+B. clocksync and C. CHIRAL, both untimed on the 08-18 h donors; in B and C each tissue is joined to its truth (grey).
+To add if wanted: the split-half agreement (estimate halves vs truth (iii) halves).
 
 **Speaker notes**
 - Truth (i) shares donors with the test set (the window donors are part of the cosinor); truth (iii) does not, which is
@@ -64,8 +66,21 @@ ones built on clock genes recover it. The method keeps the map in both designs.
 3. In working hours the method also beats the supervised TimeTeller (0.754) and a timed oracle using the window
    donors' recorded times (0.738).
 
-**Figure (to build):** dot plot, one row per method, offset circular r in working hours (filled) and whole day (open),
-joined by a line. Reading: the length of each line is what partial-day coverage costs.
+**Figures**
+- `figures/gtex_sweep/gtex_sweep.png` (`scripts/gtex_sweep.py`): median offset and amplitude error per method against the
+  number of donors (10-80), whole day vs 08-18 h, from the Figure 1 GTEx benchmark (8 tissues, 10 draws per n; truth:
+  cosinor on the recorded times of all fast deaths). In hospital hours clocksync's offset error stays 0.34-0.50 h from
+  10 to 80 donors; every orderer, TimeTeller and the timed oracle start near 1.6-2.2 h at 10 donors. Amplitudes: all
+  methods comparable, except the timed oracle in hospital hours (a 10 h window cosinor).
+- `figures/gtex_dip/gtex_dip.png` (`scripts/gtex_dip_compute.py`, `scripts/gtex_dip.py`): CHIRAL's published donor internal
+  phase (DIP) against clocksync's internal time, binned (3 h, bins and cells with < 5 donors hidden). Whole day (241
+  donors): circular r 0.69, median difference 1.7 h. Clocksync fitted on 08-18 h only (110 donors): r 0.44. Panel C: with
+  the recorded time of death, the DIP gives 0.68 (all fast deaths) but 0.23 within 08-18 h; clocksync's internal time 0.60
+  and 0.59. Within hospital hours the DIP barely orders the donors; clocksync's hospital-hours internal time does.
+
+**Caveats for the figures:** the sweep and the DIP comparison are post hoc and descriptive (presentation figures). The sweep
+ran on 2026-10-25, before the leave-one-out anchor default (clocksync c266e20, 2026-11-01); CYCLOPS and CoFE genome-wide
+were run only at 80 donors (3 draws) for cost.
 
 **Speaker notes**
 - The orderers' working-hours failure is not a reflection or stretch artefact: allowing the better direction and a
