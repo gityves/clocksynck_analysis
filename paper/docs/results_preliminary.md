@@ -4777,3 +4777,66 @@ sets, 200 matched gene sets; null mean of S 0.120.
   gene table includes the eight platform aliases and the projector is fitted over all arrays. Limits: not blind; two
   clock times per condition; 11 men; day 3 of the protocol.
 <!-- src: paper/exploratory/A257_nightshift_muscle/output/{score_tests,score_descriptive}.csv -->
+
+## A244 (scored 2026-11-13): the clock-shaped covariation of the fetal adrenal is carried by the cortex (H244.1 cortex PASS, also after foreign-RNA correction); the medulla shows none at full adult power (H244.1 medulla FAIL); the shared state of the two classes is not estimable (H244.2)
+
+- Data: six single-cell cohorts of A242, marker-defined classes (design addendum: cortex 34 fetuses, medulla 30, in 6
+  cohorts each); adult pass rate at the full clock 1.000 for both classes, 0.995 / 0.910 at 0.75 and 0.520 / 0.335 at
+  0.5. One scoring run (54 s).
+- **H244.1 cortex PASS:** C 0.608 (p 0.0038, Holm 0.0076; null q95 0.351), above every matched (q95 0.300) and responsive
+  (q95 0.451) set; corrected for medullary RNA 0.611 (p 0.0038); only fetuses with a >= 200-cell reference 0.764 (p
+  0.0002, descriptive). Leave-one-gene-out 0.438 (without ARNTL) to 0.808.
+- **H244.1 medulla FAIL:** C -0.048 (p 0.41; matched 57.5th, responsive 62.5th percentile); corrected -0.049; never
+  positive in any leave-one-cohort-out (-0.19 to -0.01) or window. At the adult power table this excludes a medullary
+  clock of 0.75 times the adult size (pass rate 0.910) or more, not one of half the size (0.335).
+- **H244.2 not estimable** (design addendum: adult pass rate 0.395 with muscle as the second tissue); not computed.
+- Descriptive: stroma C 0.322 (p 0.079). Cortex by window: from 12 weeks 0.169 (13 fetuses, p 0.27; adult pass rate
+  0.910), before 12 weeks 0.652 (19 fetuses, p 0.0028, clock-specific). Cortex without one cohort: 0.369 to 0.743;
+  without kameneva p 0.054 (24 fetuses), without wang 0.477 (p 0.020, not above the responsive q95 0.480); clock-specific
+  in the other four. Position among adult subsamples at the full clock: cortex at the 1st percentile (adult median
+  0.848), early cortex at the 14.5th. Unsigned R cortex 0.630, medulla 0.152. The registered depth-matched comparison
+  of the two classes was not run.
+- **Reading (registered rules):** "Cortex PASS, medulla negative at an adult pass rate >= 0.8: the cortex carries it; a
+  medullary clock of the size given by the power table is excluded." The whole-adrenal signal of A242 lies in the
+  steroidogenic cells, the lineage that carries the adult adrenal clock and makes glucocorticoids, not in the
+  neural-crest medulla; class proportions do not explain it (the medulla, at the same depth range, shows nothing). The
+  cortical signal is below the adult size (1st adult percentile), consistent with A242, and is strongest before 12
+  weeks; from 12 weeks it is not detected in 13 fetuses although the adult power there is 0.91, which qualifies "from
+  12 weeks" of A242 for the cortex alone (descriptive, not a registered test). It leans on the two largest cohorts.
+<!-- src: paper/exploratory/A244_fetal_adrenal_classes/output/{design_classes,foreign_cohort,feasibility_passrates,l1,verdicts,verdicts_a244,position}.csv -->
+
+## A258 (scored 2026-11-13): group contrasts are biased by unequal host spread up to the size of the equivalence bound; the arm-specific prior removes most of the bias but is not accepted by the registered criteria (V258.2 FAIL); the label-permutation test is anti-conservative at unequal spread; 3 to 55 rows of the equivalence families are flagged
+
+- Simulation (`simulate_a258.py`): 36 design cells x 100 seeds (bias), 12 cells x 30 seeds with 200 permutations (size
+  and power, 80 donors per arm); three runs, 435 s, 794 s, 795 s. Unit test of the correction run on 6 seeds at one
+  design before the registered simulation (code check, disclosed).
+- **V258.1 (bias of the pooled estimator, target, 80 donors per arm):** none at equal spread (-0.006 to +0.001). Case
+  window 8-16 h (observed log V ratio -0.33 to -0.48): -0.015 to -0.038. Window 10-14 h (-0.79 to -1.25): -0.050 (anchor
+  noise 0.002), -0.113 (0.05), -0.159 (0.15). Window 11-13 h (-0.97 to -1.62): -0.125, -0.182, -0.269. The anchor itself
+  is biased as much (to -0.28).
+- **The arm prior** brings the same cells to -0.033 to +0.018 (80 donors).
+- **V258.2 FAIL (registered criteria):** (i) bias: 8 of 51 cells with log V ratio >= -1.0 exceed 0.02 (4 at >= 80 donors:
+  largest -0.069 for the target and -0.080 for the anchor, both at 40 donors in the 11-13 h window with anchor noise 0.15);
+  (ii) RMSE at equal spread: at most 1.058 times the pooled one (passes); (iii) power: at equal spread none lost (0.567 /
+  0.367 / 0.400 against 0.567 / 0.367 / 0.367), but at unequal spread the pooled estimator rejects more (up to 0.567
+  more), because its bias points the same way as the simulated loss; the registered criterion, taken over all cells,
+  fails on that. No corrected column is added (part 2 not run).
+- **Size of the label-permutation test (descriptive; 30 seeds per cell, nominal 0.05):** at equal spread 0.000 to
+  0.033 for both estimators; at unequal spread the pooled test rejects in 0.033-0.300 (target) and up to 0.833 (anchor)
+  of null data sets, the arm prior in 0.000-0.300 and up to 0.267. Permuting the labels exchanges the arms' spreads,
+  so the null "same coupling, different spread" is not the one the permutation generates.
+- **V258.3 (rows flagged, expected bias > 0.05 at the row's observed log V ratio; anchor noise 0.05 / 0.15):** A231 (age)
+  0 / 3 of 54 rows (median |log V ratio| 0.18; largest expected bias 0.031 / 0.061); A233 (five chronic conditions) 6 /
+  33 of 302 (0.20; 0.074 / 0.149); A235 (metabolic offsets; its claims are on offsets, d* is secondary there) 5 / 55 of
+  262 (0.19; 0.062 / 0.124). A row is flagged from |log V ratio| 0.38 upwards at anchor noise 0.15. A164 / A202 / A208
+  have no spread columns and are not mapped. Per-row table: `output/v258_3_rows.csv`.
+- **Reading (registered rules):** "A failed V258.2 leaves the flag table as the answer." The pooled equivalence
+  estimates of age and chronic conditions are exposed by at most about 0.03 (typical rows) and 0.06-0.15 (the flagged
+  rows), always in the direction "the arm with the narrower spread reads lower": the pooled verdicts stand, the flagged
+  rows are marked in the tables, and no sentence may say that d* removes the sampling spread. The arm prior is an
+  improvement for 80 or more donors per arm and moderate spread differences, but it does not meet the registered bar,
+  and neither estimator gives a calibrated permutation p at unequal spread: contrasts with |log V ratio| above about
+  0.4 (31 % of the exploratory rows, review M1) have anti-conservative p values. A spread-matched null (permutations
+  within strata of host spread, or a parametric bootstrap at each arm's own spread) is what is missing; it is a new
+  amendment.
+<!-- src: paper/exploratory/A258_spread_bias/output/{summary_bias,summary_size,summary_power,v258_1_bias,v258_2_acceptance,v258_size,v258_power,v258_3_rows,v258_3_summary}.csv -->
