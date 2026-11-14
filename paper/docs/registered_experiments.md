@@ -6363,3 +6363,57 @@ reports a corrected column; V258.3 lists the rows to flag. A failed V258.2 leave
 - **H244.2: not estimable, not computed.** Second adult tissue fixed by rule before any fetal statistic: the A241
   stand-in tissue sharing most 08-18 h donors with the adrenal, excluding blood: skeletal muscle (80 donors). Adult
   pass rate 0.395 (0.327-0.466) at the full clock, mis-paired false-positive rate 0.040 (0.017-0.077): below 0.8.
+
+## A259 (2026-11-15, roadmap item A1 (c) under the lead prompt `prompts/target_line_what_internal_time_controls_2026-11-15.md` (user, 2026-11-15: target plan 1, gate G3); staged: estimator, data, hypotheses and readings are fixed here, the power note (simulation only, `A259_tissue_deviation/scripts/power_a259.py`, running at registration) goes in a dated addendum before any observed statistic; seen: the offset equivalences of A208, A231, A233, A235 (roadmap A1 (a), `roadmap_A1_offset_bound/output/offsets_hours.csv`), A133 (no circular-part estimator), A255 (fat-skin pairing r 0.533), the psi of past fits (noise around the host, not split into true deviation and measurement noise); the estimator was checked on simulated data only; NOT seen: any split-half or deviation statistic of real data): how far does a tissue's clock depart from the clock state its person's other tissues share, in hours, net of measurement noise? **GTEx fast deaths (11 body tissues as targets), MuTHER fat and skin (living); L2 / L3, person-specific deviation; primary for gate G3**
+**Why.** Plan 2's headline is a bound in hours: one internal time per person. The group offset equivalences bound
+differences between groups of people, not the spread of a tissue around its own person's body time. The same quantity
+decides whether the tissue's own clock can be read apart from the body's in humans (roadmap T2): a deviation that is
+not larger than measurement noise leaves nothing for a "tissue clock" regressor to read.
+**Estimator (fixed now; `clocksync.deviation.incoherence`, committed with a test).** Per target compartment k:
+1 + kappa_k = |m(beta_k^A, beta_k^B)| |m(g1, g2)| / sqrt(|m(beta_k^A, g1)| |m(beta_k^B, g2)| |m(beta_k^A, g2)| |m(beta_k^B, g1)|),
+m(x, y) = mean x conj(y) over donors (centred), beta^A / beta^B the clock-plane states of disjoint halves of the 14
+clock genes (one projector per half over all rows: GTEx counts, log fractions with pooled median-count weights;
+arrays, log2 x ln 2, unweighted), g1 / g2 composites of two random halves of the host compartments (each rotated onto
+the frame of the best-sampled host). Measurement noise is independent between gene halves and between samples, so
+kappa_k = var(person-specific deviation) / (clock variance of k). sigma_k = (12 / pi) sqrt(kappa_k) is its SD in hours
+if the deviation were pure phase; amplitude deviations count as phase, so sigma_k is an upper bound. With one host
+compartment (MuTHER) the pair statistic (1 + kappa_a)(1 + kappa_b) - 1 is used, sigma_pair = the SD of the relative
+phase of the two tissues. 20 gene splits (balanced, each half's centred design with condition number <= 10), 20 host
+splits, 1,000 donor bootstraps (seed 259), 90 % percentile intervals.
+**Data.** (i) GTEx v10 fast deaths (Hardy 1-2), clock-gene table of `gtex_cues/_shared.clock_table` (depth = library
+size), targets: the 11 body tissues of `_shared.BODY` without whole blood (no coherent clock); hosts of a target: the
+other ten; a target is eligible with >= 80 donors having it and >= 1 tissue in each host half. (ii) MuTHER (E-TABM-1140),
+subcutaneous fat and skin of the same women (A255 matrices, `A254_paired_lesions/output/prep/`), pair mode; the cell
+line is not a clock compartment (A255) and is not used. (iii) Descriptive, same pair in GTEx: subcutaneous adipose with
+each skin site.
+**Companions (same splits).** 100 matched and 100 stress-responsive pseudo-clock waveforms (`paired.pseudo_waveforms`,
+from the mean log fraction over all rows): for each, the within-sample split-half moment |m(beta^A, beta^B)| of the
+target divided by the target's clock variance (|m(beta_k^A, beta_k^B)| / (1 + kappa_k)) gives kappa_tech, the share
+of non-clock sample-level variation that projects onto the plane; and |m(beta_k, g)| of the pseudo set over the
+clock's, the share of the cross-tissue moment carried by non-clock variation shared by a donor's samples.
+**Hypotheses.**
+- **H259.1 (primary, the bound; G3):** the median over eligible GTEx targets of the upper 90 % bound of sigma_k is
+  below 1.0 h. Also reported: the number of targets whose upper bound is below 1.0 h.
+- **H259.2 (secondary, existence; per target, Holm over targets):** kappa_k > 0 (one-sided bootstrap p < 0.05) and
+  kappa_k above the q95 of kappa_tech of both companion families. A pass means a person-specific deviation of the
+  tissue's clock from the body time, beyond technical variation.
+- **H259.3 (secondary, living):** MuTHER fat-skin upper 90 % bound of sigma_pair below 1.41 h (sqrt 2 x 1 h: both
+  tissues within 1 h).
+**Readings (fixed now).**
+- G3 (with A1 (b)): plan 2's bound is a headline if H259.1 and H259.3 pass and the A1 (b) simulation leaves the four
+  scored offset equivalences standing; it is written as a PI question, with the evidence, before anything that depends
+  on it.
+- H259.1 fails with H259.2 passing in several tissues: tissue clocks depart from the body time by a measurable,
+  person-specific amount; that is a result for plan 1 (the L term of T2 has something to read) and against the "one
+  time per person" wording.
+- H259.2 fails in a tissue at a detection limit delta (power note): a tissue-clock regressor cannot separate the
+  tissue's clock from the body's there for deviations below delta; T2's L term is not registered for that tissue.
+- A companion family reaching kappa_k (kappa_tech q95 >= kappa_k): the deviation is not shown to be clock; sigma_k
+  stays an upper bound only. A cross-tissue companion share above 0.2 is flagged: kappa may be understated.
+**Limits.** (1) sigma counts amplitude deviation as phase (conservative for the bound, not for H259.2's "phase"
+wording: H259.2 says "deviation"). (2) The hours conversion assumes host phases spread over the day (GTEx deaths
+cover it; MuTHER visit times are unknown: a narrow window inflates kappa, conservative for the bound). (3) Non-clock
+variation shared by a donor's tissues lowers kappa (companion share reported). (4) GTEx is post mortem: agonal and
+ischaemic variation within a sample counts as deviation (conservative). (5) GTEx time of death and phenotypes are
+controlled access: aggregates only.
+**Stop rule:** one scoring run after the power note is dated. **Code:** `paper/exploratory/A259_tissue_deviation/scripts/`.
