@@ -1,0 +1,16 @@
+G,arm,persons,power_rotation_vs_flat
+10,GSE40589 saline (adipose),7,0.9935
+10,GSE59088 control (muscle),6,0.8015
+10,pooled,13,0.9965
+20,GSE40589 saline (adipose),7,1.0
+20,GSE59088 control (muscle),6,0.9645
+20,pooled,13,1.0
+50,GSE40589 saline (adipose),7,1.0
+50,GSE59088 control (muscle),6,1.0
+50,pooled,13,1.0
+100,GSE40589 saline (adipose),7,1.0
+100,GSE59088 control (muscle),6,1.0
+100,pooled,13,1.0
+200,GSE40589 saline (adipose),7,1.0
+200,GSE59088 control (muscle),6,1.0
+200,pooled,13,1.0

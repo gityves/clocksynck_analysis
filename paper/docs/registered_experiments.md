@@ -6417,3 +6417,83 @@ variation shared by a donor's tissues lowers kappa (companion share reported). (
 ischaemic variation within a sample counts as deviation (conservative). (5) GTEx time of death and phenotypes are
 controlled access: aggregates only.
 **Stop rule:** one scoring run after the power note is dated. **Code:** `paper/exploratory/A259_tissue_deviation/scripts/`.
+
+## A260 (2026-11-15, roadmap item T0c under the lead prompt of 2026-11-15; a calibration of the readers phase T will use, for gate G2 (ii); seen: the scout `exploratory/scouts_2026-11-15/T0c_calibration/` (timed cosinor class sizes and timed feeding shifts: local 584, systemic 40, knockout-only 26 genes; control liver clock -11.56 h, WAT -9.24 h, lung -2.31 h under daytime feeding), A111 / A129 (liver coupling 0.967 -> 0.676 without its clock); NOT seen: any untimed per-gene loading of these data): does the untimed procedure put mouse liver genes in the right class, with and without a local clock and with feeding moved? **Manella 2021 (GSE159135), Alb-Cre control and hepatocyte Bmal1 knockout x ad libitum (AL) / daytime feeding (DF), liver, WAT, lung, 24 mice per arm; per-gene untimed loadings against timed truth; calibration (G2 (ii))**
+**Why.** No reader of the cue line was ever checked where the answer is known (inventory 2026-11-15, point 5). Here
+it is known from the recorded times: genes that keep their rhythm in a liver without its clock are driven from outside
+the hepatocyte (body or feeding), genes that lose it need the local clock, and daytime feeding moves feeding-driven
+genes with the food.
+**Truth (timed, recorded ZT; fixed as in the scout).** Per arm and tissue, cosinor of log((count + 0.5) / depth) on ZT
+(genes with mean count >= 5), BH q. Liver, non-clock genes (the 14 GTEx clock genes excluded): **local** = q < 0.05 in
+control AL, p > 0.2 in knockout AL and amplitude ratio knockout / control < 0.5; **systemic** = q < 0.05 in both and
+ratio >= 0.5. Timed shift of a gene, DF minus AL, relative to the lung: its phase difference minus the median
+difference of the lung's rhythmic clock genes of that genotype.
+**Untimed procedure (times hidden).** `Dataset.gene_rhythms` on the clock-gene table of `common.data.load("manella2021")`
+with the genome table of the builder's `read_tissue` (liver), one arm at a time, host anchors as below, `n_null` 50 (host
+states permuted): complex loading c, amplitude |c|, acrophase in the anchors' frame, Wald p.
+- **V260.1 (body reader):** host from WAT and lung. In the knockout AL liver, -log10 p of the untimed loading separates
+  systemic from local genes: AUC >= 0.80 with the lower 90 % bound (gene bootstrap, 2,000) above 0.65.
+- **V260.2 (local reader by contrast):** log(|c| knockout AL / |c| control AL) on the same anchors, against the timed log
+  amplitude ratio, over genes with timed q < 0.05 in either arm: Spearman >= 0.60; and its AUC for local vs systemic
+  >= 0.80 (lower 90 % bound above 0.65).
+- **V260.3 (shift reader; the untimed analogue of T1):** host from the lung alone (feeding moves WAT). Per genotype,
+  untimed acrophase DF minus AL per gene against the timed shift relative to the lung, over genes with timed q < 0.05 in
+  both arms: circular correlation >= 0.70 in the control; the knockout is reported (few genes are rhythmic in both of
+  its arms).
+- **D260.4 (descriptive; tissue-deviation reader):** A259's kappa of the liver against WAT and lung (target mode, one
+  host per half) in control AL and knockout AL; and the share of local genes whose untimed loading on the liver's
+  deviation (liver clock state minus its prediction from WAT and lung, both from `clocksync.deviation.states`) has p <
+  0.01 in control AL. No pass rule: whether a tissue term can be read when the local clock is coupled is the question
+  A259 answers in humans.
+**Companions.** Untimed calls are compared with the host-permuted null of `gene_rhythms` (empirical FDR); AUCs are
+against the systemic / local truth, so a reader that calls every rhythmic gene scores 0.5.
+**Readings.** V260.1 and V260.2 pass: the untimed body reader is calibrated: in a liver without its clock, genes that
+still follow the body's state are the ones that keep a rhythm, and the knockout / control contrast of untimed loadings
+recovers clock dependence (G2 (ii) met for the body / local split). V260.3 pass: the shift reader recovers feeding-driven
+moves (the basis of T1). A failure is reported as a limit of the procedure, and phase T designs that rest on the
+failed reader are not scored (G2 (ii) not met for that reader).
+**Limits.** Same mice for truth and procedure (unavoidable: the truth is the hidden times). The mouse label is assumed
+to be the same animal in the three tissue files (A111 assumption). MARS-seq 3' counts of about 11.6 k genes; depth is
+the sum of retained genes. A systemic class of 40 genes.
+**Stop rule:** one scoring run. **Code:** `paper/exploratory/A260_mouse_calibration/scripts/`.
+
+## A261 (2026-11-15, roadmap item T1 under the lead prompt of 2026-11-15; **NOT BLIND**: A124 and A257 scored these arrays for the 14 clock genes and the A81b cue / locked sets (A257: muscle clock shift 2.68 h, excursion ratio 0.233); seen: the scout `exploratory/scouts_2026-11-15/T1_nightshift/` (reference cosinor of GSE108539, residual SDs of the GSE106800 differences around their condition means, simulated separability); NOT seen: any program-level or non-clock gene-level contrast between the two conditions): which daily programs of human muscle follow central time, the muscle clock, or behaviour after a 12 h shift of behaviour? **GSE106800 (Wefers 2018), 11 men with four arrays; programs of reference-rhythmic genes; L1 within person; primary for plan 1 (T1)**
+**Why.** The one human design that moves behaviour (12 h), the muscle clock (2.68 h, damped to 0.233: A257) and central
+time (about 0 h) by known, different amounts. A124 failed with gene-set states (MDE 7.3 h); here each program is read
+against gene phases from a timed reference, and the excursion ratio separates central time from the damped tissue
+clock.
+**Data.** Arrays and probe map of A257 (main probe sets, mean log2 per canonical gene with the eight aliases); 11
+subjects with 07:00 and 19:00 arrays in both conditions; per subject and condition d = y(19:00) - y(07:00) (log2).
+Reference: GSE108539 exon layer (10 subjects x 6 biopsies), per-gene cosinor with subject intercepts, log2 RPKM > 0 on
+average; amplitude A_g, acrophase phi_g (clock time); rhythmic: p < 0.01. The 14 clock genes are excluded from every
+program.
+**Programs (fixed now).** (i) Hallmark sets (MSigDB v2024.1, `$SCCC_DATA/reference/h.all.v2024.1.Hs.symbols.gmt`) with
+>= 20 reference-rhythmic genes on the array; (ii) "all rhythmic": every reference-rhythmic gene on the array; (iii) six
+phase programs: reference-rhythmic genes binned by phi_g in 4 h bins (0-4, ..., 20-24 h), descriptive.
+**Statistic.** Per subject and condition, z = regression (no intercept) of the program's d_g on (C_g, S_g) = 2 A_g
+(cos, sin)(w (19 - phi_g)), as a complex number. Shift s = arg(mean z_mis / mean z_al) / w (h), ratio r = |mean z_mis /
+mean z_al|; 90 % jackknife-t intervals over subjects. Hypotheses (s, r): central (0 h, 1), tissue clock (2.68 h,
+0.233), behaviour (12 h, 1); each is tested by the Hotelling T2 of the per-subject residual z_mis - r e^{iws} z_al
+(F(2, n - 2)), **excluded at p < 0.01** (scout: truth excluded in at most 0.092 of simulated programs; alternatives
+excluded with power >= 0.915 at 20 genes).
+**Rhythm gate and companion.** A program is read only if |mean z_al| exceeds the q95 of 200 expression-matched random
+gene sets of the same size drawn from reference non-rhythmic genes (p > 0.5, matched on mean array intensity in deciles),
+each carrying its own reference A_g, phi_g (the specificity companion: a set without a reference rhythm should not
+look rhythmic in the aligned condition). The same 200 sets give the null distribution of the class calls.
+**Hypotheses.**
+- **H261.1 (positive control):** the "all rhythmic" program passes the rhythm gate and its aligned loading has an
+  argument within 3 h of 0 (the reference phases transfer to the arrays).
+- **H261.2 (primary, the partition):** per gated program, the class: the single hypothesis not excluded (central,
+  tissue clock or behaviour), "mixed" (all three excluded) or "unresolved" (two or three not excluded). Reported: the
+  counts and shares of gated Hallmark programs per class, with s and r and their intervals per program.
+- **H261.3 (primary, the genome-wide program):** the class of "all rhythmic".
+**Readings (fixed now).** If H261.1 fails, H261.2-3 are uninformative. "Central" for a program: its daily change kept
+both direction and size under a 12 h shift of behaviour: a program of the body's central time (light-entrained,
+systemic). "Tissue clock": it moved and damped like the muscle clock. "Behaviour": it reversed with sleep, activity
+and meals. "Mixed": none of the three alone (a mixture of times, or another one). The partition is "mostly X" when X
+holds more than half of the gated programs; any share is reported with the number of programs, which overlap in genes
+(not independent units).
+**Limits.** (1) Not blind (clock genes only seen). (2) Two clock times per condition, third day of the protocol. (3) 11
+men. (4) Light, sleep and meals move together: "behaviour" is all of them. (5) The reference cohort ate hourly while
+awake; meal-driven rhythms are under-represented among reference-rhythmic genes. (6) Programs share genes.
+**Stop rule:** one scoring run. **Code:** `paper/exploratory/A261_nightshift_programs/scripts/`.

@@ -1,0 +1,36 @@
+0.05
+                  x_central  x_tissue_clock  x_behaviour
+G   truth                                               
+5   behaviour         0.982           0.965        0.108
+    central           0.080           0.908        0.990
+    tissue_clock      0.788           0.150        0.935
+10  behaviour         1.000           0.998        0.085
+    central           0.070           0.960        0.998
+    tissue_clock      0.918           0.132        0.988
+20  behaviour         1.000           1.000        0.075
+    central           0.085           0.988        1.000
+    tissue_clock      0.978           0.178        0.995
+50  behaviour         1.000           1.000        0.065
+    central           0.078           1.000        1.000
+    tissue_clock      0.988           0.112        1.000
+100 behaviour         1.000           1.000        0.098
+    central           0.060           1.000        1.000
+    tissue_clock      0.998           0.142        1.000
+0.01
+                  x_central  x_tissue_clock  x_behaviour
+G   truth                                               
+5   behaviour         0.952           0.918        0.045
+    central           0.030           0.815        0.978
+    tissue_clock      0.642           0.065        0.875
+10  behaviour         0.985           0.970        0.045
+    central           0.030           0.900        0.988
+    tissue_clock      0.805           0.075        0.948
+20  behaviour         1.000           1.000        0.032
+    central           0.045           0.968        1.000
+    tissue_clock      0.915           0.092        0.995
+50  behaviour         1.000           1.000        0.018
+    central           0.028           0.995        1.000
+    tissue_clock      0.958           0.050        1.000
+100 behaviour         1.000           1.000        0.040
+    central           0.032           1.000        1.000
+    tissue_clock      0.992           0.055        1.000

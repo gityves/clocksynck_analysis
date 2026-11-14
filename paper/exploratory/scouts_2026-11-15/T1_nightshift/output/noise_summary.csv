@@ -1,0 +1,2 @@
+subjects,reference_genes,reference_rhythmic_p01,on_array,median_amp_log2,median_resid_sd_aligned,median_resid_sd_misaligned,median_signal_2A
+11,9721,1896,1597,0.27403047726285923,0.31683280428876776,0.33065754379364626,0.5480609545257185
