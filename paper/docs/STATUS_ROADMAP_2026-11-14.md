@@ -9,6 +9,13 @@ be verified before they enter any other document. No code, registered analysis o
 
 **Updated 2026-11-15:** sections 2 and 3 restructured around the user's target (plan 1) and its two fallbacks.
 
+**Corrected 2026-11-15:** two existing lines of work were missing from the first version. (i) Offsets in hours are
+already scored across sex, age, chronic and metabolic disease (A208, A231, A233, A235): section 1.2, item A1 and gate
+G3 now build on them. (ii) The archive's cue line on GTEx (A91 and the analyses around it, migrated to
+`results/figure_3/scripts/gtex_cues/`) already separates internal from external time per gene: sections 1.2 and 2.1
+and items T0, T2 and T4 now start from it. Working prompt for this roadmap:
+`prompts/target_line_what_internal_time_controls_2026-11-15.md`.
+
 Supersedes `ROADMAP_2026-10-28.md` as the working plan. Phase 8 (naming, scorecard, figures, hardening, tutorials)
 stays a PI decision and is not part of this roadmap.
 
@@ -45,11 +52,13 @@ stays a PI decision and is not part of this roadmap.
 | Brain couples less to the body state than peripheral tissues, in three species | GTEx brain block r* 0.639 [0.530, 0.728] vs reference median 0.978; sheep median 0.205 vs 0.416 (p 0.009); baboon 0.420 vs 0.712 | `exploratory/A142_organ_blocks/output/tests.csv`, `results/figure_2/output/organs/r2_readout.csv` |
 | A 12 h shift of behaviour moves the human muscle clock only partly | shift 2.68 h (90 % 1.81 to 3.59), excursion ratio 0.233; 11 subjects | `exploratory/A257_nightshift_muscle/output/score_tests.csv` |
 | Mouse aorta follows a shifted light cycle within days | mean shift -2.86 h (90 % -3.95 to -1.77) | `exploratory/A201_aorta_jetlag/output/tests.csv` |
+| Organ offsets do not differ between groups of GTEx donors, within about an hour | old minus young -0.05 h (90 % -0.27 to 0.18; detection limit 0.20 h); women minus men 0.04 h (-0.10 to 0.19; 0.17 h); type 2 diabetes, fast deaths 0.02 h (-0.25 to 0.30; 0.37 h); obesity 0.20 h (-0.23 to 0.64; 0.64 h); all equivalent within 1 h. Five chronic conditions: no reordering of organs (RP A233). Not yet checked against the spread bias of A258, which was calibrated on coupling contrasts only | `exploratory/A231_age_coupling/output/score_tests.csv`, `exploratory/A208_sex_coupling/output/tests.csv`, `exploratory/A235_metabolic_offset/output/score_tests.csv` |
+| Rhythmic genes follow the body's internal time more often than the hour of death | H91 passes over 12 tissues (median difference 1.232, p 0.0005). Skeletal muscle, 220 donors, 9,313 genes: 1,480 clock-following, 113 time-following, 676 both (noise floors 37, 31.5 and 8.5). Archive result: output of 25 October, no companion sets, to be rerun on current code | `results/figure_3/output/gtex_cues/a91_verdict.csv`, `a91_tissues.csv` |
 | Tumour and adjacent normal tissue pair on the clock state; immune cells of the tumour do too | TCGA pairs 0.365 vs null mean 0.122 (pseudo-clock q95 0.260; 517 pairs); myeloid 0.581 (p_clock 0.020), T/NK 0.539 (0.030) | `exploratory/A138_cancer_estimability/output/score/tests.csv`, `exploratory/A227_tme_compartment_pairing/output/tests.csv` |
 
 Also standing, read in RP / VT only: the per-person timed validations in breast and adipose, the regenerating colon
-shift (A21), the liver clock-knockout and feeding controls (WP3), and rhythmic genes following internal time (A91).
-The last three are archive results and must be rerun on current code before they enter a main figure.
+shift (A21), and the liver clock-knockout and feeding controls (WP3). A21, WP3 and A91 are archive results and must be
+rerun on current code before they enter a main figure.
 
 ### 1.3 Provocative but fragile
 
@@ -127,11 +136,24 @@ readers of it. Either outcome (mostly body-driven or mostly locally driven) is a
 not.
 
 **What already points this way** (none sufficient): rhythmic genes follow internal rather than external time (A91,
-archive, to be rerun); muscle moves 2.7 h of a 12 h behaviour shift (A257); blood shows the day through cell
+section 1.2); muscle moves 2.7 h of a 12 h behaviour shift (A257); blood shows the day through cell
 composition without a coherent core clock; a cultured cell line carries no detectable trace of its donor's state (A255). In
 tumours the evidence is weak: clock-controlled genes followed the body time of the adjacent normal sample in TCGA
 (A249, descriptive), but not clock-specifically in CPTAC, where NFIL3 alone replicated (A250). It is not to be worded
 as a finding.
+
+**Existing line to build on.** The archive asked a neighbouring question on GTEx, "which genes follow the body's cues
+rather than the clock", and its code and outputs are migrated (`results/figure_3/scripts/gtex_cues/README.md`). What it
+gives plan 1:
+
+| piece | state | use |
+|---|---|---|
+| A91: per tissue and gene, partial F of the host state against cos/sin of the hour of death | PASS, table above | the two-way version of T2; the third regressor (the tissue's own deviation) and the companions are missing |
+| A81 / A81b: cue reference, 40 cue and 40 locked genes ("lock" = host loading in ventilated donors over timed loading) | frame check failed its guard (0.481 against 0.8), used with a post hoc override | candidate gene classes, not a validated reader |
+| A89: hierarchy of cue-like genes over organs | FAIL (within-group R 0.915 against 0.870 for random tissue sets, p 0.269) | no organ grouping of cues to assume |
+| A85, then A122: immune cells follow cues | the excess is not specific to cue genes (RP A122) | a gene-set reader needs a matched companion |
+| A112: cue against locked genes under arrhythmic feeding in mouse; A124: night shift with gene sets | both fail (RP; A124 detection limit 7.3 h) | why T1 pools genes into programs and T0 starts with a calibration |
+| A27 D6 to D8: glucocorticoid score and gene classes; A136: donor-management glucocorticoids | score R^2 on the host state 0.014 in fast deaths and 0.234 in ventilated donors, on the hour of death 0.015 and 0.011 (`results/figure_3/output/gtex_cues/diag6b_gc.csv`); A136 gate fails | starting point of T4 |
 
 **Figure outline.**
 
@@ -200,8 +222,9 @@ Thresholds are fixed in the amendments, before scoring.
   matched pseudo-clock and stress-responsive readers; (ii) calibrated: the same procedure recovers the known classes in
   mouse liver with and without a local clock; (iii) replicated in at least two independent designs or tissues;
   (iv) quantitative: a share of genes or programs per time, with intervals.
-- **G3, after A1.** Plan 2 is taken if the between-tissue offset bound is tight enough to be a headline (bound set in
-  the A1 amendment). Otherwise plan 3.
+- **G3, after A1.** Plan 2 is taken if the bound in hours is a headline: the group equivalences of section 1.2 survive
+  the spread-bias check, and the between-tissue offset spread within a person is bounded (bound set in the A1
+  amendment). Otherwise plan 3.
 
 ---
 
@@ -214,11 +237,11 @@ Tags: **[reg]** amendment written and committed before scoring; **[sim]** simula
 
 | # | task | protects | tag |
 |---|---|---|---|
-| A1 | **Headline bound.** Between-tissue offset spread within a person, in hours, with its detection limit (GTEx, and the living cohorts where two tissues exist); equivalence of offsets in hours across sex, age, metabolic and chronic disease, with a spread-matched null; replaces the coupling equivalences | plans 1 and 2; gate G3 | [reg] |
+| A1 | **Headline bound.** (a) One table in hours from the offset equivalences already scored (A208 sex, A231 age, A233 chronic conditions, A235 metabolic; section 1.2). (b) Simulation: are offset contrasts biased by unequal host spread, as coupling contrasts are? A258 did not cover offsets. (c) New: the between-tissue offset spread within a person, in hours, with its detection limit (GTEx, and the living cohorts where two tissues exist), after reading what A133, A142 and the psi estimates already give. The table in hours replaces the coupling equivalences | plans 1 and 2; gate G3 | (a) none; (b) [sim]; (c) [reg] |
 | A2 | Fetal adrenal covariate check: gestational age, cohort, a steroidogenic score (STAR, CYP17A1, NR4A1), and the statistic without PER1 and NR1D1 | fetal result | [reg] |
 | A3 | COFE head-to-head on the TCGA tumour-normal pairs (COFE reports the opposite reading) | cancer chapter | [reg] |
 | A4 | Matched and stress-responsive companions for the atlases that lack them, and a stress-responsive companion for the brain block (A142) | organ map, brain exception; plan 3 | [reg] |
-| A5 | Rerun on current code the archive results planned for main figures: **A91 first** (the first piece of plan 1), then the sheep brain block (A42 / A103) and the regenerating colon (A21) | plans 1 and 2 | rerun, verdicts unchanged |
+| A5 | Rerun on current code the archive results planned for main figures: **A91 first** (the first piece of plan 1; `results/figure_3/scripts/gtex_cues/compute_internal_external.py`), then the sheep brain block (A42 / A103) and the regenerating colon (A21) | plans 1 and 2 | rerun, verdicts unchanged |
 | A6 | Gate: acrophase null permuted within the two gene blocks; fix the paper's claim rule as pairing plus companions | all; plan 3 | [sim] then [PI] |
 | A7 | Score A243 as registered | fetal result | registered |
 
@@ -226,11 +249,11 @@ Tags: **[reg]** amendment written and committed before scoring; **[sim]** simula
 
 | # | task | data | main risk | tag |
 |---|---|---|---|---|
-| T0 | **Scouts before any registration.** (a) Why the earlier gene-set attempts failed (A112, A122, A124) and what design avoids it. (b) Power of T1 to T3 at the program level, by simulation on the real designs. (c) Calibration set: mouse liver with and without a local clock, fed in and out of phase | Manella 2021, Jouffe 2022 and the WP3 mouse data on disk | - | [sim] |
+| T0 | **Inventory and scouts before any registration.** (a) Inventory of the existing cue line (A27 D5 to D8, A46, A47, A81 / A81b, A85, A89, A90, A91, A92 / A93, A100 to A102b, A112, A122, A124, A136, A248): what each showed, what survives current standards (companions, current code), why the gene-set attempts failed and what design avoids it. (b) Power of T1 to T3 at the program level, by simulation on the real designs. (c) Calibration set: mouse liver with and without a local clock, fed in and out of phase | Manella 2021, Jouffe 2022 and the WP3 mouse data on disk | - | [sim] |
 | T1 | **Behaviour vs tissue clock vs central time.** Genome-wide in the night-shift muscle data: assign programs to the time they follow (about 0 h, 2.7 h, 12 h) | GSE106800 (11 subjects, 44 arrays; RP A124) | few arrays; A124 had a 7.3 h detection limit with gene sets, so genes must be pooled into programs | [reg] |
-| T2 | **Body vs tissue vs external day, per gene.** Regress each gene on the host state, on the tissue's deviation from it, and on time of death given the host state (aggregates only). A gene following the deviation is under local clock control | GTEx | sample quality drives both the deviation and the gene: matched and stress-responsive companions required | [reg] |
+| T2 | **Body vs tissue vs external day, per gene.** Extension of A91, which already separates the host state from the hour of death: add the tissue's deviation from the host state as a third regressor, with companions and the mouse calibration (aggregates only). A gene following the deviation is under local clock control | GTEx | sample quality drives both the deviation and the gene: matched and stress-responsive companions required | [reg] |
 | T3 | **Rotation in living people.** Which genes rotate with the clock state between two biopsies, and which do not | repeat-biopsy cohorts of A252 / A256 | interventions between biopsies | [reg] |
-| T4 | **Name the systemic signal.** Per-sample readers of glucocorticoid targets (FKBP5, TSC22D3, KLF9) and temperature targets (CIRBP, RBM3, heat-shock genes), built from genes that stay rhythmic in mouse liver without a local clock: which keeps a fixed phase relation to the host state across tissues and people, and does it loosen in brain? Extension: GTEx long-term steroid users (aggregates only, after counting the users) | GTEx; MuTHER fat and skin as confirmation | agonal stress drives both readers in GTEx | [reg] |
+| T4 | **Name the systemic signal.** Per-sample readers of glucocorticoid targets (FKBP5, TSC22D3, KLF9) and temperature targets (CIRBP, RBM3, heat-shock genes), built from genes that stay rhythmic in mouse liver without a local clock: which keeps a fixed phase relation to the host state across tissues and people, and does it loosen in brain? Starts from the glucocorticoid score and gene classes of A27 D6 to D8 and from A136 and A248. Extension: GTEx long-term steroid users (aggregates only, after counting the users) | GTEx; MuTHER fat and skin as confirmation | agonal stress drives both readers in GTEx | [reg] |
 | T5 | **Compartments with a weak or absent local clock** as natural knockouts: what still follows body time there (tumour, blood, cultured cell line). In tumours the reader must be shown clock-specific first (A250 was not) | TCGA and CPTAC pairs, blood cohorts, MuTHER | low odds in tumours | [reg] |
 | T6 | Lag-amplitude curve on the organ map: a passive follower of a shared driver has relative amplitude cos(lag); tissues off the curve are candidates for an own oscillator | GTEx map, atlases | amplitude also reflects composition | [reg] |
 
@@ -265,7 +288,7 @@ discussion), the age advance in the main text, cross-species conservation of off
 
 ### Order of work
 
-1. **Now:** T0 (scouts) and A1, with the A91 rerun of A5. T0 decides which of T1 to T3 are worth registering (gate
+1. **Now:** T0 (inventory, then scouts) and A1, with the A91 rerun of A5. T0 decides which of T1 to T3 are worth registering (gate
    G1); A1 decides whether plan 2 has a headline (gate G3).
 2. **Next:** register and score the designs that pass G1, and T4, which serves plans 1 and 2. A2 and A3 run beside
    them.
