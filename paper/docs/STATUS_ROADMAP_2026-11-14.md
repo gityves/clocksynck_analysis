@@ -22,9 +22,10 @@ stays a PI decision and is not part of this roadmap.
 2. One result is strong and replicated: **the tissues of a living person share one clock state, and that state is
    time**. Several further results are provocative but each rests on one post hoc contrast, one resource or an
    incomplete control (section 1.3).
-3. The project is not yet a safe Cell submission. It becomes one with a decisive cross-organ perturbation result (the
-   in-house multi-organ jet-lag data are the obvious candidate) and with the open checks of section 2, phase A, closed.
-   The Nature Methods alternative is nearly complete in content.
+3. The project is not yet a safe Cell submission. With only the open checks of section 3, phase A, closed, the
+   realistic level is Nature Communications or Cell Reports for the biology-led paper, or Nature Methods for the
+   method-led one, which is nearly complete in content. Cell or Science becomes credible with a cross-organ
+   perturbation result (the in-house multi-organ jet-lag data are the obvious candidate); section 2 gives the tiers.
 4. Difference from `REVIEW_2026-11-10.md`: lead with the living-person positives and state robustness as equivalence
    of **offsets in hours**, not as coupling equivalences in GTEx followed by brain death.
 
@@ -90,8 +91,33 @@ These go to a supplementary table of negative and uninformative designs.
 **Thesis.** A person's tissues share one clock state held together by a systemic signal rather than by each organ's
 own cues; in humans, misalignment is between the body and the day, not between organs.
 
-**Target.** Cell if phase C1 delivers a cross-organ perturbation result; otherwise Science (as a sequel to Talamanca
-2023) or the Cell Metabolism / Nature Communications tier. Nature Methods remains the method-led fallback.
+**Target (revised 2026-11-14 after the user asked what justifies the ranking).** The tier depends on what is added to
+the present evidence; the earlier "Science as a sequel to Talamanca 2023" is a stretch without new evidence.
+
+| evidence | realistic target | roadmap items |
+|---|---|---|
+| open checks closed only | Nature Communications, Cell Reports; or Nature Methods (method-led) | phase A |
+| offsets bounded in hours, plus the systemic signal named or a living multi-organ map | Cell Metabolism, possibly Science | A1, and B1 or C2 |
+| a cross-organ perturbation result on top | Cell or Science credible | C1 |
+
+**What justifies aiming high.** A broad question that could not be tested in humans (do a living person's organ clocks
+agree?); a method that removes the need for timed, repeated sampling and is validated against truth (section 1.2);
+a lead result replicated in living people with specificity companions; several findings that would provoke discussion
+(brain as the exception in three species, the partial shift of muscle, the fetal adrenal cortex, brain-dead donors,
+the tumour microenvironment on body time); pre-registration with negatives reported.
+
+**What could pull it lower, and the item that answers it.**
+
+| risk | answer |
+|---|---|
+| The headline reads as expected: tissues sampled at the same hour share a clock state. The new content is how tightly they agree, in hours, and that bound is not yet computed | A1 (now first), B2 |
+| No mechanism and no perturbation across organs; the systemic signal is a hypothesis | C1, B1, B4 |
+| Living evidence covers three superficial tissues (fat, skin, muscle); liver, gut and heart are post-mortem only | C2 |
+| Each provocative result is fragile on its own (section 1.3); figure 4 goes if the covariate check fails | A2, A7, brain-death replication |
+| No functional consequence: 14 clock genes, no disease positive, no link to an outcome | B6, A5 (A91); otherwise stated as a limit |
+| Visible method limits (section 1.4; disjoint-truth benchmark 0.679 against a registered 0.7) | A4, A6; report offsets, not coupling |
+| Novelty partly taken: the 2023 GTEx organ map; COFE claims the tumour side with the opposite reading | A3; lead with living people, not the map |
+| Scope reads as a collection (fetal and tumour chapters loosely tied to the thesis) | C6: each chapter stays only if it tests the thesis |
 
 | figure | content | status |
 |---|---|---|
@@ -113,7 +139,7 @@ phase B adds the one new line; phase C waits on a decision.
 
 | # | task | protects | tag |
 |---|---|---|---|
-| A1 | Equivalence of **offsets in hours** across sex, age, metabolic and chronic disease in GTEx, with a spread-matched null; replaces the coupling equivalences | Fig 3 | [reg] |
+| A1 | **Headline bound.** Between-tissue offset spread within a person, in hours, with its detection limit (GTEx, and the living cohorts where two tissues exist); equivalence of offsets in hours across sex, age, metabolic and chronic disease, with a spread-matched null; replaces the coupling equivalences | Fig 2, Fig 3 | [reg] |
 | A2 | Fetal adrenal covariate check: gestational age, cohort, a steroidogenic score (STAR, CYP17A1, NR4A1), and the statistic without PER1 and NR1D1 | Fig 4 | [reg] |
 | A3 | COFE head-to-head on the TCGA tumour-normal pairs (COFE reports the opposite reading) | Fig 5 | [reg] |
 | A4 | Matched and stress-responsive companions for the atlases that lack them, and a stress-responsive companion for the brain block (A142) | Fig 2 | [reg] |
@@ -141,7 +167,7 @@ GSE43974, coherence only; donor-type multi-organ atlases if found). No mechanism
 | # | item | recommendation | tag |
 |---|---|---|---|
 | C1 | In-house multi-organ jet-lag data | request; this is the result that makes the Cell case and the only route to dynamical modelling | [PI] |
-| C2 | STARNET (dbGaP; about 600 living patients, seven tissues, Franzen 2016) | apply: a living organ map to set against the post-mortem one | [ask] |
+| C2 | STARNET (dbGaP; about 600 living patients, seven tissues, Franzen 2016) | apply early (access takes weeks): a living organ map with liver and arteries, the one answer to "living evidence covers three superficial tissues" | [ask] |
 | C3 | TwinsUK visit times | ask: a timed validation in 680 women | [ask] |
 | C4 | Heart cohort GSE260643 | do not map now (one tissue per person, arrest and reperfusion act on PER1 and NR1D1, processed-only rule, 66 GB left); ask the authors for counts | [ask] |
 | C5 | Unspliced counts for the fetal adrenal: pre-mRNA leading mRNA by a consistent angle is the one time-free test of a running oscillator | only if released by the authors; mapping breaks the processed-only rule | [PI] |
@@ -156,6 +182,8 @@ advance in the main text, cross-species conservation of offsets.
 
 ### Order of work
 
-A1, A2 and A3 first (two lanes), with B1 and B2 registered in parallel since both use data on disk and test the
-thesis directly. A4 to A7 next. B3 to B7 follow in the order listed. C1 to C4 can start at any time and do not block
-phases A and B.
+A1 first: it turns the headline from "tissues share a state" into a bound in hours, and every tier of section 2
+depends on it. A2 and A3 run beside it (two lanes), with B1 and B2 registered in parallel since both use data on disk
+and test the thesis directly. A4 to A7 next. B3 to B7 follow in the order listed. C1 and C2 decide the tier and have
+the longest lead time, so they should be opened now; C3 and C4 can start at any time. None of phase C blocks phases A
+and B.
