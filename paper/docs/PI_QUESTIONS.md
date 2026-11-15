@@ -10,7 +10,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **New 2026-11-13:** results A245-A256 and what they change are summarised in `REVIEW_2026-11-10.md` §6; decisions asked there:
   the luminal A row after A224, whether to request ages (Wu 2020) and TwinsUK phenotypes (MuTHER), whether A243 is run (Q32),
   and the wording of the cancer chapter (Q24) after the synthesis in the ledger addendum of 2026-11-12.
-- **Q33** (below, new 2026-11-15): gate G3 fails as registered (A259): the bound in hours is not a headline. Which plan does the paper take while phase T continues?
+- **Q33** (below, new 2026-11-15): gate G3 fails as registered (A259): the bound in hours is not a headline. Which plan does the paper take while phase T continues? **Answered (c)**; update: no muscle headline (clock-core design not estimable).
 - **Q32** (below): three human fetal datasets give no adult-like clock organisation before birth (A237-A239): how the development section reads. Updated with the size of the clock the negatives exclude (A240), A241 and **the replication of the fetal adrenal clock on open data (A242, PASS): option (iii) is done, the recommendation changes**.
 - **Q31** (below): the unsigned gene coherence R reads a shift common to the clock genes as a clock; replace it by the signed coherence paper-wide?
 - **Q30** (below): the mouse embryo timing positive (A108) is not clock-specific (A236): how the paper words it.
@@ -35,6 +35,18 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
   A121 and A135 placements.
 
 ### Q33 (2026-11-15): gate G3 after A259, and where plan 1 stands
+
+**Update 2026-11-15 (after review; item 2 of the follow-up): plan 1 has no headline in muscle from GSE106800.**
+Decision recorded: option (c); the plan choice waits for G2, plan 3 stays the floor, roadmap 2.2 and the Figure 2
+headline are not reworded. The clock-autonomous core design (do direct clock targets stay with the muscle clock while
+the rest follows behaviour?) is **not estimable** on these arrays (scout `exploratory/scouts_2026-11-15/T1b_clock_core/`,
+matched stand-ins only, no core gene read): a program clears the A261 rhythm gate in 0.157 of draws at 400
+reference-rhythmic genes and 0.827 at 600, against 65 genes for the A260-derived core; and a damped clock-following
+program (ratio 0.233) is never told from central time (correct call at most 0.010 at any size). So the three layers
+cannot be shown to come apart in human muscle with these data. A261 stands as a program-level, in-hours confirmation of
+Wefers 2018 with a masking limit ("follows behaviour, shifted or evoked"). What remains for plan 1: whether blood goes
+the other way on the same machinery (A262, registered next; Kervezee 2018 and Archer 2014 suggest it does), which
+would support "which time a tissue's outputs follow is tissue-specific" (not written until both are scored), and T4.
 
 **Question.** The registered G3 component fails: a tissue's departure from its person's body time is bounded at 1 to
 3 h, not below 1 h, and the departure is not shown to be clock. Do we (a) keep plan 2's "one internal time per

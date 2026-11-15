@@ -6515,3 +6515,61 @@ awake; meal-driven rhythms are under-represented among reference-rhythmic genes.
 - **Pair mode** (MuTHER design, 680 persons): kappa unbiased (-0.022 to +0.029). At sigma 0 the truth already includes
   the host tissue's own noise (0.57 h at amplitude 1, 1.14 h at 0.5); median upper bound 0.89 h (amplitude 1) and
   1.78 h (0.5) against the registered 1.41 h.
+
+## A262 (2026-11-15, roadmap G2 (iii) under the follow-up of 2026-11-15; seen: the scout `exploratory/scouts_2026-11-15/T5_blood_misalignment/` (designs, a GSE39445 reference cosinor, within subject x condition SDs, simulated power); A156 read GSE48113 for the 14 clock genes and the A81b cue / locked sets only (timed: core state -1.36 h, cue state -6.85 h from day 1 to day 4); NOT seen: any program-level or non-clock gene-level contrast between conditions in GSE48113 or GSE122725): in human blood, does the genome-wide rhythmic program follow central time or the displaced sleep schedule? **GSE48113 (Archer 2014, forced desynchrony) and the dim-light arm of GSE122725 (= GSE107537, Kervezee 2018, simulated night shift); programs of reference-rhythmic genes; L1 within person; the second misalignment design for plan 1**
+**Why.** A261 places the rhythmic program of muscle on behaviour (shifted or evoked). The only misaligned human designs
+with public genome-wide data beyond GSE106800 are in blood (scout T5: no muscle or adipose design with shifted meals or
+sleep and public matrices). The literature suggests blood goes the other way (Kervezee 2018: 676 of 929 baseline-rhythmic
+probe sets stay on the habitual schedule; Archer 2014: rhythmic transcripts fall from 6.4 % to 1.0 %). Blood has no
+coherent core clock for this project (expected exception), so no host-referenced readout is made: the question is only
+which time the rhythmic program follows, with the A261 machinery.
+**Data.**
+- D1 GSE48113 (series matrix, GPL15331 symbols, mean log2 per symbol): subjects with >= 3 samples on both day 1
+  (aligned) and day 4 (sleep and meals displaced by about 12 h; melatonin at about the same clock time on both days,
+  Archer 2014); time = recorded clock time of the sample.
+- D2 GSE122725, experimental group "Control" (dim light; the 8 subjects of GSE107537): day-oriented (aligned) vs
+  night-oriented (sleep delayed by 10 h for 3 days) schedule, subjects with >= 3 samples in both; time = recorded
+  relative clock time (mod 24 through the cosine). Symbols from the first RefSeq record of the GPL24324 annotation
+  (main probe sets), mean log2 per symbol.
+- Reference (central time without sleep or meal rhythms): GSE39445 sleep-extension arm under extended wakefulness;
+  per gene (mean log2 per GPL15331 symbol, the lowest-intensity fifth dropped), cosinor on the melatonin-referenced
+  circadian phase with subject intercepts and a linear term in hours awake; amplitude A_g, phase phi_g; reference-
+  rhythmic: p < 0.01. Phases are mapped to clock time by adding the circular mean of (clock time - circadian phase) over
+  the reference samples. The 14 clock genes are excluded from every program.
+**Programs (fixed now).** (i) "all rhythmic": every reference-rhythmic gene present in the dataset (primary); (ii) six
+phase programs by 4 h bins of the clock-time phase (descriptive). Hallmark programs are not scored (scout: programs of
+20 genes are resolved in only 0.01 to 0.37 at a quarter of the reference amplitude).
+**Statistic.** Per subject and condition, values centred per gene within the unit; z = a + i b from the regression (no
+intercept) of the program's centred values on A_g (cos, sin)(w (t - phi_g)) over genes and samples, so a shift s
+(later = positive) and excursion ratio r give z = r e^{i w s}. Shift s = arg(mean z_mis / mean z_al) / w, ratio
+r = |mean z_mis / mean z_al|, 90 % jackknife-t intervals over subjects (as A261). Hypotheses, each tested by the
+Hotelling T2 of z_mis - r e^{i w s} z_al over subjects (F(2, n - 2)), **excluded at p < 0.01**:
+- D1: central (0 h, 1), behaviour (12 h, 1), lost (r = 0, i.e. mean z_mis = 0);
+- D2: central (1.5 h, 1: the dim-light melatonin delay of about 1 to 2 h, Kervezee 2019), behaviour (10 h, 1), lost;
+  sensitivity: central at 0 h and at 2 h.
+Class: the single hypothesis not excluded; "mixed" if all are excluded; "unresolved" if two or three are not.
+**Rhythm gate and companion.** A program is read only if |mean z_al| exceeds the q95 of 200 random sets of the same
+size drawn from reference non-rhythmic genes (p > 0.5), one per program gene from the same decile of mean intensity in
+the dataset, without replacement while the decile has unused genes, then with replacement (the non-rhythmic pool is
+smaller than the genome-wide program), each carrying its own reference A_g, phi_g; seed 262. The same sets give the
+null distribution of the class calls (specificity companion: no class should be called in sets without a reference
+rhythm).
+**Hypotheses.**
+- **H262.1 (positive control, per dataset):** the "all rhythmic" program passes the gate and its aligned argument
+  arg(mean z_al) / w is within 3 h of 0 (the reference phases transfer).
+- **H262.2 (primary):** the class of "all rhythmic" in D1.
+- **H262.3 (primary):** the class of "all rhythmic" in D2.
+**Readings (fixed now).** If H262.1 fails in a dataset, its class is uninformative. "Central": the blood program kept
+its timing and size while sleep (and in D1 meals) moved. "Behaviour": it moved with the sleep schedule. "Lost": its
+rhythm is abolished under misalignment (the Archer reading). "Mixed": none alone (partial shift and damping).
+"Unresolved": not separable. If both D1 and D2 are "central" (or one central and one lost) and A261 is "behaviour",
+the result is stated as "the rhythmic programs of muscle and blood follow different times under the same kind of
+misalignment" with the limits of each design; the sentence "which time a tissue's outputs follow is tissue-specific"
+is written only then, as a hypothesis from two tissues. If blood is also "behaviour", no tissue difference is claimed.
+**Limits.** (1) GSE48113 not blind for the clock and cue genes (A156). (2) Blood rhythms include diurnal cell
+composition (memory: blood composition clock); a "central" program may be composition driven by central hormones, not
+a cellular clock. (3) D1: sleep, meals and posture move together and the sampling day contains the displaced sleep
+(masking possible, but a full cycle is sampled); D2: sampling under constant posture with hourly snacks (no meal
+response), sleep inside the window, central time known only at group level. (4) Possible subject overlap between the
+reference (GSE39445) and D1 (same laboratory; different identifiers). (5) D2 has 8 subjects.
+**Stop rule:** one scoring run. **Code:** `paper/exploratory/A262_blood_misalignment/scripts/`.
