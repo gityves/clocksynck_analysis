@@ -6688,3 +6688,44 @@ cosinors on the hour of death (attenuated, winner's curse on the amplitudes); tu
 noise is the same in every arm. (4) 10 replicates per arm: rates have wide intervals. (5) COFE's transform deviates from
 DESeq2 as stated. (6) A138's 517 pairs include other histologies; here 464.
 **Stop rule:** one run per part. **Code:** `paper/exploratory/A265_cofe_head_to_head/scripts/{lib_a265,scout_a265,score_a265}.py`.
+
+## A266 (2026-11-15, user: "Yes run these new amendments for the fetal adrenal gland", to the follow-ups proposed after A264; **NOT BLIND**: every fetal adrenal statistic of A189, A242, A244 and A264 has been seen (A264: without PER1 and NR1D1, C 0.489, p 0.029, above matched sets, below the responsive q95 0.634); seen before writing: the adult power below; NOT seen: any fetal statistic on the CORE waveform, any fetal relation of the responsive genes to the clock state, any fetal receptor expression): is the clock-shaped covariation of the fetal adrenal cortex an entrained clock loop or a hormone-driven response? **A244 cortex readout (34 fetuses, 6 cohorts); L1 and a gene-relation readout; secondary (development section)**
+**Why.** After A264 the cortex covariation is not explained by age, cohort or steroidogenic activity, but without PER1 and
+NR1D1 it is not above the glucocorticoid / immediate-early companion. A rhythmic hormonal input (fetal ACTH via MC2R /
+cAMP; cortisol via GR; maternal melatonin via MT1, reported in non-human primate fetal adrenal) would move the
+signal-induced clock genes and the responsive genes together. Three questions separate "driven response" from "entrained
+loop" as far as these data allow.
+**Fixed now (`design_a266.py`, `score_a266.py`).** Rows, covariates (cohort indicator, quadratic age), permutations
+(10,000, per gene within cohort) and companions (200 matched, 200 responsive, same waveform) as A264. Seed 266.
+- **H266.1** `cortex:core`: signed coherence C on the CORE waveform = the 14 GTEx clock genes without those with a
+  documented direct acute response to glucocorticoid or cAMP (PER1: GRE and CRE; PER2: GRE; NR1D1: glucocorticoid
+  repression): ARNTL, CLOCK, NPAS2, PER3, CRY1, CRY2, NR1D2, DBP, RORA, TEF, CIART. PASS: p < 0.05 and above the q95 of
+  both companions. Descriptive: `cortex:core:steroid` (plus the A264 steroid score), `medulla:core`.
+- **H266.2** `cortex:relation`: per sample, the centred clock state z from the CORE waveform (`clocksync.paired`
+  projector and states); per responsive gene (`RESPONSIVE_GENES` with mean count >= 20), its centred log fraction
+  regressed on (Re z, Im z): loading beta_g. Agreement with the adult adrenal (GTEx, all 229 glands, untimed, same
+  computation): A = Re sum beta_g conj(beta_adult,g) / norms; p against 10,000 permutations of the fetuses' responsive
+  rows (genes together) within cohort. Scored only if the adult power is >= 0.8.
+- **H266.3** (descriptive) receptors: median log2 cpm of MTNR1A, MTNR1B, MC2R, MRAP, NR3C1, HSD11B2 in the fetal cortex,
+  medulla and stroma pseudobulks and the adult adrenal (MTNR1A/B are absent from the GTEx matrix).
+**Power first (done).** H266.1 (`feasibility_a266.py`, the A264 feasibility on these tests, 200 subsamples):
+`cortex:core` adult pass rate 1.000 / 0.995 / 0.630 at 1 / 0.75 / 0.5, false-positive rate 0.055;
+`cortex:core:steroid` 1.000 / 0.975 / 0.650, 0.085; `medulla:core` 0.990 / 0.910 / 0.415, 0.050. H266.2
+(`score_a266.py --stage power`: 200 draws of 34 adult glands against the remaining 195, 200 permutations each, 28
+responsive genes): pass rate **0.500** (median A 0.344), false-positive rate 0.075. **H266.2 is not estimable** at 34
+samples by the D1b rule and its fetal statistic is not computed (a weaker design is not substituted).
+**Readings (fixed now).**
+- H266.1 PASS: the covariation is carried by the core loop without the signal-induced genes, above both companions:
+  an entrained clock loop is supported over a purely acute hormonal response (not a running clock shown; still not
+  timed). The fetal result returns to "candidate for the main text" with this qualification (to the PI, Q32).
+- H266.1 p < 0.05, not clock-specific: the core loop covaries but not beyond the hormone-response genes: "driven or
+  entrained, not separable"; the fetal result stays in the supplement as A264 placed it.
+- H266.1 fail (p >= 0.05; adult power 1.000 at the full clock, 0.995 at 0.75): the covariation rests on PER1, PER2 and
+  NR1D1: a hormone-driven response is the simpler reading; a core loop of three quarters of the adult size is excluded.
+- H266.3 orders nothing; it reports whether the receptors of the candidate inputs are expressed in the fetal cortex.
+**Limits.** (1) Not blind. (2) The split of the clock genes into signal-induced and core is from the literature (from
+memory at writing; PER2 and NR1D1 regulation by glucocorticoid is documented mainly in rodent liver and cell lines). (3)
+The responsive companion with 11 genes may have a high q95 (as in A264 with 12); the verdict is read as registered. (4)
+No sampling times: entrainment cannot be shown, only covariation. (5) Limits of A244 and A264.
+**Stop rule:** one scoring run (`score_a266.py --stage score`). **Code:**
+`paper/exploratory/A266_fetal_adrenal_drive/scripts/{design_a266,feasibility_a266,score_a266}.py`.
