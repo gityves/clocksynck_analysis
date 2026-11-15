@@ -6497,3 +6497,21 @@ holds more than half of the gated programs; any share is reported with the numbe
 men. (4) Light, sleep and meals move together: "behaviour" is all of them. (5) The reference cohort ate hourly while
 awake; meal-driven rhythms are under-represented among reference-rhythmic genes. (6) Programs share genes.
 **Stop rule:** one scoring run. **Code:** `paper/exploratory/A261_nightshift_programs/scripts/`.
+
+### A259 power note (2026-11-15, simulation only, before any observed statistic; `A259_tissue_deviation/output/power/summary.csv`, 40 data sets per cell)
+- **Target mode** (ten hosts): unbiased without a shared program (mean kappa bias -0.003 to +0.004 at amplitude 1, up to
+  +0.041 at amplitude 0.5 and 100 donors). Detection (lower 90 % bound > 0) at amplitude 1: 200 donors 0.575 at 0.75 h,
+  0.850 at 1.0 h; 400 donors 0.750 at 0.75 h, 0.950 at 1.0 h; at amplitude 0.5, 200 donors: 0.300 at 1.0 h, 0.725 at
+  1.5 h. False detection at sigma 0: 0.000-0.125. Upper bound below the truth (nominal 0.05): 0.000-0.175.
+- **The bound depends on clock strength.** At sigma 0 the median upper 90 % bound is 0.70 h (amplitude 1, 200 donors)
+  and 1.72 h (amplitude 0.5, 200 donors): H259.1 can pass only where tissue clocks are about as strong as the GTEx
+  waveform; a failure in weak-clock tissues is a power limit, not evidence of deviation (read with H259.2).
+- **Shared non-clock program across a donor's tissues** (shared_sd 0.1): kappa is biased **up** by 0.125-0.155 (sigma
+  1.28 h at a true 0), and the lower bound exceeds 0 in 0.75 of data sets at sigma 0. This corrects limit (3) of the
+  registration (written as "lowers kappa"): such variation inflates kappa, which keeps H259.1 conservative but makes
+  H259.2 (existence) depend on its companions. Reading added before scoring: an H259.2 pass with a cross-tissue
+  companion share (median of the matched sets) above 0.2 is reported as "not separable from shared non-clock
+  variation", not as a person-specific clock deviation.
+- **Pair mode** (MuTHER design, 680 persons): kappa unbiased (-0.022 to +0.029). At sigma 0 the truth already includes
+  the host tissue's own noise (0.57 h at amplitude 1, 1.14 h at 0.5); median upper bound 0.89 h (amplitude 1) and
+  1.78 h (0.5) against the registered 1.41 h.
