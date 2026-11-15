@@ -164,12 +164,14 @@ def score(jobs):
     rec = []
     for k in ("cortex", "medulla", "stroma"):
         o = obs[d.d264.d244.pooled(obs, obs.compartment == k)]
-        for g in d.RECEPTORS:
-            rec.append(dict(group=f"fetal {k}", gene=g, n=len(o),
-                            median_log2cpm=float(np.median(np.log2(counts.loc[o.index, g] / o.depth * 1e6 + 1)))))
+        for g in d.RECEPTORS:  # symbol absent from a source (dong, han for MTNR1A/B): left out, not zero
+            x = counts.loc[o.index, g]
+            rec.append(dict(group=f"fetal {k}", gene=g, n=int(x.notna().sum()), detected=int((x > 0).sum()),
+                            median_log2cpm=float(np.nanmedian(np.log2(x / o.depth * 1e6 + 1)))))
     pb = adult()
     for g in d.RECEPTORS:
-        rec.append(dict(group="adult adrenal (GTEx)", gene=g, n=len(pb), median_log2cpm=float(
+        rec.append(dict(group="adult adrenal (GTEx)", gene=g, n=len(pb), detected=int((pb[g] > 0).sum()) if g in pb else 0,
+                        median_log2cpm=float(
             np.median(np.log2(pb[g] / pb.depth * 1e6 + 1))) if g in pb else np.nan))  # MTNR1A/B absent from the matrix
     pd.DataFrame(rec).to_csv(OUT / "receptors.csv", index=False)
     v = []

@@ -27,6 +27,7 @@ A2, A3, A7.
 **Progress 2026-11-15 (lead agent, biology-paper checks, `prompts/biology_paper_checks_2026-11-15.md`; numbers in RP):**
 A2 = A264 scored: the fetal cortex covariation survives further age / cohort and steroidogenic adjustment, but is not
 clock-specific without PER1 and NR1D1 (responsive companion): fetal result to the supplement (fallen exception).
+A266 (user follow-up): core loop without PER1/PER2/NR1D1 not significant; hormone-driven response the simpler reading.
 
 Supersedes `ROADMAP_2026-10-28.md` as the working plan. Phase 8 (naming, scorecard, figures, hardening, tutorials)
 stays a PI decision and is not part of this roadmap.

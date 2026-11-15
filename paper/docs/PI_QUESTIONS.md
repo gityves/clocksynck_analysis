@@ -110,6 +110,13 @@ behaviour-shift or meal-timing design if one exists on disk or public, plus comp
   the registered reading the fetal result moves to the supplement as a hypothesis; the verdict turns on the responsive
   family, whose q95 rises with 12 genes (RP A264, limits). Counted as a fallen exception in the tally (biology-paper
   checks, question to follow after Q34). A243 (other organs) is still to be scored.
+- **Update 2026-11-15 (A266, user-requested follow-up; not blind):** on the core loop without PER1, PER2 and NR1D1 the
+  cortex covariation is not significant (C 0.417, p 0.057; adult pass rate 1.000, 0.995 at 0.75); the relation of the
+  responsive genes to the clock state is not estimable (adult power 0.50). The fetal cortex expresses MC2R / MRAP highly
+  and no detectable melatonin receptor. Reading: a hormone-driven (ACTH / cAMP, own cortisol) response of the
+  signal-induced clock genes is the simpler explanation; a core loop >= 0.75 x adult is excluded. Recommendation: keep
+  the fetal adrenal in the supplement as "clock genes respond to the fetal adrenal's own hormonal axis", not as a
+  running clock.
 - **Update 2026-11-13 (A244, scored):** the fetal adrenal signal is cortical (C 0.608, Holm 0.0076, clock-specific, also
   after foreign-RNA correction); the medulla shows none at adult power 1.000. Below adult size; strongest before 12 weeks.
   Suggested wording: "a clock-shaped covariation between fetuses is present in the steroidogenic adrenal cortex from the

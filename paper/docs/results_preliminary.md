@@ -5049,3 +5049,26 @@ G2 (iii)).
 - Code: `exploratory/A264_fetal_adrenal_covariates/scripts/{design_a264,feasibility_a264,score_a264}.py` (278 s and
   21 s).
 <!-- src: paper/exploratory/A264_fetal_adrenal_covariates/output/{verdicts,l1,feasibility_passrates,adult_scores}.csv -->
+
+## A266 (scored 2026-11-15; NOT BLIND): without the signal-induced clock genes (PER1, PER2, NR1D1) the fetal adrenal cortex covariation is no longer significant (H266.1 fail, at an adult pass rate of 1.000); the responsive-gene relation is not estimable (H266.2); the fetal cortex expresses the ACTH receptor at a high level and no melatonin receptor (H266.3, descriptive): a hormone-driven response is the simpler reading
+- Power first: `cortex:core` (11 genes) adult pass rate 1.000 / 0.995 / 0.630 at 1 / 0.75 / 0.5, false-positive rate
+  0.055. H266.2: 0.500 at 34 adult glands (false-positive rate 0.075): not estimable, fetal statistic not computed.
+- **H266.1 fail** `cortex:core`: C 0.417, p 0.0572; below the matched q95 0.493 (87th percentile) and the responsive
+  q95 0.522 (74th). Descriptive: `cortex:core:steroid` C 0.311, p 0.106; `medulla:core` C -0.339, p 0.706.
+- **H266.3 (descriptive):** median log2 cpm in the fetal cortex: MC2R 7.44 and MRAP 8.44 (detected in 34 of 34),
+  NR3C1 3.19, HSD11B2 3.26; MTNR1A and MTNR1B detected in 0 of 29 cortex pseudobulks (symbol absent in dong and han).
+  Medulla: MC2R 2.88, NR3C1 5.44, MTNR1A in 3 of 24. Adult adrenal (GTEx, 229): MC2R 6.38, MRAP 3.06, NR3C1 4.77;
+  MTNR1A/B absent from the matrix. The receptor count table was rerun once with NaN-aware medians and detection counts
+  after the first run returned NaN for MTNR1A/B (source symbols missing); the clock statistics are identical in both runs.
+- **Reading as registered:** with PER1, PER2 and NR1D1 removed, the covariation is not significant; a core loop of
+  three quarters of the adult size is excluded (adult pass rate 0.995 at 0.75). The covariation rests on the
+  signal-induced clock genes: a hormone-driven response is the simpler reading; an entrained loop smaller than three
+  quarters of the adult one is not excluded (0.630 at 0.5). The fetal cortex carries the ACTH receptor complex at
+  adult-like or higher levels and no detectable melatonin receptor in these 3' single-cell data, which favours fetal
+  ACTH / cAMP (and its own cortisol) over a direct maternal melatonin input as the driver; maternal cues acting through
+  the fetal pituitary are not excluded.
+- **Limits.** Not blind; signal-induced genes chosen from the literature (from memory); no sampling times; melatonin
+  receptors are low-abundance and may be missed by droplet 3' assays; limits of A244 and A264.
+- Code: `exploratory/A266_fetal_adrenal_drive/scripts/{design_a266,feasibility_a266,score_a266}.py` (358 s; power
+  stage about 3 min; score 43 s).
+<!-- src: paper/exploratory/A266_fetal_adrenal_drive/output/{verdicts,l1,feasibility_passrates,power_h266_2,receptors}.csv -->
