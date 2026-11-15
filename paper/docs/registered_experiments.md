@@ -6573,3 +6573,61 @@ a cellular clock. (3) D1: sleep, meals and posture move together and the samplin
 response), sleep inside the window, central time known only at group level. (4) Possible subject overlap between the
 reference (GSE39445) and D1 (same laboratory; different identifiers). (5) D2 has 8 subjects.
 **Stop rule:** one scoring run. **Code:** `paper/exploratory/A262_blood_misalignment/scripts/`.
+
+## A264 (2026-11-15, roadmap item A2 under the lead prompt `prompts/biology_paper_checks_2026-11-15.md`, check 1a; **NOT BLIND**: every fetal adrenal statistic of A189, A242 and A244 has been seen (A244 cortex C 0.608, n 34, Holm p 0.0076, clock-specific; medulla -0.048); seen before writing: the adult power below and two aggregates of the adult adrenal pool; NOT seen: any fetal statistic under the adjustments below): is the clock-shaped covariation of the fetal adrenal cortex a static axis between fetuses? **A244 cortex readout (6 cohorts, 34 fetuses) under three further adjustments; L1; secondary (development section)**
+**Why.** A244 localises the fetal adrenal covariation to the steroidogenic cortex, but a static axis between fetuses
+(gestational age or cohort beyond the A244 adjustment, steroidogenic activity) would pass the same test, and two of the
+14 clock genes (PER1, NR1D1) respond directly to glucocorticoid / cAMP signalling. Each adjustment below removes one such
+axis; none can show that the covariation is a running clock.
+**Data and statistic (fixed; `design_a264.py`, `score_a264.py`).** Rows, pseudobulks, statistic, permutations and
+companions as the `cortex` readout of A244: signed coherence C over the cortex pseudobulks (>= 200 cells) of the cohorts
+with >= 2 fetuses (dong 3, han 2, kameneva 10, kildisiute 5, sasaki 5, wang 9), log fractions residualised gene by gene on
+the covariates; 10,000 per-gene permutations within cohort; 200 expression-matched and 200 responsive companion sets,
+adjusted in the same way and drawn for the waveform of the readout; clock-specific: C above the q95 of both. Seed 264.
+- `cortex:age` (i): cohort indicator, common **cubic** age polynomial and a linear age slope of its own for every cohort
+  with >= 5 fetuses (kameneva, kildisiute, sasaki, wang): 12 covariates (A244: 7).
+- `cortex:steroid` (ii): the A244 covariates plus a steroidogenic activity score: per fetus, the equal-weight mean over
+  20 genes of the gene's log fraction standardised over the cortex pseudobulks. Genes, fixed from the literature before
+  any statistic of this amendment: those raised >= 4-fold by 48 h of ACTH in **both** adult and fetal primary human
+  adrenocortical cells (Xing, Parker, Edwards, Rainey 2010, J Mol Endocrinol 45:59, Table 3, PMC3725639): MRAP, CYP11B1,
+  HSD3B2, CYP21A2, MVD, SCARB1, MT3, IDI1, MC2R, AMDHD1, ACSS2, TMEM97, GSTA4, STAR, CYP11A1, EBP, FDX1, CYP17A1, EPB41L1,
+  INHA (none is a clock gene). In the adult adrenal pool (93 GTEx glands, deaths at 08-18 h) the 20 genes cohere (mean
+  pairwise r 0.485) and the score shares almost no variance with the hour of death (cosinor R^2 0.004;
+  `output/adult_scores.csv`).
+- `cortex:-PER1-NR1D1` (iii): the A244 covariates; the waveform without PER1 and NR1D1 (12 genes), companions of 12 genes.
+- Descriptive (no verdict): `cortex` (A244 reproduced: it must return C 0.608), `cortex:all3` ((i) to (iii) together),
+  `cortex:acute` (A244 covariates plus the score of NR4A1, NR4A2, NR4A3, the immediate-early cAMP targets named in the
+  prompt; not taken from Xing 2010, whose design was 48 h); leave-one-gene-out range; unsigned R.
+**Power first (done; `feasibility_a264.py`, 278 s; `output/feasibility_passrates.csv`; 200 subsamples, 500
+permutations).** As A244's feasibility: each fetus stood for by a distinct GTEx adrenal gland thinned to the cortex
+clock-gene counts of its cohort, which also brings its own adult activity scores. Pass rate at alpha 0.05, adult clock at
+1 / 0.75 / 0.5, and without a clock: `cortex:age` 1.000 / 0.990 / 0.365, 0.055; `cortex:steroid` 1.000 / 1.000 / 0.460,
+0.080; `cortex:-PER1-NR1D1` 1.000 / 0.995 / 0.545, 0.025; `cortex` (A244 design) 1.000 / 0.995 / 0.440, 0.065;
+`cortex:all3` 1.000 / 0.910 / 0.455, 0.075. Every registered readout is estimable (>= 0.8 at the full clock). The adult
+power does not test separability from steroidogenic activity: in the adult the score is independent of the clock (R^2
+0.004), so the adjustment costs no adult power by construction.
+**Hypotheses (each read on its own: a robustness check of one standing result, not a discovery family; no Holm).**
+- **H264.1:** `cortex:age` p < 0.05 and clock-specific.
+- **H264.2:** `cortex:steroid` p < 0.05 and clock-specific.
+- **H264.3:** `cortex:-PER1-NR1D1` p < 0.05 and clock-specific.
+Verdict per readout: PASS; "not clock-specific" (p < 0.05, not above both companions); fail (p >= 0.05).
+**Readings (fixed now).**
+- All three PASS: the cortex covariation is not carried by a smoother age trend or cohort-specific age slopes, by the
+  ACTH-driven steroidogenic program, or by the two signal-induced clock genes. The fetal result stays a candidate for the
+  main text, stated as "clock-shaped covariation that survives these adjustments"; a static axis of another kind is not
+  excluded, and a running clock is not shown.
+- H264.2 fails or is not clock-specific: **the covariation is explained by steroidogenic activity** (a static axis, or a
+  clock that cannot be told from it in these data): the fetal result moves to the supplement as a hypothesis, and the
+  development section loses "the adrenal starts first" as a main-text claim (to the PI).
+- H264.1 fails or is not clock-specific: the covariation rests on the age and cohort structure of the pool; same move.
+- H264.3 fails or is not clock-specific: the covariation rests on PER1 and NR1D1; it is not shown to be a clock-network
+  state; same move.
+- Any one of the three moves the fetal exception to "fallen" in the tally of the prompt (stop rule 1); all three PASS
+  keeps it "standing, not shown to be running".
+**Limits.** (1) Not blind (above). (2) Five of the 20 score genes are also cortex classifier markers of A244 (STAR,
+CYP11A1, CYP17A1, CYP21A2, CYP11B1): within the class, their fraction mixes activity and purity; the score is used as one
+covariate, not interpreted. (3) The score is from 48 h ACTH in culture, not from acute or in vivo signalling. (4) If the
+fetal clock drives steroidogenesis, adjusting for the score removes clock signal too: H264.2 failing cannot tell
+"explained by" from "drives"; the reading above treats both as "not shown". (5) Limits 1 to 6 of A244.
+**Stop rule:** one scoring run (`score_a264.py --jobs 6`); any further cut is a new amendment. **Code:**
+`paper/exploratory/A264_fetal_adrenal_covariates/scripts/{design_a264.py,feasibility_a264.py,score_a264.py}`.
