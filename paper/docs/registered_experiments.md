@@ -6631,3 +6631,60 @@ fetal clock drives steroidogenesis, adjusting for the score removes clock signal
 "explained by" from "drives"; the reading above treats both as "not shown". (5) Limits 1 to 6 of A244.
 **Stop rule:** one scoring run (`score_a264.py --jobs 6`); any further cut is a new amendment. **Code:**
 `paper/exploratory/A264_fetal_adrenal_covariates/scripts/{design_a264.py,feasibility_a264.py,score_a264.py}`.
+
+## A265 (2026-11-15, roadmap item A3 under the lead prompt `prompts/biology_paper_checks_2026-11-15.md`, check 2; seen: A138 H138.4 on the 517 TCGA pairs of the same ten cancers (pooled clocksync 0.365, null mean 0.122, matched q95 0.260, responsive q95 0.310), A204 (COFE on 14 clock genes in a simulator, descriptive), the scout `output/scout_design.csv` (design counts) and one COFE run on gene-permuted BRCA tumours for runtime (134 s, 8 cores); NOT seen: any COFE label of real TCGA data): COFE against clocksync on the TCGA tumour-normal pairs: which reading is right, tumour clocks uncoupled from the host (COFE) or paired with the patient's normal tissue (A138)? **TCGA, ten cancers, 464 pairs; simulation on the real design; other; primary for the cancer chapter (head-to-head)**
+**COFE's claim, verified at the source** (Ananthasubramaniam and Venkataramanan 2025, PLoS Biol 23:e3003196; bioRxiv
+2024.03.13.584582; S4 Text and S2 Table). COFE (sparse cyclic PCA, sparsity by unsupervised cross-validation) was run on
+each of 11 TCGA adenocarcinomas separately, on tumours of one histological type (S2 Table), one tumour per patient,
+recount3 counts, protein-coding genes with mean count >= 64, log2 cpm (DESeq2), genes with mean log2 cpm >= 7, defaults
+(K 5, 3 repeats, 5 restarts). Labels of tumours "lay throughout the circadian cycle in all ACs"; patient-matched healthy
+samples (10 of the 11 cancers, "a small fraction of the original patients") were compared with their tumours: "the
+difference between the predicted time labels for healthy and tumor tissue was distributed throughout the circadian cycle
+in most ACs", with no statistic reported; control: held-out tumour samples of the same patients cluster near zero.
+Conclusion: "the clocks in tumors do not have a fixed timing relationship with clocks in healthy tissue" (abstract:
+rhythms "uncoupled with clocks in healthy matched tissue"). How the healthy samples were labelled is not stated; this
+amendment uses COFE's rule for samples not used in training (projection on the trained loadings, `run_cofe(test=)`), the
+reading implied by the held-out control (assumption, stated as such).
+**Data (fixed; `lib_a265.py`).** The ten cancers with normals (BLCA, BRCA, COAD, KIRC, KIRP, LIHC, LUAD, PRAD, THCA, UCEC;
+COFE's eleventh, OV, has none). Tumours: primary tumours of the S2 Table histology, one per patient (lowest barcode).
+Normals: one solid-tissue normal per patient whose tumour is in that set. 464 pairs (BLCA 19, BRCA 91, COAD 39, KIRC 72,
+KIRP 32, LIHC 49, LUAD 43, PRAD 51, THCA 49, UCEC 19), 288 to 782 tumours per cancer, 830 to 1,321 COFE genes
+(`output/scout_design.csv`). COFE's transform is log2(cpm + 1) with the protein-coding library size (S4 Text names DESeq2
+without the call: deviation). COFE as `common.benchmark.cofe.run_cofe` (COFE's fits, folds and CV error; its driver
+replaced for memory and a shared-object bug, A138), seed 265 + cancer index.
+**Readouts.**
+- (i) *COFE's readout reproduced (descriptive with a criterion):* per cancer, Rayleigh test of the tumour-minus-normal
+  label differences; "uniform" if p >= 0.05; largest empty arc of the tumour labels; CV minimum interior. Reproduced if
+  the differences are uniform in >= 6 of 10 cancers ("most") and tumour labels have no empty arc > 12 h.
+- (ii) **H265.1** *pairing of COFE's own labels:* R_c = |mean e^{i (phi_T - phi_N)}| per cancer, pooled with weights n
+  pairs; one-sided p against 10,000 permutations of the normals within cancer. clocksync on the same 464 pairs: the A138
+  statistic (`q3_lib.corr_stat`; normals gated by `reference_gate`, pooled over gated cancers), same permutations
+  (descriptive: A138 is the registered clocksync result on 517 pairs).
+- (iii) **H265.2 (decisive)** *simulation on the real design (`score_a265.py --part sim`).* Per cancer the real tumour
+  and normal counts, with the normals' patient labels permuted (real pairing broken); every patient gets a time t, normal
+  phase t, tumour phase t + N(0, 1 h) (coupled) or uniform on 24 h (uncoupled); counts multiplied by
+  exp(A_g cos(w (phase - phi_g))) for a rhythm program fixed from GTEx (A27 timed cosinor of log CPM on the hour of death:
+  every gene with BH q < 0.05 in >= 1 of 13 tissues, plus the 14 clock genes; 365 genes; amplitude the median over its
+  significant tissues, acrophase their circular mean). Arms: `coupled_surgical` (t uniform 08-18 h), `uncoupled_surgical`,
+  `coupled_wholeday` (t uniform 0-24 h); 10 replicates each, 1,000 permutations per replicate; both methods exactly as
+  in (i) and (ii). Rates per arm: clocksync pass (pooled p < 0.05), COFE pairing pass (H265.1 statistic p < 0.05), COFE
+  published reading "uncoupled" (uniform differences in >= 6 cancers).
+**Readings (fixed now).**
+- *Sampling window explains the disagreement:* in `coupled_surgical`, COFE's published reading says "uncoupled" in
+  >= 5 of 10 replicates while clocksync passes in >= 8 of 10, and clocksync passes in <= 2 of 10 `uncoupled_surgical`
+  replicates. Then COFE's published negative is not evidence against coupling under surgical hours, and A138 stands.
+- *COFE right, A138 carried by something else:* clocksync passes in >= 3 of 10 `uncoupled_surgical` replicates (its
+  pairing statistic picks up something other than the simulated coupling in these data), or H265.1 fails on real data
+  while COFE's pairing statistic passes in >= 8 of 10 `coupled_surgical` replicates (COFE would have seen real coupling).
+  Then the A138 companions are checked again (matched and responsive q95 on these 464 pairs, new amendment) and the
+  tumour-normal pairing claim is suspended in the roadmap.
+- *Real data:* H265.1 PASS (p < 0.05): COFE's own labels pair tumour with normal beyond permuted pairs, contradicting the
+  published reading with COFE's output. H265.1 fail is read with the `coupled_surgical` COFE pairing rate: below 0.8,
+  uninformative.
+- Anything else: reported as observed, with the rates; no reading.
+**Limits.** (1) Normal labelling by projection is an assumption (above). (2) The simulated program comes from GTEx
+cosinors on the hour of death (attenuated, winner's curse on the amplitudes); tumour amplitude equals normal amplitude.
+(3) The background keeps each sample's real clock, unrelated to the simulated time after the normals are re-paired; this
+noise is the same in every arm. (4) 10 replicates per arm: rates have wide intervals. (5) COFE's transform deviates from
+DESeq2 as stated. (6) A138's 517 pairs include other histologies; here 464.
+**Stop rule:** one run per part. **Code:** `paper/exploratory/A265_cofe_head_to_head/scripts/{lib_a265,scout_a265,score_a265}.py`.
