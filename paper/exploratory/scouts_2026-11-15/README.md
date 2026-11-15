@@ -12,6 +12,7 @@ Gate G1: an item is registered only if its scout shows it can separate the times
 | T3 repeat biopsies, rotation | `T3_repeat_biopsy/` | **fail as a separator of times** | not registered |
 | T1b clock-autonomous core in night-shift muscle (follow-up of A261, 2026-11-15) | `T1b_clock_core/` | **fail: not estimable** (gate needs about 600 genes; a damped clock-following program is never told from central time) | not registered |
 | T5 second misalignment design (G2 (iii)): blood, GSE48113 and GSE107537 / GSE122725 | `T5_blood_misalignment/` | **pass** for the genome-wide program (>= 0.965 correct at every attenuation); muscle or adipose: no misaligned design public | registered and scored (A262): D1 "lost" (behaviour excluded), D2 not gated |
+| T4 systemic signal: glucocorticoid and temperature readers (biology-paper checks, 2026-11-15) | `T4_systemic_signal/` | **split**: power passes (a fixed relation at R^2 0.014 found in 0.99-1.00, false-positive rate 0.02-0.07); the reader rule of the prompt fails (no glucocorticoid or cold-inducible candidate is rhythmic in clock-less mouse liver; heat: DNAJB1 only) | not registered: rule decision to the user |
 
 ## T0c: calibration set (`T0c_calibration/scout_t0c.py`, `output/`)
 
@@ -123,3 +124,19 @@ to 0.37. **G1 pass for the genome-wide program**; not for Hallmark-size programs
 sampling window of GSE48113 contains the displaced sleep and meals (masking possible, but a full cycle is sampled);
 GSE122725's central time is known only at group level (melatonin delay 1 to 2 h, Kervezee 2019); blood has no core clock
 for us, so the question is only which time the rhythmic program follows.
+
+## T4: the systemic signal (`T4_systemic_signal/scout_t4.py`, `output/`, 2026-11-15)
+- Mouse (`mouse_candidates.csv`; Manella 2021 timed cosinors of A260, liver, ad libitum). Rule of the prompt, rhythmic
+  (q < 0.05) in liver without a local clock (hepatocyte Bmal1 knockout): only DNAJB1 (q 0.034, phase 16.5 h). The
+  glucocorticoid candidates are not (FKBP5 q 0.85, TSC22D3 0.11, KLF9 0.37), nor the cold-inducible ones (CIRBP 0.15,
+  RBM3 0.77). In control liver at the expected phase: FKBP5 (q 0.0002, 15.0 h) and TSC22D3 (0.010, 16.2 h) after the
+  corticosterone peak; CIRBP (0.033, 6.4 h) in the cool rest phase; HSP90AA1 (0.003, 20.2 h) in the warm active phase.
+  The knockout keeps the phases (FKBP5 15.7 h, TSC22D3 15.4 h, CIRBP 6.3 h) at lower significance.
+- GTEx power (`power.csv`; 244 fast-death donors, 15 tissues, 2,671 samples; readers of all candidates): consistency K
+  of the per-tissue complex reader-host loadings, 200 permutations; with an inserted relation of fixed phase, pass rate
+  0.99-1.00 at R^2 0.014 (the A27 GC score level), 1.00 at 0.03 and 0.05; false-positive rate 0.07 (GC), 0.05 (cold),
+  0.02 (heat). Power is not the limit; the open questions are the reader rule and specificity against the agonal
+  confound (to be handled by matched and responsive reader companions in a registration).
+- Not registered: with the rule of the prompt the glucocorticoid and cold readers are empty. A relaxed rule (control
+  liver rhythmic at the expected phase: FKBP5 + TSC22D3; CIRBP; HSP90AA1) would be a deviation from the prompt and is
+  left to the user.
