@@ -269,6 +269,57 @@ Tested since (registered A192-A194, `results_preliminary.md`):
   METABRIC + SCAN-B luminal A (2,342 patients, 493 deaths; top tertile HR 0.92, per SD 0.98) and does not reproduce in TCGA
   with their 5-year model (OR 0.81, p 0.62). It is not a proliferation proxy (Spearman with G2M about 0).
 
+## 11. What the core clock controls (searched 2026-11-15, after A261 was scored)
+
+Checked through Europe PMC (abstracts and, where open, full-text XML) and GEO records; PubMed and publisher pages were
+blocked in this session. Each entry gives the number, the design, and whether the claim is about clock genes (C),
+rhythmic outputs, i.e. non-clock transcripts (O), or both. Numbers are quoted from the texts read; "abstract only"
+marks those whose counts were not read in full text.
+
+The consensus picture has three layers: a small clock-autonomous core (direct clock targets), a large layer driven by
+feeding, activity, temperature and hormones, and an interaction layer where the local clock gates the response to
+systemic signals. The mouse liver numbers:
+
+| reference | design | number | C / O |
+|---|---|---|---|
+| Kornmann et al., PLoS Biol 2007;5:e34 (PMID 17298173) | conditional liver clock (dox-dependent Rev-erb-alpha), mouse liver | 31 of 351 circadian transcripts kept their rhythm with the liver clock stopped, mPer2 among them | both |
+| Vollmers et al., PNAS 2009;106:21453 (PMID 19940241) | WT and Cry1/Cry2 KO, ad libitum, fasting, restricted feeding | up to 15 % of expressed liver transcripts rhythmic in DD; "only a small subset" rhythmic without feeding; restricted feeding restores hundreds in the clock-deficient liver (abstract only) | O |
+| Koronowski et al., Cell 2019;177:1448 (PMID 31150621) | hepatocyte Bmal1 reconstituted in Bmal1-null mice (Liver-RE), LD, ad libitum | 218 of 2,010 Bmal1-dependent oscillating transcripts (10.8 %) oscillate with the liver clock alone; clock-gene rhythms lost in DD | both |
+| Greenwell et al., Cell Rep 2019;27:649 (PMID 30995463; not eLife) | ad libitum, night-restricted, arrhythmic feeding, liver, 6 ZT x 3 | "more than 70 %" of cycling liver transcripts lose rhythm under arrhythmic feeding; clock genes keep normal oscillations (abstract only) | both |
+| Weger et al., PNAS 2021;118:e2015803118 (PMID 33452134) | WT, Bmal1 KO, Cry1/2 KO x ad libitum / night-restricted feeding, liver | food-driven model 22 % (Bmal1 KO) and 31 % (Cry1/2 KO) of rhythmic genes; clock-driven 30 % and 37 % of the rhythms shared between feeding regimens; food-driven rhythms 36 % lower in amplitude | both |
+| Greco et al., Sci Adv 2021;7:eabi7828 (PMID 34550736) | Liver-RE x night feeding | 13.7 % of oscillating genes autonomous; of 1,236 non-autonomous, 666 gained rhythm with night feeding, 442 of them integrated by hepatic BMAL1 (the interaction layer) | O |
+
+Skeletal muscle and humans:
+
+| reference | design | number | C / O |
+|---|---|---|---|
+| Dyar et al., Mol Metab 2014;3:29 (PMID 24567902; erratum PMID 25503566) | muscle-specific Bmal1 KO (HSA-Cre), TA and soleus, 6 ZT | 487 of 684 (TA) and 666 of 1,359 (soleus) cycling genes lose their 24 h oscillation without muscle Bmal1 | O |
+| Kumar et al., Science 2024;384:563 (PMID 38696572) | brain, muscle and brain + muscle Bmal1 reconstitution in Bmal1-null mice | the muscle clock acts as a gatekeeper of central signals; no share of rhythmic transcripts verified (full text not read; do not quote a percentage) | O |
+| Perrin et al., eLife 2018;7:e34114 (PMID 29658882) | human vastus lateralis every 4 h, 10 volunteers, hourly meal replacement (GSE108539: our A261 reference) | 5,748 genes rhythmic at pre-mRNA and / or mRNA level (FDR 5 %); in myotubes 994; CLOCK knockdown changes about 8 % of genes | both |
+| Wefers et al., PNAS 2018;115:7789 (PMID 29987027; GSE106800) | 14 men, crossover, 3.5 d of a 12 h behavioural shift, biopsies morning and evening | clock genes "kept the same diurnal pattern as in the control condition, albeit blunted for PER and CRY"; 296 (control) and 238 (misaligned) genes differ between the two times, fatty acid metabolism and PPAR sets enriched; no share of reversed genes reported | both |
+| Lundell et al., Nat Commun 2020;11:4643 (PMID 32938935; GSE129843) | 11 men, 5 d time-restricted (10:00-18:00) vs extended (07:00-22:00) feeding, muscle every 4 h | clock genes unchanged; oscillating transcripts 8 % (extended) vs 15 % (restricted) | both |
+| Archer et al., PNAS 2014;111:E682 (PMID 24449876; GSE48113) | forced desynchrony (28 h days), blood 7 x on day 1 and day 4, melatonin at the same clock time | rhythmic transcripts fall from 6.4 % to 1.0 % when sleep (and the fasting-feeding cycle) is displaced; CLOCK and ARNTL among those affected | both |
+| Kervezee et al., PNAS 2018;115:5540 (PMID 29735673; GSE107537) | 8 subjects, sleep delayed 10 h for 3 days, PBMC every 4 h, measurement under constant posture with hourly snacks | 676 of 929 probe sets rhythmic at baseline (73 %) stay rhythmic "with a similar phase relative to habitual bedtimes", i.e. they do not follow the delayed sleep, at lower amplitude; 229 (24.6 %) lose rhythm; 24 shift. The press release's "73 % did not adapt" is the same group; it is not "73 % of rhythmic genes lost" | O |
+| Kervezee et al., J Biol Rhythms 2019;34:84 (PMID 30621487; GSE122725) | same protocol, 3 subjects with bright light, 8 dim-light controls (the GSE107537 arm) | melatonin delay about 8 to 9 h with bright light, about 1 to 2 h in the dim-light controls | O |
+
+What A261 adds over Wefers 2018, and what it does not:
+- **Not new:** the direction. Wefers 2018 reported on the same arrays that the muscle clock genes kept the control
+  pattern while metabolic genes changed with the inverted schedule, and the mouse liver and muscle work above places
+  most rhythmic outputs outside the local clock's autonomous control (70 % lost under arrhythmic feeding, 10 to 14 %
+  autonomous in liver; about half to 70 % of muscle rhythms lost without muscle Bmal1, which is the other direction:
+  clock-dependent but not necessarily clock-autonomous).
+- **Added:** a program-level test of the genome-wide rhythmic program (1,587 reference-rhythmic genes from an
+  independent timed cohort) against three explicit times (central, the measured muscle clock at 2.68 h and damped,
+  behaviour), in hours with intervals, against matched non-rhythmic sets.
+- **Not shown:** that the outputs are shifted rather than evoked (two clock times, the behavioural state inverts
+  exactly at each biopsy: RP A261 masking limit); which genes form the clock-autonomous core in human muscle (the
+  core-set design is not estimable on these arrays: a program must hold about 600 reference-rhythmic genes to clear
+  the rhythm gate, and a damped clock-following program cannot be told from central time at any size; scout
+  `exploratory/scouts_2026-11-15/T1b_clock_core/`).
+- **Blood goes the other way in the literature** (Kervezee 2018: most PBMC rhythms stay on the old schedule; Archer
+  2014: most are lost when sleep is displaced). Whether "which time a tissue's outputs follow is tissue-specific" holds
+  is to be tested on the blood designs with the same machinery before it is written.
+
 ## Status table
 
 | # | reference | status | note |
@@ -302,3 +353,17 @@ Tested since (registered A192-A194, `results_preliminary.md`):
 | 26 | TimeTeller survival (Vlachou et al., bioRxiv 2019) | verified (preprint) | REMAGUS, grade 1-2 subgroup |
 | 27 | Ye et al., Cell Syst 2018; Chang and Lai, J Transl Med 2019; Venet et al., PLoS Comput Biol 2011 | candidate | section 10 |
 | 28 | Wang, Zeng, ..., Scheiermann, Cell 2024 | verified (secondary summaries) | section 6; endothelial clock gates CD8 infiltration (mouse) |
+| 25 | Kornmann et al., PLoS Biol 2007 | verified | section 11; 31 / 351 |
+| 26 | Vollmers et al., PNAS 2009 | verified | abstract only; counts not read |
+| 27 | Koronowski et al., Cell 2019 | verified | 218 / 2,010 (10.8 %) |
+| 28 | Greenwell et al., Cell Rep 2019 | corrected | journal is Cell Reports, not eLife; abstract only |
+| 29 | Weger et al., PNAS 2021 | verified | title "Systematic analysis of differential rhythmic liver gene expression ..."; no temperature arm |
+| 30 | Greco et al., Sci Adv 2021 | verified | 13.7 % autonomous |
+| 31 | Dyar et al., Mol Metab 2014 | verified | 487 / 684 TA, 666 / 1,359 soleus; erratum exists |
+| 32 | Kumar et al., Science 2024 | verified (citation) | design corrected (brain, muscle, brain + muscle reconstitution); no number verified |
+| 33 | Perrin et al., eLife 2018 | verified | 5,748 rhythmic genes |
+| 34 | Wefers et al., PNAS 2018 | verified | protocol read (methods); biopsy times 08:00 / 20:00 in methods, 07:00 / 19:00 in figures |
+| 35 | Lundell et al., Nat Commun 2020 | verified | GSE129843 |
+| 36 | Archer et al., PNAS 2014 | verified | 6.4 % -> 1.0 % |
+| 37 | Kervezee et al., PNAS 2018 | verified | 73 % = 676 / 929 baseline-rhythmic probe sets that stay on the habitual schedule |
+| 38 | Kervezee et al., J Biol Rhythms 2019 | verified | melatonin delay 1-2 h (dim) vs 8-9 h (bright light) |

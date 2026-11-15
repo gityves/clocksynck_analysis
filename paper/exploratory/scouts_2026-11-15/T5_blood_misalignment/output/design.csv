@@ -1,0 +1,5 @@
+design,cond,subjects,samples,per_subject_median,t_min,t_max
+GSE48113 forced desynchrony,al,22,148,7.0,0.0,23.85
+GSE48113 forced desynchrony,mis,21,138,7.0,0.0,23.916666666666668
+"GSE122725 night shift (dim-light control, = GSE107537)",al,8,52,6.5,0.2,24.3
+"GSE122725 night shift (dim-light control, = GSE107537)",mis,8,51,6.0,18.2,42.2

@@ -53,6 +53,8 @@ module mean; table -0.043 / module minus companion -0.062).
    clock and the body time are measured by the same 14 genes (A91 cannot separate L from B), and ventilation removes
    the day and adds drugs at once (A27, A136, A248). *Design:* use the designs where two times are moved apart by a
    known amount (night shift: H by 12 h, L by 2.7 h; repeat biopsies: X by a known number of hours; mouse KO: L removed).
+   In unshifted donors body time and behaviour move together, so A91's clock-following genes cannot be read as
+   "controlled by the local clock" (added 2026-11-15).
 4. **Small designs read at the gene level.** A90 (every p53 target undetermined), A112 (24 vs 26 genes, single tissue),
    A124 (11 subjects, one readout axis). *Design:* power by simulation at the program level before registering (G1).
 5. **Calibration missing.** No analysis of the line was checked on a system where the answer is known; A112 was meant

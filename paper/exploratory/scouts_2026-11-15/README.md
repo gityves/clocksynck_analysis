@@ -10,6 +10,8 @@ Gate G1: an item is registered only if its scout shows it can separate the times
 | T1 night-shift muscle, programs | `T1_nightshift/` | **pass**: central / tissue clock / behaviour separable from 20 genes per program | register (A261) |
 | T2 GTEx, body vs tissue vs day per gene | A259 (registered; `A259_tissue_deviation/`) | **pending A259**: the tissue term needs a person-specific deviation above noise | decide after A259 is scored |
 | T3 repeat biopsies, rotation | `T3_repeat_biopsy/` | **fail as a separator of times** | not registered |
+| T1b clock-autonomous core in night-shift muscle (follow-up of A261, 2026-11-15) | `T1b_clock_core/` | **fail: not estimable** (gate needs about 600 genes; a damped clock-following program is never told from central time) | not registered |
+| T5 second misalignment design (G2 (iii)): blood, GSE48113 and GSE107537 / GSE122725 | `T5_blood_misalignment/` | **pass** for the genome-wide program (>= 0.965 correct at every attenuation); muscle or adipose: no misaligned design public | register (A262) |
 
 ## T0c: calibration set (`T0c_calibration/scout_t0c.py`, `output/`)
 
@@ -70,3 +72,54 @@ reference amplitude is told from a flat one with power 0.80 (muscle arm) to 0.99
 the same hours, so rotation shows that a program follows time, not which time; in the intervention arms rotation and the
 intervention's response are confounded, and the rest arms are too few to subtract it. T3 is not registered. What it
 could add is a living replication of "rhythmic vs flat", which the timed muscle reference already gives.
+
+## T1b: the clock-autonomous core of night-shift muscle (`T1b_clock_core/`, 2026-11-15)
+
+Question (follow-up review of A261): do direct clock targets stay with the muscle clock (2.68 h, damped) while the rest
+of the rhythmic transcriptome follows behaviour? Sources of an external core set (`clock_target_sources.md`, Sonnet
+scout, no human muscle data opened): the rule would pick the tissue-matched knockout time series first (Dyar 2014,
+GSE43071, muscle-specific Bmal1 KO, TA and soleus, 6 ZT x 3), then muscle BMAL1 / CLOCK ChIP (GSE143334), then the A260
+liver class (clock-dependent in the hepatocyte knockout, tissue mismatch); none ships a ready gene list, and no
+mouse-human orthology table is on disk (the project convention is the upper-cased symbol).
+Power first, on matched stand-ins only (`scout_core_power.py`; the core genes are never read on the arrays): programs of
+reference-rhythmic genes outside the core, the A261 rhythm gate (matched non-rhythmic q95) and the A261 Hotelling
+classes, with each truth imposed on the stand-in's own misaligned residuals (`output/power.csv`, 300 draws per size):
+
+| genes | 20 | 50 | 100 | 200 | 400 | 600 | 800 | 1,000 |
+|---|---|---|---|---|---|---|---|---|
+| gate passed | 0.000 | 0.000 | 0.003 | 0.033 | 0.157 | 0.827 | 0.930 | 0.970 |
+| gated and "tissue clock" called, when true | 0 | 0 | 0 | 0.003 | 0.010 | 0 | 0 | 0 |
+| gated and "behaviour" called, when true | 0 | 0 | 0.003 | 0.033 | 0.157 | 0.827 | 0.930 | 0.970 |
+
+The A260 liver class (587 mouse genes) holds 65 reference-rhythmic genes on the array: gate 0.000 at that size
+(`output/power_liver_local_A260.csv`). Under a damped clock-following truth the call is "unresolved" (central not
+excluded) in 0.90 to 1.00 of gated stand-ins at every size: an excursion ratio of 0.233 on a program read at about a
+fifth of its reference amplitude (aligned loading 0.222, A261) cannot be told from central time with 11 subjects.
+**G1 fail: not estimable.** A core of the size the literature describes (10 to 14 % of rhythmic genes in liver; at most
+a few hundred in muscle) stays far below the gate, and even a gated core could only show "with behaviour" or not, never
+"with the clock". Not registered, not scored; no core gene set was read on GSE106800.
+
+## T5: a second misalignment design (`T5_blood_misalignment/`, 2026-11-15)
+
+Muscle or adipose with shifted meals or sleep: nothing on disk (`repeat_biopsy/`: every same-day design has meals,
+exercise, clamps or surgery at fixed clock times; GSE118280 swaps meal composition, not meal times). Public (literature
+agent, `T1b_clock_core/literature_core_clock_2026-11-15.md`): Lundell 2020 (GSE129843, muscle every 4 h,
+time-restricted 10:00-18:00 vs extended 07:00-22:00 feeding) changes the feeding window, not its phase, and does not
+move sleep, so clock and behaviour are not misaligned; Wilms 2019 (adipose, sleep loss) has no accession found;
+Christou 2019 (GSE87761, adipose, constant routine) has no misalignment; Wehrens 2017 has no genome-wide data. **No
+second non-blood misalignment design with public matrices.**
+Blood (on disk): GSE48113 (Archer 2014, forced desynchrony: 22 / 21 subjects, 7 samples on day 1 and day 4; melatonin
+at the same clock time on both days, sleep and meals displaced by about 12 h) and the dim-light arm of GSE122725
+(= GSE107537, Kervezee 2018: 8 subjects, every 4 h at baseline and after 3 nights with sleep delayed by 10 h;
+melatonin delayed about 1 to 2 h; measurement under constant posture with hourly snacks, so no meal response inside the
+sampling window). A156 read GSE48113 for the clock and cue genes only; the genome-wide program of either dataset has not
+been read. Reference for central-time blood rhythms: GSE39445 (Moller-Levet 2013, sleep-extension arm, extended
+wakefulness, melatonin-referenced phase, linear hours-awake term), 8,240 of 15,632 genes at p < 0.01 (blood rhythms
+include the diurnal cell composition, an expected exception for the clock readout, not for this question).
+Power (`scout_blood.py`, simulation on the real designs, noise = within subject x condition SD with the rhythm left in,
+`output/power.csv`): for the genome-wide program the three outcomes central / behaviour / lost are called correctly in
+0.965 to 1.000 of programs in both designs at reference amplitude x 1, 0.5 and 0.25; at 20 genes and x 0.25 only 0.01
+to 0.37. **G1 pass for the genome-wide program**; not for Hallmark-size programs (the A261 lesson). Caveats: the
+sampling window of GSE48113 contains the displaced sleep and meals (masking possible, but a full cycle is sampled);
+GSE122725's central time is known only at group level (melatonin delay 1 to 2 h, Kervezee 2019); blood has no core clock
+for us, so the question is only which time the rhythmic program follows.

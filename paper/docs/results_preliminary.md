@@ -4856,6 +4856,10 @@ counts and noise floors identical in all 26 tissues (skeletal muscle 1,480 clock
 both, floors 37 / 31.5 / 8.5; liver 2,717 / 5 / 326); lock values within 1.4e-9. A27 D5 summaries and host-vs-time
 (R 0.631 fast deaths, 0.142 ventilated) identical. Still missing for the main text: matched and stress-responsive
 companions (roadmap T2). Archived tables kept in `gtex_cues/archive_2026-10-25/`.
+Reading limit (added 2026-11-15, after review): in unshifted GTEx donors the body time and the person's behaviour move
+together, so A91's "clock-following" genes (B) follow the body time *or* behaviour; they cannot be read as "controlled
+by the local clock". That partition is identifiable only where clock and behaviour are misaligned (A261 and phase T,
+G2 (iii)).
 <!-- src: paper/results/figure_3/output/gtex_cues/{a91_verdict,a91_tissues,a91_genes,diag5_summary,diag5_host_vs_time}.csv; archive_2026-10-25/ -->
 
 ## Roadmap 2026-11-15, item A1 (a, b): the scored offset contrasts in hours, and their spread bias (simulation)
@@ -4902,7 +4906,7 @@ companions (roadmap T2). Archived tables kept in `gtex_cues/archive_2026-10-25/`
   V260.3 regresses every gene on the lung's own state (a host needs two compartments; registered "lung alone").
 <!-- src: paper/exploratory/A260_mouse_calibration/output/{tests,descriptive,untimed_genes,truth_genes}.csv -->
 
-## A261 (scored 2026-11-15; not blind for the clock genes): after a 12 h shift of behaviour, the rhythmic transcriptome of human muscle reverses with behaviour while its clock moves 2.7 h (H261.1 PASS, H261.3 behaviour); single Hallmark programs are too weak to be read (H261.2: 1 of 28 gated)
+## A261 (scored 2026-11-15; not blind for the clock genes): after a 12 h shift of behaviour, the rhythmic transcriptome of human muscle follows behaviour (shifted or evoked) while its clock moves 2.7 h (H261.1 PASS, H261.3 behaviour); single Hallmark programs are too weak to be read (H261.2: 1 of 28 gated)
 
 - Power (scout): at 20 genes per program the three times are told apart with power >= 0.915 at level 0.01, truth
   excluded in at most 0.092 of simulated programs.
@@ -4918,10 +4922,23 @@ companions (roadmap T2). Archived tables kept in `gtex_cues/archive_2026-10-25/`
 - **Descriptive, phase programs** (reference-rhythmic genes by 4 h bins of acrophase): gated 00-04 h (unresolved,
   10.56 h, ratio 0.59), 04-08 h (behaviour, -11.34 h, 0.56), 12-16 h (behaviour, -10.44 h, 0.69); not gated 08-12 h,
   16-20 h, 20-24 h (shifts -9.79, 11.90, -11.29 h).
-- **Reading (registered):** the genome-wide daily program of muscle "reversed with sleep, activity and meals": most of
-  the muscle's rhythmic transcriptome follows behaviour, while its core clock moved by only 2.68 h and damped (A257).
-  In this tissue, the time most rhythmic genes follow is behaviour, not the local clock and not central time. With
-  A257, the muscle's clock and its rhythmic outputs come apart under misalignment.
+- **Reading (registered; wording restricted 2026-11-15, see the masking limit):** the genome-wide daily program of
+  muscle follows behaviour (shifted or evoked): most of the muscle's rhythmic transcriptome goes with sleep, activity and
+  meals, while its core clock moved by only 2.68 h and damped (A257). It is not shown to be "shifted by 12 h". With
+  A257, the muscle's clock and its rhythmic outputs come apart under misalignment. This is the reading Wefers 2018
+  already gave for these arrays (clock genes kept their control pattern, fatty acid / PPAR genes changed; see
+  `literature_positioning.md` section 11); A261 adds the program-level test against central time and the muscle clock
+  in hours, with a matched companion, not a new direction.
+- **Masking limit (added 2026-11-15, docs only, no new statistic):** with two clock times per condition, a reversed
+  19:00 minus 07:00 difference does not distinguish a 12 h shift of an oscillation from an acute response to the
+  fed / active versus fasted / rested state. The protocol (Wefers 2018, methods, read via Europe PMC) does not help:
+  meals at 08:00, 12:30, 15:00, 20:00 and sleep 23:00-07:00 in the aligned condition, all "shifted by 12 h" in the
+  misaligned one, so in both conditions one biopsy is at the behavioural morning (about 1 h after waking, overnight
+  fasted) and the other at the behavioural evening (about 13 h awake, before dinner, fed during the day). The
+  behavioural state at each biopsy therefore inverts exactly with the clock-time contrast; a fasting / waking response
+  and a shifted rhythm predict the same data. The biopsy order relative to breakfast and the test day are not stated
+  in the text (biopsies given as 08:00 / 20:00 in the methods and 07:00 / 19:00 in the figures). Only a design that
+  samples a full cycle under a constant routine after the shift could separate the two.
 - Limits: not blind for the clock genes; 11 men, two clock times, third day; light, sleep and meals move together; the
   reference cohort ate hourly while awake, so the rhythmic set leans towards sleep / activity-driven genes, and a
   meal-driven set may differ; the class is for the pooled program, not for each gene. The scout's power assumed

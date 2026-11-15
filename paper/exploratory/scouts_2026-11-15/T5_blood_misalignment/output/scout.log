@@ -1,0 +1,79 @@
+/home/maxine/Documents/paychere/scCircadianOverview/paper/exploratory/scouts_2026-11-15/T5_blood_misalignment/scout_blood.py:117: Pandas4Warning: Starting with pandas version 4.0 all arguments of mean will be keyword-only.
+  y = y[y.mean(1) > y.mean(1).quantile(0.2)]  # drop the lowest-intensity fifth
+/home/maxine/Documents/paychere/scCircadianOverview/paper/exploratory/scouts_2026-11-15/T5_blood_misalignment/scout_blood.py:117: Pandas4Warning: Starting with pandas version 4.0 all arguments of mean will be keyword-only.
+  y = y[y.mean(1) > y.mean(1).quantile(0.2)]  # drop the lowest-intensity fifth
+reference 15632 genes, 8240 at p < 0.01
+{'design': 'GSE48113 forced desynchrony', 'genes': 19541, 'reference_on_array': 15632, 'reference_rhythmic_on_array': 8240, 'median_sd': 0.3219174276636727, 'median_ref_amp_rhythmic': 0.11522098839831943, 'median_sd_rhythmic': 0.2920062793486266}
+{'design': 'GSE48113 forced desynchrony', 'G': 20, 'attenuation': 1.0, 'truth': 'central', 'units': 21, 'correct': 0.985, 'call_central': 0.985, 'call_mixed': 0.015}
+{'design': 'GSE48113 forced desynchrony', 'G': 20, 'attenuation': 1.0, 'truth': 'behaviour', 'units': 21, 'correct': 0.995, 'call_behaviour': 0.995, 'call_mixed': 0.005}
+{'design': 'GSE48113 forced desynchrony', 'G': 20, 'attenuation': 1.0, 'truth': 'lost', 'units': 21, 'correct': 0.97, 'call_lost': 0.97, 'call_unresolved': 0.015, 'call_mixed': 0.015}
+{'design': 'GSE48113 forced desynchrony', 'G': 20, 'attenuation': 0.5, 'truth': 'central', 'units': 21, 'correct': 0.965, 'call_central': 0.965, 'call_unresolved': 0.035}
+{'design': 'GSE48113 forced desynchrony', 'G': 20, 'attenuation': 0.5, 'truth': 'behaviour', 'units': 21, 'correct': 0.99, 'call_behaviour': 0.99, 'call_mixed': 0.005, 'call_unresolved': 0.005}
+{'design': 'GSE48113 forced desynchrony', 'G': 20, 'attenuation': 0.5, 'truth': 'lost', 'units': 21, 'correct': 0.675, 'call_lost': 0.675, 'call_unresolved': 0.325}
+{'design': 'GSE48113 forced desynchrony', 'G': 20, 'attenuation': 0.25, 'truth': 'central', 'units': 21, 'correct': 0.37, 'call_unresolved': 0.62, 'call_central': 0.37, 'call_behaviour': 0.005, 'call_mixed': 0.005}
+{'design': 'GSE48113 forced desynchrony', 'G': 20, 'attenuation': 0.25, 'truth': 'behaviour', 'units': 21, 'correct': 0.37, 'call_unresolved': 0.625, 'call_behaviour': 0.37, 'call_mixed': 0.005}
+{'design': 'GSE48113 forced desynchrony', 'G': 20, 'attenuation': 0.25, 'truth': 'lost', 'units': 21, 'correct': 0.03, 'call_unresolved': 0.955, 'call_lost': 0.03, 'call_behaviour': 0.015}
+{'design': 'GSE48113 forced desynchrony', 'G': 50, 'attenuation': 1.0, 'truth': 'central', 'units': 21, 'correct': 0.99, 'call_central': 0.99, 'call_mixed': 0.01}
+{'design': 'GSE48113 forced desynchrony', 'G': 50, 'attenuation': 1.0, 'truth': 'behaviour', 'units': 21, 'correct': 0.985, 'call_behaviour': 0.985, 'call_mixed': 0.015}
+{'design': 'GSE48113 forced desynchrony', 'G': 50, 'attenuation': 1.0, 'truth': 'lost', 'units': 21, 'correct': 0.975, 'call_lost': 0.975, 'call_mixed': 0.025}
+{'design': 'GSE48113 forced desynchrony', 'G': 50, 'attenuation': 0.5, 'truth': 'central', 'units': 21, 'correct': 0.99, 'call_central': 0.99, 'call_mixed': 0.01}
+{'design': 'GSE48113 forced desynchrony', 'G': 50, 'attenuation': 0.5, 'truth': 'behaviour', 'units': 21, 'correct': 0.975, 'call_behaviour': 0.975, 'call_mixed': 0.025}
+{'design': 'GSE48113 forced desynchrony', 'G': 50, 'attenuation': 0.5, 'truth': 'lost', 'units': 21, 'correct': 0.975, 'call_lost': 0.975, 'call_unresolved': 0.025}
+{'design': 'GSE48113 forced desynchrony', 'G': 50, 'attenuation': 0.25, 'truth': 'central', 'units': 21, 'correct': 0.83, 'call_central': 0.83, 'call_unresolved': 0.15, 'call_mixed': 0.015, 'call_lost': 0.005}
+{'design': 'GSE48113 forced desynchrony', 'G': 50, 'attenuation': 0.25, 'truth': 'behaviour', 'units': 21, 'correct': 0.81, 'call_behaviour': 0.81, 'call_unresolved': 0.175, 'call_mixed': 0.015}
+{'design': 'GSE48113 forced desynchrony', 'G': 50, 'attenuation': 0.25, 'truth': 'lost', 'units': 21, 'correct': 0.315, 'call_unresolved': 0.66, 'call_lost': 0.315, 'call_mixed': 0.01, 'call_behaviour': 0.01, 'call_central': 0.005}
+{'design': 'GSE48113 forced desynchrony', 'G': 200, 'attenuation': 1.0, 'truth': 'central', 'units': 21, 'correct': 0.985, 'call_central': 0.985, 'call_mixed': 0.015}
+{'design': 'GSE48113 forced desynchrony', 'G': 200, 'attenuation': 1.0, 'truth': 'behaviour', 'units': 21, 'correct': 0.985, 'call_behaviour': 0.985, 'call_mixed': 0.015}
+{'design': 'GSE48113 forced desynchrony', 'G': 200, 'attenuation': 1.0, 'truth': 'lost', 'units': 21, 'correct': 0.99, 'call_lost': 0.99, 'call_mixed': 0.01}
+{'design': 'GSE48113 forced desynchrony', 'G': 200, 'attenuation': 0.5, 'truth': 'central', 'units': 21, 'correct': 0.98, 'call_central': 0.98, 'call_mixed': 0.02}
+{'design': 'GSE48113 forced desynchrony', 'G': 200, 'attenuation': 0.5, 'truth': 'behaviour', 'units': 21, 'correct': 0.98, 'call_behaviour': 0.98, 'call_mixed': 0.02}
+{'design': 'GSE48113 forced desynchrony', 'G': 200, 'attenuation': 0.5, 'truth': 'lost', 'units': 21, 'correct': 1.0, 'call_lost': 1.0}
+{'design': 'GSE48113 forced desynchrony', 'G': 200, 'attenuation': 0.25, 'truth': 'central', 'units': 21, 'correct': 0.99, 'call_central': 0.99, 'call_mixed': 0.01}
+{'design': 'GSE48113 forced desynchrony', 'G': 200, 'attenuation': 0.25, 'truth': 'behaviour', 'units': 21, 'correct': 0.995, 'call_behaviour': 0.995, 'call_mixed': 0.005}
+{'design': 'GSE48113 forced desynchrony', 'G': 200, 'attenuation': 0.25, 'truth': 'lost', 'units': 21, 'correct': 0.975, 'call_lost': 0.975, 'call_mixed': 0.015, 'call_unresolved': 0.01}
+{'design': 'GSE48113 forced desynchrony', 'G': 8240, 'attenuation': 1.0, 'truth': 'central', 'units': 21, 'correct': 0.995, 'call_central': 0.995, 'call_mixed': 0.005}
+{'design': 'GSE48113 forced desynchrony', 'G': 8240, 'attenuation': 1.0, 'truth': 'behaviour', 'units': 21, 'correct': 0.995, 'call_behaviour': 0.995, 'call_mixed': 0.005}
+{'design': 'GSE48113 forced desynchrony', 'G': 8240, 'attenuation': 1.0, 'truth': 'lost', 'units': 21, 'correct': 0.995, 'call_lost': 0.995, 'call_mixed': 0.005}
+{'design': 'GSE48113 forced desynchrony', 'G': 8240, 'attenuation': 0.5, 'truth': 'central', 'units': 21, 'correct': 1.0, 'call_central': 1.0}
+{'design': 'GSE48113 forced desynchrony', 'G': 8240, 'attenuation': 0.5, 'truth': 'behaviour', 'units': 21, 'correct': 0.985, 'call_behaviour': 0.985, 'call_mixed': 0.015}
+{'design': 'GSE48113 forced desynchrony', 'G': 8240, 'attenuation': 0.5, 'truth': 'lost', 'units': 21, 'correct': 0.98, 'call_lost': 0.98, 'call_mixed': 0.02}
+{'design': 'GSE48113 forced desynchrony', 'G': 8240, 'attenuation': 0.25, 'truth': 'central', 'units': 21, 'correct': 0.985, 'call_central': 0.985, 'call_mixed': 0.015}
+{'design': 'GSE48113 forced desynchrony', 'G': 8240, 'attenuation': 0.25, 'truth': 'behaviour', 'units': 21, 'correct': 0.995, 'call_behaviour': 0.995, 'call_mixed': 0.005}
+{'design': 'GSE48113 forced desynchrony', 'G': 8240, 'attenuation': 0.25, 'truth': 'lost', 'units': 21, 'correct': 0.985, 'call_lost': 0.985, 'call_mixed': 0.015}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'genes': 19182, 'reference_on_array': 13299, 'reference_rhythmic_on_array': 7080, 'median_sd': 0.2351154414842515, 'median_ref_amp_rhythmic': 0.11401747707474355, 'median_sd_rhythmic': 0.2302179762587318}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 20, 'attenuation': 1.0, 'truth': 'central', 'units': 8, 'correct': 1.0, 'call_central': 1.0}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 20, 'attenuation': 1.0, 'truth': 'behaviour', 'units': 8, 'correct': 0.995, 'call_behaviour': 0.995, 'call_mixed': 0.005}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 20, 'attenuation': 1.0, 'truth': 'lost', 'units': 8, 'correct': 0.97, 'call_lost': 0.97, 'call_unresolved': 0.02, 'call_mixed': 0.01}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 20, 'attenuation': 0.5, 'truth': 'central', 'units': 8, 'correct': 0.83, 'call_central': 0.83, 'call_unresolved': 0.165, 'call_mixed': 0.005}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 20, 'attenuation': 0.5, 'truth': 'behaviour', 'units': 8, 'correct': 0.795, 'call_behaviour': 0.795, 'call_unresolved': 0.205}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 20, 'attenuation': 0.5, 'truth': 'lost', 'units': 8, 'correct': 0.265, 'call_unresolved': 0.705, 'call_lost': 0.265, 'call_mixed': 0.015, 'call_central': 0.01, 'call_behaviour': 0.005}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 20, 'attenuation': 0.25, 'truth': 'central', 'units': 8, 'correct': 0.21, 'call_unresolved': 0.78, 'call_central': 0.21, 'call_lost': 0.01}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 20, 'attenuation': 0.25, 'truth': 'behaviour', 'units': 8, 'correct': 0.2, 'call_unresolved': 0.79, 'call_behaviour': 0.2, 'call_lost': 0.01}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 20, 'attenuation': 0.25, 'truth': 'lost', 'units': 8, 'correct': 0.01, 'call_unresolved': 0.98, 'call_lost': 0.01, 'call_central': 0.01}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 50, 'attenuation': 1.0, 'truth': 'central', 'units': 8, 'correct': 0.985, 'call_central': 0.985, 'call_mixed': 0.015}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 50, 'attenuation': 1.0, 'truth': 'behaviour', 'units': 8, 'correct': 0.99, 'call_behaviour': 0.99, 'call_mixed': 0.01}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 50, 'attenuation': 1.0, 'truth': 'lost', 'units': 8, 'correct': 0.995, 'call_lost': 0.995, 'call_mixed': 0.005}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 50, 'attenuation': 0.5, 'truth': 'central', 'units': 8, 'correct': 0.995, 'call_central': 0.995, 'call_mixed': 0.005}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 50, 'attenuation': 0.5, 'truth': 'behaviour', 'units': 8, 'correct': 0.98, 'call_behaviour': 0.98, 'call_mixed': 0.015, 'call_unresolved': 0.005}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 50, 'attenuation': 0.5, 'truth': 'lost', 'units': 8, 'correct': 0.805, 'call_lost': 0.805, 'call_unresolved': 0.19, 'call_mixed': 0.005}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 50, 'attenuation': 0.25, 'truth': 'central', 'units': 8, 'correct': 0.625, 'call_central': 0.625, 'call_unresolved': 0.36, 'call_mixed': 0.01, 'call_behaviour': 0.005}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 50, 'attenuation': 0.25, 'truth': 'behaviour', 'units': 8, 'correct': 0.575, 'call_behaviour': 0.575, 'call_unresolved': 0.41, 'call_mixed': 0.01, 'call_lost': 0.005}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 50, 'attenuation': 0.25, 'truth': 'lost', 'units': 8, 'correct': 0.065, 'call_unresolved': 0.93, 'call_lost': 0.065, 'call_behaviour': 0.005}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 200, 'attenuation': 1.0, 'truth': 'central', 'units': 8, 'correct': 0.97, 'call_central': 0.97, 'call_mixed': 0.03}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 200, 'attenuation': 1.0, 'truth': 'behaviour', 'units': 8, 'correct': 0.985, 'call_behaviour': 0.985, 'call_mixed': 0.015}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 200, 'attenuation': 1.0, 'truth': 'lost', 'units': 8, 'correct': 0.995, 'call_lost': 0.995, 'call_mixed': 0.005}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 200, 'attenuation': 0.5, 'truth': 'central', 'units': 8, 'correct': 0.985, 'call_central': 0.985, 'call_mixed': 0.015}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 200, 'attenuation': 0.5, 'truth': 'behaviour', 'units': 8, 'correct': 1.0, 'call_behaviour': 1.0}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 200, 'attenuation': 0.5, 'truth': 'lost', 'units': 8, 'correct': 0.99, 'call_lost': 0.99, 'call_mixed': 0.01}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 200, 'attenuation': 0.25, 'truth': 'central', 'units': 8, 'correct': 1.0, 'call_central': 1.0}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 200, 'attenuation': 0.25, 'truth': 'behaviour', 'units': 8, 'correct': 0.99, 'call_behaviour': 0.99, 'call_mixed': 0.01}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 200, 'attenuation': 0.25, 'truth': 'lost', 'units': 8, 'correct': 0.815, 'call_lost': 0.815, 'call_unresolved': 0.175, 'call_mixed': 0.01}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 7080, 'attenuation': 1.0, 'truth': 'central', 'units': 8, 'correct': 0.975, 'call_central': 0.975, 'call_mixed': 0.025}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 7080, 'attenuation': 1.0, 'truth': 'behaviour', 'units': 8, 'correct': 0.965, 'call_behaviour': 0.965, 'call_mixed': 0.035}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 7080, 'attenuation': 1.0, 'truth': 'lost', 'units': 8, 'correct': 0.995, 'call_lost': 0.995, 'call_mixed': 0.005}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 7080, 'attenuation': 0.5, 'truth': 'central', 'units': 8, 'correct': 0.985, 'call_central': 0.985, 'call_mixed': 0.015}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 7080, 'attenuation': 0.5, 'truth': 'behaviour', 'units': 8, 'correct': 0.995, 'call_behaviour': 0.995, 'call_mixed': 0.005}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 7080, 'attenuation': 0.5, 'truth': 'lost', 'units': 8, 'correct': 0.985, 'call_lost': 0.985, 'call_mixed': 0.015}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 7080, 'attenuation': 0.25, 'truth': 'central', 'units': 8, 'correct': 0.98, 'call_central': 0.98, 'call_mixed': 0.02}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 7080, 'attenuation': 0.25, 'truth': 'behaviour', 'units': 8, 'correct': 0.995, 'call_behaviour': 0.995, 'call_mixed': 0.005}
+{'design': 'GSE122725 night shift (dim-light control, = GSE107537)', 'G': 7080, 'attenuation': 0.25, 'truth': 'lost', 'units': 8, 'correct': 0.995, 'call_lost': 0.995, 'call_mixed': 0.005}

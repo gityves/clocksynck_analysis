@@ -51,8 +51,11 @@ continues (it does not depend on the answer).
 - A1 (b) (RP): the group offset equivalences of A208, A231 and A235 stand against the spread bias (expected bias <= about
   0.1 h at the observed spreads); A233 has no interval.
 - Plan 1 so far: A260 calibrates the untimed readers on mouse liver (AUC 0.997; shift reader r 0.869); A91 reproduces
-  on current code (body vs day per gene); **A261: the genome-wide rhythmic program of human muscle reverses with a 12 h
-  shift of behaviour (shift 11.65 h, ratio 0.854; matched sets 0 / 200) while its clock moves 2.68 h (A257)**; T3 fails
+  on current code (body vs day per gene); **A261: the genome-wide rhythmic program of human muscle follows behaviour
+  (shifted or evoked) after a 12 h shift (shift 11.65 h, ratio 0.854; matched sets 0 / 200) while its clock moves
+  2.68 h (A257)**. Limit (2026-11-15): with two clock times, a 12 h shift and an acute fed / awake vs fasted / just-woken
+  response predict the same data, and the protocol inverts the behavioural state at each biopsy exactly; Wefers 2018
+  already reported on these arrays that the muscle clock did not follow the inverted schedule; T3 fails
   G1; the T2 tissue term is not registrable (A259); Hallmark programs are too weak to partition (A261 H261.2).
 **Recommendation: (c).** G3 as registered fails, but the reason is informative rather than a failure of the method:
 sample-level variation, not clock, sets the within-person bound, and the between-group offsets remain tight. Plan 1 now
