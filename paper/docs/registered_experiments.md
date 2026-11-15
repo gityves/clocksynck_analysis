@@ -6729,3 +6729,52 @@ The responsive companion with 11 genes may have a high q95 (as in A264 with 12);
 No sampling times: entrainment cannot be shown, only covariation. (5) Limits of A244 and A264.
 **Stop rule:** one scoring run (`score_a266.py --stage score`). **Code:**
 `paper/exploratory/A266_fetal_adrenal_drive/scripts/{design_a266,feasibility_a266,score_a266}.py`.
+
+## A263 (2026-11-15, roadmap item A4 under the lead prompt `prompts/biology_paper_checks_2026-11-15.md`, check 3; number reserved when the inventory started, registered after A264-A266; **NOT BLIND**: reruns of scored data (A42, A142, A150); seen: the inventory `exploratory/A263_companions/inventory.md` (no statistic), A142 (GTEx brain block r* 0.639 [0.530, 0.728] vs reference median 0.978, timed), A42 (sheep brain vs periphery coupling medians 0.205 vs 0.416, baboon 0.420 vs 0.712; r* sheep 0.625, baboon 0.970, not separate), A150 (pooled atlas coupling 0.393 vs matched q95 0.313); NOT seen: any pseudo-set statistic of the readouts below, any human brain-periphery coupling ratio): are the brain exception and the atlas couplings clock-specific against matched and stress-responsive gene sets? **GTEx, SheepGTEx, baboon; five atlases of A150; L2; primary for the organ-map and brain claims (companions)**
+**Why.** A253 showed that pairing between brain regions is matched by stress-responsive sets, and A259 that matched sets
+carry 0.30 to 0.74 of a tissue's apparent deviation. The brain exception and the atlas couplings were scored before the
+responsive companion existed. Inventory (`inventory.md`, no statistic): no main-figure result has a gene-set companion
+on the same permutations; the brain readouts and the organ map have none; the atlas couplings have a matched one only.
+One rule for all: **a result is clock-specific if it exceeds the q95 (here, for a drop, lies below the q05) of both
+families**. Original verdicts are not changed; a companion column is added; a result that loses specificity gets an
+erratum in RP and moves in the roadmap status tables.
+**Part A, the brain exception (directional; `scripts/score_a263.py`, `build_genomewide.py`).** Per species one table
+(GTEx v10 fast deaths, tissues with >= 40 donors as A142: brain = the "Brain -" regions, Pituitary excluded, periphery
+the rest; sheep and baboon as A42, genome-wide rows identical to the A42 builders, checked on the clock genes). For the
+clock genes and for each of 200 expression-matched and 200 responsive pseudo-clock sets (`pseudo_waveforms`, GTEx
+waveform amplitudes and phases; matching variable = mean log fraction over all rows of the species, genes with mean
+count >= 1; seed 263):
+- **R2 (primary, three species):** coupling of every tissue to the peripheral-anchor host (`Dataset.fit(n_boot=0,
+  gate=False)`, anchors = periphery, peripheral tissues leave-one-out: the A42 readout 2, now also in human);
+  L = log(median brain coupling / median peripheral coupling). **H263.1 (human), H263.2 (sheep), H263.3 (baboon):** the
+  brain's drop is clock-specific if L_clock < q05 of L over the matched sets and < q05 over the responsive sets (sets
+  with an undefined L are counted and left out).
+- **R1 (secondary, human and sheep; baboon has 12 animals):** block agreement r* of brain vs periphery hosts
+  (`Dataset.agreement`, n_boot = 0), clock-specific if below the q05 of both families (sets whose r* is undefined are
+  counted). In human R1 is the untimed counterpart of A142's timed r*.
+**Readings (fixed now).**
+- H263.1 PASS and at least one of H263.2-3 PASS: "brain couples less to the body's clock state" stands as a clock
+  statement, in human and the passing species.
+- H263.1 PASS only: stands in human; the cross-species sentence is restated per species.
+- H263.1 fail (L_clock not below the q05 of one family): brain's lower coupling is shared by non-clock gene sets of that
+  family (for the responsive family: brain responds less to the body's shared stress / hormonal state); **the brain
+  exception falls as a clock statement** (tally of the lead prompt), and A142 gets an erratum: "brain is less coupled
+  to the body's shared state, not shown to be clock-specific".
+- In any species, L_clock not negative: no drop in that readout; reported.
+**Part B, atlas couplings (`exploratory/A150_atlas_specificity/scripts/compute_a150.py --kind responsive`, the A150
+script with the responsive family added; outputs in `A150_atlas_specificity/output/responsive/`).** Same five atlases,
+rows, anchors and fits as A150; 200 responsive sets. **H263.4:** pooled mean coupling of the 53 compartments above the
+q95 of the responsive pooled sets (one-sided p = (1 + #{set >= clock}) / (1 + n)), as H150.1 for the matched family
+(H150.1: PASS, 0.393 vs q95 0.313). Descriptive: per compartment, the share above both q95.
+**Readings.** H263.4 PASS: the atlas couplings are clock-specific against both families. Fail: the atlas couplings are
+matched by responsive sets; the organ-map coupling claims of Figure 2 are restated as "shared state", not clock (erratum).
+**Not in this amendment (inventory, stated reasons):** timed validations (A36 baboon host vs ZT, A123 organ-map recovery,
+A201 aorta shift) test recovery of recorded time, not specificity, and genome-wide diurnal programs would pass too;
+offset equivalences (A208, A231, A235) are null results; A132b stays descriptive (user decision); A91 belongs to roadmap
+T2; A227 (responsive companion missing) follows in a later amendment with the A138 template.
+**Limits.** (1) Not blind. (2) R2 in human is new (A142 used timed departures); R1 is untimed. (3) The responsive pool
+holds 28 to 29 genes: its sets overlap heavily. (4) Sheep symbols are NCBI symbols; baboon genes are one-to-one
+orthologs with GENCODE v29 names (genes without a one-to-one ortholog cannot be drawn). (5) Pseudo sets carry the GTEx
+clock waveform's amplitudes and phases, as in A150.
+**Stop rule:** one run per species and one Part B run. **Code:** `paper/exploratory/A263_companions/scripts/`,
+`paper/exploratory/A150_atlas_specificity/scripts/compute_a150.py`.

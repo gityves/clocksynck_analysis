@@ -14,7 +14,7 @@ clock-gene table in part of the rows, see the reproduction table).
           compartment the 30 non-clock genes with the largest soup / compartment fraction ratio are exclusion genes; rho_dk
           from them, capped at 0.5; clock counts x' = max(x - rho depth s, 0), depth' = depth (1 - rho); refit.
 
-    python compute_a150.py [--subsample N] [--n-pseudo 200] [--jobs 4] [--only NAME ...]
+    python compute_a150.py [--subsample N] [--n-pseudo 200] [--jobs 4] [--only NAME ...] [--kind matched|responsive]
 Outputs: paper/exploratory/A150_atlas_specificity/output/{reproduction,per_compartment,per_family,h150_1,d150_2,
 pseudo_pooled,pseudo_failures}.csv (aggregates only; healthy atlases are public data).
 """
@@ -117,14 +117,14 @@ def _pseudo_chunk(pb: pd.DataFrame, anchors, donors, wfs, comps):
     return out, err
 
 
-def pseudo_sets(A: dict, k: int, n: int) -> list:
+def pseudo_sets(A: dict, k: int, n: int, kind: str = "matched") -> list:
     pb, genes = A["pb"], A["genes"]
     X = pb[genes].to_numpy(float)
     mean_count = X.mean(0)
     frac = (X / pb.depth.to_numpy(float)[:, None]).mean(0)
     keep = (mean_count >= 1) | np.isin(genes, CLOCK)
     lm = pd.Series(np.log(frac + 1e-12), index=genes)[keep]
-    return pseudo_waveforms(lm, n, np.random.default_rng([SEED, k]), cs.gtex())
+    return pseudo_waveforms(lm, n, np.random.default_rng([SEED, k]), cs.gtex(), kind)
 
 
 # ---- part 2: ambient RNA ---------------------------------------------------------------------------------------
@@ -187,10 +187,15 @@ def main(argv=None):
     ap.add_argument("--only", nargs="*", default=None)
     ap.add_argument("--n-pseudo", type=int, default=None)
     ap.add_argument("--chunk", type=int, default=5, help="pseudo sets per task")
+    ap.add_argument("--kind", choices=["matched", "responsive"], default="matched",
+                    help="pseudo-set family (A263: responsive; outputs then in output/responsive/)")
     args = ap.parse_args(argv)
     run = cli.setup(args)
     n_sets = args.n_pseudo or (6 if run["quick"] else 200)
     out = exploratory_dir(AMENDMENT, run["quick"])
+    if args.kind != "matched":
+        out = out / args.kind
+        out.mkdir(exist_ok=True)
     names = [n for n in ATLASES if args.only is None or n in args.only]
     limit_threads(1)
     warnings.filterwarnings("ignore")
@@ -223,7 +228,7 @@ def main(argv=None):
     tasks, sets = [], {}
     for k, n in enumerate(names):
         A = atlas[n]
-        wfs = pseudo_sets(A, k, n_sets)
+        wfs = pseudo_sets(A, k, n_sets, args.kind)
         comps = list(clock_c[n].index)
         for i in range(0, n_sets, args.chunk):
             w = wfs[i:i + args.chunk]
