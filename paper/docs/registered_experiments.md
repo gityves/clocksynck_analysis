@@ -6778,3 +6778,37 @@ orthologs with GENCODE v29 names (genes without a one-to-one ortholog cannot be 
 clock waveform's amplitudes and phases, as in A150.
 **Stop rule:** one run per species and one Part B run. **Code:** `paper/exploratory/A263_companions/scripts/`,
 `paper/exploratory/A150_atlas_specificity/scripts/compute_a150.py`.
+
+## A267 (2026-11-15, user: "You can" (register the COFE follow-up), with the remark that in GTEx COFE failed on all genes but worked reasonably on the core clock genes with whole-day sampling (RP A123b: organ offsets r 0.856 with the clock genes vs 0.139 genome-wide, design F; both fail in working hours); follow-up of A265; seen: A265 part (i)-(ii) on real data (genome-wide COFE pooled R_c 0.302, null mean 0.245, p 0.0013; differences uniform in 3 of 10 cancers; clocksync 0.361, p 0.0001), one COFE run on a random 14-gene set of KIRP for runtime (output not read); NOT seen: any clock-gene COFE label of TCGA, any companion of COFE, the A265 simulation summary): is the pairing of COFE's tumour and normal labels a clock signal or a patient-shared non-clock effect? **TCGA, ten cancers, 464 pairs; other; primary for the cancer chapter (head-to-head)**
+**Why.** In A265 COFE's own labels pair tumour with normal beyond permuted pairs, but COFE orders the strongest circular
+structure of about 1,200 genes and has no specificity companion: the pairing may come from shared patient effects
+(normal contamination of the tumour, handling, batch, age, sex) rather than the clock. COFE on the clock genes is the
+variant that works in GTEx (with whole-day sampling); it can be given the same gene-set companions as clocksync.
+**Fixed now (`score_a267.py`; data, transform and pairing statistic of A265; seed 267).**
+- **H267.1 (primary):** COFE as published (standardised features, 3 x 5-fold CV, 5 restarts) on the 14 GTEx clock genes
+  of each cancer's tumours, log2(cpm + 1), no expression filter; normals projected (COFE's rule for unseen samples).
+  Pooled R_c with 10,000 within-cancer permutations of the normals. Companions: COFE on 100 expression-matched and 100
+  responsive 14-gene sets per cancer (`pseudo_waveforms`, matching on the mean log fraction over the cancer's tumours,
+  genes with mean count >= 1; set j pooled across cancers). PASS: p < 0.05 and above the q95 of both families.
+- **H267.2:** generic-axis companion of the genome-wide pairing of A265: on the A265 COFE matrices, the top 10 principal
+  components of the standardised tumours (normals projected); for each of the 45 pairs of components, the angles of
+  tumours and normals and their pooled R_c. PASS: the A265 genome-wide pooled R_c (0.302) above the q95 of the 45.
+- Descriptive: genome-wide COFE without the 365 genes of the A265 simulation program (pooled R_c, 10,000 permutations);
+  per cancer, agreement of clock-gene COFE tumour phases with the clocksync tumour state phase (|mean e^{i(phi - psi)}|,
+  the better of the two directions).
+**Readings (fixed now).**
+- H267.1 PASS: COFE on the clock genes also pairs tumour with normal clock-specifically: both methods agree that tumour
+  clocks keep a fixed relation to the patient's normal tissue; the published "uncoupled" reading is contradicted by
+  COFE itself with its working variant.
+- H267.1 p < 0.05, not clock-specific: COFE's clock-gene pairing is matched by non-clock sets (shared patient effects
+  or a generic axis); for the clock, the evidence is clocksync's A138 (clock-specific against both families).
+- H267.1 fail: clock-gene COFE does not detect pairing in surgical-hour data (consistent with A123b in working hours);
+  uninformative about coupling.
+- H267.2 fail: the genome-wide COFE pairing of A265 is no larger than what generic expression axes give: it is patient
+  similarity, not evidence of clock coupling (A265 H265.1 is then read as "COFE's genome-wide labels carry patient-shared
+  structure", in RP). H267.2 PASS: COFE's genome-wide axis pairs more than generic axes; not shown to be clock.
+**Limits.** (1) Projection of the normals is an assumption (A265). (2) COFE's sparsity CV on 14 features has a short
+grid (s from 1 to about 3.7). (3) 100 sets per family (runtime: about 36 s per 14-gene COFE run). (4) The responsive
+pool holds about 29 genes; its sets overlap. (5) Principal-component axes are a generic companion, not a model of a
+specific confound.
+**Stop rule:** one run. **Code:** `paper/exploratory/A265_cofe_head_to_head/scripts/score_a267.py`.
