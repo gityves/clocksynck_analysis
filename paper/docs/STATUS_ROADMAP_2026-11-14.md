@@ -16,6 +16,14 @@ G3 now build on them. (ii) The archive's cue line on GTEx (A91 and the analyses 
 and items T0, T2 and T4 now start from it. Working prompt for this roadmap:
 `prompts/target_line_what_internal_time_controls_2026-11-15.md`.
 
+**Progress 2026-11-15 (lead agent, target line; numbers in RP):** T0 (a) done: `TIME_CONTROL_INVENTORY_2026-11.md`.
+A5 (A91) done: identical on current code. T0 (b, c) done: `exploratory/scouts_2026-11-15/README.md` (G1: T1 pass, T3
+fail, T2 pending A259). A1 (a, b) done: group offset equivalences A208, A231, A235 stand against the spread bias. A1 (c)
+= A259 scored: G3 component FAILS (tissue scatter bounded at 1 to 3 h, not shown to be clock) -> PI question Q33. T0c =
+A260 scored: calibration PASS. T1 = A261 scored: the genome-wide rhythmic program of muscle follows behaviour (Hallmark
+programs not readable). T2: tissue term not registrable (A259); two-way A91 with companions remains. Not started: T4,
+A2, A3, A7.
+
 Supersedes `ROADMAP_2026-10-28.md` as the working plan. Phase 8 (naming, scorecard, figures, hardening, tutorials)
 stays a PI decision and is not part of this roadmap.
 

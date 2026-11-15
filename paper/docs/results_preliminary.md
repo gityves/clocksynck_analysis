@@ -4846,3 +4846,122 @@ sets, 200 matched gene sets; null mean of S 0.120.
   within strata of host spread, or a parametric bootstrap at each arm's own spread) is what is missing; it is a new
   amendment.
 <!-- src: paper/exploratory/A258_spread_bias/output/{summary_bias,summary_size,summary_power,v258_1_bias,v258_2_acceptance,v258_size,v258_power,v258_3_rows,v258_3_summary}.csv -->
+
+## Roadmap 2026-11-15, item A5: A91 on current code reproduces the archive exactly (no erratum)
+
+`results/figure_3/scripts/gtex_cues/compute_internal_external.py` rerun on `clocksync` of 2026-11-15 (subsample 150 check,
+then full through `run.sh`, 244 s, peak 2.4 GB); the 26-tissue selection table was recomputed (the cache was removed).
+H91: 12 tissues, median lock difference 1.232, p 0.0005, PASS, as archived. All 312,018 gene calls identical; class
+counts and noise floors identical in all 26 tissues (skeletal muscle 1,480 clock-following / 113 time-following / 676
+both, floors 37 / 31.5 / 8.5; liver 2,717 / 5 / 326); lock values within 1.4e-9. A27 D5 summaries and host-vs-time
+(R 0.631 fast deaths, 0.142 ventilated) identical. Still missing for the main text: matched and stress-responsive
+companions (roadmap T2). Archived tables kept in `gtex_cues/archive_2026-10-25/`.
+<!-- src: paper/results/figure_3/output/gtex_cues/{a91_verdict,a91_tissues,a91_genes,diag5_summary,diag5_host_vs_time}.csv; archive_2026-10-25/ -->
+
+## Roadmap 2026-11-15, item A1 (a, b): the scored offset contrasts in hours, and their spread bias (simulation)
+
+- **(a) Table** (`exploratory/roadmap_A1_offset_bound/output/offsets_hours.csv`; no new statistic): women minus men
+  0.043 h (90 % -0.104 to 0.189; MDE 0.166 h); old minus young -0.045 h (-0.274 to 0.184; 0.199 h); T2D 0.023 h
+  (-0.252 to 0.299; 0.366 h) and obesity 0.202 h (-0.232 to 0.635; 0.638 h) in fast deaths; all four scored as
+  equivalent within 1 h; pseudo-clock |offset| q95 1.290, 1.544, 2.716, 4.948 h. A233 (five chronic conditions)
+  stores the module offset and p only (0.036 to 1.994 h, p 0.112 to 0.959), no interval or MDE: "not detected", not an
+  equivalence.
+- **(b) Simulation** (A258 design and code, `offset_diff_h` of `Dataset.contrast`; not a registered hypothesis; reading
+  fixed in the script before the run): mean bias of the pooled-prior offset at most 0.061 h (case window 6-18 h) and
+  0.060 h (8-16 h; observed log V ratio about -0.4), 0.106 h at 10-14 h (log V -1.0) and 0.228 h at 11-13 h (log V
+  -1.3); Monte Carlo SEM about 0.06 h. Permutation size of p_offset (nominal 0.05, 30 seeds per cell, both priors): 0.000-0.133 at
+  6-18 h and 8-16 h, 0.033-0.333 at 10-14 h and 11-13 h. A known +0.5 h shift is recovered within 0.16 h except at
+  11-13 h (up to 0.34 h). The observed log V ratios of the scored families lie between -0.76 and +0.61 (A258 V258.3
+  rows; median |log V| 0.18-0.20). **Reading:** the A208, A231 and A235 offset equivalences stand (an expected bias of
+  at most about 0.1 h against a 1 h bound); their permutation p values are trustworthy at |log V| <= 0.4 and
+  anti-conservative only at spreads narrower than any observed family.
+<!-- src: paper/exploratory/roadmap_A1_offset_bound/output/{offsets_hours,offsets_bias_summary,offsets_size_summary,offsets_shift_summary}.csv; A258_spread_bias/output/v258_3_rows.csv -->
+
+## A260 (scored 2026-11-15): the untimed procedure recovers clock dependence and feeding shifts of mouse liver genes (V260.1, V260.2, V260.3 PASS); a coupled liver shows no readable deviation of its own
+
+- Data: Manella 2021, four arms x 24 mice, liver / WAT / lung; clock genes CIART and CLOCK dropped (A111 QC). Timed
+  truth (non-clock liver genes): local 584, systemic 40. One scoring run (3.9 min) after three crashes before any
+  statistic was computed (a host needs two anchors; CLOCK absent from the knockout lung; complex states).
+- **V260.1 PASS:** in the knockout liver, the untimed host loading (host WAT + lung) separates systemic from local genes:
+  AUC 0.997 (90 % 0.994 to 1.000).
+- **V260.2 PASS:** untimed vs timed log amplitude ratio knockout / control, Spearman 0.870 (0.858 to 0.880; 1,545 genes);
+  AUC local vs systemic 0.937 (0.901 to 0.966).
+- **V260.3 PASS:** untimed vs timed DF-minus-AL shift relative to the lung, circular correlation 0.869 (0.856 to 0.883;
+  572 genes; lung clock shift -2.31 h); knockout, reported: 0.886 (0.795 to 0.937; 24 genes).
+- **D260.4 (descriptive):** kappa of the control liver against WAT + lung 0.001 (90 % -0.030 to 0.035; upper bound
+  0.72 h); local genes with p < 0.01 on the liver's deviation 0.014 (other genes 0.019). Knockout liver kappa 0.368
+  (0.077 to 0.774).
+- **Reading (registered):** the untimed body reader is calibrated (G2 (ii) met for the body / local split and for the
+  shift reader). The tissue-deviation term reads nothing where the local clock is coupled: in the control liver the
+  genes that need the local clock do not load on the liver's deviation, because there is no deviation to load on.
+  Local control is identified by removing the clock (knockout) or by moving times apart, not by a deviation regressor.
+- Limits: truth and procedure on the same mice (optimistic); mouse labels assumed identical across tissue files;
+  40 systemic genes. A descriptive column of the first output (median absolute shift difference) was mis-computed and
+  removed from `tests.csv`; the code line is corrected, not rerun.
+- Code: `exploratory/A260_mouse_calibration/scripts/score_a260.py`; host of two anchors passed to `rhythms.gene_rhythms`;
+  V260.3 regresses every gene on the lung's own state (a host needs two compartments; registered "lung alone").
+<!-- src: paper/exploratory/A260_mouse_calibration/output/{tests,descriptive,untimed_genes,truth_genes}.csv -->
+
+## A261 (scored 2026-11-15; not blind for the clock genes): after a 12 h shift of behaviour, the rhythmic transcriptome of human muscle reverses with behaviour while its clock moves 2.7 h (H261.1 PASS, H261.3 behaviour); single Hallmark programs are too weak to be read (H261.2: 1 of 28 gated)
+
+- Power (scout): at 20 genes per program the three times are told apart with power >= 0.915 at level 0.01, truth
+  excluded in at most 0.092 of simulated programs.
+- **H261.1 PASS (positive control):** the 1,587 reference-rhythmic genes clear the rhythm gate (aligned loading 0.222
+  vs matched q95 0.098) with an aligned argument of -1.41 h.
+- **H261.3 (genome-wide program): behaviour.** Shift 11.65 h (90 % 10.54 to 12.76), excursion ratio 0.854 (0.498 to
+  1.467); central excluded (p 0.001), tissue clock excluded (p 0.003), behaviour not (p 0.392). All 200 matched
+  non-rhythmic sets of the same size are "unresolved" (none "behaviour").
+- **H261.2:** 1 of 28 Hallmark programs passes the rhythm gate (TNF-alpha via NF-kB, 68 genes: aligned 0.504 vs q95
+  0.500; ratio 0.035, called "tissue clock" because a flattened program is not excluded from r 0.233). The partition
+  over Hallmark programs is not readable: their aligned loadings are 0.05 to 1.01 of the matched q95 (median 0.31).
+  Over all 7,000 matched-set draws (35 programs x 200): unresolved 0.976, behaviour 0.017.
+- **Descriptive, phase programs** (reference-rhythmic genes by 4 h bins of acrophase): gated 00-04 h (unresolved,
+  10.56 h, ratio 0.59), 04-08 h (behaviour, -11.34 h, 0.56), 12-16 h (behaviour, -10.44 h, 0.69); not gated 08-12 h,
+  16-20 h, 20-24 h (shifts -9.79, 11.90, -11.29 h).
+- **Reading (registered):** the genome-wide daily program of muscle "reversed with sleep, activity and meals": most of
+  the muscle's rhythmic transcriptome follows behaviour, while its core clock moved by only 2.68 h and damped (A257).
+  In this tissue, the time most rhythmic genes follow is behaviour, not the local clock and not central time. With
+  A257, the muscle's clock and its rhythmic outputs come apart under misalignment.
+- Limits: not blind for the clock genes; 11 men, two clock times, third day; light, sleep and meals move together; the
+  reference cohort ate hourly while awake, so the rhythmic set leans towards sleep / activity-driven genes, and a
+  meal-driven set may differ; the class is for the pooled program, not for each gene. The scout's power assumed
+  reference amplitudes carry over to programs of 20 genes; on the arrays they do not (H261.2), so the scout
+  overstated program-level power.
+- Code: `exploratory/A261_nightshift_programs/scripts/score_a261.py` (one completed run, 1.9 min; two crashes in the
+  matched-set draw of the genome-wide program after the Hallmark lines were printed; the rerun reproduces them, the
+  draw being deterministic).
+<!-- src: paper/exploratory/A261_nightshift_programs/output/{tests,programs,matched}.csv -->
+
+## A259 (scored 2026-11-15): a tissue's clock departs from its person's body time by an upper bound of 1 to 3 h, and this departure is not shown to be clock (H259.1 FAIL, H259.2 not above companions in any tissue, H259.3 FAIL)
+
+- Power first (registered addendum): at clock amplitude 1 and 200 donors the estimator is unbiased, detects 1.0 h with
+  0.85 and, with no deviation, has a median upper bound of 0.70 h; a non-clock program shared by a donor's tissues
+  raises kappa (by 0.13 at shared_sd 0.1). The addendum was committed 9 s after the scoring run was launched (a failed
+  `git add` of an ignored output folder stopped the first commit); no output existed then (the output folder was empty).
+- Data: GTEx fast deaths, 11 body tissues, 122 to 220 donors; MuTHER fat and skin, 680 women. One scoring run (472 s).
+- **H259.1 FAIL:** median over the 11 targets of the upper 90 % bound of sigma 2.20 h; no target below 1 h. Per target
+  kappa (sigma, 90 % interval in h): thyroid 0.073 (1.03; 0.65 to 1.32), visceral adipose 0.097 (1.19; 0.83 to 1.51),
+  atrial appendage 0.131 (1.38; 0.96 to 1.82), tibial artery 0.155 (1.50; 1.18 to 1.81), tibial nerve 0.168 (1.56;
+  1.16 to 1.91), subcutaneous adipose 0.253 (1.92; 1.63 to 2.20), skeletal muscle 0.289 (2.05; 1.68 to 2.45),
+  oesophagus mucosa 0.320 (2.16; 1.71 to 2.57), skin not sun-exposed 0.529 (2.78; 2.34 to 3.26), skin sun-exposed
+  0.544 (2.82; 2.42 to 3.27), lung 0.709 (3.22; 2.60 to 3.85).
+- **H259.2: no tissue passes.** kappa > 0 in all 11 (bootstrap p 0.001 to 0.003, Holm 0.011), but none above the q95 of
+  both companion families. Matched pseudo-clock sets alone reach a median kappa_tech of 0.049 (thyroid) to 0.355 (sun-
+  exposed skin), 0.30 to 0.74 of the clock's kappa; their q95 is above the clock's kappa in 7 of 11 tissues (the clock
+  is above it in tibial artery 0.155 vs 0.150, oesophagus mucosa 0.320 vs 0.292, non-sun-exposed skin 0.529 vs 0.528 and
+  lung 0.709 vs 0.469); stress-responsive sets (median 0.39 to 2.0) have q95 above the clock's kappa in all 11.
+  Cross-tissue companion share (matched, median) 0.017 to 0.036: shared non-clock variation is not what inflates kappa.
+- **H259.3 FAIL:** MuTHER fat-skin sigma_pair 2.20 h (kappa 0.333, 90 % 0.161 to 0.557; upper 2.85 h against 1.41 h);
+  matched kappa_tech q50 0.737 on these arrays, above the clock's kappa. GTEx, same pair (descriptive): subcutaneous
+  adipose vs sun-exposed skin 2.29 h (upper 2.92), vs non-sun-exposed skin 2.80 h (3.51).
+- **Reading (registered):** the bound in hours is not a headline (G3 component fails): the estimator bounds a tissue's
+  person-specific departure from the body time at 1 to 3 h, and most or all of it is sample-level variation that
+  non-clock genes of the same expression carry too. The "deviation" is not shown to be clock (H259.2), so no
+  person-specific internal desynchrony between tissues is claimed, and none is excluded below about 1 to 3 h. For T2,
+  a tissue-clock term cannot be told from sample-level noise in GTEx: the T2 tissue term is not registered; the GTEx
+  part of the partition stays two-way (body vs day, A91), to which companions are to be added.
+- Limits: sigma counts amplitude as phase; the matched companion's within-sample moment is the technical floor, not
+  subtracted by registration; arrays (MuTHER) carry a larger technical floor than counts.
+- Code: `exploratory/A259_tissue_deviation/scripts/score_a259.py`; `clocksync.deviation` (repository commits 40ded16,
+  360abce).
+<!-- src: paper/exploratory/A259_tissue_deviation/output/score/{tests,targets,living,companions}.csv; output/power/summary.csv -->

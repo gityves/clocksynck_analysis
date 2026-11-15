@@ -10,6 +10,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **New 2026-11-13:** results A245-A256 and what they change are summarised in `REVIEW_2026-11-10.md` §6; decisions asked there:
   the luminal A row after A224, whether to request ages (Wu 2020) and TwinsUK phenotypes (MuTHER), whether A243 is run (Q32),
   and the wording of the cancer chapter (Q24) after the synthesis in the ledger addendum of 2026-11-12.
+- **Q33** (below, new 2026-11-15): gate G3 fails as registered (A259): the bound in hours is not a headline. Which plan does the paper take while phase T continues?
 - **Q32** (below): three human fetal datasets give no adult-like clock organisation before birth (A237-A239): how the development section reads. Updated with the size of the clock the negatives exclude (A240), A241 and **the replication of the fetal adrenal clock on open data (A242, PASS): option (iii) is done, the recommendation changes**.
 - **Q31** (below): the unsigned gene coherence R reads a shift common to the clock genes as a clock; replace it by the signed coherence paper-wide?
 - **Q30** (below): the mouse embryo timing positive (A108) is not clock-specific (A236): how the paper words it.
@@ -32,6 +33,32 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
+
+### Q33 (2026-11-15): gate G3 after A259, and where plan 1 stands
+
+**Question.** The registered G3 component fails: a tissue's departure from its person's body time is bounded at 1 to
+3 h, not below 1 h, and the departure is not shown to be clock. Do we (a) keep plan 2's "one internal time per
+person" with the bound restated as "group offsets agree within 0.2 to 0.6 h; within-person tissue scatter below 1 to
+3 h, mostly sample-level", (b) move to plan 3 as the roadmap's rule says when G3 fails, or (c) defer the plan choice
+until phase T is scored (G2), since plan 1 has a new positive?
+**On hold:** the plan, format and journal (C6); rewording of roadmap section 2.2 and of the Figure 2 headline. Phase T
+continues (it does not depend on the answer).
+**Evidence.**
+- A259 (RP; `exploratory/A259_tissue_deviation/output/score/tests.csv`): median upper bound of sigma over 11 GTEx tissues
+  2.20 h (0 of 11 below 1 h); per-tissue sigma 1.03 h (thyroid) to 3.22 h (lung); no tissue above both companion
+  families (matched sets carry 0.30 to 0.74 of kappa); MuTHER fat-skin 2.20 h (upper 2.85 h). Power: the estimator
+  detects 1.0 h with 0.85 at strong clocks.
+- A1 (b) (RP): the group offset equivalences of A208, A231 and A235 stand against the spread bias (expected bias <= about
+  0.1 h at the observed spreads); A233 has no interval.
+- Plan 1 so far: A260 calibrates the untimed readers on mouse liver (AUC 0.997; shift reader r 0.869); A91 reproduces
+  on current code (body vs day per gene); **A261: the genome-wide rhythmic program of human muscle reverses with a 12 h
+  shift of behaviour (shift 11.65 h, ratio 0.854; matched sets 0 / 200) while its clock moves 2.68 h (A257)**; T3 fails
+  G1; the T2 tissue term is not registrable (A259); Hallmark programs are too weak to partition (A261 H261.2).
+**Recommendation: (c).** G3 as registered fails, but the reason is informative rather than a failure of the method:
+sample-level variation, not clock, sets the within-person bound, and the between-group offsets remain tight. Plan 1 now
+has a headline candidate (in muscle the daily transcriptome follows behaviour, the clock does not) that needs G2 (iii),
+a second design. Next, independent of the answer: T4 (systemic signal) and a replication of A261 in another
+behaviour-shift or meal-timing design if one exists on disk or public, plus companions for A91. Plan 3 stays the floor.
 
 ### Q32 (2026-11-11): the human developmental section after A237-A239
 
