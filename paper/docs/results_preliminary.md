@@ -5020,3 +5020,32 @@ G2 (iii)).
   - D2 is identical in both runs (its draws do not depend on the values). Run 1's tables are kept as `output/run1_*`.
 - Code: `exploratory/A262_blood_misalignment/scripts/score_a262.py` (3 min).
 <!-- src: paper/exploratory/A262_blood_misalignment/output/{tests,programs,matched}.csv, score.log -->
+
+## A264 (scored 2026-11-15; NOT BLIND): the fetal adrenal cortex covariation survives further age and cohort adjustment and the steroidogenic activity score (H264.1, H264.2 PASS), but without PER1 and NR1D1 it is not clock-specific (H264.3): by the registered reading it rests on the two signal-induced clock genes and moves to the supplement
+- Power first (`feasibility_a264.py`, 200 adult subsamples): every readout has an adult pass rate of 1.000 at the full
+  clock (0.990 to 1.000 at 0.75; 0.365 to 0.545 at 0.5; false-positive rates 0.025 to 0.080). The adult steroid score
+  shares almost no variance with the hour of death (R^2 0.004; 20 genes, mean pairwise r 0.485), so the adult power does
+  not test separability from steroidogenic activity (limit registered).
+- `cortex` (A244 design reproduced): C 0.608, p 0.0042; matched q95 0.367, responsive q95 0.482: PASS (A244: 0.608,
+  0.0038; the companion draws use this amendment's seed).
+- **H264.1 PASS** `cortex:age` (cubic age, cohort slopes for kameneva, kildisiute, sasaki, wang; 13 parameters): C 0.659,
+  p 0.0021; matched q95 0.342, responsive q95 0.465.
+- **H264.2 PASS** `cortex:steroid` (Xing 2010 ACTH score): C 0.526, p 0.0121; matched q95 0.319, responsive q95 0.462.
+- **H264.3 not clock-specific** `cortex:-PER1-NR1D1` (12 genes): C 0.489, p 0.0290; above the matched q95 0.397 (98th
+  percentile) but below the responsive q95 0.634 (76th percentile).
+- Descriptive: `cortex:all3` C 0.438, p 0.0401, matched q95 0.417, responsive q95 0.565 (not clock-specific);
+  `cortex:acute` (NR4A1-3 score) C 0.546, p 0.0066, clock-specific. Leave-one-gene-out with 14 genes: 0.438 (without
+  ARNTL) to 0.808; unsigned R of `cortex:steroid` 0.482 (A244 design 0.630).
+- **Reading as registered:** the covariation is not a smoother age trend, a cohort-specific age slope or the ACTH-driven
+  steroidogenic program. Without PER1 and NR1D1 it remains above expression-matched sets and nominally significant, but
+  it is not above the glucocorticoid / immediate-early sets: it is not shown to be a clock-network state, and the fetal
+  result moves to the supplement as a hypothesis (the fetal exception counts as **fallen** in the tally of the lead
+  prompt).
+- **Limits.** (1) Not blind. (2) The responsive family draws from a pool of about 30 genes; with 12 genes its q95 rises
+  from 0.465-0.482 (14 genes) to 0.634, so this verdict turns on the noisier companion; the adult power of the
+  clock-specificity condition was not computed (the feasibility tests p only). (3) If the fetal clock drives
+  steroidogenesis, the steroid adjustment removes clock signal too (registered limit 4); H264.2 passed nonetheless.
+  (4) A static axis of another kind is not excluded by any of the three.
+- Code: `exploratory/A264_fetal_adrenal_covariates/scripts/{design_a264,feasibility_a264,score_a264}.py` (278 s and
+  21 s).
+<!-- src: paper/exploratory/A264_fetal_adrenal_covariates/output/{verdicts,l1,feasibility_passrates,adult_scores}.csv -->

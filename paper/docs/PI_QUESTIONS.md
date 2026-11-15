@@ -104,7 +104,12 @@ a second design. Next, independent of the answer: T4 (systemic signal) and a rep
 behaviour-shift or meal-timing design if one exists on disk or public, plus companions for A91. Plan 3 stays the floor.
 
 ### Q32 (2026-11-11): the human developmental section after A237-A239
-
+- **Update 2026-11-15 (A264, scored; not blind):** the cortex covariation survives a cubic age trend with cohort-specific
+  age slopes (C 0.659, p 0.0021) and the ACTH steroidogenic score (C 0.526, p 0.0121), both clock-specific; without PER1
+  and NR1D1 it is C 0.489, p 0.0290, above matched sets but below the responsive q95 (0.634): **not clock-specific**. By
+  the registered reading the fetal result moves to the supplement as a hypothesis; the verdict turns on the responsive
+  family, whose q95 rises with 12 genes (RP A264, limits). Counted as a fallen exception in the tally (biology-paper
+  checks, question to follow after Q34). A243 (other organs) is still to be scored.
 - **Update 2026-11-13 (A244, scored):** the fetal adrenal signal is cortical (C 0.608, Holm 0.0076, clock-specific, also
   after foreign-RNA correction); the medulla shows none at adult power 1.000. Below adult size; strongest before 12 weeks.
   Suggested wording: "a clock-shaped covariation between fetuses is present in the steroidogenic adrenal cortex from the
