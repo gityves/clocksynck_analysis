@@ -6812,3 +6812,47 @@ grid (s from 1 to about 3.7). (3) 100 sets per family (runtime: about 36 s per 1
 pool holds about 29 genes; its sets overlap. (5) Principal-component axes are a generic companion, not a model of a
 specific confound.
 **Stop rule:** one run. **Code:** `paper/exploratory/A265_cofe_head_to_head/scripts/score_a267.py`.
+
+## A268 (2026-11-16, roadmap item T4 under the lead prompt `prompts/biology_paper_checks_2026-11-15.md`, check 4; reader rule chosen by the user ("Relaxed rule") after the scout `exploratory/scouts_2026-11-15/T4_systemic_signal/`; seen: the scout (mouse candidate table; GTEx power with inserted relations), A27 D6b (GC score R^2 on the host 0.014 in fast deaths, 0.234 in ventilated donors), A136, A248, the MuTHER power below; NOT seen: any observed reader-host relation in GTEx or MuTHER): does a glucocorticoid or temperature reader keep a fixed phase relation to the host clock state across tissues and people, clock-specifically, confirmed in living people, and is the relation looser in brain? **GTEx fast deaths (15 host tissues), MuTHER fat and skin; other; primary for T4 (the systemic signal)**
+**Readers (fixed; deviation from the prompt's rule, chosen by the user).** The prompt's rule (rhythmic without a local
+clock in mouse liver, Manella 2021 hepatocyte Bmal1 knockout) leaves the glucocorticoid and cold readers empty (scout).
+Relaxed rule: literature candidates rhythmic (q < 0.05) in control mouse liver at the expected phase: glucocorticoid
+FKBP5 + TSC22D3 (ZT 15.0, 16.2; after the corticosterone peak), cold CIRBP (ZT 6.4; cool rest phase), heat HSP90AA1 (ZT
+20.2; warm active phase). Reader value per sample: mean over its genes of the within-tissue z of log expression. The 14
+clock genes are never in a reader.
+**Host (same construction in both cohorts).** Clock-plane state of the GTEx waveform (unweighted projector on
+gene-centred log expression), centred within tissue; the host of a (person, tissue) = the mean state of the person's
+other tissues (leave-one-tissue-out). Variant: waveform without PER1 (a glucocorticoid target); every result is reported
+with and without it.
+**Statistic.** Per tissue k, the complex loading beta_k = sum y conj(z) / sum |z|^2 of the centred reader on the centred
+host; consistency K = |sum_k beta_k| / sum_k |beta_k| over the 12 body tissues (one phase relation in every tissue: K
+near 1); one-sided p against 10,000 permutations of the reader across persons within tissue. Companions on the same
+host: 200 readers of expression-matched genes (the reader's size, `pseudo_clock_genes` bins on the GTEx mean log CPM,
+CLOCK_LIKE excluded) and 200 of responsive genes (`RESPONSIVE_GENES` minus the reader's genes).
+- **H268.1-3 (glucocorticoid, cold, heat; Holm over the three, per host variant):** PASS = Holm p < 0.05, K above the
+  q95 of both companions, AND living confirmation: in MuTHER (fat on the skin host, skin on the fat host), the pooled
+  loading |beta_fat + beta_skin| has p < 0.05 against 10,000 permutations of persons within tissue, and its argument
+  lies within +-3 h of the GTEx body argument arg(sum_body beta).
+- Verdict classes: "PASS (confirmed)"; "GTEx only (not confirmed)" (does not count as a positive); "not specific"
+  (Holm p < 0.05, not above both companions); fail.
+- Descriptive: brain looser: projection of the cerebellum and cortex loadings on the unit vector of sum_body beta,
+  relative to the median body projection, 200 donor bootstraps.
+**Power first (done).** GTEx (scout, clocksync host; an inserted relation of fixed phase): pass rate 0.99-1.00 at
+R^2 0.014 (the A27 GC level), 1.00 at 0.03; false-positive rate 0.02-0.07. MuTHER confirmation
+(`score_a268.py --power`, `output/power_muther.csv`, 200 draws, 1,000 permutations): glucocorticoid 0.96 at R^2 0.014,
+1.00 at 0.03, false-positive rate 0.04; cold 0.975, 1.00, 0.065; heat 0.965, 1.00, 0.06.
+**Readings (fixed now).**
+- A reader PASS (confirmed): that signal keeps a fixed phase relation to the body's clock state in dead and in living
+  people, beyond matched and stress-responsive genes: the named candidate for the systemic signal (correlational: a
+  marker of the signal, not shown to set the clocks). With PASS in the host without PER1 as well, the relation does not
+  rest on the GC-responsive clock gene.
+- GTEx only: a relation in post-mortem tissue that living tissue does not confirm: not counted (agonal or post-mortem).
+- Not specific: the relation is shared by matched or stress-responsive genes: a general state, not this signal.
+- All three fail at the stated power: a clean negative: these public data cannot name the signal by these readers.
+- Brain (descriptive): a ratio below 1 with its interval below 1: the relation is looser in brain.
+**Limits.** (1) Relaxed reader rule (user decision); the mouse check is in control liver, where the local clock may
+contribute. (2) Agonal stress drives glucocorticoid and heat-shock genes and can move PER1 in GTEx: the responsive
+companion and the host without PER1 address this, the living confirmation decides. (3) MuTHER has two tissues and no
+sampling times; a confirmation is of the phase relation, not of time. (4) Readers of one or two genes.
+(5) Extension to GTEx long-term steroid users (protected phenotype, aggregates only) only after a confirmed positive.
+**Stop rule:** one scoring run. **Code:** `paper/exploratory/A268_systemic_signal/scripts/score_a268.py`.
