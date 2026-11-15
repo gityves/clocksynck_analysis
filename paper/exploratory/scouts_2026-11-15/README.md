@@ -11,7 +11,7 @@ Gate G1: an item is registered only if its scout shows it can separate the times
 | T2 GTEx, body vs tissue vs day per gene | A259 (registered; `A259_tissue_deviation/`) | **pending A259**: the tissue term needs a person-specific deviation above noise | decide after A259 is scored |
 | T3 repeat biopsies, rotation | `T3_repeat_biopsy/` | **fail as a separator of times** | not registered |
 | T1b clock-autonomous core in night-shift muscle (follow-up of A261, 2026-11-15) | `T1b_clock_core/` | **fail: not estimable** (gate needs about 600 genes; a damped clock-following program is never told from central time) | not registered |
-| T5 second misalignment design (G2 (iii)): blood, GSE48113 and GSE107537 / GSE122725 | `T5_blood_misalignment/` | **pass** for the genome-wide program (>= 0.965 correct at every attenuation); muscle or adipose: no misaligned design public | register (A262) |
+| T5 second misalignment design (G2 (iii)): blood, GSE48113 and GSE107537 / GSE122725 | `T5_blood_misalignment/` | **pass** for the genome-wide program (>= 0.965 correct at every attenuation); muscle or adipose: no misaligned design public | registered and scored (A262): D1 "lost" (behaviour excluded), D2 not gated |
 
 ## T0c: calibration set (`T0c_calibration/scout_t0c.py`, `output/`)
 

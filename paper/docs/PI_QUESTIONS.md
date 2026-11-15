@@ -10,6 +10,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **New 2026-11-13:** results A245-A256 and what they change are summarised in `REVIEW_2026-11-10.md` §6; decisions asked there:
   the luminal A row after A224, whether to request ages (Wu 2020) and TwinsUK phenotypes (MuTHER), whether A243 is run (Q32),
   and the wording of the cancer chapter (Q24) after the synthesis in the ledger addendum of 2026-11-12.
+- **Q34** (below, new 2026-11-15): gate G2 (iii) after A262: no second design reproduces A261; blood forced desynchrony is neither central nor behaviour (damped 0.36, shifted 4 h); night-shift PBMC uninformative. How to use the muscle / blood contrast?
 - **Q33** (below, new 2026-11-15): gate G3 fails as registered (A259): the bound in hours is not a headline. Which plan does the paper take while phase T continues? **Answered (c)**; update: no muscle headline (clock-core design not estimable).
 - **Q32** (below): three human fetal datasets give no adult-like clock organisation before birth (A237-A239): how the development section reads. Updated with the size of the clock the negatives exclude (A240), A241 and **the replication of the fetal adrenal clock on open data (A242, PASS): option (iii) is done, the recommendation changes**.
 - **Q31** (below): the unsigned gene coherence R reads a shift common to the clock genes as a clock; replace it by the signed coherence paper-wide?
@@ -33,6 +34,33 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
+
+### Q34 (2026-11-15): gate G2 (iii) after A262: no second design reproduces A261, and blood differs from muscle
+
+**Question.** G2 (iii) asked for a second misalignment design. No muscle or adipose design with shifted meals or sleep
+has public matrices (scout T5). The blood designs give the following:
+- **Forced desynchrony (GSE48113, 21 subjects):** the genome-wide rhythmic program does not follow the displaced sleep.
+  It is damped to 0.355 (0.203 to 0.621) and displaced 3.96 h (2.23 to 5.69). Central time and behaviour are both
+  excluded (p < 0.0001); "lost" is not excluded at p 0.0101, against the level 0.01.
+- **Simulated night shift (GSE107537, 8 subjects):** uninformative (rhythm gate not passed, 0.245 vs 0.254).
+
+The registered condition for "which time a tissue's outputs follow is tissue-specific" is not met. Which of these does
+the paper take?
+- (a) Report muscle (A261) and blood (A262 D1) side by side as a contrast: muscle follows behaviour, blood is neither
+  on central time nor on behaviour and loses its excursion. State that neither is replicated and that blood is
+  composition.
+- (b) Treat G2 (iii) as failed, so plan 1 has no replicated headline, and fall back to plan 2 or plan 3 for the main
+  text.
+- (c) Seek a replication of A261 in muscle or adipose. That needs data that are not public (Wilms 2019 adipose has no
+  accession; contacting the authors is outward-facing, a draft only, your call).
+
+**On hold:** the plan choice (with Q33), any wording of a muscle versus blood contrast, and contacting data owners.
+**Evidence.** RP A261 and A262; scouts T1b (the clock-core design is not estimable) and T5;
+`literature_positioning.md` section 11.
+**Recommendation: (a) for a results section, without headline status.** Combined with the literature, it is
+consistent: muscle outputs follow behaviour (Wefers 2018), blood rhythms are lost or stay put (Archer 2014, Kervezee
+2018). What is new is the same in-hours program machinery applied to both designs against explicit times. It does not
+meet Cell's "conceptual advance" bar alone, so plan 1 stays below headline until T4 is in. Plan 3 stays the floor.
 
 ### Q33 (2026-11-15): gate G3 after A259, and where plan 1 stands
 

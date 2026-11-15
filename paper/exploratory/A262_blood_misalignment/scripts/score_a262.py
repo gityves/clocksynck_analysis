@@ -13,6 +13,9 @@ Choices not fixed by the registration
 - Clock-time mapping of the reference: circular mean of (clock time - circadian phase) over the GSE39445 sleep-extension
   samples used in the cosinor.
 - Intensity deciles: mean log2 over all arrays of the dataset, over the genes shared by reference and dataset.
+- Missing values (GSE48113): set to the gene's mean within the subject x condition unit (the A156 rule). Added after the
+  first run returned NaN for every D1 program (no D1 number was produced); D2 has no missing value and its matched draws
+  do not depend on the values, so D2 is unchanged.
 - Matched draw per decile: a random permutation of the decile's non-rhythmic genes, completed with replacement when the
   program needs more genes than the decile holds.
 """
@@ -94,15 +97,17 @@ def main():
         units = {s: u for s, u in units.items() if len(u) == 2 and min(len(v) for v in u.values()) >= 3}
         genes = [g for g in ref.index if g in y.index]
         r = ref.loc[genes]
-        Y = {s: {c: (lambda v: v - v.mean(1).to_numpy()[:, None])(y.loc[genes, g.gsm]) for c, g in u.items()}
+        # centred per gene within the unit; a missing value (GSE48113 arrays) is set to the unit mean (the A156 rule)
+        Y = {s: {c: (lambda v: v.sub(v.mean(1), axis=0).fillna(0.0))(y.loc[genes, g.gsm]) for c, g in u.items()}
              for s, u in units.items()}
+        miss = int(y.loc[genes, smp.gsm[smp.subject.isin(units)]].isna().to_numpy().sum())
         T = {s: {c: g.t.to_numpy(float) for c, g in u.items()} for s, u in units.items()}
         dec = pd.qcut(y.loc[genes, smp.gsm].mean(1), 10, labels=False)
         rhy = r.index[r.p < 0.01]
         non = r.index[r.p > 0.5]
         by_dec = {k: np.array(non[(dec.reindex(non) == k).to_numpy()]) for k in range(10)}
         print(name, "subjects", len(units), "genes", len(genes), "rhythmic", len(rhy), "non-rhythmic", len(non),
-              flush=True)
+              "missing cells imputed", miss, flush=True)
 
         def program(gs):
             gs = list(gs)

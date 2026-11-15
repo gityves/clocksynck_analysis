@@ -4982,3 +4982,41 @@ G2 (iii)).
 - Code: `exploratory/A259_tissue_deviation/scripts/score_a259.py`; `clocksync.deviation` (repository commits 40ded16,
   360abce).
 <!-- src: paper/exploratory/A259_tissue_deviation/output/score/{tests,targets,living,companions}.csv; output/power/summary.csv -->
+
+## A262 (scored 2026-11-15): after forced desynchrony, the genome-wide rhythmic program of blood neither stays on central time nor follows the displaced sleep: it damps to about a third and is displaced about 4 h (D1: H262.1 PASS, H262.2 "lost", at the level's edge); the night-shift PBMC design is uninformative (D2: gate not passed)
+
+- Reference (GSE39445, sleep extension, extended wakefulness): 8,234 reference-rhythmic non-clock genes of 15,619; clock
+  time = circadian phase + 4.11 h.
+- **D1 GSE48113 (21 subjects, 8,234 genes):**
+  - **H262.1 PASS:** aligned loading 1.105 above the matched q95 0.992; aligned argument -0.47 h.
+  - **H262.2: "lost".** Shift 3.96 h (90 % 2.23 to 5.69), excursion ratio 0.355 (0.203 to 0.621). Central excluded
+    (p < 0.0001), behaviour (12 h) excluded (p < 0.0001), lost not excluded (p 0.0101, against the level 0.01).
+  - All 200 matched non-rhythmic sets are "mixed" (none "lost"). Their aligned loadings reach nearly the program's
+    (q95 0.992 vs 1.105): genes that are flat under the reference's constant wakefulness carry clock-time structure in
+    D1, which contains sleep. The gate passes, but narrowly.
+  - Phase programs (descriptive): 00-04 h lost (shift 4.58 h, ratio 0.248, gated), 12-16 h mixed (3.61 h, 0.417,
+    gated); the four smaller bins are not gated (shift 2.69 to 6.75 h, ratio 0.365 to 0.594, all mixed).
+- **D2 GSE122725 dim-light arm (8 subjects, 7,074 genes): uninformative.** H262.1 FAIL: aligned loading 0.245 below the
+  matched q95 0.254, even though the aligned argument is 0.33 h. Descriptive only: shift 0.72 h (-1.88 to 3.32), ratio
+  0.445 (0.206 to 0.963); with central at 1.5 h, p central 0.034, behaviour 0.015 and lost 0.280 ("unresolved"). The
+  central sensitivities at 0 h and 2 h give the same class.
+- **Reading (registered):** in D1 the blood program does not move with the displaced sleep and meals (12 h is
+  excluded); it loses about two thirds of its excursion and lies about 4 h from its day-1 timing. This is Archer
+  2014's loss of rhythmicity (6.4 % -> 1.0 %) read at the program level. The registered condition for the
+  tissue-specific sentence (both blood designs central, or one central and one lost) is not met, because D2 is
+  uninformative. Muscle (A261: behaviour, ratio 0.854) and blood (D1: not behaviour, ratio 0.355) differ, but the
+  sentence "which time a tissue's outputs follow is tissue-specific" is not written.
+- Limits:
+  - The "lost" call sits at the level's edge (p 0.0101).
+  - The matched sets are almost as strong as the program in D1.
+  - D1's sampling day contains the displaced sleep, so sleep-locked cell-composition changes can enter. Blood rhythms
+    include diurnal composition; the program is not a cellular clock.
+  - Subjects may overlap between the reference and D1.
+  - Not blind for the GSE48113 clock and cue genes (A156: core state -1.36 h, cue state -6.85 h).
+- Process:
+  - Run 1 returned NaN for every D1 program, because GSE48113 arrays have missing values. Missing cells (156,920,
+    across 15,619 genes x the arrays of 21 subjects) were then set to the gene's mean within the subject x condition
+    unit, the A156 rule. This was decided without any D1 number, and is recorded in the script.
+  - D2 is identical in both runs (its draws do not depend on the values). Run 1's tables are kept as `output/run1_*`.
+- Code: `exploratory/A262_blood_misalignment/scripts/score_a262.py` (3 min).
+<!-- src: paper/exploratory/A262_blood_misalignment/output/{tests,programs,matched}.csv, score.log -->
