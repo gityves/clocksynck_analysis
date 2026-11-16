@@ -46,14 +46,27 @@ into a Nature Methods paper.
 | exception / line | check | outcome | status |
 |---|---|---|---|
 | Fetus absent except the adrenal cortex | 1a, 1b: A264, A266 (adrenal); A243, A269 (heart, kidney, lung, liver) | adrenal not clock-specific without PER1 / NR1D1, core loop not significant (C 0.417, p 0.057); lung (C 0.530) and liver (0.583) carry the same covariation, heart excluded at 0.5 x adult; no core loop clock-specific in any organ; not explained by steroid or glucocorticoid activity | **fell** ("adrenal first" and "absent elsewhere" both gone; a weaker multi-organ observation remains, supplement) |
-| Brain | 3: A263 Part A (human, baboon; sheep running) | brain's lower coupling to the body (human L -0.514, baboon -0.528) lies at the 59th-88th percentile of matched and responsive gene sets; companions drop more; clock r* 0.803 vs companion medians 0.42 / 0.38 | **fell as a clock statement** (erratum A142: "brain is less coupled to the body's shared state") |
+| Brain | 3: A263 Part A (human, baboon, sheep) | brain's lower coupling to the body (human L -0.514, baboon -0.528, sheep -0.707) lies at the 30th-88th percentile of matched and responsive gene sets; companions drop more; clock r* 0.803 vs companion medians 0.42 / 0.38 | **fell as a clock statement** (erratum A142: "brain is less coupled to the body's shared state") |
 | Malignant cells vs microenvironment / tumour-normal pairing | 2: A265, A267 | COFE's "uncoupled" reading not reproduced (uniform in 3 of 10 cancers) and uninformative in a simulation on the real design (7 of 10 coupled replicates read "uncoupled"); COFE's own pairing is patient similarity (not above matched sets, not above generic axes); clocksync 0.361 (p 0.0001), 10/10 coupled and 0/10 uncoupled replicates | **stands** (the head-to-head favours clocksync) |
 | The systemic signal (mechanism) | 4: A268 | glucocorticoid, cold and heat readers consistent across GTEx tissues (K 0.70-0.79) but not above matched / responsive readers, and at a phase 4-7 h away in living MuTHER tissue | **not named** (clean negative at the stated power) |
 | Blood; brain-dead donors | not checked (blood an expected exception; brain death descriptive by decision) | - | unchanged |
 
-**Not done under the stop rule:** A263 sheep (running, finishes about 16:00; added to RP when in) and Part B (H263.4,
-atlas couplings against responsive sets; not started). Part B decides whether the organ-map couplings of Figure 2 are
-clock against both families: it is the next check for either ordering.
+**Update 2026-11-16 (run after the stop rule at the user's request: "Still go for Part B"; A270 and A271 registered on
+the user's go-ahead).**
+- *A263 Part B (H263.4 FAIL):* atlas couplings 0.393, at the 87.5th percentile of the responsive sets (q95 0.423); only
+  fibroblast / stromal (and "other") clear both families. Sheep (H263.2) fails too.
+- *A270:* in GTEx the responsive sets do not read time of death (17 % of sets; clock R 0.631 above all 400 sets); in
+  baboon most sets of either family read ZT. The responsive failures are not explained away as "daily hormone program"
+  in human deaths.
+- *A271 Part A (H271.1 FAIL):* the tumour-normal myeloid, T/NK and CD8-negative T pairings (A227, A228) are not above
+  the responsive sets; fibroblasts and endothelium are. A271 Part B (A104 amplitude-coupling relation) is running.
+- *Consequence (post hoc, user and agent):* coupling size shows a shared state, not the clock. Couplings are reported
+  as the excess over each cell type's own companions; clock identity rests on phase-based readouts (host phase vs
+  recorded time, offsets vs timed truth, r*), which the clock passes far above every companion. The clock-specific
+  backbone narrows to fibroblast / stromal cells (both families) in health and in tumours. Figure 3 (H109.1-R) and the
+  TCGA pairing (H138.4-R) already passed the responsive family (2026-10-28). This strengthens the Nature Methods
+  ordering: the companion discipline is itself a result, and the biology claims that survive are the stromal backbone
+  and the timed readouts.
 
 **What stands.** One clock state per living person, the state is time (living tissues, elapsed hours), offsets
 recovered from hospital-hours samples, group offsets within an hour, tumour-normal pairing; all with companions where
@@ -69,8 +82,8 @@ results); (4) cancer pairing. The biology paper would rest on robustness alone, 
 signal, which does not meet Cell's "conceptual advance" bar. If the PI prefers to keep the biology framing, Part B
 (H263.4) should be run first: a failure there would also remove the organ-map couplings.
 
-**On hold:** the plan and journal choice (user and PI); Part B of A263; any rewording of roadmap section 2.
-**Evidence:** RP A243, A263 (Part A), A264-A269; VERDICT_TABLE rows of the same; roadmap progress note 2026-11-16.
+**On hold:** the plan and journal choice (user and PI); any rewording of roadmap section 2 and of Figure 2.
+**Evidence:** RP A243, A263 (Parts A and B), A264-A271; VERDICT_TABLE rows of the same; roadmap progress note 2026-11-16.
 
 ### Q34 (2026-11-15): gate G2 (iii) after A262: no second design reproduces A261, and blood differs from muscle
 

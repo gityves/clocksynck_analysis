@@ -5228,7 +5228,7 @@ G2 (iii)).
   22 s).
 <!-- src: paper/exploratory/A269_fetal_organs_drive/output/{verdicts,l1,feasibility_passrates,adult_scores}.csv -->
 
-## A263 Part A, human and baboon (scored 2026-11-16; NOT BLIND; sheep running, Part B not run): brain's lower coupling to the body's clock state is not specific to the clock genes: expression-matched and stress-responsive gene sets show the same or a larger drop (H263.1 fail, H263.3 fail); the brain exception falls as a clock statement (erratum to A142)
+## A263 Part A, human, baboon and sheep (scored 2026-11-16; NOT BLIND): brain's lower coupling to the body's clock state is not specific to the clock genes: expression-matched and stress-responsive gene sets show the same or a larger drop (H263.1, H263.2, H263.3 fail); the brain exception falls as a clock statement (erratum to A142)
 - **R2, L = log(median brain coupling / median peripheral coupling)** (peripheral-anchor host; 200 matched and 200
   responsive sets; registered rule: clock-specific if L_clock < q05 of both families; sets with undefined L, i.e.
   median brain coupling 0, are counted and left out, which favours the clock):
@@ -5237,14 +5237,17 @@ G2 (iii)).
   |---|---|---|---|---|---|---|
   | human (GTEx v10 fast deaths) | 13 / 26 | 0.406 vs 0.679 | -0.514 | 174, -3.207, -1.077 (75.3) | 199, -3.209, -1.306 (87.9) | **H263.1 fail** |
   | baboon | 22 / 35 | 0.420 vs 0.712 | -0.528 | 172, -2.509, -0.706 (59.3) | 175, -2.522, -0.770 (62.3) | **H263.3 fail** |
+  | sheep (mixed strata) | 8 / 35 | 0.205 vs 0.416 | -0.707 | 182, -3.007, -0.287 (32.4) | 200, -1.552, -0.394 (30.0) | **H263.2 fail** |
 
 - **R1 (human, untimed block agreement r* brain vs periphery):** clock 0.803; matched median 0.417 (q05 0.091),
   responsive median 0.376 (q05 0.131): the clock genes agree between brain and periphery more than non-clock sets do,
-  not less: not clock-specific as a drop.
+  not less: not clock-specific as a drop. **Sheep:** clock 0.614; matched median 0.445 (q05 0.087), responsive median
+  0.711 (q05 0.339): above the matched sets, below the responsive median.
 - **Reading as registered:** H263.1 fails (L_clock is not below the q05 of either family): brain's lower coupling is
   shared by non-clock gene sets, for the responsive family "brain responds less to the body's shared stress /
-  hormonal state"; **the brain exception falls as a clock statement**, and A142 gets the erratum below. Baboon fails
-  too; sheep (H263.2) follows.
+  hormonal state"; **the brain exception falls as a clock statement**, and A142 gets the erratum below. Baboon and
+  sheep fail too. In sheep the clock drop is larger than most companions' (L -0.71 against medians -0.29 and -0.39), but
+  not beyond the q05 of either family.
 - **Observed, beyond the readings:** the non-clock sets show a larger brain drop than the clock genes (median L -1.08
   matched and -1.31 responsive in human against -0.51; 26 matched sets with zero brain coupling), and the clock genes
   keep the higher brain-periphery agreement (r* 0.803 against medians 0.42 and 0.38). Read together: brain shares less
@@ -5253,12 +5256,95 @@ G2 (iii)).
 - **Limits.** Not blind; R2 is new in human (A142 used timed departures) and R1 untimed; the responsive pool holds
   28-29 genes (overlapping sets); baboon genes restricted to one-to-one orthologs; pseudo sets carry the GTEx waveform.
 - Runs: baboon 49 min (6 workers; two earlier runs lost at the write step, no result seen, output folder fix);
-  human 4.4 h (8 workers; the runner left no ledger line, the outputs are complete: 401 sets, `tests_human.csv`).
+  human 4.4 h (8 workers; the runner left no ledger line, the outputs are complete: 401 sets, `tests_human.csv`);
+  sheep 13.8 h (3 workers; no ledger line either, outputs complete: 401 sets, no errors, `tests_sheep.csv`).
 - Code: `exploratory/A263_companions/scripts/{build_genomewide,score_a263,score_a263_human,score_a263_baboon}.py`.
-<!-- src: paper/exploratory/A263_companions/output/{tests_human,sets_human,tests_baboon,sets_baboon}.csv -->
+<!-- src: paper/exploratory/A263_companions/output/{tests_human,sets_human,tests_baboon,sets_baboon,tests_sheep,sets_sheep}.csv -->
 
 ### Erratum to A142 (2026-11-16, from A263 H263.1)
 A142 H142.1 (brain block r* 0.639 against random 13-tissue blocks, PASS) stands as registered: brain is less coupled
 to the body's shared state than other organ blocks. It is **not shown to be clock-specific**: on GTEx fast deaths the
 drop of brain coupling is matched by expression-matched and stress-responsive gene sets (A263). Wording from now on:
 "brain is less coupled to the body's shared state", not "brain's clock is the exception".
+
+## A263 Part B (scored 2026-11-16; NOT BLIND): the atlas couplings of Figure 2 are not clock-specific against the responsive family overall (H263.4 FAIL); fibroblast / stromal and "other" clear both families
+Run `compute_a150.py --kind responsive` (4 workers, 12 min, peak 1.7 GB); fits reproduce A17 (max |dc| 0.009 lung_hlca,
+~0 elsewhere); 200 of 200 sets valid, 0 failed fits.
+- **H263.4 FAIL:** pooled mean coupling of the 53 compartments 0.393; responsive pooled sets median 0.321, q95 0.423
+  (clock at the 87.5th percentile), p 0.129. Against matched sets (A150 H150.1) the same coupling passes (q95 0.313).
+- **Per family (descriptive), clock median vs median / q95 of each family:**
+
+  | family (compartments) | clock | matched median / q95 | responsive median / q95 |
+  |---|---|---|---|
+  | other (2) | 0.754 | 0.454 / 0.729 | 0.455 / 0.648 |
+  | fibroblast / stromal (4) | 0.670 | 0.302 / 0.484 | 0.368 / 0.546 |
+  | mural (4) | 0.613 | 0.401 / 0.705 | 0.406 / 0.584 |
+  | endothelial (8) | 0.520 | 0.187 / 0.345 | 0.371 / 0.557 |
+  | epithelial (7) | 0.517 | 0.265 / 0.430 | 0.348 / 0.554 |
+  | parenchyma (1) | 0.461 | 0.415 / 0.858 | 0.420 / 0.675 |
+  | neuron (1) | 0.449 | 0.272 / 0.703 | 0.475 / 0.751 |
+  | myeloid (10) | 0.328 | 0.148 / 0.282 | 0.278 / 0.398 |
+  | lymphocyte (16) | 0.069 | 0.071 / 0.217 | 0.220 / 0.372 |
+
+  Above both q95: other, fibroblast / stromal. Responsive q95 only: mural. Matched q95 only: endothelial, epithelial,
+  myeloid. Neither: parenchyma, neuron, lymphocyte (lymphocytes at the median of both families; neuron below the
+  responsive median).
+- **Reading as registered:** the organ-map coupling claims of Figure 2 are restated as "shared state", not clock.
+- **Post hoc reading (2026-11-16, user and agent, after A270; replaces the registered wording for the paper):**
+  (1) Absolute couplings are not "how clock-coupled a cell type is": any expression-matched gene set reaches a
+  cell-type-dependent baseline (matched medians 0.07 lymphocytes to 0.45 "other"; causes untested), so couplings are
+  compared across cell types only as the excess over the cell type's own companions. (2) The excess is clear for
+  fibroblast / stromal cells (both families), present against matched genes for endothelial, epithelial and myeloid
+  cells and borderline against responsive genes, absent for lymphocytes. (3) The responsive family is a harsh control
+  (glucocorticoid targets and immediate-early genes); in GTEx deaths its shared state does not read time of death (A270
+  H270.2), in the living atlases what it reads is untested. (4) Clock identity is shown by phase-based readouts (organ
+  offsets vs timed truth: A36 r_FL 0.91, A123; host phase vs time: A270 clock above all 400 sets in both species;
+  r* A263), at the organ level; no timed truth exists for atlas cell types.
+<!-- src: paper/exploratory/A150_atlas_specificity/output/responsive/{h150_1,per_family,per_compartment,pseudo_pooled,reproduction}.csv; A150 matched: output/{h150_1,per_family}.csv -->
+
+## A270 (scored 2026-11-16; NOT BLIND on the clock): the responsive sets read time in baboon (H270.1 PASS) but so do most matched sets; in GTEx they do not read time of death (H270.2 FAIL); the clock host reads time above all 400 sets in both
+Runs: baboon 3.7 min, human 5.3 min (6 workers each, peak 0.6 / 0.8 GB); 0 errors.
+
+| | baboon (ZT; 12 animals, 63 tissues) | human (GTEx fast deaths, time of death; 244 donors, 15 tissues) |
+|---|---|---|
+| clock: R, p_R, r_FL | 0.987, 0.001, 0.980 | 0.631, 0.001, 0.388 |
+| responsive: share p_R < 0.05 | **0.555 (H270.1 PASS)** | **0.170 (H270.2 FAIL)** |
+| matched: share p_R < 0.05 | 0.735 | 0.100 |
+| median R responsive / matched | 0.537 / 0.622 | 0.073 / 0.054 |
+| q95 R responsive / matched | 0.856 / 0.754 | 0.149 / 0.137 |
+| median max(R, R reflected) resp. / matched | 0.681 / 0.644 | 0.082 / 0.069 |
+| clock R above every set | yes (100 / 100 pct) | yes (100 / 100 pct) |
+
+- **Reading (registered, split by species):** baboon: responsive sets carry time, but no more than matched sets (12
+  animals around the clock: most genes read ZT, as Mure 2018); this does not single out the responsive family. GTEx:
+  the responsive sets do not read time of death; their shared state is not internal time there, and the failures
+  against them (A263, A269, scored on human data) stand as warnings that a non-time shared state reaches the clock-gene
+  coupling. The clock host reads recorded time far above every companion in both species: specificity of the clock is
+  shown on the timed readout, not on coupling size.
+- **Limits:** not blind on the clock; pseudo sets carry the clock waveform's phases; GTEx time of death is recorded wall
+  time; human tested in deaths only; the 3-set `--check` run on baboon was seen before scoring.
+<!-- src: paper/exploratory/A270_responsive_time/output/{tests_baboon,sets_baboon,tests_human,sets_human}.csv -->
+
+## A271 Part A (scored 2026-11-16; NOT BLIND on the matched family): the tumour-normal immune pairings are not clock-specific against the responsive family (H271.1 FAIL for myeloid, T/NK and CD8-negative T); fibroblasts and endothelium clear it
+Runs: A227 tests 24 min (2 workers, peak 28.9 GB), A228 tests 21 min (3 workers, peak 33.2 GB); registered statistics
+reproduce exactly (max |difference| 0.0).
+
+| test | patients | pairing | responsive median / q95 | p_resp | Holm (3) |
+|---|---|---|---|---|---|
+| H227.1 myeloid | 169 | 0.581 | 0.576 / 0.637 | 0.438 | 0.597 |
+| H227.2 T/NK | 227 | 0.539 | 0.509 / 0.569 | 0.199 | 0.597 |
+| H228.4 CD8-negative T | 214 | 0.532 | 0.513 / 0.578 | 0.299 | 0.597 |
+
+- **Descriptive:** B / plasma 0.420 (responsive median 0.490), mast 0.514 (0.604), CD8 T 0.443 (0.492), NK 0.492
+  (0.513): below the responsive median. Anchors: fibroblast 0.686 (q95 0.638, p 0.015), endothelium 0.677 (0.659, p
+  0.025). Positive control tumour endothelium vs normal fibroblast 0.642 (q95 0.607, p 0.030). Tumour immune vs normal
+  stroma: T/NK vs endothelium 0.481 (q95 0.526), myeloid vs endothelium 0.510 (0.555), T/NK vs fibroblast 0.441 (0.552),
+  myeloid vs fibroblast 0.467 (0.590).
+- **Per cancer (descriptive, >= 12 patients), clock minus responsive median:** T/NK lung +0.136, liver +0.147, prostate
+  +0.111, gastric -0.049, colorectal -0.099; myeloid lung +0.110, prostate +0.088, liver -0.038, colorectal -0.113.
+- **Reading (registered):** the patient's tumour and normal immune cells share a state, but not more on the clock genes
+  than on glucocorticoid / immediate-early genes: "shared patient state", without the clock. The A227 T/NK line is no
+  longer a clock-specific lymphocyte result. Stromal compartments (fibroblasts, endothelium) stay clock-specific against
+  both families, as in the healthy atlases. Tumour and normal samples share one operation (anaesthesia, steroid
+  premedication); what the responsive shared state is in these samples is not tested.
+<!-- src: paper/exploratory/A227_tme_compartment_pairing/output/responsive/{tests,pooled}.csv; paper/exploratory/A228_immune_body_time/output/responsive/tests.csv -->
