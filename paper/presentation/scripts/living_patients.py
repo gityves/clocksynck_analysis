@@ -1,14 +1,13 @@
 """Slide figure (results, R1.3): in living patients, the untimed internal time follows the recorded hour.
 
-A. Breast surgery (GSE233242, 42 patients, tumour + adjacent normal; A200 registered, pass): one dot per patient, internal
-   time with the 13:00 rule (the estimates' circular mean set to 13:00, no recorded time used) against the recorded resection
-   hour; dashed: identity. B. Spearman of internal time with the resection hour for the clock genes (line) and for the 200
-   expression-matched non-clock gene sets (histogram, the H200.1 null).
-C. Heart surgery (GSE270258, 16 patients, 8 operated 06-10 h and 8 at 14-18 h; A174, confirmation): each patient's shared
-   clock state (host) in the clock plane (0 h on top, later clockwise), group means joined by an arrow; dashed: the direction
-   forward time predicts (18 h).
-D. Subcutaneous adipose (GSE104674, 12 men, 4 biopsies each; A113 registered, pass): single-biopsy internal time against
-   zeitgeber time, rotated by the common offset; per time point circular mean and circular SD; dashed: identity.
+A. Breast surgery (GSE233242, 42 patients, bulk tumour + adjacent normal = two compartments; A200 registered, pass): one dot
+   per patient, internal time (host phase; the estimates' circular mean set to 13:00, no recorded time used) against the
+   recorded resection hour, equal axes; dashed: identity.
+B. Heart surgery (GSE270258, 16 patients, snRNA-seq cardiomyocyte, fibroblast, endothelial, neuron; 8 operated 06-10 h and 8
+   at 14-18 h; A174, confirmation): each patient's internal time (host phase), by surgery window, with the circular mean.
+C. Per-sample absolute error after removing one common offset (best rotation against the recorded times, both cohorts):
+   breast (08-18 h, host of two compartments) vs subcutaneous adipose (GSE104674, 12 men x 4 biopsies over the day, one
+   compartment, single-biopsy phase on the GTEx clock plane; A113 registered, pass). Lines: medians.
 
 Data: presentation/output/living/breast_{patients,null}.csv (`living_breast_compute.py`), exploratory/A174_v3_heart/output/
 v3_host.csv, exploratory/A113_living_time/output/a113_phases.csv. Output: presentation/figures/living_patients/
@@ -21,7 +20,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from matplotlib.patches import Circle
 
 import paperfig as pf
 
@@ -39,94 +37,71 @@ def wrap(h):
 
 
 def breast(ax, p):
-    ax.plot([7, 19], [7, 19], color=MUTED, lw=1, ls="--", zorder=1)
+    ax.plot([8, 19], [8, 19], color=MUTED, lw=1, ls="--", zorder=1)
     y = p.resection_h + wrap(p.internal_h - p.resection_h)  # nearest turn to the recorded hour
     ax.scatter(p.resection_h, y, s=26, color=CS, edgecolor="white", lw=0.5, zorder=3)
-    ax.set_xlim(7, 19)
+    ax.set_xlim(8, 19)
+    ax.set_ylim(8, 19)
     ax.set_xticks(range(8, 19, 2))
-    ax.set_yticks(range(6, 23, 4))
+    ax.set_yticks(range(8, 19, 2))
+    ax.set_aspect("equal")
     ax.set_xlabel("resection hour [h]")
     ax.set_ylabel("internal time [h]")
     ax.set_title("breast surgery", fontsize=13, color=INK)
 
 
-def breast_null(ax, null, obs):
-    ax.hist(null.dropna(), bins=np.arange(-0.6, 0.65, 0.05), color="#cfcfcf", edgecolor="white", lw=0.5)
-    ax.axvline(obs, color=CS, lw=2)
-    ax.annotate("clock\ngenes", (obs, ax.get_ylim()[1]), xytext=(-4, -2), textcoords="offset points", ha="right", va="top",
-                fontsize=10, color=CS)
-    ax.annotate("matched\nnon-clock\ngenes", (np.nanmedian(null), ax.get_ylim()[1]), xytext=(0, -2),
-                textcoords="offset points", ha="center", va="top", fontsize=10, color=MUTED)
-    ax.set_xlabel("Spearman with\nresection hour")
-    ax.set_ylabel("gene sets")
-    ax.set_xlim(-0.6, 0.7)
-
-
 def heart(ax, h):
-    a = np.arctan2(h.y, h.x)  # host angle; drawn with 0 h on top, later clockwise
-    r = np.hypot(h.x, h.y)
-    X, Y = r * np.sin(a), r * np.cos(a)
-    rmax = 1.15 * r.max()
-    for rr in np.linspace(0, rmax, 4)[1:]:
-        ax.add_patch(Circle((0, 0), rr, fc="none", ec="#eeeeee", lw=0.8, zorder=0))
-    for hh, lab in ((0, "0 h"), (6, "6 h"), (12, "12 h"), (18, "18 h")):
-        t = hh * W
-        ax.annotate(lab, (1.08 * rmax * np.sin(t), 1.08 * rmax * np.cos(t)), ha="center", va="center", fontsize=9, color=MUTED)
-    means = {}
-    for g, c, lab in (("AM", AM, "06-10 h"), ("PM", PM, "14-18 h")):
-        i = (h.window == g).to_numpy()
-        ax.scatter(X[i], Y[i], s=28, color=c, edgecolor="white", lw=0.5, zorder=3)
-        means[g] = np.array([X[i].mean(), Y[i].mean()])
-        ax.scatter(*means[g], s=110, marker="D", color=c, edgecolor="white", lw=1, zorder=4)
-        ax.annotate(lab, means[g], xytext=(0, 12), textcoords="offset points", ha="center", fontsize=10, color=c)
-    ax.annotate("", means["PM"], xytext=means["AM"], arrowprops=dict(arrowstyle="-|>", color=INK, lw=1.6), zorder=5)
-    d = np.linalg.norm(means["PM"] - means["AM"])
-    t = 18 * W
-    ax.annotate("", means["AM"] + d * np.array([np.sin(t), np.cos(t)]), xytext=means["AM"],
-                arrowprops=dict(arrowstyle="-|>", color=MUTED, lw=1.2, ls="--"), zorder=2)
-    ax.annotate("forward time", means["AM"] + d * np.array([np.sin(t), np.cos(t)]), xytext=(0, -8), textcoords="offset points",
-                ha="center", va="top", fontsize=9, color=MUTED)
-    ax.set_xlim(-1.25 * rmax, 1.25 * rmax)
-    ax.set_ylim(-1.25 * rmax, 1.25 * rmax)
-    ax.set_aspect("equal")
-    ax.axis("off")
-    ax.set_anchor("N")
+    """Internal time per patient by surgery window, on 0-24 h (the two groups do not cross midnight)."""
+    for k, (g, c, lab) in enumerate((("AM", AM, "06-10 h"), ("PM", PM, "14-18 h"))):
+        x = h.phase_h[h.window == g].to_numpy()
+        y = 1 - k + np.random.default_rng(k).uniform(-0.12, 0.12, len(x))
+        ax.scatter(x, y, s=30, color=c, edgecolor="white", lw=0.5, zorder=3)
+        m = np.mod(np.angle(np.exp(1j * W * x).mean()) / W, 24)
+        ax.plot([m, m], [1 - k - 0.3, 1 - k + 0.3], color=c, lw=2.5, zorder=2)
+        ax.annotate(lab, (0, 1 - k), xytext=(-6, 0), textcoords="offset points", ha="right", va="center", fontsize=11,
+                    color=c, annotation_clip=False)
+    ax.set_xlim(0, 24)
+    ax.set_xticks(range(0, 25, 6))
+    ax.set_ylim(-0.6, 1.6)
+    ax.set_yticks([])
+    ax.spines["left"].set_visible(False)
+    ax.set_xlabel("internal time [h]")
     ax.set_title("heart surgery", fontsize=13, color=INK)
 
 
-def adipose(ax, p):
-    off = np.angle(np.exp(1j * W * (p.phase_h - p.time_h)).mean()) / W
-    p = p.assign(internal=p.time_h + wrap(p.phase_h - off - p.time_h))
-    ax.plot([-3, 20], [-3, 20], color=MUTED, lw=1, ls="--", zorder=1)
-    jit = np.random.default_rng(0).uniform(-0.35, 0.35, len(p))
-    ax.scatter(p.time_h + jit, p.internal, s=14, color=CS, alpha=0.35, lw=0, zorder=2)
-    for t, g in p.groupby("time_h"):
-        z = np.exp(1j * W * g.internal).mean()
-        m = t + wrap(np.angle(z) / W - t)
-        ax.errorbar([t], [m], yerr=np.sqrt(-2 * np.log(abs(z))) / W, fmt="o", color=CS, ms=7, lw=1.8, capsize=0, zorder=3)
-    ax.set_xlim(-2, 18)
-    ax.set_xticks([0, 6, 12, 18])
-    ax.set_yticks([0, 6, 12, 18])
-    ax.set_xlabel("zeitgeber time [h]")
-    ax.set_ylabel("internal time [h]")
-    ax.set_title("adipose biopsies", fontsize=13, color=INK)
+def errors(ax, err):
+    for k, (lab, e) in enumerate(err.items()):
+        e = np.abs(np.asarray(e))
+        x = k + np.random.default_rng(k).uniform(-0.15, 0.15, len(e))
+        ax.scatter(x, e, s=14, color=CS, alpha=0.45, lw=0, zorder=2)
+        ax.plot([k - 0.28, k + 0.28], [np.median(e)] * 2, color=INK, lw=2.2, zorder=3)
+    ax.set_xticks(range(len(err)), list(err))
+    ax.set_xlim(-0.6, len(err) - 0.4)
+    ax.set_ylim(0, 6)
+    ax.set_ylabel("absolute error [h]")
+
+
+def offset_errors(est, true):
+    d = wrap(np.asarray(est) - np.asarray(true))
+    return wrap(d - np.angle(np.exp(1j * W * d).mean()) / W)
 
 
 def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
     bp = pd.read_csv(SRC / "breast_patients.csv")
-    bn = pd.read_csv(SRC / "breast_null.csv").spearman
     bs = pd.read_csv(SRC / "breast_summary.csv").iloc[0]
     hh = pd.read_csv(PAPER / "exploratory/A174_v3_heart/output/v3_host.csv")
     ad = pd.read_csv(PAPER / "exploratory/A113_living_time/output/a113_phases.csv").query("dataset == 'adipose GSE104674'")
-    lay = pf.Layout.slide("ABCD", kind="wide", col_ratios=[1.1, 0.8, 1.1, 1.1])
+    err = {"breast\n08-18 h": offset_errors(bp.internal_h, bp.resection_h),
+           "adipose\nfull day": offset_errors(ad.phase_h, ad.time_h)}
+    lay = pf.Layout.slide("ABC", kind="wide", col_ratios=[1, 1.2, 0.7])
     breast(lay.axes["A"], bp)
-    breast_null(lay.axes["B"], bn, bs.spearman)
-    heart(lay.axes["C"], hh)
-    adipose(lay.axes["D"], ad)
+    heart(lay.axes["B"], hh)
+    errors(lay.axes["C"], err)
     fig = lay.finalize()
     print(bs.round(3).to_string(), f"\nheart n {len(hh)}, adipose n {len(ad)}")
+    print({k: round(float(np.median(np.abs(v))), 2) for k, v in err.items()})
     print(pf.collisions(fig))
     pf.save(fig, OUT / "living_patients")
 

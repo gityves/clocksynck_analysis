@@ -6,7 +6,9 @@ internal time with the 13:00 rule (estimates' circular mean set to 13:00, no rec
 the 200 expression-matched pseudo-clock sets (the null of H200.1). Recorded hours of a living cohort are not controlled access.
 
     paper/common/run.sh paper/presentation/scripts/living_breast_compute.py
-Outputs: paper/presentation/output/living/{breast_patients,breast_null,breast_summary}.csv
+Outputs: paper/presentation/output/living/{breast_patients,breast_null,breast_summary,breast_calibration}.csv
+(calibration, post hoc: mean recorded hour, mean error, share underestimated, OLS slope of internal time on recorded hour,
+median |error| with the 13:00 rule and after removing the common offset)
 """
 import importlib.util
 import sys
@@ -31,6 +33,13 @@ def main():
     off = A.IT.cdiff(A.PRIOR, (np.angle(np.exp(1j * A.IT.W * est).mean()) / A.IT.W) % 24)
     pd.DataFrame(dict(resection_h=truth, internal_h=(est + off) % 24,
                       error_h=A.IT.cdiff(est + off, truth))).to_csv(OUT / "breast_patients.csv", index=False)
+    err = A.IT.cdiff(est + off, truth)
+    y = truth + err
+    centred = A.IT.cdiff(err, np.angle(np.exp(1j * A.IT.W * err).mean()) / A.IT.W)
+    pd.DataFrame([dict(recorded_mean_h=truth.mean(), mean_error_h=err.mean(), share_under=float((err < 0).mean()),
+                       ols_slope=np.polyfit(truth, y, 1)[0], median_abs_err_13h=np.median(np.abs(err)),
+                       median_abs_err_offset_removed=np.median(np.abs(centred)))]).to_csv(OUT / "breast_calibration.csv",
+                                                                                         index=False)
     null = []
     for s in A.pseudo_sets(x, key, 200, np.random.default_rng([A.SEED, 1])):
         try:

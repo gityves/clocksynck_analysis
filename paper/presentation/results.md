@@ -121,16 +121,21 @@ the clock genes.
    1.11 h.
 
 **Figure:** `figures/living_patients/living_patients.png` (`scripts/living_breast_compute.py`, `scripts/living_patients.py`).
-A. breast: internal time (13:00 rule, no recorded time used) vs resection hour, one dot per patient. B. Spearman with the
-resection hour, clock genes (0.558) vs the 200 matched non-clock gene sets (median −0.053, q95 0.215). C. heart: each
-patient's shared clock state in the clock plane, morning and afternoon means joined by an arrow, dashed: the direction
-forward time predicts (18 h). D. adipose: single-biopsy internal time vs zeitgeber time (common offset removed), circular
-mean and SD per time point.
+A. breast: internal time (13:00 rule, no recorded time used) vs resection hour, one dot per patient, equal axes. B. heart:
+each patient's internal time by surgery window (06-10 h vs 14-18 h), circular means. C. per-sample absolute error after
+removing one common offset: breast (08-18 h) 1.12 h, adipose (full day) 1.11 h.
 
 **Speaker notes**
 - Breast: the ordering does not rest on glucocorticoid-induced PER1 (0.560 without it); it leans on NR1D1 (0.233
   without PER1 and NR1D1). This cohort was seen before the registration (V25.5): it is a robustness test, not a
   replication. A fresh cohort with recorded resection times is the open step.
+- Breast, why most patients look early (post hoc, `output/living/breast_calibration.csv`): the 13:00 rule assumes the
+  cohort's mean hour; the recorded mean is 13.8 h, so every estimate starts 0.86 h early (64 % underestimated). The
+  internal time is also compressed (slope 0.59 on the recorded hour): late patients come out about 2 h early. The order is
+  right (Spearman 0.558); with the centre fixed, the per-patient error (1.12 h) equals the full-day adipose biopsies (1.11 h).
+- Compartments: breast = two bulk compartments per patient (tumour, adjacent normal), internal time = phase of their shared
+  host. Heart = four snRNA-seq pseudobulks (cardiomyocyte, fibroblast, endothelial, neuron; anchors fibroblast,
+  cardiomyocyte, neuron). Adipose = one bulk biopsy, no host model: the biopsy's phase on the GTEx clock plane.
 - Heart: the truth is a 4-h window per patient, so the error is on the group displacement, not per patient. Holds in
   each surgical arm (p 0.032, 0.033), with fixed anchors and with a left-ventricle waveform. Archive result known:
   confirmation on current code.
