@@ -73,10 +73,11 @@ ones built on clock genes recover it. The method keeps the map in both designs.
   10 to 80 donors; every orderer, TimeTeller and the timed oracle start near 1.6-2.2 h at 10 donors. Amplitudes: all
   methods comparable, except the timed oracle in hospital hours (a 10 h window cosinor).
 - `figures/gtex_dip/gtex_dip.png` (`scripts/gtex_dip_compute.py`, `scripts/gtex_dip.py`): CHIRAL's published donor internal
-  phase (DIP) against clocksync's internal time, binned (3 h, bins and cells with < 5 donors hidden). Whole day (241
-  donors): circular r 0.69, median difference 1.7 h. Clocksync fitted on 08-18 h only (110 donors): r 0.44. Panel C: with
-  the recorded time of death, the DIP gives 0.68 (all fast deaths) but 0.23 within 08-18 h; clocksync's internal time 0.60
-  and 0.59. Within hospital hours the DIP barely orders the donors; clocksync's hospital-hours internal time does.
+  phase (DIP) against clocksync's internal time, binned (3 h, bins with < 5 donors hidden), clocksync fitted on the full day
+  (241 donors; median |difference| 1.7 h) or on hospital hours only (110 donors; 1.8 h). Panel C: median absolute error
+  against the recorded time of death, donor bootstrap 95 % CI. Full day: clocksync 2.03 h [1.71, 2.31], DIP 2.58 h
+  [2.19, 2.91]. Hospital hours: clocksync 1.71 h [1.19, 2.22], DIP 2.93 h [2.28, 3.43]. Within hospital hours the DIP
+  barely orders the donors; clocksync's hospital-hours internal time does.
 
 **Caveats for the figures:** the sweep and the DIP comparison are post hoc and descriptive (presentation figures). clocksync's
 sweep runs were refitted on current code (c4dde99, leave-one-out anchors; 2026-11-14); the other methods' runs are
@@ -89,6 +90,15 @@ unchanged from 2026-10-25. CYCLOPS and CoFE genome-wide were run only at 80 dono
   variation.
 - The distinctive property on real data is partial-day coverage, not coupling estimation as such: on idealised
   whole-day simulations two-step orderer pipelines recover coupling nearly as well (A145).
+- DIP vs internal time (post hoc diagnostic, `scripts/gtex_dip_diag.py`, full day): the two disagree at DIP 12-18 h,
+  where CHIRAL places only 35 donors (62 died in that interval). These bins hold the weakest shared clock states (0.75-0.80
+  of the median donor) and their recorded times are scattered (R 0.32-0.44); at DIP 15-18 h the DIP is > 6 h off the
+  recorded time for 32 % of donors (clocksync 21 %). Weak clocks are harder for both (Spearman of strength with error
+  −0.27 clocksync, −0.40 DIP); strongest third 1.41 vs 1.44 h, weakest third 2.87 vs 4.18 h.
+- Why not circular r: over the full day the DIP's |circular r| with time of death is higher (0.677 vs 0.600), but the
+  difference is not resolved (paired bootstrap 95 % CI [−0.46, +0.40]): with deaths spread over the day the
+  Jammalamadaka-SenGupta mean direction is ill-defined. The median error difference is (DIP − clocksync +0.53 h
+  [0.16, 0.86]).
 - Status: H123.4 registered, pass.
 
 **Source:** `exploratory/A123_working_hours/output/a123b/{tests,h123_4,posthoc_reflect}.csv`.

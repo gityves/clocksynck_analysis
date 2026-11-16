@@ -10,7 +10,8 @@ over its samples). CHIRAL learnt it from all GTEx donors, whole day. clocksync's
 time is aligned to the DIP by the rotation and reflection minimising the median absolute difference (`evaluate.align`).
 
 Controlled access: per-donor phases stay in memory. Written: per-bin aggregates (bins of 3 h of DIP, bins with < 5 donors blanked),
-a 2D histogram (3 h x 3 h cells, cells with < 5 donors blanked) and summary statistics.
+a 2D histogram (3 h x 3 h cells, cells with < 5 donors blanked) and summary statistics, with donor bootstrap 95 % intervals of the median
+absolute errors against the recorded time of death.
 
     paper/common/run.sh paper/presentation/scripts/gtex_dip_compute.py
 Outputs: paper/presentation/output/gtex_dip/{summary,bins,hist2d}.csv
@@ -40,7 +41,7 @@ from common.gtex import LABELLED  # noqa: E402
 
 B, T = A.B, A.T
 OUT = PAPER / "presentation" / "output" / "gtex_dip"
-BIN_H, MIN_CELL = 3.0, 5
+BIN_H, MIN_CELL, N_BOOT = 3.0, 5, 1000
 W = 2 * np.pi / 24
 
 
@@ -61,6 +62,13 @@ def internal_time(table: pd.DataFrame, wf, key: str) -> tuple[pd.Series, dict]:
     return e[key].dropna(), dict(window_width_h=e["w"], centre_day_h=e["c_day"])
 
 
+def mae_ci(x, t, seed: int = 0) -> tuple[float, float]:
+    """Donor bootstrap 95 % interval of the median absolute error of phase x against recorded time t (realigned per replicate)."""
+    rng = np.random.default_rng(seed)
+    reps = [ev.align(x[i], t[i], step=0.1)[1] for i in (rng.integers(0, len(x), len(x)) for _ in range(N_BOOT))]
+    return tuple(np.quantile(reps, [0.025, 0.975]))
+
+
 def summarise(design: str, it: pd.Series, dip: pd.Series, tod: pd.Series, extra: dict):
     k = it.index.intersection(dip.index)
     x, d, t = it.loc[k].to_numpy(), dip.loc[k].to_numpy(), tod.reindex(k).to_numpy()
@@ -69,6 +77,8 @@ def summarise(design: str, it: pd.Series, dip: pd.Series, tod: pd.Series, extra:
     row = dict(design=design, n_donors=len(k), circ_corr_dip=ev.circ_corr(xa, d), median_abs_diff_h=mae, reflected=sign < 0,
                circ_corr_it_tod=abs(ev.circ_corr(x, t)), circ_corr_dip_tod=abs(ev.circ_corr(d, t)),
                dip_mae_tod_h=ev.align(d, t)[1], it_mae_tod_h=ev.align(x, t)[1], **extra)
+    row["dip_mae_tod_lo"], row["dip_mae_tod_hi"] = mae_ci(d, t)
+    row["it_mae_tod_lo"], row["it_mae_tod_hi"] = mae_ci(x, t)
     edges = np.arange(0, 24 + BIN_H, BIN_H)
     b = np.digitize(d, edges[1:-1])
     bins = []
