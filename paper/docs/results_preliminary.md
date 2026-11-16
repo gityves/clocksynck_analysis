@@ -5588,3 +5588,27 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
   bias is an upper bound for the real null, but this is not shown.
 - Restated tests not computed. Code: `calibrated_a278.py` (null only; `--read` not run).
 <!-- src: paper/exploratory/A276_pairwise_calibration/output/a278/calibration.csv -->
+
+## A279 (scored 2026-11-17; not blind for A201's per-cell-type shifts): untimed pairwise offsets are unbiased in the mouse aorta too (V279.1 PASS: median error 0.30 h, slope 1.04 over a 4.5 h span); macrophages do not couple measurably less to known time than the stromal-vascular cells (H279.1 FAIL); in the Bmal1 knockout the stromal-vascular pairs keep |r| 0.63 to 0.75 without any clock
+
+- Design: Auerbach 2026 aorta (pools of 2 aortas), library x cell type pseudobulks of the clock genes, >= 30 cells,
+  compartments in >= 10 libraries. Aligned arm: 14 libraries, SMC, fibroblast, EC (14 each), macrophage (10); ZT 0, 6,
+  12, 18. Plumbing fix before scoring: class labels as in the source ("Fibroblast", "Macrophage"); one scoring run.
+- **Timed (aligned):** coupling to known time SMC 0.965, fibroblast 0.925, EC 0.864, macrophage 0.810; phases EC -2.02,
+  SMC -3.17, fibroblast -3.45, macrophage -4.83 h (relative to the waveform reference).
+- **V279.1 PASS.** Six aligned pairs, all timed-rhythmic: median |untimed - timed| 0.30 h, 6 of 6 within 1 h, median
+  jackknife SD 0.46 h; slope of untimed on timed offsets 1.04 (timed span 4.47 h); |r| 0.83 to 0.98. Largest error
+  fibroblast-macrophage +0.64 h. Misaligned arm (descriptive, 3 pairs): median error 0.25 h, slope 0.82.
+- **H279.1 FAIL.** Macrophage minus the smallest stromal-vascular coupling (EC) -0.055, jackknife 90 % [-0.252, 0.143].
+  Macrophages are the least coupled class, but not measurably below EC with 10 libraries.
+- **Bmal1 knockout (descriptive).** Timed coupling 0.000 to 0.200 in every class (no clock). Untimed |r| between
+  stromal-vascular classes stays high: EC-fibroblast 0.753, EC-SMC 0.629, fibroblast-SMC 0.661; with macrophages 0.11 to
+  0.35; untimed offsets then do not track timed ones (median error 3.8 h). A pairwise |r| can be large without a clock:
+  pooled libraries share non-clock variation of the clock genes between the stromal-vascular classes. This is the
+  reason the human pairwise statistic is read against companion gene sets (A272, A274), never alone.
+- **Reading (registered).** With A273 (colon), untimed pairwise offsets between cell types are unbiased against known
+  time in two mouse tissues, now over offsets of several hours (slope 1.04). No myeloid-below-stromal order is shown in
+  the aorta. The knockout shows that the size of |r| is not a clock measure on its own.
+- Limits: pools of 2 aortas, 1-3 pools per sex x ZT; macrophages in 10 libraries; one arm primary.
+- Code: `exploratory/A279_aorta_pairwise_truth/scripts/score_a279.py` (about 1 min).
+<!-- src: paper/exploratory/A279_aorta_pairwise_truth/output/{tests,pairs,compartments,design}.csv -->
