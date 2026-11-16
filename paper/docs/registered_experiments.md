@@ -6943,3 +6943,59 @@ companion and the host without PER1 address this, the living confirmation decide
 sampling times; a confirmation is of the phase relation, not of time. (4) Readers of one or two genes.
 (5) Extension to GTEx long-term steroid users (protected phenotype, aggregates only) only after a confirmed positive.
 **Stop rule:** one scoring run. **Code:** `paper/exploratory/A268_systemic_signal/scripts/score_a268.py`.
+
+## A269 (2026-11-16, user: "yes go ahead", to the follow-up proposed after A243 ("how does lung liver compare to adrenal gland, which might be driven only by hormonal response that don't oscillate with a period of 24h"); **NOT BLIND**: every statistic of A243 has been seen (H243.1 PASS: lung:all C 0.530, Holm p 0.026; liver:all C 0.583, Holm p 0.025; leave-one-gene-out minimum lung 0.439 without NPAS2, liver 0.499 without CRY1; liver without Cardoso-Moreira 0.249, p 0.19), and A264 / A266 on the adrenal (core loop C 0.417, p 0.057); seen before writing: the GC-gene medians per cohort (detection only) and the adult power below; NOT seen: any fetal statistic on the CORE waveform or with the GC score): is the clock-shaped covariation of the fetal lung and liver carried by the core loop without its signal-induced genes, and does it survive adjustment for glucocorticoid-target activity? **A243 `lung:all` (38 fetuses, 5 cohorts) and `liver:all` (35, 3); L1; secondary (development section)**
+**Why.** Signed coherence C measures a clock-shaped covariation between fetuses, not a 24 h period: a hormone level
+that differs between fetuses and moves the signal-induced clock genes would give it as well as a running clock. In the
+adrenal cortex the covariation did not survive the removal of PER1, PER2 and NR1D1 (A266) and a hormone-driven
+response became the simpler reading. Glucocorticoids act on the fetal lung (maturation) and liver; the same two checks
+decide whether lung and liver carry a loop the adrenal lacks, or the same driven response.
+**Fixed now (`design_a269.py`, `feasibility_a269.py`, `score_a269.py`).** Rows, covariates (cohort indicator, common
+quadratic age), permutations (10,000, per gene within cohort) and companions (200 matched, 200 responsive, adjusted in
+the same way, on the same waveform) as A243. Seed 269.
+- CORE: the A266 waveform (the 14 GTEx clock genes without PER1, PER2, NR1D1; 11 genes). GC score: per fetus, the mean
+  over FKBP5, TSC22D3, ZBTB16, KLF9 (canonical direct glucocorticoid-receptor targets, not clock genes; fixed before any
+  statistic) of the gene's log fraction standardised over the fetuses of the organ (`design_a264.activity`); all four
+  genes are measured in every lung and liver cohort.
+- **H269.1** `lung:core`, `liver:core`: C on CORE. Holm over the readouts scored.
+- **H269.2** `lung:gc`, `liver:gc`: C on the 14 genes, the GC score added as a covariate. Holm over the readouts scored.
+- PASS (`development.verdicts`): Holm p < 0.05 and above the q95 of both companions; "not clock-specific" and
+  "suggestive, not established" as A243.
+- Descriptive: `<organ>:core:gc` (both), `lung:early:core` (13 fetuses before 12 weeks, quadratic age).
+**Power first (done; `feasibility_a269.py`, 200 subsamples, 500 permutations).** The A243 stand-ins (GTEx Lung, Liver;
+deaths 08-18 h; thinned to each cohort) also receive the adult donor's own GC score (unthinned), so the adjustment
+removes from the adult clock what the adult score shares with it:
+
+| readout | fetuses | genes | covariates | adult pass rate at 1 / 0.75 / 0.5 | without a clock |
+|---|---|---|---|---|---|
+| `lung:core` | 38 | 11 | 6 | 1.000 / 1.000 / 0.840 | 0.065 |
+| `lung:gc` | 38 | 14 | 7 | 1.000 / 0.960 / 0.340 | 0.030 |
+| `lung:core:gc` | 38 | 11 | 7 | 1.000 / 1.000 / 0.865 | 0.105 |
+| `liver:core` | 35 | 11 | 4 | 1.000 / 1.000 / 0.910 | 0.070 |
+| `liver:gc` | 35 | 14 | 5 | 1.000 / 1.000 / 0.445 | 0.045 |
+| `liver:core:gc` | 35 | 11 | 5 | 1.000 / 1.000 / 0.855 | 0.040 |
+| `lung:early:core` | 13 | 11 | 3 | 0.975 / 0.845 / 0.505 | 0.045 |
+
+Adult GC score (`adult_scores.csv`): lung (208 donors) R^2 on the hour of death 0.0041, mean pairwise r of the four genes 0.599; liver (106 donors) R^2 on the hour of death 0.0146, mean pairwise r of the four genes 0.583.
+A readout is scored only if its adult pass rate at the full clock is >= 0.8 (D1b rule).
+**Readings (fixed now).**
+- H269.1 PASS in an organ: the covariation is carried by the core loop without the signal-induced genes, above both
+  companions: the organ carries what the adrenal cortex did not (A266); "an entrained loop is supported over a purely
+  acute response" for that organ (not a running clock: no times). The developmental line becomes "lung / liver ahead of
+  the adrenal on this criterion" (to the PI, Q32).
+- H269.1 fail (p >= 0.05): with the adult pass rates above (>= 0.84 at 0.5), a core loop of half the adult size is
+  excluded, i.e. a core loop of the size of the 14-gene signal of A243 (between 0.5 and 0.75); the organ reads as the
+  adrenal: a response through PER1, PER2, NR1D1 is the simpler reading. If both organs fail, the
+  developmental result narrows to "the clock genes covary before birth in the adrenal, lung and liver; a core loop is
+  not shown in any".
+- H269.1 p < 0.05, not clock-specific: "driven or entrained, not separable", as A266.
+- H269.2 PASS: the covariation is not explained by glucocorticoid-target activity. Fail: it is shared with that
+  activity. Neither direction orders cause: in adults GC targets are also clock outputs, so a fail does not show that a
+  hormone drives the clock genes; it is read together with H269.1.
+**Limits.** (1) Not blind. (2) CORE and GC are literature lists (from memory at writing; PER2 / NR1D1 regulation by
+glucocorticoid documented mainly in rodent liver and cell lines). (3) The GC score is four genes: a coarse readout of
+glucocorticoid action, not of hormone level; other inputs (cAMP, temperature, maternal melatonin) are not adjusted.
+(4) Fetal liver is largely haematopoietic at these ages (A243 limit 7); liver rests on pooling (no cohort alone is
+significant). (5) The responsive companion is redrawn on CORE (11 genes) and its q95 may be high, as in A264 and A266.
+(6) Limits of A243.
+**Stop rule:** one scoring run. **Code:** `paper/exploratory/A269_fetal_organs_drive/scripts/`.
