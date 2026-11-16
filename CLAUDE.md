@@ -67,7 +67,9 @@
   access: never print or commit per-donor rows, report aggregates only.
 
 ## Git
-- Commit locally with the attribution line. There is no remote: never create one or push.
+- Commit with the attribution line. Remote `origin` = github.com/gityves/clocksync (private backup, account gityves;
+  user, 2026-11-16): push `main` automatically after every commit. Never force-push, never make the repo public, never
+  add another remote. Before pushing, never commit controlled-access data (GTEx per-donor rows, phenotypes, times of death).
 
 ## Ask the user first
 Anything outward-facing: emails to data owners (draft only), access requests, public release, licence, journal
