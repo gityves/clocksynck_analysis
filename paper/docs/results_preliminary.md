@@ -5072,3 +5072,158 @@ G2 (iii)).
 - Code: `exploratory/A266_fetal_adrenal_drive/scripts/{design_a266,feasibility_a266,score_a266}.py` (358 s; power
   stage about 3 min; score 43 s).
 <!-- src: paper/exploratory/A266_fetal_adrenal_drive/output/{verdicts,l1,feasibility_passrates,power_h266_2,receptors}.csv -->
+
+## A243 (scored 2026-11-16): when open cohorts are pooled, the fetal lung and liver carry a clock-shaped covariation between fetuses (H243.1 PASS in two of four organs) of between half and three quarters of the adult size, as the adrenal; heart (powered at half the adult size) and kidney are negative
+- Design (addendum 42fc9ad, before scoring): heart 72 fetuses in 8 cohorts, kidney 53 in 7, lung 38 in 5, liver 35 in
+  3; every registered readout had an adult pass rate >= 0.8 at the full clock (lowest `lung:early` 0.950), so all were
+  scored. At half the adult size only `heart:all` reached 0.8 (0.800); `all` readouts at 0.75: >= 0.995.
+- **H243.1** (Holm over 4 organs):
+
+  | readout | fetuses | C | p | Holm p | matched q95 (pct) | responsive q95 (pct) | verdict |
+  |---|---|---|---|---|---|---|---|
+  | `lung:all` | 38 | 0.530 | 0.0087 | 0.026 | 0.396 (98.0) | 0.429 (99.5) | **PASS** |
+  | `liver:all` | 35 | 0.583 | 0.0062 | 0.025 | 0.460 (97.0) | 0.398 (100) | **PASS** |
+  | `heart:all` | 72 | 0.032 | 0.329 | 0.658 | 0.360 (66.5) | 0.269 (73.0) | fail |
+  | `kidney:all` | 53 | 0.017 | 0.439 | 0.658 | 0.413 (62.5) | 0.246 (64.0) | fail |
+
+- **H243.2** (Holm over 8 windows): `lung:early` (13 fetuses, < 12 weeks) C 0.679, p 0.0022, Holm 0.018, above both
+  companions: **PASS**. Lost at Holm (suggestive, not established): `lung:late` C 0.398, p 0.040; `liver:late` 0.497,
+  p 0.024. Fail: `liver:early` 0.169 (p 0.235), `heart:late` 0.278 (0.133), `heart:early` -0.262, `kidney:late` 0.365
+  (0.103), `kidney:early` -0.412.
+- **Descriptive.** Without Cao 2020 and Cardoso-Moreira (`all:new`): lung 0.574 (p 0.0045), heart 0.142, kidney
+  -0.145 (liver has no such readout). Leave one cohort out: lung stays significant without each cohort (lowest without
+  Sountoulidis: 0.437, p 0.039); liver without Cardoso-Moreira 0.249 (p 0.19, 9 fetuses), without Cao 0.521 (p 0.015).
+  Cohorts alone: lung Sountoulidis 0.545 (p 0.011, 17 fetuses, above both companions), lung Cao 0.190 (p 0.19), liver
+  Cardoso-Moreira 0.240 (p 0.14), heart Cardoso-Moreira -0.030, heart Cui 0.024, kidney Cardoso-Moreira -0.489.
+  Leave one gene out (minimum): lung 0.439 (without NPAS2), liver 0.499 (CRY1). Unsigned R: lung 0.575, liver 0.429.
+  Position among the adult subsamples (share of adult C at or below the fetal C at 1 / 0.75 / 0.5): lung 0.0 / 8.5 /
+  89.0 %, liver 0.5 / 46.0 / 100 %, `lung:early` 37.5 / 76.5 / 99.0 %; heart 0 / 0 / 0 %, kidney 0 / 0 / 3.0 %
+  (adrenal, A242 `all`: 1.0 / 42.0 / 100 %).
+- **Reading as registered:** a clock-shaped covariation between fetuses is present before birth in the lung and the
+  liver as in the adrenal, between half and three quarters of each organ's adult size; the developmental result becomes
+  "present in several organs, below the adult size" and the earlier negatives (A189 Cao lung 0.116, liver 0.114) are
+  read as bounds on size. Heart: negative with an adult pass rate of 0.800 at half the adult size: a clock of half the
+  adult size is excluded and the heart is behind the adrenal for the ages covered (4-28 weeks). Kidney: three quarters
+  excluded (0.995), the comparison with the adrenal stays open (0.250 at 0.5). Lung is strongest before 12 weeks.
+- **Post-scoring (not registered here):** in the adrenal the covariation did not survive the removal of the
+  signal-induced clock genes (A266). C measures a clock-shaped covariation, not a 24 h period; the same two checks
+  (core loop without PER1, PER2, NR1D1; glucocorticoid-target covariate) are registered for lung and liver as A269.
+- **Limits.** Liver is largely haematopoietic at these ages and rests on pooling (no cohort alone is significant); lung
+  rests in part on the deepest cohort (Sountoulidis, 5-14 weeks); unrecorded times; age conventions differ between
+  cohorts; fetus identity across UK HDBR sources not testable; limits of A242.
+- Code: `exploratory/A243_fetal_organs_pooled/scripts/{prep_a243,feasibility_a243,companions_dryrun_a243,score_a243,position_a243}.py`
+  (feasibility 78 min; score 460 s).
+<!-- src: paper/exploratory/A243_fetal_organs_pooled/output/{verdicts,l1,feasibility_passrates,position_in_adult}.csv -->
+
+## A265 (scored 2026-11-15/16): COFE's published "uncoupled" reading is not reproduced on the TCGA pairs (uniform differences in 3 of 10 cancers), COFE's own labels pair tumour with normal (H265.1 PASS), and in a simulation on the real design COFE's published reading says "uncoupled" in 7 of 10 coupled replicates while clocksync detects coupling in 10 of 10 and never without it (H265.2: sampling-window reading)
+- Data: 464 tumour-normal pairs in ten cancers (BLCA 19, BRCA 91, COAD 39, KIRC 72, KIRP 32, LIHC 49, LUAD 43, PRAD 51,
+  THCA 49, UCEC 19); COFE genome-wide on each cancer's tumours (1,138-1,321 genes), normals projected (assumption).
+- **(i) COFE's readout:** tumour-minus-normal label differences uniform (Rayleigh p >= 0.05) in 3 of 10 cancers (BRCA
+  diff R 0.085, COAD 0.054, UCEC 0.174); concentrated in BLCA 0.509, KIRC 0.386, KIRP 0.425, LIHC 0.379, LUAD 0.369,
+  PRAD 0.571, THCA 0.257 (p 0.039 to < 0.0001). Tumour labels cover the cycle (largest empty arc 0.23-0.67 h); CV minimum
+  interior in all ten. **Not reproduced** (criterion: uniform in >= 6 of 10).
+- **H265.1 PASS:** pooled R_c 0.302, null mean 0.245, p 0.0013 (10,000 permutations). clocksync (A138 statistic) on the
+  same pairs: 0.361, null mean 0.129, p 0.0001, all ten cancers gated (descriptive).
+- **H265.2 (simulation on the real design, 10 replicates per arm, real pairing broken, 365-gene GTEx program):**
+
+  | arm | clocksync pass | COFE pairing pass | COFE published reading "uncoupled" | median uniform cancers | clocksync stat (median) | COFE R_c (median) |
+  |---|---|---|---|---|---|---|
+  | coupled, 08-18 h | 10 / 10 | 1 / 10 | 7 / 10 | 6.0 | 0.223 | 0.224 |
+  | coupled, whole day | 10 / 10 | 1 / 10 | 5 / 10 | 5.5 | 0.334 | 0.240 |
+  | uncoupled, 08-18 h | 0 / 10 | 0 / 10 | 5 / 10 | 5.5 | 0.132 | 0.238 |
+
+- **Reading as registered:** the first reading holds (COFE "uncoupled" in >= 5 of 10 coupled surgical replicates: 7;
+  clocksync >= 8 of 10: 10; clocksync <= 2 of 10 uncoupled: 0): COFE's published negative is not evidence against
+  coupling under surgical hours, and A138 stands. Real data: H265.1 PASS, COFE's own labels pair tumour with normal,
+  contradicting the published reading with COFE's output.
+- **Observed, beyond the readings:** COFE's published readout is uninformative even with whole-day sampling (5 of 10
+  coupled replicates "uncoupled"; the same rate, 5 of 10, without coupling), and COFE's pairing statistic detects the
+  simulated coupling in 1 of 10 replicates in both coupled arms. Post hoc: the real-data COFE pairing (p 0.0013) is
+  therefore unlikely to come from the clock coupling the simulation inserts; A267 tests what carries it.
+- **Limits.** Projection of the normals is an assumption; GTEx-derived program (attenuated amplitudes); 10 replicates
+  per arm; COFE transform deviates from DESeq2; 464 of A138's 517 pairs.
+- Code: `exploratory/A265_cofe_head_to_head/scripts/{lib_a265,scout_a265,score_a265,simulate_a265}.py` (real part 45
+  min; simulation 6.8 h at 12 workers).
+<!-- src: paper/exploratory/A265_cofe_head_to_head/output/{real_tests,real_per_cancer,sim_summary,sim_reps}.csv -->
+
+## A267 (scored 2026-11-16): COFE's tumour-normal pairing is not clock-specific: on the clock genes it is matched by expression-matched gene sets (H267.1 not clock-specific), and genome-wide it is no larger than generic expression axes (H267.2 FAIL); it is patient similarity, the clock evidence remains clocksync's A138
+- **H267.1, not clock-specific:** COFE on the 14 clock genes, pooled R_c 0.290, null mean 0.188, p 0.0001; matched
+  14-gene sets median 0.265, q95 0.321 (clock at the 77th percentile, 100 sets); responsive median 0.234, q95 0.254
+  (100th percentile). Per cancer R_c 0.175 (KIRP) to 0.445 (KIRC). Agreement of clock-gene COFE tumour phases with the
+  clocksync tumour state phase: 0.272 (BRCA) to 0.749 (THCA).
+- **H267.2 FAIL:** the genome-wide COFE pairing of A265 (0.302) lies at the 82nd percentile of the 45 generic axes
+  (pairs of the top 10 principal components; median 0.206, q95 0.340, maximum 0.361).
+- Descriptive: genome-wide COFE without the 365 clock and GTEx-rhythmic genes of the A265 program: 0.250, null mean
+  0.220, p 0.055.
+- **Reading as registered:** COFE's clock-gene pairing is matched by non-clock sets (shared patient effects or a
+  generic axis); for the clock, the evidence is clocksync's A138 (clock-specific against both families). The
+  genome-wide COFE pairing of A265 is patient similarity, not evidence of clock coupling: A265 H265.1 is read as "COFE's
+  genome-wide labels carry patient-shared structure". With A265, neither COFE's published negative nor its own positive
+  pairing bears on tumour clock coupling; the head-to-head favours clocksync on these data.
+- **Limits.** Projection of the normals is an assumption; short sparsity grid on 14 features; 100 sets per family; the
+  responsive pool (about 29 genes) gives overlapping sets; principal-component axes are a generic companion.
+- Code: `exploratory/A265_cofe_head_to_head/scripts/score_a267.py` (6.0 h, 4 workers).
+<!-- src: paper/exploratory/A265_cofe_head_to_head/output/{a267_tests,a267_per_cancer,a267_sets,a267_axes}.csv -->
+
+## A268 (scored 2026-11-16): glucocorticoid, cold and heat readers each keep a consistent phase relation to the body's clock state across GTEx tissues, but none beyond matched and stress-responsive gene sets (all six tests "not specific"), and none at the GTEx phase in living MuTHER tissue: these readers do not name the systemic signal
+- **Tests** (12 body tissues, K = |sum beta| / sum |beta|, 10,000 permutations; Holm over three readers per host):
+
+  | reader | host | K | p | Holm p | matched q95 (pct) | responsive q95 (pct) | MuTHER p | MuTHER vs GTEx phase (h) | verdict |
+  |---|---|---|---|---|---|---|---|---|---|
+  | glucocorticoid (FKBP5 + TSC22D3) | all | 0.703 | 0.0048 | 0.0096 | 0.812 (79.5) | 0.903 (65.0) | 0.0001 | 4.09 | not specific |
+  | glucocorticoid | without PER1 | 0.716 | 0.0041 | 0.0082 | 0.819 (85.0) | 0.916 (63.0) | 0.0001 | 4.71 | not specific |
+  | cold (CIRBP) | all | 0.786 | 0.0010 | 0.0030 | 0.830 (88.0) | 0.907 (70.0) | 0.041 | -6.14 | not specific |
+  | cold | without PER1 | 0.782 | 0.0005 | 0.0015 | 0.829 (90.0) | 0.913 (59.5) | 0.045 | -6.06 | not specific |
+  | heat (HSP90AA1) | all | 0.696 | 0.0053 | 0.0096 | 0.873 (76.0) | 0.907 (59.5) | 0.0001 | 7.19 | not specific |
+  | heat | without PER1 | 0.689 | 0.0050 | 0.0082 | 0.875 (75.5) | 0.919 (50.5) | 0.0001 | 7.25 | not specific |
+
+- MuTHER: the pooled fat + skin loading is significant for every reader (p 0.0001 to 0.045) but its phase lies 4.1 to
+  7.3 h from the GTEx body phase (registered tolerance +-3 h): no reader is confirmed in living tissue.
+- Brain (descriptive): projection of the cerebellum and cortex loadings relative to the median body tissue 0.96 to 2.09,
+  every bootstrap interval includes 1 (e.g. glucocorticoid cerebellum 1.90 [-0.05, 4.85], cold cortex 0.96 [-0.16,
+  3.06]): looser coupling of these readers in brain is not shown.
+- **Reading as registered:** "not specific": the relations are shared by expression-matched and stress-responsive
+  gene sets (matched median K 0.49-0.57 over the readers, responsive 0.59-0.65): a general state that many genes share with the body's clock
+  state, not a named signal. These public data do not name the systemic signal by glucocorticoid, cold or heat
+  readers. With MuTHER, the living-tissue relation is significant but at a different phase, so the GTEx relation is
+  not transferable either.
+- **Limits.** Relaxed reader rule (user decision); agonal stress in GTEx; MuTHER has two tissues and no times; readers
+  of one or two genes; matched sets drawn genome-wide carry part of the clock-state signal themselves (A259: matched sets
+  carry 0.30 to 0.74 of a tissue's apparent deviation), which makes "not specific" a conservative verdict.
+- Code: `exploratory/A268_systemic_signal/scripts/score_a268.py` (power stage 51 min; score 12 min).
+<!-- src: paper/exploratory/A268_systemic_signal/output/{tests,companions,muther,brain,power_muther}.csv -->
+
+## A269 (scored 2026-11-16; NOT BLIND): the fetal lung and liver covariation survives adjustment for glucocorticoid-target activity (H269.2 PASS in both), but on the core loop without PER1, PER2 and NR1D1 neither organ passes: lung is just above p 0.05 (fail), liver is significant but not above the responsive companion (not clock-specific); both keep more of their signal on the core loop than the adrenal cortex did (A266)
+- Power first (registration d8b7df2): adult pass rate at the full clock >= 0.975 for every readout; core loop at half
+  the adult size: lung 0.840, liver 0.910. Scoring: two runs were killed for memory before any statistic (pyarrow with
+  OMP_NUM_THREADS=1 peaked at 32 GB when reading the 88,884-gene pseudobulk); fixed by reading before the thread limit
+  (commit after d8b7df2), no statistic changed or seen.
+- **H269.1** (core loop, 11 genes; Holm over 2):
+
+  | readout | fetuses | C | p | Holm p | matched q95 (pct) | responsive q95 (pct) | verdict |
+  |---|---|---|---|---|---|---|---|
+  | `lung:core` | 38 | 0.473 | 0.060 | 0.060 | 0.514 (92.5) | 0.206 (100) | fail |
+  | `liver:core` | 35 | 0.686 | 0.0086 | 0.017 | 0.516 (99.5) | 0.712 (94.0) | not clock-specific |
+  | adrenal cortex (A266) | 34 | 0.417 | 0.057 | - | 0.493 (87) | 0.522 (74) | fail |
+
+- **H269.2** (14 genes plus the GC score; Holm over 2): `lung:gc` C 0.572, p 0.0034, Holm 0.0068, above both
+  companions (99.0, 100): **PASS**; `liver:gc` C 0.589, p 0.0065, Holm 0.0068 (100, 100): **PASS**.
+- Descriptive: `lung:core:gc` 0.450 (p 0.078); `liver:core:gc` 0.700 (p 0.007; matched 98.5, responsive 95.5);
+  `lung:early:core` (13 fetuses) 0.647, p 0.014, above both companions (98.5, 99.5). Adult GC score: R^2 on the hour of
+  death 0.004 (lung) and 0.015 (liver); mean pairwise r of the four GC genes 0.60 and 0.58.
+- **Reading as registered.** H269.2: the covariation of lung and liver is not explained by glucocorticoid-target
+  activity (as the adrenal was not by steroidogenic activity, A264). H269.1, lung: fail; by the registered reading a
+  core loop of half the adult size is excluded and the lung reads as the adrenal. H269.1, liver: "driven or entrained,
+  not separable" (above the matched, below the responsive q95; the responsive q95 on 11 genes is 0.712, as anticipated
+  in limit 5). Neither organ carries a core loop shown to be clock-specific; the developmental result narrows to "the
+  clock genes covary before birth in the adrenal, lung and liver, beyond glucocorticoid activity; a core loop is not
+  shown in any".
+- **Observed, beyond the readings (post hoc):** on the core loop lung keeps 89 % of its 14-gene C (0.473 of 0.530) and
+  the liver more than all of it (0.686 of 0.583), whereas the adrenal cortex kept 69 % (0.417 of the A264 cortex 0.608);
+  the lung fail is at p 0.060 and above the responsive companion. The lung negative is borderline rather than a collapse,
+  and the early lung (before 12 weeks) is significant on the core loop above both companions (descriptive, 13 fetuses).
+- **Limits.** Not blind; CORE and GC from the literature; GC score is four genes and a readout of glucocorticoid
+  action, not of hormone level; other inputs not adjusted; liver haematopoietic and pooled; limits of A243.
+- Code: `exploratory/A269_fetal_organs_drive/scripts/{design_a269,feasibility_a269,score_a269}.py` (power 5 min; score
+  22 s).
+<!-- src: paper/exploratory/A269_fetal_organs_drive/output/{verdicts,l1,feasibility_passrates,adult_scores}.csv -->
