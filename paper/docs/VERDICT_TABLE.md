@@ -218,7 +218,7 @@ Source for the rows with a figure panel: `paper/exploratory/WP0_integrity/output
 | A36 | baboon offsets | median error 0.455 h; R 0.987 | - | primary JS statistic degenerate (fails as written) | - | Fig 1 |
 | A42 / A103 | brain vs periphery r* | brain 0.639 [0.59, 0.71]; sheep 0.625 [0.36, 0.87]; baboon 0.97 | - | H103.1, H103.2 pass; sheep passes, baboon readout 1 fails | - | Fig 2 |
 | A85 (corrected) | immune cue-following | immune 0.182 vs structural 0.095 | 0.002 | PASS after the 2026-10-22 correction (A122 then shows it is not cue-specific) | - | Fig 2 |
-| A104 | H104.1 / H104.2 (strong clocks decoupled) | rho +0.734 (predicted < 0) | 1.00 (rho < 0) | H104.1 not supported, H104.2 not replicated | - | Fig 2 |
+| A104 | H104.1 / H104.2 (strong clocks decoupled) | rho +0.734 (predicted < 0) | 1.00 (rho < 0) | H104.1 not supported, H104.2 not replicated (the predicted rho < 0; observed rho positive: sheep +0.62, baboon timed gain +0.77) | - | Fig 2 |
 | A108 | H108.1 (embryo late window) | R 0.52; window gate p_acrophase 0.08 | 0.016 | passes narrowly; 'from E15' not established; not clock-specific (A236) | - | Fig 2 |
 | A91 | rhythmic genes follow internal time | liver clock excess 2,691 vs time excess -14.5 | - | pass | - | Fig 3 |
 | A94 | H94.1-H94.3 (age effects to 70 y) | no age effect | - | all FAIL (no age effect) | - | Fig 4 |

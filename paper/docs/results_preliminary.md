@@ -5468,7 +5468,7 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
 - **Decomposition:** A tracks the shared term (0.960); the own term varies about 4-fold against about 85-fold for the
   shared term, so c follows how much shared rhythm a tissue carries. This reproduces the archive decomposition (A104).
   Brain block (13 tissues, descriptive): rho(A, clock counts) -0.533, partial rho(A, c) 0.197.
-- **Correction (to statements in this session, not to the docs):** the positive relation replicates across species.
+- **Across species:** the positive relation replicates.
   "H104.2 not replicated" in the archive refers to the predicted rho < 0. The observed rho is positive in sheep
   (+0.62, 35 tissues) and baboon timed gain (+0.77, 35), and +0.22 over 145 atlas cell classes (archive
   `docs/RESULTS_preliminary.md`, A104). The companion control (H271.2) covers GTEx only.
