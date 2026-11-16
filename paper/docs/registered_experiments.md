@@ -7338,15 +7338,15 @@ protocols; cortex classes carry no lymphocytes.
 their clock state varies between donors but independently of the tissue (own time: a clock that keeps the time of
 where the cell came from), or their clock genes carry no readable clock variation (weak clock, or too shallow).
 **Readout.** Per compartment (>= 15 donors): signed clock-gene coherence C across donors
-(`development.coherence`: log fractions centred within stratum ... via `strata`; per-sample offset fitted out, sign
-kept), one-sided permutation p against 1000 per-gene permutations within strata. Not used here: any host or partner.
+(`decompose.signed_coherence` as in `development.coherence`: log((count + 0.5) / depth), centred within stratum;
+per-sample offset fitted out, sign kept), one-sided permutation p against 1000 per-gene permutations within strata. Not used here: any host or partner.
 **Depth control (power).** In each atlas with a lymphocyte and a fibroblast-stromal compartment: the fibroblast-stromal
 compartment (largest number of donors) is thinned binomially, row by row, to the median depth of the lymphocyte
 compartment's clock genes (sum of the 14 clock-gene counts per row; rows of donors present in both), 20 replicates, and
 C with its p computed on each (200 permutations per replicate); thinned pass rate = share of replicates with p < 0.05.
 The lymphocyte compartment is read on the same donors. Atlases: lung_hlca, heart, organ_breast, organ_colon,
 organ_optic_nerve, kong_ileum, kong_colon, ibd_ileum, ibd_rectum (healthy rows; organ_muscle, eye and kidney have no
-lymphocyte compartment with >= 15 donors are named).
+lymphocyte compartment with >= 15 donors and are named, not scored).
 **H281.1 (own time):** across these atlases, the share of lymphocyte compartments (the largest per atlas, on the shared
 donors) with C p < 0.05 is >= 0.5. **H281.2 (weak clock, read only with H281.1 failed):** in the atlases where the
 thinned fibroblast-stromal pass rate is >= 0.8 (powered), the lymphocyte compartment fails (p >= 0.05) in at least
