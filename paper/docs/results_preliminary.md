@@ -5432,3 +5432,20 @@ reproduce exactly (max |difference| 0.0).
   only); post hoc.
 - Code: `exploratory/A275_shared_gene_classes/scripts/score_a275.py`.
 <!-- src: paper/exploratory/A275_shared_gene_classes/output/{classes,genes}.csv -->
+
+## A271 Part B (scored 2026-11-16; NOT BLIND on the clock): "stronger clocks are more coupled" is clock-specific in the GTEx periphery (H271.2 PASS)
+Run `score_a271_a104.py` (6 workers, 47 min, peak 2.2 GB); 244 donors, 40 tissues, 29,478 genes for matching; 0 errors;
+the clock rows reproduce A104 exactly (periphery rho 0.734, 27 tissues; brain -0.115, 13).
+
+| block | clock rho | matched median / q95 (p) | responsive median / q95 (p) | verdict |
+|---|---|---|---|---|
+| periphery | 0.734 | -0.160 / 0.258 (0.005) | 0.109 / 0.453 (0.005) | **H271.2 PASS** |
+| brain (descriptive) | -0.115 | 0.220 / 0.742 (0.80) | -0.063 / 0.765 (0.53) | - |
+
+- **Reading (registered):** the positive amplitude-coupling relation across peripheral tissues is a property of the
+  clock genes, not of the shared z2 V term: any matched or responsive gene set gives rho near 0. The A104 panel stays.
+- **Descriptive (not registered):** median tissue coupling in the GTEx periphery, clock 0.675 against matched 0.107
+  and responsive 0.267 (set medians); brain 0.667 against 0.257 and 0.481. In GTEx bulk tissues (every tissue an anchor)
+  the clock-gene coupling lies far above both companion families, unlike the single-cell atlas compartments (A263
+  Part B).
+<!-- src: paper/exploratory/A271_responsive_companions/output/{a104_tests,a104_sets}.csv -->

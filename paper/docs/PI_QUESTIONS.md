@@ -59,7 +59,10 @@ the user's go-ahead).**
   baboon most sets of either family read ZT. The responsive failures are not explained away as "daily hormone program"
   in human deaths.
 - *A271 Part A (H271.1 FAIL):* the tumour-normal myeloid, T/NK and CD8-negative T pairings (A227, A228) are not above
-  the responsive sets; fibroblasts and endothelium are. A271 Part B (A104 amplitude-coupling relation) is running.
+  the responsive sets; fibroblasts and endothelium are.
+- *A271 Part B (H271.2 PASS):* "stronger clocks are more coupled" (A104, periphery rho 0.734) is clock-specific: the
+  companion sets give rho near 0 (q95 0.258 matched, 0.453 responsive). In GTEx bulk tissues the clock coupling (median
+  0.675) is far above both families (0.107, 0.267), unlike the atlas cell types (descriptive).
 - *Consequence (post hoc, user and agent):* coupling size shows a shared state, not the clock. Couplings are reported
   as the excess over each cell type's own companions; clock identity rests on phase-based readouts (host phase vs
   recorded time, offsets vs timed truth, r*), which the clock passes far above every companion. The clock-specific
