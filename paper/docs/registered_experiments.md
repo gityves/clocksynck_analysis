@@ -7194,3 +7194,18 @@ a handling state and the matched family is the relevant control for the clock; i
 responsive level is a systemic hormonal state, not separable from internal time in these data (A270); if both, both.
 Per-gene sharing is not corrected for counting noise: genes are compared with expression-matched genes only.
 **Code.** `exploratory/A275_shared_gene_classes/scripts/score_a275.py`.
+
+### A274 design addendum (2026-11-16, before any pairwise statistic of these atlases; from `--stage design`, which computes eligibility and pair counts only)
+- **Eligible (genome table reproduces every clock count of the clock-gene table, all rows):** body: `organ_optic_nerve`
+  (83 donors), `organ_eye_anterior` (67), `kidney_sc` (26), `kong_ileum` (30), `kong_colon` (21); cortex: `psychad_hbcc`
+  (145), `seaad_dlpfc` (44), `seaad_mtg` (47).
+- **Not eligible, by the registered rule:** `islets` (3 of 118 rows differ from the clock-gene table, largest
+  difference 17 counts; cause not traced); `lung_natri_control` (no exact twin: its T class is restricted by a
+  per-cell cycling label that the genome-wide group table does not carry). Neither is approximated.
+- **Pairs per class (body):** SV_SV 23 (optic nerve 13, eye 8, kidney 1, ileum 1), SV_LY 20 (ileum 14, colon 3, optic
+  nerve 3), LY_LY 31 (ileum 21, colon 10), SV_X 92, LY_X 50, X_X 66. H274.1 (D = T_SV - T_LY) therefore rests on the
+  gut for its lymphocyte side and on the eye tissues for its stromal-vascular side: stated here as a limit, the
+  statistic is unchanged. **Cortex:** CX_diff 71 (27 + 22 + 22), CX_same 21.
+- **Dependence:** `seaad_dlpfc` and `seaad_mtg` are two regions of the same cohort and share donors; they count as
+  one cohort in the reading of H274.3 (replication = PsychAD and SEA-AD agree), and per-atlas values are reported.
+- Source: `exploratory/A274_celltype_map/output/{twin,design}.csv`. Next: placebo, then one scoring run.
