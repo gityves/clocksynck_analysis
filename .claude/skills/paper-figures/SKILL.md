@@ -13,7 +13,8 @@ figure, then apply it to the figure at hand.
 - Layout and checks: `paperfig` (the user's package, `/home/maxine/Documents/paychere/paperfig`, editable install in the
   `sccc` env). Slides: `pf.use_style("slide")` + `pf.Layout.slide(mosaic, kind="half" | "wide" | "third")`; journal:
   `pf.use_style("journal")` + `pf.Layout(mosaic, width=pf.SINGLE_COLUMN | pf.DOUBLE_COLUMN)`.
-  `fig = lay.finalize()`, `print(pf.collisions(fig))` (must be `[]`), `pf.save(fig, OUT / name)` (svg + png).
+  Stacked rows of panels sharing an x axis: `align="all"` so the left edges line up whatever the tick-label widths
+  (2026-11-16). `fig = lay.finalize()`, `print(pf.collisions(fig))` (must be `[]`), `pf.save(fig, OUT / name)` (svg + png).
 - When paperfig lacks something generally useful (a plot type, a check, a legend helper), propose adding it to
   paperfig rather than working around it in the script.
 - Python: `$(conda info --base)/envs/sccc/bin/python`.
@@ -78,6 +79,9 @@ figure, then apply it to the figure at hand.
 - Bands at low alpha (≈ 0.1); the method of interest drawn thicker and on top.
 
 ## Statistics shown in figures
+
+- A median over tissues hides the tissues a method misses: next to it, show the share of tissues off by > 2 h
+  (GTEx sweep, 2026-11-16).
 
 - Prefer robust, interpretable error measures in hours (median absolute error, with a donor bootstrap 95 % CI) over
   correlation coefficients.
