@@ -7209,3 +7209,32 @@ Per-gene sharing is not corrected for counting noise: genes are compared with ex
 - **Dependence:** `seaad_dlpfc` and `seaad_mtg` are two regions of the same cohort and share donors; they count as
   one cohort in the reading of H274.3 (replication = PsychAD and SEA-AD agree), and per-atlas values are reported.
 - Source: `exploratory/A274_celltype_map/output/{twin,design}.csv`. Next: placebo, then one scoring run.
+
+## A276 (2026-11-16, user: "you can work autonomously on paper/docs/prompts/celltype_clock_program_2026-11-16.md" (block A1); a calibration of the A272 pairwise test, no biological hypothesis; seen: A272 and A274 in full, including their single placebo runs (A274: all six placebo clock values above the companion medians, one of six at its q95, p 0.050); NOT seen: any placebo draw beyond those two): is the pairwise test (clock against the q95 of both companion families) calibrated when the pairing of donors is destroyed? **The thirteen atlases of A272 and A274; calibration; V276.1, V276.2**
+
+**Why.** H272.2, H274.1-3 compare a clock statistic with the q95 of 200 companion sets. Under no pairing the clock
+statistic should fall above that q95 in about 5 % of placebo draws. Heavier tails or a different shape of the clock-plane
+states than the companion states would make the clock's null |r| larger and the test anti-conservative; one placebo run
+per amendment cannot show this.
+**Design.** Rows, atlases, pairs, families, statistics and companion sets exactly as scored (A272: lung_hlca, heart,
+organ_breast, organ_muscle, organ_colon, seeds [272, atlas, kind]; A274: the eight eligible atlases of its design
+addendum, seeds [274, atlas, kind]; 200 matched and 200 responsive sets each). States are computed once per row and gene
+set (`paired.projector`, `states`: row-wise, so unchanged by relabelling donors). Placebo draw d (seed [276, d],
+d = 1..500): donor labels permuted within compartment x stratum in every atlas (`score_a272.placebo`), pairs rebuilt
+(`pair_index`), the ten statistic-family combinations recomputed: H272.1 T_SV, H272.2 D, H274.1 D, H274.2 T_SV, H274.3
+T_CX, each against the matched and the responsive family. Draw 0 (no permutation) must reproduce the scored
+`tests.csv` of A272 and A274 (code check).
+**V276.1 (each test):** the rejection rate (clock above the companion q95) over 500 draws is <= 0.075 for each of the
+ten combinations (binomial 99 % upper limit for a true rate of 0.05 is 0.073).
+**V276.2 (overall):** the mean rejection rate over the ten combinations is <= 0.065.
+**Descriptive.** Mean percentile of the clock among its companions per combination (0.5 expected); the same rate per
+atlas and pair class (median |r| over the class, clock against the class q95), which A2 uses to read single atlases;
+the clock's null |r| against the companions' null |r| per pair.
+**Readings.** Both pass: the test is calibrated, H272.2 and H274.1-3 stand as scored, and the readout moves to
+`clocksync`. A rate above the band: the scored verdicts of that statistic are suspended (not reversed) and the cause is
+traced before any further test of this line is scored: the per-pair null |r| of the clock against the companions, the
+anisotropy and tails of the clock-plane states (fraction of the plane variance on its first axis, kurtosis of |z|), and
+the number of genes carrying the projection. A corrected test is a new amendment.
+**Limits.** The placebo removes all pairing, so it checks the null only; power is not tested here. Correlated draws
+(same rows, same companion sets) make the ten rates dependent; the band is per combination.
+**Code.** `exploratory/A276_pairwise_calibration/scripts/calibrate_a276.py`.
