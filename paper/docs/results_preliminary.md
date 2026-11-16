@@ -5450,6 +5450,34 @@ the clock rows reproduce A104 exactly (periphery rho 0.734, 27 tissues; brain -0
   Part B).
 <!-- src: paper/exploratory/A271_responsive_companions/output/{a104_tests,a104_sets}.csv -->
 
+### A271 Part B, post hoc (not registered; chosen after H271.2 was scored): not a count artefact; correction on replication
+Run `posthoc_a104_counts.py` (seconds). Per GTEx tissue of the A104 table, medians over donors of the summed clock-gene
+counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a row and the library depth.
+
+| periphery, 27 tissues | Spearman rho with own amplitude A | with coupling c |
+|---|---|---|
+| shared term z2 V (range 0.12 to 10.3) | 0.960 | 0.863 |
+| own term 2 psi (range 0.90 to 4.14) | 0.504 | -0.085 |
+| clock-gene counts | -0.106 | 0.093 |
+| smallest clock-gene count | -0.323 | -0.228 |
+| library depth | 0.178 | 0.134 |
+| partial rho(A, c given clock-gene counts) | 0.752 | |
+
+- **Counts:** neither A nor c rises with the clock-gene counts (A falls slightly with the smallest gene count), and the
+  relation is unchanged with counts held fixed (0.752 vs 0.734). Low counts do not produce it.
+- **Decomposition:** A tracks the shared term (0.960); the own term varies about 4-fold against about 85-fold for the
+  shared term, so c follows how much shared rhythm a tissue carries. This reproduces the archive decomposition (A104).
+  Brain block (13 tissues, descriptive): rho(A, clock counts) -0.533, partial rho(A, c) 0.197.
+- **Correction (to statements in this session, not to the docs):** the positive relation replicates across species.
+  "H104.2 not replicated" in the archive refers to the predicted rho < 0. The observed rho is positive in sheep
+  (+0.62, 35 tissues) and baboon timed gain (+0.77, 35), and +0.22 over 145 atlas cell classes (archive
+  `docs/RESULTS_preliminary.md`, A104). The companion control (H271.2) covers GTEx only.
+- **Reading:** of the two sources of misalignment that scale oppositely with amplitude (METHOD.md section 3, note
+  2026-11-16), period mismatch predicts rho < 0 and phase noise or a common systemic drive rho > 0. The pre-registered
+  rigidity prediction fails in three species. Which of noise and drive dominates is not separated here. A
+  re-alignment-after-shift design would separate them (noise model: strong clocks re-align more slowly).
+<!-- src: paper/exploratory/A271_responsive_companions/output/{a104_counts_rho,a104_counts_tissues}.csv; archive scCircadianCancer/docs/RESULTS_preliminary.md (A104 table) -->
+
 ## A274 (scored 2026-11-16; blind for these atlases, one scoring run): the cell-type ranking replicates in five atlases not used by A272 (H274.1 PASS), the stromal-vascular level is now above both companion families (H274.2 PASS), and the cell classes of the human cortex share a clock-gene state beyond both families (H274.3 PASS)
 
 - Design (addendum): eight eligible atlases, each reproducing every clock count of its clock-gene table. Body: optic

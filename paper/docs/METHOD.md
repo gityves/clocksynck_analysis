@@ -41,6 +41,19 @@ Cross-covariances C_kl of the centred log fractions of compartment pairs across 
   - c_k = |z|^2 V / (|z|^2 V + 2 psi), where V = tr(cov f + mean S_u) is the host spread.
   - c is a variance share, so it depends on the host spread (sampling times). It is compared within a fit; across
     groups it is compared at a common spread (below).
+  - **What c measures (A104, A271 Part B; note 2026-11-16).** c is the fidelity of the alignment to the shared state
+    (a signal-to-noise ratio), not an entrainment strength. With own amplitude A = sqrt(|z|^2 V + 2 psi), c rises with A
+    whenever the unaligned scatter 2 psi grows more slowly than the aligned variance |z|^2 V. Two sources of
+    misalignment between persons scale oppositely with amplitude:
+    - period mismatch (detuning) between a compartment and its driver: the entrained phase angle varies as about
+      d omega / K, and with K proportional to 1 / A (amplitude-rigidity, Abraham 2010) its variance grows with A, so c
+      falls with A (the A104 prediction);
+    - phase noise (molecular, local): the stationary phase scatter of a coupled oscillator is about sigma^2 / (K' A) for a
+      restoring rate proportional to amplitude, so it falls with A and c rises with A; a systemic drive that raises
+      both amplitude and alignment gives the same sign.
+    The sign of rho(A, c) across compartments therefore indicates which source dominates; it does not by itself measure
+    rigidity or the speed of re-entrainment. Absolute c is not compared between compartment classes of different
+    expression: report the excess over the compartment's own companion families (A263 Part B).
 - **Relative amplitude and offset:** |z_k| and arg z_k, reported reference-free (each minus the mean over
   compartments).
 - **Intervals:** donor bootstrap with the host refitted.
