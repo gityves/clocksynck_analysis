@@ -2,10 +2,13 @@
 
 Registered in paper/docs/registered_experiments.md (A272). Atlases, rows and strata: those of A150 (the gate-passing
 A17 healthy atlases with a genome-wide twin). No host and no anchors: for every pair of compartments (a, b) of an atlas,
-the Poisson-corrected complex correlation of their clock-plane states over the donors that have both, pooled over
-strata (states centred within stratum):
+the complex correlation of their clock-plane states over the donors that have both, pooled over strata (states
+centred within stratum):
 
-    r_ab = sum_s sum_d a_d conj(b_d) / sqrt(E_a E_b),   E_x = sum_s [sum_d |x_d|^2 - (n_s - 1) mean_s(v_x)]
+    r_ab = sum_s sum_d a_d conj(b_d) / sqrt(E_a E_b),   E_x = sum_s sum_d |x_d|^2
+
+(design addendum: no Poisson correction in the primary statistic; the corrected form, E_x minus (n_s - 1) mean_s(v_x),
+has a non-positive variance in most pairs of these atlases and is kept as a descriptive column)
 
 |r_ab| is the shared state of the two compartments, arg r_ab their offset (h, a minus b). One projector per atlas and
 gene set. The same statistic on 200 expression-matched and 200 stress-responsive pseudo-clock sets (same donors).
@@ -15,7 +18,7 @@ gene set. The same statistic on 200 expression-matched and 200 stress-responsive
   H272.1  T_SV of the clock above the q95 of both companion families (set j pooled across atlases as set j)
   H272.2  D = T_SV - T_LY of the clock above the q95 of D in both companion families (atlases with lymphocytes)
   D272.*  family x family matrix, per-compartment centrality, offsets with donor-bootstrap intervals for pairs above
-          both companions, triangle closure, ambient over-correction (clock), uncorrected correlation
+          both companions, triangle closure, ambient over-correction (clock), Poisson-corrected correlation
 
     python score_a272.py --stage design                      # pairs, donors, degrees of freedom; no expression read into a statistic
     python score_a272.py --stage score [--placebo] [--n-pseudo 200] [--n-boot 500] [--jobs 4] [--only NAME ...]
@@ -111,8 +114,9 @@ def _centre(z, s):
     return z - (m / np.bincount(s))[s]
 
 
-def pair_r(z, v, pr, corrected=True) -> complex:
-    """Pooled complex correlation of a pair; NaN when a corrected variance is not positive."""
+def pair_r(z, v, pr, corrected=False) -> complex:
+    """Pooled complex correlation of a pair (primary: no Poisson correction, design addendum). `corrected`: Poisson
+    variance subtracted; NaN when a corrected variance is not positive."""
     s = pr["s"]
     a, b = _centre(z[pr["ia"]], s), _centre(z[pr["ib"]], s)
     ea, eb = np.sum(np.abs(a) ** 2), np.sum(np.abs(b) ** 2)
@@ -137,7 +141,7 @@ def atlas_states(pb: pd.DataFrame, wf) -> tuple:
     return beta[:, 0] + 1j * beta[:, 1], v
 
 
-def all_pairs(pb, wf, pairs, corrected=True) -> np.ndarray:
+def all_pairs(pb, wf, pairs, corrected=False) -> np.ndarray:
     z, v = atlas_states(pb, wf)
     return np.array([pair_r(z, v, pr, corrected) for pr in pairs])
 
@@ -217,7 +221,7 @@ def main():
 
     # clock (corrected, uncorrected, ambient over-correction)
     r_clock = np.concatenate([all_pairs(atlas[n]["pb"], cs.gtex(), pairs[n]) for n in names])
-    r_unc = np.concatenate([all_pairs(atlas[n]["pb"], cs.gtex(), pairs[n], corrected=False) for n in names])
+    r_cor = np.concatenate([all_pairs(atlas[n]["pb"], cs.gtex(), pairs[n], corrected=True) for n in names])
     r_amb = []
     for n in names:
         corr, _, _ = A150.ambient_correct(atlas[n])
@@ -245,7 +249,7 @@ def main():
     absc = np.abs(r_clock)
     pt = meta.copy()
     pt["r_abs"], pt["offset_h"] = absc, np.angle(r_clock) * HOURS
-    pt["r_abs_uncorrected"], pt["r_abs_ambient"] = np.abs(r_unc), np.abs(r_amb)
+    pt["r_abs_poisson_corrected"], pt["r_abs_ambient"] = np.abs(r_cor), np.abs(r_amb)
     for kind in KINDS:
         a = np.abs(R[kind])
         pt[f"{kind}_median"], pt[f"{kind}_q95"] = np.nanmedian(a, 0), np.nanquantile(a, 0.95, 0)
@@ -270,7 +274,7 @@ def main():
     tests = pd.DataFrame(tests)
     for h in tests.test.unique():
         tests.loc[tests.test == h, "passes"] = bool(tests.loc[tests.test == h, "above_q95"].all())
-    for lab, r in (("uncorrected", r_unc), ("ambient", r_amb)):
+    for lab, r in (("poisson_corrected", r_cor), ("ambient", r_amb)):
         a = np.abs(r)
         tests = pd.concat([tests, pd.DataFrame([dict(test=f"descriptive T_SV {lab}", clock=t_stat(a, meta, "SV_X", names)),
                                                 dict(test=f"descriptive D {lab}", clock=t_stat(a, meta, "SV_X", with_ly)

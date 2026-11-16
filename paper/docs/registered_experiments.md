@@ -7098,3 +7098,15 @@ atlases, 4 with lymphocytes; lung_hlca contributes the most pairs (per-atlas med
 (4) |r| is positively biased at small n; the companions share the donors, so the comparison is unaffected.
 **Code.** `exploratory/A272_backbone_pairwise/scripts/score_a272.py` (`--stage design|score`, `--placebo`: donors permuted
 within compartment and stratum, a code test run before scoring).
+
+### A272 design addendum (2026-11-16, before scoring; from the placebo run only)
+The placebo run (donors permuted within compartment and stratum, 40 sets per family; pairing destroyed, so no real
+pairwise statistic was produced) showed that the Poisson-corrected variance is non-positive in 144 of the 249 clock
+pairs and in most pseudo sets (median number of valid matched sets per pair 2 to 29 of 40): the 1 / count variance of
+`paired.states` over-corrects at single-cell pseudobulk counts, and the registered statistic is not computable.
+**Change, fixed before scoring:** the primary statistic of H272.1 and H272.2 is the complex correlation without the
+Poisson correction (bounded by 1, defined for every pair); the Poisson-corrected value becomes the descriptive column of
+D272.3. Consequence: |r| is attenuated by counting noise in shallow compartments (lymphocytes most). The matched
+companion sets are matched on expression, so they carry the same attenuation: the comparisons of H272.1 and H272.2
+(clock against companions on the same compartments) are unaffected, absolute values of |r| are lower bounds and are not
+compared between cell families without the companions. Everything else is unchanged.
