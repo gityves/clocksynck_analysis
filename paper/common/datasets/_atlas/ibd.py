@@ -57,11 +57,15 @@ def check_legacy(ds, pb, donors):
     return dict(healthy_rule_ok=set(O.healthy_members(pb, ctrl, 20)) == set(donors.index[donors.healthy]))
 
 
-def build(name: str, donors=None, genes="clock"):
+def build(name: str, donors=None, genes="clock", path=None):
+    """`path`: another group pseudobulk with the same groups (the all-gene twin `$SCCC_DATA/atlas_wg/ibdverse`)."""
     tissue, conds = CONDS[name]
     keys = {f"{tissue}|{c}" for c in conds}
-    spec = O.Spec(PATH, DS, tissue, CLASSES, keep=lambda o: o.tissue.astype(str).isin(keys).to_numpy())
-    o, X = C.read(PATH, genes, donors)
+    path = PATH if path is None else path
+    spec = O.Spec(path, DS, tissue, CLASSES, keep=lambda o: o.tissue.astype(str).isin(keys).to_numpy())
+    o, X = C.read(path, genes, donors)
+    if isinstance(genes, str) and genes == "all":  # duplicated canonical symbols keep their first column
+        X = X.loc[:, ~X.columns.duplicated()]
     F = O.groups(spec, read=(o, X))
     pb = O.table(F, F.resection.unique(), 20)
     d = _donors()

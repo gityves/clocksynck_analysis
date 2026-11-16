@@ -7284,3 +7284,25 @@ bounds the smallest attainable p_cal.
 **Readings.** As A277: a test that passed and still passes stands on a calibrated test; one that passed and fails is
 reversed; H272.1 against the responsive family is reported as changed by the correction if it changes (not blind).
 **Code.** `exploratory/A276_pairwise_calibration/scripts/calibrated_a278.py` (reads `output/a277/null_draws.npz`).
+
+## A279 (2026-11-16, autonomous, block A4 of the cell-type program; calibration of the pairwise offsets in a second mouse tissue plus one ordering question; does not use the companion q95 test held by Q36; **NOT BLIND** for the per-cell-type timed phases of this dataset (A201: aligned arm clock phases by cell type, SMC, fibroblast and endothelium within about 0.6 h of each other; Bmal1 KO amplitude 0.09-0.24 of aligned) and for A273 (colon); NOT seen: any pairwise statistic or timed coupling per cell type of this dataset): are untimed pairwise offsets unbiased in the aorta, and do macrophages couple less to known time than the stromal-vascular cells? **Auerbach 2026 aorta (pools of 2 aortas, ZT 0/6/12/18, both sexes); V279.1, H279.1**
+
+**Data.** `$SCCC_DATA/aorta_jetlag_auerbach2026` (A201 loader): library x cell type pseudobulks of the 14 clock genes,
+cell types SMC, fibroblast, EC, macrophage (the A201 MAIN and EXTRA classes; "Other" and T cells left out), >= 30 cells,
+compartments in >= 10 libraries of an arm. Arms: aligned (14 libraries, primary), misaligned (8) and Bmal1 KO (10)
+descriptive. One stratum per arm (as A273); sex as stratum is a sensitivity.
+**Readouts, as A273.** Timed: `Dataset.timed_loadings("zt")` per compartment (phase, coupling to known time); timed
+offset of a pair = difference of phases. Untimed: arg of the A272 pairwise statistic over libraries. Error = untimed
+minus timed (wrapped), leave-one-library-out jackknife SD.
+**V279.1:** median |error| <= 1.0 h over the aligned pairs whose two compartments have timed coupling >= 0.5.
+**H279.1:** in the aligned arm, the timed coupling of macrophages is below that of each stromal-vascular class (SMC,
+fibroblast, EC), with the jackknife: macrophage minus the smallest stromal-vascular coupling < 0 and its jackknife 90 %
+interval excludes 0. Not tested if macrophages are in fewer than 10 libraries (named, not scored).
+**Descriptive.** Slope of untimed on timed offsets (only if the timed offsets span >= 1 h; A201 suggests they do not);
+|r| of every pair; the KO arm (no clock: low untimed |r| and timed coupling expected) and the misaligned arm.
+**Readings.** V279.1 PASS: pairwise offsets are unbiased in a second tissue (with A273, two mouse tissues). FAIL: the
+calibration is colon-specific and human offsets get no support beyond it. H279.1 PASS: the myeloid cells of the aorta
+follow the tissue clock less than its stromal-vascular cells, as in the human atlases; fail: no order shown here.
+**Limits.** Pools of 2 aortas (pool-to-pool variation dominated A201); 1-3 pools per sex x ZT; SMC-dominated tissue;
+timed offsets between these classes are small, so V279.1 tests bias near zero, not the slope.
+**Code.** `exploratory/A279_aorta_pairwise_truth/scripts/score_a279.py`.
