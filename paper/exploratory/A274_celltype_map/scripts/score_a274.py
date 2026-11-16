@@ -40,6 +40,10 @@ A272 = importlib.util.module_from_spec(spec)
 sys.modules["a274_a272"] = A272
 spec.loader.exec_module(A272)
 A150 = A272.A150
+import cloudpickle  # noqa: E402
+
+for _m in (A272, A150):  # file-loaded modules: ship by value to joblib workers
+    cloudpickle.register_pickle_by_value(_m)
 
 AMENDMENT = "A274_celltype_map"
 SEED = 274
