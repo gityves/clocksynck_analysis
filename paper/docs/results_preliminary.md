@@ -5675,5 +5675,5 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
   (the thinned fibroblasts carry it); signed coherence reads the waveform's gene relations, so a lymphocyte clock with
   other phase relations would read low; lymphocyte classes pool resident and circulating cells (B2). The macrophage
   versus monocyte split is a post hoc observation, the motivation for B2, not a result.
-- Code: `exploratory/A281_lymphocyte_clock/scripts/score_a281.py` (3 workers, 4 min 23 s, peak 5 GB).
+- Code: `exploratory/A281_lymphocyte_clock/scripts/score_a281.py` (3 workers, 96 s, peak 5.2 GB; job ledger).
 <!-- src: paper/exploratory/A281_lymphocyte_clock/output/{tests,pairs,compartments,design}.csv -->
