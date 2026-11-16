@@ -5643,6 +5643,11 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
   cases (no pair). Earlier anchored readouts on these arms: A153 (13 targets, every MDE > 0.2 on d*), A167 (liver
   fibrosis, 0 of 12), A230 (inflamed gut, MDE 1.7 h), A141 (brain contrasts anchor-dependent). No disease contrast is
   registered before Q36 and a power calculation on the calibrated test.
+- **C2, the tumour in the pairwise language:** the question (malignant cells with the tumour's own stromal-vascular cells,
+  against normal epithelium with the normal stromal-vascular cells) is A149 S3 / S3n without a host. A149 had 51
+  patients in 7 cohorts at S3 (lung the only cancer estimable at S2 to S3n) and showed that non-clock sharing within a
+  patient dominates single-cell tumour pairings (H149.1 below its pseudo-clock median). A pairwise version would rest on
+  the same patients; its power calculation needs the calibrated null (Q36) and is left until then.
 <!-- src: scratchpad scout reports (not in the repo); counts re-checked: IBDverse rectum 61, HLCA fibrosis 198 / 71 -->
 
 ## A281 (scored 2026-11-17; not blind for lymphocyte couplings and pairwise |r|): tissue lymphocytes carry no readable clock of their own: their clock genes are not clock-coherent between donors where depth-matched fibroblasts are (H281.1 FAIL: 2 of 9; H281.2 PASS: 5 of 7 powered atlases); every stromal-vascular and epithelial compartment is coherent
