@@ -49,9 +49,9 @@ def main():
     ap.add_argument("--design", action="store_true")
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args()
-    limit_threads(1)
     t0, sfx = time.time(), "_check" if a.check else ""
-    counts, obs = load()
+    counts, obs = load()  # before limit_threads: pyarrow with OMP_NUM_THREADS=1 peaks at ~32 GB on the 88,884 columns
+    limit_threads(1)
     tests = d.tests(obs)
     design = pd.DataFrame([dict(test=k, n=int(r.sum()), cohorts=obs[r].cohort.nunique(), n_covariates=c(obs[r]).shape[1],
                                 n_genes=len(wf.genes)) for k, (r, c, _, wf) in tests.items()])
