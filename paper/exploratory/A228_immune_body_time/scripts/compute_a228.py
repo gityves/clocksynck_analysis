@@ -262,7 +262,7 @@ def stage_power(args):
 
 # ---- tests (registered statistics; not run before the power note) ----------------------------------------------
 
-def pseudo_one(study, kind, n_pseudo):
+def pseudo_one(study, kind, n_pseudo, family="matched"):
     """Expression-matched pseudo-clock sets (A149 note 2 (iv), as A227): reference log-mean from the normal-side compartment."""
     from clocksync.config import limit_threads
     from clocksync.paired import pseudo_waveforms
@@ -280,12 +280,12 @@ def pseudo_one(study, kind, n_pseudo):
     lm = np.log(frac.mean() + 1e-12)[(ref[genes].mean() >= 1) | frac.columns.isin(list(L.q.WF.genes))]
     rng = np.random.default_rng(seed_of(kind, study) + [44])
     vals = [A.raw_stat(p["za"], p["zb"]) if (p := L.pair_states(G, a, b, wf=w, pts=u["pts"])) else np.nan
-            for w in pseudo_waveforms(lm, n_pseudo, rng, L.q.WF)]
+            for w in pseudo_waveforms(lm, n_pseudo, rng, L.q.WF, family)]
     return study, kind, np.array(vals)
 
 
 def stage_tests(args):
-    pw = pd.read_csv(args.out / "power.csv").set_index("kind")
+    pw = pd.read_csv(args.power).set_index("kind")
     cohorts = A.cohort_list(args.smoke)
     kinds = [k for k in KINDS if HYP[k][1] != "primary" or bool(pw.loc[k, "scored"]) or args.force]
     for k in KINDS:
@@ -293,7 +293,7 @@ def stage_tests(args):
             print(f"{k}: not scored (power note); use --force to run anyway", flush=True)
     us = {(s, k): units_of(s, k) for k in kinds for s in cohorts}
     us = {key: u for key, u in us.items() if u}
-    ps = Parallel(n_jobs=args.jobs)(delayed(pseudo_one)(s, k, args.n_pseudo) for (s, k) in us)
+    ps = Parallel(n_jobs=args.jobs)(delayed(pseudo_one)(s, k, args.n_pseudo, args.kind) for (s, k) in us)
     pseudo = {(s, k): v for s, k, v in ps}
     pd.DataFrame({f"{s}|{k}": v for (s, k), v in pseudo.items()}).to_csv(args.out / "pseudo.csv", index=False)
     per, pooled, tests = [], [], []
@@ -347,7 +347,12 @@ def main(argv=None):
     ap.add_argument("--force", action="store_true", help="tests: also run primaries flagged not scored")
     ap.add_argument("--smoke", action="store_true", help="3 cohorts, 200 permutations, 5 pseudo sets")
     ap.add_argument("--out", type=Path, default=OUT)
+    ap.add_argument("--kind", choices=["matched", "responsive"], default="matched",
+                    help="pseudo-set family (A271: responsive; power read from --out, outputs in --out/responsive/)")
     args = ap.parse_args(argv)
+    args.power = args.out / "power.csv"
+    if args.kind != "matched":
+        args.out = args.out / args.kind
     assert args.jobs <= 8, "at most 8 workers"
     cli.setup(args)
     args.out.mkdir(parents=True, exist_ok=True)

@@ -7024,3 +7024,27 @@ time is carried genome-wide there (Mure 2018: most baboon genes are rhythmic in 
 peak in another order is read with a distorted host (hence the reflected descriptive). (3) 12 animals: permutation p has a
 floor near 1/1000 and R is noisy per set. (4) GTEx time of death is recorded wall time; the clock R is 0.631.
 **Stop rule:** one run per species. **Code:** `paper/exploratory/A270_responsive_time/scripts/score_a270.py`.
+
+## A271 (2026-11-16, user: "Yes go ahead", to the responsive-companion check proposed after A270 (A227 T/NK positive, A104); **NOT BLIND**: every matched-family statistic is known (A227: H227.1 myeloid 0.581 vs matched q95 0.548; H227.2 T/NK 0.539 vs 0.510; A228 H228.4 CD8-negative T 0.532 vs 0.501; A104 periphery rho +0.734, brain -0.115), and A263 Part B / A270 (responsive sets match the clock on atlas coupling and do not read GTEx time of death); NOT seen: any responsive-set statistic of A227, A228 or A104): are the T/NK and myeloid tumour-normal pairings and the amplitude-coupling relation specific against the responsive companion? **Single-cell TME (34 cohorts) and GTEx fast deaths; control; primary for the immune lines of the cancer chapter and the A104 panel of Figure 2**
+**Why.** A227/A228 are clock-specific against matched genes only (listed as missing in A263, "Not in this amendment").
+Tumour and normal samples of a patient share one operation (anaesthesia, often dexamethasone), a shared glucocorticoid
+state that the responsive family captures. A104: coupling c = z2 V / (z2 V + 2 psi) and own amplitude A = sqrt(z2 V + 2 psi)
+share z2 V, so rho(A, c) > 0 may hold for any gene set. Figure 3 (H109.1-R) and TCGA pairing (H138.4-R) already passed
+the responsive companion (2026-10-28) and are not retested.
+**Part A (`compute_a227.py --stage tests --kind responsive`, `compute_a228.py --stage tests --kind responsive`; the
+registered scripts with the responsive family passed to `pseudo_one`, otherwise unchanged: same cohorts, units, statistic,
+pooling, seeds; outputs in `output/responsive/`).** **H271.1 (Holm over 3):** for H227.1 (myeloid), H227.2 (T/NK) and
+H228.4 (CD8-negative T), the pooled pairing is above the q95 of the 200 pooled responsive sets, with p_resp = (1 + #{set >=
+clock}) / (1 + n) Holm-adjusted < 0.05. The other A227 / A228 rows are descriptive.
+**Part B (`exploratory/A271_responsive_companions/scripts/score_a271_a104.py`).** A104 rows, blocks and fit; 200 matched
+and 200 responsive sets (seeds [271, 1], [271, 2]); rho per block, point estimates. **H271.2:** periphery rho of the clock
+above the q95 of both families. Brain block descriptive.
+**Readings.** H271.1 per compartment: PASS, the pairing is clock-specific against both families (T/NK: the first
+lymphocyte line clock-specific against both); fail, "the patient's tumour and normal immune cells share a state" without
+the clock. H271.2 PASS: "stronger clocks are more coupled" is a clock property; fail: generic to any waveform-shaped gene set
+(the shared z2 V term), and the A104 panel leaves Figure 2 or is reworded as a property of the estimator.
+**Limits.** (1) Not blind on the matched family. (2) Responsive sets overlap heavily (Jaccard 0.79 GTEx, 0.91 TCGA in the
+A109 note); per cohort, single-cell pools can be smaller. (3) p floor 1/201. (4) A270: in GTEx the responsive shared state
+is not time of death; what it is in the surgical samples is not tested here.
+**Stop rule:** one run per script. **Code:** the two scripts above and
+`paper/exploratory/A271_responsive_companions/scripts/score_a271_a104.py`.
