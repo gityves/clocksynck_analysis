@@ -5406,3 +5406,29 @@ reproduce exactly (max |difference| 0.0).
   here (8 mice over 24 h).
 - Code: `exploratory/A273_pairwise_offset_truth/scripts/score_a273.py` (one run).
 <!-- src: paper/exploratory/A273_pairwise_offset_truth/output/{tests,pairs,compartments,design}.csv -->
+
+## A275 (scored 2026-11-16; post hoc, descriptive): glucocorticoid targets and immediate-early genes are both shared between all cell types of a donor, lymphocytes included; the clock genes are shared between stromal-vascular and other tissue cells and not by lymphocytes
+
+- Per-gene sharing (correlation over donors of a gene's expression in two compartments; median over genes and pairs,
+  mean over the five A272 atlases), by pair class:
+
+  | gene class | (SV, X) | (LY, X) | (SV, SV) | (SV, LY) |
+  |---|---|---|---|---|
+  | clock genes (14) | 0.333 | 0.172 | 0.461 | 0.151 |
+  | glucocorticoid targets | 0.524 | 0.390 | 0.665 | 0.389 |
+  | immediate-early genes | 0.535 | 0.392 | 0.647 | 0.377 |
+  | expression-matched genes | 0.237 | 0.167 | 0.350 | 0.150 |
+
+- Most shared genes in (SV, X) pairs: FKBP5 0.807, ZBTB16 0.711, ZFP36 0.697, PER1 0.690, PDK4 0.640, FOSB 0.604,
+  FOS 0.604. Clock genes: PER1 0.690, PER3 0.514, NR1D2 0.450, DBP 0.425, NR1D1 0.383, PER2 0.365, TEF 0.331,
+  CRY1 0.308, ARNTL 0.263, CLOCK 0.259, CIART 0.257, RORA 0.252, CRY2 0.217, NPAS2 0.061.
+- **Reading (rule fixed in advance): both.** The responsive companion's level in A272 is carried by a hormonal state
+  (FKBP5, ZBTB16, PDK4) and by an immediate-early state (ZFP36, FOS, JUN) alike; it is a handling state in part and a
+  systemic state in part, and neither is separated from internal time here. What is specific to the clock genes is the
+  pattern over cell types: responsive genes are shared with lymphocytes (0.39) about as with other cells, clock genes
+  are shared with lymphocytes at the level of expression-matched genes (0.172 against 0.167) and above it elsewhere
+  (0.333 against 0.237). PER1, the most shared clock gene, is also a direct glucocorticoid and immediate-early target.
+- Limits: single-gene correlations, not corrected for counting noise (compare within a column and with the matched row
+  only); post hoc.
+- Code: `exploratory/A275_shared_gene_classes/scripts/score_a275.py`.
+<!-- src: paper/exploratory/A275_shared_gene_classes/output/{classes,genes}.csv -->
