@@ -5459,6 +5459,93 @@ companions are the control. (9) New data: at most 60 GB, within the 500 GB cap.
 `paper/exploratory/A243_fetal_organs_pooled/scripts/` (prep, feasibility, score, position), on
 `paper/common/development.py` and the scripts of A242.
 
+### A243 design addendum (2026-11-16; before any clock statistic on the new cohorts; seen: the metadata, the clock-gene count medians of `prep_a243.py`, the adult feasibility runs and a dry run of the companion gene lists; no fetal clock statistic)
+**Cohorts** (`output/design_cohorts.csv`; E4 = median over the 14 clock genes of the cohort medians of the count;
+search and per-source verdicts in `scout/sources.md`):
+
+| organ | cohort | accession | assay | age convention | fetuses (< 12 / >= 12 wk) | weeks | median depth | E4 |
+|---|---|---|---|---|---|---|---|---|
+| heart | cao2020 | GSE156793 | sci-RNA-seq3 | post conception (ga_pcw) | 9 (0 / 9) | 12.86-17.43 | 5.1 M | 151.5 |
+| heart | cardoso_moreira | E-MTAB-6814 | bulk RNA-seq | post conception | 27 (18 / 9) | 4-19 | 23.8 M | 666.5 |
+| heart | cui | GSE106118 | plate scRNA-seq (UMI) | not stated | 18 (8 / 10) | 5-25 | 18.1 M | 236 |
+| heart | encode_cshl | ENCSR000AEZ | total RNA-seq | not stated (ENCODE) | 2 (0 / 2) | 19-28 | 23.2 M | 655.75 |
+| heart | encode_uw | ENCSR047LLJ+ENCSR863BUL | polyA+ RNA-seq | not stated (ENCODE) | 2 (0 / 2) | 13-17.14 | 52.8 M | 1835.85 |
+| heart | han_hcl | GSE134355 | Microwell-seq | not stated | 2 (1 / 1) | 11-12 | 5.1 M | 38.5 |
+| heart | knight_schrijver | GSE216019 | 10x 3' v3 | not stated | 6 (6 / 0) | 8.29-11.43 | 107.3 M | 570.5 |
+| heart | roost | GSE66302 | DeepSAGE tags | gestational | 6 (2 / 4) | 9-22 | 10.5 M | 119.25 |
+| kidney | cao2020 | GSE156793 | sci-RNA-seq3 | post conception (ga_pcw) | 9 (1 / 8) | 10.29-17.86 | 9.1 M | 300 |
+| kidney | cardoso_moreira | E-MTAB-6814 | bulk RNA-seq | post conception | 21 (12 / 9) | 4-20 | 21.7 M | 641.5 |
+| kidney | encode_uw | ENCSR212AMA+ENCSR495UXA+ENCSR896QPD+ENCSR907KDH | polyA+ RNA-seq | not stated (ENCODE) | 4 (0 / 4) | 12.14-15.43 | 45.0 M | 1337.05 |
+| kidney | han_hcl | GSE134355 | Microwell-seq | not stated | 4 (2 / 2) | 11-13 | 6.0 M | 34.5 |
+| kidney | hochane | GSE114530 | 10x 3' v2 | not stated | 5 (2 / 3) | 9-18 | 20.9 M | 326.5 |
+| kidney | lindstrom_combes | GSE102596+GSE124472+GSE139280 | 10x 3' | not stated | 4 (0 / 4) | 14-17 | 39.3 M | 270 |
+| kidney | roost | GSE66302 | DeepSAGE tags | gestational | 6 (2 / 4) | 9.3-22 | 6.8 M | 53.5 |
+| lung | cao2020 | GSE156793 | sci-RNA-seq3 | post conception (ga_pcw) | 11 (0 / 11) | 12.71-17.86 | 10.8 M | 275 |
+| lung | encode_cshl | ENCSR000AFC | total RNA-seq | not stated (ENCODE) | 2 (0 / 2) | 20-24 | 34.1 M | 895.75 |
+| lung | han_hcl | GSE134355 | Microwell-seq | not stated | 2 (1 / 1) | 11-12 | 6.0 M | 37 |
+| lung | roost | GSE66302 | DeepSAGE tags | gestational | 6 (2 / 4) | 9.1-22 | 7.2 M | 71.5 |
+| lung | sountoulidis | GSE215895 | 10x 3' | post conception | 17 (11 / 6) | 5-14 | 173.5 M | 3664.5 |
+| liver | cao2020 | GSE156793 | sci-RNA-seq3 | post conception (ga_pcw) | 7 (0 / 7) | 12.71-17.14 | 6.8 M | 93 |
+| liver | cardoso_moreira | E-MTAB-6814 | bulk RNA-seq | post conception | 26 (19 / 7) | 4-19 | 20.3 M | 230 |
+| liver | encode_cshl | ENCSR000AFB | total RNA-seq | not stated (ENCODE) | 2 (0 / 2) | 20-22 | 41.0 M | 822.25 |
+| liver | roost | GSE66302 | DeepSAGE tags | gestational | 6 (2 / 4) | 8.3-22 | 6.9 M | 19 (fails) |
+
+**Excluded, with the rule** (all in `scout/sources.md`): Roost liver (E4: 19.0 < 20); He 2022 lung (E1: the Methods
+state CD326/EPCAM MACS enrichment, the enriched libraries are not identifiable); Barnes 2023 lung (E1: enrichment not
+verifiable); Renesme 2025 lung (E2: the UMI matrix has no gene names or ids); Quach 2024 lung (E2: an 8 GB Seurat
+object only; reading it would execute downloaded code); Popescu 2019 kidney and liver, Stewart 2019 kidney (E1: sorted
+fractions; Stewart and Popescu share fetuses, E6); Han HCL liver (E3/E5: one or two samples of 26-27 weeks, ambiguous
+donor); sorted, part-of-organ, spatial, TPM/RPKM-only, long-read ENCODE and controlled-access sources (E1, E2, as
+tabled). Differences from the scout's counts: Cardoso-Moreira counts only prenatal individuals resolved by the A237 link
+tiers (heart 27, kidney 21, liver 26; the scout's 34, 27, 37 counted unresolved libraries); Cui heart 18 fetuses;
+Lindstrom / Combes kidney 4. Fetuses of UK HDBR sources (Cardoso-Moreira, Knight-Schrijver) cannot be cross-matched on
+metadata; ENCODE UW and Cao fetuses of the same stated age and sex are kept apart as in A242 (limit (3) of A242).
+
+**Design and adult power** (`output/feasibility_design.csv`, `output/feasibility_passrates.csv`;
+`feasibility_a243.py`, 200 subsamples, 500 permutations; fetuses of a window counted in cohorts with >= 2 fetuses in
+that window, so `heart:early` and `heart:late` drop the one Han fetus each):
+
+| readout | fetuses | cohorts | covariates | adult pass rate at 1 / 0.75 / 0.5 | without a clock |
+|---|---|---|---|---|---|
+| `heart:all` | 72 | 8 | 9 | 1.000 / 1.000 / 0.800 | 0.055 |
+| `heart:late` | 36 | 6 | 6 | 1.000 / 0.995 / 0.605 | 0.065 |
+| `heart:early` | 34 | 4 | 5 | 1.000 / 0.985 / 0.520 | 0.050 |
+| `heart:all:new` | 36 | 6 | 7 | 1.000 / 0.985 / 0.435 | 0.040 |
+| `kidney:all` | 53 | 7 | 8 | 1.000 / 0.995 / 0.250 | 0.045 |
+| `kidney:late` | 34 | 7 | 7 | 0.995 / 0.945 / 0.155 | 0.015 |
+| `kidney:early` | 18 | 4 | 5 | 0.985 / 0.855 / 0.160 | 0.045 |
+| `kidney:all:new` | 23 | 5 | 6 | 0.985 / 0.785 / 0.155 | 0.055 |
+| `lung:all` | 38 | 5 | 6 | 1.000 / 0.995 / 0.390 | 0.070 |
+| `lung:late` | 23 | 4 | 4 | 1.000 / 0.945 / 0.300 | 0.045 |
+| `lung:early` | 13 | 2 | 3 | 0.950 / 0.670 / 0.175 | 0.045 |
+| `lung:all:new` | 27 | 4 | 5 | 0.995 / 0.940 / 0.285 | 0.080 |
+| `liver:all` | 35 | 3 | 4 | 1.000 / 0.995 / 0.405 | 0.065 |
+| `liver:late` | 16 | 3 | 3 | 1.000 / 0.840 / 0.225 | 0.065 |
+| `liver:early` | 19 | 1 | 2 | 1.000 / 0.935 / 0.260 | 0.050 |
+| `heart:cardoso_moreira` | 27 | 1 | 2 | 1.000 / 1.000 / 0.620 | 0.075 |
+| `heart:cui` | 18 | 1 | 2 | 1.000 / 0.960 / 0.545 | 0.060 |
+| `kidney:cardoso_moreira` | 21 | 1 | 2 | 1.000 / 0.960 / 0.160 | 0.055 |
+| `liver:cardoso_moreira` | 26 | 1 | 2 | 1.000 / 0.995 / 0.285 | 0.045 |
+| `lung:cao2020` | 11 | 1 | 2 | 0.915 / 0.705 / 0.185 | 0.040 |
+| `lung:sountoulidis` | 17 | 1 | 2 | 0.995 / 0.895 / 0.285 | 0.045 |
+
+**Readouts scored.** All registered readouts have an adult pass rate >= 0.8 at the full clock (lowest `lung:early`
+0.950), so H243.1 has four organs (Holm over 4) and H243.2 eight windows (Holm over 8). `liver:all:new` does not exist
+(without Cao and Cardoso-Moreira the liver keeps ENCODE CSHL's 2 fetuses; the readout needs >= 3). The descriptive
+leave-one-cohort-out readouts (`<organ>:all:-<cohort>`) were not simulated; they are scored with the power of
+`<organ>:all` as stated in `score_a243.tests` and read as descriptive only. At half the adult size only `heart:all`
+reaches 0.8 (0.800): by the registered reading, a negative heart excludes a clock of half the adult size; a negative in
+kidney, lung or liver excludes three quarters (pass rates at 0.75 >= 0.995 for every `all`), and the comparison with the
+adrenal stays open there.
+
+**Companion dry run** (`companions_dryrun_a243.py`, `output/companions_dryrun.csv`; no clock statistic): the scored pool
+is that of `development.log_mean` as in A242, i.e. genes measured (not missing) in every cohort of the readout with a
+mean count >= 1 over its fetuses. Pools of the primary readouts: heart 13,242 genes, kidney 13,402, lung 13,542, liver
+17,749; of these, 230, 122, 192 and 2,086 have a zero total in one cohort (measured, not detected; mostly in the
+shallow Cao and Han libraries). The first matched and responsive set of each readout is listed in the table (the
+responsive sets draw from the immediate-early and glucocorticoid-responsive genes, e.g. EGR2, KLF2, FKBP5, NR4A2 for
+`heart:all`). Nothing else is chosen here.
+
 ## A244 (2026-11-11, user: "okay, register 1 and 2 and write a prompt for a new agent to launch them"; staged: hypotheses, classes, marker lists, families and readings are fixed here, the per-cell classifier thresholds, the design table and the adult power go in a design addendum committed before any clock statistic is computed on a cell class; seen: every result of A242 on the whole adrenals of the same fetuses, A189, A190 and its post hoc checks; no per-cell data of these cohorts beyond the summed counts): is the clock-shaped covariation of the fetal adrenal carried by the cortex, by the medulla, or by both? **Six single-cell cohorts of A242, 39 fetuses; L1 per cell class; secondary (development section)**
 **Why.** A242 reads the adrenal as one sample per fetus. A whole-organ signal can come from the steroidogenic
 cortex (the adult adrenal clock), from the neural-crest-derived medulla, from both, or from the proportions of the

@@ -111,6 +111,7 @@ def main():
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args()
     limit_threads(1)
+    OUT.mkdir(exist_ok=True)
     t0, n = time.time(), (3 if a.check else a.n_sets)
     lm = log_mean(a.species)
     print(f"{a.species}: {len(lm)} genes for matching {time.time() - t0:.0f}s", flush=True)
