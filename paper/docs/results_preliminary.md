@@ -5384,3 +5384,25 @@ reproduce exactly (max |difference| 0.0).
   calibration against timed truth).
 - Code: `exploratory/A272_backbone_pairwise/scripts/score_a272.py` (one scoring run, 30 s; placebo runs before it).
 <!-- src: paper/exploratory/A272_backbone_pairwise/output/{tests,pairs,centrality,family_matrix,closure,design}.csv, output/placebo/tests.csv -->
+
+## A273 (scored 2026-11-16; calibration): untimed pairwise offsets between cell types of one sample are unbiased against known time in the mouse colon (V273.1, V273.2 PASS)
+
+- Design: colon chrono-atlas, 8 mice per arm (ZT 1 / 7 / 13 / 19), 12 compartments in C-DC and in R-DC (66 pairs each),
+  10 in R-PC. Primary set: 43 pairs of C-DC and R-DC with both compartments timed-rhythmic (timed coupling >= 0.5).
+- **V273.1 PASS:** median |untimed - timed| 0.31 h; 97.7 % of pairs within 1 h; median jackknife SD 0.40 h.
+- **V273.2 PASS:** slope of untimed on timed offsets 1.005 (Pearson 0.994). No shrinkage towards 0.
+- By arm (timed-rhythmic pairs): C-DC 28 pairs, median error 0.24 h, slope 1.195, Pearson 0.959, with true offsets
+  up to 1.79 h only; R-DC 15 pairs, 0.57 h, slope 1.000 (true offsets up to 11.6 h after injury); R-PC 3 pairs, 0.07 h.
+- All 132 pairs of the two arms, including compartments without a timed rhythm: median error 0.84 h, slope 0.628,
+  median |r| 0.475: an offset is not readable where a compartment has no rhythm; the A272 rule (offsets only for pairs
+  above both companions) addresses this.
+- **Descriptive, the timed offsets themselves.** In the undamaged colon the timed-rhythmic cell classes differ in clock
+  phase by a median of 0.63 h and at most 1.79 h. Timed coupling to ZT: smooth muscle 0.970, endothelial 0.946,
+  fibroblast 0.931, colonocyte 0.878, lymphatic endothelium 0.815, secretory 0.805, stem 0.803, macrophage 0.514,
+  plasma 0.495, DC 0.223, B 0.167, T 0.000: the stromal-vascular classes are the most time-locked and the lymphocytes
+  the least, with time known and no host.
+- **Reading (registered).** Pairwise offsets between cell types of one sample are unbiased at the 1 h scale; the human
+  offsets of A272 are limited by their own intervals. Bias only: precision in a narrow sampling window is not tested
+  here (8 mice over 24 h).
+- Code: `exploratory/A273_pairwise_offset_truth/scripts/score_a273.py` (one run).
+<!-- src: paper/exploratory/A273_pairwise_offset_truth/output/{tests,pairs,compartments,design}.csv -->
