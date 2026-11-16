@@ -7174,3 +7174,23 @@ control); nuclei, not cells, in the cortex atlases; eye and optic nerve come fro
 atlases with lymphocytes may be only the two gut atlases and one or two others (few pairs: the addendum gives them).
 **Code.** `exploratory/A272_backbone_pairwise/scripts/score_a272.py` generalised to a list of atlases and a family
 grouping (`exploratory/A274_celltype_map/scripts/score_a274.py`), placebo before scoring.
+
+## A275 (2026-11-16, autonomous follow-up of A272; **post hoc and descriptive**: A272 is known in full (the responsive sets reach T_SV 0.434 against the clock's 0.499; lymphocytes with the tissue: clock 0.220, responsive 0.349); NOT seen: any per-gene sharing): which genes are shared between the cell types of a donor: clock genes, glucocorticoid targets, or immediate-early genes? **The five A272 atlases; per-gene decomposition of the responsive companion; no test**
+
+**Why.** The responsive companion pools two kinds of genes (`controls.GC_TARGETS`: glucocorticoid targets, several of
+them clock outputs such as NFIL3, BHLHE40, KLF9, TSC22D3; `controls.IMMEDIATE_EARLY`: FOS, JUN, EGR1 and the like, the
+core of the tissue-dissociation response). Failing against it means different things for the two: a daily hormonal
+program shared by the cells of a donor is internal time by another route; an immediate-early response shared by the
+cells of one sample is a handling state. No separate dissociation companion is added: the immediate-early pool is that
+signature.
+**Readout.** Per gene and pair of compartments (the A272 pairs): correlation over donors of log((count + 0.5) / depth),
+centred within stratum, pooled over strata. Sharing of a gene in a pair class (SV_X, LY_X, ...) = median over pairs;
+of a gene class (clock, glucocorticoid target, immediate-early, expression-matched genes of 200 matched sets) = median
+over genes per atlas, then mean over atlases.
+**Reported, no verdict.** The sharing of the four gene classes in (SV, X) and (LY, X) pairs, and the per-gene values
+of the clock, glucocorticoid and immediate-early genes. **Reading rule fixed in advance:** if immediate-early genes
+are shared at least as much as the clock genes while glucocorticoid targets are not, the responsive level of A272 is
+a handling state and the matched family is the relevant control for the clock; if glucocorticoid targets carry it, the
+responsive level is a systemic hormonal state, not separable from internal time in these data (A270); if both, both.
+Per-gene sharing is not corrected for counting noise: genes are compared with expression-matched genes only.
+**Code.** `exploratory/A275_shared_gene_classes/scripts/score_a275.py`.
