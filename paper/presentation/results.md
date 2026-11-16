@@ -121,9 +121,10 @@ the clock genes.
    1.11 h.
 
 **Figure:** `figures/living_patients/living_patients.png` (`scripts/living_breast_compute.py`, `scripts/living_patients.py`).
-A. breast: internal time (13:00 rule, no recorded time used) vs resection hour, one dot per patient, equal axes. B. heart:
-each patient's internal time by surgery window (06-10 h vs 14-18 h), circular means. C. per-sample absolute error after
-removing one common offset: breast (08-18 h) 1.12 h, adipose (full day) 1.11 h.
+A. breast: internal time (13:00 rule, no recorded time used) vs resection hour, one dot per patient, same range on both
+axes. B. heart: each patient's internal time by surgery window (06-10 h vs 14-18 h), circular means. C. adipose:
+single-biopsy internal time vs zeitgeber time (common offset removed), circular mean and SD per time point. D. per-sample
+absolute error after removing one common offset: breast (08-18 h) 1.12 h, adipose (full day) 1.11 h.
 
 **Speaker notes**
 - Breast: the ordering does not rest on glucocorticoid-induced PER1 (0.560 without it); it leans on NR1D1 (0.233

@@ -2,10 +2,12 @@
 
 A. Breast surgery (GSE233242, 42 patients, bulk tumour + adjacent normal = two compartments; A200 registered, pass): one dot
    per patient, internal time (host phase; the estimates' circular mean set to 13:00, no recorded time used) against the
-   recorded resection hour, equal axes; dashed: identity.
+   recorded resection hour, same range on both axes; dashed: identity.
 B. Heart surgery (GSE270258, 16 patients, snRNA-seq cardiomyocyte, fibroblast, endothelial, neuron; 8 operated 06-10 h and 8
    at 14-18 h; A174, confirmation): each patient's internal time (host phase), by surgery window, with the circular mean.
-C. Per-sample absolute error after removing one common offset (best rotation against the recorded times, both cohorts):
+C. Subcutaneous adipose (GSE104674, 12 men x 4 biopsies over the day; A113 registered, pass): single-biopsy internal time
+   against zeitgeber time, rotated by the common offset; per time point circular mean and circular SD; dashed: identity.
+D. Per-sample absolute error after removing one common offset (best rotation against the recorded times, both cohorts):
    breast (08-18 h, host of two compartments) vs subcutaneous adipose (GSE104674, 12 men x 4 biopsies over the day, one
    compartment, single-biopsy phase on the GTEx clock plane; A113 registered, pass). Lines: medians.
 
@@ -44,7 +46,6 @@ def breast(ax, p):
     ax.set_ylim(8, 19)
     ax.set_xticks(range(8, 19, 2))
     ax.set_yticks(range(8, 19, 2))
-    ax.set_aspect("equal")
     ax.set_xlabel("resection hour [h]")
     ax.set_ylabel("internal time [h]")
     ax.set_title("breast surgery", fontsize=13, color=INK)
@@ -67,6 +68,24 @@ def heart(ax, h):
     ax.spines["left"].set_visible(False)
     ax.set_xlabel("internal time [h]")
     ax.set_title("heart surgery", fontsize=13, color=INK)
+
+
+def adipose(ax, p):
+    off = np.angle(np.exp(1j * W * (p.phase_h - p.time_h)).mean()) / W
+    p = p.assign(internal=p.time_h + wrap(p.phase_h - off - p.time_h))
+    ax.plot([-3, 20], [-3, 20], color=MUTED, lw=1, ls="--", zorder=1)
+    jit = np.random.default_rng(0).uniform(-0.35, 0.35, len(p))
+    ax.scatter(p.time_h + jit, p.internal, s=14, color=CS, alpha=0.35, lw=0, zorder=2)
+    for t, g in p.groupby("time_h"):
+        z = np.exp(1j * W * g.internal).mean()
+        m = t + wrap(np.angle(z) / W - t)
+        ax.errorbar([t], [m], yerr=np.sqrt(-2 * np.log(abs(z))) / W, fmt="o", color=CS, ms=7, lw=1.8, capsize=0, zorder=3)
+    ax.set_xlim(-2, 18)
+    ax.set_xticks([0, 6, 12, 18])
+    ax.set_yticks([0, 6, 12, 18])
+    ax.set_xlabel("zeitgeber time [h]")
+    ax.set_ylabel("internal time [h]")
+    ax.set_title("adipose biopsies", fontsize=13, color=INK)
 
 
 def errors(ax, err):
@@ -95,10 +114,11 @@ def main():
     ad = pd.read_csv(PAPER / "exploratory/A113_living_time/output/a113_phases.csv").query("dataset == 'adipose GSE104674'")
     err = {"breast\n08-18 h": offset_errors(bp.internal_h, bp.resection_h),
            "adipose\nfull day": offset_errors(ad.phase_h, ad.time_h)}
-    lay = pf.Layout.slide("ABC", kind="wide", col_ratios=[1, 1.2, 0.7])
+    lay = pf.Layout.slide("ABCD", kind="wide", col_ratios=[0.85, 0.7, 1, 0.6])
     breast(lay.axes["A"], bp)
     heart(lay.axes["B"], hh)
-    errors(lay.axes["C"], err)
+    adipose(lay.axes["C"], ad)
+    errors(lay.axes["D"], err)
     fig = lay.finalize()
     print(bs.round(3).to_string(), f"\nheart n {len(hh)}, adipose n {len(ad)}")
     print({k: round(float(np.median(np.abs(v))), 2) for k, v in err.items()})
