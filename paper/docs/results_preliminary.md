@@ -5644,3 +5644,36 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
   fibrosis, 0 of 12), A230 (inflamed gut, MDE 1.7 h), A141 (brain contrasts anchor-dependent). No disease contrast is
   registered before Q36 and a power calculation on the calibrated test.
 <!-- src: scratchpad scout reports (not in the repo); counts re-checked: IBDverse rectum 61, HLCA fibrosis 198 / 71 -->
+
+## A281 (scored 2026-11-17; not blind for lymphocyte couplings and pairwise |r|): tissue lymphocytes carry no readable clock of their own: their clock genes are not clock-coherent between donors where depth-matched fibroblasts are (H281.1 FAIL: 2 of 9; H281.2 PASS: 5 of 7 powered atlases); every stromal-vascular and epithelial compartment is coherent
+- Design: 12 healthy body atlases (A272, A274, IBDverse); per compartment with >= 15 donors, signed clock-gene
+  coherence C across donors (`decompose.signed_coherence`, per-sample offset fitted out), 1000 per-gene permutations
+  within strata. Nine atlases have a lymphocyte and a fibroblast-stromal compartment on >= 15 shared donors (18 to 117);
+  muscle, anterior eye and kidney have none. One plumbing failure before any statistic (workers could not unpickle the
+  file-loaded module; fixed as A274), then one scoring run.
+- **H281.1 FAIL** (own time): lymphocyte compartments with p < 0.05: 2 of 9 (heart lymphocyte C 0.502, p 0.012; breast
+  CD4 T 0.384, p 0.013). The others: lung T 0.237 (p 0.112), Kong colon CD4 T 0.344 (0.072), Kong ileum CD8 T 0.055,
+  colon T 0.048, optic nerve T 0.055, IBDverse ileum T -0.426 (0.915), rectum T -0.452 (0.863).
+- **H281.2 PASS** (weak clock): fibroblast-stromal compartments thinned to the lymphocytes' clock-gene counts pass in
+  >= 80 % of 20 replicates in 7 atlases (lung, heart, breast, Kong ileum and colon, IBDverse ileum and rectum: 0.90 to
+  1.00); the lymphocytes fail in 5 of these 7 (0.714 >= 2/3). Depth does not explain it: the IBDverse T cells have more
+  clock-gene counts than the stromal cells (median 1,397 against 292 in ileum; 513 against 248 in rectum) and the most
+  negative C; their C lies at the 12th and 6th percentile of 200 expression-matched gene sets.
+- **All compartments (descriptive), median C and share with p < 0.05:** fibroblast-stromal 0.829 (13 of 13 = 1.000),
+  mural 0.806 (1.000), endothelial 0.771 (1.000), epithelial 0.752 (1.000), parenchyma 0.746 (1.000), other 0.688
+  (0.769), myeloid 0.396 (0.500), lymphocyte 0.025 (38 compartments, 0.132). Within myeloid (post hoc look):
+  macrophages are coherent in most atlases (lung 0.675, heart 0.883, breast 0.626, optic nerve 0.691, eye 0.782 and
+  0.689, Kong ileum 0.594, IBDverse 0.579 and 0.565, p <= 0.004), monocytes, mast cells and dendritic cells are not
+  (lung monocyte 0.003, DC 0.054; mast cells about 0). Lymphocyte subsets: no subset is coherent in more than one
+  atlas (plasma 1 of 6, B 1 of 7, CD8 T 0 of 4).
+- **Reading (registered).** At depths where a stromal clock is read, the lymphocyte clock is not: tissue lymphocytes
+  carry a weak or absent clock signal between donors, not a clock of their own that the tissue fails to share. With
+  A272/A274 (no sharing beyond non-clock genes) and A275 (lymphocytes do share glucocorticoid-target and immediate-early
+  states with the tissue), the simplest reading is that tissue lymphocytes respond to systemic signals but do not keep
+  a readable clock between donors. Heart and breast lymphocytes are the exceptions.
+- **Limits.** Between-donor clock variation depends on the sampling window, which is shared by all classes of an atlas
+  (the thinned fibroblasts carry it); signed coherence reads the waveform's gene relations, so a lymphocyte clock with
+  other phase relations would read low; lymphocyte classes pool resident and circulating cells (B2). The macrophage
+  versus monocyte split is a post hoc observation, the motivation for B2, not a result.
+- Code: `exploratory/A281_lymphocyte_clock/scripts/score_a281.py` (about 25 min, 3 workers).
+<!-- src: paper/exploratory/A281_lymphocyte_clock/output/{tests,pairs,compartments,design}.csv -->

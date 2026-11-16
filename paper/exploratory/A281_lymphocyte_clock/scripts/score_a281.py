@@ -36,6 +36,10 @@ A280 = importlib.util.module_from_spec(spec)
 sys.modules["a281_a280"] = A280
 spec.loader.exec_module(A280)  # A274 module with the anchor fallback; A150 / A272 through it
 A274, A272, A150 = A280.A274, A280.A274.A272, A280.A274.A150
+import cloudpickle  # noqa: E402
+
+for _m in (A280, A274, A272, A150):  # file-loaded modules: ship by value to joblib workers
+    cloudpickle.register_pickle_by_value(_m)
 
 AMENDMENT = "A281_lymphocyte_clock"
 SEED = 281
