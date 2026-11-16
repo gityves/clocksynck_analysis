@@ -120,9 +120,12 @@ the clock genes.
 3. Subcutaneous adipose (12 men, 48 biopsies over the day): circular r with clock time 0.822 (p 0.001), median error
    1.11 h.
 
-**Figure (to build):** A. breast: internal time vs surgery hour, one dot per patient, with the null of matched gene sets
-as an inset histogram (observed 0.558 marked). B. heart: morning and afternoon host means with ellipses, the arrow
-between them and the predicted direction. C. adipose: internal vs clock time.
+**Figure:** `figures/living_patients/living_patients.png` (`scripts/living_breast_compute.py`, `scripts/living_patients.py`).
+A. breast: internal time (13:00 rule, no recorded time used) vs resection hour, one dot per patient. B. Spearman with the
+resection hour, clock genes (0.558) vs the 200 matched non-clock gene sets (median −0.053, q95 0.215). C. heart: each
+patient's shared clock state in the clock plane, morning and afternoon means joined by an arrow, dashed: the direction
+forward time predicts (18 h). D. adipose: single-biopsy internal time vs zeitgeber time (common offset removed), circular
+mean and SD per time point.
 
 **Speaker notes**
 - Breast: the ordering does not rest on glucocorticoid-induced PER1 (0.560 without it); it leans on NR1D1 (0.233
