@@ -6999,3 +6999,28 @@ glucocorticoid action, not of hormone level; other inputs (cAMP, temperature, ma
 significant). (5) The responsive companion is redrawn on CORE (11 genes) and its q95 may be high, as in A264 and A266.
 (6) Limits of A243.
 **Stop rule:** one scoring run. **Code:** `paper/exploratory/A269_fetal_organs_drive/scripts/`.
+
+## A270 (2026-11-16, user: "yes go ahead", to the test proposed after A263 Part B ("most cells should share a clock with the internal time"); **NOT BLIND** on the clock: the clock-gene host vs recorded time is known in both cohorts (baboon A36 R 0.987; GTEx fast deaths, `walltime_hosts.csv`, R 0.631); seen: A263 Part A (human, baboon) and Part B (H263.4 FAIL, clock 0.393 at the 87.5th percentile of the responsive pooled sets); seen before the full run: the baboon `--check` run (3 responsive and 3 matched sets, 200 permutations; for the code only); NOT seen: any other host of a pseudo gene set read against recorded time): do the responsive companion sets carry internal time? **Baboon (GSE98965, 12 animals, 63 tissues) and GTEx fast deaths (Hardy 1-2, 15 reference tissues); control; primary for the reading of every responsive-companion verdict (A150/A263 Part B, A263 Part A, A269)**
+**Why.** The responsive family (`controls.RESPONSIVE_GENES`: glucocorticoid targets and immediate-early genes) was used as
+a non-clock control. Glucocorticoid targets follow the daily cortisol rhythm in vivo, so a responsive set may be a
+systemic output of internal time rather than a non-clock state. If so, failing against it says the clock-gene readout is
+not separable from the systemic daily program, not that the shared state is non-clock.
+**Design.** Per species, 200 responsive and 200 expression-matched sets (`clocksync.paired.pseudo_waveforms`, GTEx
+waveform amplitudes and phases, matching variable = mean log fraction over the rows used, genes with mean count >= 1;
+seeds [270, 1] and [270, 2]) plus the clock. Per set: the untimed host (`Dataset`, every tissue an anchor, as A36 and
+`compute_walltime_hosts.py`) read against recorded time with `Dataset.timed` (R, its permutation p over 1000 shuffles of
+the times, Fisher-Lee r). Baboon: ZT; human: time of death (fast deaths, the 15 tissues of `V2_TISSUES`, depth = library
+size; aggregates only).
+**H270.1 (baboon), H270.2 (GTEx):** the share of responsive sets with p_R < 0.05 is >= 0.5 ("the responsive family carries
+internal time"). Descriptive: the same share for matched sets, the median R of each family, the percentile of the clock R
+in each family, and the median of max(R, R of the reflected host) (a set whose genes peak in another order can read time
+mirrored).
+**Readings.** H270.1 and H270.2 PASS: the responsive companion is an output of internal time; the verdicts against it
+(A150/A263 Part B, A263 Part A, A269) read "not separable from the systemic daily (glucocorticoid) program", not "shared
+non-clock state"; specificity of a clock statement then rests on the matched family. Both FAIL: the responsive sets do not
+read time; the failures stand as non-clock warnings. Split: per species. If matched sets also pass in a species, internal
+time is carried genome-wide there (Mure 2018: most baboon genes are rhythmic in some tissue) and is reported as such.
+**Limits.** (1) Not blind on the clock. (2) The pseudo sets carry the clock waveform's phases; a responsive set whose genes
+peak in another order is read with a distorted host (hence the reflected descriptive). (3) 12 animals: permutation p has a
+floor near 1/1000 and R is noisy per set. (4) GTEx time of death is recorded wall time; the clock R is 0.631.
+**Stop rule:** one run per species. **Code:** `paper/exploratory/A270_responsive_time/scripts/score_a270.py`.
