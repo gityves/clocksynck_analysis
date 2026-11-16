@@ -7331,3 +7331,33 @@ stated with the result.
 **Limits.** IBDverse healthy donors are biopsies of a Crohn's study's controls (living tissue). MSSM and HBCC share
 protocols; cortex classes carry no lymphocytes.
 **Code.** `exploratory/A280_celltype_replication2/scripts/score_a280.py` (the A274 script with these atlases).
+
+## A281 (2026-11-17, autonomous, block B1 of the cell-type program; uses no pairwise |r| test (the within-compartment coherence of `common/development.py`, calibrated by per-gene permutation, A237 onwards); **NOT BLIND** for: lymphocyte couplings to the anchored host (A150, 0.069), lymphocyte pairwise |r| with other classes (A272, A274: at the matched median) and per-gene sharing (A275); NOT seen: any within-compartment coherence of these atlases' compartments, any thinned table): do lymphocytes carry a clock of their own that they do not share with the tissue, or no readable clock? **Healthy body atlases of A272, A274 and A280 (IBD); B1; H281.1, H281.2**
+
+**Why.** Lymphocytes share no more clock-gene state with the other cells of a tissue than non-clock genes do. Either
+their clock state varies between donors but independently of the tissue (own time: a clock that keeps the time of
+where the cell came from), or their clock genes carry no readable clock variation (weak clock, or too shallow).
+**Readout.** Per compartment (>= 15 donors): signed clock-gene coherence C across donors
+(`development.coherence`: log fractions centred within stratum ... via `strata`; per-sample offset fitted out, sign
+kept), one-sided permutation p against 1000 per-gene permutations within strata. Not used here: any host or partner.
+**Depth control (power).** In each atlas with a lymphocyte and a fibroblast-stromal compartment: the fibroblast-stromal
+compartment (largest number of donors) is thinned binomially, row by row, to the median depth of the lymphocyte
+compartment's clock genes (sum of the 14 clock-gene counts per row; rows of donors present in both), 20 replicates, and
+C with its p computed on each (200 permutations per replicate); thinned pass rate = share of replicates with p < 0.05.
+The lymphocyte compartment is read on the same donors. Atlases: lung_hlca, heart, organ_breast, organ_colon,
+organ_optic_nerve, kong_ileum, kong_colon, ibd_ileum, ibd_rectum (healthy rows; organ_muscle, eye and kidney have no
+lymphocyte compartment with >= 15 donors are named).
+**H281.1 (own time):** across these atlases, the share of lymphocyte compartments (the largest per atlas, on the shared
+donors) with C p < 0.05 is >= 0.5. **H281.2 (weak clock, read only with H281.1 failed):** in the atlases where the
+thinned fibroblast-stromal pass rate is >= 0.8 (powered), the lymphocyte compartment fails (p >= 0.05) in at least
+two thirds.
+**Readings.** H281.1 PASS: lymphocytes carry clock-coherent variation between donors that the tissue does not share:
+own time (with A272/A274). H281.1 fail and H281.2 PASS: at depths where a stromal clock is read, the lymphocyte clock is
+not: a weak or absent clock signal in tissue lymphocytes. Both fail: not decided (power or mixed). Descriptive: C and p
+of every compartment by family (all classes), C of 200 expression-matched pseudo sets per lymphocyte compartment
+(percentile of the clock), T, B and plasma separately where labelled (IBDverse).
+**Limits.** Donors of an atlas are sampled in a limited window of the day (surgery, biopsies; post-mortem for optic
+nerve), which limits between-donor clock variation in every class alike; the thinned fibroblasts carry the same window.
+Signed coherence reads coherent variation in the waveform pattern; a clock with altered gene phase relations in
+lymphocytes would read low.
+**Code.** `exploratory/A281_lymphocyte_clock/scripts/score_a281.py`.
