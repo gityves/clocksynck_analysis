@@ -5348,3 +5348,39 @@ reproduce exactly (max |difference| 0.0).
   both families, as in the healthy atlases. Tumour and normal samples share one operation (anaesthesia, steroid
   premedication); what the responsive shared state is in these samples is not tested.
 <!-- src: paper/exploratory/A227_tme_compartment_pairing/output/responsive/{tests,pooled}.csv; paper/exploratory/A228_immune_body_time/output/responsive/tests.csv -->
+
+## A272 (scored 2026-11-16; not blind for the anchored readout): without a host, stromal-vascular cells share more clock state with the other cells of a tissue than lymphocytes do, beyond both companion families (H272.2 PASS); their shared state itself is above expression-matched genes but not above stress-responsive genes (H272.1 fail against the responsive family only)
+
+- Design: 5 healthy atlases (lung_hlca, heart, organ_breast, organ_muscle, organ_colon), 249 pairs of compartments,
+  no host and no anchors; pairs (stromal-vascular, X) 60 in 5 atlases, (lymphocyte, X) 60 in 4. Primary statistic
+  without the Poisson correction (design addendum, from the placebo run: the corrected variance is non-positive in 144
+  of 249 clock pairs). Placebo (donors permuted): T_SV 0.161 against companion medians 0.150 and 0.153; D 0.005.
+- **H272.1 fail against the responsive family only.** T_SV (median |r| of stromal-vascular cells with the other
+  non-lymphocyte families, mean over atlases) 0.499; matched sets median 0.304, q95 0.399 (p 0.010); responsive sets
+  median 0.434, q95 0.533 (p 0.149).
+- **H272.2 PASS.** D = T_SV - T_LY 0.277; matched median 0.049, q95 0.117 (p 0.005); responsive median 0.089, q95 0.177
+  (p 0.005). Lymphocytes with the other families: clock median |r| 0.220, matched 0.219, responsive 0.349.
+- **D272.1.** Per-compartment centrality, family medians (clock; excess over matched; excess over responsive):
+  mural 0.574 (+0.214; +0.081), fibroblast-stromal 0.529 (+0.260; +0.145), endothelial 0.473 (+0.165; +0.086),
+  epithelial 0.415 (+0.164; +0.041), myeloid 0.409 (+0.153; +0.011), lymphocyte 0.243 (+0.028; -0.085). One compartment
+  of 52 is above the q95 of both families (a fibroblast). By atlas, (stromal-vascular, X): heart 0.550, breast 0.585,
+  muscle 0.545, lung 0.528, colon 0.289 (colon matched 0.218, responsive 0.442). Spearman of the pairwise excess over
+  matched sets with the A150 anchored excess: 0.652 (52 compartments).
+- **D272.2 offsets.** 14 pairs are above the q95 of both families; their offsets have median |offset| 0.62 h and a
+  median 90 % interval width of 1.54 h; the largest is lung AT2 minus fibroblast, +1.55 h (0.87 to 2.20). One closed
+  triangle only (closure 0.02 h): closure is not informative at this number of pairs.
+- **D272.3.** After the A150 ambient over-correction of the clock counts: T_SV 0.423, D 0.235 (companions not
+  corrected, so not a test). Poisson-corrected T_SV 0.834 over the pairs where it is defined; D not defined.
+- **Reading (registered).** The backbone holds without a host as a ranking: the same partner cell types share more
+  clock-gene state with stromal-vascular cells than with lymphocytes, and no companion family shows a difference of
+  that size (H272.2). The level of the stromal-vascular shared state is not separable from the daily or acute hormone
+  response in these atlases (H272.1 against the responsive sets; A270: such sets read time in the baboon, hardly in
+  GTEx): it is reported as a shared state above expression-matched genes, not as a clock-specific level. The anchored
+  result was not an effect of the anchoring (0.652 with the anchor-free excess). Lymphocytes share no more clock-gene
+  state with the tissue than expression-matched genes do, and less than responsive genes.
+- **Limits.** Five atlases, lung contributes the most pairs; colon is weak. |r| is attenuated by counting noise, so
+  absolute values are lower bounds and families are compared through the companions only. Compartments of one sample
+  share ambient RNA. Offsets: intervals of about 1.5 h, no lead or lag is interpreted (separate amendment after a
+  calibration against timed truth).
+- Code: `exploratory/A272_backbone_pairwise/scripts/score_a272.py` (one scoring run, 30 s; placebo runs before it).
+<!-- src: paper/exploratory/A272_backbone_pairwise/output/{tests,pairs,centrality,family_matrix,closure,design}.csv, output/placebo/tests.csv -->
