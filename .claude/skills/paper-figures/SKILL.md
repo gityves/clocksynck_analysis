@@ -64,6 +64,8 @@ figure, then apply it to the figure at hand.
   axes gets no title.
 - **No processing jargon on axes:** drop words like "aligned", "rotated", "normalised", "posterior"; say it once in the
   caption or the speaker notes.
+- Estimate vs truth axes name the quantity, then the source: `phase offset clocksync [h]` vs `phase offset timed [h]`
+  (user, 2026-11-16), not "untimed / timed offset".
 - Short, lower-case axis labels; a line break rather than a smaller font when a label is long.
 - Legends: one row under the panels, or direct labels next to the lines when there are at most four series.
 

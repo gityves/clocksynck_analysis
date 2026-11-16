@@ -69,8 +69,8 @@ def tissues(ax, t):
     ax.set_xticks(range(-6, 7, 3))
     ax.set_yticks(range(-6, 7, 3))
     ax.set_aspect("equal")
-    ax.set_xlabel("timed offset [h]")
-    ax.set_ylabel("untimed offset [h]")
+    ax.set_xlabel("phase offset timed [h]")
+    ax.set_ylabel("phase offset clocksync [h]")
     ax.set_title("tissues", fontsize=13, color=INK)
 
 
