@@ -3,6 +3,7 @@
 # in the background so that its exit wakes the agent: exit 1 = a run ended failed / killed_memory / interrupted, a
 # runner was LOST, or a log stayed silent longer than the limit; exit 0 = nothing is running any more (all done).
 #   paper/common/watch_jobs.sh [silent_min=120] [extra PIDs to wait for (jobs started without run.sh)...]
+# WATCH_IGNORE="pid ..." skips those runners (e.g. another session's LOST runner already reported).
 # Polls every 60 s; reads only logs/jobs.tsv, logs/jobs/*.state and log modification times.
 set -u
 repo=$(cd "$(dirname "$0")/../.." && pwd); logs="$repo/paper/results/logs"
@@ -18,7 +19,7 @@ while true; do
   running=0; now=$(date +%s)
   for f in "$logs"/jobs/*.state; do
     [ -e "$f" ] || continue
-    rp=$(basename "$f" .state); step=$(sed -n 's/^step=//p' "$f"); log=$(sed -n 's/^log=//p' "$f")
+    rp=$(basename "$f" .state); [[ " ${WATCH_IGNORE:-} " == *" $rp "* ]] && continue; step=$(sed -n 's/^step=//p' "$f"); log=$(sed -n 's/^log=//p' "$f")
     if ! kill -0 "$rp" 2>/dev/null; then
       sleep 5; [ -e "$f" ] || continue  # it may just have finished
       echo "ATTENTION runner LOST (no ledger line): $step (log $log)"; exit 1
