@@ -5612,3 +5612,13 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
 - Limits: pools of 2 aortas, 1-3 pools per sex x ZT; macrophages in 10 libraries; one arm primary.
 - Code: `exploratory/A279_aorta_pairwise_truth/scripts/score_a279.py` (about 1 min).
 <!-- src: paper/exploratory/A279_aorta_pairwise_truth/output/{tests,pairs,compartments,design}.csv -->
+
+## Data note (2026-11-17, cell-type program A3): genome-wide twins of IBDverse ileum and rectum
+- `$SCCC_DATA/atlas_wg/ibdverse` built from the local IBDverse h5ad (1,852,681 cells, raw/X) by
+  `exploratory/celltype_map_builds/build_ibd_genome.py` with the grouping of the panel build (A14); 32,363 genes after
+  canonical symbols. Builders `ibd_ileum_genome`, `ibd_rectum_genome` (same rules as `_atlas/ibd.py`).
+- Twin check over all rows: rectum 1,677 rows, ileum 2,433 rows; every clock count, n_cells and depth equal (maximum
+  difference 0), strata and healthy donors equal. Both are eligible by the A274 twin rule.
+- Healthy donors with a lymphocyte and a stromal-vascular compartment (builders, counts only): rectum 61, ileum 53.
+- First run killed for memory (13 GB > 12 GB cap: a dense temporary per chunk); rerun with in-place accumulation, peak
+  10.8 GB.
