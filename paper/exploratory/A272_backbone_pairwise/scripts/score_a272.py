@@ -188,7 +188,7 @@ def main():
     ap.add_argument("--placebo", action="store_true")
     args = ap.parse_args()
     cli.setup(args)
-    out = exploratory_dir(AMENDMENT) / "output"
+    out = exploratory_dir(AMENDMENT)
     if args.placebo:
         out = out / "placebo"
     out.mkdir(parents=True, exist_ok=True)
