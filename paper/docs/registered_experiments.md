@@ -7306,3 +7306,28 @@ follow the tissue clock less than its stromal-vascular cells, as in the human at
 **Limits.** Pools of 2 aortas (pool-to-pool variation dominated A201); 1-3 pools per sex x ZT; SMC-dominated tissue;
 timed offsets between these classes are small, so V279.1 tests bias near zero, not the slope.
 **Code.** `exploratory/A279_aorta_pairwise_truth/scripts/score_a279.py`.
+
+## A280 (2026-11-17, autonomous, blocks A3 and C3 of the cell-type program; staged: hypotheses, atlases and eligibility fixed here, design addendum before scoring; **scoring waits for Q36** (the calibrated form of the companion test, chosen by the user before any statistic of these atlases is computed); seen: A272, A274, A276-A279; NOT seen: any pairwise statistic of the atlases below): second replication of the lymphocyte ranking, and the third and fourth cortex cohorts. **IBDverse ileum and rectum (healthy), PsychAD MSSM (healthy) and RADC (normal); H280.1-3**
+
+**Atlases and eligibility.** Body: `ibd_rectum`, `ibd_ileum` (A17 healthy fits; genome twins exact, data note
+2026-11-17). Cortex: `psychad_mssm` (A17 healthy fit, 257 donors) once its genome table passes the twin rule;
+`psychad_radc` has no A17 healthy fit (its 26 "normal" donors are reported descriptively only). Rows, strata, families,
+pairs (strata with >= 3 shared donors, pooled df >= 15) and companions (200 matched, 200 responsive; seeds [280, atlas,
+kind]) as A274. An atlas that fails the twin rule is named and left out.
+**H280.1 (second replication of H272.2 / H274.1):** D = T_SV - T_LY over the IBD atlases with >= 3 pairs (SV, X) and
+>= 3 pairs (LY, X), above both companion families by the test adopted under Q36.
+**H280.2 (cortex, replication of H274.3):** T_CX over the eligible healthy cortex atlases (MSSM), above both families
+by the same test.
+**H280.3 (offset-sign tie-break):** the inhibitory_CGE minus vascular offset (arg r, h) in the healthy MSSM donors with
+its donor-bootstrap 90 % interval (500, within stratum): negative and excluding 0 agrees with PsychAD HBCC (-1.53 h),
+positive and excluding 0 with SEA-AD DLPFC (+1.33 h); an interval including 0 decides nothing. Read only if the pair's
+|r| is above both companion q95 (A274 rule for offsets).
+**Descriptive.** Per atlas and pair class with companions; the IBD family matrix (lymphocytes split T, B, plasma as
+labelled: resident-plasma against B is a preview of B2, not a test); RADC normal donors as MSSM.
+**Readings.** H280.1 PASS: the ranking holds in a third, independent body source with many more lymphocyte donors
+(61 rectum, 53 ileum). Fail with D above the companion medians: not replicated at this power. H280.2 as H274.3. H280.3:
+MSSM shares processing with HBCC (same consortium), so agreement with HBCC is weaker evidence than agreement with SEA-AD;
+stated with the result.
+**Limits.** IBDverse healthy donors are biopsies of a Crohn's study's controls (living tissue). MSSM and HBCC share
+protocols; cortex classes carry no lymphocytes.
+**Code.** `exploratory/A280_celltype_replication2/scripts/score_a280.py` (the A274 script with these atlases).
