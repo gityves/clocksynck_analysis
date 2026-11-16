@@ -5622,3 +5622,25 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
 - Healthy donors with a lymphocyte and a stromal-vascular compartment (builders, counts only): rectum 61, ileum 53.
 - First run killed for memory (13 GB > 12 GB cap: a dense temporary per chunk); rerun with in-place accumulation, peak
   10.8 GB.
+
+## Scouts of the cell-type program (2026-11-17; counts and metadata only, no statistic)
+- **A3, lymphocyte atlases without a genome table** (healthy A17 targets; donors with a lymphocyte and a
+  stromal-vascular compartment): IBDverse rectum 61 and ileum 53 (built, exact twins, A280); skin systemic sclerosis
+  controls 27 (GSE195452, MARS-seq), endometrium 21 (GSE266265), atopic dermatitis controls 19 (GSE328048): GEO sources
+  with marker-based classes, exact twins not assured (legacy builders would need re-running with all genes); Tabula
+  Sapiens 9 (all-gene table on disk, organ-specific compartments). Blood, bone marrow and the immune-aging lymphoid
+  organs have lymphocytes but no stromal-vascular class.
+- **C3:** PsychAD MSSM (1,032 donors, 257 healthy) and RADC (152 donors, 26 normal; no A17 healthy fit) have no
+  all-gene table; built from the Census by `celltype_map_builds/run_psychad.sh` (running). Cortex atlases have no
+  lymphocyte or fibroblast class (vascular is the only stromal-vascular class).
+- **A4, timed mouse single-cell data on disk:** besides the colon chrono-atlas, only the Auerbach aorta aligned arm
+  meets the design rule (scored as A279); skin dermis GSE223109 has two classes only (fibroblast, immune), the other
+  candidates have one class or too few libraries.
+- **C1, disease arms** (compartment pairs with >= 15 shared donors in each arm; control / case): HLCA fibrosis 198 / 71
+  donors, SV_X 52 / 15, LY_X 27 / 19; lung ILD (Natri) 40 / 61, SV_X 15 / 41, LY_X 4 / 23; kidney CKD 26 / 37, SV_X
+  10 / 10, LY_X 4 / 10; IBDverse Crohn's ileum 242 / 117, SV_X 4 / 4, LY_X 12 / 14; MASLD pooled (D1) 58 / 72, SV_X
+  6 / 6, LY_X 6 / 9; cortex (PsychAD AD, SCZ, BD; SEA-AD AD) only SV = vascular: 7-8 SV_X pairs per arm; Kong Crohn's 6
+  cases (no pair). Earlier anchored readouts on these arms: A153 (13 targets, every MDE > 0.2 on d*), A167 (liver
+  fibrosis, 0 of 12), A230 (inflamed gut, MDE 1.7 h), A141 (brain contrasts anchor-dependent). No disease contrast is
+  registered before Q36 and a power calculation on the calibrated test.
+<!-- src: scratchpad scout reports (not in the repo); counts re-checked: IBDverse rectum 61, HLCA fibrosis 198 / 71 -->
