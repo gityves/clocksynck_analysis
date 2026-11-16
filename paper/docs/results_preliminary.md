@@ -5521,3 +5521,37 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
 - Code: `exploratory/A274_celltype_map/scripts/score_a274.py` (design, placebo, one scoring run); loaders
   `common/datasets/_atlas/genome.py`.
 <!-- src: paper/exploratory/A274_celltype_map/output/{tests,per_atlas,family_matrix,pairs,twin,design}.csv, placebo/tests.csv -->
+
+## A276 (scored 2026-11-16; calibration): the pairwise test is anti-conservative (V276.1, V276.2 FAIL); cause: under no pairing the clock's statistic sits above its companions' by a shift of location, from the shape of the clock-plane states; the verdicts of H272.1-H274.3 are suspended pending the corrected test (A277)
+
+- Design as registered: the 13 atlases and the exact rows, pairs and companion sets of A272 and A274; 500 placebo
+  draws (donor labels permuted within compartment x stratum). Draw 0 (no permutation) reproduces all ten scored
+  statistic x family values and q95 of A272 and A274 exactly (`repro.csv`). A six-draw run of the code was seen before
+  the 500-draw run (its draws are draws 1-6 of the 500).
+- **V276.1 FAIL, V276.2 FAIL.** Rejection rate over 500 draws (band <= 0.075 each; mean <= 0.065):
+
+| statistic | matched | responsive | mean percentile of the clock (matched / responsive) |
+|---|---|---|---|
+| H272.1 T_SV | 0.078 | 0.154 | 0.580 / 0.647 |
+| H272.2 D | 0.060 | 0.092 | 0.559 / 0.579 |
+| H274.1 D | 0.062 | 0.086 | 0.534 / 0.535 |
+| H274.2 T_SV | 0.100 | 0.112 | 0.588 / 0.580 |
+| H274.3 T_CX | 0.102 | 0.088 | 0.616 / 0.558 |
+
+  Mean rate 0.093. Per atlas and pair class the rates are closer to 0.05 (median 0.056 matched, 0.068 responsive;
+  largest organ_colon SV_X 0.138 responsive): averaging over atlases shrinks the spread but not the shift, so the
+  pooled statistics are the most affected.
+- **Cause (registered diagnostics, `diagnose_a276.py`).** Location, not spread: the spread of the companions within a
+  draw equals the spread of the clock over draws (e.g. H272.1 T_SV 0.0196 against 0.0174; H274.3 0.0111 against
+  0.0102), while the clock's null statistic lies 0.12 to 0.55 SD above the companion median (H272.1 T_SV 0.162 against
+  0.156 matched, 0.152 responsive). The clock-plane states are more isotropic (median anisotropy 0.760 against 0.821
+  matched, 0.808 responsive), lighter-tailed (kurtosis ratio 2.30 against 2.74 and 2.52) and carried by more genes
+  (effective number 5.8 against 5.2 and 4.7). Null |r| of two independent complex vectors falls as they become
+  one-dimensional (E|r|^2 = 1/df whatever the shape, E|r| not); per pair the clock is above the companion mean in 59 %
+  (matched) and 55 % (responsive) of 623 pairs, a shift of a few percent of |r| that the class medians and the mean over
+  atlases turn into the rates above. Not a property of the clock's biology: a property of the statistic.
+- **Consequence (registered reading).** The scored verdicts H272.1, H272.2, H274.1, H274.2, H274.3 are suspended, not
+  reversed. The margins of the scored clock values over the companion q95 are large next to the null shift (e.g.
+  H272.2 D 0.277 against q95 0.177, null shift 0.006), but the verdicts are restated only by the corrected test (A277).
+- Code: `exploratory/A276_pairwise_calibration/scripts/{calibrate_a276,diagnose_a276}.py` (3 min, 6 workers; 4 min).
+<!-- src: paper/exploratory/A276_pairwise_calibration/output/{tests,repro,per_atlas,draws,pair_null,diag_summary,diag_compartments}.csv -->

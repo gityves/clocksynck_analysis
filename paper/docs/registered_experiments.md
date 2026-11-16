@@ -7238,3 +7238,30 @@ the number of genes carrying the projection. A corrected test is a new amendment
 **Limits.** The placebo removes all pairing, so it checks the null only; power is not tested here. Correlated draws
 (same rows, same companion sets) make the ten rates dependent; the band is per combination.
 **Code.** `exploratory/A276_pairwise_calibration/scripts/calibrate_a276.py`.
+
+## A277 (2026-11-16, autonomous, block A1 of the cell-type program after A276 failed; **NOT BLIND**: every clock and companion statistic of A272 and A274 on the real pairing is known, and A276 in full (null shift of the clock 0.12 to 0.55 SD); NOT seen: any statistic in the corrected form below, any draw with the seeds below): the pairwise test with each gene set read against its own no-pairing null. **The thirteen atlases of A272 and A274; calibration V277.1-2, then the restated tests H277.1-5**
+
+**Why.** A276: under no pairing the clock's |r| statistics sit above those of its companions because their states
+differ in shape (isotropy, tails, genes carrying the projection), not because of any pairing. Reading every gene set
+against its own placebo null removes that shift and keeps the statistic.
+**Corrected statistic.** For each gene set j (clock, 200 matched, 200 responsive per atlas, exactly as scored) and each
+of the five statistics (T_SV and D of A272; D, T_SV, T_CX of A274): excess_j = T_j - mu_j, with mu_j the mean of T_j over
+placebo draws (donors permuted within compartment x stratum; states unchanged). The test: excess of the clock above the
+q95 of the companions' excess, in each family; p = (1 + #{companion excess >= clock excess}) / 201.
+**Calibration, before any restated test is read.** Null set N1: 500 draws, seeds [277, 1, d]; calibration set N2: 500
+draws, seeds [277, 2, d]. mu_j from N1; in each N2 draw the clock's excess against the companions' excess.
+**V277.1:** rejection rate <= 0.075 for each of the ten statistic x family combinations. **V277.2:** mean <= 0.065.
+If either fails, the restated tests are not read and the program stops for a report.
+**Restated tests (read only if V277.1 and V277.2 pass), mu_j from N1 and N2 pooled (1000 draws):** H277.1 = H272.1
+(T_SV, A272 atlases), H277.2 = H272.2 (D), H277.3 = H274.1 (D), H277.4 = H274.2 (T_SV), H277.5 = H274.3 (T_CX), each
+against both families with the registered rule of its original (H272.1, H272.2, H274.1, H274.3 above the q95 of both;
+H274.2 against the matched family, the responsive one reported). **Descriptive:** the same per atlas and pair class
+(A2 reads it), the companion q95 of the excess, and the clock's excess in |r| units.
+**Readings.** A restated test that passes stands as before, now on a calibrated test. One that passed and now fails is
+reversed, and the text drops it. H272.1 against the responsive family failed before; if it passes now, that is reported
+as a change caused by the correction (not blind).
+**Limits.** Not blind: the margins of A272/A274 and the size of the null shift were known when this was written; the
+correction was chosen because it keeps the statistic and is fixed by A276's diagnosis, not by its effect on the
+verdicts. The placebo null removes the pairing between compartments only; a shared non-clock state (ambient RNA,
+handling) is controlled by the companions, as before.
+**Code.** `exploratory/A276_pairwise_calibration/scripts/corrected_a277.py` (outputs in `output/a277/`).
