@@ -36,6 +36,8 @@ figure, then apply it to the figure at hand.
 
   | morning surgery / sampling window (e.g. 06-10 h) | cyan (9) |
   | afternoon surgery / sampling window (e.g. 14-18 h) | brown (5) |
+  | peripheral tissues (vs neural) | olive (8) |
+  | neural / ocular tissues | pink (6) |
 
   Other recurring entities (organ systems, cohorts, cell classes) get a fixed mapping the first time they appear;
   write it in this table.

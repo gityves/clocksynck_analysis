@@ -160,7 +160,9 @@ half an hour.
    (peripheral tissues 0.38 h, neural and ocular 0.50 h).
 2. The untimed host phase orders the 12 sampling times: R 0.987, median error 0.39 h.
 
-**Figure (to build):** untimed vs timed offset per tissue on a clock face, peripheral and neural tissues in two colours.
+**Figure:** `figures/baboon_offsets/baboon_offsets.png` (`scripts/baboon_compute.py`, `scripts/baboon_offsets.py`; half slide).
+A. 63 tissues, untimed vs timed offset after one common shift, peripheral (olive) and neural / ocular (pink); dashed: identity.
+B. the 12 animals' internal time (host phase) vs zeitgeber time after one common shift.
 
 **Speaker notes**
 - Archive amendment (A36), re-run on current code with leave-one-out anchors (median error 0.455 → 0.452 h). The
@@ -185,8 +187,10 @@ feeding moves its untimed offset as the timed one moves.
 2. Night to day restricted feeding (Xin, 4 tissues): untimed offset changes track the timed ones, Fisher-Lee 0.988
    (exact p 0.042, the minimum attainable with 4 tissues). Liver moves +8.8 h untimed, +9.2 h timed.
 
-**Figure (to build):** A. coupling per tissue, control vs knockout, paired dots (liver falls, fat and lung flat).
-B. untimed vs timed offset change per tissue under day feeding, the diagonal.
+**Figure:** `figures/positive_controls/positive_controls.png` (`scripts/positive_controls.py`; half slide). A. change in
+coupling at the control's host spread (d*) per tissue, knockout minus control, 95 % interval: liver −0.287 [−0.411, −0.118],
+white fat −0.009 [−0.089, 0.055], lung +0.019 [−0.045, 0.087]. B. day feeding: untimed vs timed offset change of the four
+Xin tissues; dashed: identity.
 
 **Speaker notes**
 - The knockout liver keeps a clock-shaped shared state (its gate still passes) and sits −1.31 h from the fat + lung
