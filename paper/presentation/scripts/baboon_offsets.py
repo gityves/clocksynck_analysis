@@ -2,8 +2,8 @@
 current code, descriptive).
 
 A. 63 tissues: untimed offset (clocksync, every tissue an anchor, GTEx waveform) against the timed offset (phase of the
-   tissue's 12-ZT cosinor gain on the waveform), both centred on the timed circular mean after one common shift; peripheral
-   and neural / ocular tissues in two colours; dashed: identity.
+   tissue's 12-ZT cosinor gain on the waveform), both centred on the timed circular mean after one common shift; coloured
+   by organ system as the GTEx organ map (`_systems.py`); dashed: identity.
 B. Host phase of each animal (one animal per ZT) against its ZT, after one common shift; dashed: identity.
 
 Data: results/figure_1/output/species/a36_tissues.csv; presentation/output/baboon/host_phase.csv (`baboon_compute.py`).
@@ -18,12 +18,13 @@ import pandas as pd
 import seaborn as sns
 
 import paperfig as pf
+from _systems import COLOR, baboon_system, legend_in
 
 PAPER = Path(__file__).resolve().parents[2]
 OUT = PAPER / "presentation" / "figures" / "baboon_offsets"
 INK, MUTED = "#222222", pf.GREY
 TAB = sns.color_palette().as_hex()
-CS, PERIPHERAL, NEURAL = TAB[0], TAB[8], TAB[6]
+CS = TAB[0]
 W = 2 * np.pi / 24
 
 
@@ -41,8 +42,7 @@ def tissues(ax, t):
     x = wrap(timed - cmean(timed))
     y = x + wrap(untimed - timed)
     ax.plot([-7, 7], [-7, 7], color=MUTED, lw=1, ls="--", zorder=1)
-    for m, c, lab in ((~t.neural, PERIPHERAL, "peripheral"), (t.neural, NEURAL, "neural, ocular")):
-        ax.scatter(x[m], y[m], s=26, color=c, edgecolor="white", lw=0.5, zorder=3, label=lab)
+    ax.scatter(x, y, s=26, c=[COLOR[baboon_system(k)] for k in t.tissue], edgecolor="white", lw=0.5, zorder=3)
     ax.set_xlim(-7, 7)
     ax.set_ylim(-7, 7)
     ax.set_xticks(range(-6, 7, 3))
@@ -50,7 +50,6 @@ def tissues(ax, t):
     ax.set_aspect("equal")
     ax.set_xlabel("timed offset [h]")
     ax.set_ylabel("untimed offset [h]")
-    ax.legend(loc="upper left", frameon=False, fontsize=10, handletextpad=0.2)
     ax.set_title("tissues", fontsize=13, color=INK)
 
 
@@ -76,6 +75,7 @@ def main():
     lay = pf.Layout.slide("AB", kind="half", height=100)
     tissues(lay.axes["A"], t)
     animals(lay.axes["B"], h)
+    legend_in(lay.axes["A"])
     fig = lay.finalize()
     print(len(t), "tissues;", len(h), "animals")
     print(pf.collisions(fig))

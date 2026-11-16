@@ -22,26 +22,14 @@ import pandas as pd
 from matplotlib.patches import Arc
 
 import paperfig as pf
+from _systems import COLOR, gtex_system, legend_row
 
 PAPER = Path(__file__).resolve().parents[2]
 SRC = PAPER / "exploratory/A123_working_hours/output"
 OUT = Path(__file__).resolve().parents[1] / "figures" / "gtex_organ_map"
 HOURS = 24 / (2 * np.pi)
 INK, MUTED, GHOST = "#222222", pf.GREY, "#c8c8c8"
-SYSTEMS = {  # display group: tissue name prefixes
-    "brain": ("Brain",),
-    "cardiovascular": ("Artery", "Heart"),
-    "digestive": ("Colon", "Esophagus", "Stomach", "Liver"),
-    "adipose, skin, breast": ("Adipose", "Skin", "Breast"),
-    "endocrine": ("Adrenal", "Pituitary", "Thyroid"),
-    "other": ("Lung", "Muscle", "Nerve", "Kidney", "Prostate", "Testis", "Whole Blood"),
-}
-COLOR = dict(zip(SYSTEMS, [pf.OKABE_ITO[i] for i in (4, 5, 2, 0, 1, 7)]))
 RINGS = (0.5, 1.0, 2.0)
-
-
-def system(t: str) -> str:
-    return next(s for s, pre in SYSTEMS.items() if t.startswith(pre))
 
 
 def xy(offset_h, log2_amp):
@@ -74,7 +62,7 @@ def face(ax, rmax):
 def panel(ax, m, est, ref, title, rmax):
     face(ax, rmax)
     p = xy(m[f"{est}_offset_h"], m[f"{est}_log2_amp"])
-    col = [COLOR[system(t)] for t in m.index]
+    col = [COLOR[gtex_system(t)] for t in m.index]
     if ref is not None:
         q = xy(m[f"{ref}_offset_h"], m[f"{ref}_log2_amp"])
         for a, b in zip(q, p):
@@ -91,18 +79,10 @@ def main():
     tests = pd.read_csv(SRC / "tests.csv").set_index(["method", "truth"])
     rmax = 1.05 * float(2 ** m[["est_log2_amp", "chiral_log2_amp", "truth_i_log2_amp"]].max().max())
     lay = pf.Layout.slide("ABC;LLL", kind="wide", row_heights=[1, 0.1])
-    stat = lambda k: (f"offsets r = {tests.loc[(k, 'truth_i'), 'circ_corr_offset']:.2f}, "
-                      f"amplitudes r = {tests.loc[(k, 'truth_i'), 'pearson_log2_amp']:.2f}")
-    panel(lay.axes["A"], m, "truth_i", None, "timed, whole day\n(recorded time of death)", rmax)
-    panel(lay.axes["B"], m, "est", "truth_i", f"clocksync, 08-18 h, untimed\n{stat('clocksync')}", rmax)
-    panel(lay.axes["C"], m, "chiral", "truth_i", f"CHIRAL, 08-18 h, untimed\n{stat('chiral')}", rmax)
-    L = lay.axes["L"]
-    for j, (s, c) in enumerate(COLOR.items()):
-        x = 0.02 + j * 0.165
-        L.scatter([x], [0.5], s=34, color=c, transform=L.transAxes, clip_on=False)
-        L.annotate(s, (x, 0.5), xycoords="axes fraction", xytext=(8, 0), textcoords="offset points", va="center",
-                   fontsize=10, color=INK)
-    L.axis("off")
+    panel(lay.axes["A"], m, "truth_i", None, "timed, full day", rmax)
+    panel(lay.axes["B"], m, "est", "truth_i", "clocksync, hospital hours", rmax)
+    panel(lay.axes["C"], m, "chiral", "truth_i", "CHIRAL, hospital hours", rmax)
+    legend_row(lay.axes["L"])
     fig = lay.finalize()
     print(f"{len(m)} tissues; rmax {rmax:.2f}")
     print(tests.loc[[("clocksync", "truth_i"), ("chiral", "truth_i")], ["circ_corr_offset", "median_abs_offset_err_h",

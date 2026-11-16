@@ -161,7 +161,8 @@ half an hour.
 2. The untimed host phase orders the 12 sampling times: R 0.987, median error 0.39 h.
 
 **Figure:** `figures/baboon_offsets/baboon_offsets.png` (`scripts/baboon_compute.py`, `scripts/baboon_offsets.py`; half slide).
-A. 63 tissues, untimed vs timed offset after one common shift, peripheral (olive) and neural / ocular (pink); dashed: identity.
+A. 63 tissues, untimed vs timed offset after one common shift, coloured by organ system as the GTEx organ map; dashed:
+identity.
 B. the 12 animals' internal time (host phase) vs zeitgeber time after one common shift.
 
 **Speaker notes**

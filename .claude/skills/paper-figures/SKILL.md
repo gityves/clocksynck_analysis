@@ -36,8 +36,18 @@ figure, then apply it to the figure at hand.
 
   | morning surgery / sampling window (e.g. 06-10 h) | cyan (9) |
   | afternoon surgery / sampling window (e.g. 14-18 h) | brown (5) |
-  | peripheral tissues (vs neural) | olive (8) |
-  | neural / ocular tissues | pink (6) |
+
+  Organ systems (all tissue figures, GTEx and other atlases; defined once in `paper/presentation/scripts/_systems.py`,
+  import it rather than redefining; user, 2026-11-16: same split and colours across datasets):
+
+  | system | colour (tab10 index) |
+  |---|---|
+  | brain, eye | pink (6) |
+  | cardiovascular | red (3) |
+  | digestive | green (2) |
+  | adipose, skin, breast | orange (1) |
+  | endocrine | purple (4) |
+  | other | olive (8) |
 
   Other recurring entities (organ systems, cohorts, cell classes) get a fixed mapping the first time they appear;
   write it in this table.
