@@ -1,8 +1,9 @@
 """Organ systems shared by the tissue figures (GTEx organ map, baboon atlas): groups, colours (seaborn default palette, fixed per
 system, see the paper-figures skill) and the tissue -> system maps.
 
-Baboon codes: Mure et al. 2018 (GSE98965) abbreviations; ocular tissues go with the brain (neural), the pineal and pituitary with
-the endocrine glands (as GTEx's pituitary).
+Baboon codes: Mure et al. 2018 (GSE98965) tissue figure (`figures/baboon_offsets/tissue_mapping.jpeg`); ocular tissues go with
+the brain (neural), the pineal and pituitary with the endocrine glands (as GTEx's pituitary), smooth muscle (SMM) with the
+digestive tract (as Mure), skeletal muscle with "other" (as GTEx's muscle, while Mure groups it with the heart).
 """
 import seaborn as sns
 
@@ -26,7 +27,7 @@ BABOON = {
     "brain, eye": {"AMY", "ARC", "CER", "DMH", "HAB", "HIP", "LGP", "LH", "MGP", "MMB", "OLB", "PON", "PRA", "PRC", "PUT", "PVN",
                    "SCN", "SON", "SUN", "THA", "VIC", "VMH", "COR", "ONH", "RET", "RPE", "IRI"},
     "cardiovascular": {"AOR", "HEA"},
-    "digestive": {"ANT", "ASC", "CEC", "DEC", "DUO", "ILE", "LIV", "OES", "STF", "PAN"},
+    "digestive": {"ANT", "ASC", "CEC", "DEC", "DUO", "ILE", "LIV", "OES", "STF", "PAN", "SMM"},
     "adipose, skin, breast": {"OMF", "WAM", "WAP", "WAR", "WAS", "WAT", "SKI"},
     "endocrine": {"ADC", "ADM", "PIT", "PIN", "THR"},
 }

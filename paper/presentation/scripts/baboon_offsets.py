@@ -1,13 +1,15 @@
 """Slide figure (results, R1.4): a primate sampled around the clock (baboon atlas, Mure 2018; A36, archive amendment re-run on
 current code, descriptive).
 
-A. 63 tissues: untimed offset (clocksync, every tissue an anchor, GTEx waveform) against the timed offset (phase of the
+A. Organ map as the GTEx figure: per tissue, angle = untimed offset (later clockwise), radius = untimed relative amplitude,
+   coloured by organ system; grey rings joined by a line: the timed offset and amplitude (cosinor gain) of the same tissue.
+B. 63 tissues: untimed offset (clocksync, every tissue an anchor, GTEx waveform) against the timed offset (phase of the
    tissue's 12-ZT cosinor gain on the waveform), both centred on the timed circular mean after one common shift; coloured
    by organ system as the GTEx organ map (`_systems.py`); dashed: identity.
-B. Host phase of each animal (one animal per ZT) against its ZT, after one common shift; dashed: identity.
+C. Host phase of each animal (one animal per ZT) against its ZT, after one common shift; dashed: identity.
 
 Data: results/figure_1/output/species/a36_tissues.csv; presentation/output/baboon/host_phase.csv (`baboon_compute.py`).
-Output: presentation/figures/baboon_offsets/baboon_offsets.{svg,png} (half-slide figure, beside the bullets).
+Output: presentation/figures/baboon_offsets/baboon_offsets.{svg,png} (wide slide figure).
 
     python scripts/baboon_offsets.py
 """
@@ -19,6 +21,7 @@ import seaborn as sns
 
 import paperfig as pf
 from _systems import COLOR, baboon_system, legend_in
+from gtex_organ_map import GHOST, face, xy
 
 PAPER = Path(__file__).resolve().parents[2]
 OUT = PAPER / "presentation" / "figures" / "baboon_offsets"
@@ -34,6 +37,24 @@ def wrap(h):
 
 def cmean(h):
     return np.angle(np.exp(1j * W * np.asarray(h, float)).mean()) / W
+
+
+def clock_map(ax, t):
+    """Organ map as the GTEx one: angle = untimed offset, radius = relative amplitude (both clocksync, untimed); grey rings and
+    lines: the timed values of the same tissue."""
+    timed = t.timed_phase / W
+    untimed = t.offset_h - cmean(t.offset_h - timed)
+    c = cmean(timed)
+    la = np.log2(t.amplitude) - np.log2(t.amplitude).mean()
+    lg = np.log2(t.g_abs) - np.log2(t.g_abs).mean()
+    p, q = xy(wrap(untimed - c), la), xy(wrap(timed - c), lg)
+    rmax = 1.05 * float(2 ** max(la.max(), lg.max()))
+    face(ax, rmax, label_h=-5.5, labelled=(1.0, 2.0))  # the 0.5x ring sits in the brain cluster
+    for a, b in zip(q, p):
+        ax.plot([a[0], b[0]], [a[1], b[1]], color=GHOST, lw=0.7, zorder=1)
+    ax.scatter(*q.T, s=18, facecolor="none", edgecolor=GHOST, lw=0.8, zorder=2)
+    ax.scatter(*p.T, s=26, c=[COLOR[baboon_system(k)] for k in t.tissue], edgecolor="white", lw=0.5, zorder=3)
+    ax.set_title("organ map", fontsize=13, color=INK)
 
 
 def tissues(ax, t):
@@ -72,10 +93,11 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     t = pd.read_csv(PAPER / "results/figure_1/output/species/a36_tissues.csv")
     h = pd.read_csv(PAPER / "presentation/output/baboon/host_phase.csv")
-    lay = pf.Layout.slide("AB", kind="half", height=100)
-    tissues(lay.axes["A"], t)
-    animals(lay.axes["B"], h)
-    legend_in(lay.axes["A"])
+    lay = pf.Layout.slide("ABC", kind="wide", col_ratios=[1.5, 1, 1])
+    clock_map(lay.axes["A"], t)
+    tissues(lay.axes["B"], t)
+    animals(lay.axes["C"], h)
+    legend_in(lay.axes["B"])
     fig = lay.finalize()
     print(len(t), "tissues;", len(h), "animals")
     print(pf.collisions(fig))

@@ -160,10 +160,11 @@ half an hour.
    (peripheral tissues 0.38 h, neural and ocular 0.50 h).
 2. The untimed host phase orders the 12 sampling times: R 0.987, median error 0.39 h.
 
-**Figure:** `figures/baboon_offsets/baboon_offsets.png` (`scripts/baboon_compute.py`, `scripts/baboon_offsets.py`; half slide).
-A. 63 tissues, untimed vs timed offset after one common shift, coloured by organ system as the GTEx organ map; dashed:
-identity.
-B. the 12 animals' internal time (host phase) vs zeitgeber time after one common shift.
+**Figure:** `figures/baboon_offsets/baboon_offsets.png` (`scripts/baboon_compute.py`, `scripts/baboon_offsets.py`; wide).
+A. organ map as the GTEx one: untimed offset (angle) and relative amplitude (radius) per tissue, coloured by organ system,
+grey rings: the timed values. B. 63 tissues, untimed vs timed offset after one common shift; dashed: identity. C. the 12
+animals' internal time (host phase) vs zeitgeber time after one common shift. Tissue codes: Mure 2018
+(`figures/baboon_offsets/tissue_mapping.jpeg`).
 
 **Speaker notes**
 - Archive amendment (A36), re-run on current code with leave-one-out anchors (median error 0.455 → 0.452 h). The

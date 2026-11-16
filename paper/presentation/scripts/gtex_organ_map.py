@@ -38,11 +38,13 @@ def xy(offset_h, log2_amp):
     return np.column_stack([r * np.sin(th), r * np.cos(th)])
 
 
-def face(ax, rmax):
+def face(ax, rmax, label_h=-5.0, labelled=RINGS):
     """Upper half of the clock face (-6 h to +6 h around the mean): the tissue offsets span a few hours."""
     for r in RINGS:
         ax.add_patch(Arc((0, 0), 2 * r, 2 * r, theta1=0, theta2=180, ec="#e6e6e6", lw=0.8, zorder=0))
-        a = -5.0 / HOURS  # ring labels on the -5 h spoke, away from the data
+        a = label_h / HOURS  # ring labels on one spoke, away from the data
+        if r not in labelled:
+            continue
         ax.annotate(f"{r:g}x", (r * np.sin(a), r * np.cos(a)), ha="center", va="center", fontsize=8, color=MUTED, zorder=0)
     for h in range(-6, 7):
         a = h / HOURS
