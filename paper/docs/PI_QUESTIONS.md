@@ -86,7 +86,12 @@ too narrow for a split-sample check. **Options:** (a) adopt A278 with the 1000 p
 restated tests H278.1-5 (`calibrated_a278.py --read`); (b) enlarge the null (e.g. 5000 draws) and re-run the A278
 calibration with a band set for two-sample error before reading; (c) replace the statistic by one whose null does not
 depend on state shape (mean |r|^2 over pairs, E = 1/df), a new amendment and a new calibration. **Recommendation:** (b)
-then read: it keeps the registered statistics, and the cost is minutes.
+then read: it keeps the registered statistics, and the cost is minutes. **Update 2026-11-17 (null only, not a
+registered test):** option (c) is not calibrated either: with the mean |r|^2 over pairs and the q95 rule, 500 placebo
+draws give 0.042 to 0.154 (H272.1 responsive 0.154, H272.2 responsive 0.116; mean 0.076), since the overlap of the
+responsive sets is untouched (`A276_pairwise_calibration/output/option_c/tests.csv`). Only the percentile read against
+its own placebo distribution (a, b) is calibrated by construction. A280 has a ready script for it
+(`calibrated_a280.py --q36`), with the real pairing locked until the answer.
 **What is at stake.** The scored margins are large for H272.2 (D 0.277 against q95 0.177), H274.1 and H274.2 (clock
 above all 200 companions); a calibrated test changes them only if the null rate of "above all companions" exceeds 0.05,
 and it is 0.005 to 0.028 (A278). The closest is H274.3 against the matched family (cortex, T_CX 0.497 against q95 0.466,
