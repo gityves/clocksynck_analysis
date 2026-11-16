@@ -10,6 +10,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **New 2026-11-13:** results A245-A256 and what they change are summarised in `REVIEW_2026-11-10.md` §6; decisions asked there:
   the luminal A row after A224, whether to request ages (Wu 2020) and TwinsUK phenotypes (MuTHER), whether A243 is run (Q32),
   and the wording of the cancer chapter (Q24) after the synthesis in the ledger addendum of 2026-11-12.
+- **Q37** (below, new 2026-11-16): add the ROSMAP single-nucleus cortex (427 donors) and RADC time of death to the Q12 request, for a human calibration of cell-type offsets?
 - **Q36** (below, new 2026-11-16): the anchor-free pairwise test of the cell-type line (A272, A274) is anti-conservative under placebo (A276); which calibrated test replaces it before the cell-type verdicts are restated?
 - **Q35** (below, new 2026-11-16): tally of the biology-paper checks: two exceptions fell (fetal adrenal first; brain as a clock statement), the cancer and robustness lines stand, no systemic signal named. Biology paper or the Nature Methods ordering?
 - **Q34** (below, new 2026-11-15): gate G2 (iii) after A262: no second design reproduces A261; blood forced desynchrony is neither central nor behaviour (damped 0.36, shifted 4 h); night-shift PBMC uninformative. How to use the muscle / blood contrast?
@@ -36,6 +37,18 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
+
+### Q37 (2026-11-16): human truth with known time at cell-type level (cell-type program, D1)
+**Question.** Extend the unsent Q12 request (`exploratory/A141_brain_stability/drafts/tod_request_draft.md`, updated
+2026-11-16) to the ROSMAP single-nucleus prefrontal cortex (Mathys et al. 2023, 427 participants, Synapse syn52293417
+under a Data Use Certificate) with the hour of death from the RADC hub (recorded for ROS and MAP donors, used by Lim et
+al. 2017)? Send, edit, or not?
+**What it would give.** The first human check of untimed cell-type offsets against known time (A273 is mouse colon
+only); the tie-break of the cortex offset sign (PsychAD +1.3 h against SEA-AD -1.5 h for the neuron-vascular pair,
+A274); whether the shared cortical cell-class state reads time of death. Brain cohorts on disk (`$SCCC_DATA/brain_tod`,
+bulk) cannot give cell classes.
+**On hold.** Nothing; outward-facing, so drafts only. Not verified: whether the time-of-death field is released through
+the hub for this use (RADC to confirm), and the overlap with `psychad_radc` donors.
 
 ### Q36 (2026-11-16): calibration of the pairwise cell-type test (A276-A278)
 **Question (for the user first).** Under no pairing, the clock's statistic exceeds the q95 of its companions in 6 to
