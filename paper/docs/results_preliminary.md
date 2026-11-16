@@ -5610,7 +5610,7 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
   time in two mouse tissues, now over offsets of several hours (slope 1.04). No myeloid-below-stromal order is shown in
   the aorta. The knockout shows that the size of |r| is not a clock measure on its own.
 - Limits: pools of 2 aortas, 1-3 pools per sex x ZT; macrophages in 10 libraries; one arm primary.
-- Code: `exploratory/A279_aorta_pairwise_truth/scripts/score_a279.py` (about 1 min).
+- Code: `exploratory/A279_aorta_pairwise_truth/scripts/score_a279.py` (run directly, one run; runtime not recorded).
 <!-- src: paper/exploratory/A279_aorta_pairwise_truth/output/{tests,pairs,compartments,design}.csv -->
 
 ## Data note (2026-11-17, cell-type program A3): genome-wide twins of IBDverse ileum and rectum
