@@ -7110,3 +7110,29 @@ D272.3. Consequence: |r| is attenuated by counting noise in shallow compartments
 companion sets are matched on expression, so they carry the same attenuation: the comparisons of H272.1 and H272.2
 (clock against companions on the same compartments) are unaffected, absolute values of |r| are lower bounds and are not
 compared between cell families without the companions. Everything else is unchanged.
+
+## A273 (2026-11-16, user: "Okay, work on this autonomously" (a cell-type level understanding of the clock); a calibration of the A272 pairwise readout, no biological hypothesis; **NOT BLIND** for the per-class timed phases of this atlas (A21, A31: per-class gene phases against ZT R 0.98; epithelial shift after injury); NOT seen: any pairwise offset between cell classes of this atlas, timed or untimed; seen before registration: the design stage (mice and compartments per arm)): are untimed pairwise offsets between cell types of one tissue sample unbiased? **Mouse colon chrono-atlas (known ZT); calibration; V273.1, V273.2**
+
+**Why.** A272 reports offsets between cell types as the argument of a pairwise correlation. Compartments of one sample
+share ambient RNA and dissociation effects, which would pull such offsets towards 0; before any lead or lag between
+cell types is read in the human atlases, the readout is checked where time is known.
+**Data.** `colon_chrono` (clock genes, CellBender counts), rows with >= 30 cells, compartments with >= 7 of the 8 mice of
+an arm. Arms C-DC (undamaged) and R-DC (regenerating) primary, 12 compartments and 66 pairs each; R-PC (10
+compartments, 45 pairs) as sensitivity. ZT 1 / 7 / 13 / 19, two mice per ZT and arm.
+**Readouts, per arm.** Timed: `Dataset.timed_loadings("zt")`, the phase of each compartment against ZT and its coupling
+to the known time; the timed offset of a pair is the difference of the two phases. Untimed: the argument of the A272
+pairwise statistic over the mice (no time). Error = untimed minus timed, with a leave-one-mouse-out jackknife SD.
+Primary set: pairs of C-DC and R-DC in which both compartments have a timed coupling >= 0.5 ("timed-rhythmic").
+**V273.1:** median |error| over the primary set <= 1.0 h. **V273.2:** slope of the untimed on the timed offsets (through
+the origin) between 0.7 and 1.3.
+**Readings.** Both pass: pairwise offsets between cell types of one sample are unbiased at the 1 h scale; the human
+offsets of A272 are limited by their own intervals only. V273.2 below 0.7: offsets are shrunk towards 0 (shared RNA):
+human pairwise offsets are lower bounds, and a lead or lag is read on the anchored fit only. V273.1 fails with V273.2
+passing: unbiased but imprecise at 8 animals; no conclusion on bias beyond the slope.
+**Descriptive.** The timed offsets themselves (median and largest |offset| between cell classes of the colon): whether
+cell types of one tissue differ in clock phase when time is known; per arm; all pairs including weakly rhythmic
+compartments; the relation of |error| to |r|.
+**Limits.** Eight mice per arm with full 24 h coverage: this tests bias, not the precision reached in a narrow
+sampling window (human hospital hours), which the donor bootstrap of A272 and the timed human comparisons (A251, A123)
+cover. The human waveform is used on mouse data, as in A21 and A31. Mouse, one tissue.
+**Code.** `exploratory/A273_pairwise_offset_truth/scripts/score_a273.py`.
