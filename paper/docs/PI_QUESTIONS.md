@@ -10,6 +10,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **New 2026-11-13:** results A245-A256 and what they change are summarised in `REVIEW_2026-11-10.md` §6; decisions asked there:
   the luminal A row after A224, whether to request ages (Wu 2020) and TwinsUK phenotypes (MuTHER), whether A243 is run (Q32),
   and the wording of the cancer chapter (Q24) after the synthesis in the ledger addendum of 2026-11-12.
+- **Q38** (below, new 2026-11-16): two side projects scouted (clock and cell cycle; liver zonation): start either, and with which data?
 - **Q37** (below, new 2026-11-16): add the ROSMAP single-nucleus cortex (427 donors) and RADC time of death to the Q12 request, for a human calibration of cell-type offsets?
 - **Q36** (below, new 2026-11-16): the anchor-free pairwise test of the cell-type line (A272, A274) is anti-conservative under placebo (A276); which calibrated test replaces it before the cell-type verdicts are restated?
 - **Q35** (below, new 2026-11-16): tally of the biology-paper checks: two exceptions fell (fetal adrenal first; brain as a clock statement), the cancer and robustness lines stand, no systemic signal named. Biology paper or the Nature Methods ordering?
@@ -37,6 +38,30 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
+
+### Q38 (2026-11-16): clock and cell cycle (D2), liver zonation (D3): scouts only
+**D2. Is the distribution of cell-cycle phases of a donor's cells related to the donor's clock state?** CoPhaser is
+used for cell-cycle phase only, at median UMI per cell above 1.5k (memory rule). Mean UMI per cell (pseudobulk depth /
+cells; the median per cell is not in the pseudobulk tables) and cells per donor:
+- Kong gut epithelium (Crohn's study, healthy and disease donors): colon 34 donors, 5.8k UMI per cell, median 1,686
+  epithelial cells per donor; terminal ileum 42 donors, 5.5k, 1,524. Best candidate.
+- Colorectal (colon_crc, 62 donors, epithelial 22.8k UMI per cell, 1,870 cells per donor; tumour and normal), KPMP
+  kidney (77, 5.0k, 1,114), muscle (32), breast (126, 933 cells per donor).
+- T cells: 1.3k to 5.8k UMI per cell; the Kong epithelial fractions carry T cells at 5.3k to 5.8k.
+- Power (rough): with 34 to 42 donors a circular-linear relation of about |r| 0.45 is detectable at 80 % (alpha 0.05).
+  Needs per-cell counts (Census download per atlas, size not checked) and the CoPhaser runs with their validation
+  plots; uses the lab's unpublished tool.
+**D3. Do pericentral and periportal hepatocytes of a person share one clock phase?** Healthy liver
+(`liver_xu`, Census harmonised liver, 36 donors): donors with both a centrilobular and a periportal hepatocyte
+compartment of >= 30 cells: 11 (5 / 3 / 3 by assay), so 8 degrees of freedom after strata, below the project's minimum
+of 15 for a pair; pericentral and periportal sinusoidal endothelium: 14 donors (>= 30 cells). Larger single-nucleus
+cohorts are mostly MASLD: GSE202379 (47 patients, 2 healthy; per-cell counts exported), GSE289173 (48 donors),
+GSE256398 (6 healthy of 17). These have no zone labels: a per-cell zonation score from marker genes fixed in advance
+(e.g. CYP2E1, GLUL, CYP1A2 pericentral; HAL, SDS, CPS1, ASS1 periportal, Droin 2021 for the mouse) would split
+hepatocytes by zone; in MASLD zonation itself changes, which confounds a disease cohort.
+**Recommendation.** Neither is needed for the cell-type section; both are projects of their own. D2 with the Kong
+epithelium is the more feasible; D3 is underpowered in healthy liver and confounded in MASLD.
+**On hold.** Nothing.
 
 ### Q37 (2026-11-16): human truth with known time at cell-type level (cell-type program, D1)
 **Question.** Extend the unsent Q12 request (`exploratory/A141_brain_stability/drafts/tod_request_draft.md`, updated
