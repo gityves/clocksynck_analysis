@@ -7265,3 +7265,22 @@ correction was chosen because it keeps the statistic and is fixed by A276's diag
 verdicts. The placebo null removes the pairing between compartments only; a shared non-clock state (ambient RNA,
 handling) is controlled by the companions, as before.
 **Code.** `exploratory/A276_pairwise_calibration/scripts/corrected_a277.py` (outputs in `output/a277/`).
+
+## A278 (2026-11-16, autonomous, after A277's calibration failed; **NOT BLIND**: the clock and companion statistics of A272 and A274 on the real pairing are known (they set the observed percentiles below), A276 and A277 calibrations in full; NOT seen: any calibrated p-value of the form below): the pairwise test calibrated by construction. **The thirteen atlases of A272 and A274; calibration V278 now; restated tests H278.1-5 read only after the user has seen the A276/A277 report**
+
+**Why.** A276 (location shift) and A277 (correlated responsive companions, wider clock null) show that a q95 rule
+against companions is not calibrated for this statistic. The clock's percentile among its companions, read against the
+distribution of that same percentile under no pairing, absorbs shift, spread and correlation together.
+**Test.** For each statistic T (T_SV, D of A272; D, T_SV, T_CX of A274) and family: pi = share of the 200 companion values
+of T below the clock's T (raw statistics, as scored). Null: pi in each of the 1000 placebo draws of A277 (N1 and N2,
+seeds [277, 1 | 2, d]; donors permuted within compartment x stratum). p_cal = (1 + #{null pi >= observed pi}) / 1001. A
+family is passed when p_cal < 0.05.
+**V278 (calibration, null only, run now):** with N1 as the null, the rejection rate over the N2 draws (p_cal < 0.05) is
+<= 0.075 for each of the ten combinations. Exchangeable draws make this a code check.
+**Restated tests (read after the user has seen the report):** H278.1-5 = H272.1, H272.2, H274.1, H274.2 (matched family
+decides, responsive reported), H274.3, each with its original rule, the family criterion replaced by p_cal < 0.05.
+Descriptive: the same per atlas and pair class, and the null rate of pi = 1 (clock above all 200 companions), which
+bounds the smallest attainable p_cal.
+**Readings.** As A277: a test that passed and still passes stands on a calibrated test; one that passed and fails is
+reversed; H272.1 against the responsive family is reported as changed by the correction if it changes (not blind).
+**Code.** `exploratory/A276_pairwise_calibration/scripts/calibrated_a278.py` (reads `output/a277/null_draws.npz`).

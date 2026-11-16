@@ -5555,3 +5555,18 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
   H272.2 D 0.277 against q95 0.177, null shift 0.006), but the verdicts are restated only by the corrected test (A277).
 - Code: `exploratory/A276_pairwise_calibration/scripts/{calibrate_a276,diagnose_a276}.py` (3 min, 6 workers; 4 min).
 <!-- src: paper/exploratory/A276_pairwise_calibration/output/{tests,repro,per_atlas,draws,pair_null,diag_summary,diag_compartments}.csv -->
+
+## A277 calibration (2026-11-16): the per-set null correction removes most of the bias but not all (V277.1 FAIL: responsive family 0.080 and 0.078; V277.2 PASS, mean 0.058); restated tests not read (registered stop)
+
+- mu_j from N1 (500 draws), rejection over N2 (500 draws), band <= 0.075: H272.1 T_SV 0.056 / 0.080 (matched /
+  responsive), H272.2 D 0.060 / 0.074, H274.1 D 0.036 / 0.038, H274.2 T_SV 0.046 / 0.054, H274.3 T_CX 0.058 / 0.078;
+  mean 0.058.
+- **Residual cause (descriptive, from the saved draws).** The responsive sets come from a pool of about 28 genes and
+  overlap: within a draw their excesses correlate (mean 0.045 to 0.074, matched sets 0.002 to 0.009), so the
+  reference spread within a draw is narrower than the clock's spread over draws (H272.1 T_SV 0.0166 against 0.0179;
+  H274.3 0.0101 against 0.0107); the clock's own null spread is also slightly wider than a typical set's (0.0179 against
+  0.0170). A q95 rule on correlated companions cannot be calibrated by a location correction alone.
+- The restated tests H277.1-5 were not computed (the script stops before them). By the A277 rule the line stops for a
+  report; the next amendment (A278) calibrates the test by construction and its real-data reading waits for the user.
+- Code: `exploratory/A276_pairwise_calibration/scripts/corrected_a277.py` (5 min, 6 workers).
+<!-- src: paper/exploratory/A276_pairwise_calibration/output/a277/{calibration.csv,null_draws.npz} -->
