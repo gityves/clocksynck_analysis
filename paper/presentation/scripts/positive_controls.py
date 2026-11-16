@@ -57,8 +57,8 @@ def feeding(ax, r):
     ax.set_xticks([-3, 0, 3, 6, 9])
     ax.set_yticks([-3, 0, 3, 6, 9])
     ax.set_aspect("equal")
-    ax.set_xlabel("timed shift vs other tissues [h]")
-    ax.set_ylabel("untimed shift vs other tissues [h]")
+    ax.set_xlabel("phase offset timed [h]")
+    ax.set_ylabel("phase offset clocksync [h]")
     ax.set_title("inverted feeding", fontsize=13, color=INK)
 
 
