@@ -37,11 +37,12 @@ SPECS = {
     "skin_ganier_genome": "skin_ganier", "lung_hlca_genome": "lung_hlca",
     "organ_optic_nerve_genome": "optic_nerve", "organ_eye_anterior_genome": "eye_anterior",  # A17 / A27 extension
     "psychad_hbcc_genome": "psychad_hbcc", "seaad_dlpfc_genome": "seaad_dlpfc", "seaad_mtg_genome": "seaad_mtg",
+    "psychad_mssm_genome": "psychad_mssm", "psychad_radc_genome": "psychad_radc",  # A280
     "kidney_sc_genome": "kpmp_sc", "islets_genome": "islets_t2d",
     "kong_colon_genome": "kong_co", "kong_ileum_genome": "kong_ti",  # three folders each (`kong.SEGMENTS`)
 }
 KONG = {"kong_colon_genome": "colon", "kong_ileum_genome": "ileum"}
-CORTEX = ("psychad_hbcc_genome", "seaad_dlpfc_genome", "seaad_mtg_genome")  # rules of `cortex.build`
+CORTEX = ("psychad_hbcc_genome", "seaad_dlpfc_genome", "seaad_mtg_genome", "psychad_mssm_genome", "psychad_radc_genome")  # rules of `cortex.build`
 DISEASE = {  # name: (label column rule, healthy min donors, block column or None, donor columns, extra donor column)
     "kidney_sc_genome": (["normal"], ["chronic kidney disease"], 20, "dataSource", "ckd_sc"),
     "islets_genome": (["normal"], ["type 2 diabetes mellitus"], 15, None, "islets_t2d"),
@@ -51,7 +52,8 @@ CLOCK_TWIN = {"heart_global_genome": "heart_global", "organ_breast_genome": "org
               "organ_adipose_genome": "organ_adipose", "lung_hlca_genome": "lung_hlca",
               "organ_optic_nerve_genome": "organ_optic_nerve", "organ_eye_anterior_genome": "organ_eye_anterior",
               "psychad_hbcc_genome": "psychad_hbcc", "seaad_dlpfc_genome": "seaad_dlpfc",
-              "seaad_mtg_genome": "seaad_mtg", "kidney_sc_genome": "kidney_sc", "islets_genome": "islets",
+              "seaad_mtg_genome": "seaad_mtg", "psychad_mssm_genome": "psychad_mssm",
+              "psychad_radc_genome": "psychad_radc", "kidney_sc_genome": "kidney_sc", "islets_genome": "islets",
               "kong_colon_genome": "kong_colon", "kong_ileum_genome": "kong_ileum"}
 
 
