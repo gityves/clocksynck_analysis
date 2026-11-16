@@ -5449,3 +5449,47 @@ the clock rows reproduce A104 exactly (periphery rho 0.734, 27 tissues; brain -0
   the clock-gene coupling lies far above both companion families, unlike the single-cell atlas compartments (A263
   Part B).
 <!-- src: paper/exploratory/A271_responsive_companions/output/{a104_tests,a104_sets}.csv -->
+
+## A274 (scored 2026-11-16; blind for these atlases, one scoring run): the cell-type ranking replicates in five atlases not used by A272 (H274.1 PASS), the stromal-vascular level is now above both companion families (H274.2 PASS), and the cell classes of the human cortex share a clock-gene state beyond both families (H274.3 PASS)
+
+- Design (addendum): eight eligible atlases, each reproducing every clock count of its clock-gene table. Body: optic
+  nerve (83 donors), anterior eye (67), kidney (26), Kong ileum (30), Kong colon (21). Cortex: PsychAD HBCC (145),
+  SEA-AD DLPFC (44) and MTG (47; same cohort as DLPFC). Not eligible by the registered rule: islets (3 of 118 rows
+  differ), lung control (no exact twin). 282 body pairs, 92 cortex pairs.
+- Placebo (donors permuted within compartment and stratum): D 0.053 against q95 0.064 / 0.056 (matched /
+  responsive), T_SV 0.209 against 0.217 / 0.220, T_CX 0.128 against 0.134 / 0.127 (p 0.050 against the responsive
+  family, the one placebo test of six at its q95).
+- **H274.1 PASS (replication of H272.2):** D = T_SV - T_LY 0.152 over optic nerve, ileum and colon; matched q95 0.104
+  (p 0.020), responsive q95 0.109 (p 0.010). Per atlas, (SV, X) against (LY, X): optic nerve 0.510 / 0.335, ileum
+  0.307 / 0.142, colon 0.436 / 0.322.
+- **H274.2 PASS against both families:** T_SV 0.478 over the five body atlases; matched median 0.269, q95 0.344
+  (p 0.005); responsive median 0.337, q95 0.405 (p 0.005). In A272 the level did not exceed the responsive family
+  (p 0.149). Per atlas, the (SV, X) median against the responsive q95: optic nerve 0.510 against 0.438 (above); colon
+  0.436 against 0.441, eye 0.611 against 0.627, kidney 0.524 against 0.615, ileum 0.307 against 0.375 (not above):
+  the pooled statistic passes, four of the five atlases do not on their own.
+- **H274.3 PASS:** T_CX 0.497; matched median 0.330, q95 0.466 (p 0.020); responsive median 0.321, q95 0.388
+  (p 0.005). Per atlas (pairs of different classes): PsychAD 0.423 (matched q95 0.465, responsive 0.392), DLPFC
+  0.557 (0.612, 0.510), MTG 0.510 (0.607, 0.486): each cohort is above the responsive q95 and below the matched q95
+  on its own; the margin against the matched family comes from pooling.
+- **Family matrix (descriptive; clock / matched / responsive set medians).** Body: fibroblast-endothelial 0.687 /
+  0.271 / 0.419; fibroblast-myeloid 0.559 / 0.290 / 0.360; endothelial-epithelial 0.558 / 0.245 / 0.302;
+  endothelial-myeloid 0.380 / 0.264 / 0.324; lymphocyte with fibroblast 0.156, endothelial 0.165, epithelial 0.221,
+  myeloid 0.207, lymphocyte 0.214, all at or below their matched medians (0.211 to 0.255). Cortex: neuron-neuron
+  0.865 / 0.692 / 0.631; neuron-endothelial 0.493 / 0.253 / 0.243; neuron-myeloid 0.510 / 0.320 / 0.330;
+  glia-myeloid 0.517 / 0.316 / 0.347; glia-endothelial 0.470 / 0.258 / 0.295; neuron-glia 0.444 / 0.429 / 0.321;
+  glia-glia 0.397 / 0.420 / 0.396. Neuron-glia and glia-glia pairs are not above the matched genes.
+- **Offsets (descriptive; pairs above both companions).** Body: 46 of 282 pairs, median |offset| 0.63 h, largest
+  4.32 h, median 90 % interval width 1.70 h, 63 % of intervals include 0. Cortex: 11 of 92 pairs, median |offset|
+  1.02 h, largest 1.68 h, no interval includes 0. In PsychAD the three neuron classes lie within 0.6 h of each
+  other and the vascular class differs from them by 1.0 to 1.5 h; in SEA-AD DLPFC the one readable neuron-vascular
+  pair has the opposite sign (1.33 h [0.31, 2.52] against -1.53 h [-2.17, -0.94] for the same pair in PsychAD). The
+  cortex offsets therefore do not agree between cohorts; no order of cortical cell classes is claimed.
+- **Reading (registered).** The ranking (stromal-vascular cells share the clock state with the tissue, lymphocytes
+  do not) is replicated in independent atlases and is written as a result. A shared clock state links the cortical
+  cell classes: the brain is internally coherent, whatever its coupling to the body (A263).
+- **Limits.** The lymphocyte side of H274.1 rests on the two gut atlases and three optic-nerve pairs; eye, optic
+  nerve and cortex are post-mortem; nuclei in cortex; the two SEA-AD regions share donors; the cortex margin
+  against matched genes is small (0.497 against 0.466) and the placebo sat near its own q95.
+- Code: `exploratory/A274_celltype_map/scripts/score_a274.py` (design, placebo, one scoring run); loaders
+  `common/datasets/_atlas/genome.py`.
+<!-- src: paper/exploratory/A274_celltype_map/output/{tests,per_atlas,family_matrix,pairs,twin,design}.csv, placebo/tests.csv -->
