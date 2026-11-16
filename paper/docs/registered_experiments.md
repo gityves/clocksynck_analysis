@@ -7048,3 +7048,53 @@ A109 note); per cohort, single-cell pools can be smaller. (3) p floor 1/201. (4)
 is not time of death; what it is in the surgical samples is not tested here.
 **Stop rule:** one run per script. **Code:** the two scripts above and
 `paper/exploratory/A271_responsive_companions/scripts/score_a271_a104.py`.
+
+## A272 (2026-11-16, user: "Okay, start this" (development of the cellular backbone: coverage, circularity, who follows whom); **NOT BLIND** for the anchored readout: the A150 couplings by family against both companion families (fibroblast above both; endothelial, epithelial, myeloid not above the responsive sets; lymphocytes at 0.069) and A271 Part A (tumour-normal pairing: fibroblast and endothelial above the responsive sets, immune cells not) are known; NOT seen: any pairwise statistic between compartments of a healthy atlas, on any gene set; seen before registration: the design stage of the script (pairs, donors, degrees of freedom; no state computed)): is the stromal-vascular backbone seen without a host? **Five healthy single-cell atlases; anchor-free; control of the backbone claim; primary H272.1, H272.2**
+
+**Why.** In the anchored fits the host is defined on stromal-vascular compartments (learned anchors), so their high
+coupling is partly by construction, even with the leave-one-out readout (the other stromal-vascular anchors stay in the
+host). The backbone claim ("a person's shared clock state is carried by the stromal and vascular cells of a tissue,
+lymphocytes do not carry it") needs a readout with no host and no anchors, against both companion families.
+**Data.** The A150 atlases (gate-passing A17 healthy atlases with a genome-wide twin): lung_hlca, heart, organ_breast,
+organ_muscle, organ_colon; rows, strata and families as in A150 (`anchor_rule.family`). Design
+(`exploratory/A272_backbone_pairwise/output/design.csv`): 249 pairs of compartments; pairs (stromal-vascular, X) 60 in 5
+atlases, pairs (lymphocyte, X) 60 in 4 atlases (muscle has no lymphocyte compartment), X = any family other than
+stromal-vascular and lymphocyte (epithelial, myeloid, parenchyma, neuron, other).
+**Statistic.** One projector per atlas and gene set (`clocksync.paired.projector`, `states`). For a pair (a, b), over the
+donors having both, in strata with >= 3 shared donors, pooled degrees of freedom >= 15: states centred within stratum,
+r_ab = sum a conj(b) / sqrt(E_a E_b), with E the summed squared states minus the Poisson variance (the pooled form of
+`paired.ccorr`); a pair with a non-positive corrected variance is NaN and left out of medians. |r_ab|: shared state;
+arg r_ab: offset (h, a minus b). T_SV = mean over atlases of the median |r| over pairs (stromal-vascular, X); T_LY the same
+for (lymphocyte, X); D = T_SV - T_LY over the 4 atlases with lymphocytes. Companions: 200 expression-matched and 200
+stress-responsive pseudo-clock sets per atlas (`paired.pseudo_waveforms`, matched on the mean log fraction over the rows
+of the atlas, genes with mean count >= 1; seeds [272, atlas, 1 | 2]); set j is pooled across atlases as set j.
+**H272.1 (the backbone without a host):** T_SV of the clock genes is above the q95 of both companion families.
+**H272.2 (the ranking is a clock property):** D of the clock genes is above the q95 of D in both companion families: the
+same partner cell types share more clock state with stromal-vascular cells than with lymphocytes, beyond what
+non-clock genes show. No multiplicity correction between the two (H272.2 is read only with H272.1's outcome stated).
+**Descriptive.** D272.1 family x family matrix of median |r| (clock, companion medians, share of pairs above both q95) and
+per-compartment centrality (median |r| with compartments of other families) with its excess over each companion family;
+Spearman of that excess with the A150 anchored excess. D272.2 offsets: for pairs above the q95 of both families, arg r
+in hours with a donor bootstrap within stratum (500, 90 %), and the closure of triangles (offset ab + bc - ac). D272.3
+sensitivity of T_SV and D: correlation without the Poisson correction; clock counts after the A150 ambient
+over-correction.
+**Readings.** H272.1 and H272.2 PASS: the backbone holds without a host and against both companions; the section is
+written on the pairwise readout, the anchored couplings become the secondary display. H272.1 PASS, H272.2 fail: stromal-
+vascular cells share a clock state with the other cells, but lymphocytes are not shown to share less of it than non-clock
+genes predict (depth or responsiveness may explain their low coupling): "lymphocytes do not carry it" is dropped.
+H272.1 fail against the responsive family only: the shared state of stromal-vascular cells is not separable from the
+daily or acute hormone response in these atlases (A270: such sets read time in the baboon, hardly in GTEx): reported as
+such, backbone kept as "shared state". H272.1 fail against both: the backbone was an effect of the anchoring; the
+section is withdrawn.
+**Not in this amendment.** No lead or lag between cell types is interpreted: D272.2 gives the precision only. A
+driver-follower reading (lag-amplitude relation, mediation) needs first a calibration of pairwise offsets against timed
+truth (mouse colon with known ZT, aorta) and is a separate amendment; offsets below about 1 h are not interpreted (the
+project's untimed-vs-timed errors are 0.4 to 0.5 h). Extension to the atlases without a genome-wide table needs new
+builds from the Census and is decided after this result.
+**Limits.** (1) Compartments of one sample share ambient RNA and dissociation effects, which inflate |r| and pull offsets
+to 0; the companions carry the same inflation for |r|, D272.3 bounds it for the clock. (2) The Poisson correction is
+unstable at low counts (lymphocytes): NaN pairs are counted, medians used, the uncorrected value reported. (3) Five
+atlases, 4 with lymphocytes; lung_hlca contributes the most pairs (per-atlas medians, then the mean, limit its weight).
+(4) |r| is positively biased at small n; the companions share the donors, so the comparison is unaffected.
+**Code.** `exploratory/A272_backbone_pairwise/scripts/score_a272.py` (`--stage design|score`, `--placebo`: donors permuted
+within compartment and stratum, a code test run before scoring).
