@@ -7136,3 +7136,41 @@ compartments; the relation of |error| to |r|.
 sampling window (human hospital hours), which the donor bootstrap of A272 and the timed human comparisons (A251, A123)
 cover. The human waveform is used on mouse data, as in A21 and A31. Mouse, one tissue.
 **Code.** `exploratory/A273_pairwise_offset_truth/scripts/score_a273.py`.
+
+## A274 (2026-11-16, user: "Okay, work on this autonomously" (cell-type level understanding of the clock); staged: hypotheses, statistic, eligibility and readings are fixed here, before the genome-wide tables of the new atlases exist; the design table (atlases, pairs) goes in an addendum committed before scoring; seen: A272 in full (5 atlases), A273, A150, A271; NOT seen: any genome-wide table or pairwise statistic of the atlases below): does the cell-type ranking of A272 replicate in atlases it did not use, and which cell classes share the clock state in the human cortex? **Healthy single-cell atlases not in A272; anchor-free pairwise readout; replication (H274.1, H274.2) and cortex (H274.3)**
+
+**Why.** A272 rests on five atlases, one of them weak (colon), and was not blind for the anchored readout. The atlases
+with a clock-gene table only are being rebuilt with all genes (Census 2025-11-08, same grouping as their panel builds:
+`exploratory/celltype_map_builds/run.sh`, `celltype_map_builds_gut/run.sh`), which makes companions possible there.
+**Atlases.** Body: organ_optic_nerve, organ_eye_anterior, kidney_sc, islets, kong_ileum, kong_colon,
+lung_natri_control. Cortex: psychad_hbcc, seaad_dlpfc, seaad_mtg. Rows, strata, classes and healthy donors: those of the
+clock-gene dataset of each atlas (A17 healthy target). **Eligibility, fixed:** an atlas enters only if its genome-wide
+table reproduces the clock-gene table on the twin check (clock counts, cells, depth, strata identical on the common
+rows); pairs as in A272 (strata with >= 3 shared donors, pooled degrees of freedom >= 15). An atlas that fails the twin
+check or is not built is left out and named; no atlas is added.
+**Statistic.** As A272 after its design addendum (complex correlation without the Poisson correction, one projector
+per atlas and gene set; 200 expression-matched and 200 stress-responsive sets, seeds [274, atlas, 1 | 2]; set j pooled
+across atlases as set j). Families from `anchor_rule.family`; SV = fibroblast_stromal, endothelial, mural; LY =
+lymphocyte; X = any other family.
+**H274.1 (replication of H272.2, primary):** D = T_SV - T_LY over the eligible body atlases that have at least 3 pairs
+(SV, X) and 3 pairs (LY, X), above the q95 of D in both companion families.
+**H274.2 (replication of the level):** T_SV over the eligible body atlases with at least 3 pairs (SV, X), above the q95
+of the matched family; the responsive family is reported with the same rule (A272: p 0.149).
+**H274.3 (cortex):** T_CX = mean over the eligible cortex atlases of the median |r| over pairs of compartments of
+different families (neuron, glia, endothelial, myeloid), above the q95 of both companion families: the cell classes of
+the cortex share a clock-gene state beyond non-clock genes. Descriptive: the family x family matrix with companions;
+neuron-neuron against neuron-glia against glia-glia pairs; offsets with donor-bootstrap intervals for pairs above both
+companions (A273: unbiased at the 1 h scale), and their agreement between the three cortex atlases.
+**Readings.** H274.1 PASS: the ranking (stromal-vascular cells share the clock state with the tissue, lymphocytes do
+not) is replicated in independent atlases and is written as a result. Fail with the same sign and the clock D above the
+companion medians: not replicated at this power, reported with A272 as the only support. Fail with D at or below the
+companion medians: the A272 ranking is not general; the section states it for the A272 atlases only, as a lead.
+H274.2 as H272.1. H274.3 PASS: a shared clock state links the cortical cell classes (the brain is internally coherent,
+whatever its coupling to the body, A263); fail against the responsive family only: shared state not separable from the
+agonal or hormonal response (post-mortem tissue); fail against both: no cell-class clock relation is read in cortex.
+**Not in this amendment.** No driver-follower reading. Gene-level outputs per cell type (A50 maps) are not rescored.
+**Limits.** Post-mortem cortex (agonal state shared by all classes of a donor: the responsive family is the relevant
+control); nuclei, not cells, in the cortex atlases; eye and optic nerve come from post-mortem donors too; the body
+atlases with lymphocytes may be only the two gut atlases and one or two others (few pairs: the addendum gives them).
+**Code.** `exploratory/A272_backbone_pairwise/scripts/score_a272.py` generalised to a list of atlases and a family
+grouping (`exploratory/A274_celltype_map/scripts/score_a274.py`), placebo before scoring.
