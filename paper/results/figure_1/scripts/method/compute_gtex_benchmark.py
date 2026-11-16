@@ -15,6 +15,8 @@ coverage and width of the clocksync intervals, runtime, CCD (clock correlation d
 Only aggregates are written (no per-donor orderings or times: controlled access).
 
     python compute_gtex_benchmark.py [--subsample N] [--methods ...] [--ns 80 40 ...] [--draws K] [--tissues ...]
+`--tissue-set working_hours`: the 40 tissues with >= 20 fast deaths who died 08-18 h (A123), outputs in `gtex_benchmark_40/`
+(presentation R1.2, post hoc). `cyclops_clock`: CYCLOPS 2.0 on the 14 core clock genes only (expression and seed genes), 3 draws per n (cost, ~4 min per tissue).
 `--subsample N`: check mode, one draw of N donors per design, five tissues, cheap methods (clocksync, timed, chiral, cofe_clock).
 Full run (legacy design): n in (10, 20, 40, 80), 10 draws (cofe_genome and cyclops 3 at n = 80), methods per `DRAWS_80` / `DRAWS_SWEEP`.
 Outputs: paper/results/figure_1/output/method/gtex_benchmark/{tissues,samples,genes,coverage,runtime,ccd,truth,truth_model,gene_truth}.csv
@@ -50,9 +52,11 @@ REF = "Muscle - Skeletal"
 TISSUES = ("Muscle - Skeletal", "Thyroid", "Artery - Tibial", "Nerve - Tibial", "Skin - Sun Exposed (Lower leg)",
            "Skin - Not Sun Exposed (Suprapubic)", "Adipose - Subcutaneous", "Lung")
 NS = (10, 20, 40, 80)
-DRAWS_80 = {"cofe_genome": 3, "cofe_clock": 10, "cyclops": 3, "chiral": 10, "timeteller": 10, "clocksync": 10, "timed": 10}
-DRAWS_SWEEP = {"cofe_clock": 10, "chiral": 10, "timeteller": 10, "clocksync": 10, "timed": 10}
-ORDERINGS = ("chiral", "timeteller", "cofe_clock", "cofe_genome", "cyclops")
+DRAWS_80 = {"cofe_genome": 3, "cofe_clock": 10, "cyclops": 3, "cyclops_clock": 3, "chiral": 10, "timeteller": 10,
+            "clocksync": 10, "timed": 10}
+DRAWS_SWEEP = {"cofe_clock": 10, "cyclops_clock": 3, "chiral": 10, "timeteller": 10, "clocksync": 10, "timed": 10}
+ORDERINGS = ("chiral", "timeteller", "cofe_clock", "cofe_genome", "cyclops", "cyclops_clock")
+MIN_WINDOW = 20  # `--tissue-set working_hours`: tissues with >= 20 fast deaths who died 08-18 h (as A123)
 DESIGNS = ("full", "window")
 SEED = 2026
 AMP_FAIL, OFFSET_FAIL = 0.5, 2.0
@@ -61,6 +65,20 @@ LN2 = np.log(2.0)
 
 
 # ---- data -------------------------------------------------------------------------------------------------------------
+
+def working_hours_tissues() -> tuple[str, ...]:
+    """Tissues with >= MIN_WINDOW fast deaths who died 08-18 h (cultured cells excluded), most donors first: A123's 40 tissues."""
+    import anndata as ad
+    from common.gtex import FAST, LABELLED
+
+    a = ad.read_h5ad(LABELLED, backed="r")
+    o = a.obs[["tissue", "subject", "DTHHRDY", "tod"]].copy()
+    a.file.close()
+    o["tissue"] = o.tissue.astype(str)
+    o = o[~o.tissue.str.startswith("Cells -") & o.DTHHRDY.isin(list(FAST)) & o.tod.notna()].drop_duplicates(["subject", "tissue"])
+    n = o[in_window(o.tod.astype(float) % 24)].groupby("tissue").subject.nunique()
+    return tuple(n[n >= MIN_WINDOW].sort_values(ascending=False).index)
+
 
 def draw(data, design: str, n: int, rng) -> np.ndarray:
     tod = donor_times(data)
@@ -160,11 +178,15 @@ def run_order(method: str, counts: pd.DataFrame, tmp: Path, seed: int = 0, ncore
 
         phase, failed = run_chiral(log2_normalised(counts), seed=seed)
         return phase.rename(None), {"failed_starts": failed}
-    if method == "cyclops":
+    if method in ("cyclops", "cyclops_clock"):
         from common.benchmark.cyclops import run_cyclops
 
         expr = 2 ** log2_normalised(counts) - 1
-        r = run_cyclops(expr.T, cyclops_seeds(), tmp, seed=seed, threads=ncores)
+        seeds = cyclops_seeds()
+        if method == "cyclops_clock":  # core clock genes only, as expression and as seed genes
+            seeds = [g for g in CLOCK if g in expr.columns]
+            expr = expr[seeds]
+        r = run_cyclops(expr.T, seeds, tmp, seed=seed, threads=ncores)
         return (r["phase_raw"] * 24 / (2 * np.pi)) % 24, {}
     raise ValueError(method)
 
@@ -242,13 +264,17 @@ def main():
     ap.add_argument("--tissues", nargs="*", default=None)
     ap.add_argument("--ncores", type=int, default=4)
     ap.add_argument("--n-boot", type=int, default=None)
+    ap.add_argument("--tissue-set", choices=("benchmark", "working_hours"), default="benchmark",
+                    help="benchmark: the eight tissues of TISSUES; working_hours: A123's 40 tissues (output folder gtex_benchmark_40)")
+    ap.add_argument("--no-ccd", action="store_true", help="skip the clock correlation distance of every tissue draw")
     args = ap.parse_args()
     opt = cli.setup(args)
     quick = opt["quick"]
-    out = out_dir(FOLDER, quick) / "gtex_benchmark"
+    out = out_dir(FOLDER, quick) / ("gtex_benchmark_40" if args.tissue_set == "working_hours" else "gtex_benchmark")
     runs = out / "runs"
     runs.mkdir(parents=True, exist_ok=True)
-    tissues = tuple(args.tissues) if args.tissues else TISSUES[:5] if quick else TISSUES
+    tissues = (tuple(args.tissues) if args.tissues else working_hours_tissues() if args.tissue_set == "working_hours"
+               else TISSUES[:5] if quick else TISSUES)
     ns = tuple(args.ns) if args.ns else (args.subsample,) if quick else NS
     methods = args.methods or (["clocksync", "timed", "chiral", "cofe_clock"] if quick else list(DRAWS_80))
     n_boot = args.n_boot if args.n_boot is not None else 10 if quick else 200
@@ -323,7 +349,7 @@ def main():
                         print(m, f"n{n}", design, i, f"{time.time() - ts:.0f} s", flush=True)
                     for k in rows:
                         rows[k] += r[k]
-        for design in DESIGNS:  # clock correlation distance of every tissue draw
+        for design in () if args.no_ccd else DESIGNS:  # clock correlation distance of every tissue draw
             for (d, i), donors in D.items():
                 if d != design:
                     continue

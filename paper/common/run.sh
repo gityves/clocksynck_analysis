@@ -2,7 +2,7 @@
 # Run a paper step with a RAM cap (the machine is shared): a script (`python`, env `sccc`), a notebook (executed in
 # place with papermill) or a group's `run.sh` (log `logs/m3_<group>.log`).
 #   [RUN_CAP_GB=30] paper/common/run.sh paper/results/figure_1/scripts/method/compute_gtex_benchmark.py [script args...]
-# Log: paper/results/logs/<name>.log. Memory (PSS, so pages shared between joblib workers count once) is summed
+# Log: paper/results/logs/<name>.log (or <RUN_LOG_NAME>.log, for concurrent runs of the same script). Memory (PSS, so pages shared between joblib workers count once) is summed
 # over the whole process tree (papermill starts the kernel in its own session, and joblib workers under it); on
 # breach every process of the tree is killed.
 # Every run is recorded: a live state file logs/jobs/<pid>.state while it runs, and one line in logs/jobs.tsv when it
@@ -14,6 +14,7 @@ step=$1; shift; cap_gb=${RUN_CAP_GB:-30}; args="$*"
 repo=$(cd "$(dirname "$0")/../.." && pwd)
 name=$(basename "$step"); log="$repo/paper/results/logs/${name%.*}.log"
 [[ $step == *.sh ]] && log="$repo/paper/results/logs/m3_$(basename "$(dirname "$step")").log"
+[ -n "${RUN_LOG_NAME:-}" ] && log="$repo/paper/results/logs/${RUN_LOG_NAME}.log"
 jobs_dir="$repo/paper/results/logs/jobs"; ledger="$repo/paper/results/logs/jobs.tsv"
 mkdir -p "$jobs_dir"
 [ -f "$ledger" ] || printf 'start\tend\tstatus\texit\tpeak_gb\truntime_s\trunner_pid\tstep\targs\tlog\n' > "$ledger"
