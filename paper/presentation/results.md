@@ -191,8 +191,8 @@ feeding moves its untimed offset as the timed one moves.
 
 **Figure:** `figures/positive_controls/positive_controls.png` (`scripts/positive_controls.py`; half slide). A. change in
 coupling at the control's host spread (d*) per tissue, knockout minus control, 95 % interval: liver −0.287 [−0.411, −0.118],
-white fat −0.009 [−0.089, 0.055], lung +0.019 [−0.045, 0.087]. B. day feeding: untimed vs timed offset change of the four
-Xin tissues; dashed: identity.
+white fat −0.009 [−0.089, 0.055], lung +0.019 [−0.045, 0.087]. B. inverted feeding (food in the day instead of the night): each
+tissue's shift relative to the other three, untimed vs timed; dashed: identity.
 
 **Speaker notes**
 - The knockout liver keeps a clock-shaped shared state (its gate still passes) and sits −1.31 h from the fat + lung

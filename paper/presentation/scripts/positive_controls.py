@@ -2,8 +2,10 @@
 
 A. Hepatocyte Bmal1 knockout vs AlbCre control (Manella 2021, ad libitum, 24 vs 24 mice; H111.3 registered, pass): change in
    coupling of each tissue at the control's host spread (d*), point and 95 % interval from the permutations.
-B. Night to day restricted feeding (Xin 2021, 4 tissues; H111.1 registered, pass): change of each tissue's untimed offset
-   against the change of its timed offset; dashed: identity.
+B. Inverted feeding (Xin 2021: food at night (NRF, normal for mice) vs in the day (DRF), each arm sampled over the day, 4
+   tissues; H111.1 registered, pass): per tissue, offset in DRF minus offset in NRF, centred on the circular mean of the four
+   tissues (the shift of each tissue relative to the others; a whole-body shift is not identifiable untimed and is removed
+   from both). x: timed (from the recorded ZT), y: untimed (clocksync, anchors heart, kidney, VAT); dashed: identity.
 
 Data: exploratory/A111_feeding_controls/output/a111_h111_3.csv (primary, ad libitum rows), a111_h111_1.csv (xin2021).
 Output: presentation/figures/positive_controls/positive_controls.{svg,png} (half-slide figure).
@@ -55,9 +57,9 @@ def feeding(ax, r):
     ax.set_xticks([-3, 0, 3, 6, 9])
     ax.set_yticks([-3, 0, 3, 6, 9])
     ax.set_aspect("equal")
-    ax.set_xlabel("timed offset change [h]")
-    ax.set_ylabel("untimed offset change [h]")
-    ax.set_title("day feeding", fontsize=13, color=INK)
+    ax.set_xlabel("timed shift vs other tissues [h]")
+    ax.set_ylabel("untimed shift vs other tissues [h]")
+    ax.set_title("inverted feeding", fontsize=13, color=INK)
 
 
 def main():
