@@ -10,6 +10,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **New 2026-11-13:** results A245-A256 and what they change are summarised in `REVIEW_2026-11-10.md` §6; decisions asked there:
   the luminal A row after A224, whether to request ages (Wu 2020) and TwinsUK phenotypes (MuTHER), whether A243 is run (Q32),
   and the wording of the cancer chapter (Q24) after the synthesis in the ledger addendum of 2026-11-12.
+- **Q35** (below, new 2026-11-16): tally of the biology-paper checks: two exceptions fell (fetal adrenal first; brain as a clock statement), the cancer and robustness lines stand, no systemic signal named. Biology paper or the Nature Methods ordering?
 - **Q34** (below, new 2026-11-15): gate G2 (iii) after A262: no second design reproduces A261; blood forced desynchrony is neither central nor behaviour (damped 0.36, shifted 4 h); night-shift PBMC uninformative. How to use the muscle / blood contrast?
 - **Q33** (below, new 2026-11-15): gate G3 fails as registered (A259): the bound in hours is not a headline. Which plan does the paper take while phase T continues? **Answered (c)**; update: no muscle headline (clock-core design not estimable).
 - **Q32** (below): three human fetal datasets give no adult-like clock organisation before birth (A237-A239): how the development section reads. Updated with the size of the clock the negatives exclude (A240), A241 and **the replication of the fetal adrenal clock on open data (A242, PASS): option (iii) is done, the recommendation changes**.
@@ -34,6 +35,42 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
+
+### Q35 (2026-11-16): tally of the biology-paper checks (stop rule: two exceptions fell)
+
+**Thesis tested** (`prompts/biology_paper_checks_2026-11-15.md`): the human clock network is robust, and the places
+where it breaks are specific: brain, blood, the fetus except the adrenal cortex, malignant cells against their
+microenvironment, brain-dead donors. Rule of the prompt: if two or more exceptions fall, the same material is reordered
+into a Nature Methods paper.
+
+| exception / line | check | outcome | status |
+|---|---|---|---|
+| Fetus absent except the adrenal cortex | 1a, 1b: A264, A266 (adrenal); A243, A269 (heart, kidney, lung, liver) | adrenal not clock-specific without PER1 / NR1D1, core loop not significant (C 0.417, p 0.057); lung (C 0.530) and liver (0.583) carry the same covariation, heart excluded at 0.5 x adult; no core loop clock-specific in any organ; not explained by steroid or glucocorticoid activity | **fell** ("adrenal first" and "absent elsewhere" both gone; a weaker multi-organ observation remains, supplement) |
+| Brain | 3: A263 Part A (human, baboon; sheep running) | brain's lower coupling to the body (human L -0.514, baboon -0.528) lies at the 59th-88th percentile of matched and responsive gene sets; companions drop more; clock r* 0.803 vs companion medians 0.42 / 0.38 | **fell as a clock statement** (erratum A142: "brain is less coupled to the body's shared state") |
+| Malignant cells vs microenvironment / tumour-normal pairing | 2: A265, A267 | COFE's "uncoupled" reading not reproduced (uniform in 3 of 10 cancers) and uninformative in a simulation on the real design (7 of 10 coupled replicates read "uncoupled"); COFE's own pairing is patient similarity (not above matched sets, not above generic axes); clocksync 0.361 (p 0.0001), 10/10 coupled and 0/10 uncoupled replicates | **stands** (the head-to-head favours clocksync) |
+| The systemic signal (mechanism) | 4: A268 | glucocorticoid, cold and heat readers consistent across GTEx tissues (K 0.70-0.79) but not above matched / responsive readers, and at a phase 4-7 h away in living MuTHER tissue | **not named** (clean negative at the stated power) |
+| Blood; brain-dead donors | not checked (blood an expected exception; brain death descriptive by decision) | - | unchanged |
+
+**Not done under the stop rule:** A263 sheep (running, finishes about 16:00; added to RP when in) and Part B (H263.4,
+atlas couplings against responsive sets; not started). Part B decides whether the organ-map couplings of Figure 2 are
+clock against both families: it is the next check for either ordering.
+
+**What stands.** One clock state per living person, the state is time (living tissues, elapsed hours), offsets
+recovered from hospital-hours samples, group offsets within an hour, tumour-normal pairing; all with companions where
+registered. **What is gone as a clock claim.** The brain exception and the fetal adrenal "first". **Method results
+added by these checks.** The companion discipline itself removed two exceptions that a coupling statistic alone would
+have kept; in the head-to-head, the only competing untimed method's published conclusion fails on the same data.
+
+**Recommendation: the Nature Methods ordering**, as the prompt's rule says (two fell), with the biology kept as the
+application chapters: (1) the method and its calibration (timed recovery, hospital hours, the COFE head-to-head and the
+simulation on the real design); (2) one clock state per living person as the flagship application; (3) where the
+shared state is weaker and what is not clock (brain, fetus: shared-state statements with companions, as cautionary
+results); (4) cancer pairing. The biology paper would rest on robustness alone, with no specific breaks and no named
+signal, which does not meet Cell's "conceptual advance" bar. If the PI prefers to keep the biology framing, Part B
+(H263.4) should be run first: a failure there would also remove the organ-map couplings.
+
+**On hold:** the plan and journal choice (user and PI); Part B of A263; any rewording of roadmap section 2.
+**Evidence:** RP A243, A263 (Part A), A264-A269; VERDICT_TABLE rows of the same; roadmap progress note 2026-11-16.
 
 ### Q34 (2026-11-15): gate G2 (iii) after A262: no second design reproduces A261, and blood differs from muscle
 
@@ -104,6 +141,14 @@ a second design. Next, independent of the answer: T4 (systemic signal) and a rep
 behaviour-shift or meal-timing design if one exists on disk or public, plus companions for A91. Plan 3 stays the floor.
 
 ### Q32 (2026-11-11): the human developmental section after A237-A239
+- **Update 2026-11-16 (A243 and A269; tally Q35):** pooled open cohorts give a clock-shaped covariation in the fetal
+  lung (C 0.530, Holm p 0.026) and liver (0.583, 0.025), between half and three quarters of the adult size as the
+  adrenal; heart negative at an adult pass rate of 0.800 at half the adult size, kidney negative (three quarters
+  excluded). Both survive a glucocorticoid-target covariate (A269 H269.2); neither passes on the core loop (lung C
+  0.473, p 0.060; liver 0.686, p 0.009, below the responsive q95 0.712). Reading: "the clock genes covary before birth
+  in the adrenal, lung and liver, beyond glucocorticoid activity; a core loop is not shown in any". Recommendation:
+  supplement with one main-text sentence; the one time-free test of a running oscillator is spliced / unspliced counts
+  (roadmap C5: author release, outward-facing, or FASTQ mapping, outside the processed-data rule).
 - **Update 2026-11-15 (A264, scored; not blind):** the cortex covariation survives a cubic age trend with cohort-specific
   age slopes (C 0.659, p 0.0021) and the ACTH steroidogenic score (C 0.526, p 0.0121), both clock-specific; without PER1
   and NR1D1 it is C 0.489, p 0.0290, above matched sets but below the responsive q95 (0.634): **not clock-specific**. By

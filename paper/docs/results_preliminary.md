@@ -5227,3 +5227,38 @@ G2 (iii)).
 - Code: `exploratory/A269_fetal_organs_drive/scripts/{design_a269,feasibility_a269,score_a269}.py` (power 5 min; score
   22 s).
 <!-- src: paper/exploratory/A269_fetal_organs_drive/output/{verdicts,l1,feasibility_passrates,adult_scores}.csv -->
+
+## A263 Part A, human and baboon (scored 2026-11-16; NOT BLIND; sheep running, Part B not run): brain's lower coupling to the body's clock state is not specific to the clock genes: expression-matched and stress-responsive gene sets show the same or a larger drop (H263.1 fail, H263.3 fail); the brain exception falls as a clock statement (erratum to A142)
+- **R2, L = log(median brain coupling / median peripheral coupling)** (peripheral-anchor host; 200 matched and 200
+  responsive sets; registered rule: clock-specific if L_clock < q05 of both families; sets with undefined L, i.e.
+  median brain coupling 0, are counted and left out, which favours the clock):
+
+  | species | brain / periphery tissues | median coupling brain vs periphery | L clock | matched: valid, q05, median (pct at or below clock) | responsive: valid, q05, median (pct) | verdict |
+  |---|---|---|---|---|---|---|
+  | human (GTEx v10 fast deaths) | 13 / 26 | 0.406 vs 0.679 | -0.514 | 174, -3.207, -1.077 (75.3) | 199, -3.209, -1.306 (87.9) | **H263.1 fail** |
+  | baboon | 22 / 35 | 0.420 vs 0.712 | -0.528 | 172, -2.509, -0.706 (59.3) | 175, -2.522, -0.770 (62.3) | **H263.3 fail** |
+
+- **R1 (human, untimed block agreement r* brain vs periphery):** clock 0.803; matched median 0.417 (q05 0.091),
+  responsive median 0.376 (q05 0.131): the clock genes agree between brain and periphery more than non-clock sets do,
+  not less: not clock-specific as a drop.
+- **Reading as registered:** H263.1 fails (L_clock is not below the q05 of either family): brain's lower coupling is
+  shared by non-clock gene sets, for the responsive family "brain responds less to the body's shared stress /
+  hormonal state"; **the brain exception falls as a clock statement**, and A142 gets the erratum below. Baboon fails
+  too; sheep (H263.2) follows.
+- **Observed, beyond the readings:** the non-clock sets show a larger brain drop than the clock genes (median L -1.08
+  matched and -1.31 responsive in human against -0.51; 26 matched sets with zero brain coupling), and the clock genes
+  keep the higher brain-periphery agreement (r* 0.803 against medians 0.42 and 0.38). Read together: brain shares less
+  of every between-person state with the body than peripheral tissues do, and of the gene sets tested the clock genes
+  are among the most shared, not the least.
+- **Limits.** Not blind; R2 is new in human (A142 used timed departures) and R1 untimed; the responsive pool holds
+  28-29 genes (overlapping sets); baboon genes restricted to one-to-one orthologs; pseudo sets carry the GTEx waveform.
+- Runs: baboon 49 min (6 workers; two earlier runs lost at the write step, no result seen, output folder fix);
+  human 4.4 h (8 workers; the runner left no ledger line, the outputs are complete: 401 sets, `tests_human.csv`).
+- Code: `exploratory/A263_companions/scripts/{build_genomewide,score_a263,score_a263_human,score_a263_baboon}.py`.
+<!-- src: paper/exploratory/A263_companions/output/{tests_human,sets_human,tests_baboon,sets_baboon}.csv -->
+
+### Erratum to A142 (2026-11-16, from A263 H263.1)
+A142 H142.1 (brain block r* 0.639 against random 13-tissue blocks, PASS) stands as registered: brain is less coupled
+to the body's shared state than other organ blocks. It is **not shown to be clock-specific**: on GTEx fast deaths the
+drop of brain coupling is matched by expression-matched and stress-responsive gene sets (A263). Wording from now on:
+"brain is less coupled to the body's shared state", not "brain's clock is the exception".
