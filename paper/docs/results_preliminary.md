@@ -5570,3 +5570,21 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
   report; the next amendment (A278) calibrates the test by construction and its real-data reading waits for the user.
 - Code: `exploratory/A276_pairwise_calibration/scripts/corrected_a277.py` (5 min, 6 workers).
 <!-- src: paper/exploratory/A276_pairwise_calibration/output/a277/{calibration.csv,null_draws.npz} -->
+
+## A278 calibration (2026-11-16): the percentile test calibrated against its placebo distribution misses its band in one of ten combinations (V278 FAIL: H272.2 D responsive 0.082; mean 0.043); the band was too narrow for a split-sample check; restated tests not read
+
+- Null pi from N1 (500 draws), rejection (p_cal < 0.05) over N2 (500): H272.1 T_SV 0.026 / 0.034 (matched /
+  responsive), H272.2 D 0.074 / 0.082, H274.1 D 0.030 / 0.032, H274.2 T_SV 0.034 / 0.018, H274.3 T_CX 0.044 / 0.060;
+  mean 0.043. Null rate of pi = 1 (clock above all 200 companions): 0.005 to 0.028, so the smallest attainable p_cal
+  is about 0.006 to 0.03.
+- **Reading.** Exchangeable draws make this test exact up to sampling error, and the rates scatter around 0.05 (eight
+  of ten at or below it). The registered band (0.075) ignored the error of the N1 threshold: with both halves at 500
+  draws the SD of a rate is about 0.014, and the chance that one of ten combinations exceeds 0.075 at a true rate of
+  0.05 is about 0.3. V278 is recorded as failed by its rule; the band, not the test, is the likely cause. Not decided
+  here: the next step is the user's (A278 as is, with 1000 draws as the null; or a larger null).
+- **Scope of every placebo check (A276-A278).** The placebo removes all pairing; it calibrates the test under "no
+  shared state for any gene set". The registered null of H272-H274 is "the clock shares no more than its companions",
+  with companions that do share (|r| 0.3 to 0.4). Shape effects on |r| shrink as true sharing grows, so the placebo
+  bias is an upper bound for the real null, but this is not shown.
+- Restated tests not computed. Code: `calibrated_a278.py` (null only; `--read` not run).
+<!-- src: paper/exploratory/A276_pairwise_calibration/output/a278/calibration.csv -->
