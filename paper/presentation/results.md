@@ -72,10 +72,11 @@ ones built on clock genes recover it. The method keeps the map in both designs.
 **Figures**
 - `figures/gtex_sweep/gtex_sweep.png` (`scripts/gtex_sweep.py`): error per method against the number of donors (10-80),
   full day vs hospital hours (08-18 h), on the 40 tissues of the test set (10 draws per n; truth: cosinor on the recorded
-  times of all fast deaths). Rows: median offset error over tissues, share of tissues off by > 2 h, median amplitude
+  times of all fast deaths; CYCLOPS 3 draws per n, for cost). Rows: median offset error over tissues, share of tissues off by > 2 h, median amplitude
   error. clocksync: offset error 0.28-0.89 h (full day) and 0.35-0.81 h (hospital hours), at most 11-13 % of tissues
   off by > 2 h and none at 80 donors. CHIRAL and CoFE on the clock genes plateau at 0.9-1.9 h and miss 18-44 % of
-  tissues at every n, with or without the full day. The timed oracle reaches 0.35 h with the full day at 80 donors but
+  tissues at every n, with or without the full day. CYCLOPS 2.0 on the clock genes does worse with the full day
+  (1.68-2.44 h, 35-58 % missed) than in hospital hours (0.67-1.72 h, 10-40 %), and never reaches clocksync. The timed oracle reaches 0.35 h with the full day at 80 donors but
   0.88 h (18 % missed) in hospital hours. Amplitudes: all methods comparable (0.13-0.37 |log2| for the untimed methods),
   the timed oracle worse in hospital hours (a 10 h window cosinor).
 - `figures/gtex_dip/gtex_dip.png` (`scripts/gtex_dip_compute.py`, `scripts/gtex_dip.py`): CHIRAL's published donor internal
@@ -86,8 +87,7 @@ ones built on clock genes recover it. The method keeps the map in both designs.
   barely orders the donors; clocksync's hospital-hours internal time does.
 
 **Caveats for the figures:** the sweep and the DIP comparison are post hoc and descriptive (presentation figures). The 40-tissue sweep
-was run on current code for all methods (2026-11-16); CYCLOPS 2.0 on the clock genes is still running and will be
-added. TimeTeller and CoFE genome-wide are not in the 40-tissue run.
+was run on current code for all methods (2026-11-16/17). TimeTeller and CoFE genome-wide are not in the 40-tissue run.
 
 **Speaker notes**
 - The orderers' working-hours failure is not a reflection or stretch artefact: allowing the better direction and a

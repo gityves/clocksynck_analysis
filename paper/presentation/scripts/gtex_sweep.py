@@ -3,13 +3,13 @@
 GTEx benchmark of Figure 1 (`results/figure_1/scripts/method/compute_gtex_benchmark.py --tissue-set working_hours`, post hoc
 figure design, run 2026-11-16 on current code): the 40 tissues with >= 20 fast deaths (Hardy 1-2) between 08 and 18 h
 (Muscle - Skeletal the reference). A draw is n donors from all fast deaths (`full`, full day) or from those who died 08-18 h
-(`window`); 10 draws per n. Each method gives per-tissue offsets and relative amplitudes, scored against the timed truth:
+(`window`); 10 draws per n (CYCLOPS: 3, for cost). Each method gives per-tissue offsets and relative amplitudes, scored against the timed truth:
 per-tissue cosinor of the clock genes on the recorded time of death of all fast deaths, rank-1 complex SVD.
 Rows, per draw: median over tissues of |offset error|; share of tissues whose offset is off by > 2 h (a median over
 tissues hides them); median over tissues of |log2 amplitude error|. Plotted: median over draws (line, dot) and
 interquartile range over draws (band).
-Methods: clocksync (untimed); CHIRAL, CoFE on the clock genes, CYCLOPS 2.0 on the clock genes (untimed orderers, when its
-run has finished); timed oracle (cosinor on the drawn donors' recorded times).
+Methods: clocksync (untimed); CHIRAL, CoFE on the clock genes, CYCLOPS 2.0 on the clock genes as both expression and
+seeds (untimed orderers); timed oracle (cosinor on the drawn donors' recorded times).
 
 Output: paper/presentation/figures/gtex_sweep/gtex_sweep.{svg,png} (wide slide figure).
 
