@@ -2,11 +2,14 @@
 companions, read against the distribution of that percentile over placebo draws (donors permuted within compartment x
 stratum; states unchanged).
 
-Registered in paper/docs/registered_experiments.md (A280). `--placebo-only` computes the null draws alone (no statistic
-on the real pairing: a code check). The real pairing is read only with `--q36` (after the user's answer to Q36).
+Registered in paper/docs/registered_experiments.md (A280, addendum after Q36: the A283 form, 5000 draws).
+`--placebo-only` computes the null draws alone (no statistic on the real pairing: a code check). `--q36` reads the real
+pairing, only once A283's calibration (V283) has passed: H280.1 D, H280.2 T_CX, and the H280.3 tie-break (the
+inhibitory_CGE - vascular pair in MSSM: its |r| pi against the same draws of that pair, then its offset with a donor
+bootstrap within stratum).
 
-    python calibrated_a280.py [--placebo-only | --q36] [--draws 1000] [--jobs 6]
-Outputs (../output/calibrated/): null.npz, tests.csv (with --q36), per_atlas.csv (with --q36).
+    python calibrated_a280.py [--placebo-only | --q36] [--draws 5000] [--n-boot 500] [--jobs 6]
+Outputs (../output/calibrated/): null.npz; with --q36: tests.csv, tiebreak.csv.
 """
 
 from __future__ import annotations
@@ -38,6 +41,7 @@ A274, A272, A150 = A280.A274, A280.A274.A272, A280.A274.A150
 import cloudpickle  # noqa: E402
 
 import clocksync as cs  # noqa: E402
+from clocksync.waveform import HOURS  # noqa: E402
 from common import cli  # noqa: E402
 from common.paths import exploratory_dir  # noqa: E402
 
@@ -45,6 +49,8 @@ for _m in (A280, C276, A274, A272, A150):
     cloudpickle.register_pickle_by_value(_m)
 
 FAMILIES = {"matched": slice(1, 201), "responsive": slice(201, 401)}
+TIE = ("psychad_mssm", "brain:inhibitory_CGE", "brain:vascular")  # offset = arg r of (a, b) as A274: a minus b, hours
+V283 = PAPER / "exploratory/A276_pairwise_calibration/output/a283/calibration.csv"
 
 
 def load_all():
@@ -90,15 +96,30 @@ def statistics(cm, groups):
     return out
 
 
+def tie_index(data):
+    if TIE[0] not in data:
+        return None
+    m = data[TIE[0]][2]
+    hit = np.flatnonzero((m.a == TIE[1]).to_numpy() & (m.b == TIE[2]).to_numpy())
+    return int(hit[0]) if len(hit) else None
+
+
 def draw(seed, data, groups):
     warnings.filterwarnings("ignore")
     rng = None if seed is None else np.random.default_rng(seed)
-    rows, metas = [], []
+    rows, metas, tie = [], [], None
+    k = tie_index(data)
     for n, (key, S, meta) in data.items():
-        rows.append(C276.pair_abs(S, A272.pair_index(key if rng is None else A272.placebo(key, rng))))
+        a = C276.pair_abs(S, A272.pair_index(key if rng is None else A272.placebo(key, rng)))
+        if n == TIE[0] and k is not None:
+            tie = a[:, k]
+        rows.append(a)
         metas.append(meta)
     cm = C276.class_medians(np.concatenate(rows, 1), pd.concat(metas, ignore_index=True))
-    return statistics(cm, groups), cm
+    out = statistics(cm, groups)
+    if tie is not None:
+        out["H280.3 pair |r|"] = tie
+    return out, cm
 
 
 def pi(v, sl):
@@ -109,7 +130,8 @@ def pi(v, sl):
 
 def main():
     ap = cli.parser(__doc__)
-    ap.add_argument("--draws", type=int, default=1000)
+    ap.add_argument("--draws", type=int, default=5000)
+    ap.add_argument("--n-boot", type=int, default=500)
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--placebo-only", action="store_true")
     g.add_argument("--q36", action="store_true", help="read the real pairing (only after the user's answer to Q36)")
@@ -128,6 +150,8 @@ def main():
             C276.log(t, kind, "null pi: mean", round(float(p.mean()), 3), "share pi = 1", round(float(np.mean(p == 1)), 4))
     if not args.q36:
         return
+    if not (V283.exists() and pd.read_csv(V283).V283_pass.all()) or args.draws < 5000:
+        sys.exit("A280: the real pairing is read only after V283 has passed, with the registered 5000 draws")
     obs, cmo = draw(None, data, groups)
     tests = []
     for t, v in obs.items():
@@ -140,6 +164,29 @@ def main():
         tests.append(row)
     pd.DataFrame(tests).to_csv(out / "tests.csv", index=False)
     print(pd.DataFrame(tests).round(4).to_string())
+    k = tie_index(data)
+    if k is None:
+        C276.log("H280.3: pair absent")
+        return
+    gate = [r for r in tests if r["test"] == "H280.3 pair |r|"][0]["passes"]
+    pb = A150.load_atlas(TIE[0], None, 0)["pb"].reset_index(drop=True)
+    z, v = A272.atlas_states(pb, cs.gtex())
+    pr = A272.pair_index(pb[["donor", "compartment", "stratum"]])[k]
+    assert (pr["a"], pr["b"]) == TIE[1:]
+    r = A272.pair_r(z, v, pr)
+    off = float(np.angle(r) * HOURS)
+    brng = np.random.default_rng([A274.SEED, 7])
+    ang = []
+    for _ in range(args.n_boot):
+        idx = np.concatenate([brng.choice(np.where(pr["s"] == s)[0], (pr["s"] == s).sum()) for s in range(pr["s"].max() + 1)])
+        ang.append(np.angle(A272.pair_r(z, v, dict(ia=pr["ia"][idx], ib=pr["ib"][idx], s=pr["s"][idx])) * np.conj(r)) * HOURS)
+    lo, hi = off + np.nanquantile(ang, [0.05, 0.95])
+    verdict = ("not read (gate failed)" if not gate else "decides nothing" if lo <= 0 <= hi
+               else "agrees with HBCC (negative)" if hi < 0 else "agrees with SEA-AD (positive)")
+    tb = pd.DataFrame([dict(atlas=TIE[0], a=TIE[1], b=TIE[2], n=len(pr["ia"]), r_abs=float(abs(r)), gate_passed=gate,
+                            offset_h=off, lo90=float(lo), hi90=float(hi), H280_3=verdict)])
+    tb.to_csv(out / "tiebreak.csv", index=False)
+    print(tb.round(3).T.to_string())
 
 
 if __name__ == "__main__":
