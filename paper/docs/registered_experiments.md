@@ -8025,3 +8025,15 @@ uncorrected values, the same for the matched median.
 **Limits.** About 50 to 180 shared donors per pair; the leakage correction assumes isotropic host error; fasting
 state before death is unknown; adipose sensitivity to feeding is mixed in the mouse data.
 **Code.** `exploratory/A302_departure_groups/scripts/score_a302.py`. Aggregates only.
+
+## A303 (2026-11-17, user: "for the adrenal can we see the same structure we found in mouse or sheep?"; descriptive with a fixed criterion; **NOT BLIND** for the human (+4.4 h) and baboon (cortex +0.9 h, medulla +5.9 h) adrenal offsets; NOT seen: any adrenal offset in mouse or sheep): is the adrenal offset from the other organs in mouse and sheep?
+**Data.** Mouse: Wolff 2023 (GSE201207; adrenal, heart, kidney, lung, muscle, hypothalamus; 12 circadian times in
+constant darkness x 3 ages; pools of 2 mice), timed (`timed_loadings("ct")`), per age and pooled with age as stratum.
+Sheep: the sheep atlas (untimed; 21 animals with adrenal), `Dataset.fit` with every non-brain tissue an anchor.
+**Readout.** The adrenal's offset (h) relative to the circular mean of the non-brain tissues (mouse: heart, kidney,
+lung, muscle; sheep: all non-brain tissues), with a bootstrap 90 % interval (mouse: libraries within CT, 1000; sheep:
+donors, 500).
+**Criterion (fixed now).** "The same structure as in humans" = the adrenal's offset >= 2 h from the mean with its
+interval excluding 0 (sign reported against the human +4.4 h, positive = advanced). A whole-gland offset near 0 in
+both species, with the human result, would fit the adrenal offset being specific to GTEx (death) or to primates.
+**Code.** `exploratory/A296_genewise_offsets/scripts/score_a303.py`.
