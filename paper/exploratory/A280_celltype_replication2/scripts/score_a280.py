@@ -1,8 +1,9 @@
 """A280: second replication of the lymphocyte ranking (IBDverse ileum and rectum) and the third and fourth cortex
 cohorts (PsychAD MSSM, RADC), with the offset-sign tie-break. The A274 script with these atlases.
 
-Registered in paper/docs/registered_experiments.md (A280, staged). Scoring waits for Q36 (calibrated form of the
-companion test); `--stage design` computes eligibility (twin rule) and pair counts only.
+Registered in paper/docs/registered_experiments.md (A280). `--stage design`: eligibility (twin rule) and pair counts.
+`--stage score`: the A274 descriptive tables (family matrix, per atlas, pairs); its q95 columns decide nothing (the
+verdicts are read by `calibrated_a280.py`, Q36 (b)).
 
     python score_a280.py --stage design
 Outputs: paper/exploratory/A280_celltype_replication2/output/{twin,design}.csv
@@ -38,7 +39,5 @@ def _anchors_or_none(name, comps):
 
 A274.A150.learned_anchors = _anchors_or_none
 
-if __name__ == "__main__":
-    if "--stage" in sys.argv and sys.argv[sys.argv.index("--stage") + 1] == "score":
-        sys.exit("A280: scoring waits for Q36 (calibrated form of the companion test)")
+if __name__ == "__main__":  # verdicts come from calibrated_a280.py (Q36 (b)); `--stage score` gives descriptive tables only
     A274.main()

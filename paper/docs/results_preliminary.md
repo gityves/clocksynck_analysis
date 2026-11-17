@@ -5708,3 +5708,42 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
 - Limits: the placebo removes all pairing (A278 scope note); pooled statistics weight atlases equally.
 - Code: `exploratory/A276_pairwise_calibration/scripts/calibrated_a283.py` (1357 s, peak 3.2 GB, job ledger).
 <!-- src: paper/exploratory/A276_pairwise_calibration/output/a283/calibration.csv, tests.csv, per_atlas.csv -->
+
+## A280 (scored 2026-11-17 with the A283 form; blind for these atlases): the stromal-vascular-over-lymphocyte ranking replicates in IBDverse (H280.1 PASS, D 0.413); cortical sharing does not replicate in PsychAD MSSM, the largest cortex cohort (H280.2 FAIL); the offset-sign tie-break is not read (H280.3 gate failed)
+
+- Design (addendum): IBDverse rectum (274 donors) and ileum (242), each SV_X 4 and LY_X 12 pairs; MSSM 257 healthy
+  donors, CX_diff 27 pairs; all three exact genome twins. Null: 5000 placebo draws (seeds [280, 9, d]).
+- **H280.1 PASS.** D = 0.413 (companion medians 0.016 matched, 0.048 responsive; pi 1.00 in both), p_cal 0.0036 /
+  0.0164. The contrast is larger than in A272 (0.277) and A274 (0.152).
+- **H280.2 FAIL.** MSSM T_CX 0.279 (medians 0.237 / 0.230; pi 0.645 / 0.775), p_cal 0.455 / 0.271. Not replicated at
+  this power; MSSM's clock |r| between cortical families is lower than in HBCC, DLPFC and MTG (0.423 to 0.557, A283).
+- **H280.3 not read.** Gate: inhibitory_CGE-vascular |r| 0.231 (95 donors), pi 0.68 / 0.74, p_cal 0.332 / 0.279. The
+  offset (-2.16 h, 90 % [-4.35, +0.54]) decides nothing either way and is reported for completeness only.
+- **Reading.** The lymphocyte gap now holds in three independent body sources, the third with 53-61 lymphocyte donors
+  per tissue, all from living biopsies. The cortex statement weakens: pooled over HBCC, DLPFC and MTG it passes (A283
+  H283.5), but per cohort it beats the matched family in none, and the largest cohort shows no clock-specific sharing.
+  MSSM shares consortium and protocols with HBCC, so the difference is not one of processing.
+- Code: `exploratory/A280_celltype_replication2/scripts/calibrated_a280.py --q36` (1132 s, peak 10.4 GB).
+<!-- src: paper/exploratory/A280_celltype_replication2/output/calibrated/tests.csv, tiebreak.csv; output/design.csv -->
+
+## A282 (scored 2026-11-17 with the A283 form; descriptive; not blind for the all-donor statistics): the ranking holds in living tissue alone: D = 0.225 over five living atlases, above both companion families (p_cal 0.011 / 0.011), with stromal-vascular sharing above both companion medians
+
+- Arms (per donor, from atlas metadata; recall-only classes left out): living 7 atlases (D over HLCA, breast, colon,
+  Kong ileum, Kong colon), post-mortem 7 (D over HLCA, heart, optic nerve; T_CX over the three cortex cohorts).
+- **Question fixed in advance: yes.** Living arm: T_SV 0.450 (medians 0.279 / 0.359; p_cal 0.014 / 0.059), D 0.225 (0.028
+  / -0.010; p_cal 0.011 / 0.011), T_LY 0.203 (0.243 / 0.331: below both companion medians).
+- Post-mortem arm (descriptive): T_SV 0.547 (p_cal 0.010 / 0.012), D 0.261 (0.006 / 0.007), T_LY 0.264, T_CX 0.497
+  (0.034 / 0.009).
+- **The one atlas in both arms (HLCA):** SV_X 0.523 living vs 0.516 post-mortem; LY_X 0.195 vs 0.261; D 0.328 vs 0.255.
+- **Per atlas, living:** SV_X above the matched family in breast and kidney (p_cal 0.007 each), above the responsive
+  family only in HLCA (0.017); LY_X above no family (Kong colon closest, 0.076 / 0.060).
+- **Post hoc (seen in the family matrix, different atlases per arm):** stromal-vascular pairs with myeloid cells share
+  less in living tissue (fibroblast-myeloid 0.259 over 7 pairs) than post-mortem (0.643 over 13 pairs); lymphocyte pairs
+  are low in both. Not tested; arms confound organ, donor type and the split.
+- **Reading.** No agonal state shared by a donor's cells is needed for the stromal-vascular-over-lymphocyte ranking:
+  it is as large in surgical and biopsy tissue as post-mortem, and within HLCA it is if anything larger in living
+  donors. In living tissue lymphocytes share responsive genes with the other cells more than clock genes (T_LY below the
+  responsive median).
+- Limits: living tissue is surgical or biopsy (ischaemia, anaesthesia); pooled means weight atlases equally.
+- Code: `exploratory/A282_pooled_living/scripts/score_a282.py` (1776 s, peak 2.9 GB).
+<!-- src: paper/exploratory/A282_pooled_living/output/tests.csv, per_atlas.csv, family_matrix.csv, arms.csv -->
