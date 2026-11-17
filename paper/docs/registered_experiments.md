@@ -7416,3 +7416,12 @@ families of its original rule. Smallest attainable p_cal is the null rate of pi 
 is reversed and named as such in RP and VERDICT_TABLE. The calibrated form becomes the readout of every later test of
 the line (A280, A282, B2, C1-C3).
 **Code.** `exploratory/A276_pairwise_calibration/scripts/calibrated_a283.py` (A277 `load_all`, `draw`).
+**Design addendum (2026-11-17, after Q36, before scoring; `score_a282.py --design`, output `arms.csv`; no statistic
+computed).** Readout: the A283 form (clock's pi among its 200 companions; p_cal against 5000 placebo draws of the arm,
+seeds [282, arm, d]); scoring only after V283 passes. Pairs re-derived on each arm's rows with the A272 pair rule
+(strata with >= 3 shared donors, pooled df >= 15; stricter than the ">= 15 shared donors" written above). Every row has
+a source class (0 missing). Living: HLCA 55 donors (SV_X 3, LY_X 3), breast 126 (9, 20), muscle 27 (4, 0), colon 36
+(6, 15), kidney 26 (6, 0), Kong ileum 30 (8, 28), Kong colon 21 (3, 19): D over five atlases (HLCA, breast, colon, Kong
+ileum, Kong colon), T_SV over seven. Post-mortem: HLCA 124 (22, 17), heart 27 (Koenig, Kuppe; 12, 4), optic nerve 83
+(34, 3), anterior eye 67 (41, 0), cortex HBCC 145, DLPFC 44, MTG 47 (CX_diff 27, 22, 22): D over three atlases (HLCA,
+heart, optic nerve), T_SV over four, T_CX over three. HLCA is the only atlas in both arms.
