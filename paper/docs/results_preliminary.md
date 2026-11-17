@@ -6062,3 +6062,60 @@ median and percentile reproduce in all nine pairs.
   described as "no clock read on the full gene set; a weak core loop is possible", pending a blind test on fresh
   atlases (core loop, all lymphocyte compartments, power-controlled).
 <!-- src: paper/exploratory/A294_lymphocyte_hormonal/output/{pairs,tests}.csv -->
+
+## A295 (scored 2026-11-17; NOT BLIND for the organ map, A291, A293): a sample's composition does not move the phase of its clock state (H295.2 PASS, within +-0.13 h per SD); the lymphocyte dilution of gain is not detected (H295.1 FAIL); stromal-vascular content raises gain (descriptive)
+
+- Design as registered: GTEx fast deaths, 27 peripheral tissues; per tissue, the clock state on its leave-one-out host
+  with an interaction with a marker score (lymphocyte: CD3D, CD3E, CD2, CD247, MS4A1, CD79A, CD19; stromal-vascular:
+  DCN, LUM, COL1A2, PECAM1, VWF, CDH5; standardised within tissue); donor bootstrap SE (200); random-effects pooling.
+  One run (17 s).
+- **H295.1 FAIL:** lymphocyte score, pooled gain change -0.010 per SD (SE 0.012), one-sided p 0.201; negative in 16
+  of 27 tissues.
+- **H295.2 PASS:** pooled phase change per SD +0.05 h (90 % -0.03 to +0.13) for the lymphocyte score and -0.05 h
+  (-0.12 to +0.02) for the stromal-vascular score, both within +-0.5 h; between-tissue tau 0.16 h and 0.12 h.
+- **Descriptive:** the stromal-vascular score raises gain, +0.041 per SD (SE 0.014; positive in 21 of 27 tissues).
+- **Reading (registered).** H295.2 PASS with H295.1 FAIL: composition varies too little within tissues to move gain
+  detectably through lymphocytes; the phase bound holds. Read with the stromal-vascular gain effect (not registered as
+  a test): composition changes how loudly a sample expresses the body's time, not when, to within about 0.1 h per SD.
+- Code: `exploratory/A295_composition/scripts/score_a295.py`.
+<!-- src: paper/exploratory/A295_composition/output/{tests,tissues}.csv -->
+
+## A296 (scored 2026-11-17; NOT BLIND for the organ offsets): the adrenal offset is a whole-clock property in GTEx (H296.1 PASS: +4.42 h with all clock genes, +4.61 h without PER1, PER2, NR1D1); in the baboon the outlier is the adrenal medulla (+5.9 h), not the cortex (+0.9 h)
+
+- Design as registered: GTEx fast deaths, 27 peripheral tissues, timed on the hour of death; offsets relative to the
+  mean over tissues with the full and the reduced waveform; donor bootstrap 200. One run (449 s; a 3-replicate smoke
+  test was run first and its last lines, the baboon skin row, were seen).
+- **H296.1 PASS.** Adrenal +4.42 h full, +4.61 h reduced, difference +0.19 h (90 % -0.58 to +1.19).
+- **Secondary (all within 1 h):** lung +1.67 / +1.93 h (difference +0.26); skin sun-exposed +0.46 / +0.05 (-0.41);
+  skin not sun-exposed +1.55 / +1.33 (-0.22). Tissues where dropping the three genes moves the offset by more than
+  0.5 h: skeletal muscle (-1.36 h, 90 % -1.68 to -1.06), transverse colon (+0.79), pituitary (-0.61), sigmoid colon
+  (+0.56).
+- **Baboon (descriptive; timed on ZT, 63 tissues, median |offset| 1.47 h):** adrenal cortex +0.91 h (reduced +0.33),
+  adrenal medulla +5.90 h (+4.94), lung +0.82 (+1.30), skin +1.97 (+1.94).
+- **Reading (registered).** The adrenal sits about 4.5 h from the other organs on its core clock, not only on
+  hormone-induced genes. Post hoc, from the baboon: the outlier there is the medulla, the part of the adrenal that is a
+  sympathetic ganglion receiving direct preganglionic input, while the cortex sits with the other organs. GTEx adrenal
+  samples mix cortex and medulla, so the human offset may come from the medulla; this fits the direct-neural-route
+  hypothesis (as the pineal, A289) and is not tested.
+- Code: `exploratory/A296_genewise_offsets/scripts/score_a296.py --n-boot 200`.
+<!-- src: paper/exploratory/A296_genewise_offsets/output/{tests,offsets,genes,baboon}.csv -->
+
+## A297 (scored 2026-11-17; NOT BLIND for the A111 shifts): removing the feeding rhythm keeps the mouse liver clock's amplitude far above what additive cues predict (H297.1 FAIL, above the interval): inputs set the liver clock's phase, the oscillator holds its amplitude
+
+- Design as registered: one projector per dataset over its arms; per arm the timed complex amplitude of the liver
+  state; within-ZT library bootstrap 2000. One run.
+- **Calibration (inversion).** Manella daytime feeding against ad libitum: amplitude ratio 0.712 (90 % 0.659 to 0.772),
+  shift 11.69 h; Xin day- against night-restricted: 0.438 (0.414 to 0.467), 11.29 h.
+- **Prediction for removal, (1 + rho) / 2:** amplitude ratio 0.148 (0.117 to 0.181), shift +0.76 h (Manella); 0.288
+  (0.274 to 0.301), +0.54 h (Xin).
+- **Observed (Greenwell, arrhythmic against ad libitum):** amplitude ratio 0.724 (0.657 to 0.792), shift +1.57 h (0.94
+  to 2.26). **H297.1 FAIL, above the interval** (also above the Xin prediction). Control, night-restricted against ad
+  libitum: 1.037 (0.930 to 1.142), +0.74 h.
+- **Reading (registered).** When the feeding rhythm is removed, the liver clock keeps about three quarters of its
+  amplitude and moves 1.6 h, while additive cues predict a collapse to 15 to 30 %. An inverted cue moves it 11 to 12 h
+  at 44 to 71 % of its amplitude. The liver clock behaves as a self-sustained oscillator: inputs set its phase, the
+  oscillator sets its amplitude. Removing one cue (as in intensive care, A46) leaves it running near its phase;
+  conflicting cues move it.
+- **Limits.** Different laboratories, strains and protocols; liver only; amplitudes read in each dataset's own projector.
+- Code: `exploratory/A297_feeding_model/scripts/score_a297.py`.
+<!-- src: paper/exploratory/A297_feeding_model/output/{tests,arms}.csv -->
