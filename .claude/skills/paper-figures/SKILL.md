@@ -57,6 +57,11 @@ figure, then apply it to the figure at hand.
   | stromal-vascular | brown (5) |
   | macrophage | orange (1) |
   | lymphocyte | cyan (9) |
+  | finer families: fibroblast, endothelial, mural | brown (5, as stromal-vascular) |
+  | epithelial | green (2) |
+  | parenchyma | purple (4) |
+  | glia, melanocyte, progenitor | olive (8) |
+  | myeloid | orange (1, as macrophage) |
 
   Companion gene sets (expression-matched, stress-responsive): grey open markers (circle, square) or grey dots.
 

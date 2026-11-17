@@ -5,9 +5,10 @@ Readout (anchor-free, `clocksync.pairwise`): for two cell classes of the same do
 donors of their clock-plane states; a class's sharing = the median |r| over its pairs with the non-immune classes of
 the tissue (X). Companions: 200 expression-matched and 200 stress-responsive gene sets per atlas; calibrated p from
 5000 placebo draws (A283 form).
-A. Per atlas, sharing of stromal-vascular cells (SV_X), macrophages (T_MAC, A288) and lymphocytes (LY_X), connected per
-   atlas: the ten healthy body atlases of A272 and A274 (descriptive per atlas; A283 per-atlas table); grey open circle:
-   median of the expression-matched gene sets for the lymphocytes (the level random genes reach in the same cells).
+A. Every cell class of the ten healthy body atlases of A272 and A274 (one dot per compartment): clock state shared with
+   the tissue's non-immune cells, median |r| over its pairs with them, by cell family; grey open circle: the same
+   compartment's expression-matched gene sets (median over its pairs). Post hoc, descriptive (from the scored pair
+   tables; the registered statistics are in B).
 B. The registered contrasts, each a pooled difference in sharing: stromal-vascular minus lymphocyte in three
    independent atlas sets (A272 = H283.2, A274 = H283.3, IBDverse = H280.1) and in living donors only (A282), and
    macrophage minus lymphocyte (A288 H288.2); grey: medians of the expression-matched (circle) and stress-responsive
@@ -18,7 +19,8 @@ C. Do lymphocytes keep a clock of their own? Signed clock-gene coherence between
    clock-gene counts (median of 20 thinnings), and the lymphocytes' expression-matched gene sets (grey, median), nine
    atlases (A281 H281.1 fail: 2 of 9 lymphocyte compartments coherent; H281.2 pass).
 
-Data: exploratory/A281_lymphocyte_clock/output/pairs.csv; exploratory/A276_pairwise_calibration/output/a283/{per_atlas,tests}.csv; exploratory/A280_celltype_replication2/
+Data: exploratory/A272_backbone_pairwise/output/pairs.csv; exploratory/A274_celltype_map/output/pairs.csv;
+exploratory/A281_lymphocyte_clock/output/pairs.csv; exploratory/A276_pairwise_calibration/output/a283/{per_atlas,tests}.csv; exploratory/A280_celltype_replication2/
 output/calibrated/tests.csv; exploratory/A282_pooled_living/output/tests.csv; exploratory/A288_macrophage_pairwise/output/
 {per_atlas,tests}.csv. Output: presentation/figures/celltypes_health/celltypes_health.{svg,png}.
 
@@ -39,33 +41,43 @@ OUT = PAPER / "presentation" / "figures" / "celltypes_health"
 INK, MUTED = "#222222", pf.GREY
 TAB = sns.color_palette().as_hex()
 CELL = {"stromal-vascular": TAB[5], "macrophage": TAB[1], "lymphocyte": TAB[9]}
+FAMILY = {  # pair-table family: (label, colour)
+    "fibroblast_stromal": ("fibroblast", TAB[5]), "endothelial": ("endothelial", TAB[5]), "mural": ("mural", TAB[5]),
+    "epithelial": ("epithelial", TAB[2]), "parenchyma": ("parenchyma", TAB[4]), "other": ("glia, melanocyte,\nprogenitor", TAB[8]),
+    "myeloid": ("myeloid", TAB[1]), "lymphocyte": ("lymphocyte", TAB[9])}
+BODY = ("lung_hlca", "heart", "organ_breast", "organ_muscle", "organ_colon", "organ_optic_nerve", "organ_eye_anterior",
+        "kidney_sc", "kong_ileum", "kong_colon")
 ATLAS = {"lung_hlca": "lung", "heart": "heart", "organ_breast": "breast", "organ_colon": "colon (Pelka)",
          "organ_muscle": "muscle", "kidney_sc": "kidney", "kong_ileum": "ileum (Kong)", "kong_colon": "colon (Kong)", "organ_eye_anterior": "anterior eye",
          "organ_optic_nerve": "optic nerve", "ibd_ileum": "ileum (IBD)", "ibd_rectum": "rectum (IBD)"}
 
 
-def per_atlas(ax, pa, mac):
-    pa = pa[pa.atlas.isin(ATLAS)]
-    sv = pa[pa.klass == "SV_X"].set_index("atlas").clock
-    ly = pa[pa.klass == "LY_X"].set_index("atlas").clock
-    mc = mac[mac.statistic == "T_MAC"].set_index("atlas").clock
-    floor = pa[pa.klass == "LY_X"].set_index("atlas").matched_median
-    order = sv.sort_values(ascending=False).index
-    for i, a in enumerate(order):
-        xs = [v for v in (sv.get(a), mc.get(a), ly.get(a)) if v is not None and np.isfinite(v)]
-        ax.plot(xs, [i] * len(xs), color=MUTED, lw=0.8, zorder=1)
-        if a in floor.index:
-            ax.scatter([floor[a]], [i], s=22, facecolor="white", edgecolor=MUTED, lw=1.2, zorder=1.5)
-        for s_, c in zip((sv, mc, ly), CELL.values()):
-            if a in s_.index:
-                ax.scatter([s_[a]], [i], s=34, color=c, edgecolor="white", lw=0.5, zorder=2)
-    ax.set_yticks(range(len(order)), [ATLAS[a] for a in order])
+def compartments():
+    """Per compartment of the body atlases: median clock |r| and median matched-set |r| over its pairs with non-immune
+    classes."""
+    P = pd.concat([pd.read_csv(EXP / f"{d}/output/pairs.csv") for d in ("A272_backbone_pairwise", "A274_celltype_map")])
+    P = P[P.atlas.isin(BODY)]
+    cols = ["atlas", "c", "f", "g", "r_abs", "matched_median"]
+    L = pd.concat([P.rename(columns={"a": "c", "family_a": "f", "family_b": "g"})[cols],
+                   P.rename(columns={"b": "c", "family_b": "f", "family_a": "g"})[cols]])
+    L = L[~L.g.isin(["lymphocyte", "myeloid"]) & L.f.isin(FAMILY)]
+    return L.groupby(["atlas", "c", "f"]).agg(clock=("r_abs", "median"), matched=("matched_median", "median")).reset_index()
+
+
+def families(ax, C):
+    order = C.groupby("f").clock.median().sort_values(ascending=False).index
+    for i, f in enumerate(order):
+        c = C[C.f == f]
+        y = i + np.random.default_rng(i).uniform(-0.22, 0.22, len(c))
+        ax.scatter(c.matched, y, s=14, facecolor="white", edgecolor=MUTED, lw=0.8, zorder=1)
+        ax.scatter(c.clock, y, s=26, color=FAMILY[f][1], edgecolor="white", lw=0.4, zorder=2)
+        ax.plot([c.clock.median()] * 2, [i - 0.32, i + 0.32], color=INK, lw=1.8, zorder=3)
+    ax.set_yticks(range(len(order)), [FAMILY[f][0] for f in order])
     ax.tick_params(axis="y", length=0)
     ax.invert_yaxis()
-    ax.set_xlim(0, 0.8)
+    ax.set_xlim(0, 1)
     ax.set_xlabel("clock state shared with\nthe tissue's other cells")
-    h = [Line2D([], [], ls="", marker="o", ms=6, color=c, label=lab) for lab, c in CELL.items()]
-    h.append(Line2D([], [], ls="", marker="o", ms=5, mfc="white", mec=MUTED, label="random genes,\nlymphocytes"))
+    h = [Line2D([], [], ls="", marker="o", ms=5, mfc="white", mec=MUTED, label="random genes")]
     ax.legend(handles=h, loc="lower right", frameon=False, fontsize=8, handletextpad=0.1)
 
 
@@ -106,11 +118,9 @@ def contrasts(ax, rows):
 def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
-    pa = pd.read_csv(EXP / "A276_pairwise_calibration/output/a283/per_atlas.csv")
     t283 = pd.read_csv(EXP / "A276_pairwise_calibration/output/a283/tests.csv").set_index("test")
     t280 = pd.read_csv(EXP / "A280_celltype_replication2/output/calibrated/tests.csv").set_index("test")
     t282 = pd.read_csv(EXP / "A282_pooled_living/output/tests.csv").query("arm == 'living' and statistic == 'D'").iloc[0]
-    mac = pd.read_csv(EXP / "A288_macrophage_pairwise/output/per_atlas.csv")
     t288 = pd.read_csv(EXP / "A288_macrophage_pairwise/output/tests.csv").set_index("test")
 
     def row(r, label, kind="SV"):
@@ -122,7 +132,7 @@ def main():
             row(t282, "stromal-vascular,\nliving donors"),
             row(t288.loc["H288.2 D_MAC"], "macrophage", "MAC")]
     lay = pf.Layout.slide("ABC", kind="wide", col_ratios=[1, 1, 0.9])
-    per_atlas(lay.axes["A"], pa, mac)
+    families(lay.axes["A"], compartments())
     contrasts(lay.axes["B"], rows)
     own_clock(lay.axes["C"], pd.read_csv(EXP / "A281_lymphocyte_clock/output/pairs.csv"))
     fig = lay.finalize()
