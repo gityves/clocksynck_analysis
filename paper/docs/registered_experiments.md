@@ -7736,3 +7736,76 @@ ventilated donors (Hardy 0) the same.
 **Limits.** The hour of death is the end of an agonal period, not the person's recent schedule; fast deaths keep that
 period short. Amplitudes A_k are estimated from the same data. Aggregates only; no per-donor value leaves the script.
 **Code.** `exploratory/A292_external_tracking/scripts/score_a292.py` (`--stage calibrate | score`).
+
+## A293 (2026-11-17, user: "Yes go ahead", after the synthesis of the clock's organisation into three levels: alignment to the day, organ arrangement, cell participation): which level of the organisation is set by what? **Part 1 GTEx death types with companions (level B); Part 2 conserved stromal-vascular phase order across organs (level C); Part 3 conserved relative gain of cell classes across organs (level C)**
+
+**Seen before registration (NOT BLIND).** Part 1: A109, A109c, A132, A132b in full (clock-gene offset preservation:
+Hardy 4 rho 0.784, ventilated post-mortem 0.690 / 0.678, organ donors 0.161; Hardy 4 alignment to the hour of death at
+its null), A46. Part 2: the mouse timed phases of A273 (colon) and A279 (aorta), which motivated the hypothesis
+(endothelium earliest, then smooth muscle, then fibroblasts in both tissues and both aorta arms); of the human pairs, one
+endothelial-fibroblast offset (optic nerve head, A274 list of pairs above both companions) was seen; the counts of
+pairs per class were read for this design, no other offset. Part 3: the A17 atlas fits (`a17_healthy_fits.csv`) have
+been used throughout Figure 2; the ratios to endothelium defined below have not been computed.
+
+### Part 1 (level B): is the preserved organ arrangement of slow deaths and of ventilated living-brain donors clock-specific?
+**Data and statistic.** As A109 / A132 (`exploratory/A109_coupling_nulls/scripts/_helpers.py`; GTEx v10, the 12 A92
+body tissues, donors with >= 2 tissues and a time of death). Groups: fast deaths (Hardy 1-2, reference, all donors);
+slow deaths (Hardy 4, all); Hardy 3 (all); Hardy 0 ventilated post-mortem cases and Hardy 0 brain-dead organ donors
+(COHORT), each at the equal-n draw of A132 (`default_rng(132 + seed)`, seed 0). Per group: Fisher-Lee correlation rho
+of the pair phases (pairs with >= 20 shared donors in the group and in fast deaths) with those of fast deaths, for the
+clock genes and for the 200 expression-matched pseudo-clock sets per tissue of A109 (`Tissues(200, seed 0)`) and the
+200 stress-responsive sets of the A109 note (`compute_h109_responsive.add_sets`), on the same donors and pairs.
+Reproduction check first: the clock rho of A109 / A132 (Hardy 4 0.784; ventilated post-mortem 0.690; organ donors
+0.161) to 3 decimals, else stop.
+**H293.1 (slow deaths):** clock rho above the q95 of the matched family (decisive: the A285 calibration found this
+family calibrated, the responsive one anti-conservative), with the tissue-label permutation p < 0.05 (10,000, as
+A109). The responsive family is reported (percentile pi of the clock).
+**H293.2 (ventilated post-mortem, living brain):** the same.
+**Descriptive.** Hardy 3; organ donors (brain death stays descriptive by decision: replication of A132b with companions,
+no mechanism reading); the group's companion median rho (does non-clock covariation also carry the fast-death pattern?).
+**Readings, fixed now.** H293.1 PASS: in slow deaths, whose internal time is not aligned to the hour of death (A109c),
+the organs keep the fast-death arrangement on clock genes beyond non-clock genes: the organ arrangement (level B) does
+not depend on alignment to the day (level A). FAIL with companions at or above the clock: the preserved relations are
+a shared non-clock tissue structure; the claim is withdrawn for slow deaths. H293.2 likewise for the living-brain
+ventilated donors: PASS supports "the arrangement holds without behavioural and feeding cues".
+
+### Part 2 (level C): do stromal-vascular cell classes keep the same phase order in every organ?
+**Data.** Human: the pair tables of A272 and A274 (pairs.csv; pairs of compartments of one atlas, untimed offsets
+unbiased against known time in mouse colon and aorta, A273, A279). Mouse: the untimed offsets of the same class pairs in
+A273 (colon, arm C-DC) and A279 (aorta, aligned arm), from their pairs.csv.
+**Statistic.** Class pair endothelial-fibroblast_stromal (primary), endothelial-mural and mural-fibroblast_stromal
+(secondary). Each pair's offset oriented as the first class named minus the second. Readable pairs: |r| above the
+pair's matched q95 (as stored). Per atlas: circular mean of the readable pairs' offsets, weights |r|^2. Reference sign:
+the sign of the mouse untimed offset of the same class pair (colon and aorta must agree; if they disagree the class
+pair is not tested).
+**H293.3 (primary):** the per-atlas endothelial-minus-fibroblast offset has the mouse sign in more atlases than chance:
+one-sided sign test p < 0.05 over the atlases with >= 1 readable pair. Reported: the circular mean over atlases (atlas
+bootstrap 90 % interval, 2000 draws, seed 293) against the mouse values.
+**Readings.** PASS: a small phase order of stromal-vascular classes, with the mouse sign, is shared across human organs:
+a cell-class property of timing exists beside the organ's phase (with endothelium at the interface with blood-borne
+signals, the order would fit signals reaching endothelium first; interpretation, not tested). FAIL: no conserved
+cell-class phase order is shown; within organs the classes share the organ's phase (A272-A274) and timing is an organ
+property only, at this resolution.
+**Limits.** Few atlases (6 with a readable endothelial-fibroblast pair by the count read for this design); offsets of
+1 h are near the resolution of single pairs.
+
+### Part 3 (level C): does each cell class carry the same gain relative to endothelium in every organ?
+**Data.** A17 healthy atlas fits (`results/figure_2/output/atlas_fits/a17_healthy_fits.csv`, rule "learned", status
+ok), body atlases only (blood, bone marrow, lymph nodes, spleen, brain, retina and Tabula Sapiens excluded); families
+by `clocksync.anchors.family`.
+**Statistic.** Per atlas and family f with a clock (fibroblast_stromal, mural, epithelial, parenchyma, myeloid):
+g_f = mean log_amp_rel of the family's compartments minus mean log_amp_rel of the atlas's endothelial compartments
+(the atlas's host scale and sampling spread cancel); SE from the 95 % bootstrap intervals ((hi - lo) / 3.92, combined
+in quadrature; covariance ignored, which overstates the SE). Per family over atlases: random-effects pooled g, tau
+(between-atlas SD) and Cochran's Q (`clocksync.stats.meta`).
+**H293.4:** the gain relative to endothelium is a cell-class property: for the families with >= 4 atlases, tau <= 0.35
+(an amplitude factor of 1.4) in every family. Reported with it: Q p per family, and the GTEx same-class spread (log
+amplitude ratios of the tissues dominated by one class, A291 post hoc table) for scale.
+**Readings.** PASS: relative gain is conserved across organs; organ differences in gain then come from composition and
+an organ-wide drive (both cell classes of an organ scaled together), not from cell classes behaving differently in
+different organs. FAIL (tau > 0.35 in a family): that class's responsiveness depends on the organ.
+**Limits.** Relative gains, not absolute: an organ-wide drive is invisible to this test by construction and needs the
+GTEx decomposition (not in this amendment). Lymphocytes are excluded (no readable clock, A281, A287).
+
+**Code.** `exploratory/A293_organisation_levels/scripts/part1_death_types.py`, `part2_phase_order.py`,
+`part3_relative_gain.py`. Aggregates only for GTEx (controlled access).
