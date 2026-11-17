@@ -220,9 +220,16 @@ body time, with 90 % interval.
 - Why panel B uses the timed amplitude (post hoc choice of display): the untimed "own amplitude" counts every
   clock-gene variation between animals, not only the rhythm, and shares a term with coupling. Baboon tissues at
   coupling 0 with sizeable untimed amplitude (lateral hypothalamus, thalamus, testis, pineal; smooth muscle 0.06) have
-  weak rhythms against known time (0.29 to 0.76, smooth muscle 1.67; periphery median 2.46): their untimed amplitude
-  is non-rhythmic variation. The timed amplitude is estimated without the host, so the relation in B cannot come from
-  a shared term; it also shows that a coupling of 0 marks a tissue without a detectable shared rhythm.
+  weak rhythms against known time (0.29 to 0.76, smooth muscle 1.67; periphery median 2.46): their clock-gene
+  variation does not follow the body's clock. Whether it is no clock (noise, dissection, other programs) or a clock
+  of their own with a phase that differs between animals is not tested here (a within-tissue clock-coherence test,
+  as A281/A287 for lymphocytes, would decide; underpowered with 12 animals). The timed amplitude is estimated without
+  the host, so the relation in B cannot come from a shared term.
+- Caveat on B: it mixes a timed x and an untimed y, so it is partly a validation (untimed coupling follows real rhythm
+  strength). A detectability effect would give the same shape: with 12 animals and a fixed noise level, a weak but
+  fully followed rhythm would also read as low coupling. Against noise as the driver: in GTEx a tissue's own
+  variation shrinks with its clock (brain 0.38 vs periphery 0.94) rather than staying at a floor, and the association
+  lies in the shared part, not in noise shared within donors (A144 part 1).
 - Why strong clocks couple more is open. A144's registered candidate: a tissue's amplitude is a population amplitude;
   body-wide signals keep its cells in phase, raising amplitude and coupling together (part 2 inconclusive).
 - Panel A plots the A263 fit (peripheral host, pituitary in neither group: 26 peripheral tissues, rho 0.745); the
