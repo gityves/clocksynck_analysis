@@ -5784,8 +5784,7 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
 - **Natri ILD** (`lung_natri_genome`, exact twin of `lung_natri`): 40 controls, 61 cases, 2 processing sites with both
   arms (101 donors); control arm 23 pairs (SV_X 9, LY_X 2, fibroblast-X 0): MDE S1 0.178, S2 0.274, S3 0.228 (S3
   undefined in the control arm).
-- **Rule (registered):** primary = S3, else S2, if MDE <= 0.10: neither cohort reaches it. For scale: the A280-A283
-  contrasts between classes are 0.15-0.41 pooled over atlases, single-atlas class differences mostly < 0.2.
+- **Rule (registered):** primary = S3, else S2, if MDE <= 0.10: neither cohort reaches it.
 - **Reading.** Lung fibrosis cannot be read with the pairwise readout on public single-cell data: the control arms
   are small where they share a study with the cases (healthy lung atlases separate cases and controls by study), and
   every case is an explant taken at surgery while controls are donor lungs (sampling-time spread). Not a negative
