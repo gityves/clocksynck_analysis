@@ -40,6 +40,7 @@ SPECS = {
     "psychad_mssm_genome": "psychad_mssm", "psychad_radc_genome": "psychad_radc",  # A280
     "kidney_sc_genome": "kpmp_sc", "islets_genome": "islets_t2d",
     "kong_colon_genome": "kong_co", "kong_ileum_genome": "kong_ti",  # three folders each (`kong.SEGMENTS`)
+    "hlca_fibrotic_genome": "lung_hlca",  # A286: lung_hlca_genome rules, healthy and fibrotic donors
 }
 KONG = {"kong_colon_genome": "colon", "kong_ileum_genome": "ileum"}
 CORTEX = ("psychad_hbcc_genome", "seaad_dlpfc_genome", "seaad_mtg_genome", "psychad_mssm_genome", "psychad_radc_genome")  # rules of `cortex.build`
@@ -147,20 +148,29 @@ def build(name: str, donors=None, genes="all"):
         pb, out = O.finish(pb, d, extra, cols=("age", "sex", "disease") + ((block_col,) if block_col else ()))
         out["male"] = (out.sex.astype(str) == "male").astype(float)
         return pb, out
-    if name == "lung_hlca_genome":
+    if name in ("lung_hlca_genome", "hlca_fibrotic_genome"):
         ld = LU.hlca_donors()
         cls = o.ann_level_3.astype(str).map(LU.L3)
         cls[o.ann_level_2.astype(str) == "Smooth muscle"] = "smooth_muscle"
         res = "hlca_full:" + o.donor_id.astype(str)
-        healthy = ld.index[~ld.lung_condition.str.contains(";") & ld.lung_condition.isin(LU.HEALTHY)]
+        single = ~ld.lung_condition.str.contains(";")
+        healthy = ld.index[single & ld.lung_condition.isin(LU.HEALTHY)]
+        fibrotic = ld.index[single & ld.lung_condition.isin(LU.FIBROTIC)] if name == "hlca_fibrotic_genome" else []
         keep = (o.tissue_sampling_method.astype(str).isin(LU.HLCA_TISSUE) & (o.tissue.astype(str) != "nose")).to_numpy() \
-            & cls.notna().to_numpy() & res.isin(healthy).to_numpy()
+            & cls.notna().to_numpy() & res.isin(healthy.union(fibrotic)).to_numpy()
         F = C.keep_majority(C.frame(o, dummy, "hlca_full", "lung:" + cls.astype(str), o.assay, keep=keep))
         block = ld.study_major
         pb = C.sum_groups_sparse(F, X, names, F.resection.unique(), 20, "batch", 20 if full else None)
         pb["stratum"] = pb.stratum + "|" + pb.resection.map(block).astype(str)
         d = LU._hlca_cov()
         cols = ("age", "sex", "disease", "lung_condition", "study_major")
+        if name == "hlca_fibrotic_genome":
+            lab = pd.concat([pd.Series("control", index=healthy), pd.Series("case", index=fibrotic)])
+            pb, out = O.finish(pb, d, {"healthy": O.flag([r for r in pb.resection.unique() if r in set(healthy)]),
+                                       "hlca_fibrotic": lab.rename("hlca_fibrotic")},
+                               cols=cols + ("tissue_sampling_method_major",))
+            out["male"] = (out.sex.astype(str) == "male").astype(float)
+            return pb, out
     else:
         s = spec(name)
         F = O.groups(s, donors, read=(o, dummy))
