@@ -6210,3 +6210,13 @@ median and percentile reproduce in all nine pairs.
   decided.
 - Code: `exploratory/A299_adrenal_medulla/scripts/score_a301.py`.
 <!-- src: paper/exploratory/A299_adrenal_medulla/output/a301/{tests,effects,scores,correlations}.csv -->
+
+### A294 correction note (2026-11-17; interpretation only, post hoc, no new statistic)
+The registered reading of H294.2 named slope 1 as the signature of individual clock periods. Corrected: for a
+limit-cycle clock the angle by which an input turns it scales as 1 / amplitude, so the displacement of the state in the
+clock plane is independent of amplitude. Three sources of a person's tissue departure then predict different slopes of
+log departure variance on log shared variance: person-specific timing of cues (meals, activity, light) or additive
+noise, slope 0; a fixed person-specific angle, slope 1; individual intrinsic periods (locking angle growing with
+amplitude), slope 2. The observed slopes (0.07 for the clock's own variance, 0.22 for its excess over matched genes)
+exclude intrinsic periods as the main source and do not separate person-specific cue history from noise; A302 tests
+the first.
