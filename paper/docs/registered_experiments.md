@@ -7331,6 +7331,13 @@ stated with the result.
 **Limits.** IBDverse healthy donors are biopsies of a Crohn's study's controls (living tissue). MSSM and HBCC share
 protocols; cortex classes carry no lymphocytes.
 **Code.** `exploratory/A280_celltype_replication2/scripts/score_a280.py` (the A274 script with these atlases).
+**Design addendum (2026-11-17, before scoring; `--stage design`, output `twin.csv`, `design.csv`).** All three atlases
+pass the twin rule exactly (0 rows with a count difference): `ibd_rectum` 1,659 rows, 274 donors, 8 compartments;
+`ibd_ileum` 1,569 rows, 242 donors, 8 compartments; `psychad_mssm` 1,930 rows, 257 donors, 9 compartments (the genome
+table, 33,994 genes, also reproduces the full 7,523-row clock table). Pairs: rectum SV_X 4 (median n 58, min df 47),
+LY_X 12 (205, 115); ileum SV_X 4 (52.5, 51), LY_X 12 (191.5, 161): H280.1 is estimable in both. MSSM CX_diff 27
+(median n 213, min df 77), CX_same 9; inhibitory_CGE and vascular are both present (H280.3 estimable). RADC (no A17
+healthy fit; genome twin exact, 1,173 rows) stays descriptive. Nothing scored; `--stage score` stays blocked until Q36.
 
 ## A281 (2026-11-17, autonomous, block B1 of the cell-type program; uses no pairwise |r| test (the within-compartment coherence of `common/development.py`, calibrated by per-gene permutation, A237 onwards); **NOT BLIND** for: lymphocyte couplings to the anchored host (A150, 0.069), lymphocyte pairwise |r| with other classes (A272, A274: at the matched median) and per-gene sharing (A275); NOT seen: any within-compartment coherence of these atlases' compartments, any thinned table): do lymphocytes carry a clock of their own that they do not share with the tissue, or no readable clock? **Healthy body atlases of A272, A274 and A280 (IBD); B1; H281.1, H281.2**
 
