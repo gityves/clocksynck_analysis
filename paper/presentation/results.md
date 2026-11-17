@@ -287,15 +287,19 @@ own: where a clock would be readable at their depth, they have none.
 of the ten body atlases of A272/A274: clock state shared with the tissue's non-immune cells (median |r| over its pairs),
 by cell family, black: family median; grey open circles: the same compartments' expression-matched gene sets. B. own
 clock: signed clock-gene coherence between donors of the lymphocytes (cyan), of stromal-vascular (fibroblast-stromal)
-cells of the same donors thinned to the lymphocytes' clock-gene counts (brown, median of 20), and of the lymphocytes'
-expression-matched gene sets (grey), nine atlases. The registered contrasts (bullets 2-3) are not plotted.
+cells of the same donors thinned to the lymphocytes' clock-gene counts (brown, median of 20); grey bar: 5-95 % range of the lymphocytes'
+200 expression-matched gene sets (A294), nine atlases. The registered contrasts (bullets 2-3) are not plotted.
 
 **Speaker notes**
-- Panel B, read honestly: breast CD4 T (0.38) and heart lymphocytes (0.50) are coherent alone (the 2 of 9); in the
-  IBD tissues, with the deepest T cells (median 1,397 and 513 clock-gene counts, more than their fibroblasts),
-  lymphocytes are below random genes (−0.43, −0.45). Thinned fibroblasts pass in >= 80 % of thinnings in 7 atlases
-  (not optic nerve 0.40, Pelka colon 0.55), so A281 is powered there; A287's own statistic is powered only in Kong
-  ileum and the two IBD tissues.
+- Panel B, read honestly (A294, registered): the grey bar is the 5-95 % range of random expression-matched genes in
+  the lymphocytes. Lymphocytes sit inside it in seven of nine atlases. Breast CD4 T (0.38) is just above it, and is a
+  hormonal pulse: without PER1, PER2 and NR1D1 it is not significant (p 0.081) and it is not above stress-responsive
+  genes (H294.1, H294.2 fail). Heart lymphocytes (0.50, 36 donors) keep a coherence without those genes (p 0.014) and
+  above stress-responsive genes (both pass), but not above random genes: a weak signal in one atlas.
+- Caveat, post hoc (A294): on the core loop without the hormone-induced genes, lymphocyte coherence rises in most
+  atlases (6 of 9 at p < 0.10, e.g. IBD ileum −0.43 to 0.40). The hormone-induced genes may mask a weak lymphocyte
+  core loop; "no readable clock" holds on the full clock-gene set, and a blind core-loop test on fresh atlases is
+  needed before the slide states it without qualification.
 - Panel A replaces the stromal-vascular framing (post hoc view of the scored pair tables, 2026-11-17): the registered
   tests were written for stromal-vascular cells, but epithelial and parenchymal cells share the clock state as much;
   A281 found every stromal-vascular and epithelial compartment coherent. The resident tissue is the unit, immune
@@ -326,4 +330,5 @@ expression-matched gene sets (grey), nine atlases. The registered contrasts (bul
 `exploratory/A276_pairwise_calibration/output/a283/{per_atlas,tests}.csv`;
 `exploratory/A280_celltype_replication2/output/calibrated/tests.csv`; `exploratory/A282_pooled_living/output/{tests,per_atlas}.csv`;
 `exploratory/A288_macrophage_pairwise/output/{per_atlas,tests}.csv`; `exploratory/A284_residency/output/tests.csv`;
-`exploratory/A281_lymphocyte_clock/output/{pairs,tests}.csv`; `exploratory/A287_lymphocyte_covariance/output/tests.csv`.
+`exploratory/A281_lymphocyte_clock/output/{pairs,tests}.csv`; `exploratory/A287_lymphocyte_covariance/output/tests.csv`;
+`exploratory/A294_lymphocyte_hormonal/output/{pairs,tests}.csv`.

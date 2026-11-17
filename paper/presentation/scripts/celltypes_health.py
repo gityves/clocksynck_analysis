@@ -11,11 +11,13 @@ A. Every cell class of the ten healthy body atlases of A272 and A274 (one dot pe
    tables; the registered statistics are in B).
 B. Do lymphocytes keep a clock of their own? Signed clock-gene coherence between donors (A281, `decompose.signed_coherence`,
    per-sample offset fitted out): lymphocytes, fibroblast-stromal cells of the same donors thinned to the lymphocytes'
-   clock-gene counts (median of 20 thinnings), and the lymphocytes' expression-matched gene sets (grey, median), nine
+   clock-gene counts (median of 20 thinnings), and the 5-95 % range of the lymphocytes' 200 expression-matched gene sets
+   (grey bar; A294 recompute of A281's sets and seeds, reproducing its median and percentile), nine
    atlases (A281 H281.1 fail: 2 of 9 lymphocyte compartments coherent; H281.2 pass).
 
 Data: exploratory/A272_backbone_pairwise/output/pairs.csv; exploratory/A274_celltype_map/output/pairs.csv;
-exploratory/A281_lymphocyte_clock/output/pairs.csv. Output: presentation/figures/celltypes_health/celltypes_health.{svg,png}.
+exploratory/A281_lymphocyte_clock/output/pairs.csv;
+exploratory/A294_lymphocyte_hormonal/output/pairs.csv. Output: presentation/figures/celltypes_health/celltypes_health.{svg,png}.
 
     python scripts/celltypes_health.py
 """
@@ -74,11 +76,11 @@ def families(ax, C):
     ax.legend(handles=h, loc="lower right", frameon=False, fontsize=8, handletextpad=0.1)
 
 
-def own_clock(ax, p):
-    p = p.sort_values("C_stromal_thinned_median", ascending=False)
+def own_clock(ax, p, rng_):
+    p = p.merge(rng_[["atlas", "matched_q05", "matched_q95"]], on="atlas").sort_values("C_stromal_thinned_median",
+                                                                                         ascending=False)
     for i, r in enumerate(p.itertuples()):
-        ax.plot([r.C_lymph, r.C_stromal_thinned_median], [i, i], color=MUTED, lw=0.8, zorder=1)
-        ax.scatter([r.matched_C_median], [i], s=22, facecolor="white", edgecolor=MUTED, lw=1.2, zorder=2)
+        ax.plot([r.matched_q05, r.matched_q95], [i, i], color=MUTED, lw=6, alpha=0.3, solid_capstyle="butt", zorder=1)
         ax.scatter([r.C_stromal_thinned_median], [i], s=34, color=CELL["stromal-vascular"], edgecolor="white", lw=0.5,
                    zorder=3)
         ax.scatter([r.C_lymph], [i], s=34, color=CELL["lymphocyte"], edgecolor="white", lw=0.5, zorder=3)
@@ -86,12 +88,12 @@ def own_clock(ax, p):
     ax.tick_params(axis="y", length=0)
     ax.invert_yaxis()
     ax.axvline(0, color=MUTED, lw=0.8, ls="--")
-    ax.set_xlim(-0.6, 1)
+    ax.set_xlim(-0.8, 1)
     ax.set_xlabel("own clock: coherence\nbetween donors")
     h = [Line2D([], [], ls="", marker="o", ms=6, color=CELL["stromal-vascular"], label="stromal-vascular,\nsame depth"),
          Line2D([], [], ls="", marker="o", ms=6, color=CELL["lymphocyte"], label="lymphocyte"),
-         Line2D([], [], ls="", marker="o", ms=5, mfc="white", mec=MUTED, label="random genes")]
-    ax.legend(handles=h, loc="lower right", frameon=False, fontsize=8, handletextpad=0.1)
+         Line2D([], [], color=MUTED, lw=6, alpha=0.3, label="random genes,\nlymphocytes (5-95 %)")]
+    ax.legend(handles=h, loc="lower right", frameon=False, fontsize=8, handletextpad=0.4)
 
 
 def main():
@@ -99,7 +101,8 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     lay = pf.Layout.slide("AB", kind="wide", col_ratios=[1.1, 1])
     families(lay.axes["A"], compartments())
-    own_clock(lay.axes["B"], pd.read_csv(EXP / "A281_lymphocyte_clock/output/pairs.csv"))
+    own_clock(lay.axes["B"], pd.read_csv(EXP / "A281_lymphocyte_clock/output/pairs.csv"),
+              pd.read_csv(EXP / "A294_lymphocyte_hormonal/output/pairs.csv"))
     fig = lay.finalize()
     print(pf.collisions(fig))
     pf.save(fig, OUT / "celltypes_health")

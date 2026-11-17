@@ -6037,3 +6037,28 @@ random-effects over body atlases:
 - Code: `exploratory/A293_organisation_levels/scripts/part1_death_types.py`, `part2_phase_order.py`,
   `part3_relative_gain.py`.
 <!-- src: paper/exploratory/A293_organisation_levels/output/{part1/{groups,reproduction,sets},part2/{tests,atlases},part3/{families,atlases}}.csv -->
+
+## A294 (scored 2026-11-17; NOT BLIND for A281 and A287): breast CD4 T coherence is not a clock (H294.1, H294.2 FAIL: "hormone-driven"); heart lymphocytes keep a coherence without the hormone-induced genes and above stress-responsive sets (H294.1, H294.2 PASS: "a weak lymphocyte clock signal"); post hoc, the core loop raises lymphocyte coherence in several atlases
+Run `score_a294.py --jobs 4` (one scoring run, ledger ok, peak 4 GB). Reproduction: the 14-gene C and A281's matched
+median and percentile reproduce in all nine pairs.
+- **Power control:** thinned fibroblast-stromal rows pass the core loop in 100 % (breast) and 95 % (heart) of
+  replicates: both informative.
+- **Breast CD4 T (117 donors): FAIL / FAIL.** Core loop C 0.323, p 0.081; 14-gene C 0.384 below the responsive q95
+  0.399 (92nd percentile). Registered reading: hormone-driven, not a lymphocyte clock.
+- **Heart lymphocytes (36 donors): PASS / PASS.** Core loop C 0.597, p 0.014; 14-gene C 0.502 above the responsive
+  q95 0.443 (96.5th percentile). Registered reading: a weak lymphocyte clock signal in the heart. Descriptive: the same
+  C is inside the matched range (q95 0.584, 85th percentile), so not above random expression-matched genes.
+- **Matched range for the slide (descriptive, 5th / 95th percentile of 200 sets):** the lymphocyte C lies inside it in
+  seven of nine atlases, above it in breast (0.384 > 0.303), at the edge in heart; below the 5th percentile nowhere.
+- **Post hoc (not registered; seen in the descriptive columns):** removing PER1, PER2 and NR1D1 raises the
+  lymphocytes' coherence in most atlases: lung 0.24 -> 0.41 (p 0.075), IBDverse ileum -0.43 -> 0.40 (p 0.050), Kong
+  colon 0.34 -> 0.54 (p 0.055), Kong ileum 0.06 -> 0.26 (p 0.24), optic nerve 0.06 -> 0.41 (p 0.096, power control
+  0.20); IBDverse rectum stays negative (-0.40, p 0.85), Pelka colon ~0 (p 0.46). Six of nine lymphocyte compartments
+  have core-loop p < 0.10. Reading, provisional: the hormone-induced clock genes move against the clock pattern in
+  lymphocytes and may mask a weak core-loop coherence; A281 (14 genes) and A287 (14 genes, waveform-free) did not
+  separate them. "No readable clock" holds on the full clock-gene set; on the core loop it is open.
+- **Reading.** The two A281 passes are not one thing: breast is a hormonal pulse, heart a weak clock-pattern signal
+  beyond a hormonal pulse but not beyond random genes. With the post hoc core-loop pattern, lymphocytes are better
+  described as "no clock read on the full gene set; a weak core loop is possible", pending a blind test on fresh
+  atlases (core loop, all lymphocyte compartments, power-controlled).
+<!-- src: paper/exploratory/A294_lymphocyte_hormonal/output/{pairs,tests}.csv -->
