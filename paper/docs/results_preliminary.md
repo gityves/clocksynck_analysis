@@ -5682,3 +5682,29 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
   versus monocyte split is a post hoc observation, the motivation for B2, not a result.
 - Code: `exploratory/A281_lymphocyte_clock/scripts/score_a281.py` (3 workers, 96 s, peak 5.2 GB; job ledger).
 <!-- src: paper/exploratory/A281_lymphocyte_clock/output/{tests,pairs,compartments,design}.csv -->
+
+## A283 (scored 2026-11-17; user's answer to Q36 (b); not blind for the A272/A274 statistics): the cell-type pairwise test is calibrated with a 5000-draw placebo null (V283 PASS), and every A272/A274 verdict stands on it: the stromal-vascular-over-lymphocyte ranking (H272.2, H274.1), stromal-vascular sharing beyond the matched family (H274.2) and cortical sharing (H274.3) pass; stromal-vascular sharing in the A272 atlases is still not above the responsive companions (H272.1)
+
+- **Calibration (null only).** 5000 placebo draws (seeds [283, d]); one half as the null, rejection (p_cal < 0.05) over
+  the other, both directions: 0.031 to 0.063 over the ten combinations (H274.3 T_CX the widest: 0.063 / 0.031 matched,
+  0.061 / 0.040 responsive), all <= 0.0685. Null rate of pi = 1: 0.004 to 0.021 (smallest attainable p_cal).
+- **Restated tests (null = all 5000 draws; p_cal matched / responsive):**
+  - H283.1 = H272.1, T_SV 0.499 (companion medians 0.304 / 0.434): 0.010 / 0.299, **FAIL** (responsive), as before.
+  - H283.2 = H272.2, D 0.277 (0.049 / 0.089): 0.007 / 0.014, **PASS**.
+  - H283.3 = H274.1, D 0.152 (0.029 / -0.003): 0.020 / 0.014, **PASS**.
+  - H283.4 = H274.2, T_SV 0.478 (0.269 / 0.337): 0.009 (decides) / 0.013, **PASS**.
+  - H283.5 = H274.3, T_CX 0.497 (0.330 / 0.321): 0.038 / 0.011, **PASS**.
+- **Per atlas (descriptive, same draws).** SV_X beats the matched family (p_cal < 0.05) in heart, HLCA, breast,
+  kidney, anterior eye and optic nerve, and the responsive family only in optic nerve (0.014); colon, muscle and Kong
+  ileum are not above either family. LY_X is above no family in any atlas (lowest p_cal: Kong colon 0.081 / 0.061).
+  Cortex CX_diff is above the responsive family in HBCC (0.036) and DLPFC (0.029), not in MTG (0.061), and above the
+  matched family in none (0.135 to 0.179); the pooled T_CX passes both.
+- **Reading.** The anti-conservative q95 rule (A276) did not produce any of the cell-type verdicts: with a test
+  calibrated by construction (rates around 0.05 in 5000 draws) all five keep their original outcome. What is clock-
+  specific is the contrast (stromal-vascular cells share clock state more than lymphocytes do, beyond both companion
+  families, in two independent atlas sets) and the cortical sharing pooled over three cohorts; the level of
+  stromal-vascular sharing is matched by responsive genes in the A272 atlases and beaten in single atlases mostly by
+  the matched family only. The A283 form is now the readout of the line (A280, A282 and later tests).
+- Limits: the placebo removes all pairing (A278 scope note); pooled statistics weight atlases equally.
+- Code: `exploratory/A276_pairwise_calibration/scripts/calibrated_a283.py` (1357 s, peak 3.2 GB, job ledger).
+<!-- src: paper/exploratory/A276_pairwise_calibration/output/a283/calibration.csv, tests.csv, per_atlas.csv -->
