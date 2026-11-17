@@ -61,7 +61,7 @@ def main():
         seed = int(rng.integers(2 ** 31))
         try:
             o = {k: offsets(d.resample(np.random.default_rng(seed)), "tod") for k, d in ds.items()}
-            boots.append(wrap(o["reduced"] - o["full"]))
+            boots.append(pd.Series(wrap(o["reduced"] - o["full"]), index=o["full"].index))
         except (ValueError, np.linalg.LinAlgError):
             continue
     B = pd.concat(boots, axis=1)
