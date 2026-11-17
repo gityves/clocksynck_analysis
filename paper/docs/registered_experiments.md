@@ -7525,3 +7525,13 @@ cells, not a clock statement.
 **Limits.** Labels are the authors' (marker-defined); circulating T in tissue may be partly recirculating memory;
 breast Tem may be tissue effectors (stated by the scout). Kong ileum IELs come from the epithelial fraction.
 **Code.** `exploratory/A284_residency/scripts/build_a284.py`, `score_a284.py`.
+**Design addendum (2026-11-17, before scoring; `score_a284.py --design`, outputs `design.csv`, `table_checks.csv`; no
+statistic computed).** Tables: IBDverse T subclasses built from the raw file (`$SCCC_DATA/atlas_wg/ibdverse_tsub`,
+healthy cells; 2,433 ileum and 1,677 rectum source rows unchanged); breast and Kong ileum from the genome builder with
+the registered labels first. Breast: only T rows change (CD8_T and part of CD4_T move to the new classes). **Kong
+ileum: the source class rule had put "intraepithelial lymphocyte" into `ileum:epithelial`** (IELs are a median 9.6 %,
+max 23.2 %, of that class's cells per donor); A284 uses the epithelial rows without them (the only non-immune rows that
+differ). Donors with both classes: T: IBDverse ileum 100, rectum 57, breast 94, Kong ileum 22; plasma-B: breast 34,
+Pelka colon 26, Kong ileum 25, Kong colon 16, IBDverse ileum 149, rectum 173; macrophage-monocyte: HLCA 107, breast
+65. All twelve are eligible (>= 15). Rows: the A17 healthy targets (as A272/A274/A280), new T rows on the same donors
+and strata.

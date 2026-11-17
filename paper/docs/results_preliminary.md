@@ -5792,3 +5792,14 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
 - Code: `exploratory/A286_lung_fibrosis_pairwise/scripts/score_a286.py --stage power [--cohort natri]` (HLCA 350 s,
   Natri 801 s).
 <!-- src: paper/exploratory/A286_lung_fibrosis_pairwise/output/{power,design}.csv, output/natri/{power,design}.csv -->
+
+## Data note (2026-11-17, from A284): Kong ileum "epithelial" contained the intraepithelial lymphocytes
+- The coarse class rule (`organ.COARSE`, first match on Census `cell_type`) matches "intraepithelial lymphocyte" as
+  epithelial. In `kong_ileum` / `kong_ileum_genome` the `ileum:epithelial` compartment therefore includes the IEL T
+  cells: a median 9.6 % (max 23.2 %) of its cells per donor (5,004 of 55,991 cells). Kong colon has no such label.
+- Affected readouts (Kong ileum epithelial rows): A274 (replication atlas), A281 (coherence per compartment), A282,
+  A283 (per-atlas rows). Not rerun here; a T admixture would make the epithelial class look more lymphocyte-like, so
+  any bias works against the stromal-vascular-over-lymphocyte contrast at the epithelial pairs. A284 uses the
+  corrected rows. The class rule is left unchanged (other tables would move); to be fixed with a rebuild if the PI
+  wants the earlier rows corrected.
+<!-- src: paper/exploratory/A284_residency/output/table_checks.csv; check in the A284 build session (IEL share) -->
