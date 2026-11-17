@@ -196,16 +196,19 @@ coupling is this rule, not a separate brain clock. Within a person, a tissue sta
    from oscillator theory, rho < 0: not supported).
 2. Specific to the clock genes: 200 expression-matched and 200 stress-responsive gene sets give rho near 0 (medians
    −0.160 and 0.109; q95 0.258 and 0.453). Calibrated against the stress-responsive sets: A290, running.
-3. The brain follows the rule: in the baboon, where brain and peripheral amplitudes overlap, brain regions sit on the
-   periphery's line (median residual −0.001, 11 of 22 above). Human brain couples at 0.406 against 0.679 in the
-   periphery, with clock amplitude 1.15 against 2.78.
+3. The brain follows the rule. In the baboon, where each animal's time is known, coupling rises with each tissue's
+   rhythm amplitude against known time (Spearman 0.82 over 57 tissues; periphery 0.77, brain 0.74), and the weakly
+   rhythmic brain regions fall on the peripheral line (registered on the untimed amplitude, A289: median residual
+   −0.001). Human brain couples at 0.406 against 0.679 in the periphery.
 4. A tissue's clock departs from its person's body time with an SD of 1.0 h (thyroid) to 3.2 h (lung), 11 body
    tissues; an upper bound (not above the companion gene sets).
 
 **Figure:** `figures/organs_health/organs_health.png` (`scripts/organs_compute.py`, `scripts/organs_health.py`; wide).
-A. human (GTEx fast deaths): clock amplitude (log scale) against coupling to the body's clock state, one dot per tissue,
-coloured by organ system (brain pink); grey: least-squares line over the peripheral tissues. B. baboon, the same (35
-peripheral tissues, 22 brain regions). C. amplitude-coupling correlation of the clock genes (blue) against 200
+A. human (GTEx fast deaths): clock-gene variation (A104 "own amplitude": all clock-plane variation between donors,
+shared and own; log scale) against coupling to the body's clock state, one dot per tissue, coloured by organ system
+(brain pink); grey: least-squares line over the peripheral tissues. B. baboon: rhythm amplitude against known time
+(A36 timed gain, estimated without the host; log scale) against coupling, 35 peripheral tissues and 22 brain regions;
+grey: the peripheral line. C. variation-coupling correlation of the clock genes (blue) against 200
 expression-matched and 200 stress-responsive gene sets (grey dots). D. SD of a tissue's departure from its person's
 body time, with 90 % interval.
 
@@ -214,6 +217,12 @@ body time, with 90 % interval.
   registered by A144 and A271 Part B); A144 part 1 (registered): not noise shared within donors, it lies in the shared
   part; A271 Part B H271.2 pass (q95 rule; the calibrated form, A290, is running); A289 H289.3 (registered, fail:
   brain on the line, the outcome shown); A259 registered (H259.1 fail, H259.2 no tissue above its companions).
+- Why panel B uses the timed amplitude (post hoc choice of display): the untimed "own amplitude" counts every
+  clock-gene variation between animals, not only the rhythm, and shares a term with coupling. Baboon tissues at
+  coupling 0 with sizeable untimed amplitude (lateral hypothalamus, thalamus, testis, pineal; smooth muscle 0.06) have
+  weak rhythms against known time (0.29 to 0.76, smooth muscle 1.67; periphery median 2.46): their untimed amplitude
+  is non-rhythmic variation. The timed amplitude is estimated without the host, so the relation in B cannot come from
+  a shared term; it also shows that a coupling of 0 marks a tissue without a detectable shared rhythm.
 - Why strong clocks couple more is open. A144's registered candidate: a tissue's amplitude is a population amplitude;
   body-wide signals keep its cells in phase, raising amplitude and coupling together (part 2 inconclusive).
 - Panel A plots the A263 fit (peripheral host, pituitary in neither group: 26 peripheral tissues, rho 0.745); the
@@ -239,6 +248,7 @@ body time, with 90 % interval.
 - Panel D bounds how far a tissue can run on its own time; it does not show that it does (H259.2).
 
 **Source:** `presentation/output/organs/couplings.csv`; `results/figure_2/output/organs/r2_couplings.csv`;
+`results/figure_1/output/species/a36_tissues.csv`;
 `exploratory/A271_responsive_companions/output/{a104_sets,a104_tests}.csv`; `exploratory/A289_brain_barrier/output/tests.csv`;
 `exploratory/A263_companions/output/sets_human.csv`; `exploratory/A142_organ_blocks/output/tests.csv`;
 `exploratory/A259_tissue_deviation/output/score/{targets,tests}.csv`.

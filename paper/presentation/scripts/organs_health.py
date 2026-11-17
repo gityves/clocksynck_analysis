@@ -1,18 +1,21 @@
 """Slide figure (results, R2.1, merged with R2.2): organs share one clock state; weak clocks are the loosely coupled ones,
 the brain included.
 
-A. GTEx fast deaths: own clock amplitude against coupling to the body's clock state (peripheral-anchor host, peripheral
+A. GTEx fast deaths: clock-gene variation (A104 own amplitude, sqrt of shared + own clock-plane variance) against coupling to the body's clock state (peripheral-anchor host, peripheral
    tissues read leave-one-out; A263 R2 fit, `organs_compute.py`), one dot per tissue, coloured by organ system (brain
    regions pink); grey: least-squares line coupling = a + b log(amplitude) over the peripheral tissues. Pituitary (in
    neither A263 group) not shown. The registered statistic is A104's (H104.1 not supported; observed rho +0.734).
-B. Baboon (Mure 2018, 12 animals; A42 readout 2): the same, 35 peripheral tissues and 22 brain regions; grey: the
-   peripheral line (A289 H289.3: the brain sits on it). Pineal, pituitary and ocular tissues not shown.
+B. Baboon (Mure 2018, 12 animals): rhythm amplitude against known time (A36 timed gain |g|, estimated without the host)
+   against coupling to the body's clock state (A42 readout 2), 35 peripheral tissues and 22 brain regions; grey: the
+   peripheral line. Post hoc panel (A289 H289.3 registered the untimed amplitude: brain on the line). Pineal, pituitary
+   and ocular tissues not shown.
 C. Is the relation specific to the clock genes? rho(amplitude, coupling) over the GTEx peripheral tissues for the clock
    genes (blue) and 200 expression-matched and 200 stress-responsive gene sets (A271 Part B, H271.2; calibrated: A290).
 D. How far a tissue's clock departs from its person's body time (A259, registered): SD across donors [h] with its 90 %
    interval, 11 body tissues. An upper bound: the departure is not above that of the companion gene sets (H259.2).
 
 Data: presentation/output/organs/couplings.csv; results/figure_2/output/organs/r2_couplings.csv;
+results/figure_1/output/species/a36_tissues.csv;
 exploratory/A271_responsive_companions/output/a104_sets.csv; exploratory/A259_tissue_deviation/output/score/targets.csv.
 GTEx aggregates only (one value per tissue). Output: presentation/figures/organs_health/organs_health.{svg,png}.
 
@@ -41,20 +44,21 @@ SHORT = {"Adipose - Visceral (Omentum)": "adipose, visceral", "Adipose - Subcuta
          "Thyroid": "thyroid", "Lung": "lung"}
 
 
-def scatter(ax, t, system, title):
-    """Own amplitude against coupling, peripheral line; `t`: tissue index, columns group, coupling, own_amplitude."""
-    t = t[t.group.isin(["periphery", "brain"])]
+def scatter(ax, t, system, title, x="own_amplitude", xlabel="clock-gene variation"):
+    """Amplitude column `x` against coupling, peripheral line; `t`: tissue index, columns group, coupling, `x`."""
+    t = t[t.group.isin(["periphery", "brain"])].rename(columns={x: "amp"})
     per = t[t.group == "periphery"]
-    b, a = np.polyfit(np.log(per.own_amplitude), per.coupling, 1)
-    x = np.geomspace(t.own_amplitude.min() * 0.9, t.own_amplitude.max() * 1.1, 50)
-    ax.plot(x, a + b * np.log(x), color=MUTED, lw=1.2, zorder=1)
-    ax.scatter(t.own_amplitude, t.coupling, s=24, c=[COLOR[system(k)] for k in t.index], edgecolor="white", lw=0.4,
+    b, a = np.polyfit(np.log(per.amp), per.coupling, 1)
+    xs = np.geomspace(t.amp.min() * 0.9, t.amp.max() * 1.1, 50)
+    ax.plot(xs, a + b * np.log(xs), color=MUTED, lw=1.2, zorder=1)
+    ax.scatter(t.amp, t.coupling, s=24, c=[COLOR[system(k)] for k in t.index], edgecolor="white", lw=0.4,
                zorder=2)
     ax.set_xscale("log")
     ax.minorticks_off()
-    ax.set_xticks([1, 2, 4], ["1", "2", "4"])
+    ticks = [v for v in (0.25, 0.5, 1, 2, 4) if t.amp.min() * 0.9 <= v <= t.amp.max() * 1.1]
+    ax.set_xticks(ticks, [f"{v:g}" for v in ticks])
     ax.set_ylim(-0.05, 1.05)
-    ax.set_xlabel("clock amplitude")
+    ax.set_xlabel(xlabel)
     ax.set_title(title, fontsize=13, color=INK)
 
 
@@ -72,7 +76,7 @@ def specificity(ax, sets):
     ax.tick_params(axis="y", length=0)
     ax.set_ylim(-0.5, 1.9)
     ax.set_xlim(-1, 1)
-    ax.set_xlabel("amplitude-coupling\ncorrelation")
+    ax.set_xlabel("variation-coupling\ncorrelation")
 
 
 def departure(ax, d):
@@ -98,7 +102,9 @@ def main():
     scatter(lay.axes["A"], t, gtex_system, "human")
     lay.axes["A"].set_ylabel("coupling to the\nbody's clock state")
     legend_in(lay.axes["A"], fontsize=8, loc="upper left")
-    scatter(lay.axes["B"], bab.set_index("compartment"), baboon_system, "baboon")
+    timed = pd.read_csv(PAPER / "results/figure_1/output/species/a36_tissues.csv", index_col="tissue").g_abs
+    bab = bab.set_index("compartment").assign(timed_amp=timed)
+    scatter(lay.axes["B"], bab, baboon_system, "baboon", x="timed_amp", xlabel="rhythm amplitude\nagainst known time")
     specificity(lay.axes["C"], sets)
     departure(lay.axes["D"], dep)
     fig = lay.finalize()
