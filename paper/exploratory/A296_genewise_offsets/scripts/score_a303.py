@@ -85,7 +85,7 @@ def main():
     pb, d = data.load("sheep")
     pb = pb[~pb.compartment.isin(BRAIN_SHEEP)]
     comps = sorted(pb.compartment.unique())
-    ds = cs.Dataset(pb, anchors=comps, donors=d, name="sheep")
+    ds = cs.Dataset(pb, anchors=comps, donors=d, mixed_strata=True, name="sheep")  # as compute_sheep.py
     off = ds.fit(n_boot=0, gate=False).table.offset_h.dropna()
     est = rel(off, "Adrenal")
     bs = []
