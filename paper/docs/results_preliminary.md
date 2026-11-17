@@ -6142,3 +6142,33 @@ median and percentile reproduce in all nine pairs.
   matched sets carry much of it on a different statistic (within-sample split-gene moment).
 - Code: `exploratory/A294_floor/scripts/score_a294.py --jobs 4`.
 <!-- src: paper/exploratory/A294_floor/output/{tests,tissues,sets}.csv -->
+
+## A299 (scored 2026-11-17; NOT BLIND for the adrenal offset and the baboon medulla): the medulla content of a GTEx adrenal sample does not move its phase (H299.1 FAIL); cortex content does, towards the body's time (descriptive, 1.15 h per SD)
+
+- Design as registered; one run (43 s). Primary donors Hardy 1-4: 75 adrenal samples with a leave-one-out host of 31
+  tissues.
+- **H299.1 FAIL.** Medulla score (TH, DBH, PNMT, CHGA, CHGB): phase change -0.25 h per SD (90 % -0.81 to +0.45),
+  one-sided p 0.753; gain change -0.18 (-0.43 to +0.01).
+- **Cortex score (specificity, descriptive):** phase change -1.15 h per SD (90 % -1.87 to -0.56), gain change +0.30
+  (+0.15 to +0.49): samples with more cortex RNA sit closer to the body's time and express it more strongly. Fast
+  deaths alone (60 samples): medulla -0.21 h (-0.82 to +0.65); cortex -0.86 h (-1.45 to -0.20), gain +0.29.
+- **Reading (registered).** The human adrenal phase is not explained by its medulla content at this power; the adrenal
+  offset stays an organ-level observation. Post hoc: the cortex effect is about nine times the largest composition
+  effect on phase in the other tissues (A295, within 0.13 h per SD): in the adrenal, the part of a sample that is not
+  cortex is phase-advanced, whatever it is (medulla, capsule, periadrenal fat); the medulla markers do not identify it.
+- Code: `exploratory/A299_adrenal_medulla/scripts/score_a299.py`.
+<!-- src: paper/exploratory/A299_adrenal_medulla/output/tests.csv -->
+
+## A300 (scored 2026-11-17; NOT BLIND for the frontier pattern): frontier tissues do not change their clock relation to the body with the death season (H300.1 FAIL)
+
+- Design as registered; one run (335 s). 19 tissues with >= 20 donors per arm (4 frontier: lung, both skin sites,
+  oesophageal mucosa; stomach and transverse colon below the arm minimum); 66 summer and 53 winter donors.
+- **H300.1 FAIL.** Median |summer - winter offset|: frontier 0.25 h, internal 0.30 h; T -0.05 h, permutation p 0.804
+  (500). Largest offset changes: liver -0.69 h, breast +0.69 h, left ventricle +0.59 h; lung -0.43 h, sun-exposed skin
+  +0.27 h.
+- **Descriptive.** log z2 is lower in the summer arm in 18 of 19 tissues (-0.50 to -1.79; a difference of the arms'
+  host scale, not interpretable per tissue); sun-exposed skin is the one tissue with the opposite sign (+1.00).
+- **Reading (registered).** No season-dependent frontier effect at this power; the frontier pattern (lower coupling,
+  more own variation) stays a post hoc observation.
+- Code: `exploratory/A300_frontier_season/scripts/score_a300.py --n-perm 500 --jobs 4`.
+<!-- src: paper/exploratory/A300_frontier_season/output/{tests,tissues}.csv -->
