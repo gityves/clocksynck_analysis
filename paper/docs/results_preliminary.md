@@ -5831,3 +5831,31 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
   be tissue effectors); two myeloid atlases only.
 - Code: `exploratory/A284_residency/scripts/score_a284.py --draws 2000 --jobs 6` (740 s, peak 6.2 GB).
 <!-- src: paper/exploratory/A284_residency/output/{tests,per_atlas,design,table_checks}.csv; paper/results/logs/jobs.tsv -->
+
+## A287 (scored 2026-11-17; not blind for A281): tissue lymphocytes have no clock-gene covariance beyond expression-matched genes, whatever its phase pattern, where depth-matched fibroblasts show it (H287.1 FAIL: 0 of 3 powered atlases; H287.2 PASS: 3 of 3 fail); "no readable clock", not "a different clock"
+
+- Statistic (registered): U = share of the clock genes' correlation matrix in its two leading eigenvalues, after the
+  per-sample shift is removed (no waveform); a compartment carries structure when U is above 95 % of 200 matched sets
+  and above per-gene permutations (p < 0.05). Nine A281 pairs; fibroblast-stromal rows thinned to the lymphocytes'
+  clock-gene count, 20 replicates.
+- **Power: 3 atlases powered** (thinned fibroblasts carry structure in >= 80 % of replicates): Kong ileum 1.00, IBDverse
+  ileum 1.00, rectum 1.00 (IBDverse fibroblasts are shallower than the T cells, so they are not thinned). Not powered:
+  heart 0.50, breast 0.40, lung, Pelka colon, optic nerve, Kong colon 0.00. The registered minimum is 3.
+- **H287.1 FAIL / H287.2 PASS:** lymphocytes carry structure in 0 of the 3 powered atlases; matched-set pi: Kong ileum
+  CD8 T 0.335, IBDverse ileum T 0.740, rectum T 0.110 (U 0.427, 0.551, 0.350 against matched medians 0.449, 0.496,
+  0.424). In IBDverse the T cells have more clock-gene counts than the fibroblasts (median 1,397 against 292 in ileum;
+  513 against 248 in rectum) and still none.
+- **Descriptive, all nine pairs unthinned:** no lymphocyte compartment carries structure (matched pi 0.110 to 0.845;
+  every p_perm <= 0.003: the clock genes covary in lymphocytes, but no more than expression-matched genes do).
+  Fibroblast-stromal: 5 of 9 carry structure (heart, optic nerve, Kong ileum, IBDverse ileum and rectum, pi 0.985 to
+  1.000), and their leading-plane gene phases match the GTEx waveform without being told it (circular correlation 0.70
+  to 0.88). Lung (pi 0.675), breast (0.785), Pelka colon and Kong colon fibroblasts do not carry structure on U: the
+  statistic is less sensitive than the signed C of A281, which passes them.
+- **Reading (registered): "no readable clock" holds for any phase pattern.** In the three atlases where a fibroblast
+  clock is read at the lymphocytes' depth, the lymphocytes' clock genes covary between donors at the level of random
+  expression-matched genes, so A281's failure is not a clock with other gene relations. With A275, tissue lymphocytes
+  carry systemic (glucocorticoid, immediate-early) states but no clock between donors.
+- **Limits.** Three powered atlases (the minimum), all gut; U misses the fibroblast clock in four atlases, so it is the
+  weaker of the two statistics; the between-donor clock spread depends on each atlas's sampling window.
+- Code: `exploratory/A287_lymphocyte_covariance/scripts/score_a287.py --jobs 6` (56 s, peak 3.6 GB).
+<!-- src: paper/exploratory/A287_lymphocyte_covariance/output/{tests,compartments,thinned,phases,design}.csv; paper/results/logs/jobs.tsv -->
