@@ -10,6 +10,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **New 2026-11-13:** results A245-A256 and what they change are summarised in `REVIEW_2026-11-10.md` §6; decisions asked there:
   the luminal A row after A224, whether to request ages (Wu 2020) and TwinsUK phenotypes (MuTHER), whether A243 is run (Q32),
   and the wording of the cancer chapter (Q24) after the synthesis in the ledger addendum of 2026-11-12.
+- **Q39** (below, new 2026-11-17): tally of the cell-type program (blocks A-C, A276-A283): what the cell-type line now claims, and which of B2, C1, C2 to run next?
 - **Q38** (below, new 2026-11-16): two side projects scouted (clock and cell cycle; liver zonation): start either, and with which data?
 - **Q37** (below, new 2026-11-16): add the ROSMAP single-nucleus cortex (427 donors) and RADC time of death to the Q12 request, for a human calibration of cell-type offsets?
 - **Q35** (below, new 2026-11-16): tally of the biology-paper checks: two exceptions fell (fetal adrenal first; brain as a clock statement), the cancer and robustness lines stand, no systemic signal named. Biology paper or the Nature Methods ordering?
@@ -37,6 +38,26 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
+
+### Q39 (2026-11-17): tally of the cell-type program (blocks A-C)
+**Scored (all on the calibrated test of A283 where a companion test is used).**
+- Test calibration: q95 rule anti-conservative (A276); percentile against a 5000-draw placebo null calibrated (V283
+  PASS); every A272/A274 verdict unchanged (H272.1 still fails against responsive genes; H272.2, H274.1-3 pass).
+- Stromal-vascular over lymphocyte (D): passes in three independent body sources (A272 0.277, A274 0.152, IBDverse
+  A280 0.413) and in living donors alone (A282: 0.225, p_cal 0.011 / 0.011; post-mortem 0.261).
+- Lymphocytes: no readable clock of their own (A281: coherent in 2 of 9 atlases; fail where depth-matched fibroblasts
+  pass in 5 of 7), and in living tissue they share responsive genes more than clock genes (A282).
+- Untimed offsets unbiased against known time in two mouse tissues (A273 colon, A279 aorta); aorta macrophages not
+  less coupled than stromal-vascular cells (H279.1 FAIL).
+- Cortex: pooled sharing passes over HBCC, DLPFC, MTG (H283.5) but not in MSSM, the largest cohort (H280.2 FAIL); no
+  cohort beats the matched family alone; offset sign unresolved (H280.3 not read).
+**Not scored.** B2 residency (design ready from A280/A281 tables); C1 disease contrasts (inventory only); C2 tumour
+pairwise (same patients as A149 S3, power not computed); D1-D3 scouts (Q37, Q38).
+**Question.** (1) Is the claim for the paper "stromal-vascular cells carry the shared tissue clock, lymphocytes neither
+share it nor keep their own; cortex unresolved"? (2) Which next: B2 (residency: do tissue-resident lymphocytes differ),
+C1 (disease contrast, with power first), or C2? (3) Move the calibrated pairwise readout into `clocksync` (the program
+says: if A1 confirms calibration)?
+**Evidence.** RP A276-A283; VERDICT_TABLE rows A272-A283.
 
 ### Q38 (2026-11-16): clock and cell cycle (D2), liver zonation (D3): scouts only
 **D2. Is the distribution of cell-cycle phases of a donor's cells related to the donor's clock state?** CoPhaser is
