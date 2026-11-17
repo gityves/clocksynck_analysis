@@ -227,9 +227,10 @@ body time, with 90 % interval.
   the host, so the relation in B cannot come from a shared term.
 - Caveat on B: it mixes a timed x and an untimed y, so it is partly a validation (untimed coupling follows real rhythm
   strength). A detectability effect would give the same shape: with 12 animals and a fixed noise level, a weak but
-  fully followed rhythm would also read as low coupling. Against noise as the driver: in GTEx a tissue's own
-  variation shrinks with its clock (brain 0.38 vs periphery 0.94) rather than staying at a floor, and the association
-  lies in the shared part, not in noise shared within donors (A144 part 1).
+  fully followed rhythm would also read as low coupling. In GTEx this is excluded (A291, registered, H291.1 pass): a
+  perfectly locked tissue would read 0.966 to 0.977 at every peripheral tissue's real design, and the relation holds
+  after that ceiling (rho 0.717). The baboon (12 animals) was not simulated. Non-count technical noise (dissection,
+  composition) is not separated by A291.
 - Why strong clocks couple more is open. A144's registered candidate: a tissue's amplitude is a population amplitude;
   body-wide signals keep its cells in phase, raising amplitude and coupling together (part 2 inconclusive).
 - Panel A plots the A263 fit (peripheral host, pituitary in neither group: 26 peripheral tissues, rho 0.745); the
