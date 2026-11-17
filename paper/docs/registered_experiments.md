@@ -7833,3 +7833,94 @@ the core-loop C and p and the responsive percentile of every lymphocyte compartm
 **Limits.** Removing three genes lowers the signal of a real clock too (the power control bounds this); two
 compartments, so no pooled statement; A281's per-compartment p of these two is not corrected (Holm over nine: 0.11).
 **Code.** `exploratory/A294_lymphocyte_hormonal/scripts/score_a294.py` (one scoring run).
+
+## A294 (2026-11-17, user: "Okay you can launch the remaining tests"; the floor test proposed after A291's post hoc decomposition; **NOT BLIND** for the A104 table (S 85-fold, 2 psi 5-fold over 27 tissues) and A259; NOT seen: own variance of any non-clock set at these rows): is the own-variation floor of peripheral tissues specific to the clock genes? **GTEx fast deaths, A104 rows; clock own variance against 100 expression-matched pseudo-clock sets fitted the same way**
+
+**Statistic.** A104 rows and fit (every tissue an anchor, leave-one-out host, `fit(n_boot=0, gate=False)`), periphery
+block. For the clock and each of 100 matched sets (`pseudo_waveforms(kind="matched")`, GTEx waveform amplitudes and
+phases, matching as A271 Part B, seed [294, 1]): per tissue, own variance 2 psi and shared variance S = z2 V.
+Reproduction check: clock periphery rho 0.734.
+**H294.1 (primary):** the clock genes carry own variation beyond the generic floor: median over the 27 tissues of
+log(2 psi_clock / median over sets of 2 psi_set) > 0, with a tissue-bootstrap 90 % interval (2000, seed 294) above 0.
+**H294.2 (conditional on H294.1 PASS):** the clock's excess own variance E = 2 psi_clock - median 2 psi_set scales with
+the shared rhythm as person-specific phase or amplitude variation would: Theil-Sen slope of log E on log S_clock
+(tissues with E > 0) with a bootstrap 90 % interval including 1 and excluding 0. Interval including 0 and excluding 1:
+additive own variation.
+**Readings.** H294.1 FAIL with the interval including 0 or below: the floor is generic (technical or sample-level,
+shared with non-clock genes); peripheral tissues are locked to the body's time up to the measurement floor and the
+amplitude-coupling relation is the gain over that floor. PASS: the clock carries own variation beyond the floor; H294.2
+says whether it has the signature of individual clock periods (slope 1) or of additive noise (slope 0).
+**Limits.** Matched sets have their own shared state (non-clock between-person variation); their psi is the floor
+for genes of that expression read through the same projector. Aggregates only.
+**Code.** `exploratory/A294_floor/scripts/score_a294.py`.
+
+## A295 (2026-11-17, same instruction; **NOT BLIND** for the GTEx organ map and A291 / A293; NOT seen: any per-sample composition score): within a tissue, does a sample's composition change the gain of its clock state but not its phase? **GTEx fast deaths, A104 periphery rows; marker scores fixed here**
+
+**Scores (fixed now; log((sum of marker counts + 0.5) / depth), standardised within tissue).** Lymphocyte: CD3D,
+CD3E, CD2, CD247, MS4A1, CD79A, CD19. Stromal-vascular: DCN, LUM, COL1A2, PECAM1, VWF, CDH5.
+**Model.** Per tissue (A292 design: states x, leave-one-out host h, strata intercepts): complex least squares
+x = mu + c s + a h + b (s h), s one score at a time. Gain change per SD = Re(b / a); phase change per SD (h) =
+Im(b / a) x 24 / (2 pi). SE by donor bootstrap (200, seed [295, tissue]). Pooled over tissues by random effects
+(`clocksync.stats.meta`).
+**H295.1 (gain, positive control):** pooled Re(b / a) for the lymphocyte score < 0, one-sided p < 0.05 (lymphocytes
+carry no readable clock, A281, A287: more lymphocyte RNA dilutes the rhythm).
+**H295.2 (phase):** the pooled phase change per SD of each score lies within +-0.5 h (90 % interval inside the bound),
+for both scores.
+**Readings.** H295.1 and H295.2 PASS: composition changes how loudly a sample expresses the body's time, not when:
+phase is not a composition property. H295.2 PASS with H295.1 FAIL: composition varies too little within tissues to
+move the gain detectably; the phase bound holds but is a weak statement. H295.2 FAIL: composition moves the phase;
+organ offsets may partly be composition.
+**Code.** `exploratory/A295_composition/scripts/score_a295.py`. Aggregates only.
+
+## A296 (2026-11-17, same instruction; **NOT BLIND** for the timed organ offsets (adrenal +5.1 h, lung +2.5 h, skin +1.8 / +2.4 h, A123 organ map) and A264 / A266 (PER1, PER2, NR1D1 signal-induced); NOT seen: any offset on a reduced waveform): are the large organ offsets whole-clock properties or carried by signal-induced clock genes? **GTEx fast deaths, timed; baboon replication**
+
+**Statistic.** GTEx fast deaths, A104 periphery rows, timed against the hour of death (`Dataset.timed_loadings("tod")`):
+each tissue's offset relative to the circular mean of all tissues, with the full 14-gene waveform and with PER1, PER2
+and NR1D1 dropped (`Waveform.drop`). Difference per tissue (reduced minus full), donor bootstrap 90 % interval (200,
+seed 296).
+**H296.1 (adrenal):** whole-clock property: |reduced - full| <= 1 h for the adrenal gland and its reduced offset >= +3 h.
+Secondary, the same rule: lung, skin (sun-exposed, not sun-exposed). Descriptive: per-gene timing on the host
+(`Dataset.gene_loadings`) for these tissues; baboon (GSE98965, timed, all tissues an anchor): offsets of ADC, ADM, LUN,
+SKI with full and reduced waveforms.
+**Readings.** PASS: the adrenal sits about 4 to 5 h from the other organs on its core clock, not only on hormone-
+induced genes; an organ-level property to explain (direct neural input is the hypothesis, not tested). FAIL: the
+adrenal offset is carried by PER1 / PER2 / NR1D1 induction (waveform distortion), not by the organ's clock phase.
+**Code.** `exploratory/A296_genewise_offsets/scripts/score_a296.py`. Aggregates only.
+
+## A297 (2026-11-17, same instruction; **NOT BLIND** for the Manella and Xin timed shifts (A111: liver +11.7 h, WAT +10.6 h, lung +1.9 h under daytime feeding; Xin liver +10.1 h relative to the rest); the WP3 script also wrote a Greenwell per-arm host table (`a112_host_state_by_arm.csv`) that is not in RP and was not read for this design): does removing the feeding rhythm do what the additive cue model, calibrated on inverted feeding, predicts? **Mouse liver: Manella (inversion, calibration), Xin (inversion, second calibration), Greenwell (removal, test)**
+
+**Model.** The liver's timed clock state per arm is a complex amplitude A (state = mu + A e^{iWt}). Additive cues:
+A_AL = d + f (direct cues d, feeding cue f, in phase with normal nocturnal feeding); inversion (food in the light phase)
+A_inv = d - f. With rho = A_inv / A_AL: f / d = (1 - rho) / (1 + rho), and removal of the feeding rhythm predicts
+A_removed / A_AL = (1 + rho) / 2 (closed form: amplitude ratio |1 + rho| / 2, phase shift arg(1 + rho)).
+**Estimation.** One projector per dataset and tissue over all its arms (clock genes passing the A111 QC); per arm, OLS of
+the state on cos, sin of ZT; A = complex amplitude. rho from Manella Alb-Cre controls (AL vs DF; liver); mouse
+bootstrap within arm (2000, seed 297) gives the prediction interval of (1 + rho) / 2. Observed: Greenwell liver,
+arrhythmic (adapted) vs ad libitum, A_AR / A_AL with its bootstrap interval; night-restricted vs ad libitum as the
+internal control (predicted ratio 1, shift 0).
+**H297.1:** the observed removal ratio's amplitude lies inside the 90 % prediction interval of the additive model. Reported
+with it: the observed phase shift against the predicted one; rho from Xin (NRF vs DRF) as a second calibration.
+**Readings (fixed now).** PASS: an additive driven model explains both inversion and removal; the liver clock's
+amplitude is set by its inputs. FAIL with the observed amplitude ratio above the interval (near 1) and a small phase
+shift: the liver clock keeps its amplitude when a cue is removed (self-sustained): inputs set its phase, the
+oscillator sets its amplitude. FAIL below the interval: removal costs more amplitude than additive cues predict.
+**Limits.** Different laboratories, strains and protocols; inversion in Manella is daytime feeding against ad libitum
+(not exactly 12 h); Greenwell has the liver only. Not a human result: it decides how removal (human intensive care,
+A46) and inversion relate.
+**Code.** `exploratory/A297_feeding_model/scripts/score_a297.py`.
+
+## A298 (2026-11-17, same instruction; staged: hypothesis now, reference mapping and organs in a design addendum before scoring; **NOT BLIND** for GTEx gains (A291 post hoc) and A293 Part 3 (relative gains: fibroblast +0.228, mural -0.079, parenchyma -0.126, epithelial -0.220, myeloid -0.399 log units against endothelium)): does composition explain the gain differences between GTEx organs, or is an organ-wide drive needed? **GTEx periphery organs with a matching healthy atlas**
+
+**Statistic.** Per GTEx tissue t with a matching atlas: shares of clock-gene mRNA per cell family, p_c(t), from a
+non-negative least-squares fit of the tissue's mean expression (marker genes per family, fixed in the addendum) onto
+the atlas's family profiles; predicted relative gain G_t = (sum_c p_c(t) exp(g_c))^2 with g_c from A293 Part 3
+(endothelium 0; lymphocyte and other families without a readable clock at exp(g) = 0). Organ drive D_t = S_t / G_t (S
+from the A104 table).
+**H298.1:** composition explains part of the gain differences: Spearman rho(G_t, S_t) > 0, one-sided permutation p < 0.05.
+**H298.2:** an organ-wide drive is needed: the spread of log D_t over tissues exceeds that of log S_t explained by G_t,
+read as: the variance of log D_t > 0.5 x the variance of log S_t.
+**Readings.** H298.1 PASS, H298.2 FAIL: composition and cell-class gains explain tissue gain; no organ drive needed.
+H298.2 PASS: organs drive their cells at different strengths (with A293 Part 3: cell classes keep their relative
+gains, the organ scales them together). Both FAIL: not decided.
+**Limits.** About 10 organs; marker-based NNLS shares; atlas and GTEx donors differ.
+**Code.** `exploratory/A298_organ_drive/scripts/` (design addendum first).
