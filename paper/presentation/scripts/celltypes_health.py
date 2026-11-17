@@ -91,7 +91,7 @@ def own_clock(ax, p):
     h = [Line2D([], [], ls="", marker="o", ms=6, color=CELL["stromal-vascular"], label="stromal-vascular,\nsame depth"),
          Line2D([], [], ls="", marker="o", ms=6, color=CELL["lymphocyte"], label="lymphocyte"),
          Line2D([], [], ls="", marker="o", ms=5, mfc="white", mec=MUTED, label="random genes")]
-    ax.legend(handles=h, loc="lower left", frameon=False, fontsize=8, handletextpad=0.1)
+    ax.legend(handles=h, loc="lower right", frameon=False, fontsize=8, handletextpad=0.1)
 
 
 def main():
