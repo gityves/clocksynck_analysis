@@ -7934,3 +7934,47 @@ dropped for < 2,000 cells), giving implausible shares (skin 42 % myeloid mRNA). 
 the gain predictions were not computed. A test of the organ-wide drive needs a deconvolution with complete,
 bulk-calibrated references (or single-cell data of several organs of the same donors), not available here.
 <!-- src: paper/exploratory/A298_organ_drive/output/{shares,design}.csv -->
+
+## A299 (2026-11-17, user: "Yes start these suggestions"; **NOT BLIND** for the GTEx adrenal offset (+4.42 h, A296), its own variation and coupling (4.14, 0.46; A294 / A104), the baboon cortex +0.91 h and medulla +5.90 h (A296), and A295 (composition does not move phase in other tissues); NOT seen: any medulla or cortex score in GTEx): does the medulla content of a GTEx adrenal sample move its clock phase towards the medulla's? **The one tissue where composition should move phase: two compartments at different phases**
+
+**Why.** If the adrenal cortex follows the body's time and the medulla (a sympathetic ganglion on the direct neural
+route) sits about 5 h earlier, as in the baboon, a bulk sample's phase is a mixture: samples with more medulla RNA should
+be more advanced. A295 found no phase effect of composition in tissues whose cell types share one phase; here the
+prediction is positive.
+**Scores (fixed now; log((sum of marker counts + 0.5) / depth), standardised within the adrenal).** Medulla: TH, DBH,
+PNMT, CHGA, CHGB. Cortex (specificity): STAR, CYP11A1, CYP11B1, CYP17A1, CYP21A2.
+**Model.** A295 model on the adrenal only: x = mu + c s + a h + b (s h) with the adrenal's leave-one-out host (every
+peripheral tissue an anchor, A104 rows); phase change per SD = Im(b / a) x 24 / (2 pi) h (positive = advanced, the
+convention of the offsets); gain change Re(b / a); donor bootstrap (2000, seed 299).
+**Donors.** Primary: Hardy 1 to 4 (fast and slow deaths, whose organ arrangement is preserved, A293); ventilated
+donors excluded (organ arrangement pushed towards 0 / 12 h, A109). Descriptive: fast deaths only (A104 rows).
+**H299.1:** medulla score, phase change per SD > 0 (towards the medulla's advance), one-sided bootstrap p < 0.05.
+Reported with it: the cortex score's phase change (predicted opposite sign or null) and both gain changes.
+**Readings.** PASS: composition moves phase where compartments differ in phase; the GTEx adrenal offset is at least
+partly a medulla contribution, as in the baboon (with A295: phase is an organ-compartment property, and a bulk tissue
+mixing two compartments reads in between). FAIL: the human adrenal phase is not explained by its medulla content at
+this power; the adrenal offset stays an organ-level observation.
+**Limits.** About 100 adrenal samples; markers fixed from adrenal biology, not checked for cross-expression; the
+medulla's own phase in humans is not measured.
+**Code.** `exploratory/A299_adrenal_medulla/scripts/score_a299.py`. Aggregates only.
+
+## A300 (2026-11-17, same instruction; **NOT BLIND** for the post hoc look at "frontier" tissues (lower coupling 0.51 against 0.69, higher own variation 2.80 against 1.87, more hour-of-death weight in A292, offsets +0.24 against -0.22 h; list chosen after seeing the table); NOT seen: any season contrast): do the tissues facing the external environment change their clock relation to the body with the season? **GTEx fast deaths, A104 periphery rows; summer against winter deaths**
+
+**Groups (fixed now, by anatomy).** Frontier, tissues whose epithelium faces air, light or the gut lumen: Lung, Skin -
+Sun Exposed, Skin - Not Sun Exposed, Esophagus - Mucosa, Colon - Transverse, Stomach. Internal: the other periphery
+tissues except Whole Blood (circulating cells) and Testis (germ cells). Tissues with >= 20 donors in each season arm.
+**Statistic.** Death season (`DTHSEASON`, protected): Summer and Winter donors (Spring and Fall not used). Per arm, the
+A104 periphery fit (every tissue an anchor, leave-one-out host); per tissue the offset (h, relative to the circular
+mean) and log z2 (relative amplitude, comparable between arms). Delta_k = offset_summer - offset_winter (wrapped).
+T = median |Delta| over frontier tissues minus median |Delta| over internal tissues.
+**H300.1:** T > 0, one-sided p < 0.05 against season labels permuted over the summer and winter donors (500
+permutations, seeds [300, d], both arms refitted).
+**Descriptive.** The same for log z2 changes; skin and lung separately; the direction of the skin and lung offsets
+(summer minus winter).
+**Readings.** PASS: frontier tissues move their clock relative to the body with the season more than internal tissues:
+an environmental input beyond the body's time reaches them (with the post hoc pattern: lower coupling, more own
+variation). FAIL: no season-dependent frontier effect at this power; the frontier pattern stays a post hoc observation.
+**Limits.** About 60 donors per season arm; season also changes day length, temperature, infections and activity; GTEx
+death season is not the person's exposure history; offsets per arm carry the fit's noise (the permutation null includes
+it).
+**Code.** `exploratory/A300_frontier_season/scripts/score_a300.py`. Aggregates only.
