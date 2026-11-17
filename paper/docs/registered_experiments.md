@@ -7615,3 +7615,34 @@ optic nerve 19 / 5, anterior eye 23 / 0, Kong ileum 4 / 28, Kong colon 3 / 13, I
 ten atlases enter T_MAC; eight enter D_MAC (muscle and anterior eye have no lymphocyte pair). H288.3: HLCA 92 donors
 with both (alveolar 124, monocyte-derived 105): eligible if both classes have a pair; IBDverse ileum 60 (descriptive);
 rectum 5 (not eligible).
+
+## A289 (2026-11-17, user: "draft the baboon amendment", after the R2.1 discussion of why the brain is less coupled to the body's clock state; **NOT BLIND** for: the baboon and sheep brain and periphery medians of the peripheral-anchor coupling (A42 readout 2: baboon 0.420 vs 0.712, sheep 0.205 vs 0.416), A263 for both species (every gene set drops in the brain), the baboon couplings of AMY 0.60, ARC 0.84 and CER 0.67 (seen in a table head, 2026-11-17), the sheep couplings of Brainstem 0.31, Cerebellum 0.13 and Cerebral cortex 0.30 (same table head), GTEx: pituitary 0.605 between brain 0.406 and periphery 0.679, and GTEx brain regions all above the peripheral amplitude-coupling line (13 of 13, median residual +0.19; post hoc, presentation R2.1); NOT seen: any baboon or sheep coupling of the pineal or pituitary, any other baboon or sheep brain coupling, any baboon or sheep amplitude): is the brain's lower coupling explained by the blood-brain barrier, and do brain clocks couple more than their amplitude predicts? **Baboon (Mure 2018, 12 animals) and SheepGTEx, the A42 tables and fits; H289.1-3**
+**Data.** `results/figure_2/output/organs/r2_couplings.csv` (A42 readout 2, current code: coupling of every tissue to
+the peripheral-anchor host, peripheral tissues read leave-one-out, `own_amplitude` per tissue). No refit. Groups as
+A42: brain = the CNS regions (baboon 22, sheep 8), periphery = the rest (35 each); the excluded tissues are pineal
+and pituitary (both species) and the ocular tissues (baboon COR, ONH, RET, RPE).
+**Barrier (H289.1, H289.2).** Outside the barrier: pineal and pituitary (OUT, 2 per species; neural or neuroendocrine
+tissue with fenestrated capillaries). Behind it: the brain regions as A42 (IN; baboon ARC stays in IN, as defined,
+although it borders the median eminence and was seen). Statistic: Delta = median coupling(OUT) - median coupling(IN);
+p = exact one-sided permutation over the assignment of the OUT labels among OUT + IN tissues (baboon 276, sheep 45
+assignments).
+- **H289.1 (baboon, primary):** Delta > 0, p < 0.05.
+- **H289.2 (sheep, replication):** Delta > 0, p < 0.05 (smallest attainable p 0.022).
+**Amplitude (H289.3).** Per species, over the peripheral tissues: least squares coupling = a + b log(own amplitude).
+Residual of each brain region from that line; statistic: median residual of the brain regions; p = one-sided sign
+test (residual > 0). **H289.3:** in baboon, median residual > 0 and p < 0.05. Sheep: the same, reported (8 regions,
+smallest p 0.004). Extrapolation check, stated with the verdict: the number of peripheral tissues within the brain
+regions' amplitude range; fewer than 3 labels the verdict "extrapolated".
+**Descriptive.** All couplings and amplitudes of OUT, IN, periphery and ocular; Delta with the ocular tissues as a
+second IN group (behind the blood-retina barrier, outside the brain); GTEx: pituitary against brain (seen) for
+reference; for H289.1 the same Delta on the A263 gene sets is not computed (the barrier reading predicts more sharing
+for any gene set, so the companions are no falsifier here).
+**What each outcome means (stated now).** H289.1 and H289.2 pass: tissues outside the barrier couple more than
+brain regions behind it, in two species: the barrier is a candidate cause of the brain's lower coupling, read with
+the limit below. H289.1 fails: the barrier reading is not supported in the timed atlas; the R2.1 notes keep both
+readings open. H289.3 passes: brain clocks couple more than their amplitude predicts in a second species: the brain
+keeps more of the body's clock state than its weak clocks imply (the R2.1 post hoc note becomes a registered result).
+**Limits.** Pineal and pituitary are glands: function and cell composition differ from the brain regions (the pineal
+is driven by the SCN through a sympathetic route), so H289.1 cannot separate the barrier from gland type. 12 baboon
+animals give noisy per-tissue couplings; sheep strata are mixed. ARC and three regions per species are seen.
+**Code.** `exploratory/A289_brain_barrier/scripts/score_a289.py` (reads the A42 table; one scoring run).
