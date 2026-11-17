@@ -40,56 +40,10 @@ B. clocksync and C. CHIRAL, both untimed on the 08-18 h donors; in B and C each 
 To add if wanted: the split-half agreement (estimate halves vs truth (iii) halves).
 
 **Speaker notes**
-- Why the earlier 8-tissue sweep looked like the orderers catch up in hospital hours at 80 donors: those 8 tissues are
-  the easy ones, and a median over 7-8 tissues hides the ones an orderer misses. On 40 tissues the share of missed
-  tissues (> 2 h) shows it: the orderers miss about a fifth to two fifths of tissues at every n, clocksync almost none.
-- Truth (i) shares donors with the test set (the window donors are part of the cosinor); truth (iii) does not, which is
-  why it was registered as the stricter test.
-- The two truths agree with each other at only 0.821 [0.657, 0.925]: the ceiling of any comparison with truth (iii)
-  is low.
-- Donor order within the window (tangent coordinate vs recorded time): Spearman 0.613, direction correct.
-- Status: H123.1-3 registered, pass; H123.5 registered, **fail** (offsets); H123.6 registered, pass; split halves post
-  hoc (PI decision 2026-10-28: keep the panel with the verdict as scored).
-
-**Source:** `exploratory/A123_working_hours/output/tests.csv`; `a123c/tests.csv`; `a123c/diag/estimate_split_half.csv`,
-`a123c/diag/split_half.csv`.
-
----
-
-## R1.2 Orderers need the whole day; this method does not
-
-**Message:** untimed orderers lose the organ map when samples come from working hours only; with the whole day, the
-ones built on clock genes recover it. The method keeps the map in both designs.
-
-**Bullets**
-1. Working hours (111 donors), offsets vs truth (i), circular r: clocksync 0.945; CHIRAL −0.165, CYCLOPS 2.0 −0.296,
-   CoFE genome-wide −0.283, CoFE clock genes −0.417. Each difference with clocksync Holm p 0.0015 (registered).
-2. Whole day (all fast deaths): CHIRAL 0.877, CoFE clock genes 0.856, clocksync 0.966. The failure is the design, not
-   the orderers.
-3. In working hours the method also beats the supervised TimeTeller (0.754) and a timed oracle using the window
-   donors' recorded times (0.738).
-
-**Figures**
-- `figures/gtex_sweep/gtex_sweep.png` (`scripts/gtex_sweep.py`): error per method against the number of donors (10-80),
-  full day vs hospital hours (08-18 h), on the 40 tissues of the test set (10 draws per n; truth: cosinor on the recorded
-  times of all fast deaths; CYCLOPS 3 draws per n, for cost). Rows: median offset error over tissues, share of tissues off by > 2 h, median amplitude
-  error. clocksync: offset error 0.28-0.89 h (full day) and 0.35-0.81 h (hospital hours), at most 11-13 % of tissues
-  off by > 2 h and none at 80 donors. CHIRAL and CoFE on the clock genes plateau at 0.9-1.9 h and miss 18-44 % of
-  tissues at every n, with or without the full day. CYCLOPS 2.0 on the clock genes does worse with the full day
-  (1.68-2.44 h, 35-58 % missed) than in hospital hours (0.67-1.72 h, 10-40 %), and never reaches clocksync. The timed oracle reaches 0.35 h with the full day at 80 donors but
-  0.88 h (18 % missed) in hospital hours. Amplitudes: all methods comparable (0.13-0.37 |log2| for the untimed methods),
-  the timed oracle worse in hospital hours (a 10 h window cosinor).
-- `figures/gtex_dip/gtex_dip.png` (`scripts/gtex_dip_compute.py`, `scripts/gtex_dip.py`): CHIRAL's published donor internal
-  phase (DIP) against clocksync's internal time, binned (3 h, bins with < 5 donors hidden), clocksync fitted on the full day
-  (241 donors; median |difference| 1.7 h) or on hospital hours only (110 donors; 1.8 h). Panel C: median absolute error
-  against the recorded time of death, donor bootstrap 95 % CI. Full day: clocksync 2.03 h [1.71, 2.31], DIP 2.58 h
-  [2.19, 2.91]. Hospital hours: clocksync 1.71 h [1.19, 2.22], DIP 2.93 h [2.28, 3.43]. Within hospital hours the DIP
-  barely orders the donors; clocksync's hospital-hours internal time does.
-
-**Caveats for the figures:** the sweep and the DIP comparison are post hoc and descriptive (presentation figures). The 40-tissue sweep
-was run on current code for all methods (2026-11-16/17). TimeTeller and CoFE genome-wide are not in the 40-tissue run.
-
-**Speaker notes**
+- Why the best direction and rotation: an orderer's cycle has an arbitrary direction and origin; scored as run, a
+  reversed draw negates every tissue offset (CYCLOPS was reversed in all full-day draws), which made the orderers look
+  worse with the full day than in hospital hours. Aligned for every method alike, the full day helps everyone, and the
+  advantage of clocksync is specific to hospital hours (post hoc scoring, 2026-11-17).
 - The orderers' working-hours failure is not a reflection or stretch artefact: allowing the better direction and a
   least-squares stretch, CHIRAL stays at |r| 0.165 (post hoc check).
 - CoFE genome-wide and CYCLOPS also fail with the whole day (0.139, 0.115): they order donors along non-clock

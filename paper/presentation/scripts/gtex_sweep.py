@@ -5,6 +5,9 @@ figure design, run 2026-11-16 on current code): the 40 tissues with >= 20 fast d
 (Muscle - Skeletal the reference). A draw is n donors from all fast deaths (`full`, full day) or from those who died 08-18 h
 (`window`); 10 draws per n (CYCLOPS: 3, for cost). Each method gives per-tissue offsets and relative amplitudes, scored against the timed truth:
 per-tissue cosinor of the clock genes on the recorded time of death of all fast deaths, rank-1 complex SVD.
+An untimed method fixes neither the direction of its cycle nor its origin, so every method (clocksync and the timed
+oracle included) is scored after the best alignment of its offsets to the truth, per draw: reflection and rotation
+(0.1 h grid) minimising the median |offset error| over tissues (user, 2026-11-17: the fair comparison).
 Rows, per draw: median over tissues of |offset error|; share of tissues whose offset is off by > 2 h (a median over
 tissues hides them); median over tissues of |log2 amplitude error|. Plotted: median over draws (line, dot) and
 interquartile range over draws (band).
@@ -17,6 +20,7 @@ Output: paper/presentation/figures/gtex_sweep/gtex_sweep.{svg,png} (wide slide f
 """
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import seaborn as sns
 from matplotlib.lines import Line2D
@@ -40,8 +44,22 @@ MISS_H = 2.0
 METRICS = {"offset": "offset\nerror [h]", "miss": f"tissues off\nby > {MISS_H:g} h [%]", "amp": "amplitude\nerror [|log2|]"}
 
 
+def wrap(h):
+    return (np.asarray(h, float) + 12) % 24 - 12
+
+
+def aligned_errors(g: pd.DataFrame) -> pd.Series:
+    """Offset errors after the reflection and rotation of the estimates that minimise the median |error| over tissues."""
+    est, true = (g.offset_h_true + g.offset_err_h).to_numpy(), g.offset_h_true.to_numpy()
+    rot = np.arange(0, 24, 0.1)[:, None]
+    best = min((wrap(d * est + rot - true) for d in (1, -1)), key=lambda e: np.nanmedian(np.abs(e), axis=1).min())
+    return pd.Series(best[np.nanmedian(np.abs(best), axis=1).argmin()], index=g.index)
+
+
 def per_draw(t: pd.DataFrame) -> pd.DataFrame:
-    t = t.assign(offset=t.offset_err_h.abs(), miss=100 * (t.offset_err_h.abs() > MISS_H), amp=t.log2_amp_err.abs())
+    t = t.dropna(subset=["offset_h_true"])
+    err = t.groupby(["method", "design", "n", "draw"], group_keys=False).apply(aligned_errors).abs()
+    t = t.assign(offset=err, miss=100 * (err > MISS_H), amp=t.log2_amp_err.abs())
     return t.groupby(["method", "design", "n", "draw"]).agg(offset=("offset", "median"), miss=("miss", "mean"),
                                                             amp=("amp", "median")).reset_index()
 

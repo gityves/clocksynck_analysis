@@ -80,6 +80,9 @@ figure, then apply it to the figure at hand.
 
 ## Statistics shown in figures
 
+- Untimed orderers (CHIRAL, CoFE, CYCLOPS) fix neither the direction nor the origin of their cycle: compare methods
+  after the best reflection and rotation of each method's estimates onto the truth, applied to every method alike,
+  never by a gene-order direction rule (user, 2026-11-17).
 - A median over tissues hides the tissues a method misses: next to it, show the share of tissues off by > 2 h
   (GTEx sweep, 2026-11-16).
 
