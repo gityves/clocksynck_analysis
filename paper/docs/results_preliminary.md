@@ -6189,3 +6189,24 @@ median and percentile reproduce in all nine pairs.
   and express it more strongly, a hormonal route consistent with the fetal cortex result (A264, A266); not tested.
 - Code: `exploratory/A299_adrenal_medulla/scripts/posthoc_a299.py`.
 <!-- src: paper/exploratory/A299_adrenal_medulla/output/posthoc/{scores,correlations,effects}.csv -->
+
+## A301 (scored 2026-11-17; NOT BLIND for A299 and its post hoc): neither acute ACTH response (H301.1 FAIL) nor cortex identity (H301.2 FAIL) carries the adrenal phase effect; the steroidogenic enzyme score keeps it on its own (-1.10 h per SD)
+
+- Design as registered; one run (seconds). 75 adrenal samples (Hardy 1-4); scores standardised within the adrenal.
+- Score consistency (mean pairwise correlation; SD of the log score): ACTH / cAMP response 0.322, 0.82; cortex identity
+  0.153, 0.35 (its genes hardly co-vary: a weak content measure); steroidogenic 0.704, 0.50. Correlations between the
+  three scores 0.05 to 0.21.
+- **H301.1 FAIL.** ACTH score, joint with identity: phase change -0.04 h per SD (90 % -0.57 to +0.63), p 0.483.
+- **H301.2 FAIL.** Identity score, joint with ACTH: +0.55 h per SD (-0.04 to +1.03), outside the +-0.5 h bound and of
+  the sign opposite to the steroidogenic effect.
+- **Three-score model (reported):** steroidogenic -1.10 h per SD (-1.64 to -0.58), gain +0.33 (+0.17 to +0.49); ACTH
+  -0.10 h; identity +0.61 h (+0.03 to +1.11). Fast deaths alone: steroidogenic -1.00 h (-1.57 to -0.40), identity
+  +0.61 h.
+- **Reading (registered).** Neither component reproduces the steroidogenic effect: it is not the acute ACTH / cAMP
+  response, and not cortex content as measured by identity genes (which move the phase, if at all, the other way; their
+  low consistency limits that reading). The predictor is the level of the steroidogenic enzymes themselves: adrenal
+  samples with a higher steroidogenic program sit about 1 h per SD closer to the body's time and express it more
+  strongly. Whether that program reflects chronic ACTH drive, zonation or sampling depth within the cortex is not
+  decided.
+- Code: `exploratory/A299_adrenal_medulla/scripts/score_a301.py`.
+<!-- src: paper/exploratory/A299_adrenal_medulla/output/a301/{tests,effects,scores,correlations}.csv -->
