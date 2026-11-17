@@ -7646,3 +7646,23 @@ keeps more of the body's clock state than its weak clocks imply (the R2.1 post h
 is driven by the SCN through a sympathetic route), so H289.1 cannot separate the barrier from gland type. 12 baboon
 animals give noisy per-tissue couplings; sheep strata are mixed. ARC and three regions per species are seen.
 **Code.** `exploratory/A289_brain_barrier/scripts/score_a289.py` (reads the A42 table; one scoring run).
+
+## A290 (2026-11-17, user: "run the calibration check first", before H271.2 enters the merged R2.1 slide; a calibration and calibrated restatement in the A285 form, no new biology; **NOT BLIND**: A104 and A271 Part B in full (periphery clock rho 0.734; responsive median 0.109, q95 0.453, p 0.005, i.e. the clock above all 200 responsive sets; matched q95 0.258, p 0.005), A285 (the responsive q95 rule is anti-conservative in bulk, 0.076 to 0.204, where it rests on few pairs; the matched rule is calibrated in every test); NOT seen: any placebo draw of the A104 statistic): is "stronger clocks are more coupled" clock-specific against the responsive family on a calibrated test? **GTEx v10 fast deaths, the 27 peripheral tissues of A104; V290, H290**
+**Statistic (A271 Part B, unchanged).** Per gene set (the clock and the 200 responsive sets of A271 Part B, rebuilt
+from the gene lists of `a104_sets.csv` with the clock's amplitudes and phases, as `pseudo_waveforms`): Spearman
+rho(own amplitude A, coupling c) over the peripheral tissues, every tissue an anchor, leave-one-out host
+(`compute_oscillator_gtex.per_tissue`). pi = share of responsive sets with rho below the clock's (sets with undefined
+rho count as below).
+**Placebo (A285 form).** Donor labels permuted within each tissue (the pairing unit within its stratum), one
+permutation per draw applied to every set; seeds [290, d], d = 1..400; draw 0 = the real pairing, must reproduce the
+clock rho 0.734 and the responsive median and q95 of A271 Part B (to 3 decimals).
+- **V290 (calibration of the q95 rule, descriptive):** share of placebo draws in which the clock rho exceeds the
+  responsive q95 of the same draw; calibrated if <= 0.0685 (A283 band).
+- **H290 (restated H271.2, responsive family):** p_cal = (1 + #{d: pi_d >= pi_0}) / (1 + 400) < 0.05.
+The matched family is not re-run (calibrated in every A285 test; its A271 verdict stands as the A285 reading).
+**What each outcome means (stated now).** H290 passes: "stronger clocks are more coupled" is clock-specific against both
+families on a calibrated test; the merged R2.1 slide states it. H290 fails: clock-specific against matched genes only;
+the slide says so ("not decidable against stress-responsive genes" if the floor of p_cal is above 0.05).
+**Limits.** 400 draws (p_cal floor 0.0025; rejection-rate SE about 0.011 at 0.05), fewer than A285's 2000, for cost
+(201 fits of about 4 s per draw).
+**Code.** `exploratory/A290_a104_calibration/scripts/placebo_a290.py` (`--check`: draw 0 with 5 sets).
