@@ -5803,3 +5803,31 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
   corrected rows. The class rule is left unchanged (other tables would move); to be fixed with a rebuild if the PI
   wants the earlier rows corrected.
 <!-- src: paper/exploratory/A284_residency/output/table_checks.csv; check in the A284 build session (IEL share) -->
+
+## A284 (scored 2026-11-17; B2 residency; labels fixed before scoring, scored once): sharing of the tissue's clock state does not increase with residency: resident T cells (H284.1 FAIL), plasma cells (H284.2 FAIL, wrong sign in every scorable atlas) and macrophages (H284.3 FAIL after Holm) do not share more than their circulating counterparts
+
+- **Design (registered):** per atlas, donors with both classes; the deeper immune row thinned to the other's clock-gene
+  count (10 replicates); Delta = median clock |r| of the resident class with the tissue classes minus the same for the
+  circulating class; pooled = mean over atlases; null = the two rows of each donor swapped (2000 draws); Holm over three.
+  Each class meets 4 tissue classes per atlas (lung 9), so each per-atlas Delta rests on 4 (9) pairs per class.
+- **H284.1 T resident vs circulating (4 atlases): FAIL.** Pooled Delta 0.010, p_swap 0.337; p_cal matched 0.323,
+  responsive 0.573. Per atlas: IBDverse ileum +0.084, breast +0.035, IBDverse rectum -0.050, Kong ileum -0.031.
+- **H284.2 plasma vs B (6 registered atlases, 5 scorable): FAIL.** Delta is negative in every scorable atlas: breast
+  -0.022, colon (Pelka) -0.069, Kong ileum -0.057, IBDverse ileum -0.010, rectum -0.020 (mean -0.036, post hoc: the
+  registered pooled value is undefined, below). Plasma cells share less of the tissue's clock state than B cells.
+- **H284.3 macrophage vs monocyte (2 atlases): FAIL.** Pooled Delta 0.092 (lung +0.038, breast +0.146), p_swap 0.033,
+  Holm 0.067 as stored (0.067 to 0.100 with a valid H284.2 p); p_cal matched 0.017, responsive 0.073.
+- **Scoring fault (found after scoring; no verdict depends on it).** Kong colon (16 donors with plasma and B, eligible by
+  the registered >= 15 donors) yields no pair under the shared-donor rule (pooled df >= 15), so its Delta is NaN and
+  the registered pooled mean over atlases is NaN. The stored H284.2 p_swap (0.0005) is an artefact of NaN comparisons
+  and is not a result; it also lowered the stored Holm value of H284.3. H284.2 fails on sign (Delta < 0 in all five
+  scorable atlases, so no pooling of them can be > 0); H284.3 fails Holm whatever the H284.2 p. Not rerun.
+- **Reading against the stated outcomes: "none passes".** The lymphocyte gap (A272-A283) is not explained by residency:
+  the chapter keeps "lymphocytes are apart" without a mechanism. Against the mouse colon expectation (plasma 0.495 vs B
+  0.167, A21/A31) the B-lineage sign is reversed. Macrophage over monocyte is the only contrast in the predicted
+  direction in both atlases and above the matched companions (p_cal 0.017), but not significant after correction nor
+  above the responsive companions: a lead for a larger myeloid design, not a finding.
+- **Limits.** Few pairs per class; author labels (circulating T in tissue may be recirculating memory; breast Tem may
+  be tissue effectors); two myeloid atlases only.
+- Code: `exploratory/A284_residency/scripts/score_a284.py --draws 2000 --jobs 6` (740 s, peak 6.2 GB).
+<!-- src: paper/exploratory/A284_residency/output/{tests,per_atlas,design,table_checks}.csv; paper/results/logs/jobs.tsv -->
