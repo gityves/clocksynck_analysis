@@ -8000,3 +8000,28 @@ A299 is not reproduced by either component. Reported: all three scores' correlat
 **Limits.** 75 samples; NR4A and CREM are also general stress / immediate-early genes (agonal state); marker sets
 fixed from adrenal biology, consistency checked descriptively, not used to select genes.
 **Code.** `exploratory/A299_adrenal_medulla/scripts/score_a301.py`. Aggregates only.
+
+## A302 (2026-11-17, user: "Yes go ahead", after the reading that person-specific cue timing (e.g. meal times) would give a departure of constant size in the clock plane (A294 slope near 0); **NOT BLIND** for A291, A292, A294 (per-tissue S, own variation, coupling) and the A142 organ blocks; NOT seen: any correlation of departures between tissues; the trait-or-state test proposed with it is not registered: every repeat-biopsy cohort samples one tissue per person, so a tissue's departure cannot be separated from the person's own offset): do the departures of meal-driven tissues share a direction within a person beyond the body's time? **GTEx fast deaths, A104 periphery rows; the liver's departure against gut and adipose tissues versus other tissues**
+
+**Groups (fixed now).** Anchor: Liver (the tissue that follows feeding in both mouse inversion designs: Manella +11.7 h,
+Xin +11.3 h, A111). Meal-driven group G: Stomach, Colon - Transverse, Colon - Sigmoid, Esophagus - Mucosa, Adipose -
+Subcutaneous, Adipose - Visceral (Omentum) (digestive and adipose tissues; the mouse data on disk are mixed for adipose
+and heart / kidney, so the group is fixed from digestive physiology, not from a mouse threshold). Other group N: the
+remaining periphery tissues except Liver, Whole Blood and Testis.
+**Departures.** For the liver and a tissue j: a host built from all periphery tissues except both (`clocksync._core.host`,
+the A104 rows), each tissue's state regressed on it with strata intercepts (complex least squares), residuals e. Over the
+donors with both tissues: cross-moment M = mean e_liver conj(e_j), minus the part induced by the common host error,
+L = a_liver conj(a_j) x mean trace of the host's posterior covariance; same correction for each tissue's own variance;
+r_j = |M - L| / sqrt((M_ll - L_ll)(M_jj - L_jj)) (NaN when a corrected variance is <= 0). Pairs with >= 30 shared donors.
+**Statistic.** T = median r_j over j in G minus median r_j over j in N.
+**H302.1:** T > 0 with (i) p < 0.05 against random groups of the same size drawn from G and N together (10,000 draws,
+seed 302), and (ii) T above the q95 of the same statistic for 100 expression-matched pseudo-clock sets (A271 Part B
+matching; seed [302, 1]) on the same donors (specificity: shared handling of gut samples would also move matched genes).
+**Readings.** PASS: meal-driven tissues depart from the body's time together within a person: part of the personal
+departure is a shared, cue-driven displacement (person-specific feeding history), not independent noise. FAIL (i):
+no group structure of departures at this power: the departure looks tissue-independent. PASS (i) but FAIL (ii): the
+shared departure is not clock-specific (shared sampling of gut tissues). Reported: r_j per tissue, the corrected and
+uncorrected values, the same for the matched median.
+**Limits.** About 50 to 180 shared donors per pair; the leakage correction assumes isotropic host error; fasting
+state before death is unknown; adipose sensitivity to feeding is mixed in the mouse data.
+**Code.** `exploratory/A302_departure_groups/scripts/score_a302.py`. Aggregates only.
