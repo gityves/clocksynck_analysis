@@ -7809,3 +7809,27 @@ GTEx decomposition (not in this amendment). Lymphocytes are excluded (no readabl
 
 **Code.** `exploratory/A293_organisation_levels/scripts/part1_death_types.py`, `part2_phase_order.py`,
 `part3_relative_gain.py`. Aggregates only for GTEx (controlled access).
+
+## A294 (2026-11-17, user: "register the test", after asking whether the breast and heart lymphocyte coherence (A281's 2 of 9 passes) is a clock or a glucocorticoid / stress response; **NOT BLIND** for: A281 in full (breast CD4 T C 0.384, p 0.013, 97th percentile of matched sets; heart lymphocytes C 0.502, p 0.012, 85th percentile; the other seven), A287 in full (breast CD4 T: U at the 59th percentile of matched and below every responsive set; heart: 19th / 60th), A275 (PER1 is the most shared clock gene and a glucocorticoid / immediate-early target), A266 (fetal adrenal coherence vanished without PER1, PER2, NR1D1); NOT seen: any coherence on the 11-gene core loop or against responsive sets for any lymphocyte compartment, any distribution of the matched sets beyond A281's median and percentile): is the lymphocyte coherence of breast and heart carried by the hormone-induced clock genes? **The nine A281 lymphocyte / fibroblast-stromal pairs; breast CD4 T and heart lymphocytes decide; H294.1-2**
+**Statistic (A281, unchanged).** Signed clock-gene coherence C across donors (`decompose.signed_coherence`, per-sample
+offset fitted out) of the lymphocyte compartment on the donors it shares with the fibroblast-stromal compartment;
+log((count + 0.5) / depth) centred within stratum; per-gene permutation within strata, 1000 permutations.
+**Core loop.** The 14-gene waveform without PER1, PER2 and NR1D1 (the glucocorticoid-induced genes, as A266), via
+`Waveform.subset` (11 genes, acrophases and amplitudes of the GTEx waveform). Seeds [294, k] (k = atlas index of A281).
+**Power control (read first).** The same donors' fibroblast-stromal rows thinned to the lymphocytes' clock-gene count
+(A281 rule, 20 replicates, 200 permutations each) read on the core loop: the core-loop test of a compartment is
+informative only where the thinned fibroblasts pass (p < 0.05) in >= 80 % of replicates.
+- **H294.1 (core loop, breast CD4 T and heart lymphocytes, each):** in an informative compartment, the core-loop C has
+  p < 0.05.
+- **H294.2 (responsive family, each):** the 14-gene C is above the 95th percentile of 200 stress-responsive pseudo-clock
+  sets (`A272.pseudo_sets(A, k, 200, "responsive")`, the A281 lymphocyte rows).
+**What each outcome means (stated now), per compartment.** H294.1 and H294.2 fail: the coherence is carried by the
+hormone-induced genes and matched by a stress-responsive pulse: "hormone-driven, not a lymphocyte clock". Both pass: a
+clock-pattern coherence survives without those genes and beyond a hormonal pulse: "a weak lymphocyte clock signal in
+that tissue" (an exception to A281/A287, stated as such). Mixed, or the power control fails: undecided.
+**Descriptive (same run, no test).** For all nine pairs: the 5th, 50th and 95th percentiles of the 200 matched sets'
+C of the lymphocytes (A281's sets and seeds; must reproduce A281's median and percentile), for the slide's random range;
+the core-loop C and p and the responsive percentile of every lymphocyte compartment.
+**Limits.** Removing three genes lowers the signal of a real clock too (the power control bounds this); two
+compartments, so no pooled statement; A281's per-compartment p of these two is not corrected (Holm over nine: 0.11).
+**Code.** `exploratory/A294_lymphocyte_hormonal/scripts/score_a294.py` (one scoring run).
