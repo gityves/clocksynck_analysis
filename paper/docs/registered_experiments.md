@@ -7368,3 +7368,25 @@ nerve), which limits between-donor clock variation in every class alike; the thi
 Signed coherence reads coherent variation in the waveform pattern; a clock with altered gene phase relations in
 lymphocytes would read low.
 **Code.** `exploratory/A281_lymphocyte_clock/scripts/score_a281.py`.
+
+## A282 (2026-11-17, autonomous, block A2 of the cell-type program; staged: question, split and table fixed here; **scoring waits for Q36** (the companion readout of each cell uses the form the user adopts); descriptive, no new test; **NOT BLIND**: every clock and companion statistic of A272 and A274 on all donors is known (A272 T_SV 0.499, lymphocytes 0.220; A276-A278 calibrations); NOT seen: any statistic restricted to living or post-mortem donors; seen before registration: the per-donor source classes below (metadata only)): does the cell-type ranking hold in living tissue alone, where no agonal state is shared by the cells of a donor? **The thirteen atlases of A272 and A274, pooled; living against post-mortem donors; descriptive**
+**Source classes.** `exploratory/A282_pooled_living/meta/living_postmortem.csv` (per donor, from each atlas's metadata;
+1,298 donors over the 15 atlases of A272/A274 builds; collected by a subagent 2026-11-17, counts checked against the
+file). Living: surgical resection, biopsy, living donor. Post-mortem: deceased organ donor, autopsy, brain bank.
+Calls that rest on recall of the source paper and not on its text (heart: Litvinukova 2020 and Tucker 2020; muscle:
+Tabula Sapiens and He 2020) are set to unknown in the primary split; unknown donors are left out of both arms.
+Expected arms (healthy donors only, read at scoring): living = organ_breast, organ_colon, kidney_sc, kong_ileum,
+kong_colon, organ_muscle (Perez, De Micheli), lung_hlca (biopsy, resection); post-mortem = heart (Koenig, Kuppe),
+organ_optic_nerve, organ_eye_anterior, lung_hlca (donor lung, autopsy), the three cortex atlases.
+**Table.** Per arm, pooled over atlases with the A272 statistic unchanged (pairs of compartments with >= 15 shared
+donors of that arm, strata as scored): family by family median |r| matrix with the clock value, both companion
+medians and the companion readout adopted under Q36; per-atlas rows (T_SV, T_LY, D, T_CX where defined) per arm; an
+atlas contributes to an arm only if that arm keeps >= 3 (SV, X) and >= 3 (LY, X) pairs.
+**Question fixed in advance.** In the living arm: is D = T_SV - T_LY > 0 with T_SV above both companion medians? Yes:
+the stromal-vascular-over-lymphocyte ranking is not a product of a shared agonal state. No: stated with the arm's
+power (pairs, median df). The post-mortem arm, and the living minus post-mortem difference of D, are descriptive
+(atlases differ between arms: organ and donor type are confounded with the split). Anything chosen after seeing the
+table is labelled post hoc.
+**Limits.** Living tissue is surgical (ischaemia time, anaesthesia, disease-adjacent margins) and biopsies; the arms
+share no atlas except HLCA. The cortex is post-mortem only and has no lymphocytes.
+**Code.** to be written as `exploratory/A282_pooled_living/scripts/score_a282.py` (A276 loaders, donor filter per arm).
