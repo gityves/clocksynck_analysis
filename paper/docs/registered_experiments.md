@@ -7477,3 +7477,12 @@ permutations (A283 form: the clock's percentile among its companions, p_cal agai
 families): fibrosis remodels the fibroblast's clock coupling to the tissue. FAIL with MDE stated: no change detected at
 that size. A difference in S1 alone is not read as biology (sampling-time spread).
 **Code.** `exploratory/A286_lung_fibrosis_pairwise/scripts/score_a286.py --stage power`.
+**Power-stage amendment (2026-11-17, permuted labels only; no observed contrast computed).** (i) HLCA: only 4 study|assay
+strata hold both arms (97 donors); elsewhere cases and controls come from different studies, so arm = study and the
+registered "strata without both arms keep their labels" leaves that confound in the null (null mean of S2 0.08). The
+only unconfounded HLCA design is within study (donors of the 4 strata with both arms; 48 controls, 49 cases); its MDE
+are S1 0.238, S2 0.274, S3 0.387 (2000 draws, `output/power.csv`): above 0.10, so HLCA has no primary. (ii) A second
+fibrosis cohort is added to the power stage before any observed value: Natri 2024 ILD (`lung_natri_genome`, exact
+twin of `lung_natri`: 1,027 rows, 0 differences; 40 controls, 61 cases, one study, strata = processing site), same
+statistics, nulls and rule (within-stratum label permutation; strata with both arms). The primary rule is applied to
+whichever cohort reaches it; if both do, both are scored and the HLCA one is the replication.

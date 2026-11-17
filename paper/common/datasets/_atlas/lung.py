@@ -130,7 +130,8 @@ def build(name: str, donors=None, genes="clock"):
     if name == "lung_natri":
         d = C.census_donors(C.ATLAS / "natri2024_ild", "natri2024_ild")
         lab = _natri_labels(d)
-        o, X = C.read(C.ATLAS / "natri2024_ild", genes, donors)
+        root = C.ATLAS_WG if isinstance(genes, str) and genes == "all" else C.ATLAS  # all genes: the genome-wide build
+        o, X = C.read(root / "natri2024_ild", genes, donors)
         cls = _natri_cls(o)
         F = C.frame(o, X, "natri2024_ild", "lung:" + cls.astype(str), o.Processing_site, keep=cls.notna().to_numpy())
         if donors is not None:
