@@ -5859,3 +5859,24 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
   weaker of the two statistics; the between-donor clock spread depends on each atlas's sampling window.
 - Code: `exploratory/A287_lymphocyte_covariance/scripts/score_a287.py --jobs 6` (56 s, peak 3.6 GB).
 <!-- src: paper/exploratory/A287_lymphocyte_covariance/output/{tests,compartments,thinned,phases,design}.csv; paper/results/logs/jobs.tsv -->
+
+## A289 (scored 2026-11-17; NOT BLIND for six tissues and the group medians): the tissues outside the blood-brain barrier couple less, not more (H289.1, H289.2 FAIL, opposite direction); in the baboon the brain sits on the periphery's amplitude-coupling line (H289.3 FAIL, not extrapolated): the brain's lower coupling is what its weaker clocks predict
+Run `score_a289.py` (seconds; reads the A42 readout-2 table, no refit); one scoring run.
+- **H289.1 FAIL (baboon).** Pineal and pituitary median coupling 0.123 against 22 brain regions 0.420: Delta -0.297,
+  permutation p 0.855 (276 assignments). Pineal 0.000, pituitary 0.246.
+- **H289.2 FAIL (sheep).** Pineal and pituitary 0.082 against 8 brain regions 0.205: Delta -0.123, p 0.933 (45).
+  Pineal 0.000 (43 animals), pituitary 0.164 (123).
+- **H289.3 FAIL (baboon).** Peripheral line coupling = 0.265 + 0.350 log(own amplitude); brain residuals median -0.001,
+  11 of 22 above (sign test p 0.584). Not extrapolated: brain amplitudes 0.81 to 2.63, 7 peripheral tissues in that
+  range (periphery 1.32 to 5.28). Sheep (reported): median residual +0.014, 4 of 8 above (p 0.637), extrapolated (brain
+  0.75 to 0.96, no peripheral tissue in range; periphery 0.58 to 2.35, slope 0.344).
+- **Descriptive.** Baboon ocular tissues (behind the blood-retina barrier) 0.689: cornea 0.806, RPE 0.851, optic nerve
+  head 0.573, retina 0.010. Medians of own amplitude: baboon brain 1.539, glands 1.537, periphery 3.524; sheep brain
+  0.846, glands 1.100, periphery 1.334.
+- **Reading (registered).** The barrier reading is not supported: the two tissues outside the barrier are the least
+  coupled in both species, the pineal not at all. In the baboon, where brain and peripheral amplitudes overlap, the
+  brain's lower coupling is what the periphery's amplitude-coupling relation predicts for its weaker clocks; the GTEx
+  post hoc observation (13 of 13 brain regions above the line, extrapolated) does not replicate. Pineal and pituitary
+  are glands, so H289.1-2 do not isolate the barrier (registered limit).
+- **Post hoc (not registered).** A pineal coupling of 0 in both species fits a gland whose clock-gene rhythm is set by
+  the SCN through its sympathetic input at night rather than by the body's peripheral state; GTEx has no pineal.

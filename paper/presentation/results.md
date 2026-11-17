@@ -220,16 +220,14 @@ interval.
   brain's is smaller than the periphery's (psi median 0.38 vs 0.94); its coupling is lower because it shares far less
   of the body's clock state (z2 0.16 vs 1.51). Coupling does not follow clock-gene counts across GTEx tissues (A271
   post hoc, rho 0.09), and the fresh, timed baboon brain shows the same gap (0.42 vs 0.71).
-- What is claimed beyond "brain clocks are weaker" (known: lower amplitude, 1.15 vs 2.78 here): weaker amplitude need
-  not mean lower coupling. Against the periphery's own relation between amplitude and coupling, every brain region
-  couples more than a peripheral tissue of the same clock strength would (13 of 13 above the line, median +0.19;
-  post hoc, extrapolated: brain amplitudes 0.96-1.33 sit at the periphery's lower edge, 1.16-3.52). Registered in
-  baboon and sheep as A289.
-- Two biological readings, open: (i) brain clocks receive fewer body-wide timing signals, filtered by the blood-brain
-  barrier, and are set mainly through neural routes from the SCN; (ii) the SCN drives brain and body by different
-  routes, so they share a driver rather than a link. Hint for (i): the pituitary, outside the barrier, couples at
-  0.605, between brain and periphery (one tissue, seen). A289 tests (i) on the pineal and pituitary of baboon and
-  sheep.
+- What is claimed beyond "brain clocks are weaker" (known; amplitude 1.15 vs 2.78 here): nothing beyond the general
+  rule of R2.2. In the baboon, where brain and peripheral amplitudes overlap, the brain sits on the periphery's
+  amplitude-coupling line (A289 H289.3 fail: median residual -0.001, 11 of 22 above): the brain's lower coupling is
+  what its weaker clocks predict. GTEx brain regions sit above the line, but only by extrapolation (post hoc).
+- The blood-brain barrier is not the explanation (A289, registered): pineal and pituitary, outside the barrier, couple
+  less than brain regions behind it in baboon (0.12 vs 0.42) and sheep (0.08 vs 0.20); the pineal not at all in either
+  (post hoc reading: its clock is set by the SCN's sympathetic input, not by the body). They are glands, so the barrier
+  is not isolated. The GTEx pituitary (0.605) is the exception.
 - Wording after the erratum: "the brain is less coupled to the body's shared state", never "the brain's clock is the
   exception".
 - Brain vs periphery as blocks (A142, registered): r* 0.639 [0.530, 0.728] against random 13-tissue peripheral blocks
