@@ -7450,3 +7450,30 @@ refit of 401 sets per draw (baboon 49 min, human 4.4 h, sheep 13.8 h per pass), 
 88th percentile); a calibration bias of the A276 size cannot turn them into passes. Stated as a limit.
 **Code.** `exploratory/A285_companion_calibration/scripts/placebo_a285.py` (one module per result, importing the scored
 scripts' functions).
+
+## A286 (2026-11-17, user: "Lung fibrosis: the one powered disease contrast, with a power calculation first"; staged: power stage now (permuted labels only, no observed contrast computed), statistic and readings fixed here, the primary chosen by the rule below from the power table, scoring after a power note; seen: anchored fibrosis contrasts on `hlca_fibrotic` (A4/A5/A12 lung T cells; A153: every MDE > 0.2), A272/A274/A282/A283 (healthy HLCA pairwise statistics); NOT seen: any pairwise statistic of a fibrotic donor): does fibrosis change how much clock state the lung's cell classes share? **HLCA, 200 healthy vs 71 fibrotic donors (`hlca_fibrotic_genome`); anchor-free pairwise readout (`clocksync.pairwise`)**
+**Data.** `hlca_fibrotic_genome` (rules of `lung_hlca_genome`; its healthy rows identical, 1,799 rows, 0 differences);
+case = `lung.FIBROTIC` (IPF 52, SSc-ILD 8, HP, NSIP, end-stage fibrosis, myositis-ILD, ILD), control = Healthy and
+Healthy (tumour adjacent). Pairs re-derived on each arm's rows (A272 rule: strata study|assay with >= 3 shared donors,
+pooled df >= 15); classes and families as A272 (SV = fibroblast_stromal, endothelial, mural; LY = lymphocyte).
+**Candidate statistics (per arm, clock |r| per pair; contrast = case minus control).**
+  S1  T_SV: median |r| over SV_X pairs.
+  S2  D = T_SV - T_LY.
+  S3  F: median |r| of fibroblast-X pairs minus median |r| of endothelial-X pairs (X = non-SV classes).
+**Design problem stated in advance.** Cases are 65 of 71 lung explants (taken at surgery, daytime), controls mostly
+donor lungs (unknown times): a narrower spread of sampling times lowers every clock |r| of an arm without biology. S1
+carries that confound fully; S2 and S3 are within-arm contrasts in which a common loss of shared clock variance cancels
+to first order. The A282 within-HLCA comparison (living vs post-mortem SV_X 0.523 vs 0.516) bounds the donor-type effect
+on SV sharing but not the time-spread effect.
+**Power stage (now).** Null of each contrast: arm labels permuted across donors within stratum (study|assay; strata
+without both arms keep their labels), 2000 draws, seeds [286, d]; per statistic: null SD and MDE = 2.49 SD, pairs and
+donors per arm. Also with controls restricted to living tissue (surgical resection, biopsy, explant) as a sensitivity
+design. No observed contrast is computed.
+**Primary rule (fixed now).** Primary = S3 if its MDE <= 0.10, else S2 if its MDE <= 0.10, else no primary (descriptive
+only, stated as not powered). S1 is reported descriptively whatever its power (confounded). Specificity: each scored
+contrast against the same contrast of the 200 matched and 200 responsive companion sets on the same label
+permutations (A283 form: the clock's percentile among its companions, p_cal against its placebo distribution).
+**Readings (for the scoring addendum).** A PASS of S3 (fibroblast sharing changes relative to endothelium, beyond both
+families): fibrosis remodels the fibroblast's clock coupling to the tissue. FAIL with MDE stated: no change detected at
+that size. A difference in S1 alone is not read as biology (sampling-time spread).
+**Code.** `exploratory/A286_lung_fibrosis_pairwise/scripts/score_a286.py --stage power`.
