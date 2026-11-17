@@ -5976,3 +5976,64 @@ Run `score_a289.py` (seconds; reads the A42 readout-2 table, no refit); one scor
   two are negatively related (rho -0.434): between brain regions, own variation, not the shared rhythm, is what
   varies.
 <!-- src: paper/results/figure_2/output/backbone/a104_gtex_tissues.csv (S = z2 V, own = 2 psi) -->
+
+## A293 (scored 2026-11-17; NOT BLIND, see registration): slow deaths and ventilated living-brain donors keep the organ arrangement clock-specifically (H293.1, H293.2 PASS); cell classes keep their gain relative to endothelium across organs within a factor of about 1.4 (H293.4 PASS); a conserved stromal-vascular phase order is not shown by the registered sign test (H293.3 FAIL), though the pooled offset has the mouse sign
+
+**Part 1 (level B; one run, 46 s; a smoke test on a 400-donor subsample with 20 sets was run and seen before it).**
+Reproduction exact: Hardy 4 0.784, ventilated post-mortem 0.690, organ donors 0.161. Fisher-Lee rho of the pair phases
+with fast deaths (200 matched and 200 responsive sets per tissue, same donors and pairs):
+
+| group | n | pairs | clock rho (label p) | matched median / q95 | responsive median / q95 | verdict |
+|---|---|---|---|---|---|---|
+| slow deaths (Hardy 4) | 103 | 66 | 0.784 (0.0001) | 0.038 / 0.129 | 0.234 / 0.440 | **H293.1 PASS** |
+| ventilated post-mortem (living brain) | 79 | 66 | 0.690 (0.001) | 0.025 / 0.108 | 0.145 / 0.318 | **H293.2 PASS** |
+| Hardy 3 (descriptive) | 50 | 48 | 0.624 (0.002) | 0.033 / 0.183 | 0.327 / 0.573 | - |
+| brain-dead organ donors (descriptive) | 79 | 65 | 0.161 (0.183) | 0.011 / 0.071 | 0.100 / 0.254 | - |
+
+In both tested groups the clock is above all 200 matched and all 200 responsive sets. Non-clock genes carry little of
+the fast-death arrangement (matched medians 0.01 to 0.04; responsive 0.10 to 0.33).
+- **Reading (registered).** In slow deaths, whose internal time is not aligned to the hour of death (A109c), and in
+  ventilated donors without meals or activity but with a living brain, the organs keep the fast-death arrangement on
+  the clock genes beyond non-clock genes: the organ arrangement does not depend on alignment to the day or on
+  behavioural cues. Brain-dead donors (descriptive, by decision): clock rho 0.161, not different from tissue-label
+  permutation, at the 99th percentile of matched and 75th of responsive sets.
+
+**Part 2 (level C; one run, seconds).** Mouse untimed offsets (timed in brackets), endothelial minus fibroblast: colon
++1.33 h (+1.30), aorta +1.07 h (+1.44); endothelial minus smooth muscle +0.96 (+0.65) and +0.93 (+1.16); smooth muscle
+minus fibroblast +0.55 (+0.65) and +0.24 (+0.28): the same order in both tissues (positive = first class earlier, as the
+untimed pairwise convention validated in A273).
+- **H293.3 FAIL.** Human endothelial minus fibroblast, per atlas (readable pairs): 4 of 6 atlases with the mouse sign
+  (kidney +1.50, lung +0.74, optic nerve +0.69, breast +0.24; anterior eye -0.39, Kong ileum -0.00), sign test p 0.344.
+- **Descriptive.** Circular mean over the 6 atlases +0.46 h (atlas bootstrap 90 % 0.09 to 0.90); endothelial minus mural
+  3 of 4 atlases, mean +0.96 h (0.13 to 1.84); mural minus fibroblast 1 of 2, +0.11 h.
+- **Reading (registered).** No conserved cell-class phase order is shown by the registered test; at this resolution,
+  timing is an organ property. The pooled human offset has the mouse sign and an interval excluding 0, about a third of
+  the mouse size: a lead for a larger design, not a result.
+
+**Part 3 (level C; one run, seconds).** Log gain relative to endothelium (natural log of the shared-rhythm amplitude),
+random-effects over body atlases:
+
+| family | atlases | pooled (SE) | tau | Q p | range over atlases |
+|---|---|---|---|---|---|
+| fibroblast_stromal | 13 | +0.228 (0.084) | 0.181 | 0.044 | -0.634 to +0.633 |
+| mural | 7 | -0.079 (0.075) | 0.097 | 0.240 | -0.254 to +0.207 |
+| parenchyma | 4 | -0.126 (0.123) | 0.145 | 0.205 | -0.438 to +0.310 |
+| epithelial | 11 | -0.220 (0.126) | 0.305 | 0.001 | -1.234 to +0.345 |
+| myeloid | 12 | -0.399 (0.117) | 0.302 | < 0.001 | -1.380 to +0.183 |
+
+- **H293.4 PASS:** tau <= 0.35 in all five families (epithelial 0.305 and myeloid 0.302 close to the bound; Q shows
+  heterogeneity beyond the bootstrap SEs in three families). Scale: GTEx tissues dominated by one class differ by log
+  amplitude 0.76 to 0.98 (squamous: oesophagus mucosa against skin), 0.46 to 0.53 (adipocytes: visceral against
+  subcutaneous and breast) and 0.25 to 0.32 (visceral smooth muscle: oesophagus against sigmoid colon) (A291 post hoc
+  table; S ratios halved in log).
+- **Reading (registered).** Relative gain is conserved across organs: fibroblasts about 1.26 times endothelium, mural
+  cells and parenchyma close to it, epithelium about 0.8 and myeloid cells about 0.67, with between-organ spread
+  (factor 1.1 to 1.36) below the organ differences of the same class in GTEx (factor 1.3 to 2.7). The organ
+  differences of gain therefore come from composition and an organ-wide drive, not from cell classes responding
+  differently in different organs. The organ-wide drive itself is not tested here (relative gains cancel it).
+- **Limits.** Atlases have one or two compartments per family; the SE ignores the covariance with endothelium;
+  "myeloid" mixes macrophages with monocytes and dendritic cells (A281: only macrophages carry a clock), which may
+  explain part of its heterogeneity.
+- Code: `exploratory/A293_organisation_levels/scripts/part1_death_types.py`, `part2_phase_order.py`,
+  `part3_relative_gain.py`.
+<!-- src: paper/exploratory/A293_organisation_levels/output/{part1/{groups,reproduction,sets},part2/{tests,atlases},part3/{families,atlases}}.csv -->
