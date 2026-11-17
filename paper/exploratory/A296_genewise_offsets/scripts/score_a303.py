@@ -48,7 +48,7 @@ def resample_ct(pb, donors, rng):
     for ct, ids in donors.groupby("ct").groups.items():
         pick = rng.choice(np.asarray(ids), len(ids))
         for j, dn in enumerate(pick):
-            new = f"{dn}#b{ct}_{j}"
+            new = f"{dn}_b{ct}_{j}"  # no "#": timed_loadings maps resections to donors by splitting at "#"
             out_pb.append(pb[pb.donor == dn].assign(donor=new))
             out_d.append(donors.loc[[dn]].set_axis([new]))
     return pd.concat(out_pb, ignore_index=True), pd.concat(out_d)
