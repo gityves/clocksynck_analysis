@@ -86,7 +86,8 @@ def spec(name: str) -> O.Spec:
     return O.Spec(C.ATLAS_WG / ds, ds, organ, O.COARSE, keep=_normal, region=region)
 
 
-def build(name: str, donors=None, genes="all"):
+def build(name: str, donors=None, genes="all", refine=None):
+    """`refine(obs, classes) -> classes` (lung_hlca only): finer classes for some groups, e.g. macrophage subtypes (A288)."""
     if genes != "all":
         raise ValueError("genome tables hold every gene (use the clock-gene dataset for the 14-gene panel)")
     ds = SPECS[name]
@@ -152,6 +153,8 @@ def build(name: str, donors=None, genes="all"):
         ld = LU.hlca_donors()
         cls = o.ann_level_3.astype(str).map(LU.L3)
         cls[o.ann_level_2.astype(str) == "Smooth muscle"] = "smooth_muscle"
+        if refine is not None:
+            cls = refine(o, cls)
         res = "hlca_full:" + o.donor_id.astype(str)
         single = ~ld.lung_condition.str.contains(";")
         healthy = ld.index[single & ld.lung_condition.isin(LU.HEALTHY)]

@@ -101,14 +101,16 @@ def ibd_rows(tissue, donors, genes):
     return rows[rows.donor.isin(donors)].reset_index(drop=True)
 
 
-def build_ibd(h5, out):
-    """Raw IBDverse -> group pseudobulk (donor x tissue|condition x T class) of the registered author labels, all genes.
-    Run with `python -I` (the input is downloaded data)."""
+def build_ibd(h5, out, classes=None, title="IBDverse T subclasses (A284)"):
+    """Raw IBDverse -> group pseudobulk (donor x tissue|condition x class) of registered author labels, all genes.
+    `classes`: {class: set of author labels} (default: the A284 T classes). Run with `python -I` (downloaded data)."""
     import anndata as ad
     import h5py
     import scipy.sparse as sp
     out = Path(out)
-    res, circ = T_LABELS["ibd"]
+    if classes is None:
+        res, circ = T_LABELS["ibd"]
+        classes = {"T_resident": res, "T_circulating": circ}
     with h5py.File(h5, "r") as h:
         def cat(col):
             g = h["obs"][col]
@@ -120,7 +122,9 @@ def build_ibd(h5, out):
                         (sym[()] if isinstance(sym, h5py.Dataset) else
                          np.array(sym["categories"][()])[sym["codes"][()]])], dtype=object)
         lab = cat("author_cell_type")
-        cls = np.where(np.isin(lab, list(res)), "T_resident", np.where(np.isin(lab, list(circ)), "T_circulating", ""))
+        cls = np.full(len(lab), "", dtype=object)
+        for k, v in classes.items():
+            cls[np.isin(lab, list(v))] = k
         dis, infl = cat("disease"), cat("author_inflammation_status")
         cond = np.where(dis == "normal", "healthy", np.where(infl == "inflamed", "crohn_inflamed", "crohn_uninflamed"))
         key = pd.Series(cat("donor_id")) + "|" + pd.Series(cat("tissue")) + "|" + pd.Series(cond) + "|" + pd.Series(cls)
@@ -150,9 +154,9 @@ def build_ibd(h5, out):
     out.mkdir(parents=True, exist_ok=True)
     A.write_h5ad(out / "pseudobulk.h5ad")
     (out / "PROVENANCE.md").write_text(
-        f"# IBDverse T subclasses (A284)\n- Built {datetime.date.today()} by "
+        f"# {title}\n- Built {datetime.date.today()} by "
         f"`paper/exploratory/A284_residency/scripts/build_a284.py ibd` from {h5} (raw/X): healthy cells, "
-        f"author_cell_type {sorted(res)} -> T_resident, {sorted(circ)} -> T_circulating; donor x tissue|condition x "
+        f"author_cell_type {({k: sorted(v) for k, v in classes.items()})}; donor x tissue|condition x "
         f"class sums, all {len(sym)} genes.\n")
     print(obs.groupby(["tissue", "cell_type"]).size(), flush=True)
 

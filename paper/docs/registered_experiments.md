@@ -7606,3 +7606,12 @@ H288.3 passes: long-lived resident macrophages share more than recruited ones (a
 **Limits.** Labels are the authors'; most MAC classes include DCs; the matched-family level is not blind.
 **Code.** `exploratory/A288_macrophage_pairwise/scripts/build_a288.py`, `score_a288.py` (`--design` first, a design
 addendum with atlases and pair counts before scoring).
+**Design addendum (2026-11-17, before scoring; `score_a288.py --design`, outputs `design.csv`, `design_h3.csv`; no
+statistic computed).** IBDverse macrophage table built from the raw file (`$SCCC_DATA/atlas_wg/ibdverse_mac`, healthy
+cells; donor x label groups: ileum CD163hi 228, CD163lo 231, proliferating 169, MMP9 53, CCL 39; rectum 183, 193, 97,
+1, 25), rows >= 20 cells; HLCA split through a class-refinement hook of the genome builder (`genome.build(...,
+refine=)`; other classes unchanged). Pairs (MAC_X / LY_X): lung 9 / 20, breast 4 / 28, Pelka colon 4 / 20, muscle 3 / 0,
+optic nerve 19 / 5, anterior eye 23 / 0, Kong ileum 4 / 28, Kong colon 3 / 13, IBDverse ileum 4 / 12, rectum 4 / 12. All
+ten atlases enter T_MAC; eight enter D_MAC (muscle and anterior eye have no lymphocyte pair). H288.3: HLCA 92 donors
+with both (alveolar 124, monocyte-derived 105): eligible if both classes have a pair; IBDverse ileum 60 (descriptive);
+rectum 5 (not eligible).
