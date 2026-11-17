@@ -6220,3 +6220,20 @@ noise, slope 0; a fixed person-specific angle, slope 1; individual intrinsic per
 amplitude), slope 2. The observed slopes (0.07 for the clock's own variance, 0.22 for its excess over matched genes)
 exclude intrinsic periods as the main source and do not separate person-specific cue history from noise; A302 tests
 the first.
+
+## A302 (scored 2026-11-17; NOT BLIND for A291, A292, A294): the liver's personal departure is not shared preferentially with gut and adipose tissues (H302.1 FAIL)
+
+- Design as registered; one run (1440 s, 4 workers; a check printing shared-donor counts only was run first). 21 pairs
+  with >= 30 shared donors (stomach, kidney cortex and coronary artery below); G has 5 tissues.
+- **H302.1 FAIL.** T = median r (G) - median r (N) = 0.189 - 0.154 = 0.034; random groups p 0.377; matched sets median T
+  0.008, q95 0.093.
+- **Descriptive.** Host-error-corrected |correlation| of the liver's departure with each tissue: 0.03 (visceral adipose)
+  to 0.26 (thyroid); transverse colon 0.25, pituitary 0.24, tibial artery 0.22, subcutaneous adipose 0.20, skin 0.20;
+  the median over the 100 matched sets' pairs 0.12 (set medians 0.05 to 0.20).
+- **Reading (registered).** No group structure of departures at this power: the liver's departure is not shared more
+  with meal-driven tissues than with others. The personal departure looks tissue-independent with respect to feeding;
+  the person-specific cue-history reading of the constant departure (A294 correction note) is not supported here, and
+  additive noise remains equally possible. The spread of T among matched sets (SD 0.048) means a group difference
+  below about 0.1 could not be detected.
+- Code: `exploratory/A302_departure_groups/scripts/score_a302.py --jobs 4`.
+<!-- src: paper/exploratory/A302_departure_groups/output/{tests,pairs,sets}.csv -->
