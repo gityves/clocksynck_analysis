@@ -5774,3 +5774,22 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
   by wide margins.
 - Code: `exploratory/A285_companion_calibration/scripts/placebo_a285.py` (A227: 997 s, peak 31.2 GB; others < 1 min).
 <!-- src: paper/exploratory/A285_companion_calibration/output/{a251,a255,a138,a227}/{repro,tests}.csv -->
+
+## A286 power note (2026-11-17; permuted labels only, no observed contrast computed): lung fibrosis is not powered for the pairwise readout in either cohort; no primary, A286 closed at the power stage
+
+- **HLCA** (`hlca_fibrotic_genome`; healthy rows identical to `lung_hlca_genome`): 200 controls, 71 cases (65 lung
+  explants). Only 4 study|assay strata hold both arms (97 donors): elsewhere arm = study, which the registered null
+  cannot remove (S2 null mean 0.080 with all controls). Within study (48 controls, 49 cases; control SV_X 5 pairs,
+  endothelial-X 0): MDE S1 0.238, S2 0.274, S3 0.387. Living controls only: 1 stratum with both arms (13 donors).
+- **Natri ILD** (`lung_natri_genome`, exact twin of `lung_natri`): 40 controls, 61 cases, 2 processing sites with both
+  arms (101 donors); control arm 23 pairs (SV_X 9, LY_X 2, fibroblast-X 0): MDE S1 0.178, S2 0.274, S3 0.228 (S3
+  undefined in the control arm).
+- **Rule (registered):** primary = S3, else S2, if MDE <= 0.10: neither cohort reaches it. For scale: the A280-A283
+  contrasts between classes are 0.15-0.41 pooled over atlases, single-atlas class differences mostly < 0.2.
+- **Reading.** Lung fibrosis cannot be read with the pairwise readout on public single-cell data: the control arms
+  are small where they share a study with the cases (healthy lung atlases separate cases and controls by study), and
+  every case is an explant taken at surgery while controls are donor lungs (sampling-time spread). Not a negative
+  result. The tables (`hlca_fibrotic_genome`, `lung_natri_genome`) stay for later designs.
+- Code: `exploratory/A286_lung_fibrosis_pairwise/scripts/score_a286.py --stage power [--cohort natri]` (HLCA 350 s,
+  Natri 801 s).
+<!-- src: paper/exploratory/A286_lung_fibrosis_pairwise/output/{power,design}.csv, output/natri/{power,design}.csv -->

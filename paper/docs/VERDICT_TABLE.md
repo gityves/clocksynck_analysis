@@ -505,3 +505,4 @@ Source for the rows with a figure panel: `paper/exploratory/WP0_integrity/output
 | A285 | H285 A255 H255.3 surgical pooled, calibrated | L2 | S | 0.005 / 0.017 | both | STANDS | - | A285_companion_calibration/output/a255/tests.csv |
 | A285 | H285 A138 H138.4 clock-specific, calibrated | L2 | P | 0.004 / 0.011 | both | STANDS | - | A285_companion_calibration/output/a138/tests.csv |
 | A285 | H285 A227 H227.1 / H227.2 clock-specific (matched), calibrated | L3 | P | 0.018 / 0.035 | matched | STAND | responsive 0.44 / 0.20 (as A271) | A285_companion_calibration/output/a227/tests.csv |
+| A286 | Lung fibrosis pairwise contrast (HLCA, Natri ILD): power stage | disease | P | MDE within study: HLCA 0.24-0.39, Natri 0.18-0.27 (rule <= 0.10) | - | NOT POWERED (no primary; closed) | arm = study in HLCA; explants vs donor lungs | A286_lung_fibrosis_pairwise/output/power.csv |
