@@ -7338,6 +7338,14 @@ table, 33,994 genes, also reproduces the full 7,523-row clock table). Pairs: rec
 LY_X 12 (205, 115); ileum SV_X 4 (52.5, 51), LY_X 12 (191.5, 161): H280.1 is estimable in both. MSSM CX_diff 27
 (median n 213, min df 77), CX_same 9; inhibitory_CGE and vascular are both present (H280.3 estimable). RADC (no A17
 healthy fit; genome twin exact, 1,173 rows) stays descriptive. Nothing scored; `--stage score` stays blocked until Q36.
+**Addendum after Q36 (2026-11-17, before scoring; the user chose option (b), A283).** Readout of H280.1 and H280.2:
+the A283 form (clock's pi among its 200 companions, p_cal against the clock's pi in 5000 placebo draws of these
+atlases, seeds [280, 9, d], d = 0..4999; the first 1000 already computed, null only); passed when p_cal < 0.05 in both
+families. H280.3 gate: the inhibitory_CGE-vascular pair's |r| pi, with p_cal < 0.05 in both families against the same
+5000 draws of that pair (replaces "above both companion q95"); the offset interval as registered (500 donor bootstrap
+draws within stratum, seed [280, 7]). Read only if A283's V283 passes; if it fails, A280 waits with the line. The A274
+descriptive outputs (`--stage score`: family matrix, per-atlas rows, pairs) are run for the tables; their q95 columns
+are not used for any verdict.
 
 ## A281 (2026-11-17, autonomous, block B1 of the cell-type program; uses no pairwise |r| test (the within-compartment coherence of `common/development.py`, calibrated by per-gene permutation, A237 onwards); **NOT BLIND** for: lymphocyte couplings to the anchored host (A150, 0.069), lymphocyte pairwise |r| with other classes (A272, A274: at the matched median) and per-gene sharing (A275); NOT seen: any within-compartment coherence of these atlases' compartments, any thinned table): do lymphocytes carry a clock of their own that they do not share with the tissue, or no readable clock? **Healthy body atlases of A272, A274 and A280 (IBD); B1; H281.1, H281.2**
 
@@ -7390,3 +7398,21 @@ table is labelled post hoc.
 **Limits.** Living tissue is surgical (ischaemia time, anaesthesia, disease-adjacent margins) and biopsies; the arms
 share no atlas except HLCA. The cortex is post-mortem only and has no lymphocytes.
 **Code.** to be written as `exploratory/A282_pooled_living/scripts/score_a282.py` (A276 loaders, donor filter per arm).
+
+## A283 (2026-11-17, user's answer to Q36: "(b) 5000 draws, then read"; a calibration and the restatement of the cell-type tests; **NOT BLIND**: the clock and companion statistics of A272 and A274 on the real pairing, A276-A278 in full (A278: rates 0.018 to 0.082 with 500 null and 500 evaluation draws; null rate of pi = 1 0.005 to 0.028); NOT seen: any draw with the seeds below, any calibrated p-value on the real pairing): the A278 test with a null of 5000 placebo draws. **The thirteen atlases of A272 and A274; V283, then H283.1-5**
+**Test.** As A278: for each statistic T and family, pi = share of the 200 companion values of T below the clock's T;
+p_cal = (1 + #{null pi >= observed pi}) / (1 + draws). Null: 5000 new placebo draws (seeds [283, d], d = 0..4999; donors
+permuted within compartment x stratum, states unchanged; A277 `draw`). The A277 draws (N1, N2) are not reused.
+**V283 (calibration, null only, read before any real pairing):** split the draws into halves (d < 2500, d >= 2500);
+with one half as the null, the rejection rate (p_cal < 0.05) over the other half is <= 0.0685 for each of the ten
+combinations (five statistics x two families), in both directions. The band is 0.05 + 3 SD of a difference of two
+independent proportions at 0.05 over 2500 draws each (A278's band, 0.075 over 500 draws, ignored the error of the null
+half). If V283 fails, nothing is read: the cause is reported and the line waits for the user.
+**Restated tests (read only if V283 passes; null = all 5000 draws):** H283.1-5 = H272.1 (T_SV), H272.2 (D), H274.1 (D),
+H274.2 (T_SV; matched family decides, responsive reported), H274.3 (T_CX), each passed when p_cal < 0.05 in the family or
+families of its original rule. Smallest attainable p_cal is the null rate of pi = 1 (reported per combination).
+**Descriptive.** Per atlas and pair class: the clock's pi and p_cal against the same 5000 draws of that class median.
+**Readings.** As A278: a test that passed and still passes stands on a calibrated test; one that passed and now fails
+is reversed and named as such in RP and VERDICT_TABLE. The calibrated form becomes the readout of every later test of
+the line (A280, A282, B2, C1-C3).
+**Code.** `exploratory/A276_pairwise_calibration/scripts/calibrated_a283.py` (A277 `load_all`, `draw`).

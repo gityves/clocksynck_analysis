@@ -12,7 +12,6 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
   and the wording of the cancer chapter (Q24) after the synthesis in the ledger addendum of 2026-11-12.
 - **Q38** (below, new 2026-11-16): two side projects scouted (clock and cell cycle; liver zonation): start either, and with which data?
 - **Q37** (below, new 2026-11-16): add the ROSMAP single-nucleus cortex (427 donors) and RADC time of death to the Q12 request, for a human calibration of cell-type offsets?
-- **Q36** (below, new 2026-11-16): the anchor-free pairwise test of the cell-type line (A272, A274) is anti-conservative under placebo (A276); which calibrated test replaces it before the cell-type verdicts are restated?
 - **Q35** (below, new 2026-11-16): tally of the biology-paper checks: two exceptions fell (fetal adrenal first; brain as a clock statement), the cancer and robustness lines stand, no systemic signal named. Biology paper or the Nature Methods ordering?
 - **Q34** (below, new 2026-11-15): gate G2 (iii) after A262: no second design reproduces A261; blood forced desynchrony is neither central nor behaviour (damped 0.36, shifted 4 h); night-shift PBMC uninformative. How to use the muscle / blood contrast?
 - **Q33** (below, new 2026-11-15): gate G3 fails as registered (A259): the bound in hours is not a headline. Which plan does the paper take while phase T continues? **Answered (c)**; update: no muscle headline (clock-core design not estimable).
@@ -74,32 +73,6 @@ A274); whether the shared cortical cell-class state reads time of death. Brain c
 bulk) cannot give cell classes.
 **On hold.** Nothing; outward-facing, so drafts only. Not verified: whether the time-of-death field is released through
 the hub for this use (RADC to confirm), and the overlap with `psychad_radc` donors.
-
-### Q36 (2026-11-16): calibration of the pairwise cell-type test (A276-A278)
-**Question (for the user first).** Under no pairing, the clock's statistic exceeds the q95 of its companions in 6 to
-15 % of 500 placebo draws (A276, band 7.5 %): the clock-plane states are more isotropic and lighter-tailed than the
-companion states, which raises null |r| by a few percent; the pooled statistics (means over atlases) turn that into the
-largest rates. A per-set null correction (A277) leaves two responsive combinations at 0.080 and 0.078 (the responsive
-sets overlap, so their reference is too narrow). The percentile test calibrated against its own placebo distribution
-(A278) scatters around 0.05 (0.018 to 0.082, mean 0.043) but misses its own band in one combination, a band that was
-too narrow for a split-sample check. **Options:** (a) adopt A278 with the 1000 placebo draws as the null and read the
-restated tests H278.1-5 (`calibrated_a278.py --read`); (b) enlarge the null (e.g. 5000 draws) and re-run the A278
-calibration with a band set for two-sample error before reading; (c) replace the statistic by one whose null does not
-depend on state shape (mean |r|^2 over pairs, E = 1/df), a new amendment and a new calibration. **Recommendation:** (b)
-then read: it keeps the registered statistics, and the cost is minutes. **Update 2026-11-17 (null only, not a
-registered test):** option (c) is not calibrated either: with the mean |r|^2 over pairs and the q95 rule, 500 placebo
-draws give 0.042 to 0.154 (H272.1 responsive 0.154, H272.2 responsive 0.116; mean 0.076), since the overlap of the
-responsive sets is untouched (`A276_pairwise_calibration/output/option_c/tests.csv`). Only the percentile read against
-its own placebo distribution (a, b) is calibrated by construction. A280 has a ready script for it
-(`calibrated_a280.py --q36`), with the real pairing locked until the answer.
-**What is at stake.** The scored margins are large for H272.2 (D 0.277 against q95 0.177), H274.1 and H274.2 (clock
-above all 200 companions); a calibrated test changes them only if the null rate of "above all companions" exceeds 0.05,
-and it is 0.005 to 0.028 (A278). The closest is H274.3 against the matched family (cortex, T_CX 0.497 against q95 0.466,
-p 0.020), whose placebo rate at the q95 was 0.102. Every placebo check removes all pairing; the registered null has
-companions that share (|r| 0.3 to 0.4), where shape effects should be smaller (not shown).
-**On hold.** Every further test of the cell-type line (A2 pooled table, B1, B2, C1-C3 scoring). Scouts, inventories and
-genome-table builds continue.
-**Evidence.** RP A276, A277 calibration, A278 calibration; `exploratory/A276_pairwise_calibration/output/`.
 
 ### Q35 (2026-11-16): tally of the biology-paper checks (stop rule: two exceptions fell)
 
@@ -536,6 +509,34 @@ A141 (registered after your Q6 answer):
 - Evidence: `results_preliminary.md` (A141).
 
 ## Answered
+### Q36 (2026-11-16): calibration of the pairwise cell-type test (A276-A278)
+**Question (for the user first).** Under no pairing, the clock's statistic exceeds the q95 of its companions in 6 to
+15 % of 500 placebo draws (A276, band 7.5 %): the clock-plane states are more isotropic and lighter-tailed than the
+companion states, which raises null |r| by a few percent; the pooled statistics (means over atlases) turn that into the
+largest rates. A per-set null correction (A277) leaves two responsive combinations at 0.080 and 0.078 (the responsive
+sets overlap, so their reference is too narrow). The percentile test calibrated against its own placebo distribution
+(A278) scatters around 0.05 (0.018 to 0.082, mean 0.043) but misses its own band in one combination, a band that was
+too narrow for a split-sample check. **Options:** (a) adopt A278 with the 1000 placebo draws as the null and read the
+restated tests H278.1-5 (`calibrated_a278.py --read`); (b) enlarge the null (e.g. 5000 draws) and re-run the A278
+calibration with a band set for two-sample error before reading; (c) replace the statistic by one whose null does not
+depend on state shape (mean |r|^2 over pairs, E = 1/df), a new amendment and a new calibration. **Recommendation:** (b)
+then read: it keeps the registered statistics, and the cost is minutes. **Update 2026-11-17 (null only, not a
+registered test):** option (c) is not calibrated either: with the mean |r|^2 over pairs and the q95 rule, 500 placebo
+draws give 0.042 to 0.154 (H272.1 responsive 0.154, H272.2 responsive 0.116; mean 0.076), since the overlap of the
+responsive sets is untouched (`A276_pairwise_calibration/output/option_c/tests.csv`). Only the percentile read against
+its own placebo distribution (a, b) is calibrated by construction. A280 has a ready script for it
+(`calibrated_a280.py --q36`), with the real pairing locked until the answer.
+**What is at stake.** The scored margins are large for H272.2 (D 0.277 against q95 0.177), H274.1 and H274.2 (clock
+above all 200 companions); a calibrated test changes them only if the null rate of "above all companions" exceeds 0.05,
+and it is 0.005 to 0.028 (A278). The closest is H274.3 against the matched family (cortex, T_CX 0.497 against q95 0.466,
+p 0.020), whose placebo rate at the q95 was 0.102. Every placebo check removes all pairing; the registered null has
+companions that share (|r| 0.3 to 0.4), where shape effects should be smaller (not shown).
+**On hold.** Every further test of the cell-type line (A2 pooled table, B1, B2, C1-C3 scoring). Scouts, inventories and
+genome-table builds continue.
+**Evidence.** RP A276, A277 calibration, A278 calibration; `exploratory/A276_pairwise_calibration/output/`.
+**Answer (user, 2026-11-17):** "(b) 5000 draws, then read". Registered as A283 (V283 band 0.0685 per combination, both
+split directions; restated tests H283.1-5 only if V283 passes); A280 addendum adopts the same form.
+
 ### Q21 (2026-11-01): cancer L2 after A175/A176, and the Q8 wording
 **Evidence** (`results_preliminary.md`, A175, A176, C1 replication scout):
 - A175 H175.1 (TCGA, secondary): high-proliferation tumours pair less with their own normal tissue (D +0.158, p 0.021,
