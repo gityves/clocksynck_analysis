@@ -7978,3 +7978,25 @@ variation). FAIL: no season-dependent frontier effect at this power; the frontie
 death season is not the person's exposure history; offsets per arm carry the fit's noise (the permutation null includes
 it).
 **Code.** `exploratory/A300_frontier_season/scripts/score_a300.py`. Aggregates only.
+
+## A301 (2026-11-17, user: "Okay go ahead", after the A299 post hoc: the steroidogenic cortex score moves adrenal phase -1.15 h per SD and survives adjustment for medulla, fat and capsule content; **NOT BLIND** for A299 and its post hoc in full; NOT seen: any ACTH-response or cortex-identity score): is the adrenal phase effect carried by ACTH activity or by cortex content? **GTEx adrenal, the A299 rows and model**
+
+**Scores (fixed now; log((sum of counts + 0.5) / depth), standardised within the adrenal).**
+- ACTH / cAMP response, without steroidogenic enzymes: NR4A1, NR4A2, NR4A3, SIK1, CREM, MC2R, MRAP.
+- Cortex identity, genes not known as acute ACTH targets: NR5A1, NR0B1, KCNK3, VSNL1, CCN3.
+- Steroidogenic (the A299 cortex score, for reference): STAR, CYP11A1, CYP11B1, CYP17A1, CYP21A2.
+**Model.** The A299 model with the ACTH and identity scores fitted jointly (x = mu + sum_j c_j s_j + a h + sum_j b_j
+s_j h); phase change per SD Im(b_j / a) x 24 / (2 pi) h, gain change Re(b_j / a); donor bootstrap 2000 (seed 301);
+Hardy 1-4 primary, fast deaths descriptive.
+**H301.1:** ACTH activity moves the phase towards the body's time: ACTH-score phase change < 0, one-sided bootstrap
+p < 0.05, in the joint model.
+**H301.2:** cortex content does not: identity-score phase change within +-0.5 h (90 % interval inside the bound), in
+the joint model.
+**Readings.** H301.1 PASS, H301.2 PASS: the adrenal effect is hormonal activity, not composition: samples under stronger
+ACTH drive sit closer to the body's time (a hormonal input to the adrenal clock, with the fetal cortex result as
+context). H301.1 FAIL, identity score moving phase: the effect is cortex content (composition of compartments at
+different phases, the non-cortex part being advanced). Both moving: not separable. Neither: the steroidogenic effect of
+A299 is not reproduced by either component. Reported: all three scores' correlations; the three-score joint model.
+**Limits.** 75 samples; NR4A and CREM are also general stress / immediate-early genes (agonal state); marker sets
+fixed from adrenal biology, consistency checked descriptively, not used to select genes.
+**Code.** `exploratory/A299_adrenal_medulla/scripts/score_a301.py`. Aggregates only.
