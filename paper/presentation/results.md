@@ -268,8 +268,7 @@ body time, with 90 % interval.
 **Message:** read without any host or anchor, the clock state of every resident cell class (fibroblasts, endothelial
 and mural cells, epithelium, parenchyma) moves with that of the other cells of the same person's tissue, at about the
 same level; macrophages do too. Lymphocytes share no more than random genes, and not because they run a clock of their
-own: where a clock would be readable at their depth, they have none. They do receive the body's hormonal and
-immediate-early signals, as every other cell does; what they lack is the clock.
+own: where a clock would be readable at their depth, they have none.
 
 **Bullets**
 1. Per cell family (post hoc, descriptive; median over compartments of ten body atlases): fibroblast 0.63, parenchyma
@@ -283,24 +282,15 @@ immediate-early signals, as every other cell does; what they lack is the clock.
    the same donors thinned to the lymphocytes' depth are in 7 of 7 powered atlases (A281). Where a clock is readable at
    their depth (both IBD tissues, Kong ileum), lymphocytes carry no clock-gene structure beyond random genes, whatever
    its phase pattern (A287): "no readable clock", not "a different clock".
-5. Hormonal signals reach them (A275, post hoc, descriptive): per-gene sharing with the tissue's other cells,
-   lymphocytes against stromal-vascular cells: glucocorticoid targets 0.390 vs 0.524, immediate-early genes 0.392 vs
-   0.535, clock genes 0.172 vs 0.333, random genes 0.167 vs 0.237.
 
 **Figure:** `figures/celltypes_health/celltypes_health.png` (`scripts/celltypes_health.py`; wide). A. every compartment
 of the ten body atlases of A272/A274: clock state shared with the tissue's non-immune cells (median |r| over its pairs),
 by cell family, black: family median; grey open circles: the same compartments' expression-matched gene sets. B. own
 clock: signed clock-gene coherence between donors of the lymphocytes (cyan), of stromal-vascular (fibroblast-stromal)
 cells of the same donors thinned to the lymphocytes' clock-gene counts (brown, median of 20), and of the lymphocytes'
-expression-matched gene sets (grey), nine atlases. C. per-gene sharing with the tissue's other cells (correlation over
-donors, median over genes and pairs, mean over the A272 atlases) of clock genes, glucocorticoid targets,
-immediate-early genes and random genes, for stromal-vascular cells and lymphocytes. The registered contrasts
-(bullets 2-3) are not plotted.
+expression-matched gene sets (grey), nine atlases. The registered contrasts (bullets 2-3) are not plotted.
 
 **Speaker notes**
-- Panel C uses single-gene correlations, not corrected for counting noise: compare within a row and with the random
-  genes, not with panel A. The responsive genes' sharing is in part a handling state and in part systemic (A275);
-  PER1, the most shared clock gene (0.690), is itself a glucocorticoid and immediate-early target.
 - Panel B, read honestly: breast CD4 T (0.38) and heart lymphocytes (0.50) are coherent alone (the 2 of 9); in the
   IBD tissues, with the deepest T cells (median 1,397 and 513 clock-gene counts, more than their fibroblasts),
   lymphocytes are below random genes (−0.43, −0.45). Thinned fibroblasts pass in >= 80 % of thinnings in 7 atlases
@@ -336,5 +326,4 @@ immediate-early genes and random genes, for stromal-vascular cells and lymphocyt
 `exploratory/A276_pairwise_calibration/output/a283/{per_atlas,tests}.csv`;
 `exploratory/A280_celltype_replication2/output/calibrated/tests.csv`; `exploratory/A282_pooled_living/output/{tests,per_atlas}.csv`;
 `exploratory/A288_macrophage_pairwise/output/{per_atlas,tests}.csv`; `exploratory/A284_residency/output/tests.csv`;
-`exploratory/A281_lymphocyte_clock/output/{pairs,tests}.csv`; `exploratory/A287_lymphocyte_covariance/output/tests.csv`;
-`exploratory/A275_shared_gene_classes/output/classes.csv`.
+`exploratory/A281_lymphocyte_clock/output/{pairs,tests}.csv`; `exploratory/A287_lymphocyte_covariance/output/tests.csv`.

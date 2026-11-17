@@ -14,13 +14,7 @@ B. Do lymphocytes keep a clock of their own? Signed clock-gene coherence between
    clock-gene counts (median of 20 thinnings), and the lymphocytes' expression-matched gene sets (grey, median), nine
    atlases (A281 H281.1 fail: 2 of 9 lymphocyte compartments coherent; H281.2 pass).
 
-C. Do lymphocytes receive body-wide hormonal signals? Per-gene sharing with the tissue's other cells (correlation over
-   donors of a gene's expression in two compartments; median over genes and pairs, mean over the A272 atlases) for the
-   clock genes, glucocorticoid targets, immediate-early genes and expression-matched genes, for stromal-vascular cells
-   and lymphocytes (A275, post hoc, descriptive): lymphocytes share the hormonal and immediate-early states, not the
-   clock.
-
-Data: exploratory/A275_shared_gene_classes/output/classes.csv; exploratory/A272_backbone_pairwise/output/pairs.csv; exploratory/A274_celltype_map/output/pairs.csv;
+Data: exploratory/A272_backbone_pairwise/output/pairs.csv; exploratory/A274_celltype_map/output/pairs.csv;
 exploratory/A281_lymphocyte_clock/output/pairs.csv. Output: presentation/figures/celltypes_health/celltypes_health.{svg,png}.
 
     python scripts/celltypes_health.py
@@ -97,32 +91,15 @@ def own_clock(ax, p):
     h = [Line2D([], [], ls="", marker="o", ms=6, color=CELL["stromal-vascular"], label="stromal-vascular,\nsame depth"),
          Line2D([], [], ls="", marker="o", ms=6, color=CELL["lymphocyte"], label="lymphocyte"),
          Line2D([], [], ls="", marker="o", ms=5, mfc="white", mec=MUTED, label="random genes")]
-    ax.legend(handles=h, loc="lower right", frameon=False, fontsize=8, handletextpad=0.1)
-
-
-def hormonal(ax, c):
-    rows = (("clock", "clock genes"), ("gc_target", "glucocorticoid\ntargets"), ("immediate_early", "immediate-early\ngenes"),
-            ("matched", "random genes"))
-    v = c.set_index(["klass", "gene_class"]).sharing
-    for i, (g, _) in enumerate(rows):
-        a, b = v[("LY_X", g)], v[("SV_X", g)]
-        ax.plot([a, b], [i, i], color=MUTED, lw=0.8, zorder=1)
-        ax.scatter([b], [i], s=40, color=CELL["stromal-vascular"], edgecolor="white", lw=0.5, zorder=2)
-        ax.scatter([a], [i], s=40, color=CELL["lymphocyte"], edgecolor="white", lw=0.5, zorder=2)
-    ax.set_yticks(range(len(rows)), [lab for _, lab in rows])
-    ax.tick_params(axis="y", length=0)
-    ax.invert_yaxis()
-    ax.set_xlim(0, 0.7)
-    ax.set_xlabel("gene shared with the\ntissue's other cells [r]")
+    ax.legend(handles=h, loc="lower left", frameon=False, fontsize=8, handletextpad=0.1)
 
 
 def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
-    lay = pf.Layout.slide("ABC", kind="wide", col_ratios=[1.1, 1, 0.75])
+    lay = pf.Layout.slide("AB", kind="wide", col_ratios=[1.1, 1])
     families(lay.axes["A"], compartments())
     own_clock(lay.axes["B"], pd.read_csv(EXP / "A281_lymphocyte_clock/output/pairs.csv"))
-    hormonal(lay.axes["C"], pd.read_csv(EXP / "A275_shared_gene_classes/output/classes.csv"))
     fig = lay.finalize()
     print(pf.collisions(fig))
     pf.save(fig, OUT / "celltypes_health")
