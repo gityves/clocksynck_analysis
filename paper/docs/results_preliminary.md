@@ -6119,3 +6119,26 @@ median and percentile reproduce in all nine pairs.
 - **Limits.** Different laboratories, strains and protocols; liver only; amplitudes read in each dataset's own projector.
 - Code: `exploratory/A297_feeding_model/scripts/score_a297.py`.
 <!-- src: paper/exploratory/A297_feeding_model/output/{tests,arms}.csv -->
+
+## A294 (scored 2026-11-17; NOT BLIND for the A104 table): the own variation of peripheral clocks is clock-specific, about 2.6 times that of expression-matched genes in every tissue (H294.1 PASS); it grows only weakly with the shared rhythm (H294.2: slope 0.22, neither the additive nor the individual-period signature)
+
+- Design as registered: A104 rows and fit, 27 peripheral tissues; clock and 100 matched pseudo-clock sets. Reproduction
+  exact (rho 0.734). One run through `run.sh` (1515 s, peak 2.8 GB, 4 workers).
+- **H294.1 PASS.** Median over tissues of log(2 psi_clock / median 2 psi_matched) 0.969 (tissue bootstrap 90 % 0.889 to
+  1.077): the clock's own variance exceeds the matched median in all 27 tissues and the matched q95 in 10. Medians:
+  clock 1.89, matched 0.71. The matched sets share little between tissues (median S 0.016 to 0.193, against the
+  clock's 0.12 to 10.33).
+- **H294.2 (read because H294.1 passed).** Theil-Sen slope of log excess own variance on log S_clock 0.223 (90 % 0.044 to
+  0.332, 27 tissues): excludes both 0 and 1, so neither registered signature applies. Descriptive: slope of the clock's
+  own variance on S 0.072; of the matched floor on S -0.025.
+- **Reading (registered).** The floor is not generic: clock genes carry person-specific own variation beyond what
+  random genes of their expression carry, of similar size in every peripheral tissue. It does not scale with the
+  shared rhythm as individual clock periods would (slope 1); it grows weakly (excess proportional to about S^0.2, i.e.
+  amplitude^0.45). Peripheral tissues are therefore not locked up to measurement noise: each carries a clock-specific
+  departure from the body's time, of nearly constant size, and the amplitude-coupling relation is the gain over that
+  departure.
+- **Limits.** The matched floor is read through each set's own shared state, which is small; non-count technical
+  variation specific to clock genes (none known) cannot be excluded. A259 bounded the departure at 1 to 3 h and found
+  matched sets carry much of it on a different statistic (within-sample split-gene moment).
+- Code: `exploratory/A294_floor/scripts/score_a294.py --jobs 4`.
+<!-- src: paper/exploratory/A294_floor/output/{tests,tissues,sets}.csv -->
