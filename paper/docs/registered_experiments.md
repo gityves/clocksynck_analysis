@@ -7666,3 +7666,73 @@ the slide says so ("not decidable against stress-responsive genes" if the floor 
 **Limits.** 400 draws (p_cal floor 0.0025; rejection-rate SE about 0.011 at 0.05), fewer than A285's 2000, for cost
 (201 fits of about 4 s per draw).
 **Code.** `exploratory/A290_a104_calibration/scripts/placebo_a290.py` (`--check`: draw 0 with 5 sets).
+
+## A291 (2026-11-17, user: "okay, register them", after the discussion of why weaker clocks share less of the body's time (A104, A271 Part B, A289) and whether oscillator theory is contradicted; a calibration of the amplitude-coupling relation at the real GTEx design; **NOT BLIND**: A104 per-tissue table (periphery rho 0.734 over 27 tissues; brain -0.115 over 13), A271 Part B and its post hoc count check, A289; NOT seen: any simulated coupling at these designs): is "stronger clocks are more coupled" what measurement alone produces? **GTEx fast deaths, the A104 rows; coupling of a perfectly locked tissue at each tissue's real design**
+
+**Why.** Coupling is c = S / (S + 2 psi) and own amplitude A = sqrt(S + 2 psi) (S the shared clock-plane variance, psi
+the tissue's own variance per dimension; checked on the A104 table). A tissue with a weak clock could read as less
+coupled because its fitted coupling is attenuated by counting noise and by the reliability of its host, even if it
+were perfectly locked (method limit, roadmap 1.4; A154, A162). A271's post hoc check excluded counting noise as the
+cause of the amplitude variable, not attenuation of c. Three scenarios explain the line: (S1) perfect locking, the
+relation from measurement only; (S2) locking with own variance that does not scale with the rhythm (weak clocks
+noisier relative to their rhythm, biology or non-count technical noise); (S3) transient tracking: low-amplitude clocks
+follow recent external cues and depart from the inertial consensus of the strong clocks (oscillator theory away from
+steady state). This amendment tests S1; A292 separates S2 from S3.
+**Rows and fit.** As A104 (`results/figure_2/scripts/backbone/compute_oscillator_gtex.py`: GTEx fast deaths, tissues
+with >= 40 donors, periphery and brain blocks, every tissue an anchor, leave-one-out host, `fit(n_boot=0, gate=False)`).
+Reproduction check before any simulation: periphery rho 0.734 and brain -0.115 to 3 decimals.
+**Simulation.** Per tissue k, `clocksync.simulate.like(ds, k)` (the tissue's real donors, host means and posterior
+covariances, measurement covariances, strata, intercepts): 100 replicates at true coupling 1 (psi = 0, perfect
+locking) and 100 at true coupling = the tissue's estimate (design bias, descriptive). Seeds [291, block, tissue index,
+1 | 2]. c_ceil,k = median fitted coupling at truth 1.
+**H291.1 (primary, periphery):** the relation survives the measurement ceiling: Spearman rho(A_k, c_k / c_ceil,k) > 0,
+one-sided permutation p < 0.05 (A shuffled over tissues, 10000 permutations, seed 291). Reported with it: rho(A_k,
+c_ceil,k) (how much of the line measurement alone produces) and the median c_ceil.
+**Readings, fixed now.** H291.1 PASS: counting noise and host reliability do not produce the relation; S2 or S3 remain
+(A292). FAIL with rho(A, c_ceil) at or above 0.5: the amplitude-coupling relation is what the measurement produces;
+the organ-level rule ("weaker clocks share less") is dropped, and the brain reading of A289 (brain on the periphery's
+line) becomes "brain is measured like a weak peripheral tissue", not a statement about its clocks. FAIL otherwise:
+not decided at 27 tissues; the rule stays out of the results.
+**Descriptive.** Brain block the same (13 regions; A104 found no relation there); per-tissue c, c_ceil, design bias.
+**Limits.** The simulator's noise is counting plus host uncertainty; non-count technical noise (dissection,
+composition, RNA quality) sits in psi and cannot be told from biological own variation here: S1 tests measurement
+in the narrow sense only. Aggregates only (GTEx controlled access).
+**Code.** `exploratory/A291_attenuation/scripts/score_a291.py` (`--check`: reproduction and one tissue).
+
+## A292 (2026-11-17, user: "okay, register them", with A291; **NOT BLIND**: A104 / A271 per-tissue amplitudes and couplings, A259 (tissue departures from body time bounded at 1 to 3 h, mostly carried by matched non-clock genes), A91 (rhythmic genes follow internal time more often than the hour of death), A270 (in GTEx the clock host reads time of death, R 0.631; few companion sets do), A263 and A289 (brain); NOT seen: any regression of a tissue's clock state on the hour of death beyond its host): do weak clocks depart from the body's time toward the external time of day? **GTEx fast deaths, the A104 periphery rows; per tissue, the part of its clock state that follows the hour of death beyond its leave-one-out host**
+
+**Why.** S3 of A291 (transient tracking) predicts that the departures of low-amplitude tissues from the consensus of
+the strong clocks are structured: pulled toward recent external time. S2 (own variance that does not scale with the
+rhythm) predicts departures unrelated to anything external. The hour of death is the one external time recorded for
+every GTEx donor (controlled access, used in aggregate only).
+**Statistic.** Per periphery tissue k: clock-plane states x_dk of its samples (`clocksync.paired.states`, GTEx
+waveform), its leave-one-out host h_d (the A104 host without k, `Dataset.host(anchors=others)`), and the external
+time u_d = exp(i 2 pi tod_d / 24) rotated into the host's frame by delta = arg sum_d h_d conj(u_d) (full host, all
+donors). Complex least squares x_dk = mu_k + a_k h_d + b_k u_d (one intercept per stratum). Tracking weight
+w_k = Re(b_k / a_k) / sd(h): the external-time component of the tissue's state per unit of its host component, in
+the same direction. Leakage note (stated now): errors in h attenuate a_k and move a share of the host component
+into b_k; that share is proportional to a_k and therefore the same fraction for every tissue on a common host, so it
+shifts all w_k equally and does not create an amplitude dependence.
+**H292.1 (primary):** weak clocks track external time more: Spearman rho(A_k, w_k) < 0 over the 27 tissues,
+one-sided p < 0.05 against the null of the hour of death permuted over donors (2000 permutations, seeds [292, d];
+every w_k recomputed).
+**V292 (calibration and power, before the observed statistic is read).** State-level simulation at the real design:
+truth h = the full host, tissue states a_k h + N(0, psi_k) + the sample's measurement covariance, the leave-one-out
+host perturbed by its posterior covariance, the real hours of death. (i) S2 (no tracking, b = 0): rejection rate of
+H292.1 over 500 simulations must be <= 0.0685 (A283 band); if not, H292.1 is not read. (ii) S3: b_k = w0 a_k sd(h)
+(A_min / A_k), w0 in {0.1, 0.25}: power. If power at w0 = 0.25 is below 0.8, a failure of H292.1 is uninformative.
+**Specificity (reported; decisive only for the wording).** The same rho for 100 expression-matched and 100
+stress-responsive pseudo-clock sets (`pseudo_waveforms`, matching as A271 Part B; seeds [292, 1 | 2]); the clock's
+percentile pi in each family. A pass of H292.1 with the clock below the 95th percentile of the responsive family is
+"weak tissues track a stress state timed with death", not a clock statement.
+**Readings, fixed now.** H292.1 PASS (V292 calibrated): low-amplitude clocks depart from the body's time toward
+external time; with A291 PASS, the amplitude-coupling relation reads as transient tracking (S3): strong peripheral
+clocks hold an inertial internal time, weak clocks follow the present. FAIL at adequate power: no evidence of
+transient tracking; with A291 PASS, S2 is the remaining reading (not shown, by elimination). FAIL at low power:
+uninformative.
+**Descriptive (no verdict).** Mean w over tissues (contains the leakage, not interpretable alone); brain block the same
+(rho and the median w of brain regions against the periphery: does the brain follow the hour of death more?);
+ventilated donors (Hardy 0) the same.
+**Limits.** The hour of death is the end of an agonal period, not the person's recent schedule; fast deaths keep that
+period short. Amplitudes A_k are estimated from the same data. Aggregates only; no per-donor value leaves the script.
+**Code.** `exploratory/A292_external_tracking/scripts/score_a292.py` (`--stage calibrate | score`).
