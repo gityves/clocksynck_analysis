@@ -263,11 +263,11 @@ body time, with 90 % interval.
 
 ---
 
-## R2.2 Inside tissues: stromal-vascular cells and macrophages share the tissue's clock state, lymphocytes do not
+## R2.2 Inside tissues: stromal-vascular cells and macrophages share the tissue's clock state; lymphocytes carry no readable clock
 
 **Message:** read without any host or anchor, the clock state of fibroblasts, endothelial and mural cells moves with
-that of the other cells of the same person's tissue; macrophages do too; lymphocytes do not. This holds in three
-independent atlas sets and in living donors alone.
+that of the other cells of the same person's tissue; macrophages do too. Lymphocytes share no more than random genes,
+and not because they run a clock of their own: where a clock would be readable at their depth, they have none.
 
 **Bullets**
 1. Stromal-vascular minus lymphocyte sharing, beyond both companion gene families (calibrated, 5000 placebo draws):
@@ -275,14 +275,25 @@ independent atlas sets and in living donors alone.
    only 0.225 (p_cal 0.004 to 0.020 against expression-matched, 0.011 to 0.016 against stress-responsive genes).
 2. Macrophages join the stromal-vascular cells: macrophage minus lymphocyte 0.148 (p_cal 0.003 / 0.006, 8 atlases).
 3. Lymphocytes share no more clock state than random genes in any atlas (LY_X above no companion family).
+4. No clock of their own: lymphocyte clock genes are coherent between donors in 2 of 9 atlases, where fibroblasts of
+   the same donors thinned to the lymphocytes' depth are in 7 of 7 powered atlases (A281). Where a clock is readable at
+   their depth (both IBD tissues, Kong ileum), lymphocytes carry no clock-gene structure beyond random genes, whatever
+   its phase pattern (A287): "no readable clock", not "a different clock".
 
 **Figure:** `figures/celltypes_health/celltypes_health.png` (`scripts/celltypes_health.py`; wide). A. per healthy atlas,
 clock state shared with the tissue's other (non-immune) cells, median |r| over pairs, for stromal-vascular cells,
 macrophages and lymphocytes (ten atlases of A272/A274; kidney has no immune class, muscle and anterior eye no
-lymphocytes). B. the registered contrasts (difference in sharing vs lymphocytes), with the medians of the
-expression-matched (circle) and stress-responsive (square) gene sets.
+lymphocytes); grey open circle: the level expression-matched genes reach in the lymphocytes. B. the registered contrasts (difference in sharing vs lymphocytes), with the medians of the
+expression-matched (circle) and stress-responsive (square) gene sets. C. own clock: signed clock-gene coherence
+between donors of the lymphocytes (cyan), of fibroblast-stromal cells of the same donors thinned to the lymphocytes'
+clock-gene counts (brown, median of 20), and of the lymphocytes' expression-matched gene sets (grey), nine atlases.
 
 **Speaker notes**
+- Panel C, read honestly: breast CD4 T (0.38) and heart lymphocytes (0.50) are coherent alone (the 2 of 9); in the
+  IBD tissues, with the deepest T cells (median 1,397 and 513 clock-gene counts, more than their fibroblasts),
+  lymphocytes are below random genes (−0.43, −0.45). Thinned fibroblasts pass in >= 80 % of thinnings in 7 atlases
+  (not optic nerve 0.40, Pelka colon 0.55), so A281 is powered there; A287's own statistic is powered only in Kong
+  ileum and the two IBD tissues.
 - Readout: `clocksync.pairwise`, anchor-free: for two cell classes of the same donors, the complex correlation over
   donors of their clock-plane states (|r|). No host, no anchor choice, so the A17 anchor question does not arise.
 - Status: A272 (H272.2), A274 (H274.1 replication, blind for its atlases), A280 (H280.1, blind), all restated on the
@@ -306,4 +317,5 @@ expression-matched (circle) and stress-responsive (square) gene sets.
 
 **Source:** `exploratory/A276_pairwise_calibration/output/a283/{per_atlas,tests}.csv`;
 `exploratory/A280_celltype_replication2/output/calibrated/tests.csv`; `exploratory/A282_pooled_living/output/{tests,per_atlas}.csv`;
-`exploratory/A288_macrophage_pairwise/output/{per_atlas,tests}.csv`; `exploratory/A284_residency/output/tests.csv`.
+`exploratory/A288_macrophage_pairwise/output/{per_atlas,tests}.csv`; `exploratory/A284_residency/output/tests.csv`;
+`exploratory/A281_lymphocyte_clock/output/{pairs,tests}.csv`; `exploratory/A287_lymphocyte_covariance/output/tests.csv`.

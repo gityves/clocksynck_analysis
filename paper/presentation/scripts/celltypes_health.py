@@ -1,18 +1,24 @@
 """Slide figure (results, R2.2): inside tissues, stromal-vascular cells and macrophages share the tissue's clock state;
-lymphocytes do not.
+lymphocytes do not, and carry no readable clock of their own.
 
 Readout (anchor-free, `clocksync.pairwise`): for two cell classes of the same donors, |r| = the complex correlation over
 donors of their clock-plane states; a class's sharing = the median |r| over its pairs with the non-immune classes of
 the tissue (X). Companions: 200 expression-matched and 200 stress-responsive gene sets per atlas; calibrated p from
 5000 placebo draws (A283 form).
 A. Per atlas, sharing of stromal-vascular cells (SV_X), macrophages (T_MAC, A288) and lymphocytes (LY_X), connected per
-   atlas: the ten healthy body atlases of A272 and A274 (descriptive per atlas; A283 per-atlas table).
+   atlas: the ten healthy body atlases of A272 and A274 (descriptive per atlas; A283 per-atlas table); grey open circle:
+   median of the expression-matched gene sets for the lymphocytes (the level random genes reach in the same cells).
 B. The registered contrasts, each a pooled difference in sharing: stromal-vascular minus lymphocyte in three
    independent atlas sets (A272 = H283.2, A274 = H283.3, IBDverse = H280.1) and in living donors only (A282), and
    macrophage minus lymphocyte (A288 H288.2); grey: medians of the expression-matched (circle) and stress-responsive
    (square) companion sets. All pass against both families (p_cal <= 0.016).
 
-Data: exploratory/A276_pairwise_calibration/output/a283/{per_atlas,tests}.csv; exploratory/A280_celltype_replication2/
+C. Do lymphocytes keep a clock of their own? Signed clock-gene coherence between donors (A281, `decompose.signed_coherence`,
+   per-sample offset fitted out): lymphocytes, fibroblast-stromal cells of the same donors thinned to the lymphocytes'
+   clock-gene counts (median of 20 thinnings), and the lymphocytes' expression-matched gene sets (grey, median), nine
+   atlases (A281 H281.1 fail: 2 of 9 lymphocyte compartments coherent; H281.2 pass).
+
+Data: exploratory/A281_lymphocyte_clock/output/pairs.csv; exploratory/A276_pairwise_calibration/output/a283/{per_atlas,tests}.csv; exploratory/A280_celltype_replication2/
 output/calibrated/tests.csv; exploratory/A282_pooled_living/output/tests.csv; exploratory/A288_macrophage_pairwise/output/
 {per_atlas,tests}.csv. Output: presentation/figures/celltypes_health/celltypes_health.{svg,png}.
 
@@ -35,7 +41,7 @@ TAB = sns.color_palette().as_hex()
 CELL = {"stromal-vascular": TAB[5], "macrophage": TAB[1], "lymphocyte": TAB[9]}
 ATLAS = {"lung_hlca": "lung", "heart": "heart", "organ_breast": "breast", "organ_colon": "colon (Pelka)",
          "organ_muscle": "muscle", "kidney_sc": "kidney", "kong_ileum": "ileum (Kong)", "kong_colon": "colon (Kong)", "organ_eye_anterior": "anterior eye",
-         "organ_optic_nerve": "optic nerve"}
+         "organ_optic_nerve": "optic nerve", "ibd_ileum": "ileum (IBD)", "ibd_rectum": "rectum (IBD)"}
 
 
 def per_atlas(ax, pa, mac):
@@ -43,10 +49,13 @@ def per_atlas(ax, pa, mac):
     sv = pa[pa.klass == "SV_X"].set_index("atlas").clock
     ly = pa[pa.klass == "LY_X"].set_index("atlas").clock
     mc = mac[mac.statistic == "T_MAC"].set_index("atlas").clock
+    floor = pa[pa.klass == "LY_X"].set_index("atlas").matched_median
     order = sv.sort_values(ascending=False).index
     for i, a in enumerate(order):
         xs = [v for v in (sv.get(a), mc.get(a), ly.get(a)) if v is not None and np.isfinite(v)]
         ax.plot(xs, [i] * len(xs), color=MUTED, lw=0.8, zorder=1)
+        if a in floor.index:
+            ax.scatter([floor[a]], [i], s=22, facecolor="white", edgecolor=MUTED, lw=1.2, zorder=1.5)
         for s_, c in zip((sv, mc, ly), CELL.values()):
             if a in s_.index:
                 ax.scatter([s_[a]], [i], s=34, color=c, edgecolor="white", lw=0.5, zorder=2)
@@ -56,7 +65,24 @@ def per_atlas(ax, pa, mac):
     ax.set_xlim(0, 0.8)
     ax.set_xlabel("clock state shared with\nthe tissue's other cells")
     h = [Line2D([], [], ls="", marker="o", ms=6, color=c, label=lab) for lab, c in CELL.items()]
-    ax.legend(handles=h, loc="lower right", frameon=False, fontsize=9, handletextpad=0.1)
+    h.append(Line2D([], [], ls="", marker="o", ms=5, mfc="white", mec=MUTED, label="random genes,\nlymphocytes"))
+    ax.legend(handles=h, loc="lower right", frameon=False, fontsize=8, handletextpad=0.1)
+
+
+def own_clock(ax, p):
+    p = p.sort_values("C_stromal_thinned_median", ascending=False)
+    for i, r in enumerate(p.itertuples()):
+        ax.plot([r.C_lymph, r.C_stromal_thinned_median], [i, i], color=MUTED, lw=0.8, zorder=1)
+        ax.scatter([r.matched_C_median], [i], s=22, facecolor="white", edgecolor=MUTED, lw=1.2, zorder=2)
+        ax.scatter([r.C_stromal_thinned_median], [i], s=34, color=CELL["stromal-vascular"], edgecolor="white", lw=0.5,
+                   zorder=3)
+        ax.scatter([r.C_lymph], [i], s=34, color=CELL["lymphocyte"], edgecolor="white", lw=0.5, zorder=3)
+    ax.set_yticks(range(len(p)), [ATLAS[a] for a in p.atlas])
+    ax.tick_params(axis="y", length=0)
+    ax.invert_yaxis()
+    ax.axvline(0, color=MUTED, lw=0.8, ls="--")
+    ax.set_xlim(-0.6, 1)
+    ax.set_xlabel("own clock: coherence\nbetween donors")
 
 
 def contrasts(ax, rows):
@@ -95,9 +121,10 @@ def main():
             row(t280.loc["H280.1 D"], "stromal-vascular,\nIBD cohort"),
             row(t282, "stromal-vascular,\nliving donors"),
             row(t288.loc["H288.2 D_MAC"], "macrophage", "MAC")]
-    lay = pf.Layout.slide("AB", kind="wide", col_ratios=[1, 1])
+    lay = pf.Layout.slide("ABC", kind="wide", col_ratios=[1, 1, 0.9])
     per_atlas(lay.axes["A"], pa, mac)
     contrasts(lay.axes["B"], rows)
+    own_clock(lay.axes["C"], pd.read_csv(EXP / "A281_lymphocyte_clock/output/pairs.csv"))
     fig = lay.finalize()
     for r in rows:
         print(r["label"].replace("\n", " "), round(r["clock"], 3), [round(p, 4) for p in r["p"]])
