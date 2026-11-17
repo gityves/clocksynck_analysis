@@ -185,61 +185,60 @@ age, internal time advances while the organisation stays.
 
 ---
 
-## R2.1 The organs of a person share one clock state; the brain is less coupled to it
+## R2.1 Organs share one clock state; weak clocks are the loosely coupled ones, the brain included
 
-**Message:** every organ follows the body's clock state far more than any other gene program does; the brain less
-than the periphery, as it does for every program. Within a person, a tissue's clock stays within 1 to 3 h of the
-body's.
+**Message:** every organ follows the body's clock state, and how closely it follows is set by the strength of its own
+clock: strong clocks are the coupled ones, the opposite of what oscillator theory predicts. The brain's lower
+coupling is this rule, not a separate brain clock. Within a person, a tissue stays within 1 to 3 h of the body's time.
 
 **Bullets**
-1. Coupling to the body's clock state (40 GTEx tissues, peripheral host): periphery median 0.679 (26 tissues), brain
-   median 0.406 (13 regions); for 200 stress-responsive gene sets the same medians are 0.259 and 0.064 (expression-
-   matched 0.115 and 0.029). The brain's clock coupling is above 99.5 % and 99 % of them.
-2. The brain-to-periphery drop is not specific to the clock genes: any gene set drops as much or more (A263).
-3. A tissue's clock departs from its person's body time with an SD of 1.0 h (thyroid) to 3.2 h (lung), 11 body
-   tissues; median upper 90 % bound 2.2 h. An upper bound: not above the companion gene sets.
+1. Across the 27 GTEx peripheral tissues, stronger clocks are more coupled (Spearman rho +0.734; registered prediction,
+   from oscillator theory, rho < 0: not supported).
+2. Specific to the clock genes: 200 expression-matched and 200 stress-responsive gene sets give rho near 0 (medians
+   −0.160 and 0.109; q95 0.258 and 0.453). Calibrated against the stress-responsive sets: A290, running.
+3. The brain follows the rule: in the baboon, where brain and peripheral amplitudes overlap, brain regions sit on the
+   periphery's line (median residual −0.001, 11 of 22 above). Human brain couples at 0.406 against 0.679 in the
+   periphery, with clock amplitude 1.15 against 2.78.
+4. A tissue's clock departs from its person's body time with an SD of 1.0 h (thyroid) to 3.2 h (lung), 11 body
+   tissues; an upper bound (not above the companion gene sets).
 
 **Figure:** `figures/organs_health/organs_health.png` (`scripts/organs_compute.py`, `scripts/organs_health.py`; wide).
-A. coupling per tissue (95 % donor-bootstrap interval), sorted within periphery and brain, coloured by organ system;
-black: group medians; grey dashed: 95th percentile of the group median over 200 stress-responsive gene sets. Pituitary
-(in neither registered group) not shown: 0.605. D. SD of a tissue's departure from its person's body time, with 90 %
-interval.
+A. human (GTEx fast deaths): clock amplitude (log scale) against coupling to the body's clock state, one dot per tissue,
+coloured by organ system (brain pink); grey: least-squares line over the peripheral tissues. B. baboon, the same (35
+peripheral tissues, 22 brain regions). C. amplitude-coupling correlation of the clock genes (blue) against 200
+expression-matched and 200 stress-responsive gene sets (grey dots). D. SD of a tissue's departure from its person's
+body time, with 90 % interval.
 
 **Speaker notes**
-- Status: A263 registered, not blind (H263.1 fail: erratum to A142); the comparison of absolute couplings with the gene
-  sets (bullet 1, grey line) is post hoc, read from the same A263 sets. A259 registered (H259.1 fail, H259.2 no tissue
-  above its companions). The per-tissue intervals of panel A are new (A263's fit with a 200-draw donor bootstrap).
-- How to read it biologically: coupling of a gene set measures how much of its donor-to-donor variation a tissue
-  shares with the body. For ordinary genes that sharing is small in the periphery (body-wide signals: hormones, agonal
-  state, ischaemia) and almost nil in the brain, which is shielded from circulating signals and procured and preserved
-  differently. So the brain shares little of anything with the body; the clock is the program it shares most, keeping
-  60 % of its peripheral coupling where other programs keep a quarter to a third (log ratio −0.51 against set medians −1.08
-  and −1.31). Brain and body run on one clock state; the brain's lower coupling is its general separation from the body,
-  not a separate clock.
-- Not a measurement artefact (post hoc, same table): noise would inflate a tissue's own unshared variation, but the
-  brain's is smaller than the periphery's (psi median 0.38 vs 0.94); its coupling is lower because it shares far less
-  of the body's clock state (z2 0.16 vs 1.51). Coupling does not follow clock-gene counts across GTEx tissues (A271
-  post hoc, rho 0.09), and the fresh, timed baboon brain shows the same gap (0.42 vs 0.71).
-- What is claimed beyond "brain clocks are weaker" (known; amplitude 1.15 vs 2.78 here): nothing beyond the general
-  rule of R2.2. In the baboon, where brain and peripheral amplitudes overlap, the brain sits on the periphery's
-  amplitude-coupling line (A289 H289.3 fail: median residual -0.001, 11 of 22 above): the brain's lower coupling is
-  what its weaker clocks predict. GTEx brain regions sit above the line, but only by extrapolation (post hoc).
-- The blood-brain barrier is not the explanation (A289, registered): pineal and pituitary, outside the barrier, couple
-  less than brain regions behind it in baboon (0.12 vs 0.42) and sheep (0.08 vs 0.20); the pineal not at all in either
-  (post hoc reading: its clock is set by the SCN's sympathetic input, not by the body). They are glands, so the barrier
-  is not isolated. The GTEx pituitary (0.605) is the exception.
-- Wording after the erratum: "the brain is less coupled to the body's shared state", never "the brain's clock is the
-  exception".
-- Brain vs periphery as blocks (A142, registered): r* 0.639 [0.530, 0.728] against random 13-tissue peripheral blocks
-  (median 0.978); digestive 0.883 [0.819, 0.971] against 7-tissue blocks (median 0.970). The clock genes agree between
-  brain and periphery more than other gene sets do (r* 0.803 against set medians 0.417 and 0.376).
-- Compared with CHIRAL (Talamanca 2023): CHIRAL gives each tissue a mean amplitude and phase relative to one donor phase,
-  assuming every tissue follows it fully. Panel A estimates how fully (coupling); panel D the spread between people
-  around a tissue's mean offset (variance across donors, not a per-person estimate). With donors over the whole day, a
-  two-step CHIRAL pipeline could approach A (A145); hospital hours and the gene-set comparison are what it lacks.
-- Whole blood (0.07) and testis (0.21) are the least coupled peripheral tissues.
-- Panel D bounds how far a tissue can run on its own time; it does not show that it does (H259.2): a non-clock program
-  shared by a donor's tissues raises the estimate.
+- Status: A104 registered (H104.1, rho < 0, not supported; the positive relation is a post hoc reading made
+  registered by A144 and A271 Part B); A144 part 1 (registered): not noise shared within donors, it lies in the shared
+  part; A271 Part B H271.2 pass (q95 rule; the calibrated form, A290, is running); A289 H289.3 (registered, fail:
+  brain on the line, the outcome shown); A259 registered (H259.1 fail, H259.2 no tissue above its companions).
+- Why strong clocks couple more is open. A144's registered candidate: a tissue's amplitude is a population amplitude;
+  body-wide signals keep its cells in phase, raising amplitude and coupling together (part 2 inconclusive).
+- Panel A plots the A263 fit (peripheral host, pituitary in neither group: 26 peripheral tissues, rho 0.745); the
+  registered A104 statistic counts the pituitary as peripheral (27 tissues, 0.734). Human brain regions sit above the
+  peripheral line, but only by extrapolation (brain amplitudes 0.96-1.33 at the periphery's lower edge, post hoc); the
+  baboon, with overlapping amplitudes, decides (A289).
+- The brain's lower coupling is not specific to the clock genes (A263): every gene set drops in the brain, and the
+  clock is the program the brain shares most with the body (brain coupling 0.406 against stress-responsive and
+  matched set medians 0.064 and 0.029; post hoc). Brain vs periphery as blocks (A142, registered): r* 0.639 [0.530,
+  0.728] against random 13-tissue peripheral blocks (median 0.978). Wording: "the brain is less coupled to the body's
+  shared state", never "the brain's clock is the exception".
+- Not a measurement artefact (post hoc): the brain's own unshared variation is smaller than the periphery's (psi
+  median 0.38 vs 0.94); it shares far less of the body's state (z2 0.16 vs 1.51); coupling does not follow clock-gene
+  counts (A271 post hoc, rho 0.09); the fresh, timed baboon brain shows the same.
+- Not the blood-brain barrier (A289, registered): pineal and pituitary, outside it, couple less than brain regions in
+  baboon (0.12 vs 0.42) and sheep (0.08 vs 0.20), the pineal not at all (post hoc reading: its clock is set by the
+  SCN's sympathetic input). They are glands, so the barrier is not isolated.
+- Compared with CHIRAL (Talamanca 2023): CHIRAL gives each tissue a mean amplitude and phase relative to one donor
+  phase, assuming every tissue follows it fully. Coupling estimates how fully; panel D the spread between people
+  around a tissue's mean offset (a variance across donors, not a per-person estimate). With donors over the whole day,
+  a two-step CHIRAL pipeline could approach coupling (A145); hospital hours and the gene-set comparison are what it
+  lacks.
+- Panel D bounds how far a tissue can run on its own time; it does not show that it does (H259.2).
 
-**Source:** `presentation/output/organs/couplings.csv`; `exploratory/A263_companions/output/{sets_human,tests_human}.csv`;
-`exploratory/A142_organ_blocks/output/tests.csv`; `exploratory/A259_tissue_deviation/output/score/{targets,tests}.csv`.
+**Source:** `presentation/output/organs/couplings.csv`; `results/figure_2/output/organs/r2_couplings.csv`;
+`exploratory/A271_responsive_companions/output/{a104_sets,a104_tests}.csv`; `exploratory/A289_brain_barrier/output/tests.csv`;
+`exploratory/A263_companions/output/sets_human.csv`; `exploratory/A142_organ_blocks/output/tests.csv`;
+`exploratory/A259_tissue_deviation/output/score/{targets,tests}.csv`.

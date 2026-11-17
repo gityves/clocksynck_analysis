@@ -1,16 +1,20 @@
-"""Slide figure (results, R2.1): the organs of a person share one clock state; the brain is less coupled to it.
+"""Slide figure (results, R2.1, merged with R2.2): organs share one clock state; weak clocks are the loosely coupled ones,
+the brain included.
 
-A. Coupling of every GTEx tissue to the body's clock state (peripheral-anchor host, peripheral tissues read leave-one-out;
-   A263 R2 fit, registered readout, here with a donor bootstrap: `organs_compute.py`): one dot per tissue with its 95 %
-   interval, sorted within periphery (26 tissues) and brain (13 regions), coloured by organ system; black: group medians;
-   grey dashed: 95th percentile of the same group median over 200 stress-responsive gene sets (A263 sets, post hoc
-   comparison). Pituitary, in neither registered group, is not shown (coupling in the caption).
+A. GTEx fast deaths: own clock amplitude against coupling to the body's clock state (peripheral-anchor host, peripheral
+   tissues read leave-one-out; A263 R2 fit, `organs_compute.py`), one dot per tissue, coloured by organ system (brain
+   regions pink); grey: least-squares line coupling = a + b log(amplitude) over the peripheral tissues. Pituitary (in
+   neither A263 group) not shown. The registered statistic is A104's (H104.1 not supported; observed rho +0.734).
+B. Baboon (Mure 2018, 12 animals; A42 readout 2): the same, 35 peripheral tissues and 22 brain regions; grey: the
+   peripheral line (A289 H289.3: the brain sits on it). Pineal, pituitary and ocular tissues not shown.
+C. Is the relation specific to the clock genes? rho(amplitude, coupling) over the GTEx peripheral tissues for the clock
+   genes (blue) and 200 expression-matched and 200 stress-responsive gene sets (A271 Part B, H271.2; calibrated: A290).
 D. How far a tissue's clock departs from its person's body time (A259, registered): SD across donors [h] with its 90 %
    interval, 11 body tissues. An upper bound: the departure is not above that of the companion gene sets (H259.2).
 
-Data: presentation/output/organs/couplings.csv; exploratory/A263_companions/output/sets_human.csv;
-exploratory/A259_tissue_deviation/output/score/targets.csv. GTEx aggregates only (one value per tissue).
-Output: presentation/figures/organs_health/organs_health.{svg,png}.
+Data: presentation/output/organs/couplings.csv; results/figure_2/output/organs/r2_couplings.csv;
+exploratory/A271_responsive_companions/output/a104_sets.csv; exploratory/A259_tissue_deviation/output/score/targets.csv.
+GTEx aggregates only (one value per tissue). Output: presentation/figures/organs_health/organs_health.{svg,png}.
 
     python scripts/organs_health.py
 """
@@ -23,12 +27,13 @@ import pandas as pd
 import paperfig as pf
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _systems import COLOR, gtex_system, legend_in  # noqa: E402
+from _systems import COLOR, baboon_system, gtex_system, legend_in  # noqa: E402
 
 PAPER = Path(__file__).resolve().parents[2]
 EXP = PAPER / "exploratory"
 OUT = PAPER / "presentation" / "figures" / "organs_health"
 INK, MUTED = "#222222", pf.GREY
+CS = "#1f77b4"
 SHORT = {"Adipose - Visceral (Omentum)": "adipose, visceral", "Adipose - Subcutaneous": "adipose, subcut.",
          "Skin - Not Sun Exposed (Suprapubic)": "skin, not sun-exp.", "Skin - Sun Exposed (Lower leg)": "skin, sun-exposed",
          "Heart - Atrial Appendage": "heart, atrium", "Esophagus - Mucosa": "oesophagus mucosa",
@@ -36,28 +41,38 @@ SHORT = {"Adipose - Visceral (Omentum)": "adipose, visceral", "Adipose - Subcuta
          "Thyroid": "thyroid", "Lung": "lung"}
 
 
-def couplings(ax, t, sets):
-    x0 = 0
-    ticks = []
-    for g, col in (("periphery", "median_periph"), ("brain", "median_brain")):
-        s = t[t.group == g].sort_values("coupling", ascending=False)
-        x = x0 + np.arange(len(s))
-        c = [COLOR[gtex_system(k)] for k in s.index]
-        ax.vlines(x, s.coupling_lo, s.coupling_hi, colors=c, lw=1, alpha=0.6, zorder=1)
-        ax.scatter(x, s.coupling, s=22, c=c, edgecolor="white", lw=0.4, zorder=2)
-        ax.plot([x[0] - 0.4, x[-1] + 0.4], [s.coupling.median()] * 2, color=INK, lw=1.6, zorder=3)
-        q = sets.loc[sets.kind == "responsive", col].quantile(0.95)
-        ax.plot([x[0] - 0.4, x[-1] + 0.4], [q] * 2, color=MUTED, lw=1.4, ls="--", zorder=0)
-        ticks.append((x.mean(), g))
-        x0 += len(s) + 2
-    ax.annotate("other gene sets\n(95th percentile)", (x[0] - 0.4, q), xytext=(0, -4), textcoords="offset points",
-                ha="left", va="top", fontsize=8, color=MUTED)
-    ax.set_xticks([p for p, _ in ticks], [lab for _, lab in ticks])
-    ax.tick_params(axis="x", length=0)
-    ax.set_xlim(-1.5, x0 - 1)
-    ax.set_ylim(0, 1.05)
-    ax.set_ylabel("coupling to the\nbody's clock state")
-    legend_in(ax, fontsize=8, loc="lower left")
+def scatter(ax, t, system, title):
+    """Own amplitude against coupling, peripheral line; `t`: tissue index, columns group, coupling, own_amplitude."""
+    t = t[t.group.isin(["periphery", "brain"])]
+    per = t[t.group == "periphery"]
+    b, a = np.polyfit(np.log(per.own_amplitude), per.coupling, 1)
+    x = np.geomspace(t.own_amplitude.min() * 0.9, t.own_amplitude.max() * 1.1, 50)
+    ax.plot(x, a + b * np.log(x), color=MUTED, lw=1.2, zorder=1)
+    ax.scatter(t.own_amplitude, t.coupling, s=24, c=[COLOR[system(k)] for k in t.index], edgecolor="white", lw=0.4,
+               zorder=2)
+    ax.set_xscale("log")
+    ax.minorticks_off()
+    ax.set_xticks([1, 2, 4], ["1", "2", "4"])
+    ax.set_ylim(-0.05, 1.05)
+    ax.set_xlabel("clock amplitude")
+    ax.set_title(title, fontsize=13, color=INK)
+
+
+def specificity(ax, sets):
+    s = sets[sets.block == "periphery"]
+    clock = s.loc[s.kind == "clock", "rho"].iloc[0]
+    for j, k in enumerate(("matched", "responsive")):
+        v = s.loc[s.kind == k, "rho"].dropna().to_numpy()
+        ax.scatter(v, j + np.random.default_rng(j).uniform(-0.18, 0.18, len(v)), s=6, color=MUTED, alpha=0.5, lw=0)
+    ax.axvline(clock, color=CS, lw=2.2)
+    ax.annotate("clock\ngenes", (clock, 1.5), xytext=(-4, 0), textcoords="offset points", ha="right", va="center",
+                fontsize=9, color=CS)
+    ax.axvline(0, color=MUTED, lw=0.8, ls="--")
+    ax.set_yticks([0, 1], ["expression-\nmatched", "stress-\nresponsive"])
+    ax.tick_params(axis="y", length=0)
+    ax.set_ylim(-0.5, 1.9)
+    ax.set_xlim(-1, 1)
+    ax.set_xlabel("amplitude-coupling\ncorrelation")
 
 
 def departure(ax, d):
@@ -76,13 +91,17 @@ def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
     t = pd.read_csv(PAPER / "presentation/output/organs/couplings.csv", index_col="tissue")
-    sets = pd.read_csv(EXP / "A263_companions/output/sets_human.csv")
+    bab = pd.read_csv(PAPER / "results/figure_2/output/organs/r2_couplings.csv").query("species == 'baboon'")
+    sets = pd.read_csv(EXP / "A271_responsive_companions/output/a104_sets.csv")
     dep = pd.read_csv(EXP / "A259_tissue_deviation/output/score/targets.csv")
-    lay = pf.Layout.slide("AD", kind="wide", col_ratios=[1.7, 1])
-    couplings(lay.axes["A"], t, sets)
+    lay = pf.Layout.slide("ABCD", kind="wide", col_ratios=[1, 1, 0.7, 0.85])
+    scatter(lay.axes["A"], t, gtex_system, "human")
+    lay.axes["A"].set_ylabel("coupling to the\nbody's clock state")
+    legend_in(lay.axes["A"], fontsize=8, loc="upper left")
+    scatter(lay.axes["B"], bab.set_index("compartment"), baboon_system, "baboon")
+    specificity(lay.axes["C"], sets)
     departure(lay.axes["D"], dep)
     fig = lay.finalize()
-    print(t.groupby("group").coupling.median().round(3).to_dict())
     print(pf.collisions(fig))
     pf.save(fig, OUT / "organs_health")
 
