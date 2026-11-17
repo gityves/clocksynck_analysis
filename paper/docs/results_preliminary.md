@@ -5961,3 +5961,18 @@ Run `score_a289.py` (seconds; reads the A42 readout-2 table, no refit); one scor
 - Code: `exploratory/A292_external_tracking/scripts/score_a292.py --stage calibrate | score --jobs 4` (calibration
   131 s; scoring 3059 s, mostly the 200 companion refits; run directly, not through `run.sh`).
 <!-- src: paper/exploratory/A292_external_tracking/output/{calibration,tests,descriptive,tissues,sets}.csv -->
+
+### A291 post hoc (2026-11-17; not registered, chosen after A291 and A292 were scored; descriptive, from the A104 table): tissues differ in the shared rhythm they carry, not in their own variation
+- Coupling is c = S / (S + 2 psi) with S the shared clock-plane variance and 2 psi the tissue's own. Over the 27
+  peripheral tissues, S spans 0.12 to 10.33 (85-fold; sd of log 1.02) and 2 psi spans 0.90 to 4.14 (5-fold; sd of log
+  0.38). Own variance does not scale with the shared rhythm: Theil-Sen slope of log 2 psi on log S 0.07 [-0.08, 0.23];
+  rho(own amplitude, S) 0.960, rho(own amplitude, 2 psi) 0.504.
+- Reading (post hoc): in the periphery the amplitude-coupling relation is a difference in how much of the body's
+  rhythm a tissue expresses above an own-variation floor of similar size in every tissue, not a difference in how
+  much a tissue departs from the body's time. With A291 (the floor is not counting noise or host reliability), what
+  the floor is (sample-level technical variation, or person-specific tissue clock variation of similar size
+  everywhere) is not decided: A259 found matched non-clock genes carry 0.30 to 0.74 of a tissue's departure.
+- Brain block (13 regions, own host; units not comparable with the periphery): S spans 2-fold, 2 psi 4-fold, and the
+  two are negatively related (rho -0.434): between brain regions, own variation, not the shared rhythm, is what
+  varies.
+<!-- src: paper/results/figure_2/output/backbone/a104_gtex_tissues.csv (S = z2 V, own = 2 psi) -->
