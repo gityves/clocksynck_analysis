@@ -7486,3 +7486,42 @@ fibrosis cohort is added to the power stage before any observed value: Natri 202
 twin of `lung_natri`: 1,027 rows, 0 differences; 40 controls, 61 cases, one study, strata = processing site), same
 statistics, nulls and rule (within-stratum label permutation; strata with both arms). The primary rule is applied to
 whichever cohort reaches it; if both do, both are scored and the HLCA one is the replication.
+
+## A284 (2026-11-17, user: "Test residency (B2) first ... Fix in advance which labels count as resident and which as circulating ... then score once"; block B2 of the cell-type program; **NOT BLIND** for: the pairwise |r| of the coarse classes (A272/A274/A280/A283: lymphocytes at the companion median; plasma and B are both "lymphocyte"), A281 (lymphocyte clocks not coherent), and the label scout (`exploratory/A284_residency/scout/residency_labels.csv`: labels, donors, cell counts only); NOT seen: any statistic of a resident or circulating class separately): does sharing of the tissue's clock state increase with residency? **Healthy atlases; resident against circulating T, plasma against B, macrophages against monocytes; H284.1-3**
+**Labels (fixed now; exact strings).**
+- *T (H284.1).* Resident: IBDverse `author_cell_type` in {CD8 TRM TRGC2, Tissue resident GD T}; breast (Kumar)
+  Census `cell_type` "CD8-positive, alpha-beta memory T cell" (= author CD8-Trm, same 19,213 cells); Kong ileum
+  "intraepithelial lymphocyte" (= IELs ID3 ENTPD1, 5,004 cells). Circulating: IBDverse {CD4 CM/naive, CD4 CM, CD8
+  naive}; breast "effector memory CD8-positive, alpha-beta T cell", "effector memory CD4-positive, alpha-beta T cell",
+  "CD4-positive, alpha-beta T cell" (= CD8-Tem, CD4-Tem, CD4-naive); Kong ileum "naive T cell" (= T cells Naive CD4).
+  Atlases: IBDverse ileum, IBDverse rectum (healthy), breast, Kong ileum. No TRM label in HLCA, heart, optic nerve,
+  muscle, Pelka colon, Kong colon (scout): not used.
+- *B lineage (H284.2).* Resident = plasma, circulating = B, as the built compartments: breast, Pelka colon, Kong ileum,
+  Kong colon, IBDverse ileum and rectum.
+- *Myeloid (H284.3).* Resident = macrophage, circulating = monocyte, as built: HLCA (lung:macrophage, lung:monocyte),
+  breast (macrophage_DC, monocyte). Pelka colon, Kong and IBDverse lack a usable monocyte class (scout): not used.
+**New tables (built before any statistic; all genes, same donors and strata rules as the source genome tables).**
+IBDverse T subclasses from the local raw file (`author_cell_type`, healthy donors); breast and Kong ileum T classes from
+the genome-wide group pseudobulks (`atlas_wg`, Census `cell_type`). Each new table also carries the source's non-immune
+classes unchanged (checked against the existing genome tables: identical rows).
+**Statistic.** Per atlas and contrast, on donors having both the resident and the circulating class (>= 15 donors):
+T_res = median clock |r| (A272 statistic, strata as the atlas) of the resident class with each tissue class X
+(non-immune families: fibroblast_stromal, endothelial, mural, epithelial, parenchyma, other non-immune), T_circ the same
+with the circulating class on the same X and donors; Delta = T_res - T_circ. **Depth control:** per donor, the deeper
+of the two immune rows is thinned binomially (all genes) to the other's clock-gene count; 10 replicates (seeds [284,
+atlas, rep]), Delta averaged. Pooled Delta = mean over the contrast's atlases.
+**Tests.** Null: the resident and circulating rows of each donor swapped at random (2000 draws, seeds [284, 9, d]; exact
+under "no difference between the two classes"). H284.k passes when pooled Delta > 0 with one-sided p < 0.05, Holm over
+the three. Specificity (reported, A283 form): Delta of the 200 matched and 200 responsive companion sets on the same
+thinned tables; the clock's pi among them, p_cal against the swap distribution of pi.
+**Expectation (mouse colon, A21/A31):** macrophage 0.514, plasma 0.495, B 0.167, T 0.000 (couplings to known time).
+**What each outcome means for the health chapter (stated now).** All three pass: "cells that live in the tissue share
+its clock state; circulating immune cells do not" becomes the explanation of the lymphocyte gap (A272-A283), and the
+lymphocyte class is a mixture of the two. T fails with plasma or macrophage passing: residency matters for the B and
+myeloid lineages but resident T cells still do not share; the T-cell gap is a property of T cells (with A281: no
+readable clock of their own). None passes: the gap is not about residency; the chapter keeps "lymphocytes are apart"
+without a mechanism. A Delta that passes the swap test but not the companions is a shared non-clock state of resident
+cells, not a clock statement.
+**Limits.** Labels are the authors' (marker-defined); circulating T in tissue may be partly recirculating memory;
+breast Tem may be tissue effectors (stated by the scout). Kong ileum IELs come from the epithelial fraction.
+**Code.** `exploratory/A284_residency/scripts/build_a284.py`, `score_a284.py`.
