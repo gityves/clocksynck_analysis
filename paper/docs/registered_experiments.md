@@ -7535,3 +7535,74 @@ differ). Donors with both classes: T: IBDverse ileum 100, rectum 57, breast 94, 
 Pelka colon 26, Kong ileum 25, Kong colon 16, IBDverse ileum 149, rectum 173; macrophage-monocyte: HLCA 107, breast
 65. All twelve are eligible (>= 15). Rows: the A17 healthy targets (as A272/A274/A280), new T rows on the same donors
 and strata.
+
+## A287 (2026-11-17, user: "The unsigned lymphocyte covariance test, to separate 'no clock' from 'a different clock'"; follow-up of A281 (B1); **NOT BLIND** for: A281 in full (lymphocyte signed coherence C fails in 7 of 9 atlases, IBDverse T C -0.43 / -0.45 at the 12th / 6th percentile of matched sets; thinned fibroblasts pass in 7 atlases), A275 (per-gene sharing); NOT seen: any waveform-free covariance statistic of any compartment): do tissue lymphocytes have structured clock-gene covariance between donors that is not the tissue's waveform (a different clock), or none (no clock)? **The nine atlases of A281 with a lymphocyte and a fibroblast-stromal compartment on >= 15 shared donors; H287.1, H287.2**
+**Why a new statistic.** A281's signed C reads the clock genes against the GTEx waveform's phase relations: a clock whose
+genes keep other relations reads low. The unsigned R of `development.unsigned` is no remedy: it reads a shift common to
+the clock genes of a sample as coherence (A237 simulation: false positives 0.625 to 1.000). The statistic here uses no
+waveform and removes the common shift.
+**Statistic U (waveform-free).** Per compartment, on the donors shared by the atlas's lymphocyte and fibroblast-stromal
+compartments (the A281 pairs): y = log((count + 0.5) / depth) of the 14 clock genes, centred per gene within stratum,
+then each row centred over the genes (the per-sample shift removed); U = share of the variance of the gene correlation
+matrix of y in its two leading eigenvalues ((lambda1 + lambda2) / trace). Any clock with one phase per gene puts its
+covariance in a plane (rank 2), whatever the phase relations; no clock gives the noise level.
+**References.** (i) 200 expression-matched gene sets (the A281 sets, `A272.pseudo_sets`, seeds as A281), each treated
+identically; pi = share of matched sets with U below the clock's. (ii) 1000 per-gene permutations of y within strata:
+p_perm. (iii) 200 responsive sets (`clocksync.pairwise.companions`, seeds [287, atlas, 1]): reported, not decisive (they
+covary by design). A compartment **carries clock-gene structure** when pi >= 0.95 and p_perm < 0.05 (no pairing is
+involved, so the A276 bias of the clock plane does not arise; under exchangeability with matched genes pi is uniform).
+**Power.** The fibroblast-stromal rows thinned binomially (all genes of the sets, as A281 but every gene) to the
+lymphocyte compartment's median clock-gene count, 20 replicates (seeds [287, atlas, 100 + rep]), 200 permutations each:
+an atlas is **powered** when the thinned fibroblasts carry structure in >= 80 % of replicates.
+**Tests.**
+- **H287.1 (a different clock):** in the powered atlases, the lymphocytes carry clock-gene structure in >= half.
+- **H287.2 (no clock; read only if H287.1 fails):** in the powered atlases, the lymphocytes do not in >= 2/3.
+- Neither: undecided. Fewer than 3 powered atlases: not estimable.
+**Descriptive.** U, pi, p_perm of every compartment of the nine pairs, unthinned; the leading-plane phase of each clock
+gene (angle of its loading on the two leading eigenvectors) and its circular correlation with the waveform acrophases,
+for compartments that carry structure; responsive pi.
+**What each outcome means (stated now).** H287.1 passes: lymphocytes keep a clock-like covariance of their own whose
+gene relations are not the tissue's waveform (A281: signed C low), a candidate "different clock"; the text then says
+the lymphocyte clock is unread by the tissue waveform, not absent, and the descriptive phases say how it differs.
+H287.2 passes: no clock-gene covariance beyond expression-matched genes where depth-matched fibroblasts show it; "no
+readable clock" holds for any phase pattern. Neither: the lymphocyte clock stays undecided.
+**Limits.** A non-clock programme acting on several clock genes (PER1 is a glucocorticoid and immediate-early target,
+A275) also gives structure: a pass is clock-gene covariance, read with the responsive pi and the phases. The between-
+donor clock spread depends on the atlas's sampling window (shared by both compartments).
+**Code.** `exploratory/A287_lymphocyte_covariance/scripts/score_a287.py` (A281 tables and sets; `--design` first).
+
+## A288 (2026-11-17, user: "A larger myeloid design ... since the macrophage lead is the only residency-like signal left", then "okay go ahead" to the plan: macrophages against both companion families in every atlas with a macrophage class, IBDverse relabelled; resident against monocyte-derived macrophages as a secondary; macrophage against monocyte dropped (monocytes too rare in tissue, scout); **NOT BLIND** for: A272/A274 family matrices (myeloid with fibroblasts 0.559, matched 0.290, responsive 0.360; myeloid-X 0.409 in A272), A281 (macrophages coherent in most atlases, post hoc), A282 post hoc (fibroblast-myeloid lower in living tissue), A284 H284.3 (macrophage over monocyte, Delta 0.092, FAIL after Holm), the label scout of A284; NOT seen: any statistic of a macrophage class on the calibrated test, any IBDverse macrophage row, any macrophage subclass): do macrophages keep the tissue's shared clock state as stromal-vascular cells do? **Healthy body atlases with a macrophage class; H288.1-2 (primary), H288.3 (secondary)**
+**Classes.** MAC = the macrophage class of each atlas as built: lung_hlca `lung:macrophage`; breast, Pelka colon,
+muscle, Kong ileum, Kong colon `*:macrophage_DC`; optic nerve (head, nerve) and anterior eye (ciliary, trabecular)
+`*_macrophage_DC` (two classes, both MAC); IBDverse ileum and rectum: new rows `<tissue>:macrophage` = the healthy
+cells of the author labels {Macrophage CD163hi, Macrophage CD163lo, Macrophage CCL3/4 CXCL9/10, Macrophage MMP9,
+Macrophage proliferating} (= Census "tissue-resident macrophage"), from the raw file as A284. Heart (`heart:myeloid`,
+mixed) is not used. `macrophage_DC` classes include dendritic cells (limit). Kong ileum: epithelial rows without the
+IELs (A284 data note).
+**Statistic (A283 form, `clocksync.pairwise`).** X = non-immune classes (A284). Per atlas: T_MAC = median clock |r| over
+(MAC, X) pairs; T_LY = median over (lymphocyte, X) pairs; D_MAC = T_MAC - T_LY. Pooled = mean over the atlases where the
+statistic has >= 1 pair (an atlas without a pair is dropped from that mean, fixed now; A284 lesson). Companions: 200
+matched + 200 responsive sets per atlas (seeds [288, atlas, family]); pi of the pooled clock value among the pooled
+companion values; null: 5000 placebo draws (donors permuted within compartment x stratum, seeds [288, d, atlas]);
+p_cal as A283.
+- **H288.1:** pooled T_MAC is clock-specific: p_cal < 0.05 against both families (the matched level is already seen
+  at the family level, so the responsive family decides in practice).
+- **H288.2:** pooled D_MAC > 0 beyond both families (p_cal < 0.05 for each): macrophages share more clock state with the
+  tissue than lymphocytes do (the H272.2 contrast with macrophages in place of stromal-vascular cells).
+- Holm over H288.1-2 (max of the two family p_cal per test).
+**Secondary H288.3, resident against monocyte-derived macrophages (A284 design: donors with both, deeper row thinned to
+the other's clock-gene count, 10 replicates, Delta = T_res - T_md over X, swap null 2000 draws, seeds [288, 9, d]).**
+Decided on HLCA only, where origin is labelled: resident = Census `cell_type` "alveolar macrophage" (HLCA "Alveolar
+macrophages", "Alveolar Mph CCL3+", "Alveolar Mph MT-positive", "Alveolar Mph proliferating"), monocyte-derived =
+"elicited macrophage" (HLCA "Monocyte-derived Mph"); "lung macrophage" (interstitial perivascular) not used. Passes when
+Delta > 0 with one-sided p < 0.05. Descriptive, IBDverse ileum and rectum: CD163hi against CD163lo (a maturity proxy
+from markers, not origin). Eligibility: >= 15 donors with both and >= 1 pair per class.
+**What each outcome means (stated now).** H288.1 and H288.2 pass: macrophages join the stromal-vascular cells as
+keepers of the tissue's shared clock state, and the cell-type section reads "tissue cells and macrophages, not
+lymphocytes" (with mouse colon 0.514 and aorta 0.810 to known time). H288.1 passes, H288.2 fails: macrophages share
+clock state but not measurably more than lymphocytes. H288.1 fails: macrophages are not shown to keep the shared state
+beyond non-clock genes (as stromal-vascular sharing in A272, H283.1); the section names stromal-vascular cells only.
+H288.3 passes: long-lived resident macrophages share more than recruited ones (a residency effect within one lineage).
+**Limits.** Labels are the authors'; most MAC classes include DCs; the matched-family level is not blind.
+**Code.** `exploratory/A288_macrophage_pairwise/scripts/build_a288.py`, `score_a288.py` (`--design` first, a design
+addendum with atlases and pair counts before scoring).
