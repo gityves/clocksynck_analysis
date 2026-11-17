@@ -101,7 +101,7 @@ def unit(n, res, circ, pb, family, k):
     for rep in range(N_REP):
         rng = np.random.default_rng([SEED, k, 100 + rep])
         tt = t.copy()
-        cnt = tt[use].to_numpy(np.int64)
+        cnt = np.array(tt[use].to_numpy(), dtype=np.int64)  # a writable copy (joblib inputs can be read-only)
         s = tt[clock].sum(1).to_numpy(float)
         for a, b in zip(ir, ic):  # thin the deeper row of the pair to the other's clock-gene count
             hi, lo = (a, b) if s[a] > s[b] else (b, a)
