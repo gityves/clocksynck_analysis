@@ -6172,3 +6172,20 @@ median and percentile reproduce in all nine pairs.
   more own variation) stays a post hoc observation.
 - Code: `exploratory/A300_frontier_season/scripts/score_a300.py --n-perm 500 --jobs 4`.
 <!-- src: paper/exploratory/A300_frontier_season/output/{tests,tissues}.csv -->
+
+### A299 post hoc (2026-11-17; not registered, at the user's question whether the cortex effect is the converse of the medulla hypothesis with clearer markers): the cortex effect is not a medulla effect
+- Same 75 samples. Marker consistency (mean pairwise correlation of log fractions) and spread (SD of the log score):
+  medulla 0.879 and 1.68 (a fivefold range), cortex 0.704 and 0.50, fat 0.788 and 1.20, capsule / stroma (DCN, LUM,
+  COL1A2, COL3A1) 0.731 and 0.68, blood 0.952 and 1.16. Medulla content is well measured and varies widely.
+- Score correlations: cortex with medulla -0.13, with stroma -0.44, with fat +0.07; medulla with stroma +0.32.
+- Phase change per SD (90 %), single scores: fat +0.35 (-0.38 to +0.86), stroma +0.35 (-0.34 to +0.97), blood -0.05.
+  Joint models: cortex -1.29 h (-2.07 to -0.69) with medulla (medulla -0.48, -0.98 to +0.23); cortex -1.23 h (-2.08 to
+  -0.51) with medulla, fat and stroma.
+- Reading (post hoc). The cortex score is not an inverse medulla score (correlation -0.13) and its effect survives
+  adjustment for medulla, fat and capsule content; medulla content, measured with consistent markers over a fivefold
+  range, does not advance the phase (if anything the opposite sign). The cortex score varies little (SD 0.50 of the
+  log) and its genes (STAR, CYP11A1, CYP11B1, CYP17A1, CYP21A2) are induced by ACTH: it may index steroidogenic activity
+  more than cortex content. Under that reading, adrenal samples under stronger ACTH drive sit closer to the body's time
+  and express it more strongly, a hormonal route consistent with the fetal cortex result (A264, A266); not tested.
+- Code: `exploratory/A299_adrenal_medulla/scripts/posthoc_a299.py`.
+<!-- src: paper/exploratory/A299_adrenal_medulla/output/posthoc/{scores,correlations,effects}.csv -->
