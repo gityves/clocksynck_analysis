@@ -7425,3 +7425,28 @@ a source class (0 missing). Living: HLCA 55 donors (SV_X 3, LY_X 3), breast 126 
 ileum, Kong colon), T_SV over seven. Post-mortem: HLCA 124 (22, 17), heart 27 (Koenig, Kuppe; 12, 4), optic nerve 83
 (34, 3), anterior eye 67 (41, 0), cortex HBCC 145, DLPFC 44, MTG 47 (CX_diff 27, 22, 22): D over three atlases (HLCA,
 heart, optic nerve), T_SV over four, T_CX over three. HLCA is the only atlas in both arms.
+
+## A285 (2026-11-17, user: "check whether the other companion tests share the bias ... I would register it as a calibration before anything is written up"; a calibration and calibrated restatement, no new biology; **NOT BLIND**: every clock and companion statistic of the tests below is known; seen before registration: a read-only code inventory (`exploratory/A285_companion_calibration/scout/inventory.md`) and the smoke-test placebos of A251/A255 (5 sets, code checks); NOT seen: any placebo draw with the seeds below, any calibrated p): are the companion rules of the bulk and tumour headline results calibrated under no pairing, and do their verdicts stand on the calibrated percentile test of A283? **A251 skin, A255 fat-skin and surgical, A138 tumour-normal, A227 tumour myeloid and T/NK; A263 Part A not run (below)**
+**Tests covered.** H251.1, H251.2a, H251.2b; H255.1, H255.3; H138.4 (matched q95 descriptive, responsive H138.4-R);
+H227.1, H227.2 (matched, the registered family; responsive from A271 reported). Each exactly as scored: statistic,
+pooling weights, 200 + 200 companion sets with the scored seeds, states computed once.
+**Placebo.** The pairing unit is permuted within the scored strata (A251 women within compartment; A255 persons within
+tissue and cohort; A138 normal samples across patients within cancer; A227 normal-side rows across patients within
+cohort x chemistry stratum), the clock and every companion set re-paired identically in a draw; 2000 draws per test,
+seeds [285, test, d]. States unchanged (no refit).
+**V285 (per test x family):** the placebo rejection rate of the scored rule ("clock above the companion q95") <= 0.0646
+(0.05 + 3 SD at 2000 draws). A test that exceeds it carries the A276 bias.
+**Restatement H285 (read for every test, whatever V285):** pi = the clock's percentile among its 200 companions; p_cal =
+(1 + #{placebo pi >= pi}) / 2001; the clock-specific part of each verdict stands when p_cal < 0.05 in each family its
+rule used (A251, A255: both; A138: responsive (H138.4-R) and matched as reported; A227: matched, responsive reported).
+The pairing p-values against each test's own permutation null are unaffected (a permutation test of the clock itself)
+and are not restated. Reported: rate, pi, p_cal, the placebo rate of pi = 1 (the floor of p_cal).
+**Readings.** V285 pass: the scored rule was calibrated for that design (large bulk cohorts, as expected by the user).
+V285 fail with H285 pass: the verdict stands on the calibrated test. H285 fail: the clock-specific claim is reversed
+and named as such in RP and VERDICT_TABLE before any write-up.
+**A263 Part A not run.** Its coupling L is a ratio of medians from a full `Dataset.fit` per gene set: a placebo needs a
+refit of 401 sets per draw (baboon 49 min, human 4.4 h, sheep 13.8 h per pass), and permuting donors drives couplings to
+0 so L is undefined. Its verdicts are failures by wide margins (clock L above the companion medians, at the 30th to
+88th percentile); a calibration bias of the A276 size cannot turn them into passes. Stated as a limit.
+**Code.** `exploratory/A285_companion_calibration/scripts/placebo_a285.py` (one module per result, importing the scored
+scripts' functions).
