@@ -39,7 +39,7 @@ def rel(off: pd.Series, k="adrenal"):
 
 def mouse_offset(pb, donors):
     comps = sorted(pb.compartment.unique())
-    ds = cs.Dataset(pb, anchors=comps, donors=donors, name="wolff")
+    ds = cs.Dataset(pb, anchors=comps, donors=donors, min_donors=10, name="wolff")  # 12 libraries per age
     return rel(ds.timed_loadings("ct").clock_offset_h)
 
 
