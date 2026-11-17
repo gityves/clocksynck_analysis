@@ -285,14 +285,13 @@ own: where a clock would be readable at their depth, they have none.
 
 **Figure:** `figures/celltypes_health/celltypes_health.png` (`scripts/celltypes_health.py`; wide). A. every compartment
 of the ten body atlases of A272/A274: clock state shared with the tissue's non-immune cells (median |r| over its pairs),
-by cell family, black: family median; grey open circles: the same compartments' expression-matched gene sets. B. the
-registered contrasts (difference in sharing vs lymphocytes), with the medians of the
-expression-matched (circle) and stress-responsive (square) gene sets. C. own clock: signed clock-gene coherence
-between donors of the lymphocytes (cyan), of fibroblast-stromal cells of the same donors thinned to the lymphocytes'
-clock-gene counts (brown, median of 20), and of the lymphocytes' expression-matched gene sets (grey), nine atlases.
+by cell family, black: family median; grey open circles: the same compartments' expression-matched gene sets. B. own
+clock: signed clock-gene coherence between donors of the lymphocytes (cyan), of stromal-vascular (fibroblast-stromal)
+cells of the same donors thinned to the lymphocytes' clock-gene counts (brown, median of 20), and of the lymphocytes'
+expression-matched gene sets (grey), nine atlases. The registered contrasts (bullets 2-3) are not plotted.
 
 **Speaker notes**
-- Panel C, read honestly: breast CD4 T (0.38) and heart lymphocytes (0.50) are coherent alone (the 2 of 9); in the
+- Panel B, read honestly: breast CD4 T (0.38) and heart lymphocytes (0.50) are coherent alone (the 2 of 9); in the
   IBD tissues, with the deepest T cells (median 1,397 and 513 clock-gene counts, more than their fibroblasts),
   lymphocytes are below random genes (−0.43, −0.45). Thinned fibroblasts pass in >= 80 % of thinnings in 7 atlases
   (not optic nerve 0.40, Pelka colon 0.55), so A281 is powered there; A287's own statistic is powered only in Kong
