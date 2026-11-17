@@ -50,6 +50,16 @@ figure, then apply it to the figure at hand.
   | endocrine | purple (4) |
   | other | olive (8) |
 
+  Cell families (cell-type figures; `celltypes_health.py`, 2026-11-17):
+
+  | cell family | colour (tab10 index) |
+  |---|---|
+  | stromal-vascular | brown (5) |
+  | macrophage | orange (1) |
+  | lymphocyte | cyan (9) |
+
+  Companion gene sets (expression-matched, stress-responsive): grey open markers (circle, square) or grey dots.
+
   Other recurring entities (organ systems, cohorts, cell classes) get a fixed mapping the first time they appear;
   write it in this table.
 - Neutral elements (identity lines, references, connectors, grids): grey `pf.GREY` or lighter. Text stays in ink

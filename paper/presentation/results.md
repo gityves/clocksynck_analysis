@@ -260,3 +260,50 @@ body time, with 90 % interval.
 `exploratory/A271_responsive_companions/output/{a104_sets,a104_tests}.csv`; `exploratory/A289_brain_barrier/output/tests.csv`;
 `exploratory/A263_companions/output/sets_human.csv`; `exploratory/A142_organ_blocks/output/tests.csv`;
 `exploratory/A259_tissue_deviation/output/score/{targets,tests}.csv`.
+
+---
+
+## R2.2 Inside tissues: stromal-vascular cells and macrophages share the tissue's clock state, lymphocytes do not
+
+**Message:** read without any host or anchor, the clock state of fibroblasts, endothelial and mural cells moves with
+that of the other cells of the same person's tissue; macrophages do too; lymphocytes do not. This holds in three
+independent atlas sets and in living donors alone.
+
+**Bullets**
+1. Stromal-vascular minus lymphocyte sharing, beyond both companion gene families (calibrated, 5000 placebo draws):
+   five atlases 0.277, replication in five others 0.152, IBD cohort (IBDverse biopsies: rectum 274, ileum 242 donors) 0.413; living donors
+   only 0.225 (p_cal 0.004 to 0.020 against expression-matched, 0.011 to 0.016 against stress-responsive genes).
+2. Macrophages join the stromal-vascular cells: macrophage minus lymphocyte 0.148 (p_cal 0.003 / 0.006, 8 atlases).
+3. Lymphocytes share no more clock state than random genes in any atlas (LY_X above no companion family).
+
+**Figure:** `figures/celltypes_health/celltypes_health.png` (`scripts/celltypes_health.py`; wide). A. per healthy atlas,
+clock state shared with the tissue's other (non-immune) cells, median |r| over pairs, for stromal-vascular cells,
+macrophages and lymphocytes (ten atlases of A272/A274; kidney has no immune class, muscle and anterior eye no
+lymphocytes). B. the registered contrasts (difference in sharing vs lymphocytes), with the medians of the
+expression-matched (circle) and stress-responsive (square) gene sets.
+
+**Speaker notes**
+- Readout: `clocksync.pairwise`, anchor-free: for two cell classes of the same donors, the complex correlation over
+  donors of their clock-plane states (|r|). No host, no anchor choice, so the A17 anchor question does not arise.
+- Status: A272 (H272.2), A274 (H274.1 replication, blind for its atlases), A280 (H280.1, blind), all restated on the
+  calibrated test of A283 (5000 placebo draws; rejection 0.031 to 0.063 under no pairing); A282 (living arm,
+  descriptive question fixed in advance); A288 (H288.2 pass). The earlier q95 rule was anti-conservative (A276); no
+  verdict depended on it.
+- What is clock-specific is the contrast. The level of sharing is not shown above stress-responsive genes everywhere:
+  stromal-vascular sharing passes both families in the A274 atlases (0.478; p_cal 0.009 / 0.013) but not against
+  stress-responsive genes in the A272 atlases (0.499 vs median 0.434, p 0.299); macrophage sharing likewise (0.409 vs
+  0.367, p 0.133). A shared body-wide stress state carries part of the level; the gap to lymphocytes is clock.
+- Living donors: in HLCA, the one atlas with both arms, stromal-vascular sharing is the same living and post-mortem
+  (0.523 vs 0.516): the backbone is not an agonal artefact.
+- Not residency (A284, registered, none passes): resident T cells do not share more than circulating ones (Delta
+  0.010), plasma cells share less than B cells in every atlas, alveolar over monocyte-derived macrophages misses
+  (A288 H288.3, p 0.051).
+- Mouse calibration (timed): untimed pairwise offsets between cell types match known time in the colon (A273: median
+  error 0.31 h, slope 1.005) and the aorta (A279: 0.30 h, slope 1.04). Offsets between human cell types are not
+  read yet.
+- Cortex: the cell classes share a clock state pooled over three cohorts (A283 H283.5 pass) but not in the largest,
+  PsychAD MSSM (A280 H280.2 fail): not claimed.
+
+**Source:** `exploratory/A276_pairwise_calibration/output/a283/{per_atlas,tests}.csv`;
+`exploratory/A280_celltype_replication2/output/calibrated/tests.csv`; `exploratory/A282_pooled_living/output/{tests,per_atlas}.csv`;
+`exploratory/A288_macrophage_pairwise/output/{per_atlas,tests}.csv`; `exploratory/A284_residency/output/tests.csv`.
