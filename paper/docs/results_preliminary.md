@@ -5747,3 +5747,30 @@ counts (24,133 to 132,043 in the periphery), the smallest clock-gene count of a 
 - Limits: living tissue is surgical or biopsy (ischaemia, anaesthesia); pooled means weight atlases equally.
 - Code: `exploratory/A282_pooled_living/scripts/score_a282.py` (1776 s, peak 2.9 GB).
 <!-- src: paper/exploratory/A282_pooled_living/output/tests.csv, per_atlas.csv, family_matrix.csv, arms.csv -->
+
+## A285 (scored 2026-11-17; calibration, not blind): in the bulk and tumour results the expression-matched q95 rule is calibrated, the stress-responsive one is not (placebo rejection 0.076 to 0.204); on the calibrated test the clock-specific verdicts stand for A138, A227, A255 surgical, and against matched genes everywhere, but A251 (skin sites) and A255 MuTHER fat-skin are no longer shown to be clock-specific against the responsive genes
+
+- Placebo: pairing unit permuted within the scored strata, 2000 draws per test, every companion set re-paired
+  identically; draw 0 reproduces each scored statistic and both companion q95 exactly (`repro.csv`).
+- **V285, matched family (calibrated in every test):** rejection 0.0465 to 0.0595 (A251 0.047-0.057, A255 0.052-0.054,
+  A138 0.050, A227 0.052-0.060). The user's expectation for large bulk cohorts holds for this family.
+- **V285, responsive family (biased in every test but A227 H227.1):** A251 0.184 to 0.204; A255 MuTHER 0.131, surgical
+  0.088; A138 0.076; A227 0.062 / 0.065 (not in its rule). Cause: the responsive sets are drawn from a pool of about 30
+  genes, overlap, and so move together; with one to six compartment pairs, a clock above all of them under no pairing
+  is not rare (placebo rate of pi = 1: A251 0.063-0.084, MuTHER 0.056).
+- **H285, calibrated restatement (p_cal matched / responsive):**
+  - A251 H251.1 0.004 / 0.075; H251.2a 0.007 / 0.084; H251.2b 0.008 / 0.064: the clock is above all 200 responsive
+    sets in each, but that is attainable under no pairing in 6-8 % of draws. **Clock-specific against responsive
+    genes: not shown (reversed from A251's "clock-specific");** against matched genes: stands.
+  - A255 H255.1 MuTHER fat-skin 0.011 / 0.057 (floor 0.056): **not shown against responsive genes (reversed)**;
+    H255.3 surgical pooled 0.005 / 0.017: **stands**.
+  - A138 H138.4 0.004 / 0.011: **stands** (both families).
+  - A227 H227.1 0.018 (matched) and H227.2 0.035: **stand**; responsive 0.439 / 0.200 (not clock-specific, as A271).
+- **Reading.** The bias the user suspected is real but confined to the responsive family, and it matters where the
+  statistic rests on few pairs (one pair in MuTHER, three to six in A251). There the responsive comparison cannot
+  reach p < 0.05 at all: the result is "not decidable against responsive genes", not "matched by them". The pairing
+  itself (each test's own permutation p) and the matched-family specificity are unchanged everywhere.
+- **Not run: A263 Part A** (registered reason: per-draw refits, L undefined under no pairing); its verdicts are failures
+  by wide margins.
+- Code: `exploratory/A285_companion_calibration/scripts/placebo_a285.py` (A227: 997 s, peak 31.2 GB; others < 1 min).
+<!-- src: paper/exploratory/A285_companion_calibration/output/{a251,a255,a138,a227}/{repro,tests}.csv -->
