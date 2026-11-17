@@ -5912,3 +5912,52 @@ Run `score_a289.py` (seconds; reads the A42 readout-2 table, no refit); one scor
   before registration; H288.3 rests on one atlas.
 - Code: `exploratory/A288_macrophage_pairwise/scripts/build_a288.py`, `score_a288.py --jobs 6` (998 s, peak 5.9 GB).
 <!-- src: paper/exploratory/A288_macrophage_pairwise/output/{tests,per_atlas,design,design_h3,h288_3}.csv; paper/results/logs/jobs.tsv -->
+
+## A291 (scored 2026-11-17; NOT BLIND for the A104 table): measurement does not produce "stronger clocks are more coupled": a perfectly locked tissue would read a coupling of 0.97 at every GTEx tissue's real design (H291.1 PASS)
+
+- Rows and fit as A104 (GTEx fast deaths, 27 peripheral tissues and 13 brain regions, every tissue an anchor,
+  leave-one-out host); reproduction exact (periphery rho 0.734, brain -0.115). Per tissue, 100 simulations at true
+  coupling 1 and 100 at its estimate with `clocksync.simulate.like` (real host means and posterior covariances,
+  measurement covariances, strata, intercepts). One run (4 workers, 31 s).
+- **Ceiling.** Perfect locking reads 0.966 to 0.977 in the periphery (median 0.972) and 0.937 to 0.956 in brain
+  (0.946); no simulation reached the boundary. Observed couplings span 0.067 to 0.853 (periphery) and 0.308 to 0.706
+  (brain). Design bias at the estimate: median -0.013 (periphery), -0.022 (brain).
+- **H291.1 PASS.** rho(own amplitude, coupling / ceiling) 0.717 over 27 tissues, one-sided permutation p 0.0001
+  (observed rho 0.734). The ceiling itself rises with amplitude (rho 0.408, p 0.020) but over a range of 0.011, two
+  orders of magnitude below the spread of the couplings.
+- **Brain (descriptive).** No relation, as in A104: rho -0.170 after correction (-0.115 observed).
+- **Reading (registered).** Counting noise and host reliability do not produce the relation: a weak peripheral clock
+  that was perfectly locked would be read as locked. The relation reflects own clock-plane variance that does not
+  scale with the rhythm (A291 S2) or departures toward recent external cues (S3); A292 addresses the second.
+- **Limits.** Non-count technical noise (dissection, composition, RNA quality) is part of psi and is not separated
+  from biological own variation by this simulation; A259 found that matched non-clock genes carry much of a tissue's
+  departure from body time, so part of psi is likely technical.
+- Code: `exploratory/A291_attenuation/scripts/score_a291.py --jobs 4`.
+<!-- src: paper/exploratory/A291_attenuation/output/{tests,tissues}.csv -->
+
+## A292 (scored 2026-11-17; NOT BLIND for the A104 table, A259, A91, A270): weak clocks are not shown to track the hour of death beyond their host (H292.1 FAIL, opposite sign; uninformative by the registered power rule)
+
+- Design as registered: GTEx fast deaths, 27 peripheral tissues, 244 donors; per tissue the states regressed on the
+  leave-one-out host and on the hour of death rotated into the host frame; tracking weight w; H292.1 = rho(own
+  amplitude, w) < 0 against 2000 permutations of the hour over donors. Aggregates only.
+- **V292 (run and committed before scoring):** no tracking (S2): rejection 0.024 over 500 simulations (calibrated,
+  conservative); tracking at w0 0.1: power 0.146; at w0 0.25: 0.422 (500 permutations inside each simulation).
+  Power below 0.8: a failure is uninformative (registered).
+- **H292.1 FAIL:** rho +0.425, one-sided p 0.971: the sign is the opposite of the prediction, tissues with stronger
+  clocks carry more external-time weight beyond their host. w: median 0.014, range -0.256 to 0.189.
+- **Companions (descriptive):** the clock's rho lies above 94 % of 100 matched sets (median -0.038) and 98 % of 100
+  responsive sets (median 0.004).
+- **Descriptive:** brain block (fast deaths, brain-only host): rho -0.066 (p 0.434), median w 0.070 (periphery
+  0.014); ventilated donors, periphery (30 tissues): rho -0.081 (p 0.346), median w 0.013; ventilated brain not
+  estimable (fewer than 2 brain tissues with >= 40 donors).
+- **Reading (registered).** Failure at low power: uninformative for transient tracking (S3). With A291 PASS, own
+  clock-plane variance that does not scale with the rhythm (S2) remains the reading of the amplitude-coupling line,
+  by elimination and not shown; part of that variance is technical (A259).
+- **Post hoc (not tested).** The registration assumed that host-error leakage into b is the same fraction for every
+  tissue. With every tissue an anchor, leaving out a strong clock degrades its host more than leaving out a weak one,
+  so leakage plausibly grows with amplitude; that would produce the positive sign, and the S2 simulation (host
+  error drawn from each tissue's own posterior) may not capture it fully. The brain's higher w is on a different host
+  and is not compared with the periphery.
+- Code: `exploratory/A292_external_tracking/scripts/score_a292.py --stage calibrate | score --jobs 4` (calibration
+  131 s; scoring 3059 s, mostly the 200 companion refits; run directly, not through `run.sh`).
+<!-- src: paper/exploratory/A292_external_tracking/output/{calibration,tests,descriptive,tissues,sets}.csv -->
