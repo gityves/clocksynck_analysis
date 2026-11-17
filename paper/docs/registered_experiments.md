@@ -7924,3 +7924,13 @@ H298.2 PASS: organs drive their cells at different strengths (with A293 Part 3: 
 gains, the organ scales them together). Both FAIL: not decided.
 **Limits.** About 10 organs; marker-based NNLS shares; atlas and GTEx donors differ.
 **Code.** `exploratory/A298_organ_drive/scripts/` (design addendum first).
+
+### A298 design addendum (2026-11-17, before any statistic; composition only, `scripts/build_shares.py`): not scored
+The composition step does not meet the quality the registered statistic needs. Marker-based NNLS of the GTEx tissue
+profiles on the atlas family profiles explains little of them (weighted R^2 0.008 to 0.403 over the 11 tissues;
+unweighted R^2 negative in 9), and several atlases lack families the tissue contains (subcutaneous adipose: no
+endothelial, fibroblast or mural family; skeletal muscle: no parenchyma; transverse colon: fibroblast and myeloid
+dropped for < 2,000 cells), giving implausible shares (skin 42 % myeloid mRNA). A298 is closed before scoring; S and
+the gain predictions were not computed. A test of the organ-wide drive needs a deconvolution with complete,
+bulk-calibrated references (or single-cell data of several organs of the same donors), not available here.
+<!-- src: paper/exploratory/A298_organ_drive/output/{shares,design}.csv -->
