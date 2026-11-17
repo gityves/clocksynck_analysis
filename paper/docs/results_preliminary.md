@@ -5880,3 +5880,35 @@ Run `score_a289.py` (seconds; reads the A42 readout-2 table, no refit); one scor
   are glands, so H289.1-2 do not isolate the barrier (registered limit).
 - **Post hoc (not registered).** A pineal coupling of 0 in both species fits a gland whose clock-gene rhythm is set by
   the SCN through its sympathetic input at night rather than by the body's peripheral state; GTEx has no pineal.
+
+## A288 (scored 2026-11-17; not blind at the family level): macrophages share more clock state with the tissue than lymphocytes do, beyond both companion families (H288.2 PASS, D_MAC 0.148); their sharing level is above expression-matched genes but not above stress-responsive genes (H288.1 FAIL); alveolar over monocyte-derived macrophages misses (H288.3 FAIL, p 0.051)
+
+- Design (registered, A283 form, `clocksync.pairwise`): ten healthy atlases with a macrophage class (IBDverse relabelled
+  from the author labels); X = non-immune classes; pooled = mean over atlases with a pair; 200 matched + 200 responsive
+  sets per atlas; 5000 placebo draws; Holm over H288.1-2 on the larger of the two family p.
+- **H288.1 FAIL:** pooled T_MAC 0.409 (10 atlases); matched median 0.253, p_cal 0.0036; responsive median 0.367, pi
+  0.910, p_cal 0.133. Holm 0.133.
+- **H288.2 PASS:** pooled D_MAC = T_MAC - T_LY 0.148 (8 atlases); matched median 0.027, p_cal 0.0034; responsive median
+  0.056, p_cal 0.0064; Holm 0.0128.
+- **Per atlas (descriptive, same draws; p_cal matched / responsive).** T_MAC: lung 0.530 (0.010 / 0.327), breast 0.559
+  (0.003 / 0.229), anterior eye 0.648 (0.012 / 0.073), optic nerve 0.519 (0.032 / 0.071), Kong colon 0.480 (0.021 /
+  0.008), IBDverse rectum 0.286 (0.018 / 0.422), muscle 0.454 (0.289 / 0.658), IBDverse ileum 0.195 (0.101 / 0.534), Kong
+  ileum 0.253 (0.489 / 0.459), Pelka colon 0.163 (0.856 / 0.982). D_MAC: lung 0.294 (0.003 / 0.006), breast 0.234
+  (0.019 / 0.168), IBDverse rectum 0.189 (0.017 / 0.034), optic nerve 0.184, Kong colon 0.128, IBDverse ileum 0.101,
+  Kong ileum 0.101, Pelka colon -0.043 (the one negative atlas).
+- **H288.3 FAIL (HLCA decides):** alveolar minus monocyte-derived macrophages, 92 donors, 8 pairs each: Delta 0.165,
+  p_swap 0.051; p_cal 0.077 / 0.123. Descriptive, IBDverse ileum CD163hi minus CD163lo (60 donors): -0.071, p_swap
+  0.780. Rectum not eligible (5 donors with both).
+- **Reading against the stated outcomes.** The registered combinations were "both pass", "H288.1 passes, H288.2 fails"
+  and "H288.1 fails: macrophages are not shown to keep the shared state beyond non-clock genes; the section names
+  stromal-vascular cells only". The last applies to the level. **Post hoc (not counted):** this is the pattern of
+  stromal-vascular cells in A272 (H283.1 level FAIL against the responsive family, H283.2 contrast PASS); the
+  stromal-vascular level test that passed (H274.2 = H283.4) was decided by the matched family alone, and on that rule
+  T_MAC passes (0.0036). Macrophages therefore stand where stromal-vascular cells stood in A272: the contrast with
+  lymphocytes is clock-specific, the level is matched by stress-responsive genes. The residency split within
+  macrophages points the predicted way in lung (Delta 0.165) but misses the threshold, and the gut marker proxy
+  points the other way.
+- **Limits.** Most macrophage classes include dendritic cells; the matched-family level was known at the family level
+  before registration; H288.3 rests on one atlas.
+- Code: `exploratory/A288_macrophage_pairwise/scripts/build_a288.py`, `score_a288.py --jobs 6` (998 s, peak 5.9 GB).
+<!-- src: paper/exploratory/A288_macrophage_pairwise/output/{tests,per_atlas,design,design_h3,h288_3}.csv; paper/results/logs/jobs.tsv -->
