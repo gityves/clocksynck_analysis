@@ -6583,3 +6583,31 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
   is effectively two samples of one tissue.
 - Code: `exploratory/A313_local_coupling/scripts/score_a313.py --stage score --jobs 16`.
 <!-- src: paper/exploratory/A313_local_coupling/output/{pairs,sets,tests,power,power_sets}.csv -->
+
+## A315 (scored 2026-11-18; NOT BLIND for the arrangement results A132 / A293 Part 1 and A314; powered): brain-dead organ donors keep the clock amplitude of ventilated donors with a living brain (H315.1 FAIL, clock-specific ratio 1.05): after loss of the central drive the tissue clocks lose their arrangement, not their amplitude
+
+- Design as registered; power stage (power 0.995 at a 30 % loss), then one scoring run (39 s). 298 organ donors, 79
+  ventilated post-mortem donors, 12 tissues (42 to 269 donors per group and tissue).
+- **H315.1 FAIL.** Median log ratio of the debiased clock-plane variance, organ donors over post-mortem, Q -0.136 (ratio
+  0.87; donor bootstrap 90 % -0.299 to +0.014); random expression-matched genes fall more (median -0.182, q05 -0.303):
+  the clock lies at their 69th percentile, clock-specific ratio exp(Q*) 1.05; responsive sets median -0.162 (clock at
+  their 62nd percentile). L_t is negative in all 12 tissues and inside the matched spread (tibial artery -0.332, 90 %
+  -0.555 to -0.054, matched median -0.174, is the largest).
+- **Descriptive (registered).** Fast deaths over ventilated post-mortem: Q +0.174 against matched -0.230 (Q* +0.404; above
+  all 200 sets): ventilated deaths carry clearly less clock amplitude than fast deaths, clock-specifically, whether the
+  brain lives or not. Within organ donors, longest over shortest ventilation tertile (99 vs 101 donors): Q -0.182 against
+  matched +0.053 (Q* -0.236; 1st percentile of the matched sets): clock amplitude falls with time on the ventilator.
+- **Reading (registered: FAIL, powered).** Loss of the central drive (brain death) removes the organ arrangement (A132,
+  A293 Part 1) but not the tissue clocks' amplitude, relative to donors who are equally ventilated: tissue clocks hold
+  their amplitude without the drive and drift as organs, which the registration reads as coupled or self-sustained
+  tissue clocks, against the uncoupled entrained-ensemble reading. Amplitude is lost with intensive care itself
+  (fast vs ventilated) and, descriptively, with its duration, in both readings a property of the ICU state rather than of
+  brain death.
+- **Post hoc (not tested).** Arrangement lost with amplitude kept means cells within a tissue stay coherent while tissues
+  drift apart: coherence is held inside tissues (local coupling or a tissue-level oscillator) and between tissues only
+  by the drive. A313 found no shared departures between adjacent tissues, which concerns coupling between tissues, not
+  within them. Time since brain death is not recorded; if it is short against the cells' dephasing time, an uncoupled
+  ensemble with small period dispersion would also keep its amplitude, so the result bounds the dephasing rate rather
+  than excluding the uncoupled reading outright.
+- Code: `exploratory/A315_braindeath_gain/scripts/score_a315.py --stage score`.
+<!-- src: paper/exploratory/A315_braindeath_gain/output/{power,tests,tissues,sets,descriptive}.csv -->
