@@ -87,24 +87,25 @@ def purity_half(ann: pd.DataFrame) -> np.ndarray:
     return (x > np.median(x)).astype(int)
 
 
+def cell_from_raw(cancer: str, raw, ann_c: pd.DataFrame, contrast: str) -> dict | None:
+    """One cell from (bt, vt, bn, vn) of all pairs of a cancer (pair order): states, variances and labels of the pairs
+    in the contrast; V_N^all over all pairs. None if the cancer is not in the contrast."""
+    lab = labels(ann_c, contrast, cancer)
+    keep = lab >= 0
+    if not keep.any():
+        return None
+    bt, vt, bn, vn = raw
+    zt, zn = q.S.complex_state(bt), q.S.complex_state(bn)
+    zn_all = zn - zn.mean()
+    vn_all = float(np.sum(np.abs(zn_all) ** 2) / (len(zn) - 1) - vn.mean())
+    return dict(cancer=cancer, zt=zt[keep], vt=vt[keep], zn=zn[keep], vn=vn[keep], lab=lab[keep],
+                n=int(keep.sum()), vn_all=vn_all, ann=ann_c[keep])
+
+
 def design(states: dict, ann: dict, contrast: str) -> list[dict]:
     """Cells of one contrast: per cancer the complex states, Poisson variances and labels of the pairs in the contrast."""
-    cells = []
-    for c in CANCERS:
-        if c not in states:
-            continue
-        lab = labels(ann[c], contrast, c)
-        keep = lab >= 0
-        if not keep.any():
-            continue
-        u = states[c]
-        bt, vt, bn, vn = u["raw"]
-        zt, zn = q.S.complex_state(bt), q.S.complex_state(bn)
-        zn_all = zn - zn.mean()
-        vn_all = float(np.sum(np.abs(zn_all) ** 2) / (len(zn) - 1) - vn.mean())
-        cells.append(dict(cancer=c, zt=zt[keep], vt=vt[keep], zn=zn[keep], vn=vn[keep], lab=lab[keep],
-                          n=int(keep.sum()), vn_all=vn_all, ann=ann[c][keep]))
-    return cells
+    cells = [cell_from_raw(c, states[c]["raw"], ann[c], contrast) for c in CANCERS if c in states]
+    return [c for c in cells if c is not None]
 
 
 # ---- statistics (label matrices: P x n, values 0 / 1) ----------------------------------------------------------------
