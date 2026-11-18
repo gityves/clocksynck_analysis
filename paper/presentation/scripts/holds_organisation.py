@@ -1,24 +1,29 @@
-"""Slide figure (results, R3.1): what holds the organisation. The organ arrangement survives the loss of daily cues but
-not the loss of the brain; a peripheral clock keeps its amplitude without its main cue and stays near central time when
-behaviour is shifted, while its rhythmic outputs follow behaviour.
+"""Slide figures (results, R3.1 and R3.2): what holds the organisation.
 
-A. GTEx: does a death group keep the organ arrangement of fast deaths? Fisher-Lee correlation of the organ-pair phase
+R3.1 (`holds_organisation`), GTEx death types:
+A. Does a death group keep the organ arrangement of fast deaths? Fisher-Lee correlation of the organ-pair phase
    differences of each group with those of fast deaths (12 body tissues, pairs with >= 20 shared donors), for the clock
    genes (blue), 200 expression-matched (light grey) and 200 stress-responsive gene sets (dark grey), same donors and
    pairs (A293 Part 1; slow deaths H293.1 and ventilated living-brain donors H293.2 registered, Hardy 3 and brain-dead
    organ donors descriptive).
-B. Mouse liver (A297, registered, H297.1 fail above the interval): core-clock amplitude (blue, clock genes) with the feeding rhythm removed
-   (Greenwell arrhythmic feeding), relative to ad libitum, 90 % library bootstrap interval; grey open: the amplitude
-   expected if the clock state were the sum of its cues, (1 + rho) / 2, rho calibrated on an inverted feeding rhythm in
-   two datasets (Manella, Xin).
-C. Human muscle after three days of 12 h-shifted sleep, light, activity and meals (Wefers 2018, 11 men, biopsies at
+B. Does the body's clock still read the external day? Alignment of the host phase (clock genes of 15 reference tissues,
+   fitted without time) to the recorded hour of death, R = |mean exp(i (host phase - w t_death))|, per death type, with
+   its permutation p (times shuffled over donors, 10,000) (A27, post hoc; ventilated = all Hardy 0, brain-dead and
+   living-brain donors together).
+R3.2 (`cue_removal`), designed removal of a cue in one organ:
+A. Mouse liver (A297, registered, H297.1 fail above the interval): core-clock amplitude (blue, clock genes) with the
+   feeding rhythm removed (Greenwell arrhythmic feeding), relative to ad libitum, 90 % library bootstrap interval; grey
+   open: the amplitude expected if the clock state were the sum of its cues, (1 + rho) / 2, rho calibrated on an
+   inverted feeding rhythm in two datasets (Manella, Xin).
+B. Human muscle after three days of 12 h-shifted sleep, light, activity and meals (Wefers 2018, 11 men, biopsies at
    07:00 and 19:00): shift of the 07:00-to-19:00 change against the aligned condition, 90 % interval, for the core
    clock (14 clock genes, A257 H257.2) and the rhythmic outputs (1,587 reference-rhythmic genes, A261 H261.3); right:
    amplitude of the change relative to aligned (A257 H257.3, A261).
 
-Data: exploratory/A293_organisation_levels/output/part1/{groups,sets}.csv; exploratory/A297_feeding_model/output/tests.csv;
-exploratory/A257_nightshift_muscle/output/score_tests.csv; exploratory/A261_nightshift_programs/output/programs.csv.
-GTEx aggregates only. Output: presentation/figures/holds_organisation/holds_organisation.{svg,png}.
+Data: exploratory/A293_organisation_levels/output/part1/{groups,sets}.csv; results/figure_3/output/cues_lost/walltime_hosts.csv;
+exploratory/A297_feeding_model/output/tests.csv; exploratory/A257_nightshift_muscle/output/score_tests.csv;
+exploratory/A261_nightshift_programs/output/programs.csv. GTEx aggregates only.
+Output: presentation/figures/holds_organisation/{holds_organisation,cue_removal}.{svg,png}.
 
     python scripts/holds_organisation.py
 """
@@ -60,6 +65,27 @@ def arrangement(ax, g, sets):
         Line2D([], [], ls="", marker="o", ms=5, color=c, label=lab) for lab, c in FAMILY.values()]
     ax.legend(handles=h, loc="upper center", bbox_to_anchor=(0.45, -0.24), ncol=3, frameon=False, fontsize=8,
               handletextpad=0.1, columnspacing=0.8)
+
+
+WALL = {"fast": "fast deaths", "hardy4": "slow deaths", "ventilator": "ventilated\n(all)", "hardy3": "intermediate\ndeaths"}
+
+
+def external(ax, w):
+    """Alignment of the body's clock to the recorded hour of death, per death type."""
+    w = w.set_index("cohort")
+    for i, k in enumerate(WALL):
+        r = w.loc[k]
+        ax.plot([0, r.R], [i, i], color=CS, lw=1.2, alpha=0.5, zorder=1)
+        ax.scatter([r.R], [i], s=48, color=CS, zorder=2)
+        p = f"p {r.p_R:.4f}" if r.p_R < 0.001 else f"p {r.p_R:.3f}"
+        ax.annotate(f"{p}, n {int(r.donors)}", (r.R, i), xytext=(8, 0), textcoords="offset points", va="center",
+                    fontsize=8, color=MUTED)
+    ax.set_xlim(0, 1)
+    ax.set_yticks(range(len(WALL)), list(WALL.values()))
+    ax.tick_params(axis="y", length=0)
+    ax.set_ylim(len(WALL) - 0.4, -0.5)
+    ax.set_xlabel("body clock aligned to\nthe hour of death, R")
+    ax.set_title("external time", fontsize=13, color=INK)
 
 
 def liver(ax, t):
@@ -107,17 +133,24 @@ def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
     p1 = EXP / "A293_organisation_levels/output/part1"
-    lay = pf.Layout.slide("ABC", kind="wide", col_ratios=[1.2, 0.9, 1])
+    lay = pf.Layout.slide("AB", kind="wide", col_ratios=[1.2, 1])
     arrangement(lay.axes["A"], pd.read_csv(p1 / "groups.csv"), pd.read_csv(p1 / "sets.csv"))
-    liver(lay.axes["B"], pd.read_csv(EXP / "A297_feeding_model/output/tests.csv"))
+    lay.axes["A"].set_title("organ arrangement", fontsize=13, color=INK)
+    external(lay.axes["B"], pd.read_csv(PAPER / "results/figure_3/output/cues_lost/walltime_hosts.csv"))
+    fig = lay.finalize()
+    print(pf.collisions(fig))
+    pf.save(fig, OUT / "holds_organisation")
+
+    lay = pf.Layout.slide("AB", kind="wide", col_ratios=[1, 1])
+    liver(lay.axes["A"], pd.read_csv(EXP / "A297_feeding_model/output/tests.csv"))
     t257 = pd.read_csv(EXP / "A257_nightshift_muscle/output/score_tests.csv")
     core = t257[t257.test.str.startswith("H257.2")].iloc[0].copy()
     core["R"] = t257[t257.test.str.startswith("H257.3")].iloc[0].R
     prog = pd.read_csv(EXP / "A261_nightshift_programs/output/programs.csv").set_index("program")
-    muscle(lay.axes["C"], core, prog.loc["ALL_RHYTHMIC"])
+    muscle(lay.axes["B"], core, prog.loc["ALL_RHYTHMIC"])
     fig = lay.finalize()
     print(pf.collisions(fig))
-    pf.save(fig, OUT / "holds_organisation")
+    pf.save(fig, OUT / "cue_removal")
 
 
 if __name__ == "__main__":

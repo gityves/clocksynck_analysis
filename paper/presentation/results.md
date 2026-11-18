@@ -521,38 +521,29 @@ GTEx is the only data).
 
 ---
 
-## R3.1 The organ arrangement survives the loss of daily cues, not the loss of the brain
+## R3.1 The organ arrangement survives the loss of external time, not the loss of the brain
 
-**Message:** slow deaths and ventilated donors whose brain is alive keep the organ arrangement of fast deaths, on the
-clock genes only; brain-dead organ donors do not. Peripheral clocks hold on their own: without its feeding rhythm the
-mouse liver clock keeps three quarters of its amplitude, and after a 12 h shift of behaviour the human muscle clock
-stays near central time, damped, while its rhythmic outputs follow behaviour.
+**Message:** in slow deaths and in ventilated donors the body's clock no longer reads the hour of death, yet the organs
+keep the arrangement of fast deaths, on the clock genes only. Brain-dead organ donors, ventilated in the same way, lose
+it.
 
 **Bullets**
-1. Slow deaths (Hardy 4, 103 donors), whose internal time is not aligned to the hour of death (A109c), keep the
-   fast-death organ arrangement: Fisher-Lee rho 0.784, above all 200 expression-matched (median 0.038) and all 200
-   stress-responsive gene sets (median 0.234) (registered, H293.1). Ventilated donors with a living brain (79), without
-   meals or activity: 0.690, above all sets (H293.2).
-2. Brain-dead organ donors (79, same ventilation and intensive care): 0.161, not different from tissue-label
+1. External time is lost: the body's clock reads the recorded hour of death in fast deaths (R 0.63, 244 donors) but
+   barely in slow deaths (0.16, p 0.079, 106) and ventilated donors (0.14, 380; post hoc readout).
+2. The arrangement is kept: slow deaths (Hardy 4, 103 donors) share the fast-death organ arrangement at Fisher-Lee rho
+   0.784, above all 200 expression-matched (median 0.038) and all 200 stress-responsive gene sets (median 0.234)
+   (registered, H293.1); ventilated donors with a living brain (79), without meals or activity, 0.690 (H293.2).
+3. Brain-dead organ donors (79, same ventilation and intensive care): 0.161, not different from tissue-label
    permutation (p 0.18), at the level of random genes (descriptive).
-3. Mouse liver (A297, registered): removing the feeding rhythm keeps 0.72 of the clock's amplitude (90 % 0.66 to 0.79)
-   and moves it 1.6 h; if the clock were the sum of its cues it would fall to 0.15 to 0.29.
-4. Human muscle, three days of 12 h-shifted sleep, light, activity and meals (11 men): the core clock moves 2.7 h
-   (90 % 1.8 to 3.6) and its daily change falls to 0.23 (A257); the 1,587 rhythmic output genes move 11.6 h (10.5 to
-   12.8) at 0.85 of their change (A261): the clock and its outputs come apart.
 
-**Figure:** `figures/holds_organisation/holds_organisation.png` (`scripts/holds_organisation.py`; wide). A. GTEx:
-correlation of each group's organ-pair phase differences with those of fast deaths (Fisher-Lee, 12 body tissues), for
-the clock genes (blue), 200 expression-matched (light grey) and 200 stress-responsive gene sets (dark grey), same donors
-and pairs. B. mouse liver: core-clock amplitude relative to ad libitum feeding when the feeding rhythm is removed (blue,
-90 % bootstrap interval, phase shift beside it), and the amplitude expected if the clock state were the sum of its cues
-(grey open; calibrated on an inverted feeding rhythm in two datasets, Manella upper, Xin lower). C. human muscle:
-shift of the 07:00-to-19:00 change after a 12 h shift of behaviour against the aligned condition (dashed: 0, central
-time; 12 h, behaviour), 90 % interval, for the core clock (14 clock genes, blue) and the rhythmic outputs (black);
-right, the size of the change relative to aligned.
+**Figure:** `figures/holds_organisation/holds_organisation.png` (`scripts/holds_organisation.py`; wide). A. correlation
+of each group's organ-pair phase differences with those of fast deaths (Fisher-Lee, 12 body tissues), for the clock
+genes (blue), 200 expression-matched (light grey) and 200 stress-responsive gene sets (dark grey), same donors and
+pairs. B. alignment of the body's clock (host phase from the clock genes of 15 reference tissues, fitted without time)
+to the recorded hour of death, R = |mean exp(i (host phase − ω t_death))|, per death type, with its permutation p and
+donor count; ventilated = all Hardy 0 donors (brain-dead and living-brain together).
 
-**Speaker notes**
-- Status: A293 Part 1 registered, NOT BLIND (the clock rho of every group was known from A109 / A132; the companion
+**Speaker notes**- Status: A293 Part 1 registered, NOT BLIND (the clock rho of every group was known from A109 / A132; the companion
   sets were new); H293.1 and H293.2 pass. Hardy 3 and brain-dead donors descriptive by decision. Brain death vs
   ventilated as a difference: 0.517 (p 0.008, A132b), post hoc.
 - What the groups remove (A109c, A132): slow deaths are not aligned to the hour of death (R 0.097, null median 0.101;
@@ -566,13 +557,47 @@ right, the size of the change relative to aligned.
   SCN test was impossible (PI, Q7, 2026-10-24: the SCN reading stays a hypothesis). Consistent with SCN lesions
   destroying inter-tissue phase synchrony in mice (Yoo 2004); contrary report: Tahara 2012. Wording: "organs keep a
   shared internal time unless the central drive is lost".
-- Mouse (A297): different laboratories, strains and protocols; liver only; amplitudes read in each dataset's own
+- Panel B (A27, post hoc readout, reused as context in A46, A92, A93): one host for all four groups. The registered
+  test for slow deaths (A109c H109c.1, 12 body tissues, 103 donors) gives R 0.097 against a null median 0.101 (p 0.56):
+  no detectable alignment, but alignment as strong as in ventilated donors is not excluded (80 %-power R 0.208).
+  Ventilated donors keep a small alignment (R 0.14, p 0.0005) and are pushed toward 0 / 12 h (A132); the brain-dead
+  and living-brain subgroups are not separated in this readout. Intermediate deaths: R 0.25 (p 0.039, 51 donors).
+
+**Source:** `exploratory/A293_organisation_levels/output/part1/{groups,sets,reproduction}.csv`;
+`results/figure_3/output/cues_lost/walltime_hosts.csv`; `exploratory/A109_coupling_nulls/output/a109c_walltime.csv`;
+`results_preliminary.md` A109c, A132, A136; `docs/PI_QUESTIONS.md` Q7.
+
+---
+
+## R3.2 A peripheral clock holds without its cue; its outputs follow behaviour
+
+**Message:** removing or shifting one cue in one organ leaves its core clock in place: without its feeding rhythm the
+mouse liver clock keeps three quarters of its amplitude, and after a 12 h shift of behaviour the human muscle clock
+stays near central time, damped, while its rhythmic outputs follow behaviour.
+
+**Bullets**
+1. Mouse liver (A297, registered): removing the feeding rhythm keeps 0.72 of the clock's amplitude (90 % 0.66 to 0.79)
+   and moves it 1.6 h; if the clock were the sum of its cues it would fall to 0.15 to 0.29.
+2. Human muscle, three days of 12 h-shifted sleep, light, activity and meals (11 men): the core clock moves 2.7 h
+   (90 % 1.8 to 3.6) and its daily change falls to 0.23 (A257); the 1,587 rhythmic output genes move 11.6 h (10.5 to
+   12.8) at 0.85 of their change (A261): the clock and its outputs come apart.
+
+**Figure:** `figures/holds_organisation/cue_removal.png` (`scripts/holds_organisation.py`; wide). A. mouse liver:
+core-clock amplitude relative to ad libitum feeding when the feeding rhythm is removed (blue, 90 % bootstrap interval,
+phase shift beside it), and the amplitude expected if the clock state were the sum of its cues (grey open; calibrated
+on an inverted feeding rhythm in two datasets, Manella upper, Xin lower). B. human muscle: shift of the 07:00-to-19:00
+change after a 12 h shift of behaviour against the aligned condition (dashed: 0, central time; 12 h, behaviour), 90 %
+interval, for the core clock (14 clock genes, blue) and the rhythmic outputs (black); right, the size of the change
+relative to aligned.
+
+**Speaker notes**
+- Mouse (A297, registered, NOT BLIND for the A111 shifts; H297.1 fail, above the interval): different laboratories, strains and protocols; liver only; amplitudes read in each dataset's own
   projector. The additive prediction (1 + rho) / 2 assumes the clock's state is the sum of its cues. The
   night-restricted control is 1.04 (0.93 to 1.14). Reading for humans: removing one cue (as in intensive care, A46)
   leaves a peripheral clock running near its phase; conflicting cues move it.
-- The inversions behind panel B's prediction (registered calibration): day feeding against ad libitum (Manella) moves the
+- The inversions behind panel A's prediction (registered calibration): day feeding against ad libitum (Manella) moves the
   liver clock 11.7 h at 0.71 of its amplitude; day- against night-restricted feeding (Xin) 11.3 h at 0.44.
-- Panel C (A257 registered, NOT BLIND, H257.2 partial shift, H257.3 damping pass; A261 registered, H261.3
+- Panel B (A257 registered, NOT BLIND, H257.2 partial shift, H257.3 damping pass; A261 registered, H261.3
   "behaviour"): within-person, Wefers 2018 (GSE106800), biopsies at 07:00 and 19:00, day 3 of each protocol. The core
   clock's 12 h ambiguity: a 12 h shift has no direction of its own, so "towards behaviour" cannot be read from the
   sign; 10 of 11 men shift positively. Masking limit (A261): with two biopsy times, a reversed 19:00 - 07:00 difference
@@ -582,7 +607,5 @@ right, the size of the change relative to aligned.
   PPAR genes changed); A257 / A261 add hours, intervals and companions. Light moved with behaviour, so "central time"
   is the expected position of a clock that did not follow the 12 h shift, not a measured SCN phase.
 
-**Source:** `exploratory/A293_organisation_levels/output/part1/{groups,sets,reproduction}.csv`;
-`exploratory/A297_feeding_model/output/{tests,arms}.csv`; `exploratory/A257_nightshift_muscle/output/score_tests.csv`;
-`exploratory/A261_nightshift_programs/output/programs.csv`; `results_preliminary.md` A109c, A132, A136, A257, A261;
-`docs/PI_QUESTIONS.md` Q7.
+**Source:** `exploratory/A297_feeding_model/output/{tests,arms}.csv`; `exploratory/A257_nightshift_muscle/output/score_tests.csv`;
+`exploratory/A261_nightshift_programs/output/programs.csv`; `results_preliminary.md` A257, A261, A297.
