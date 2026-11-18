@@ -6497,3 +6497,33 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
   Stage 2b (orientation of the departure) is not run: the registration conditions it on blocks A and B.
 - Code: `exploratory/A310_clock_model/scripts/{model.py, boot_a310.py, fit_a310.py}`.
 <!-- src: paper/exploratory/A310_clock_model/output/{boot,blockA_tissues,blockA_variants,blockB_gains,blockB_phases,blockC,profiles,composition_bound,verdict}.csv -->
+
+## A311 (scored 2026-11-18; NOT BLIND for the A104 table and A310; powered): the personal departure of GTEx peripheral tissues is not a phase departure (H311.1 FAIL, share -0.03), with no significant gradient with gain (H311.2 FAIL, rho 0.30, p 0.064): the driven-Hopf model's sharpest prediction is not supported
+
+- Design as registered; one scoring run (2723 s, 4 workers, peak 2.7 GB); clock and 100 matched sets, no errors.
+  Primary share = excess tilt / A104 2 psi (deviation note); the script's ML-based share gives the same verdicts
+  (median -0.029, 90 % -0.064 to -0.007; rho 0.288, p 0.079).
+- **Power (registered, before scoring):** a clock-specific departure 30 % more tangential than radial would give a
+  median share near 0.16 (detection 1.00; type I 0.05). A cycle above its bifurcation predicts more than 0.5 of the
+  clock-specific departure (model grid).
+- **H311.1 FAIL.** Median share over the 27 tissues -0.028 (tissue bootstrap 90 % -0.064 to -0.007); share > 0 in 9 of
+  27 tissues; range -0.232 to +0.180. Outside the null at |z| > 2: subcutaneous adipose (-0.191) and lung (+0.180).
+  Share of the clock-specific departure (over E_o): median -0.045, above 0.5 in no tissue.
+- **H311.2 FAIL.** Spearman rho(share, S) 0.296, one-sided p 0.064.
+- **Matched sets.** Their median share is -0.213 (q95 of the set medians 0.016); the clock lies at their 90th
+  percentile. Random genes read strongly radial at the same design, so the isotropic simulation does not reproduce
+  real non-clock variation (a sample-level scale component of expression is the likely source; not examined). The
+  absolute share may therefore be biased downwards for every gene set. Relative to the matched genes the clock is
+  not significantly more tangential (90th percentile).
+- **Reading (registered).** The upper bound is below 0, but by 0.007 and with a median of -0.03. Of the registered
+  readings, "isotropic, no evidence of limit-cycle dynamics" fits better than "radial dominates". The personal
+  departure is not the phase-dominated response of a cycle above its bifurcation; a 30 % tangential excess would have
+  been detected. On the model grid, a share near 0 places a compartment far below the bifurcation, which contradicts
+  the self-sustained liver (A297). The reading is therefore that the departure GTEx measures is not a dynamical
+  perturbation of each tissue's cycle. It is variation added to the state (sample-level technical or compositional
+  variation, or state at death), consistent with A302 (not shared by meal-driven tissues). The Hopf model stays an
+  interpretation of gain and lag; its departure prediction fails in GTEx.
+- **Limits.** Deaths: a person's tissue state at death may not be a stationary fluctuation. The calibration is not
+  matched to real non-clock variation (matched sets at -0.21). Fast deaths only.
+- Code: `exploratory/A311_hopf/scripts/{hopf.py, power_a311.py, score_a311.py}`; `clocksync.orientation` (f9ea9f1).
+<!-- src: paper/exploratory/A311_hopf/output/{tests,tissues,tissues_primary,sets,power}.csv -->

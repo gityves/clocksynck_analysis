@@ -48,8 +48,10 @@ With x = |w*|^2 solving x((mu - x)^2 + nu^2) = F^2 and w* = -F / (mu + i nu - x)
 
 ## Predictions not yet measured
 
-1. **Orientation (GTEx; A311).** Departures mostly tangential, more so in high-gain tissues; near isotropic in the
-   lowest-gain tissues.
+1. **Orientation (GTEx; A311): NOT SUPPORTED.** Predicted: departures mostly tangential, more so in high-gain tissues.
+   Observed: median share -0.03 (90 % -0.064 to -0.007), no significant gradient (rho 0.30, p 0.064), powered for a
+   0.16 share. The GTEx departure is not the phase-dominated response of a cycle above its bifurcation; it reads as
+   variation added to the state (A311, A302).
 2. **Gain against drive.** Proportional below the bifurcation (fetal organs, lymphocytes), flat above it (adult
    parenchyma).
 3. **Tumours in single cells.** A fall of mu means lower per-cell amplitude (damping), not cells drifting out of phase.
