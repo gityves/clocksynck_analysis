@@ -6120,15 +6120,15 @@ median and percentile reproduce in all nine pairs.
 - Code: `exploratory/A297_feeding_model/scripts/score_a297.py`.
 <!-- src: paper/exploratory/A297_feeding_model/output/{tests,arms}.csv -->
 
-## A294 (scored 2026-11-17; NOT BLIND for the A104 table): the own variation of peripheral clocks is clock-specific, about 2.6 times that of expression-matched genes in every tissue (H294.1 PASS); it grows only weakly with the shared rhythm (H294.2: slope 0.22, neither the additive nor the individual-period signature)
+## A294b (scored 2026-11-17; NOT BLIND for the A104 table): the own variation of peripheral clocks is clock-specific, about 2.6 times that of expression-matched genes in every tissue (H294b.1 PASS); it grows only weakly with the shared rhythm (H294b.2: slope 0.22, neither the additive nor the individual-period signature)
 
 - Design as registered: A104 rows and fit, 27 peripheral tissues; clock and 100 matched pseudo-clock sets. Reproduction
   exact (rho 0.734). One run through `run.sh` (1515 s, peak 2.8 GB, 4 workers).
-- **H294.1 PASS.** Median over tissues of log(2 psi_clock / median 2 psi_matched) 0.969 (tissue bootstrap 90 % 0.889 to
+- **H294b.1 PASS.** Median over tissues of log(2 psi_clock / median 2 psi_matched) 0.969 (tissue bootstrap 90 % 0.889 to
   1.077): the clock's own variance exceeds the matched median in all 27 tissues and the matched q95 in 10. Medians:
   clock 1.89, matched 0.71. The matched sets share little between tissues (median S 0.016 to 0.193, against the
   clock's 0.12 to 10.33).
-- **H294.2 (read because H294.1 passed).** Theil-Sen slope of log excess own variance on log S_clock 0.223 (90 % 0.044 to
+- **H294b.2 (read because H294b.1 passed).** Theil-Sen slope of log excess own variance on log S_clock 0.223 (90 % 0.044 to
   0.332, 27 tissues): excludes both 0 and 1, so neither registered signature applies. Descriptive: slope of the clock's
   own variance on S 0.072; of the matched floor on S -0.025.
 - **Reading (registered).** The floor is not generic: clock genes carry person-specific own variation beyond what
@@ -6211,8 +6211,8 @@ median and percentile reproduce in all nine pairs.
 - Code: `exploratory/A299_adrenal_medulla/scripts/score_a301.py`.
 <!-- src: paper/exploratory/A299_adrenal_medulla/output/a301/{tests,effects,scores,correlations}.csv -->
 
-### A294 correction note (2026-11-17; interpretation only, post hoc, no new statistic)
-The registered reading of H294.2 named slope 1 as the signature of individual clock periods. Corrected: for a
+### A294b correction note (2026-11-17; interpretation only, post hoc, no new statistic)
+The registered reading of H294b.2 named slope 1 as the signature of individual clock periods. Corrected: for a
 limit-cycle clock the angle by which an input turns it scales as 1 / amplitude, so the displacement of the state in the
 clock plane is independent of amplitude. Three sources of a person's tissue departure then predict different slopes of
 log departure variance on log shared variance: person-specific timing of cues (meals, activity, light) or additive
@@ -6221,7 +6221,7 @@ amplitude), slope 2. The observed slopes (0.07 for the clock's own variance, 0.2
 exclude intrinsic periods as the main source and do not separate person-specific cue history from noise; A302 tests
 the first.
 
-## A302 (scored 2026-11-17; NOT BLIND for A291, A292, A294): the liver's personal departure is not shared preferentially with gut and adipose tissues (H302.1 FAIL)
+## A302 (scored 2026-11-17; NOT BLIND for A291, A292, A294b): the liver's personal departure is not shared preferentially with gut and adipose tissues (H302.1 FAIL)
 
 - Design as registered; one run (1440 s, 4 workers; a check printing shared-donor counts only was run first). 21 pairs
   with >= 30 shared donors (stomach, kidney cortex and coronary artery below); G has 5 tissues.
@@ -6232,7 +6232,7 @@ the first.
   the median over the 100 matched sets' pairs 0.12 (set medians 0.05 to 0.20).
 - **Reading (registered).** No group structure of departures at this power: the liver's departure is not shared more
   with meal-driven tissues than with others. The personal departure looks tissue-independent with respect to feeding;
-  the person-specific cue-history reading of the constant departure (A294 correction note) is not supported here, and
+  the person-specific cue-history reading of the constant departure (A294b correction note) is not supported here, and
   additive noise remains equally possible. The spread of T among matched sets (SD 0.048) means a group difference
   below about 0.1 could not be detected.
 - Code: `exploratory/A302_departure_groups/scripts/score_a302.py --jobs 4`.

@@ -8,7 +8,7 @@ asked: the cancer chapter (now main text), disease, and the fetal section. Work 
 ## Read first
 1. `CLAUDE.md` and the memory index (`MEMORY.md`): all entries apply.
 2. `paper/docs/STATUS_2026-11-18.md` (claims by tier, what fell, open decisions). Then `STATUS_2026-11-17.md` section 2.
-3. RP (`paper/docs/results_preliminary.md`): A291, A294 (and its correction note), A295, A297, A293, A302 for the
+3. RP (`paper/docs/results_preliminary.md`): A291, A294b (and its correction note), A295, A297, A293, A302 for the
    framework; A138, A212, A227, A271, A127, A166, A171, A173, A215, A219, A224 for cancer; A153, A208, A231, A235, A258
    for disease contrasts; A243, A244, A264, A266, A269 for the fetal section; and `docs/literature/fetal_clocks_animal_2026-11-18.md`.
 4. `paper/docs/PI_QUESTIONS.md`: Q24 (cancer chapter), Q32 and Q35 (fetal, tally), Q36 (calibrated pairwise test).
@@ -18,7 +18,7 @@ files only; never touch its uncommitted files or jobs.
 ## The framework you apply (in one paragraph)
 A tissue's clock state in donor d is: organ term x body's time(d) + departure(d, tissue). The organ term has a **gain**
 |z| and a fixed **phase**; the departure has variance 2 psi, random direction between donors. Coupling = S / (S + 2 psi)
-with S = z2 V. In GTEx, S spans 85-fold and 2 psi is nearly constant and clock-specific (A291, A294): differences of
+with S = z2 V. In GTEx, S spans 85-fold and 2 psi is nearly constant and clock-specific (A291, A294b): differences of
 coupling are differences of gain over a constant departure. Group comparisons are allowed on z2 (gain) and psi
 (departure), not on coupling (A258: coupling contrasts are biased at unequal host spread). Within organs, structural
 cells and macrophages carry the time at the organ's phase; lymphoid cells carry none; composition changes gain, not

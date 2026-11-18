@@ -1,5 +1,6 @@
-"""A294 (registered in `paper/docs/registered_experiments.md`): is the own-variation floor of peripheral tissues specific
-to the clock genes?
+"""A294b (registered in `paper/docs/registered_experiments.md`; renumbered from A294 on 2026-11-18, so the labels
+H294.1 / H294.2 in this code and its outputs stand for H294b.1 / H294b.2): is the own-variation floor of peripheral
+tissues specific to the clock genes?
 
 A104 rows and fit (GTEx fast deaths, tissues with >= 40 donors, periphery block, every tissue an anchor, leave-one-out
 host). For the clock and 100 expression-matched pseudo-clock sets (`pseudo_waveforms(kind="matched")`, matching as A271

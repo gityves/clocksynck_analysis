@@ -9,6 +9,8 @@ One worker per draw; rows are appended per draw, so a rerun skips the draws alre
 
     RUN_CAP_GB=20 paper/common/run.sh paper/exploratory/A290_a104_calibration/scripts/placebo_a290.py [--draws 400] [--jobs 8]
     python placebo_a290.py --check   (draw 0 with the clock and 5 sets)
+    python placebo_a290.py --score   (tests.csv from the draws written so far; the weekend run is stopped by the clock,
+                                      see the registered deviation)
 Outputs (`../output/`): draws.csv (one row per draw), tests.csv.
 """
 import argparse
@@ -74,8 +76,11 @@ def main():
     ap.add_argument("--draws", type=int, default=400)
     ap.add_argument("--jobs", type=int, default=8)
     ap.add_argument("--check", action="store_true")
+    ap.add_argument("--score", action="store_true")
     a = ap.parse_args()
     t0 = time.time()
+    if a.score:
+        return score(t0)
     from common import gtex
     sets = waveforms(5 if a.check else None)
     genes = sorted({g for _, w in sets for g in w.genes})
@@ -95,13 +100,18 @@ def main():
         for k, row in enumerate(p.imap_unordered(draw, todo)):
             pd.DataFrame([row]).to_csv(f, mode="a", header=not f.exists(), index=False)
             print(f"draw {row['draw']} pi {row['pi']:.3f} ({k + 1}/{len(todo)}) {time.time() - t0:.0f}s", flush=True)
-    D = pd.read_csv(f).sort_values("draw")
+    score(t0)
+
+
+def score(t0):
+    D = pd.read_csv(OUT / "draws.csv").sort_values("draw")
     r0, null = D[D.draw == 0].iloc[0], D[D.draw > 0]
     T = pd.DataFrame([dict(clock_rho=r0.clock_rho, resp_median=r0.resp_median, resp_q95=r0.resp_q95, pi_obs=r0.pi,
                            draws=len(null), v290_rejection=float(null.above_q95.mean()),
                            v290_calibrated=bool(null.above_q95.mean() <= 0.0685), null_rate_pi1=float((null.pi >= 1).mean()),
                            p_cal=float((1 + (null.pi >= r0.pi).sum()) / (1 + len(null))))])
-    T["h290_pass"] = T.p_cal < 0.05
+    T["decidable"] = len(null) >= 60  # registered deviation: fewer draws, H290 not decidable
+    T["h290_pass"] = (T.p_cal < 0.05).where(T.decidable)
     T.to_csv(OUT / "tests.csv", index=False)
     print(T.T.to_string(), f"runtime {time.time() - t0:.0f}s", sep="\n", flush=True)
 
