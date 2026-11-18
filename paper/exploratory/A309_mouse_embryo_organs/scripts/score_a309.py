@@ -21,7 +21,7 @@ from clocksync.paired import pseudo_waveforms
 from common import data
 from common import development as dev
 
-sys.path.insert(0, str(L.HERE.parents[1] / "A307_fetal_gc_pattern" / "scripts"))
+sys.path.insert(0, str(L.HERE.parents[2] / "A307_fetal_gc_pattern" / "scripts"))
 S = {}
 _log_mean = dev.log_mean
 
