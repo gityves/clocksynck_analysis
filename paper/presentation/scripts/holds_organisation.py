@@ -11,15 +11,15 @@ B. Does the body's clock still read the external day? Alignment of the host phas
    fitted without time) to the recorded hour of death, R = |mean exp(i (host phase - w t_death))|, per death type, with
    its permutation p (times shuffled over donors, 10,000): fast, slow and intermediate deaths from A27 (post hoc
    readout), ventilated donors with a living brain and brain-dead organ donors from A314 (descriptive, post hoc split).
-R3.2 (`cue_removal`), designed removal of a cue in one organ:
-A. Mouse liver (A297, registered, H297.1 fail above the interval): core-clock amplitude (blue, clock genes) with the
-   feeding rhythm removed (Greenwell arrhythmic feeding), relative to ad libitum, 90 % library bootstrap interval; grey
-   open: the amplitude expected if the clock state were the sum of its cues, (1 + rho) / 2, rho calibrated on an
-   inverted feeding rhythm in two datasets (Manella, Xin).
+R3.2 (`cue_removal`), designed removal or shift of a cue in one organ, as clock faces: angle = phase shift against
+the reference (0 h at the top, clockwise), radius = amplitude relative to it; 90 % intervals as a radial segment and an
+arc.
+A. Mouse liver core clock (A297, registered, H297.1 fail above the interval) against ad libitum: feeding rhythm removed
+   (Greenwell arrhythmic) and the night-restricted control (open), feeding inverted (Manella day feeding, Xin day- vs
+   night-restricted; the calibration), and the state expected for removal if cues add, (1 + rho) / 2 (grey open).
 B. Human muscle after three days of 12 h-shifted sleep, light, activity and meals (Wefers 2018, 11 men, biopsies at
-   07:00 and 19:00): shift of the 07:00-to-19:00 change against the aligned condition, 90 % interval, for the core
-   clock (14 clock genes, A257 H257.2) and the rhythmic outputs (1,587 reference-rhythmic genes, A261 H261.3); right:
-   amplitude of the change relative to aligned (A257 H257.3, A261).
+   07:00 and 19:00): the 07:00-to-19:00 change against the aligned condition, for the core clock (14 clock genes, A257
+   H257.2 shift, H257.3 size) and the rhythmic outputs (1,587 reference-rhythmic genes, A261 H261.3).
 
 Data: exploratory/A293_organisation_levels/output/part1/{groups,sets}.csv; results/figure_3/output/cues_lost/walltime_hosts.csv;
 exploratory/A314_vent_walltime/output/groups.csv;
@@ -94,45 +94,70 @@ def external(ax, w, v):
     ax.set_title("external time", fontsize=13, color=INK)
 
 
+def clockface(ax, rmax, rings, title, names=None):
+    """Polar frame on a cartesian axis: angle = phase shift (0 h at the top, clockwise, 24 h a turn), radius =
+    amplitude relative to the reference; grey rings at `rings`, spokes every 6 h."""
+    th = np.linspace(0, 2 * np.pi, 200)
+    for r in rings:
+        ax.plot(r * np.sin(th), r * np.cos(th), color=MUTED, lw=0.6 if r != 1 else 0.9, ls="-" if r == 1 else ":",
+                zorder=0)
+        ax.text(r * np.sin(-0.6), r * np.cos(-0.6), f"{r:g}", fontsize=7.5, color=MUTED, ha="right", va="bottom")
+    for h in (0, 6, 12, 18):
+        t = 2 * np.pi * h / 24
+        ax.plot([0, rmax * np.sin(t)], [0, rmax * np.cos(t)], color=MUTED, lw=0.5, zorder=0)
+        lab = f"{h} h" + (f"\n{names[h]}" if names and h in names else "")
+        ax.text(1.12 * rmax * np.sin(t), 1.12 * rmax * np.cos(t), lab, fontsize=8.5, color=MUTED, ha="center",
+                va="center", linespacing=0.9)
+    ax.set_aspect("equal")
+    ax.set_xlim(-1.25 * rmax, 1.25 * rmax)
+    ax.set_ylim(-1.25 * rmax, 1.25 * rmax)
+    ax.axis("off")
+    ax.set_title(title, fontsize=13, color=INK)
+
+
+def vector(ax, amp, shift, color, label, amp_ci=None, shift_ci=None, open_=False, dx=8, dy=0, ha="left", size=40):
+    """One condition: point at (amp, shift), 90 % intervals as a radial segment and an arc, direct label."""
+    t = 2 * np.pi * shift / 24
+    if amp_ci is not None:
+        ax.plot([amp_ci[0] * np.sin(t), amp_ci[1] * np.sin(t)], [amp_ci[0] * np.cos(t), amp_ci[1] * np.cos(t)],
+                color=color, lw=1.4, zorder=1)
+    if shift_ci is not None:
+        u = 2 * np.pi * np.linspace(shift_ci[0], shift_ci[1], 30) / 24
+        ax.plot(amp * np.sin(u), amp * np.cos(u), color=color, lw=1.4, zorder=1)
+    ax.scatter([amp * np.sin(t)], [amp * np.cos(t)], s=size, color="white" if open_ else color, edgecolor=color,
+               lw=1.2, zorder=3)
+    if label:
+        ax.annotate(label, (amp * np.sin(t), amp * np.cos(t)), xytext=(dx, dy), textcoords="offset points",
+                    ha=ha, va="center", fontsize=8, color=color, linespacing=0.9)
+
+
 def liver(ax, t):
-    obs = t[t.contrast.str.startswith("observed Greenwell")].iloc[0]
-    ax.scatter([1], [0], s=40, color=CS, zorder=2)
-    ax.plot([obs.amp_lo90, obs.amp_hi90], [1, 1], color=CS, lw=1.6, zorder=1)
-    ax.scatter([obs.amp_ratio], [1], s=40, color=CS, zorder=2)
-    ax.annotate(f"{obs.shift_h:+.1f} h", (obs.amp_hi90, 1), xytext=(6, 0), textcoords="offset points", va="center",
-                fontsize=8.5, color=CS)
-    for j, key in enumerate(("prediction from Manella", "prediction from Xin")):
-        r = t[t.contrast.str.startswith(key)].iloc[0]
-        y = 2 + (j - 0.5) * 0.25
-        ax.plot([r.amp_lo90, r.amp_hi90], [y, y], color=MUTED, lw=1.6, zorder=1)
-        ax.scatter([r.amp_ratio], [y], s=36, facecolor="white", edgecolor=MUTED, lw=1.2, zorder=2)
-    ax.axvline(1, color=MUTED, lw=0.8, ls="--", zorder=0)
-    ax.set_xlim(0, 1.2)
-    ax.set_yticks([0, 1, 2], ["fed ad libitum", "feeding rhythm\nremoved", "expected if\ncues add"])
-    ax.tick_params(axis="y", length=0)
-    ax.set_ylim(2.5, -0.5)
-    ax.set_xlabel("liver clock amplitude\n(ad libitum = 1)")
-    ax.set_title("mouse liver", fontsize=13, color=INK)
+    """Mouse liver clock state relative to ad libitum feeding (A297): amplitude ratio and phase shift."""
+    clockface(ax, 1.2, (0.5, 1), "mouse liver")
+    r = lambda key: t[t.contrast.str.startswith(key)].iloc[0]
+    vector(ax, 1, 0, INK, "ad libitum", dx=-10, ha="right")
+    for key, lab, dy in (("Manella DF", "feeding\ninverted", 0), ("Xin DRF", "", 0)):
+        x = r(key)
+        vector(ax, x.amp_ratio, x.shift_h, CS, lab, (x.amp_lo90, x.amp_hi90), (x.shift_lo90, x.shift_hi90), size=28,
+               dx=10, dy=dy)
+    for key, lab in (("prediction from Manella", "expected if\ncues add"), ("prediction from Xin", "")):
+        x = r(key)
+        vector(ax, x.amp_ratio, x.shift_h, MUTED, lab, open_=True, size=30, dx=-10, ha="right")
+    x = r("control Greenwell night")
+    vector(ax, x.amp_ratio, x.shift_h, CS, "night-\nrestricted", (x.amp_lo90, x.amp_hi90), (x.shift_lo90, x.shift_hi90),
+           open_=True, size=30, dx=18, dy=-2)
+    x = r("observed Greenwell arrhythmic")
+    vector(ax, x.amp_ratio, x.shift_h, CS, "feeding rhythm\nremoved", (x.amp_lo90, x.amp_hi90),
+           (x.shift_lo90, x.shift_hi90), dx=10, dy=-6)
 
 
 def muscle(ax, core, outputs):
-    rows = [("core clock", core.s, core.lo90, core.hi90, core.R, CS),
-            ("rhythmic\noutputs", outputs.shift_h, outputs.shift_lo, outputs.shift_hi, outputs.ratio, INK)]
-    for i, (_, s, lo, hi, ratio, col) in enumerate(rows):
-        ax.plot([lo, hi], [i, i], color=col, lw=1.6, zorder=1)
-        ax.scatter([s], [i], s=40, color=col, zorder=2)
-        ax.text(14.2, i, f"×{ratio:.2f}", va="center", ha="left", fontsize=8.5, color=col)
-    ax.text(14.2, -0.3, "amplitude", va="center", ha="left", fontsize=8.5, color=MUTED)
-    for x, lab in ((0, "central time"), (12, "behaviour")):
-        ax.axvline(x, color=MUTED, lw=0.8, ls="--", zorder=0)
-        ax.text(x + 0.3, -0.65, lab, ha="left", va="center", fontsize=8.5, color=MUTED)
-    ax.set_xlim(-1, 14)
-    ax.set_xticks([0, 3, 6, 9, 12])
-    ax.set_yticks([0, 1], [r[0] for r in rows])
-    ax.tick_params(axis="y", length=0)
-    ax.set_ylim(1.9, -0.9)
-    ax.set_xlabel("shift after 12 h shift\nof behaviour [h]")
-    ax.set_title("human muscle", fontsize=13, color=INK)
+    """Human muscle, misaligned against aligned (A257, A261): size and phase of the 07:00-to-19:00 change."""
+    clockface(ax, 1.5, (0.5, 1, 1.5), "human muscle", {0: "central time", 12: "behaviour"})
+    vector(ax, 1, 0, INK, "aligned", dx=-10, ha="right")
+    vector(ax, core.R, core.s, CS, "core clock", (core.R_lo, core.R_hi), (core.lo90, core.hi90), dx=16, dy=-6)
+    vector(ax, outputs.ratio, outputs.shift_h, INK, "rhythmic\noutputs", (outputs.ratio_lo, outputs.ratio_hi),
+           (outputs.shift_lo, outputs.shift_hi), dx=14, dy=-18)
 
 
 def main():
@@ -151,7 +176,8 @@ def main():
     liver(lay.axes["A"], pd.read_csv(EXP / "A297_feeding_model/output/tests.csv"))
     t257 = pd.read_csv(EXP / "A257_nightshift_muscle/output/score_tests.csv")
     core = t257[t257.test.str.startswith("H257.2")].iloc[0].copy()
-    core["R"] = t257[t257.test.str.startswith("H257.3")].iloc[0].R
+    damp = t257[t257.test.str.startswith("H257.3")].iloc[0]
+    core["R"], core["R_lo"], core["R_hi"] = damp.R, damp.lo90, damp.hi90
     prog = pd.read_csv(EXP / "A261_nightshift_programs/output/programs.csv").set_index("program")
     muscle(lay.axes["B"], core, prog.loc["ALL_RHYTHMIC"])
     fig = lay.finalize()

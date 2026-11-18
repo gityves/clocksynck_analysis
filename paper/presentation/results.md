@@ -587,18 +587,20 @@ stays near central time, damped, while its rhythmic outputs follow behaviour.
 
 **Bullets**
 1. Mouse liver (A297, registered): removing the feeding rhythm keeps 0.72 of the clock's amplitude (90 % 0.66 to 0.79)
-   and moves it 1.6 h; if the clock were the sum of its cues it would fall to 0.15 to 0.29.
+   and moves it 1.6 h (0.9 to 2.3; the night-restricted control moved 0.7 h); if the clock were the sum of its cues it
+   would fall to 0.15 to 0.29 with a similar small shift. Inverting the feeding rhythm moves it 11 to 12 h.
 2. Human muscle, three days of 12 h-shifted sleep, light, activity and meals (11 men): the core clock moves 2.7 h
    (90 % 1.8 to 3.6) and its daily change falls to 0.23 (A257); the 1,587 rhythmic output genes move 11.6 h (10.5 to
    12.8) at 0.85 of their change (A261): the clock and its outputs come apart.
 
-**Figure:** `figures/holds_organisation/cue_removal.png` (`scripts/holds_organisation.py`; wide). A. mouse liver:
-core-clock amplitude relative to ad libitum feeding when the feeding rhythm is removed (blue, 90 % bootstrap interval,
-phase shift beside it), and the amplitude expected if the clock state were the sum of its cues (grey open; calibrated
-on an inverted feeding rhythm in two datasets, Manella upper, Xin lower). B. human muscle: shift of the 07:00-to-19:00
-change after a 12 h shift of behaviour against the aligned condition (dashed: 0, central time; 12 h, behaviour), 90 %
-interval, for the core clock (14 clock genes, blue) and the rhythmic outputs (black); right, the size of the change
-relative to aligned.
+**Figure:** `figures/holds_organisation/cue_removal.png` (`scripts/holds_organisation.py`; wide). Two clock faces:
+angle = phase shift against the reference (0 h at the top, clockwise, a full turn 24 h), distance from the centre =
+amplitude relative to the reference (rings 0.5 and 1); each point with its 90 % intervals as a radial segment
+(amplitude) and an arc (phase). A. mouse liver core clock against ad libitum feeding: feeding rhythm removed and the
+night-restricted control (Greenwell, open), feeding inverted (Manella, Xin; the calibration), and the state expected
+for removal if cues add (grey open). B. human muscle, 07:00-to-19:00 change after a 12 h shift of behaviour against the
+aligned condition (0 h = central time, 12 h = behaviour): core clock (14 clock genes, blue) and rhythmic outputs
+(1,587 genes, black).
 
 **Speaker notes**
 - Mouse (A297, registered, NOT BLIND for the A111 shifts; H297.1 fail, above the interval): different laboratories, strains and protocols; liver only; amplitudes read in each dataset's own
