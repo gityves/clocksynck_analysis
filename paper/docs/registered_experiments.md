@@ -8354,3 +8354,40 @@ not time since brain death.
 the model. The departure is one stationary noise of one intensity; static person-specific cue timing is a different
 process. GTEx deaths; the fit is a synthesis, not evidence; liver drive from three mouse laboratories.
 **Code.** `exploratory/A310_clock_model/scripts/{model.py, fit_a310.py, predict_a310.py, power_a310.py, score_a310.py}`.
+
+## A311 (2026-11-18, user: "This fit well the lab typical view of the circadian cycle, let's see if we can justify this model", on the driven-Hopf model statement `docs/MODEL_hopf_2026-11-18.md`; staged: power first, then one scoring run; **NOT BLIND** for the A104 table (S, 2 psi, couplings per tissue), A291, A294b (slope 0.223), A302, A310 (fit and verdict); **seen before writing (model only):** the forced Hopf normal form's orientation share (0.015 at mu -4, 0.500 at mu 0, 0.904 at mu +4 in units of F^{2/3}), and that the new `clocksync.orientation` estimator reads no excess under isotropic own variation and recovers an injected tilt on simulated cohorts; NOT seen: the radial / tangential split of any real compartment): is the personal departure of peripheral tissues mostly a phase departure, as for driven cycles above their Hopf bifurcation, and more so in tissues with more gain? **GTEx fast deaths, the 27 peripheral tissues of A104**
+
+**Statistic (`clocksync.orientation`, clocksync f9ea9f1).** A104 rows and fit (every peripheral tissue an anchor,
+leave-one-out host). Per tissue: residual of each donor's state on the host posterior mean (loading and intercepts
+refitted), split on the direction of the predicted state; tilt T = mean(tangential^2) - mean(radial^2), minus the mean
+of 200 simulations at the tissue's real design with isotropic own variation of the estimated size (seed [311, tissue
+index]); **share_o = excess tilt / 2 psi_o** (tangential minus radial share of the tissue's own variation). Companion:
+100 expression-matched pseudo-clock sets (A294b construction, seed [294, 1], so the same sets), each on its own fit,
+50 simulations per tissue.
+- **H311.1:** median over the 27 tissues of share_o > 0: tissue-bootstrap (2000) 90 % lower bound > 0, and the
+  median above the q95 of the same median over the 100 matched sets.
+- **H311.2:** Spearman rho(share_o, S_o) > 0, one-sided permutation p < 0.05 (2000).
+- **Reported (descriptive):** per tissue share_o and its null SD; the share of the clock-specific departure,
+  share_o x 2 psi_o / E_o (E_o the excess over the matched floor, A294b), read on the model grid as a position
+  relative to the bifurcation (> 0.5: above, for small detuning); radial and tangential excess separately; the
+  matched sets' per-tissue shares.
+**Power (run and committed before scoring).** Per tissue, `orientation.simulator` at the real design with a true tilt
+of 0.3 x E_o (a clock-specific departure 30 % more tangential than radial, mu about -0.7 F^{2/3} on the model grid,
+i.e. slightly below the bifurcation) and with 0; 200 replicates of the 27-tissue median and its bootstrap bound. Power of
+the bootstrap part of H311.1 >= 0.8 at 0.3 x E_o is required to score; otherwise the test is reported not powered and
+not scored. Type I rate under tilt 0 reported (must be <= 0.10). The matched-set part is not simulated.
+**Readings (stated now).**
+- **H311.1 and H311.2 PASS:** departures are mostly in phase, more so where the gain is high, as driven cycles above
+  their bifurcation predict and as neither a damped responder (isotropic) nor phase noise in the input (tangential in
+  every tissue, departure growing with S at slope 1, excluded by A294b's 0.223) does. The Hopf model makes a confirmed
+  prediction; the share of the clock-specific departure places tissues relative to the bifurcation (descriptive).
+- **H311.1 PASS, H311.2 FAIL:** phase departures without the predicted gradient; consistent with the model only if
+  all tissues sit at a similar distance above the bifurcation; phase noise in the input not excluded.
+- **H311.1 FAIL (powered), share near 0:** isotropic departures: no evidence of limit-cycle dynamics in the personal
+  departure; the Hopf statement stays an interpretation, not a supported model of human tissue clocks.
+- **Median share < 0 (upper bound < 0):** radial departures dominate: person x organ variation of gain, outside the model.
+**Limits.** The direction is the predicted state's, from an estimated loading and host; the simulation calibrates its
+error at the real design but assumes Gaussian own variation. Non-count technical variation is part of 2 psi and
+dilutes the share (isotropic if technical). GTEx deaths. The model grid assumes additive isotropic perturbations of
+one compartment; a mixture of compartments at different mu reads as their weighted mixture.
+**Code.** `exploratory/A311_hopf/scripts/{hopf.py, power_a311.py, score_a311.py}`.
