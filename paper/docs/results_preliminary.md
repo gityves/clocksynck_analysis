@@ -6381,3 +6381,21 @@ the first.
   GTEx phases; Pearson r over 34-38 fetuses after cohort and age adjustment.
 - Code: `exploratory/A307_fetal_gc_pattern/scripts/score_a307.py --stage power | score`.
 <!-- src: paper/exploratory/A307_fetal_gc_pattern/output/{power,tests,genes,companions}.csv -->
+
+## A308 (scored 2026-11-18; NOT BLIND for A183 and the archive psoriasis results): the psoriatic lesion delay is beyond the lesion-wide rotation of random expression-matched genes once their estimation noise is removed (H308 PASS, q 0.016); A183's 5.5th percentile reflects noisy companions, and its q05 rule never rejects under the complete null (V308 0.000)
+
+- One run (14 s, 2000 per-person swap draws, the same swaps for every set). Draw 0 reproduces A183 (clock -1.453 h;
+  matched q05 -1.560, percentile 0.055; responsive q05 -1.012).
+- **V308 (A285 form):** with no lesion effect on any gene, the clock falls below the matched q05 in 0 of 2000 draws
+  (responsive 0.024): in this design the percentile rule is conservative, not calibrated. The clock's own offset noise is
+  0.33 h; that of the matched sets is mean variance 0.76 h^2 (SD about 0.87 h).
+- **H308 PASS.** Matched sets: observed offsets mean -0.04 h, variance 1.08 h^2, of which 0.76 is their own estimation
+  noise (noise share 0.71); true lesion-wide rotation of random genes tau 0.56 h. The clock (-1.45 h, noise 0.33 h) lies
+  at q = 0.016 of noise-free random sets observed with the clock's noise (90 % over resampled sets 0.0007 to 0.046).
+- **Responsive family (reported):** the spread is all noise (noise share 1.23, tau 0); q < 0.0001.
+- **Reading (registered).** The matched sets' wide spread in A183 was mostly their own noise (few, weakly covarying
+  genes in 81 persons); the lesion does rotate random genes, but by about 0.6 h SD around 0, and the psoriatic delay of
+  1.45 h exceeds it. The delay is clock-specific against both companion families. Limits: method-of-moments tau with a
+  normal approximation (upper interval bound 0.046, close to the line); not blind; composition not addressed.
+- Code: `exploratory/A308_psoriasis_calibration/scripts/score_a308.py`.
+<!-- src: paper/exploratory/A308_psoriasis_calibration/output/{tests,sets}.csv -->
