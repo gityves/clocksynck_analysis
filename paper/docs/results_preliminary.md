@@ -6635,3 +6635,20 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
   together, but by being the drive whose timing produces this order.
 - Code: `exploratory/A317_braindeath_confirm/scripts/score_a317.py --stage score`.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/{power,tests,sensitivity,sets}.csv -->
+
+## A318 (scored 2026-11-18; NOT BLIND for A317): the brain-death arrangement change survives adjustment for ischaemic time and RNA quality (H318.1 PASS, D_rho 0.584); within organ donors, those with longer ischaemic times keep more of the arrangement (H318.2, +0.410, p 0.040, descriptive): ischaemic time is not a sufficient explanation, but not excluded as a contributor
+
+- Design as registered; power stage (65 pairs kept, MDE 0.582), then one scoring run (46 s). Ischaemic time medians
+  258 min (organ donors) and 561 min (post-mortem); RIN 7.6 and 7.2.
+- **H318.1 PASS.** With every Hardy 0 state (clock and companions) residualised on ischaemic time and RIN, D_rho 0.584
+  (A317 unadjusted 0.621); relabelling p 0.003; above all 200 matched (q95 0.090) and all 200 responsive sets (q95
+  0.161). Adjusted D_C 0.088 (A317: 0.048).
+- **H318.2 (descriptive).** Organ donors in the longest vs the shortest third of ischaemic time (99 vs 100 donors, 66
+  pairs): rho difference against fast deaths +0.410, two-sided relabelling p 0.040: the direction a confound predicts.
+- **Reading (registered).** A linear dependence on ischaemic time or RIN does not explain the contrast: the arrangement
+  change of brain-dead donors stands, clock-specifically. Within organ donors the arrangement still varies with
+  ischaemic time in the confound's direction, so a non-linear or threshold effect of ischaemia (or what it proxies in
+  organ donors, e.g. procurement sequence or time since brain death) is not excluded. The brain-death reading is
+  supported in GTEx, with ischaemic time stated as an unresolved contributor; an independent replication is needed.
+- Code: `exploratory/A317_braindeath_confirm/scripts/score_a318.py --stage score`.
+<!-- src: paper/exploratory/A317_braindeath_confirm/output/{a318_power,a318_tests,a318_sets}.csv -->
