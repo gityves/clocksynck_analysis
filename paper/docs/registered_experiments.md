@@ -8106,3 +8106,24 @@ rule points (H304.1): gain x 0.5: mean Q_G -0.509, Q_R -0.100; departure x 2: Q_
 | H304.3 TP53 | 5 (BRCA, COAD, LIHC, LUAD, PRAD; 299, 100 / 199) | 0.524 | 0.998 | departure (secondary) |
 | H304.4 LumA (BRCA) | 1 (105, 58 / 47) | 0.200 | 0.854 | departure (secondary) |
 Secondary family: H304.3 and H304.4 departure readouts, Holm over 2. Every other readout is reported descriptively.
+
+## A305 (2026-11-18, lead prompt task A4; staged: power stage only now (placebo draws, no observed statistic), scored only if the power rule below passes, after a dated power note; **NOT BLIND** for A149 H149.3 (malignant cells covary with the tumour stromal host, specificity not tested), A138 H138.1, A227 / A271 (tumour fibroblasts and endothelium keep the patient's normal state, clock-specifically) and the healthy pairwise results A272-A283; NOT seen: any pairwise |r| of malignant cells with stromal-vascular compartments of the same tumour sample): do malignant cells share the clock state of their own tumour's stromal-vascular cells beyond the companion families? **Single-cell tumour cohorts (A149 / A227 tables with genome-wide counts), anchor-free pairwise readout (`clocksync.pairwise`, A283 form)**
+**Pairs.** Within each cohort (stratum = cohort x chemistry, as A149), compartment pairs (malignant, X) with X in the
+tumour sample's stromal-vascular compartments (fibroblast, endothelial, mural); the malignant compartment as A138
+(`q3_lib.study_table`). Shared-donor rule of `pairwise.pair_index` (min_stratum 3, min_df 15). Companion pairs
+reported: (tumour SV, tumour SV) (positive control, expected high) and (malignant, T/NK) where present.
+**Statistic.** T_MS = median over cohorts of the cohort median clock |r| (uncorrected) of (malignant, SV) pairs; read as
+the clock's percentile pi among 200 matched and 200 responsive companion sets, p_cal against 5000 placebo draws
+(donor labels permuted within compartment x stratum), as A283.
+**H305.1:** T_MS above both companion families (p_cal < 0.05 against each; the matched family decides if the
+responsive one cannot reach 0.05, A285).
+**Power stage (now; placebo only).** Per cohort: patients, pairs, df; the placebo rate of pi = 1 per family (smallest
+attainable p_cal); the placebo SD of T_MS minus its matched-companion median and MDE = q95 + 0.84 SD - placebo mean
+of that difference (one-sided 0.05, power 0.8).
+**Power rule (fixed now).** H305.1 is scored only if (i) the smallest attainable p_cal is < 0.05 for the matched family
+and (ii) the MDE of T_MS minus the matched median is <= 0.10 (A286 bound). Otherwise A305 closes at the power stage
+("not powered"; no reading of malignant clock sharing).
+**Readings (for scoring).** PASS: malignant cells share their tumour's stromal clock state clock-specifically (the
+tumour's own clock environment reaches them). FAIL with MDE: not detected at that size; sharing matched by companions:
+the A149 covariation is a shared non-clock state.
+**Code.** `exploratory/A305_malignant_stroma_pairwise/scripts/power_a305.py`.
