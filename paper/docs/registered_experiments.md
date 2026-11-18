@@ -8487,3 +8487,21 @@ sharing follows composition, not location.
 tissues processed together, e.g. tissues of one region collected in sequence (no GTEx field orders sample collection;
 not controlled). The correction assumes isotropic host error. Region and family sizes are small.
 **Code.** `exploratory/A313_local_coupling/scripts/score_a313.py --stage power | score`.
+
+## A314 (2026-11-18, user: "we need to split the ventilated apart in B because they don't behave at all the same way in A", slide R3.1; descriptive, **post hoc split**: chosen after A293 Part 1 / A132 showed the organ arrangement kept in ventilated post-mortem donors (rho 0.690) and lost in brain-dead organ donors (0.161); seen: the pooled Hardy 0 alignment (A27 `walltime_hosts.csv`: R 0.142, p 0.0005, 380 donors) and A132's folded distance to 0 / 12 h (organ donors 0.75 h, post-mortem 0.77 h, fast 1.01 h); NOT seen: the alignment to the hour of death of either subgroup alone): does the body's clock read the hour of death in ventilated donors with a living brain and in brain-dead organ donors? **GTEx Hardy 0 split by COHORT (Postmortem; Organ Donor (OPO)); descriptive, no hypothesis**
+
+**Why.** R3.1 panel B reports the pooled Hardy 0 alignment, which mixes the two groups that differ in panel A. A
+descriptive readout per group lets the slide show both on the same rows; it tests nothing.
+**Procedure (as A27 `compute_walltime_hosts.py`, unchanged).** Per group: `gtex.load` on the 15 reference tissues
+(`_shared.V2_TISSUES`), Hardy 0, clock genes, library-size depth; host fitted without time with every tissue an anchor
+(`cs.Dataset`); `Dataset.timed(tod, n_perm=10,000)`: R = |mean exp(i (host phase − ω t_death))| and its permutation p.
+Groups: ventilated post-mortem (all donors) and organ donors (all donors); because R under no alignment shrinks with
+n, also organ donors at the post-mortem n (20 random draws, seed 314, median R and the range).
+**Reported.** R, p, donors per group; the null median of R per group (from 1,000 of the permutations) so the two can
+be compared at their own n. No contrast between groups is tested.
+**Reading (stated now).** Descriptive only: the slide shows each group's R beside the fast-death value. Whether the
+living-brain donors keep more alignment than brain-dead donors is not a registered question; any difference is
+labelled post hoc.
+**Limits.** Same as A27 (one host per group; recorded time of death); organ donors are about four times as many as
+post-mortem ventilated donors.
+**Code.** `exploratory/A314_vent_walltime/scripts/score_a314.py` (aggregates only).
