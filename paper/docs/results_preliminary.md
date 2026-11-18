@@ -6652,3 +6652,29 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
   supported in GTEx, with ischaemic time stated as an unresolved contributor; an independent replication is needed.
 - Code: `exploratory/A317_braindeath_confirm/scripts/score_a318.py --stage score`.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/{a318_power,a318_tests,a318_sets}.csv -->
+
+## A319 (scored 2026-11-19; NOT BLIND for the published tables): in forebrain Bmal1 KO mice the organs' loss of "within-mouse coherence" is mostly a new, reproducible organ order, not independent drift (H319.2 PASS: under restricted feeding all 6 organs cluster across mice and the new order accounts for all of the within-mouse spread); without any shared drive (DD) no significant shared phase is left beyond the organ order (H319.1 PASS, E 0.069, p 0.070, borderline)
+
+- Data: Izumo et al. 2014 eLife source data (organ means and circular variances across mice; per-mouse circular
+  variance over six organs); 11-15 mice per arm; one run, independence null 20000 replicates.
+- **Order share** (V_order / mean within-mouse V): WT 0.90 (LD), 0.83 (DD), 0.31 (FR, CT frame); BKO 0.91 (LD), 0.79
+  (DD), 1.09 (FR). Mean within-mouse V: WT 0.173 / 0.129 / 0.143; BKO 0.226 / 0.405 / 0.512.
+- **H319.2 PASS (BKO FR).** 6/6 organs cluster across mice (Rayleigh p <= 0.005); V_order 0.558 against observed
+  0.512: the high within-mouse variance the paper reads as lost coherence is the spread of a consistent new order
+  (liver 150 deg, kidney 72, heart 46, lung 9, spleen 73, pituitary 227; shifts from WT FR 50-150 deg; circular
+  correlation of organ means with WT 0.02). Excess coherence over independence E 0.076, p 0.035: a mouse's organs
+  also share part of their phase beyond the group order (mouse-specific entrainment).
+- **H319.1 PASS (BKO DD).** E 0.069, p 0.070: not significant, at the edge; 6/6 organs still cluster across mice
+  (liver weakest, R 0.445, p 0.049) and the order explains 0.79 of the within-mouse spread; liver, kidney and heart
+  are advanced 47-56 deg relative to WT DD, lung and spleen not (correlation of organ means with WT 0.91).
+- **LD:** BKO keeps the WT order (shifts -10 to +19 deg, correlation 0.96), as the paper reports.
+- **Amplitude (quoted, not reanalysed):** lower in BKO DD, kept in BKO LD, restored by FR only in liver; heart
+  imaging: lower cell amplitude and cell dephasing together.
+- **Reading (registered).** The mouse shows the human pattern for order: without the central clock, a substitute
+  drive (feeding) sets a new, reproducible organ order rather than leaving organs independent; with light, the order
+  is kept. Without any drive for > 30 days, organs keep a reproducible order across mice (possibly the dissection reset
+  or a residual cue) and only a borderline shared phase within the mouse. Tension for amplitude: tissue amplitude
+  falls after weeks without a shared drive (cell dephasing), which A315's "amplitude kept" in brain-dead donors (hours
+  to days, ICU cues) does not contradict but does not generalise to: the human claim is stated for the short term.
+- Code: `exploratory/A319_izumo_mouse/scripts/score_a319.py`; card `manuscript/literature/notes/izumo2014differential.md`.
+<!-- src: paper/exploratory/A319_izumo_mouse/output/{conditions,organs,tests}.csv -->
