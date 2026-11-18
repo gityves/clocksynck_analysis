@@ -8505,3 +8505,12 @@ labelled post hoc.
 **Limits.** Same as A27 (one host per group; recorded time of death); organ donors are about four times as many as
 post-mortem ventilated donors.
 **Code.** `exploratory/A314_vent_walltime/scripts/score_a314.py` (aggregates only).
+
+### A313 power note (2026-11-18, before scoring; `score_a313.py --stage power`, 20 matched sets only, 4518 s)
+SD of T_adj over the 20 sets 0.033, median SD of the region-reassignment null within a set 0.021; power of H313.1
+against an excess of 0.10 for adjacent-different pairs 0.91: gate passed. Usable pairs per cell (>= 30 shared donors):
+AS 3, AD 19, DS 10, DD 229. Matched sets already show T_adj above 0 on average (mean 0.017, 12 of 20 sets positive), and
+spread more than the region-reassignment null: the reassignment criterion alone would be anti-conservative, and the
+matched-set criterion (ii) carries the specificity, as registered. Scoring needs the clock and 100 sets (about 6 h at 4
+workers).
+<!-- src: paper/exploratory/A313_local_coupling/output/{power,power_sets}.csv -->
