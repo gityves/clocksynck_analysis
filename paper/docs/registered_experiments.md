@@ -8202,3 +8202,31 @@ loop of a given adult size.
 `score_a307.py --stage power` (17 s; `output/power.csv`, 10,000 draws). MDE (q95 + 0.84 SD of the null): L (mean r^2 of
 SI with the GC score) cortex 0.122, lung 0.096, liver 0.104 (null means 0.028-0.035); W cortex 0.058, lung 0.051, liver
 0.053 (null means 0.000). Both statistics are scored in all three organs as registered.
+
+## A308 (2026-11-18, user: "yes register it and run the calibration", after re-reading the psoriasis caveats against the newer tests; a calibration and a variance decomposition of an existing statistic, no new data; **NOT BLIND**: A183 in full (psoriasis lesional offset -1.45 h, p 0.0001; matched q05 -1.56, clock at the 5.5th percentile, 11 of 200 sets at or below it; responsive q05 -1.01, 0.5th percentile; matched offsets SD 1.04 h; gene sensitivity, without PER1 and NR1D1 -1.08 h), A54-A82 (archive), A254, A285 (the matched q95 rule is calibrated in bulk, the responsive one is not where few pairs); NOT seen: any swap-placebo offset of a companion set in GSE154200): is the psoriatic lesion delay beyond the lesion-wide rotation of random expression-matched genes, once the companions' own estimation noise is removed? **GSE154200, the 81 psoriasis persons and batches of A183 H183.1**
+**Statistic (A183 H183.1, unchanged).** Pooled offset over the used batches of `clocksync.paired` (per-batch
+`ccorr` of lesional vs non-lesional states on one projector, weights = the clock fit's inverse variances, fixed), for
+the clock and the 200 matched and 200 responsive sets of A183 (same seeds, so the same gene sets). States centred within
+sample type per batch as in `paired.swap_offset_null`.
+**Placebo.** Per-person label swaps (lesional <-> non-lesional), 2000 draws, seed [308, d]; each draw applies the same
+swaps to the clock and to every companion set. Draw 0 = no swap, must reproduce A183 (clock -1.453 h, matched q05
+-1.560, percentile 0.055; responsive q05 -1.012) to 3 decimals.
+- **V308 (A285 form, descriptive):** share of draws in which the clock offset is below the matched q05 of the same
+  draw (calibrated if <= 0.0685; conservative if far below 0.05). Responsive family reported. This checks the rule under
+  the complete null (no lesion effect on any gene); it does not test specificity, since the swaps remove the lesion's
+  rotation of the companion sets too.
+- **H308 (specificity, deconvolved).** Per matched set j: observed offset o_j (draw 0) and its noise SD s_j (SD of its
+  wrapped placebo offsets); for the clock, o_c and s_c. True lesion-wide rotation of random genes: mean m = mean_j o_j,
+  variance tau^2 = max(0, var_j(o_j) - mean_j s_j^2). Statistic: q = Phi((o_c - m) / sqrt(tau^2 + s_c^2)), the
+  percentile of the clock among noise-free random sets observed with the clock's own noise. **H308 passes if q < 0.05.**
+  Interval: 90 % over 2000 bootstrap resamples of the 200 sets (reported, not decisive). Also reported: noise share
+  mean_j s_j^2 / var_j(o_j); the same for the responsive family.
+**What each outcome means (stated now).** H308 passes: the matched sets' spread is mostly their own estimation noise;
+the psoriatic delay exceeds what the lesion does to random genes of the same expression: clock-specific, and A183's
+5.5th percentile reflects noisy companions. H308 fails with tau^2 well above 0: the lesion rotates random genes'
+projections by about as much as the clock; the delay is a lesion-wide transcriptional rotation that the clock genes
+share, not shown to be a clock property (the slide says so). V308 well below 0.05: the q05 rule is conservative in this
+design under the complete null (stated; it does not by itself change the A183 verdict).
+**Limits.** tau^2 is a method-of-moments estimate with a normal approximation; circular wrapping is ignored beyond
+|offset| < 12 h (the observed sets lie within about +-3 h). Composition is not addressed.
+**Code.** `exploratory/A308_psoriasis_calibration/scripts/score_a308.py` (imports A183's loaders).
