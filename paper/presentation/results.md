@@ -621,3 +621,64 @@ aligned condition (0 h = central time, 12 h = behaviour): aligned reference (gre
 
 **Source:** `exploratory/A297_feeding_model/output/{tests,arms}.csv`; `exploratory/A257_nightshift_muscle/output/score_tests.csv`;
 `exploratory/A261_nightshift_programs/output/programs.csv`; `results_preliminary.md` A257, A261, A297.
+
+---
+
+## R4 Before birth: some organs share a clock-shaped state between individuals, in human and mouse
+
+**Message:** before birth, clock genes already covary between individuals in the clock's pattern in the adrenal cortex,
+lung and liver, at about two thirds of the adult size, and not in the heart or kidney; in the late mouse embryo the
+liver and the heart / kidney negatives replicate. The hormone-induced clock genes carry most of it, yet they move with
+the core genes in the clock's phase pattern: an entrained loop or a systemic input moving the whole network, not
+decided without times.
+
+**Bullets**
+1. Human fetus (pooled open cohorts, 4-20 wpc): adrenal cortex C 0.61 (34 fetuses, Holm p 0.008), liver 0.58 (35,
+   0.025), lung 0.53 (38, 0.026), each above expression-matched and stress-responsive gene sets; adult tissue at the same
+   design gives 0.84 to 0.86. Heart (0.03, 72 fetuses) and kidney (0.02, 53) are flat, where adult-sized clocks would
+   pass in 100 % of subsamples (A243, A244).
+2. Late mouse embryo (E15-E18.75, sampled at 00, 06, 12, 18 h): hepatocytes 0.64 (Holm p 0.012), clock-specific;
+   ventricular cardiomyocytes 0.24 (three quarters of the adult size excluded) and nephron progenitors negative;
+   adrenocortical cells (0.41, 13 embryos) and lung progenitors not replicated in this window (A309).
+3. Without PER1, PER2 and NR1D1 the signal is not significant in the cortex or lung and not clock-specific in the liver
+   (A266, A269), but these genes are not moving alone: they agree with the core genes in the clock's phase pattern
+   beyond matched genes in the cortex, lung and mouse liver (W); their link to glucocorticoid targets is clock-specific
+   in the lung only (A307, A309).
+
+**Figure:** `figures/development/development.png` (`scripts/development.py`; wide). Rows: organs; human fetus blue
+(adrenal cortex cells, whole lung, liver, heart, kidney), mouse embryo orange (adrenocortical cells, hepatocytes, lung
+progenitors, ventricular cardiomyocytes, nephron progenitors). Filled: significant and above the 95th percentile of
+both companion families; open: not. Grey tick: 95th percentile of 200 expression-matched gene sets. A. clock-gene
+covariation between individuals C (signed coherence of 14 clock genes against the adult waveform, cohort / batch and age
+adjusted); open diamond: median C of adult tissue subsampled to the same design (full-size clock). B. link of PER1,
+PER2, NR1D1 to a glucocorticoid-target score (FKBP5, TSC22D3, ZBTB16, KLF9), L = mean r^2. C. agreement of PER1, PER2,
+NR1D1 with the core genes in the adult clock's phase pattern, W = mean r cos(phase difference) over 33 pairs. B and C:
+adrenal cortex, lung, liver (human), liver (mouse).
+
+**Speaker notes**
+- Status: A243, A244 registered (A243 heart and kidney blind; lung, liver passes H243.1); A264, A266, A269, A307, A309
+  registered, NOT BLIND for the earlier fetal results. No sampling times in the human data: C reads a shared state
+  between individuals, not a rhythm.
+- Size: the fetal C sits at 0.62 to 0.72 of the adult median at the same design (cortex 0.61 vs 0.85, lung 0.53 vs
+  0.84, liver 0.58 vs 0.86); C is not linear in amplitude, so "about two thirds" is a rough reading. Heart at half the
+  adult size: adult pass rate 0.80; kidney at half: 0.25 (kidney powered at three quarters only, 0.995).
+- Not a static axis: the covariation survives age and cohort adjustment, steroidogenic activity in the cortex (A264)
+  and glucocorticoid-target activity in lung and liver (A269).
+- Core loop alone (11 genes): cortex 0.42 (p 0.057), lung 0.47 (p 0.060), liver 0.69 (p 0.009, below the responsive
+  q95). Core-loop clocks of three quarters of the adult size are excluded in the cortex; smaller entrained loops are not.
+- Why the heart matters: the mouse heart clock runs in explants at E15-E18 (Umemura 2017), yet cardiomyocytes of
+  embryos sampled across the day show no shared state: cells able to oscillate, not synchronised in the fetus. This is
+  the sequence the animal literature describes: maternally (systemically) driven organs first, autonomy later
+  (`docs/literature/fetal_clocks_animal_2026-11-18.md`). Tension to state: Dolatshad 2010 found no in vivo variation of
+  liver clock genes at E18-19 by qPCR of whole tissue, whereas hepatocytes covary here (single-cell, cell-type
+  pseudobulk, 16 embryos).
+- The fetal cortex carries the ACTH receptor complex (MC2R, MRAP) at adult or higher levels and no detectable melatonin
+  receptor (A266): fetal ACTH / cortisol is a plausible driver.
+- Open: the time-free test of a running oscillator (spliced / unspliced phase relations) needs FASTQ mapping or an
+  author release; an unseen adrenal cohort (del Valle 2023, 32 fetuses, FASTQ only) would give a blind replication.
+
+**Source:** `exploratory/A243_fetal_organs_pooled/output/{l1,verdicts,position_in_adult,feasibility_passrates}.csv`;
+`exploratory/A244_fetal_adrenal_classes/output/{l1,verdicts_a244,position}.csv`;
+`exploratory/A309_mouse_embryo_organs/output/{l1,power_passrates,gc_pattern}.csv`;
+`exploratory/A307_fetal_gc_pattern/output/tests.csv`; `results_preliminary.md` A243, A244, A264, A266, A269, A307,
+A309.
