@@ -67,8 +67,15 @@ figure, then apply it to the figure at hand.
   both families are drawn, light grey (#BBBBBB) for expression-matched and dark grey (#6E6E6E) for stress-responsive,
   with a legend (user, 2026-11-18).
 
-  Core clock / clock-gene readouts: blue (0), in every figure, including timed readouts in other species (mouse liver,
-  human muscle); clock outputs or genome-wide rhythmic programs: ink (user, 2026-11-18).
+  Colour encodes what the panel compares (user, 2026-11-18, revised the same day): a fixed entity colour applies only
+  when that entity is one of the compared categories. When a panel contrasts gene sets (core clock vs outputs vs
+  companions), the core clock is blue (0); outputs / genome-wide rhythmic programs take another tab10 colour (orange
+  when next to the core clock on a clock face, ink in bar or dot plots). When a panel compares conditions on one readout
+  (feeding arms, protocols), colour the conditions and name the readout in the title or caption; the reference
+  condition is dark grey (#6E6E6E).
+  Model predictions or expected values: the colour of the condition they predict, open marker of another shape
+  (diamond), never a separate grey; legend entry "<condition>: expected if ...".
+  Clock faces (angle = phase shift, radius = amplitude ratio): legend below the face, no direct labels.
 
   Other recurring entities (organ systems, cohorts, cell classes) get a fixed mapping the first time they appear;
   write it in this table.

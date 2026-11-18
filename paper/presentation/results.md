@@ -598,9 +598,9 @@ angle = phase shift against the reference (0 h at the top, clockwise, a full tur
 amplitude relative to the reference (rings 0.5 and 1); each point with its 90 % intervals as a radial segment
 (amplitude) and an arc (phase). A. mouse liver core clock against ad libitum feeding: feeding rhythm removed and the
 night-restricted control (Greenwell, open), feeding inverted (Manella, Xin; the calibration), and the state expected
-for removal if cues add (grey open). B. human muscle, 07:00-to-19:00 change after a 12 h shift of behaviour against the
-aligned condition (0 h = central time, 12 h = behaviour): core clock (14 clock genes, blue) and rhythmic outputs
-(1,587 genes, black).
+for removal if cues add (open diamonds, in the colour of removal); reference in grey, legend below. B. human muscle, 07:00-to-19:00 change after a 12 h shift of behaviour against the
+aligned condition (0 h = central time, 12 h = behaviour): aligned reference (grey), core clock (14 clock genes, blue) and rhythmic outputs
+(1,587 genes, orange).
 
 **Speaker notes**
 - Mouse (A297, registered, NOT BLIND for the A111 shifts; H297.1 fail, above the interval): different laboratories, strains and protocols; liver only; amplitudes read in each dataset's own

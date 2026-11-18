@@ -16,10 +16,10 @@ the reference (0 h at the top, clockwise), radius = amplitude relative to it; 90
 arc.
 A. Mouse liver core clock (A297, registered, H297.1 fail above the interval) against ad libitum: feeding rhythm removed
    (Greenwell arrhythmic) and the night-restricted control (open), feeding inverted (Manella day feeding, Xin day- vs
-   night-restricted; the calibration), and the state expected for removal if cues add, (1 + rho) / 2 (grey open).
+   night-restricted; the calibration), and the state expected for removal if cues add, (1 + rho) / 2 (open diamonds, colour of removal). Colours are conditions (reference grey).
 B. Human muscle after three days of 12 h-shifted sleep, light, activity and meals (Wefers 2018, 11 men, biopsies at
    07:00 and 19:00): the 07:00-to-19:00 change against the aligned condition, for the core clock (14 clock genes, A257
-   H257.2 shift, H257.3 size) and the rhythmic outputs (1,587 reference-rhythmic genes, A261 H261.3).
+   H257.2 shift, H257.3 size; blue) and the rhythmic outputs (orange; 1,587 reference-rhythmic genes, A261 H261.3).
 
 Data: exploratory/A293_organisation_levels/output/part1/{groups,sets}.csv; results/figure_3/output/cues_lost/walltime_hosts.csv;
 exploratory/A314_vent_walltime/output/groups.csv;
@@ -43,7 +43,11 @@ PAPER = Path(__file__).resolve().parents[2]
 EXP = PAPER / "exploratory"
 OUT = PAPER / "presentation" / "figures" / "holds_organisation"
 INK, MUTED = "#222222", pf.GREY
-CS = sns.color_palette().as_hex()[0]
+TAB = sns.color_palette().as_hex()
+CS = TAB[0]
+REF = "#6E6E6E"  # reference condition of a clock face (ad libitum, aligned)
+FEED = {"night": TAB[2], "removed": TAB[4], "inverted": TAB[3]}  # mouse feeding arms; expected removal: open diamond
+OUTPUTS = TAB[1]
 FAMILY = {"matched": ("random genes", "#BBBBBB"), "responsive": ("stress-responsive genes", "#6E6E6E")}
 ROWS = ["fast deaths", "slow deaths", "intermediate\ndeaths", "ventilated,\nbrain alive", "brain-dead\norgan donors"]
 GROUPS = {"slow_hardy4": 1, "hardy3": 2, "ventilated_postmortem": 3, "organ_donor": 4}  # A293 group -> row
@@ -115,7 +119,8 @@ def clockface(ax, rmax, rings, title, names=None):
     ax.set_title(title, fontsize=13, color=INK)
 
 
-def vector(ax, amp, shift, color, label, amp_ci=None, shift_ci=None, open_=False, dx=8, dy=0, ha="left", size=40):
+def vector(ax, amp, shift, color, label=None, amp_ci=None, shift_ci=None, open_=False, dx=8, dy=0, ha="left", size=40,
+           marker="o"):
     """One condition: point at (amp, shift), 90 % intervals as a radial segment and an arc, direct label."""
     t = 2 * np.pi * shift / 24
     if amp_ci is not None:
@@ -124,40 +129,52 @@ def vector(ax, amp, shift, color, label, amp_ci=None, shift_ci=None, open_=False
     if shift_ci is not None:
         u = 2 * np.pi * np.linspace(shift_ci[0], shift_ci[1], 30) / 24
         ax.plot(amp * np.sin(u), amp * np.cos(u), color=color, lw=1.4, zorder=1)
-    ax.scatter([amp * np.sin(t)], [amp * np.cos(t)], s=size, color="white" if open_ else color, edgecolor=color,
-               lw=1.2, zorder=3)
+    ax.scatter([amp * np.sin(t)], [amp * np.cos(t)], s=size, marker=marker, color="white" if open_ else color,
+               edgecolor=color, lw=1.2, zorder=3)
     if label:
         ax.annotate(label, (amp * np.sin(t), amp * np.cos(t)), xytext=(dx, dy), textcoords="offset points",
                     ha=ha, va="center", fontsize=8, color=color, linespacing=0.9)
+
+
+def legend_below(ax, entries, ncol=2):
+    """Legend under a clock face: (label, colour, marker, open)."""
+    h = [Line2D([], [], ls="", marker=m, ms=6.5, mfc="white" if o else c, mec=c, mew=1.2, label=lab)
+         for lab, c, m, o in entries]
+    ax.legend(handles=h, loc="upper center", bbox_to_anchor=(0.5, 0.0), ncol=ncol, frameon=False, fontsize=8.5,
+              handletextpad=0.3, columnspacing=1.2)
 
 
 def liver(ax, t):
     """Mouse liver clock state relative to ad libitum feeding (A297): amplitude ratio and phase shift."""
     clockface(ax, 1.2, (0.5, 1), "mouse liver")
     r = lambda key: t[t.contrast.str.startswith(key)].iloc[0]
-    vector(ax, 1, 0, INK, "ad libitum", dx=-10, ha="right")
-    for key, lab, dy in (("Manella DF", "feeding\ninverted", 0), ("Xin DRF", "", 0)):
+    vector(ax, 1, 0, REF)
+    for key in ("Manella DF", "Xin DRF"):
         x = r(key)
-        vector(ax, x.amp_ratio, x.shift_h, CS, lab, (x.amp_lo90, x.amp_hi90), (x.shift_lo90, x.shift_hi90), size=28,
-               dx=10, dy=dy)
-    for key, lab in (("prediction from Manella", "expected if\ncues add"), ("prediction from Xin", "")):
+        vector(ax, x.amp_ratio, x.shift_h, FEED["inverted"], None, (x.amp_lo90, x.amp_hi90),
+               (x.shift_lo90, x.shift_hi90), size=30)
+    for key in ("prediction from Manella", "prediction from Xin"):
         x = r(key)
-        vector(ax, x.amp_ratio, x.shift_h, MUTED, lab, open_=True, size=30, dx=-10, ha="right")
+        vector(ax, x.amp_ratio, x.shift_h, FEED["removed"], open_=True, size=32, marker="D")
     x = r("control Greenwell night")
-    vector(ax, x.amp_ratio, x.shift_h, CS, "night-\nrestricted", (x.amp_lo90, x.amp_hi90), (x.shift_lo90, x.shift_hi90),
-           open_=True, size=30, dx=18, dy=-2)
+    vector(ax, x.amp_ratio, x.shift_h, FEED["night"], None, (x.amp_lo90, x.amp_hi90), (x.shift_lo90, x.shift_hi90))
     x = r("observed Greenwell arrhythmic")
-    vector(ax, x.amp_ratio, x.shift_h, CS, "feeding rhythm\nremoved", (x.amp_lo90, x.amp_hi90),
-           (x.shift_lo90, x.shift_hi90), dx=10, dy=-6)
+    vector(ax, x.amp_ratio, x.shift_h, FEED["removed"], None, (x.amp_lo90, x.amp_hi90), (x.shift_lo90, x.shift_hi90))
+    legend_below(ax, [("ad libitum (reference)", REF, "o", False), ("night-restricted", FEED["night"], "o", False),
+                      ("feeding inverted", FEED["inverted"], "o", False),
+                      ("feeding rhythm removed", FEED["removed"], "o", False),
+                      ("removed: expected\nif cues add", FEED["removed"], "D", True)])
 
 
 def muscle(ax, core, outputs):
     """Human muscle, misaligned against aligned (A257, A261): size and phase of the 07:00-to-19:00 change."""
     clockface(ax, 1.5, (0.5, 1, 1.5), "human muscle", {0: "central time", 12: "behaviour"})
-    vector(ax, 1, 0, INK, "aligned", dx=-10, ha="right")
-    vector(ax, core.R, core.s, CS, "core clock", (core.R_lo, core.R_hi), (core.lo90, core.hi90), dx=16, dy=-6)
-    vector(ax, outputs.ratio, outputs.shift_h, INK, "rhythmic\noutputs", (outputs.ratio_lo, outputs.ratio_hi),
-           (outputs.shift_lo, outputs.shift_hi), dx=14, dy=-18)
+    vector(ax, 1, 0, REF)
+    vector(ax, core.R, core.s, CS, None, (core.R_lo, core.R_hi), (core.lo90, core.hi90))
+    vector(ax, outputs.ratio, outputs.shift_h, OUTPUTS, None, (outputs.ratio_lo, outputs.ratio_hi),
+           (outputs.shift_lo, outputs.shift_hi))
+    legend_below(ax, [("aligned (reference)", REF, "o", False), ("core clock", CS, "o", False),
+                      ("rhythmic outputs", OUTPUTS, "o", False)], ncol=1)
 
 
 def main():
