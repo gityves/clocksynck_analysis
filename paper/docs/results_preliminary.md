@@ -6438,3 +6438,21 @@ the first.
   types are not the human organs (progenitor and parenchymal classes vs whole-organ or class pseudobulks); not blind.
 - Code: `exploratory/A309_mouse_embryo_organs/scripts/{power_a309.py, score_a309.py}`.
 <!-- src: paper/exploratory/A309_mouse_embryo_organs/output/{power_design,power_passrates,l1,gc_pattern,gc_genes,all_ages}.csv -->
+
+## Scout (2026-11-18; metadata only, no data downloaded, no statistic): spliced / unspliced counts and unseen cohorts for the fetal section
+Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key numbers spot-checked by the lead
+(ENA filereports of PRJEB58854 and PRJEB26969).
+- **Processed spliced / unspliced counts:** none found in any cohort used (A189-A269); RAW.tar contents and the Cao 2020
+  loom layers (12 GB, named "gene_count") not opened.
+- **Raw reads open:** Cardoso-Moreira E-MTAB-6814 (bulk polyA, ENA PRJEB26969: prenatal heart about 38, liver 37,
+  kidney 30 individuals; about 82 / 73 / 53 GB), Kameneva GSE147821 (10x, about 11 fetal adrenal donors, about 415 GB),
+  Wang 2022 GSE167860 (10x, 10 adrenal donors, about 172 GB), Cheng 2022 GSE193672 (about 6 donors, 3-8 wpf, about
+  115 GB), Dong 2020 GSE137804 (about 6 fetal samples among 670 GB), Knight-Schrijver GSE216019 (10x, 6-7 hearts, 231 GB),
+  Cui 2019 (plate, 20 hearts, 1.5 TB), Hochane GSE114530 (5 kidneys, 59 GB), ENCODE fetal (small sets). R1 of the 10x
+  sets is listed in SRA as original files, availability without requester-pays not tested. **Closed:** Cao 2020
+  (dbGaP), Sountoulidis 2023 lung (federated EGA), Kildisiute (EGA). Lung cannot reach 15 fetuses with open raw reads.
+- **Unseen cohorts (blind replication):** adrenal: del Valle 2023, E-MTAB-12492 / PRJEB58854, bulk RNA-seq of 32 whole
+  fetal adrenals (8 per stage at 7, 8, 9, 11.5 wpc, 4 XX / 4 XY), paired-end 43 bp, 46 runs (with 14 non-adrenal
+  controls), 49 GB FASTQ, no count matrix deposited. Liver: Popescu 2019 E-MTAB-7407 (14 fetuses, CD45+ / CD45- sorted,
+  probable overlap with Suo 2022). Heart, lung: no unseen cohort with >= 8 fetuses found. Kidney: <= 9 (low depth).
+<!-- src: subagent reports of 2026-11-18 (session transcript); ENA filereports PRJEB58854 (46 runs, 49.3 GB) and PRJEB26969 (313 runs) -->
