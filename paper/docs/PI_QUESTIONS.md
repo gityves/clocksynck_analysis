@@ -39,6 +39,52 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
 
+### Q40 (2026-11-18): where the paper stands after the organisation framework, and how the cancer chapter reads in it
+**Before / after, 2026-11-15 to 2026-11-18** (STATUS_2026-11-18 sections 1-3, updated today).
+- *Before (11-15/16):* no replicated headline for "what internal time controls" (Q33, Q34); the biology thesis had lost
+  two exceptions (brain as a clock statement, fetal adrenal first; Q35 recommended the Nature Methods ordering); the
+  amplitude-coupling relation was unexplained; atlas couplings failed the responsive control; death-type results were
+  archive results without companions.
+- *After (11-18):* a coherent account of how the clock is organised in the body. Tissues express one shared time with
+  85-fold different gain over a clock-specific departure of nearly constant size (A291, A294); within organs
+  stromal-vascular, epithelial and parenchymal cells and macrophages carry it, lymphocytes do not (A272-A288);
+  composition changes gain, not phase (A295); the organ arrangement holds without alignment to the day or behavioural
+  cues and is lost in brain death (A293); peripheral clocks are self-sustained (mouse re-analysis, A297).
+- *Fell or stayed open:* adrenal +4.4 h offset (absent in mouse and sheep, A303: an effect of death or of species),
+  endothelium-first order (A293), meal-driven shared departures (A302), cortex cell-class coherence (A280).
+**Claim tiers.** Tier 1 (living, replicated, clock-specific): shared internal time advancing with elapsed hours;
+cell-type participation; one phase per organ; conserved relative gains. Tier 2 (GTEx deaths, clock-specific): gain over
+a constant departure; organ arrangement independent of daily alignment. Supported with care: gain not composition
+alone; offsets equal across sex, age and metabolic disease; brain-body two domains (descriptive).
+**Today's scoring (A304-A306).**
+- *Cancer, A304 (TCGA paired, 517 pairs, powered):* proliferating tumours express less of the patient's time (gain ratio
+  0.63, p 0.0055, Holm 0.011, below the matched and responsive companions) and do not drift further from it (departure
+  rise not detected, power 1.000 at a doubling). TP53 and luminal A: no departure rise (powered, FAIL); ER: not
+  powered. Purity does not explain it (the proliferative arm has more stroma, which raises gain).
+  Tumour coupling to the body's time, disattenuated by GTEx reliability (descriptive): lung adenocarcinoma 0.54,
+  liver 0.38, kidney clear-cell 0.27, prostate 0.26, breast 0.18, papillary kidney 0.12, thyroid 0.11, colon 0.06.
+- *Cancer single cell, A305:* not powered (2 cohorts, 3 malignant-stroma pairs; MDE 0.156 > 0.10); closed.
+- *Disease, A306 (GTEx, powered for 5 readouts):* T2D, hypertension and smoking change neither the gain nor the
+  departure of their organ relative to the rest of the body (MDE 0.26-0.35 on log z2 or log psi; smoking departure
+  0.42). With d* and offsets already equal (A164, A233, A235), chronic disease leaves the organ-level organisation
+  intact. Lung gain in smokers is lower (-0.51, p 0.068), not powered.
+**Recommendation for the cancer chapter (main text).** One framework, three statements:
+(1) the tumour keeps the patient's time (A138; COFE's opposite is a sampling artefact, A265, A267);
+(2) within the tumour, the participation rule of healthy organs holds: fibroblasts and endothelium carry it clock-
+specifically, immune cells share only a responsive state (A227, A271);
+(3) as tumours proliferate they express less of that time, without drifting from it (A304): gain falls, the departure
+does not rise. This replaces "loss of coherence" (A127-A173, tumour-only, which could not tell damping from rewiring,
+A212) with a statement on the body's time, and it is the organ-level analogue of lymphocyte dilution in healthy tissue.
+Whether malignant cells carry a weaker clock or simply carry less of it is not resolvable with public single-cell data
+(A214, A305). Per-cancer ranking (A3) as an Extended Data panel, descriptive, with the GTEx-reliability caveat.
+The disease section reads: clock organisation is robust to chronic disease (couplings, offsets, gains, departures)
+and lost in brain death; cancer is the one condition where the organ's gain falls, with proliferation.
+**Open decisions (user / PI).** (a) Venue: Cell (biology case now real) vs Nature Methods fallback. (b) Spliced /
+unspliced fetal counts: FASTQ mapping is outside the processed-data rule; rule change or an author request (draft only).
+(c) Q37 (time of death for brain cohorts / human known-time truth at cell-type level). (d) A290 (the other session's calibration of the amplitude-coupling relation against responsive genes):
+rescheduled by its owner as a weekend run (deviation registered, commit 9a6479e); nothing needed from the PI. (e) Is the smoking lung gain worth a powered design (larger smoking cohort)?
+**Evidence.** RP A304, A305 power note, A306; STATUS_2026-11-18; VERDICT_TABLE rows A304-A306.
+
 ### Q39 (2026-11-17): tally of the cell-type program (blocks A-C)
 **Scored (all on the calibrated test of A283 where a companion test is used).**
 - Test calibration: q95 rule anti-conservative (A276); percentile against a 5000-draw placebo null calibrated (V283
