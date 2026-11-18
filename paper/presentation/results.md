@@ -516,7 +516,7 @@ minus recorded time of death, change per decade of age, body and brain hosts, 90
 
 **Chapter message:** the organ arrangement does not need the daily cues: it survives slow deaths and ventilation
 without meals or activity, a peripheral clock keeps its amplitude when its main cue is removed, and a shifted behaviour
-moves the outputs, not the clock. It is lost when the brain is lost. The central drive, not the external day, holds the organs together (a hypothesis for the brain part:
+moves the outputs and barely the clock. It is lost when the brain is lost. The central drive, not the external day, holds the organs together (a hypothesis for the brain part:
 GTEx is the only data).
 
 ---
