@@ -8230,3 +8230,32 @@ design under the complete null (stated; it does not by itself change the A183 ve
 **Limits.** tau^2 is a method-of-moments estimate with a normal approximation; circular wrapping is ignored beyond
 |offset| < 12 h (the observed sets lie within about +-3 h). Composition is not addressed.
 **Code.** `exploratory/A308_psoriasis_calibration/scripts/score_a308.py` (imports A183's loaders).
+
+## A309 (2026-11-18, user: "yes go ahead, register and run it", after the question why the fetal heart is negative when mouse heart Per1 / Per2 are reported to oscillate; staged: adult power first, then scoring of powered readouts; **NOT BLIND**: A236 (whole-embryo late window: time-locked harmonics not in the clock plane; H108.1 R 0.516 not clock-specific; descriptive rotation estimates hepatocytes 0.67 (se 0.91), cardiomyocytes 0.52 (se 0.31)), A108 / A108c lineage gates (mostly "too few"), the human fetal results A243-A269 and A307; **seen before writing:** embryo counts, cell counts and median clock-gene counts per cell type (counts only); NOT seen: any between-embryo clock statistic of a single mouse cell type): does the late mouse embryo show the human fetal organ pattern (adrenal cortex, lung, liver covary; heart, kidney do not), at the stage where the mouse heart clock is reported to function? **Qiu 2024 late window (E15.0-E18.75: 4 batches = embryonic days, one embryo at 00, 06, 12, 18 h each; `natexp/qiu2024/genome_late`)**
+**Readouts (fixed now; pseudobulks with >= 50 cells).** `adrenal` = Adrenocortical cells (13 embryos), `liver` =
+Hepatocytes (16), `lung` = Lung progenitor cells (16), `kidney` = Nephron progenitors (16), `heart` = Ventricular
+cardiomyocytes (12). Atrial cardiomyocytes (6 embryos) and alveolar cells (<= 8 in the window) are not used.
+**Statistic.** As A243 (`common.development.l1_test`): signed coherence C of the 14 clock genes across embryos after
+residualising every gene on batch indicators (the embryonic day; within a batch the four embryos span 18 h of age),
+10,000 per-gene permutations within batch; 200 matched and 200 responsive companion sets from the genome-wide late
+table (gene symbols upper-cased, clock genes by the A236 panel; duplicated symbols: most expressed kept), adjusted in the
+same way. Sampling times are not used (the readout is the human one; times enter only through the design).
+**Power first (adult stand-ins, before any embryo statistic).** Every embryo of a readout stood for by one timed adult
+mouse sample of the organ (distinct samples): Wolff 2023 (`mouse_ageing_wolff`, all ages; adrenal, lung, kidney,
+heart) and Manella 2021 liver (`manella2021`, AlbCre, ad libitum; 24 samples); stand-ins assigned to the readout's batch
+structure at random; clock-gene counts thinned gene by gene to the cell type's median count (p_g = min(1, fetal median_g /
+adult median_g)); adult clock at 1, 0.75, 0.5 (`simulate.scale_clock`) and shuffled (false-positive rate); 200 subsamples,
+500 permutations within batch. A readout is scored only if its adult pass rate at the full clock is >= 0.8 (D1b rule).
+**H309.1 (per readout, Holm over the scored readouts).** PASS: Holm p < 0.05 and above both companions' q95; "not
+clock-specific": p < 0.05 below a companion q95; fail otherwise (read against the pass rate at 0.75 and 0.5).
+**Readings.** `heart` PASS: the mouse heart carries the covariation at E15-E18.75, so the human heart negative (4-25
+weeks) is a matter of stage (or species), not an organ property. `heart` fail with a pass rate >= 0.8 at 0.5 while
+adrenal / liver / lung pass: the organ split replicates in a second species at a stage where heart cells can oscillate
+(explants): in vivo the heart is not synchronised between individuals the way adrenal, liver and lung are. `heart` not
+powered: the question stays open. Kidney is read in the same way as the heart.
+**H309.2 (secondary; only for readouts passing H309.1; Holm over them per statistic).** The A307 statistics (L: mean r^2
+of PER1, PER2, NR1D1 with the GC score of FKBP5, TSC22D3, ZBTB16, KLF9; W: (signal-induced, core) waveform agreement),
+nulls and matched companions as A307 (within batch). Readings as A307.
+**Descriptive.** All-age readouts of the same cell types from the 14-gene table (`mouse_qiu`; quadratic E-day, global
+permutations, no companions): C and p only.
+**Code.** `exploratory/A309_mouse_embryo_organs/scripts/{power_a309.py, score_a309.py}`.
