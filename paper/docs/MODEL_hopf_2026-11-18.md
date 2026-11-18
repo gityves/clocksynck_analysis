@@ -1,5 +1,8 @@
 # The body's clock as driven Hopf oscillators: model statement (draft, 2026-11-18)
 
+**Superseded (2026-11-19) by `MODEL_federation_2026-11-19.md`.** Kept for the A311 / A312 predictions and the model
+grid; the Hopf form survives there as the cell-level oscillator only.
+
 Candidate take-home model of the paper (user, 2026-11-18). It is an organiser: a quantitative multi-tissue fit was
 tried and failed (A310). Model numbers come from `exploratory/A311_hopf/output/hopf_grid.csv`, data numbers from the
 results entries cited.

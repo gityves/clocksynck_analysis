@@ -73,8 +73,8 @@ Ranked by how much the headline depends on it.
    Saini 2013 kinetics as a mouse calibration of b for liver.
 7. **Lymphocyte core loop** (A294): blind test before "no clock" loses "readable".
 8. **Age advance** (A234; living cohorts opposite sign): supplement with caveats, or replicate.
-9. **Model document**: rewrite `MODEL_hopf_2026-11-18.md` as the federation model, with its tested limits
-   (A310 inadequate fit, A311 departure not phase-like, A312, A313, A315, A319).
+9. **Model document**: done, `MODEL_federation_2026-11-19.md` (with its tested limits A310, A311, A312, A313,
+   A315, A319).
 10. **Literature before submission**: repeat the inter-organ / inter-tissue coherence search (PubMed, bioRxiv 2026);
     brain-death endocrinology; missing cards (Leproult 2014, Morris 2015 for human misalignment; Janich 2011 for the
     epidermal clock).
