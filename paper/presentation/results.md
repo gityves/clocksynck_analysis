@@ -179,85 +179,88 @@ tissue's shift relative to the other three, untimed vs timed; dashed: identity.
 
 # R2. Organisation in health
 
-**Chapter message:** a person's organs share one clock state, and the stronger an organ's clock, the more it follows
-it. Inside tissues the organ sets the time and each cell class sets how strongly it expresses it; lymphocytes carry
+**Chapter message:** a person's organs share one clock state, each at its own gain over a departure of constant size,
+so the stronger an organ's clock, the more it reads as coupled. Inside tissues the organ sets the time and each cell class sets how strongly it expresses it; lymphocytes carry
 no readable clock. With
 age, internal time advances while the organisation stays.
 
 ---
 
-## R2.1 Organs share one clock state; weak clocks are the loosely coupled ones, the brain included
+## R2.1 Organs share one clock state: each expresses the body's time with its own gain over a departure of constant size
 
-**Message:** every organ follows the body's clock state, and how closely it follows is set by the strength of its own
-clock: strong clocks are the coupled ones, the opposite of what oscillator theory predicts. The brain's lower
-coupling is this rule, not a separate brain clock. Within a person, a tissue stays within 1 to 3 h of the body's time.
+**Message:** every organ carries the body's clock state, at its own gain, plus a departure of its own that is about
+the same size in every organ and specific to the clock genes. Coupling is the ratio of the two, so strong clocks read
+as the coupled ones: not because they are held more tightly, but because the same departure weighs less against a
+larger shared rhythm. The brain follows the same rule.
 
 **Bullets**
-1. Across the 27 GTEx peripheral tissues, stronger clocks are more coupled (Spearman rho +0.734; registered prediction,
-   from oscillator theory, rho < 0: not supported).
-2. Specific to the clock genes: 200 expression-matched and 200 stress-responsive gene sets give rho near 0 (medians
-   −0.160 and 0.109; q95 0.258 and 0.453). Calibrated against the stress-responsive sets: A290, running.
+1. Across 27 GTEx peripheral tissues, the clock variation shared with the body (S) spans 85-fold (0.12, whole blood,
+   to 10.3), the tissue's own departure (D) only 4.6-fold (0.90 to 4.14), and D barely grows with S (slope of log D on
+   log S 0.07). Coupling = S / (S + D): stronger clocks are more coupled (Spearman rho +0.734; registered prediction
+   from oscillator theory, rho < 0, not supported).
+2. Not measurement: a perfectly locked tissue would read a coupling of 0.97 at every tissue's real design (A291).
+   The departure is clock-specific: 2.6 times the own variation of expression-matched genes (median over tissues; 90 %
+   2.4 to 2.9), above it in all 27 tissues (A294b, registered).
 3. The brain follows the rule. In the baboon, where each animal's time is known, coupling rises with each tissue's
-   rhythm amplitude against known time (Spearman 0.82 over 57 tissues; periphery 0.77, brain 0.74), and the weakly
-   rhythmic brain regions fall on the peripheral line (registered on the untimed amplitude, A289: median residual
-   −0.001). Human brain couples at 0.406 against 0.679 in the periphery.
-4. A tissue's clock departs from its person's body time with an SD of 1.0 h (thyroid) to 3.2 h (lung), 11 body
-   tissues; an upper bound (not above the companion gene sets).
+   rhythm amplitude against known time (Spearman 0.82 over 57 tissues; periphery 0.77, brain 0.74), and weakly
+   rhythmic brain regions fall on the peripheral line (A289: median residual −0.001). Human brain couples at 0.406
+   against 0.679 in the periphery.
+4. Source of the departure: open. Not individual clock periods (it would grow with amplitude), not shared by
+   meal-driven organs (A302, H302.1 fail); noise or other personal cues remain. Calibration against stress-responsive
+   genes: A290, running.
 
-**Figure:** `figures/organs_health/organs_health.png` (`scripts/organs_compute.py`, `scripts/organs_health.py`; wide).
-A. human (GTEx fast deaths): clock-gene variation (A104 "own amplitude": all clock-plane variation between donors,
-shared and own; log scale) against coupling to the body's clock state, one dot per tissue, coloured by organ system
-(brain pink); grey: least-squares line over the peripheral tissues. B. baboon: rhythm amplitude against known time
-(A36 timed gain, estimated without the host; log scale) against coupling, 35 peripheral tissues and 22 brain regions;
-grey: the peripheral line. C. variation-coupling correlation of the clock genes (blue) against 200
-expression-matched and 200 stress-responsive gene sets (grey dots). D. SD of a tissue's departure from its person's
-body time, with 90 % interval.
+**Figure:** `figures/organs_health/organs_health.png` (`scripts/organs_health.py`; wide). Human panels: GTEx fast
+deaths, 27 peripheral tissues, one dot per tissue coloured by organ system. A. clock variation shared with the body (S)
+against the tissue's own departure (D), log axes of the same range; grey: Theil-Sen line of log D on log S. B. coupling
+against S; grey: S / (S + D) at the median D (1.9), the definition of coupling drawn at a constant departure. C. own
+departure of the clock genes against that of expression-matched genes (median of 100 sets); dashed, 1:1; dotted, the
+median ratio 2.6. D. baboon: rhythm amplitude against known time (A36 timed gain, estimated without the host; log
+scale) against coupling, 35 peripheral tissues and 22 brain regions (pink); grey: the peripheral line.
 
 **Speaker notes**
-- Status: A104 registered (H104.1, rho < 0, not supported; the positive relation is a post hoc reading made
-  registered by A144 and A271 Part B); A144 part 1 (registered): not noise shared within donors, it lies in the shared
-  part; A271 Part B H271.2 pass (q95 rule; the calibrated form, A290, is running); A289 H289.3 (registered, fail:
-  brain on the line, the outcome shown); A259 registered (H259.1 fail, H259.2 no tissue above its companions).
-- Why panel B uses the timed amplitude (post hoc choice of display): the untimed "own amplitude" counts every
+- Status: A104 registered (H104.1, rho < 0, not supported; the positive relation is a post hoc reading made registered
+  by A144 and A271 Part B). A291 registered (H291.1 pass: a perfectly locked tissue reads 0.966 to 0.977 at every
+  peripheral tissue's real design; the relation holds after that ceiling, rho 0.717). The S / D decomposition is the
+  A291 post hoc table; A294b registered (H294b.1 pass; H294b.2 slope 0.22 of the excess over matched genes, 90 % 0.04
+  to 0.33). A302 registered (H302.1 fail). A289 H289.3 registered (fail: brain on the line, the outcome shown).
+- Panel B is not a test: c = S / (S + D) is how coupling is defined. What the panel shows is that one constant D
+  places every tissue near one curve; the finding is panel A (D nearly constant while S spans 85-fold).
+- Reading of the slope (A294b correction note, post hoc): for a limit-cycle clock, the angle an input turns it scales as
+  1 / amplitude, so a departure independent of amplitude (slope 0) means person-specific cue timing or additive noise;
+  a fixed angle would give slope 1, individual intrinsic periods slope 2. The observed 0.07 (0.22 for the excess over
+  matched genes) excludes intrinsic periods as the main source. A302 tested the cue-history reading for feeding (the
+  liver's departure is not shared more with gut and adipose; differences below about 0.1 undetectable).
+- Clock-specificity: the departure exceeds the matched median in all 27 tissues and the matched q95 in 10. The matched
+  sets share little between tissues (median S 0.016 to 0.193), so their own variance is read on a small shared state;
+  non-count technical variation specific to clock genes (none known) cannot be excluded.
+- The departure in hours (A259, registered): SD across donors 1.0 h (thyroid) to 3.2 h (lung), 11 body tissues; an
+  upper bound, not above the companion gene sets on that statistic (H259.2). Different estimator from A294b.
+- Gene-set companions of the rho (former panel C, A271 Part B, H271.2 pass on the q95 rule): 200 expression-matched
+  and 200 stress-responsive gene sets give rho medians −0.160 and 0.109 (q95 0.258 and 0.453). The calibrated form
+  (A290) runs the weekend of 2026-11-21; update when its `tests.csv` exists.
+- Why panel D uses the timed amplitude (post hoc choice of display): the untimed "own amplitude" counts every
   clock-gene variation between animals, not only the rhythm, and shares a term with coupling. Baboon tissues at
   coupling 0 with sizeable untimed amplitude (lateral hypothalamus, thalamus, testis, pineal; smooth muscle 0.06) have
   weak rhythms against known time (0.29 to 0.76, smooth muscle 1.67; periphery median 2.46): their clock-gene
-  variation does not follow the body's clock. Whether it is no clock (noise, dissection, other programs) or a clock
-  of their own with a phase that differs between animals is not tested here (a within-tissue clock-coherence test,
-  as A281/A287 for lymphocytes, would decide; underpowered with 12 animals). The timed amplitude is estimated without
-  the host, so the relation in B cannot come from a shared term.
-- Caveat on B: it mixes a timed x and an untimed y, so it is partly a validation (untimed coupling follows real rhythm
-  strength). A detectability effect would give the same shape: with 12 animals and a fixed noise level, a weak but
-  fully followed rhythm would also read as low coupling. In GTEx this is excluded (A291, registered, H291.1 pass): a
-  perfectly locked tissue would read 0.966 to 0.977 at every peripheral tissue's real design, and the relation holds
-  after that ceiling (rho 0.717). The baboon (12 animals) was not simulated. Non-count technical noise (dissection,
-  composition) is not separated by A291.
-- Why strong clocks couple more is open. A144's registered candidate: a tissue's amplitude is a population amplitude;
-  body-wide signals keep its cells in phase, raising amplitude and coupling together (part 2 inconclusive).
-- Panel A plots the A263 fit (peripheral host, pituitary in neither group: 26 peripheral tissues, rho 0.745); the
-  registered A104 statistic counts the pituitary as peripheral (27 tissues, 0.734). Human brain regions sit above the
-  peripheral line, but only by extrapolation (brain amplitudes 0.96-1.33 at the periphery's lower edge, post hoc); the
-  baboon, with overlapping amplitudes, decides (A289).
+  variation does not follow the body's clock. Whether no clock or a clock of their own with a phase that differs between
+  animals is not tested (underpowered with 12 animals). The baboon (12 animals) was not simulated as in A291.
 - The brain's lower coupling is not specific to the clock genes (A263): every gene set drops in the brain, and the
   clock is the program the brain shares most with the body (brain coupling 0.406 against stress-responsive and
   matched set medians 0.064 and 0.029; post hoc). Brain vs periphery as blocks (A142, registered): r* 0.639 [0.530,
   0.728] against random 13-tissue peripheral blocks (median 0.978). Wording: "the brain is less coupled to the body's
-  shared state", never "the brain's clock is the exception".
-- Not a measurement artefact (post hoc): the brain's own unshared variation is smaller than the periphery's (psi
-  median 0.38 vs 0.94); it shares far less of the body's state (z2 0.16 vs 1.51); coupling does not follow clock-gene
-  counts (A271 post hoc, rho 0.09); the fresh, timed baboon brain shows the same.
+  shared state", never "the brain's clock is the exception". In the brain block, own variation, not the shared rhythm,
+  varies between regions (S 2-fold, D 4-fold; A291 post hoc; units not comparable with the periphery).
 - Not the blood-brain barrier (A289, registered): pineal and pituitary, outside it, couple less than brain regions in
   baboon (0.12 vs 0.42) and sheep (0.08 vs 0.20), the pineal not at all (post hoc reading: its clock is set by the
-  SCN's sympathetic input). They are glands, so the barrier is not isolated.
+  SCN's sympathetic input).
 - Compared with CHIRAL (Talamanca 2023): CHIRAL gives each tissue a mean amplitude and phase relative to one donor
-  phase, assuming every tissue follows it fully. Coupling estimates how fully; panel D the spread between people
-  around a tissue's mean offset (a variance across donors, not a per-person estimate). With donors over the whole day,
-  a two-step CHIRAL pipeline could approach coupling (A145); hospital hours and the gene-set comparison are what it
-  lacks.
-- Panel D bounds how far a tissue can run on its own time; it does not show that it does (H259.2).
+  phase, assuming every tissue follows it fully. Coupling estimates how fully; D is the spread between people around a
+  tissue's mean offset. With donors over the whole day, a two-step CHIRAL pipeline could approach coupling (A145);
+  hospital hours and the gene-set comparison are what it lacks.
 
-**Source:** `presentation/output/organs/couplings.csv`; `results/figure_2/output/organs/r2_couplings.csv`;
-`results/figure_1/output/species/a36_tissues.csv`;
+**Source:** `exploratory/A294_floor/output/{tissues,tests}.csv`; `exploratory/A291_attenuation/output/tests.csv`;
+`results/figure_2/output/backbone/a104_gtex_tissues.csv`; `results/figure_2/output/organs/r2_couplings.csv`;
+`results/figure_1/output/species/a36_tissues.csv`; `exploratory/A302_departure_groups/output/tests.csv`;
 `exploratory/A271_responsive_companions/output/{a104_sets,a104_tests}.csv`; `exploratory/A289_brain_barrier/output/tests.csv`;
 `exploratory/A263_companions/output/sets_human.csv`; `exploratory/A142_organ_blocks/output/tests.csv`;
 `exploratory/A259_tissue_deviation/output/score/{targets,tests}.csv`.

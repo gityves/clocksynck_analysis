@@ -1,23 +1,22 @@
-"""Slide figure (results, R2.1, merged with R2.2): organs share one clock state; weak clocks are the loosely coupled ones,
-the brain included.
+"""Slide figure (results, R2.1): each organ expresses the body's time with its own gain over a clock-specific departure
+of nearly constant size; coupling follows, the brain included.
 
-A. GTEx fast deaths: clock-gene variation (A104 own amplitude, sqrt of shared + own clock-plane variance) against coupling to the body's clock state (peripheral-anchor host, peripheral
-   tissues read leave-one-out; A263 R2 fit, `organs_compute.py`), one dot per tissue, coloured by organ system (brain
-   regions pink); grey: least-squares line coupling = a + b log(amplitude) over the peripheral tissues. Pituitary (in
-   neither A263 group) not shown. The registered statistic is A104's (H104.1 not supported; observed rho +0.734).
-B. Baboon (Mure 2018, 12 animals): rhythm amplitude against known time (A36 timed gain |g|, estimated without the host)
-   against coupling to the body's clock state (A42 readout 2), 35 peripheral tissues and 22 brain regions; grey: the
-   peripheral line. Post hoc panel (A289 H289.3 registered the untimed amplitude: brain on the line). Pineal, pituitary
-   and ocular tissues not shown.
-C. Is the relation specific to the clock genes? rho(amplitude, coupling) over the GTEx peripheral tissues for the clock
-   genes (blue) and 200 expression-matched and 200 stress-responsive gene sets (A271 Part B, H271.2; calibrated: A290).
-D. How far a tissue's clock departs from its person's body time (A259, registered): SD across donors [h] with its 90 %
-   interval, 11 body tissues. An upper bound: the departure is not above that of the companion gene sets (H259.2).
+Notation (A104 table, GTEx fast deaths, peripheral tissues read leave-one-out on the peripheral host): S = z2 V, the
+clock-plane variance a tissue shares with the body's clock state; D = 2 psi, its own variance; coupling c = S / (S + D).
+A. Shared against own clock variation, one dot per tissue (log axes, same range), coloured by organ system; grey: Theil-Sen
+   line of log D on log S (A294b descriptive slope). Post hoc display (A291 post hoc table).
+B. Coupling against S; grey: c = S / (S + D) at the median D over tissues. The curve is the definition of c drawn at a
+   constant D, not a fit: the finding is that D is nearly constant (A).
+C. Is the own variation specific to the clock genes? Own variance of the clock genes against the median of 100
+   expression-matched gene sets in the same tissue (A294b, registered, H294b.1 pass); grey: identity.
+D. Baboon (Mure 2018, 12 animals): rhythm amplitude against known time (A36 timed gain |g|, estimated without the host)
+   against coupling (A42 readout 2), 35 peripheral tissues and 22 brain regions; grey: the peripheral least-squares line.
+   Post hoc panel (A289 H289.3 registered the untimed amplitude: brain on the line). Pineal, pituitary and ocular tissues
+   not shown.
 
-Data: presentation/output/organs/couplings.csv; results/figure_2/output/organs/r2_couplings.csv;
-results/figure_1/output/species/a36_tissues.csv;
-exploratory/A271_responsive_companions/output/a104_sets.csv; exploratory/A259_tissue_deviation/output/score/targets.csv.
-GTEx aggregates only (one value per tissue). Output: presentation/figures/organs_health/organs_health.{svg,png}.
+Data: exploratory/A294_floor/output/{tissues,tests}.csv; results/figure_2/output/organs/r2_couplings.csv;
+results/figure_1/output/species/a36_tissues.csv. GTEx aggregates only (one value per tissue).
+Output: presentation/figures/organs_health/organs_health.{svg,png}.
 
     python scripts/organs_health.py
 """
@@ -36,12 +35,6 @@ PAPER = Path(__file__).resolve().parents[2]
 EXP = PAPER / "exploratory"
 OUT = PAPER / "presentation" / "figures" / "organs_health"
 INK, MUTED = "#222222", pf.GREY
-CS = "#1f77b4"
-SHORT = {"Adipose - Visceral (Omentum)": "adipose, visceral", "Adipose - Subcutaneous": "adipose, subcut.",
-         "Skin - Not Sun Exposed (Suprapubic)": "skin, not sun-exp.", "Skin - Sun Exposed (Lower leg)": "skin, sun-exposed",
-         "Heart - Atrial Appendage": "heart, atrium", "Esophagus - Mucosa": "oesophagus mucosa",
-         "Muscle - Skeletal": "skeletal muscle", "Artery - Tibial": "tibial artery", "Nerve - Tibial": "tibial nerve",
-         "Thyroid": "thyroid", "Lung": "lung"}
 
 
 def scatter(ax, t, system, title, x="own_amplitude", xlabel="clock-gene variation"):
@@ -62,51 +55,76 @@ def scatter(ax, t, system, title, x="own_amplitude", xlabel="clock-gene variatio
     ax.set_title(title, fontsize=13, color=INK)
 
 
-def specificity(ax, sets):
-    s = sets[sets.block == "periphery"]
-    clock = s.loc[s.kind == "clock", "rho"].iloc[0]
-    for j, k in enumerate(("matched", "responsive")):
-        v = s.loc[s.kind == k, "rho"].dropna().to_numpy()
-        ax.scatter(v, j + np.random.default_rng(j).uniform(-0.18, 0.18, len(v)), s=6, color=MUTED, alpha=0.5, lw=0)
-    ax.axvline(clock, color=CS, lw=2.2)
-    ax.annotate("clock\ngenes", (clock, 1.5), xytext=(-4, 0), textcoords="offset points", ha="right", va="center",
-                fontsize=9, color=CS)
-    ax.axvline(0, color=MUTED, lw=0.8, ls="--")
-    ax.set_yticks([0, 1], ["expression-\nmatched", "stress-\nresponsive"])
-    ax.tick_params(axis="y", length=0)
-    ax.set_ylim(-0.5, 1.9)
-    ax.set_xlim(-1, 1)
-    ax.set_xlabel("variation-coupling\ncorrelation")
+def log_ticks(ax, lo, hi, axis="x"):
+    ticks = [v for v in (0.1, 0.3, 1, 3, 10) if lo <= v <= hi]
+    getattr(ax, f"set_{axis}scale")("log")
+    getattr(ax, f"set_{axis}lim")(lo, hi)
+    getattr(ax, f"set_{axis}ticks")(ticks, [f"{v:g}" for v in ticks])
+    ax.minorticks_off()
 
 
-def departure(ax, d):
-    d = d.sort_values("hours")
-    y = np.arange(len(d))
-    c = [COLOR[gtex_system(k)] for k in d.target]
-    ax.hlines(y, d.hours_lo, d.hours_hi, colors=c, lw=1.6)
-    ax.scatter(d.hours, y, s=24, c=c, zorder=3)
-    ax.set_yticks(y, [SHORT.get(k, k) for k in d.target], fontsize=9)
-    ax.tick_params(axis="y", length=0)
-    ax.set_xlim(0, 4)
-    ax.set_xlabel("departure from\nbody time, SD [h]")
+def shared_own(ax, t, slope):
+    """S against D per tissue, with the Theil-Sen line of log D on log S."""
+    c = [COLOR[gtex_system(k)] for k in t.index]
+    ax.scatter(t.S, t.own, s=24, c=c, edgecolor="white", lw=0.4, zorder=2)
+    xs = np.geomspace(t.S.min(), t.S.max(), 50)
+    icpt = np.median(np.log(t.own) - slope * np.log(t.S))
+    ax.plot(xs, np.exp(icpt + slope * np.log(xs)), color=MUTED, lw=1.2, zorder=1)
+    log_ticks(ax, 0.08, 15)
+    log_ticks(ax, 0.08, 15, "y")
+    ax.set_xlabel("shared with the body, S")
+    ax.set_ylabel("own departure, D")
+
+
+def coupling_curve(ax, t):
+    """Coupling against S, with S / (S + D) at the median D."""
+    ax.scatter(t.S, t.coupling, s=24, c=[COLOR[gtex_system(k)] for k in t.index], edgecolor="white", lw=0.4, zorder=2)
+    xs = np.geomspace(0.08, 15, 80)
+    d = t.own.median()
+    ax.plot(xs, xs / (xs + d), color=MUTED, lw=1.2, zorder=1)
+    ax.text(3, 0.12, f"S / (S + {d:.1f})", ha="center", fontsize=8.5, color=MUTED)
+    log_ticks(ax, 0.08, 15)
+    ax.set_ylim(-0.05, 1.05)
+    ax.set_xlabel("shared with the body, S")
+    ax.set_ylabel("coupling to the\nbody's clock state")
+
+
+def specific(ax, t, ratio):
+    """Own variance of the clock genes against that of expression-matched genes, per tissue; `ratio`: median clock /
+    matched over tissues."""
+    ax.scatter(t.own_matched_median, t.own, s=24, c=[COLOR[gtex_system(k)] for k in t.index], edgecolor="white", lw=0.4,
+               zorder=2)
+    ax.plot([0.2, 6], [0.2, 6], color=MUTED, lw=0.8, ls="--", zorder=1)
+    ax.plot([0.2, 6 / ratio], [0.2 * ratio, 6], color=MUTED, lw=0.8, ls=":", zorder=1)
+    ax.text(2.2, 2.2 * 0.8, "1:1", fontsize=8.5, color=MUTED, ha="left", va="top")
+    ax.text(1.6, 1.6 * ratio, f"×{ratio:.1f}", fontsize=8.5, color=MUTED, ha="left", va="top")
+    log_ticks(ax, 0.2, 6)
+    log_ticks(ax, 0.2, 6, "y")
+    ax.set_xticks([0.3, 1, 3], ["0.3", "1", "3"])
+    ax.set_yticks([0.3, 1, 3], ["0.3", "1", "3"])
+    ax.set_xlabel("own departure,\nrandom genes")
+    ax.set_ylabel("own departure, clock genes")
 
 
 def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
-    t = pd.read_csv(PAPER / "presentation/output/organs/couplings.csv", index_col="tissue")
+    t = pd.read_csv(EXP / "A294_floor/output/tissues.csv", index_col="tissue")
+    slope = pd.read_csv(EXP / "A294_floor/output/tests.csv").set_index("test").loc[
+        "descriptive", "slope_log_own_clock_on_log_S"]
     bab = pd.read_csv(PAPER / "results/figure_2/output/organs/r2_couplings.csv").query("species == 'baboon'")
-    sets = pd.read_csv(EXP / "A271_responsive_companions/output/a104_sets.csv")
-    dep = pd.read_csv(EXP / "A259_tissue_deviation/output/score/targets.csv")
-    lay = pf.Layout.slide("ABCD", kind="wide", col_ratios=[1, 1, 0.7, 0.85])
-    scatter(lay.axes["A"], t, gtex_system, "human")
-    lay.axes["A"].set_ylabel("coupling to the\nbody's clock state")
-    legend_in(lay.axes["A"], fontsize=8, loc="upper left")
+    lay = pf.Layout.slide("ABCD", kind="wide", col_ratios=[1, 1, 0.85, 1])
+    shared_own(lay.axes["A"], t, slope)
+    legend_in(lay.axes["A"], fontsize=7.5, loc="upper left")
+    coupling_curve(lay.axes["B"], t)
+    tests = pd.read_csv(EXP / "A294_floor/output/tests.csv").set_index("test")
+    specific(lay.axes["C"], t, float(np.exp(tests.loc["H294.1", "median_log_ratio"])))
+    for k in "ABC":
+        lay.axes[k].set_title("human", fontsize=13, color=INK)
     timed = pd.read_csv(PAPER / "results/figure_1/output/species/a36_tissues.csv", index_col="tissue").g_abs
     bab = bab.set_index("compartment").assign(timed_amp=timed)
-    scatter(lay.axes["B"], bab, baboon_system, "baboon", x="timed_amp", xlabel="rhythm amplitude\nagainst known time")
-    specificity(lay.axes["C"], sets)
-    departure(lay.axes["D"], dep)
+    scatter(lay.axes["D"], bab, baboon_system, "baboon", x="timed_amp", xlabel="rhythm amplitude\nagainst known time")
+    lay.axes["D"].set_ylabel("coupling")
     fig = lay.finalize()
     print(pf.collisions(fig))
     pf.save(fig, OUT / "organs_health")
