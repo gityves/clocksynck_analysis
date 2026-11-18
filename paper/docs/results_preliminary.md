@@ -6561,3 +6561,25 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
   loss of external time: losing the external day does not by itself remove the arrangement. No contrast tested.
 - Code: `exploratory/A314_vent_walltime/scripts/score_a314.py`.
 <!-- src: paper/exploratory/A314_vent_walltime/output/{groups,draws}.csv -->
+
+## A313 (scored 2026-11-18; NOT BLIND for the organ offsets and the liver pairs of A302; powered): adjacent tissues do not share a person's clock departure beyond distant tissues once random genes are taken into account (H313.1 FAIL); composition does not either (H313.2 FAIL); the adjacency gradient exists for random expression-matched genes as well
+
+- Design as registered; power stage (power 0.91 at an excess of 0.10), then one scoring run (6329 s, 16 workers, peak
+  2.8 GB); clock and 100 matched sets; 261 of 300 pairs with >= 30 shared donors (the stomach pairs and colon
+  transverse-stomach fall below).
+- **H313.1 FAIL.** T_adj = median r(adjacent, different) - median r(distant, different) = 0.162 - 0.129 = 0.033;
+  region reassignment p 0.098; matched sets median 0.024, q95 0.069; the clock at their 63rd percentile.
+- **H313.2 FAIL.** T_fam = 0.131 - 0.129 = 0.002 (p 0.48; matched median 0.037, q95 0.100).
+- **Descriptive.** Median r per cell, clock against the median over the matched sets: adjacent-similar 0.265 (3 pairs:
+  oesophageal muscularis-junction 0.620, atrial-ventricle 0.265, aorta-coronary 0.191) against 0.210; adjacent-different
+  0.162 against 0.137; distant-similar 0.131 against 0.150; distant-different 0.129 against 0.115. Highest single
+  adjacent-different pair: colon sigmoid-transverse 0.519 (31 donors).
+- **Reading (registered: FAIL, powered).** Departures are shared more by adjacent tissues, but random genes of the same
+  expression show the same gradient (adjacent-similar > adjacent-different > distant-different). The regional sharing is
+  a property of the samples (shared handling, region-level physiology or composition captured by any gene set), not of
+  the clock; the clock-specific part is below the 0.10 the test could detect. With one systemic drive and no regional
+  term, the uncoupled entrained-ensemble reading is not contradicted; local coupling or regional cues acting on clocks are
+  not detected in GTEx. The 3 adjacent-similar pairs are too few to test; the oesophageal muscularis-junction pair (0.62)
+  is effectively two samples of one tissue.
+- Code: `exploratory/A313_local_coupling/scripts/score_a313.py --stage score --jobs 16`.
+<!-- src: paper/exploratory/A313_local_coupling/output/{pairs,sets,tests,power,power_sets}.csv -->
