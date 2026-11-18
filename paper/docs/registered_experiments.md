@@ -8037,3 +8037,58 @@ donors, 500).
 interval excluding 0 (sign reported against the human +4.4 h, positive = advanced). A whole-gland offset near 0 in
 both species, with the human result, would fit the adrenal offset being specific to GTEx (death) or to primates.
 **Code.** `exploratory/A296_genewise_offsets/scripts/score_a303.py`.
+
+## A304 (2026-11-18, lead prompt `prompts/organisation_followups_2026-11-18.md`, task A1-A3; staged: this entry fixes design, statistics, readings and the power rule; a design addendum with the power results and the contrasts to be scored follows before any observed contrast is computed; **NOT BLIND** for the A138 per-cancer tumour-normal correlations (all pairs), the A127-A224 tumour-only coherence results and the H138.8 purity split; **seen before writing:** design counts only (pairs per cancer; per arm: TP53 altered / intact, ER- / ER+ and LumA / other in BRCA; no clock statistic of any arm); NOT seen: any tumour-normal statistic computed within an arm): is the loss of tumour clock coherence with tumour state a loss of gain or a rise of departure? **TCGA paired tumour-normal (`tcga_paired`, 10 cancers, 517 pairs)**
+
+**Framework.** Normal sample N = h + e_N (h the patient's clock state at surgery, variance S; own departure 2 psi_N);
+tumour T = g h + e_T (gain g, departure 2 psi_T). With one normal per patient the host is N itself, of reliability
+rel = S / (S + 2 psi_N). Per arm, on the states of the cancer's one projector (`q3_lib.tcga_states`, as A138), centred
+within arm and sample type, Poisson-corrected: V_N, V_T (clock-plane variances), C = mean z_T conj(z_N) (n - 1).
+- **Gain** G = |C| / V_N = |g| rel (the tumour's regression slope on its own normal; psi_T does not enter it).
+- **Departure** R = (V_T - |C|^2 / V_N) / V_N^all = (g^2 S (1 - rel) + 2 psi_T) / V_N^all, with V_N^all the cancer's
+  normal variance over all its pairs (fixed across arms; makes R unitless and comparable between cancers).
+- **Offset** arg(C_case / C_ref) (h), descriptive.
+Within a cancer rel cancels from the gain ratio if the two arms' normals are alike; the pure gain loss lowers G and
+also R (through g^2 S (1 - rel)); a pure departure rise raises R and leaves G. The host check below tests "normals alike".
+
+**Contrasts (case vs reference; cells = cancer; arms with >= 8 pairs each, else the cancer leaves that contrast).**
+- H304.1 (primary): proliferation high vs low: median split, within cancer, of the A127 score (mean z of Hallmark G2M
+  without clock genes, z within the project over all its primaries; `figure_5/.../_shared.load_tumours`, column
+  `prolif`).
+- H304.2: ER negative vs positive (BRCA; clinical XML field, `load_tumours` column `er`).
+- H304.3: TP53 altered vs intact (A215 MC3 status, `A215_checkpoint_coherence/output/status_tcga.csv`).
+- H304.4: luminal A vs other PAM50 subtypes (BRCA; PanCanAtlas subtypes, `A217_subtype_matched/output/subtypes_tcga.csv`).
+**Pooled statistics** (weights n_c = pairs of the cancer in the contrast): Q_G = log(sum n_c G_c,case / sum n_c
+G_c,ref) and Q_R = log(sum n_c R_c,case / sum n_c R_c,ref). Null: labels permuted within cancer (2000 draws, seed
+[304, contrast index]). One-sided p: gain loss P(null <= Q_G); departure rise P(null >= Q_R) (add-one).
+**Specificity (same labels):** 200 expression-matched pseudo-clock sets per cancer (`paired.pseudo_waveforms`,
+genome-wide counts of the pairs as A138 responsive note; seed [304, 7, cancer index]), pooled per set index; a readout
+is clock-specific if Q_G is below the matched q05 (gain) or Q_R above the matched q95 (departure) (A285: calibrated in
+bulk). 200 responsive sets reported, not decisive (A285: anti-conservative).
+**Host check (same permutations):** log ratio of V_N case / ref pooled as Q_G; reported with its p. If |log ratio|
+has p < 0.05 the arms' normals differ and the gain readout is read with that caveat (rel may differ).
+**Tests.** Per contrast two readouts: gain loss (Q_G < 0) and departure rise (Q_R > 0), each "detected" if
+permutation p < 0.05 after Holm over the readouts of its family (primary: H304.1's two; secondary: the readouts of the
+powered contrasts among H304.2-4) and clock-specific.
+**Readings.** Gain loss detected, departure rise not: malignant cells dilute or weaken the body's rhythm in the tumour
+(as lymphocytes in normal tissue), they do not drift from it. Departure rise detected, gain loss not: the tumour clock
+drifts from the body's time. Both: a mixture. Neither, powered: no change beyond the MDE in either; underpowered:
+uninformative. Not clock-specific: the change is shared by matched genes (tumour-state shared variance, not the clock).
+**Power stage (A2, run and reported before the addendum).** Simulation at the real design of each contrast (real arm
+sizes and per-sample Poisson variances; cancer moments S, g, psi_T calibrated from all pairs of the cancer, the A138
+data already seen, with rel set to the GTEx coupling of the matching tissue from the A104 table: BRCA breast, COAD
+colon transverse, KIRC / KIRP kidney cortex, LIHC liver, LUAD lung, PRAD prostate, THCA thyroid; BLCA and UCEC the median
+of these). `clocksync.simulate.like` needs an anchored host of >= 2 compartments and cannot represent this design; the
+simulation is written for the paired model (complex Gaussian states, Poisson noise of each sample). Scenarios for the
+case arm: null; pure gain loss g x k_G; pure departure rise 2 psi_T x k_D; 500 replicates, 500 permutations each.
+**Power rule (fixed now):** a contrast is scored as a test only if power >= 0.8 at k_G = 0.5 (the tumour expresses half
+the body's rhythm, e.g. malignant cells without a clock forming half of its clock RNA) for the gain readout, or at
+k_D = 2 (departure doubled) for the departure readout; readouts below the rule are reported descriptively. Reported:
+power curves, MDE (k at 80 %), the type I error of each readout, and the cross-readouts (Q_R under a gain loss, Q_G
+under a departure rise).
+**Sensitivity (reported, H304.1):** cells = cancer x purity half (A127 purity proxy, `load_tumours` column `purity`).
+**A3 (descriptive, after A1).** Per cancer, the tumour's coupling to the body's time c_T = corr^2 / rel (corr the A138
+Poisson-corrected tumour-normal correlation, rel as above; BLCA and UCEC without a matching tissue are left out) and the
+tumour gain on body time |g| = G / rel, with patient-bootstrap 90 % intervals (1000, seed 304) on corr and G; ranked.
+Caveats stated with it: rel is from GTEx deaths on a multi-tissue host, the normal is adjacent tissue at surgery.
+**Code.** `exploratory/A304_cancer_gain_departure/scripts/{power_a304.py, score_a304.py}`.
