@@ -105,18 +105,18 @@ def clockface(ax, rmax, rings, title, names=None):
     for r in rings:
         ax.plot(r * np.sin(th), r * np.cos(th), color=MUTED, lw=0.6 if r != 1 else 0.9, ls="-" if r == 1 else ":",
                 zorder=0)
-        ax.text(r * np.sin(-0.6), r * np.cos(-0.6), f"{r:g}", fontsize=7.5, color=MUTED, ha="right", va="bottom")
+        ax.text(r * np.sin(-0.6), r * np.cos(-0.6), f"{r:g}", fontsize=10, color=MUTED, ha="right", va="bottom")
     for h in (0, 6, 12, 18):
         t = 2 * np.pi * h / 24
         ax.plot([0, rmax * np.sin(t)], [0, rmax * np.cos(t)], color=MUTED, lw=0.5, zorder=0)
         lab = f"{h} h" + (f"\n{names[h]}" if names and h in names else "")
-        ax.text(1.12 * rmax * np.sin(t), 1.12 * rmax * np.cos(t), lab, fontsize=8.5, color=MUTED, ha="center",
+        ax.text(1.12 * rmax * np.sin(t), 1.12 * rmax * np.cos(t), lab, fontsize=11, color=MUTED, ha="center",
                 va="center", linespacing=0.9)
     ax.set_aspect("equal")
     ax.set_xlim(-1.25 * rmax, 1.25 * rmax)
     ax.set_ylim(-1.25 * rmax, 1.25 * rmax)
     ax.axis("off")
-    ax.set_title(title, fontsize=13, color=INK)
+    ax.set_title(title, fontsize=16, color=INK)
 
 
 def vector(ax, amp, shift, color, label=None, amp_ci=None, shift_ci=None, open_=False, dx=8, dy=0, ha="left", size=40,
@@ -138,9 +138,9 @@ def vector(ax, amp, shift, color, label=None, amp_ci=None, shift_ci=None, open_=
 
 def legend_side(ax, entries):
     """One-column legend to the right of a clock face: (label, colour, marker, open)."""
-    h = [Line2D([], [], ls="", marker=m, ms=6.5, mfc="white" if o else c, mec=c, mew=1.2, label=lab)
+    h = [Line2D([], [], ls="", marker=m, ms=8, mfc="white" if o else c, mec=c, mew=1.2, label=lab)
          for lab, c, m, o in entries]
-    ax.legend(handles=h, loc="center left", bbox_to_anchor=(1.0, 0.5), frameon=False, fontsize=8.5,
+    ax.legend(handles=h, loc="center left", bbox_to_anchor=(1.0, 0.5), frameon=False, fontsize=11.5,
               handletextpad=0.3, labelspacing=0.8)
 
 
