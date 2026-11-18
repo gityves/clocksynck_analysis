@@ -8167,3 +8167,33 @@ MDE_80 of Delta (module minus companion; bound log 2 = 0.693): T2D gain 0.327, d
 departure 0.264; smoking gain 0.700 (not powered: descriptive), departure 0.418. Scored: five readouts, Holm over 5.
 Balance after matching (median |SMD|): BMI 0.70 (T2D fast), 0.32 (T2D vent), 0.38 (hypertension fast); T2D share 0.66 / 0.64
 in hypertension (fast / vent); age 0.53 (hypertension vent); others <= 0.28. Comorbidity not removed, as in A233.
+
+## A307 (2026-11-18, user: "Run the glucocorticoid-pattern check for the fetal organs" (lead prompt task C, optional check); staged: null-only power stage, then scoring; **NOT BLIND**: A243, A244, A264, A266, A269 seen in full (in particular: the 14-gene covariation survives adjustment for the GC score in lung and liver, H269.2 PASS; without PER1, PER2, NR1D1 it fails in cortex and lung and is not clock-specific in liver); **seen before writing:** detection and mean counts of FKBP5, TSC22D3, ZBTB16, KLF9 in the three organs' rows (all detected in >= 94 % of rows); NOT seen: any correlation of a single gene with the GC score or between clock genes in the fetal rows): is the fetal clock-gene covariation the glucocorticoid-induction pattern or the waveform's phase relations? **Fetal adrenal cortex (A244 `cortex`, 34 fetuses, 6 cohorts), lung and liver (A243 `lung:all` 38 / 5, `liver:all` 35 / 3)**
+**Rows, adjustment.** As A264 / A269: log fractions residualised within each organ on cohort indicators and common
+quadratic age (`common.development.adjust`); genes: the 14 GTEx clock genes and the A269 GC targets (FKBP5, TSC22D3,
+ZBTB16, KLF9). SI = PER1, PER2, NR1D1 (the signal-induced clock genes of A266); CORE = the other 11.
+GC score: mean of the four GC targets' adjusted log fractions standardised over the organ's rows.
+**Statistics (per organ).**
+- GC link L = mean over the three SI genes of r^2 (Pearson, over fetuses, adjusted) with the GC score. Sign-free: a
+  hormone pulse that represses NR1D1 and induces PER1 / PER2 counts as the same pattern. Signed r reported.
+- Waveform cross-agreement W = mean over the 33 (SI, CORE) pairs of r_gh cos(phi_g - phi_h) (phi: GTEx waveform
+  acrophases): positive when the SI genes covary with the core genes as the clock's phase relations predict (e.g.
+  against ARNTL, with DBP); near 0 when the SI genes move on their own.
+**Nulls and companions.** L: GC score permuted over fetuses within cohort (10,000; seed [307, organ, 0]); companion: 200
+expression-matched non-clock 3-gene sets in place of SI (`paired.pseudo_waveforms` on the SI sub-waveform; sets
+containing a GC target redrawn; seed [307, organ, 1]). W: every gene permuted on its own within cohort (10,000; seed
+[307, organ, 2], as `development.coherence`); companion: 200 expression-matched sets on the full waveform (A243 matched
+family, seed [307, organ, 3]) with the same SI / CORE positions. The responsive family is not used (its pool is the GC
+targets themselves).
+**Tests (Holm over the three organs per statistic).** H307.1 (GC pattern): L > null (p < 0.05) and above the matched
+q95. H307.2 (waveform pattern): W > null (p < 0.05) and above the matched q95.
+**Readings (per organ).** H307.1 pass, H307.2 fail: the covariation is the glucocorticoid-induction pattern (the
+signal-induced clock genes move with GC targets, not with the core loop): a driven response. H307.2 pass, H307.1 fail:
+the signal-induced genes keep the clock's phase relations to the core genes, independent of GC-target activity: a loop
+(entrained or running) rather than a GC-driven state. Both pass: a GC-driven component on top of loop-consistent
+covariation (not separable). Neither: not resolved at the stated MDE.
+**Power stage (null only, before scoring).** Per organ and statistic: null mean, SD, q95 and MDE = q95 + 0.84 SD; matched
+companion medians and q95 are part of scoring (they are on the true rows) and are not computed at this stage. No adult
+power is computed (the user asked for the cheap check): a fail is read only against the MDE, not as an exclusion of a
+loop of a given adult size.
+**Code.** `exploratory/A307_fetal_gc_pattern/scripts/score_a307.py --stage power | score`.
