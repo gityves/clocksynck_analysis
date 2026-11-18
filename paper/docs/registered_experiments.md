@@ -8514,3 +8514,38 @@ spread more than the region-reassignment null: the reassignment criterion alone 
 matched-set criterion (ii) carries the specificity, as registered. Scoring needs the clock and 100 sets (about 6 h at 4
 workers).
 <!-- src: paper/exploratory/A313_local_coupling/output/{power,power_sets}.csv -->
+
+## A315 (2026-11-18, user: "check if brain-death gains were looked at, then register it"; check done: no amplitude or gain comparison of brain-dead organ donors against ventilated post-mortem donors exists (A132, A132b, A293 Part 1 compared the organ arrangement; A314 the alignment to the hour of death; PI Q28 (i) proposed this table and is on hold); staged: power first (null spreads only), then one scoring run; **NOT BLIND** for A132 / A132b / A293 Part 1 (arrangement 0.161 vs 0.690), A314, H109.1 (shared-covariance excess lower in pooled ventilated donors than in fast deaths) and A231 D231.6 (host spread of pooled ventilated donors about a tenth of fast deaths, separate fits); NOT seen: any within-tissue clock-plane variance of either ventilated group): when the central drive is lost (brain death), do tissue clocks lose amplitude (dephasing of uncoupled cellular clocks) or keep it while their arrangement is lost (coupled or limit-cycle tissue clocks drifting)? **GTEx Hardy 0: brain-dead organ donors (COHORT "Organ Donor (OPO)") vs ventilated post-mortem donors (COHORT "Postmortem"), the 12 A109 body tissues**
+
+**Prediction (entrained-ensemble reading).** Cell-autonomous clocks kept in phase only by the systemic drive dephase
+when it stops (order parameter decays at the rate of their period dispersion), so each tissue's bulk clock-plane
+amplitude falls; tissues whose clocks hold their amplitude by coupling (a tissue limit cycle) keep it and drift in
+phase. Both lose the arrangement (seen). Brain death is the loss of the drive in this reading; ventilation, ICU care
+and the absence of meals are common to both groups.
+**Data.** A109 `Tissues(200, seed 0)` (GTEx, 12 body tissues, first sample per donor, donors with >= 2 tissues and a
+recorded time of death; one projector per tissue fitted over Hardy 0-4), clock states and Poisson variances; the 200
+matched sets of that construction; responsive sets (`compute_h109_responsive.add_sets`, 200). Groups as A132 (all
+donors of each group, no equal-n draw). Tissues with >= 20 donors in each group.
+**Statistic.** Per tissue t and group g: debiased clock-plane variance W_tg = mean |z - mean_g z|^2 - mean Poisson
+variance (trace). L_t = log(W_t,OD / W_t,PM) (tissues with both W > 0). Q = median over tissues of L_t. The same for each
+matched and responsive set: Q_k.
+- **H315.1:** Q < 0 with (i) Q below the q05 of the 200 matched Q_k, and (ii) the 90 % upper bound of Q < 0 (donor
+  bootstrap within groups, 1000, the matched and clock rows resampled together).
+- **Reported:** L_t per tissue with intervals; Q* = Q - median matched Q_k (clock-specific log ratio) and exp(Q*);
+  responsive Q_k distribution; fast deaths against ventilated post-mortem (descriptive, the ICU effect); within organ
+  donors, top vs bottom tertile of ventilation duration (A132 cuts 61 / 101 h; descriptive, a weak proxy of time since
+  loss of drive, protected phenotype, aggregates only).
+**Power stage (before scoring; no group difference of the clock computed).** SD of Q over the 200 matched sets and SD
+of the clock's Q under 1000 random relabellings of Hardy 0 donors into groups of the real sizes; power against a
+clock-specific variance loss of 30 % (Q* = log 0.7) = Phi(0.357 / SD - 1.645), SD the larger of the two. Gate: power >=
+0.8, else reported not resolvable and not scored.
+**Readings (stated now).** PASS: tissue clocks of brain-dead donors carry less amplitude than those of ventilated
+donors with a living brain, beyond matched genes: loss of the central drive dephases peripheral clocks (uncoupled
+entrained ensemble). FAIL with Q* near 0 (powered): amplitude kept while the arrangement is lost: tissue clocks keep
+their own rhythm without the drive and drift (coupled or limit-cycle tissue clocks), against the uncoupled reading.
+Q > 0 (clock-specific): brain-dead donors carry more clock amplitude, outside both readings.
+**Limits.** Procurement differs (organ donors: surgical procurement with perfusion; post-mortem: autopsy), handled only
+as far as matched genes capture it; donor management (steroids, hormones) differs; time since brain death is not
+recorded; a variance loss can also come from organ-specific additive noise falling (not expected); one projector per
+tissue fitted on all death types.
+**Code.** `exploratory/A315_braindeath_gain/scripts/score_a315.py --stage power | score`.
