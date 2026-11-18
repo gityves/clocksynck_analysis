@@ -86,21 +86,36 @@ Ranked by how much the headline depends on it.
 - **One paper, biology first** (Cell): the federation story, with the method's validation in Extended Data and cancer
   as one perturbation figure. The method is the means; the brain-death and cell-class results are what a timed design
   cannot give.
-- **Fallback split**: B (biology, sections below) and M (method in hospital hours + cancer: A123b, A145, A209,
+- **Fallback split**: B (biology, figure plan below) and M (method in hospital hours + cancer: A123b, A145, A209,
   A285, A138, A265, A267, A304, A220). The tags in `PAPER_TRIAGE_2026-11-18.md` support either.
 
-### Figure plan (one paper)
+### Figure plan (one paper; revised 2026-11-19 after the CHIRAL overlap discussion)
+
+**Principle.** CHIRAL (Talamanca 2023, our lab) already shows that human tissue clocks are synchronised with offsets of
+a few hours and that amplitudes rank by tissue. Opening with a GTEx organ map or "one internal time per person" would
+repeat its Figure 1 and invite the "reinterpretation only" reading. The paper asks the next question (how that
+organisation is built, from cells to organs, and what holds it together) and climbs from the cells to the body. Rules:
+- No organ phase map or tissue amplitude ranking as a main result: both go to Extended Data as a concordance check
+  with CHIRAL (our offsets vs their tissue phases), credited as its replication.
+- Organ-level main panels show only what CHIRAL cannot estimate (it assumes fixed tissue offsets, needs full-day
+  sampling, has no cell resolution): conserved class gain, composition effects, the personal departure, and contrasts
+  of the order (day, meals, brain death).
+- The method is one schematic panel (Fig 1a); its validation goes to Extended Data.
+- Figures 1-2 are not GTEx-only (atlases, living surgical cohorts).
+- Brain death is the high point (Fig 3), not the opening: it rests on GTEx alone until replicated.
 
 | fig | message | main panels (entries) | Extended Data |
 |---|---|---|---|
-| 1 | Reading the body's clock from untimed hospital samples | host-referenced estimand (c, gain, offset); orderers fail on 08-18 h deaths, clocksync holds (A123b); specificity companions; one internal time per person (A251-A256) | simulations (A145), gates (A209), calibration (A285, A258) |
-| 2 | Who keeps time inside organs | stromal-vascular hub vs lymphocytes (A272, A274, A283, A280, A282); macrophages (A288); cell classes share the organ phase (A273, A279) | per-atlas replicates (A281, A287, A284, A152); hormone and immediate-early states shared, clock not (A275) |
-| 3 | Loudness is set by cell class and composition | conserved class gain across organs (A293 H293.4); composition moves gain, not phase (A295); 85-fold gain over a constant departure, coupling = S / (S + D) (A291, A294b) | A302, A311, A312, A313 (limits of the departure) |
-| 4 | The order between organs needs a living brain | order kept without the day and without meals (A293 Part 1); rearranged in brain death, clock-specific, confound-adjusted (A317, A318); amplitude kept (A315); mouse knockouts: substitute drive, new order (A319, with Izumo, Husse, Tahara) | A132, A132b, A314, A318 sensitivity |
-| 5 | Drives and conflicts | liver self-sustained, saturating integration (A297); night shift: muscle 2.7 h, amplitude to a quarter (A257); forced desynchrony (A262) | A260, A261, A268, A270 |
-| 6 | Perturbations | chronic disease nulls (A164, A233, A235, A306); psoriasis delay (A183, A308, A254); tumours keep the patient's time and lose gain (A138, A304; COFE artefact A265, A267) | A202, A180, A115, A227, A271 |
-| 7 | Model | the federation: autonomous cellular clocks, class x composition gain, weak local coupling, central drive sets organ order, conflicting drives cost amplitude; tested predictions and failures listed | A310 fit, model grid (A311) |
+| 1 | Who keeps time inside human organs | (a) host-referenced readout from untimed samples (schematic); (b) stromal-vascular, epithelial, parenchymal cells and macrophages carry the organ's time, tissue lymphocytes no readable clock (A272, A274, A283, A280, A282, A288); (c) cell classes share the organ phase (A273, A279); (d) one internal time advancing with elapsed hours in living surgical tissue (A251-A256) | per-atlas replicates (A281, A287, A284, A152); hormone and immediate-early states shared, clock not (A275); method validation: orderers fail on 08-18 h deaths, clocksync holds (A123b), simulations (A145), gates (A209), calibration (A285, A258) |
+| 2 | Loudness is set by cell class and composition | conserved class gain across organs (A293 H293.4); composition moves gain, not phase (A295); gain over a constant personal departure, coupling = S / (S + D) (A291, A294b) | concordance with CHIRAL (organ offsets and amplitude ranking, A123); A302, A311, A312, A313 (limits of the departure) |
+| 3 | The order between organs needs a living brain | order kept without the day and without meals (A293 Part 1, A109); rearranged in brain death, clock-specific, confound-adjusted (A317, A318); amplitude kept (A315); mouse central-clock loss: a substitute drive imposes a new order (A319, with Izumo, Husse, Tahara) | A132, A132b, A314, A317 sensitivities; age and sex equal (A231, A208) |
+| 4 | Drives and conflicts | liver self-sustained, saturating integration (A297); night shift: muscle 2.7 h, amplitude to a quarter (A257); forced desynchrony (A262) | A260, A261, A268, A270; Saini 2013 kinetics |
+| 5 | Perturbations | chronic disease nulls (A164, A233, A235, A306); psoriasis delay (A183, A308, A254); tumours keep the patient's time and lose gain (A138, A304; COFE artefact A265, A267) | A202, A180, A115, A227, A271 |
+| 6 | Model | the federation: autonomous cellular clocks, class x composition gain, weak local coupling, central drive sets organ order, conflicting drives cost amplitude; tested predictions and failures listed | A310 fit, model grid (A311) |
 | ED | Before birth | driven state before an adult-size loop (A243, A244, A266, A269, A307, A309) | negatives and bounds (A236-A241) |
+
+**Introduction sentence.** "CHIRAL established that human tissue clocks are synchronised with offsets of a few hours.
+We ask how that organisation is built, from cells to organs, and what holds it together."
 
 ### Wording rules (from the results)
 
