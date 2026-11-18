@@ -1,8 +1,9 @@
 """Slide figure (results, R2.1): each organ expresses the body's time with its own gain over a clock-specific departure
 of nearly constant size; coupling follows, the brain included.
 
-Notation (A104 table, GTEx fast deaths, peripheral tissues read leave-one-out on the peripheral host): S = z2 V, the
-clock-plane variance a tissue shares with the body's clock state; D = 2 psi, its own variance; coupling c = S / (S + D).
+Notation (A104 table, GTEx fast deaths, peripheral tissues read leave-one-out on the peripheral host): S = z2 V_h, the
+clock-plane variance a tissue shares with the body's clock state (gain squared times host spread); D = 2 psi, its clock-plane variance
+at a fixed body state, net of counting noise (own departure in amplitude and phase); coupling c = S / (S + D).
 A. Shared against own clock variation, one dot per tissue (log axes, same range), coloured by organ system; grey: Theil-Sen
    line of log D on log S (A294b descriptive slope). Post hoc display (A291 post hoc table).
 B. Coupling against S; grey: c = S / (S + D) at the median D over tissues. The curve is the definition of c drawn at a

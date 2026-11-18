@@ -210,8 +210,11 @@ larger shared rhythm. The brain follows the same rule.
    genes: A290, running.
 
 **Figure:** `figures/organs_health/organs_health.png` (`scripts/organs_health.py`; wide). Human panels: GTEx fast
-deaths, 27 peripheral tissues, one dot per tissue coloured by organ system. A. clock variation shared with the body (S)
-against the tissue's own departure (D), log axes of the same range; grey: Theil-Sen line of log D on log S. B. coupling
+deaths, 27 peripheral tissues, one dot per tissue coloured by organ system. S = z2 V_h: between-donor clock-plane
+variance of a tissue carried by the body's clock state (gain squared times the host spread); D = 2 psi: the tissue's
+clock-plane variance at a fixed body state, net of counting noise, i.e. its own departure from the body's clock state
+in amplitude and phase (both in clock-plane log-expression units squared, common to all tissues). A. S against D, log
+axes of the same range; grey: Theil-Sen line of log D on log S. B. coupling
 against S; grey: S / (S + D) at the median D (1.9), the definition of coupling drawn at a constant departure. C. own
 departure of the clock genes against that of expression-matched genes (median of 100 sets); dashed, 1:1; dotted, the
 median ratio 2.6. D. baboon: rhythm amplitude against known time (A36 timed gain, estimated without the host; log
@@ -223,6 +226,23 @@ scale) against coupling, 35 peripheral tissues and 22 brain regions (pink); grey
   peripheral tissue's real design; the relation holds after that ceiling, rho 0.717). The S / D decomposition is the
   A291 post hoc table; A294b registered (H294b.1 pass; H294b.2 slope 0.22 of the excess over matched genes, 90 % 0.04
   to 0.33). A302 registered (H302.1 fail). A289 H289.3 registered (fail: brain on the line, the outcome shown).
+- Definitions (`clocksync` `_core/host.py`, `on_host`; A104 fit, leave-one-out peripheral host). Each donor x tissue
+  pseudobulk is projected onto the reference clock plane: a complex state beta_i with known Poisson covariance V_i.
+  The host factor model over the other tissues gives each donor's body clock state, posterior mean f_s and covariance
+  S_u. Per tissue k: beta_i = a_stratum + z_k f_s + e_i, e_i ~ N(0, psi_k I + V_i), with |z|^2 debiased by tr cov(z)
+  (z2) and psi corrected for its degrees of freedom. V_h = tr(cov f + mean S_u), the spread of the body's state over
+  the tissue's donors. S = z2 V_h, D = 2 psi_k, c = S / (S + D).
+- What S is: gain squared times host spread, invariant to the host's scale convention (z2 and V_h separately are not).
+  V_h is 3.2 to 3.8 in 26 of 27 tissues; skeletal muscle 1.11 (with z2 3.23), so compare S, not z2. Over the 27
+  tissues rho(S, z2) 0.90.
+- What D is: the scatter of the tissue's clock-plane state around the point the body's state predicts, isotropic
+  (psi I), so a departure in amplitude and phase from the body's clock state; "departure from the body's time" is a
+  shorthand. It contains (i) the tissue's person-specific departure; (ii) non-count technical variation (dissection,
+  composition, RNA quality), not separated by A291; (iii) a small host-error term: regressing on posterior means puts
+  about |z|^2 tr(S_u) into the residual; A291 sizes it, a perfectly locked tissue reads c 0.966 to 0.977 (median
+  0.972), so about 3 % of S. Counting noise is excluded by construction (V_i modelled). The clock-specific excess over
+  matched genes (A294b) argues against generic technical noise, not against technical variation specific to clock
+  genes (none known). In hours: A259, SD 1.0 to 3.2 h, a different estimator.
 - Panel B is not a test: c = S / (S + D) is how coupling is defined. What the panel shows is that one constant D
   places every tissue near one curve; the finding is panel A (D nearly constant while S spans 85-fold).
 - Reading of the slope (A294b correction note, post hoc): for a limit-cycle clock, the angle an input turns it scales as
