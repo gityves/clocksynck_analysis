@@ -6314,3 +6314,34 @@ the first.
 - Code: `exploratory/A305_malignant_stroma_pairwise/scripts/power_a305.py` (58 s; run by a Sonnet subagent; numbers
   checked against `power.csv` and `design.csv`).
 <!-- src: paper/exploratory/A305_malignant_stroma_pairwise/output/power/{power,design,design_pairs}.csv -->
+
+## A306 (scored 2026-11-18; NOT BLIND for d* and offsets of these conditions, A164 / A233 / A235): T2D, hypertension and smoking change neither the gain nor the departure of their organ relative to the rest of the body (5 powered readouts, all FAIL); smoking lung gain lower, not powered (descriptive)
+
+- Design as registered (A233 matching, A164 anchors, 1000 within-set permutations shared across tissues; vent and fast);
+  Delta = module minus companion (tibial nerve, both skins) of the per-tissue log z2 ratio (gain) or log psi ratio
+  (departure), inverse-null-variance pooling. Power stage 2218 s, scoring 40 s.
+
+| condition | readout | Delta (module / companion) | p | Holm | MDE_80 | verdict |
+|---|---|---|---|---|---|---|
+| T2D | gain | -0.029 (+0.021 / +0.050) | 0.83 | 1.0 | 0.327 | not detected |
+| T2D | departure | -0.139 (-0.050 / +0.090) | 0.24 | 0.98 | 0.288 | not detected |
+| hypertension | gain | +0.213 (+0.116 / -0.097) | 0.13 | 0.63 | 0.346 | not detected |
+| hypertension | departure | -0.012 (+0.033 / +0.045) | 0.92 | 1.0 | 0.264 | not detected |
+| smoking | gain | -0.514 (-0.455 / +0.060) | 0.068 | - | 0.700 | descriptive (not powered) |
+| smoking | departure | -0.029 (-0.103 / -0.073) | 0.86 | 1.0 | 0.418 | not detected |
+
+- **Arm-prior sensitivity** (observed only): every Delta within 0.011 of the pooled-prior value (e.g. smoking gain -0.516,
+  T2D departure -0.141).
+- **Descriptive per tissue:** smoking lung log z2 ratio -0.647 (vent), -0.292 (fast): lower in smokers in both cohorts;
+  T2D liver -0.629 (vent, 15 sets), +0.080 (fast, 25 sets). Vent coronary artery +5.19 (47 sets; null SD 0.91, low
+  weight) is an unstable estimate.
+- **Reading (registered).** With d* known unchanged (A164, A233), no condition scales the organ's clock up or down:
+  in T2D (metabolic organs), hypertension (arteries, heart) and smoking (lung, departure only), neither the gain nor the
+  departure moves by a factor of about 1.3-1.5 relative to the companions (MDE 0.26-0.42 on the log scale). With the
+  earlier offsets (equal within about 1 h) and couplings, chronic disease leaves the organisation of the clock intact at
+  the organ level in GTEx. A lower lung gain in smokers (about 0.6 of non-smokers on z2) is the one suggestive signal;
+  not powered and not tested.
+- **Limits.** GTEx deaths; comorbidity not removed (hypertension with T2D, SMD 0.64-0.66); BMI imbalance in T2D fast
+  (0.70); the companion tissues are not disease-free (skin and nerve in T2D).
+- Code: `exploratory/A306_disease_gain_departure/scripts/compute_a306.py --stage power | score --jobs 4`.
+<!-- src: paper/exploratory/A306_disease_gain_departure/output/{power,power_tissues,balance_summary,score_tests,score_tissues,score_sensitivity}.csv -->
