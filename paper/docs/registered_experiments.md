@@ -8268,3 +8268,89 @@ lung 1.000 / 1.000 / 0.960 (0.050); kidney 1.000 / 1.000 / 0.930 (0.065); heart 
 readouts are scored (Holm over 5). Heart and adrenal: a fail excludes a clock of three quarters of the adult size, not
 one of half. Choice made in the script, not in the registration: stand-ins carry the adult sample's own library size
 (gene-wise thinning is a constant log offset per gene).
+
+## A310 (2026-11-18, user: "yes go ahead with Stage 1" of `docs/prompts/clock_model_2026-11-18.md`; a model synthesis, staged: fit and adequacy (Stage 2a, **not blind, descriptive**), then one prediction on a GTEx statistic not yet computed (Stage 2b), then the single-cell power stage (Stage 3, separate amendment); **NOT BLIND** for every input of the fit: A104 table, A291 and its post hoc, A294b (slope of log excess own variance on log S 0.223, 90 % 0.044 to 0.332), A302, A293 Parts 1-3, A295, A297 (all four contrasts), A304, A183 / A308, A164-A306, A132; literature `docs/literature/clock_population_models_2026-11-18.md`; **seen before writing (model only, no data):** the model's slope of log departure variance on log R^2 and its radial / tangential split at arbitrary parameters (organs differing in dispersion: slope about 0.3 and tangential excess growing with R; in coupling: about 0.1, same sign; in drive strength: negative slope); NOT seen: the radial / tangential split of any GTEx tissue's own variation): can one driven population-of-oscillators model reproduce the organisation results with far fewer parameters than observations, and does it predict a new property of the personal departure?
+
+**Model (code `exploratory/A310_clock_model/scripts/model.py`).** Cells of class c in tissue o are phase oscillators
+of fixed single-cell amplitude a_c, Lorentzian intrinsic frequencies (centre omega0, half-width gamma_o), mean-field
+coupling K_o and a systemic drive F (the body's time theta_p). In the drive's frame the tissue order parameter
+w_o = R_o e^{i phi_o} follows the Ott-Antonsen equation dw/dt = (i nu - gamma) w + (H - conj(H) w^2) / 2, H = K w + F.
+The bulk clock state of class c in tissue o of person p is
+
+    x_ocp = a_c w_o* e^{i theta_p} + a_c delta_op + measurement,
+
+with w_o* the stable locked state (gain a_c R_o, phase phi_o) and delta_op the person's departure: the stationary
+fluctuation of w around w_o* under additive white noise of one intensity q for all tissues (J C + C J^T + q I = 0).
+A sample mixes classes: G_o = R_o sum_c s_oc a_c, s_oc the share of clock-gene mRNA from class c (lymphocytes a = 0).
+Consequences: coupling = S / (S + 2 psi) with S = G_o^2 V; the departure's angle shrinks with gain; its size and
+radial / tangential split follow from (gamma_o, K_o, F), not from a free term. Liver feeding (A297) adds a second
+drive F_f e^{i alpha_f} to the liver equation (removed: F_f = 0; inverted: alpha_f + pi).
+**Organ variants (one choice, counted as a parameter).** Tissues differ in one of: dispersion gamma_o (primary), coupling
+K_o, drive F_o; the other two are shared. In each, R_o is the tissue's input, set from S_o.
+**Alternatives it must beat.** (a) Linear damped driven oscillator dw/dt = (i nu - lam) w + F (A297's additive-cue
+reading): its departure is isotropic, its slope of log departure variance on log S is 0.5 if tissues differ in damping
+and 0 if in drive. (b) Composition alone (R_o = 1): organ gain only through s_oc. (c) Free per-organ gains without
+structure.
+
+**Observations, parameters (fit, Stage 2a).**
+| block | observations | model parameters |
+|---|---|---|
+| A. GTEx periphery (A104 rows, 27 tissues) | 27 excess own variances E_o = 2 psi_clock - median 2 psi_matched (A294b sets), each with a donor-bootstrap 90 % interval (200 resamples, matched floor fixed); the slope of log E_o on log S_o | q, the amplitude scale a (R of the strongest tissue), the ratio of the two shared constants, the variant: 4. Inputs, not fitted: R_o from S_o (27), phi_o (27) |
+| B. Cell classes (A293 Parts 2-3) | 47 atlas x family log gains relative to endothelium with their SEs; 12 atlas x class-pair phase offsets | 5 class gains log(a_c / a_endo); 1 endothelial lead (others share the organ phase): 6 |
+| C. Liver drive (A297) | 8: amplitude ratio and shift of Manella DF / AL, Xin DRF / NRF, Greenwell arrhythmic / AL and night-restricted / AL, each with its 90 % interval | F_f / F_s, alpha_f, gamma / F_s, K / F_s (nu = 0): 4. Night-restricted = ad libitum in the model |
+Total 14 parameters for 95 observations (inputs excluded). Organ gain and organ phase are inputs: on them the model is
+alternative (c) and claims no compression; stated, not tested.
+
+**Adequacy criterion (registered).** Global: parameters < observations / 3. Block A: the prediction lies in the
+tissue's 90 % interval of E_o in >= 80 % of tissues, and the model's slope of log E on log S over the observed S range
+lies in 0.044 to 0.332; the variant is chosen as the one meeting both with the smallest weighted squared error on
+log E_o (if none, block A fails). Block B: >= 80 % of the 47 relative gains within pooled +- 1.645 x their own SE; RMS
+of the 12 class-pair offsets around the model (endothelium leads by one fitted lag, the others 0) <= 0.6 h. Block C:
+>= 6 of the 8 predictions inside their 90 % intervals. Fits by weighted least squares (log scale for gains, variances
+and amplitude ratios; hours for shifts); identifiability by profile: a parameter whose profile does not rise by 2.71
+(chi-square, 1 df, 90 %) on both sides within a factor 100 of its estimate is reported not identifiable and never
+quoted as a biological value.
+**Comparison with the alternatives (descriptive).** (a) Fitted to blocks A and C with its own parameters (3 for C;
+its slope fixed at 0 or 0.5 for A): number of block-C hits and whether its slope lies in the A294b interval. (b) For
+each tissue, the largest share of clock-carrying mRNA compatible with composition alone, s_o <= (G_o / G_max) x
+(a_max / a_min) with a_max / a_min from A293 Part 3 (the strongest tissue fully clock-carrying): tissues whose bound
+falls below 0.5 while their dominant cell class carries a clock (muscle, hepatocytes, adipocytes, squamous epithelium,
+A293) would need more than R_o = 1. (c) Compression counted per block.
+**Verdicts.** ADEQUATE: global rule and blocks A, B, C pass. PARTIAL: A and B pass, C fails: an organisation model
+without the liver's drive dynamics. INADEQUATE: A or B fails: the model is not worth it; stop (reported as such).
+
+**Stage 2b, prediction (only if A and B pass; scored once).** The model predicts how the personal departure is
+oriented: excess own variation across the tissue's state (tangential, a phase departure) exceeds that along it
+(radial, a gain departure), the more so the higher R; alternative (a) predicts no orientation; a person x organ gain
+departure (as the person-level amplitude of Saint-Antoine and Anafi 2025) predicts a radial excess.
+Statistic: A104 rows and fit (fast deaths, periphery, every tissue an anchor, leave-one-out host). Per tissue o and
+donor p, residual r = beta_op - z_o u_p (u_p the host posterior mean), radial and tangential parts on the direction
+of z_o u_p; T_o = var(tangential) - var(radial), minus the mean T_o of 100 `clocksync.simulate.like` replicates at the
+tissue's estimate (isotropic own variation, real design); share sh_o = T_o / E_o. Companions: the same on 100
+matched sets (their own fits), reported per tissue and pooled.
+- **H310.1:** median over tissues of sh_o > 0, tissue-bootstrap 90 % lower bound > 0, and above the q95 of the same
+  median over the matched sets.
+- **H310.2:** Spearman rho(sh_o, S_o) > 0, one-sided permutation p < 0.05 (2000).
+- Reported with them: the chosen variant's predicted median share (computed and committed before scoring) and
+  whether it lies in the observed interval; the radial excess alone.
+- **Power first (committed before scoring):** detection rate of H310.1 in 200 simulations at the real design with a
+  tangential excess of the variant's predicted size added to the `like` states; below 0.8 the test is reported not
+  powered and not scored.
+**Readings.** H310.1 PASS: the departure is mostly a phase departure, as a synchronising population predicts and a
+linear damped oscillator does not: the model makes a confirmed prediction beyond re-description (with H310.2 PASS, one
+that scales with synchrony as predicted). FAIL, powered, share near 0: departures are isotropic: the population
+dynamics are not supported in GTEx and the model stays a description. Radial excess (upper bound < 0): person x organ
+gain variation dominates the departure, outside the model.
+**Disease and brain death (descriptive, parameter changes, no fit).** Tumour gain loss with no departure rise (A304):
+lower a or R at fixed q predicts a departure that does not rise (A304's pure-gain simulation, Q_R -0.10). Psoriatic delay
+with cue genes on time (A183, A308): a change of phi_o, from detuning or coupling; whether it comes with a gain
+change is read from the A183 states. Chronic conditions (A164-A306): no parameter change. Brain death: F -> 0; a tissue
+with K_o > 2 gamma_o keeps R and free-runs (organ arrangement drifts, gain kept); with K_o < 2 gamma_o it dephases
+(gain lost). Correction to the task prompt, from `A132_brain_death/output/a132_groups.csv`: in A132 H132.2 the
+longest-ventilation tertile has the lower organ-arrangement rho (-0.089, p 0.64) and the shortest the higher (0.247,
+p 0.16), neither significant: the direction a drift since loss of drive predicts, not against it; ventilation time is
+not time since brain death.
+**Limits.** Phase oscillators fix the single-cell amplitude; coupling-dependent cell amplitude (Webb 2012) is outside
+the model. The departure is one stationary noise of one intensity; static person-specific cue timing is a different
+process. GTEx deaths; the fit is a synthesis, not evidence; liver drive from three mouse laboratories.
+**Code.** `exploratory/A310_clock_model/scripts/{model.py, fit_a310.py, predict_a310.py, power_a310.py, score_a310.py}`.
