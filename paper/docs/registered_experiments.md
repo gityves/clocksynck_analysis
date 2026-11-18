@@ -8660,3 +8660,8 @@ the companions: not decided. H318.2 is read only beside H318.1.
 **Power stage.** SD of the adjusted D_rho under 2000 relabellings and the MDE (2.49 SD); pairs remaining. No stop rule:
 both are scored, the MDE reported.
 **Code.** `exploratory/A317_braindeath_confirm/scripts/score_a318.py --stage power | score`.
+
+### A318 power note (2026-11-18, before scoring; `score_a318.py --stage power`, adjusted relabelling null only)
+All 65 pairs kept (298 organ donors, 79 post-mortem). SD of the adjusted D_rho 0.234, MDE 0.582. Confound aggregates
+(medians over samples): ischaemic time 258 min (organ donors) vs 561 min (post-mortem); RIN 7.6 vs 7.2.
+<!-- src: paper/exploratory/A317_braindeath_confirm/output/a318_power.csv -->
