@@ -33,6 +33,7 @@ on DIPs; sex/age contrasts by model selection (Weger 2021). cSVD summarises the 
 
 ## Link to us
 - **Intro claims:** human tissue clocks are synchronised with offsets of a few hours (health baseline); amplitude highest in metabolic tissues, lowest in brain/testis; rhythms damp with age and differ by sex; TOD is not phase.
+- **Our correction (age):** the age dampening does not survive death-type matching in GTEx: old vs young rhythmic-gene count, pooled -0.73 (p 0.008) -> Hardy-matched -0.13 (p 0.78), TMM -0.58 -> -0.20 (WP0 item 5, `results_preliminary.md` 2026-10-23 and status correction 2026-11-01; `WP0_integrity/output/chiral_tmm/count_comparison_tmm_summary.csv`); the shared clock state shows no consistent amplitude loss with age either (A231 D231.6: host spread old vs young, median log ratio -0.03 in fast deaths). Cite the dampening only with this correction. The sex excess also shrinks by one half to two thirds with matching and is no longer significant.
 - **Relation:** our lab's precursor. clocksync generalises the fixed tissue shift (arg z_k) and adds coupling c and relative amplitude |z|, without assigning phases (works on hospital hours).
 
 ## Ideas
