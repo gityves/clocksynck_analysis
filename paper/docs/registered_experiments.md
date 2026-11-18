@@ -8555,3 +8555,38 @@ tissue fitted on all death types.
 0.082; SD of the clock's Q under 1000 relabellings of Hardy 0 donors 0.084; power against a clock-specific variance loss
 of 30 % 0.995. Gate passed: H315.1 is scored.
 <!-- src: paper/exploratory/A315_braindeath_gain/output/power.csv -->
+
+## A316 (2026-11-18, user: "yes register it with the feasibility stage first ... is CoPhaser really better than this method, the projection should probably identical": the method's own per-cell estimator is used, not CoPhaser; staged: feasibility on the aligned arm only, then one scoring run; **NOT BLIND** for A201 (pseudobulk shifts SMC -2.85, fibroblast -2.87, EC -2.29 h; cosinor amplitude ratio misaligned / aligned SMC 0.875, fibroblast 0.888) and A279; NOT seen: any within-library cell-to-cell clock statistic of this dataset): after a 6 h light advance, do the cells of a tissue shift as a block, drift apart (dephasing of autonomous cells), or lose amplitude each (damping)? **Auerbach 2026 mouse aorta (A201 data; aligned 14, misaligned 8, Bmal1 KO 10 libraries, pools of 2 aortas)**
+
+**Why.** A315 found that tissue clocks keep their amplitude after loss of the central drive while organs drift apart,
+and A201 that aortic cell types shift together. Whether a tissue is a block of coherent cells or an ensemble of
+autonomous cells is read in single cells: during re-entrainment, autonomous cells with different periods move at
+different speeds and spread; a coherent tissue moves as a block; damped cells lose amplitude each. A component that
+paces the others would lead and its followers would spread more.
+**Estimator (`clocksync.cells.dispersion`, no per-cell phases).** Per library x cell type with >= 100 cells: D =
+within-library cell-to-cell in-plane second moment of the clock state, from cross-gene moments of split gene halves
+(free of counting noise; log scale; 30 splits; the 14 clock genes, mouse symbols, GTEx waveform design). Per
+condition x cell type: D_bar = mean D over libraries; coherent power A^2 = mean over libraries of |b_l - mean b|^2,
+b_l the library's pseudobulk clock state (same projector on the library's log mean expression; ZT-balanced within
+condition, sex centred), minus its Poisson variance. Coherent fraction F = A^2 / (A^2 + D_bar); per-cell power
+P = A^2 + D_bar. Contrasts misaligned / aligned on the log scale, per cell type and pooled (mean of SMC and fibroblast);
+library jackknife within condition for the SE.
+- **H316.1 (dephasing):** pooled log(F_mis / F_al) < 0, 90 % upper bound < 0.
+- **H316.2 (block):** pooled log(F_mis / F_al) within +-0.26 (90 % interval; 0.26 = the drop if the whole 0.88
+  amplitude ratio were dephasing at constant P).
+- **Reported:** log P ratio (damping if P falls with F kept); per cell type F and P ratios, EC and macrophages
+  descriptive (a pacemaker type would keep F while its followers lose it); Bmal1 KO F and D against the aligned arm
+  (negative control: coherent power collapses); clock UMI per cell.
+**Feasibility stage (aligned arm only; written before scoring).** (a) median clock UMI per cell >= 2 in SMC and
+fibroblasts; (b) aligned D above its permuted-acrophase null (`dispersion_null`, 20 permutations) in both; (c) placebo:
+the aligned libraries split into two ZT- and sex-balanced halves (all balanced splits, or 50 random ones), the pooled
+log F ratio and its jackknife SE computed per split; SE (median) <= 0.105, so a ratio of exp(-0.26) is detected at about
+80 %; placebo mean within +-0.1 of 0. Any criterion failing: power note, not scored.
+**Readings (stated now).** H316.1 PASS with P kept: autonomous cells drift apart during re-entrainment (uncoupled
+ensemble within the tissue). H316.2 PASS: the tissue shifts as a coherent block (coupling or a tissue oscillator), and
+with P down, the 0.88 is per-cell damping. Neither: not resolved. A cell type keeping F while others lose it: candidate
+pacemaker (descriptive).
+**Limits.** One tissue, one time after the shift (day 5), pools of 2 aortas; D includes non-clock covariance of the
+clock genes (null-corrected only in the feasibility check); coherent power mixes rhythm amplitude with pool-to-pool
+variation in each arm.
+**Code.** `exploratory/A316_aorta_cells/scripts/score_a316.py --stage feasibility | score`.
