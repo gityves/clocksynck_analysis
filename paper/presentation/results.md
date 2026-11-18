@@ -473,13 +473,18 @@ minus recorded time of death, change per decade of age, body and brain hosts, 90
 - What Talamanca et al. 2023 claim (re-read, `literature/talamanca_science_2023.pdf`): "The relative phases and
   amplitudes of clock genes were conserved in males and females"; "the overall amplitudes, phases, and relative
   relationships of the clock genes were conserved with age"; the number of rhythmic genes "was higher in females by
-  about twofold", and rhythms were "overall strongly damped in the older donors" (< 50 vs > 60 y). Death type appears
-  only for time-of-death concordance (better in fast deaths, fig. S2E); sample covariates were regressed out of
-  expression (fig. S1D, supplement not in our copy). They list "complex covariate structures, or sampling bias" among
-  limits. So panel B agrees with them; panel A concerns their output-gene claims.
+  about twofold", and rhythms were "overall strongly damped in the older donors" (< 50 vs > 60 y). Supplement
+  (`scCircadianCancer/literature/chiral_supp.pdf`, methods): "we regressed out ischemic time, sex, age and type of
+  death as categorical variables with a linear regression model" on log CPM, per gene and tissue; for the sex and age
+  contrasts, "when the number of samples in the two groups differed, we subsampled the group with more samples to match
+  the sample size of the smaller group". Death type is therefore removed from mean expression but not balanced between
+  the groups compared. In the main text it appears only for time-of-death concordance (better in fast deaths, fig.
+  S2E); they list "complex covariate structures, or sampling bias" among limits. So panel B agrees with them; panel A
+  concerns their output-gene claims.
 - Why matching and not covariate removal: regressing death type out of mean expression does not remove its effect on
-  rhythm amplitude (fast deaths carry stronger rhythms); matching equalises the death-type mix of the two groups.
-  Reading, not a separate test.
+  rhythm amplitude (fast deaths carry stronger rhythms); matching equalises the death-type mix of the two groups. Our
+  re-run keeps CHIRAL's covariate regression (ischaemic time, age, sex, death type) and adds the matching, so the drop
+  in panel A is what matching adds on top of their correction. Reading of the mechanism, not a separate test.
 - Status of panel A: confirmation of archive A101b / A102b (WP0 item 5, 2026-10-23), CHIRAL's statistic, not
   clocksync. Is the drop itself significant (matched minus pooled, same tissues, tissue bootstrap)? Sex: −0.27 (95 %
   −0.39 to −0.14, p < 0.001); with RNA quality −0.34 (p < 0.001). Age: +0.39 (−0.10 to 0.84, p 0.092), +0.59 with RNA
@@ -503,4 +508,4 @@ minus recorded time of death, change per decade of age, body and brain hosts, 90
 **Source:** `exploratory/WP0_integrity/output/chiral_tmm/{count_comparison_tmm_summary,sex_comparison_matched_summary}.csv`;
 `exploratory/A231_age_coupling/output/{score_tests,score_d231_6_spread}.csv`;
 `exploratory/A208_sex_coupling/output/{tests,pooled}.csv`; `exploratory/A234_internal_time_age/output/score_tests.csv`;
-`literature/talamanca_science_2023.pdf`.
+`literature/talamanca_science_2023.pdf`; `scCircadianCancer/literature/chiral_supp.pdf`.
