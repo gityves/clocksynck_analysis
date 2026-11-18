@@ -1,8 +1,8 @@
 # Results section: slide by slide
 
-Order (agreed 2026-11-11): R1 model validation, R2 organisation in health (with ageing), R3 development, R4 loss of
-daily cues, R5 chronic disease, R6 where clocks break: locally (psoriasis, cancer), R7 misalignment and limits,
-R8 synthesis. Every number below was re-read from the table named in its slide's **Source** line. GTEx figures show
+Order (agreed 2026-11-18): R1 method (description and validation, short); R2 organisation in health (organs,
+composition, cells, age and sex); what holds the organisation (loss of daily cues, central drive); development (only if
+re-scored); internal desynchrony in disease; synthesis. Limits inside each chapter plus one final slide. Every number below was re-read from the table named in its slide's **Source** line. GTEx figures show
 per-tissue aggregates only, never per-donor times.
 
 Status labels: **registered** (primary or secondary, scored as written), **confirmation** (archive result known,
@@ -180,9 +180,9 @@ tissue's shift relative to the other three, untimed vs timed; dashed: identity.
 # R2. Organisation in health
 
 **Chapter message:** a person's organs share one clock state, each at its own gain over a departure of constant size,
-so the stronger an organ's clock, the more it reads as coupled. Inside tissues the organ sets the time and each cell class sets how strongly it expresses it; lymphocytes carry
-no readable clock. With
-age, internal time advances while the organisation stays.
+so the stronger an organ's clock, the more it reads as coupled. Composition does not set an organ's phase; inside tissues
+each cell class keeps its gain relative to the others, and lymphocytes carry no readable clock. Age and sex leave the
+organisation unchanged; with age the whole body clock runs earlier.
 
 ---
 
@@ -440,3 +440,67 @@ atlases.
 `exploratory/A288_macrophage_pairwise/output/{per_atlas,tests}.csv`; `exploratory/A284_residency/output/tests.csv`;
 `exploratory/A281_lymphocyte_clock/output/{pairs,tests}.csv`; `exploratory/A287_lymphocyte_covariance/output/tests.csv`;
 `exploratory/A294_lymphocyte_hormonal/output/{pairs,tests}.csv`.
+
+---
+
+## R2.4 Age and sex: the core clock's organisation is the same; ageing shifts the body's clock as a whole
+
+**Message:** as CHIRAL found, the core clock is the same in old and young, women and men: here, coupling and organ
+offsets are equivalent to no difference. The reported changes in output rhythms (fewer rhythmic genes in older donors,
+more in women) largely follow the type of death and shrink or vanish when it is matched. What changes with age is the
+timing of the whole body clock: it runs earlier, the brain with the body.
+
+**Bullets**
+1. Output rhythms (CHIRAL's statistic, re-read with its TMM normalisation; log ratio of rhythmic-gene counts): old over
+   young −0.67 on CHIRAL's donor subsample, −0.58 on all donors, −0.20 matched on death type (95 % −0.98 to 0.51),
+   0.00 with RNA quality also matched; female over male +0.61, +0.51, +0.23 (−0.08 to 0.60), +0.17. Young GTEx donors
+   are mostly violent fast deaths.
+2. Core-clock organisation (registered): coupling old − young +0.003 (90 % −0.027 to 0.033), female − male +0.020
+   (−0.003 to 0.043), both equivalent within ±0.15; organ offsets −0.05 h and +0.04 h, equivalent within ±1 h (A231,
+   A208), in fast and ventilated donors.
+3. Timing (registered, timed readout): internal time runs ahead of the recorded time of death by +0.64 h per decade in
+   the body (90 % 0.17 to 1.11) and +0.99 h in the brain (0.49 to 1.49), death type and sex held fixed; brain and body
+   do not drift apart (−0.01 h per decade, A234).
+
+**Figure:** `figures/ageing_sex/ageing_sex.png` (`scripts/ageing_sex.py`; wide). A. CHIRAL's statistic: total log ratio
+of rhythmic-gene counts (TMM), old / young (filled circles) and female / male (open diamonds), on CHIRAL's donor
+subsample, all donors at equal n, donors matched on death type (Hardy class), and also on RNA quality (RIN tertile);
+tissue bootstrap 95 % interval. B. coupling difference at a common host spread (d*), old − young and female − male,
+90 % interval; dashed: equivalence bounds ±0.15. C. organ offset difference [h], same; dashed: ±1 h. D. internal time
+minus recorded time of death, change per decade of age, body and brain hosts, 90 % interval.
+
+**Speaker notes**
+- What Talamanca et al. 2023 claim (re-read, `literature/talamanca_science_2023.pdf`): "The relative phases and
+  amplitudes of clock genes were conserved in males and females"; "the overall amplitudes, phases, and relative
+  relationships of the clock genes were conserved with age"; the number of rhythmic genes "was higher in females by
+  about twofold", and rhythms were "overall strongly damped in the older donors" (< 50 vs > 60 y). Death type appears
+  only for time-of-death concordance (better in fast deaths, fig. S2E); sample covariates were regressed out of
+  expression (fig. S1D, supplement not in our copy). They list "complex covariate structures, or sampling bias" among
+  limits. So panel B agrees with them; panel A concerns their output-gene claims.
+- Why matching and not covariate removal: regressing death type out of mean expression does not remove its effect on
+  rhythm amplitude (fast deaths carry stronger rhythms); matching equalises the death-type mix of the two groups.
+  Reading, not a separate test.
+- Status of panel A: confirmation of archive A101b / A102b (WP0 item 5, 2026-10-23), CHIRAL's statistic, not
+  clocksync. Is the drop itself significant (matched minus pooled, same tissues, tissue bootstrap)? Sex: −0.27 (95 %
+  −0.39 to −0.14, p < 0.001); with RNA quality −0.34 (p < 0.001). Age: +0.39 (−0.10 to 0.84, p 0.092), +0.59 with RNA
+  quality (0.02 to 1.25, p 0.040). Age matching keeps 29 of 37 tissues. With CPM, the age drop is +0.57 (p 0.024).
+  Wording: "with death type matched, the age dampening is no longer seen and the female excess halves and is not
+  significant"; not "CHIRAL's results are artefacts". Their within-tissue findings (e.g. coronary artery, liver
+  programmes) are not re-tested here.
+- Panels B, C: A231 (registered, H231.1 pass; H231.2, H231.3 fail: no shift detected, organ-specific shifts with SD
+  above 0.45 h would have been detected); A208 (registered, H208.1 pass, H208.2 fail; offset equivalent within about
+  ±0.2 h; pseudo-clock |offset| q95 1.29 h, so no clock-specific offset). MDEs: d* 0.037 (age), 0.032 (sex). The old
+  arm carries more T2D (not adjusted; T2D leaves coupling unchanged, A164 / A202). A shared amplitude loss would leave
+  coupling and offsets unchanged by construction: B and C do not test dampening.
+- Panel D: A234 (registered, H234.1 and H234.3 pass; H234.2 post hoc). A timed readout (recorded time of death), fast
+  deaths only. Likely inflated (winner's curse): power about 0.29 at the archive prior 0.35 h per decade, which the
+  interval includes; young fast donors are few (19 under 40 y). Age is not associated with time of death (post hoc,
+  R 0.05). Direction as chronotype epidemiology (Roenneberg 2004; to verify before citing). Sex and internal time
+  versus the clock was not tested here (A99 archive, timed, +0.35 h female − male, SE 0.31, post hoc).
+- Host spread with age (A231 D231.6, descriptive): no consistent loss of the shared clock's spread in fast donors
+  (median log ratio −0.03), confounded by time of death.
+
+**Source:** `exploratory/WP0_integrity/output/chiral_tmm/{count_comparison_tmm_summary,sex_comparison_matched_summary}.csv`;
+`exploratory/A231_age_coupling/output/{score_tests,score_d231_6_spread}.csv`;
+`exploratory/A208_sex_coupling/output/{tests,pooled}.csv`; `exploratory/A234_internal_time_age/output/score_tests.csv`;
+`literature/talamanca_science_2023.pdf`.
