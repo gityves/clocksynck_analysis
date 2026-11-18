@@ -8637,3 +8637,26 @@ below it, so H317.1 has roughly three-quarter power at the effect already seen. 
 rule was registered for this stage; both hypotheses are scored. Choice fixed in the script before scoring: the
 sensitivity rows carry companion medians over 20 sets (every 10th) and 5 organ-donor draws, to bound runtime.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/power.csv -->
+
+## A318 (2026-11-18, user: "yes do both in parallel" (the ischaemic-time follow-up of A317 and the mouse data search); staged: power first, then one scoring run; **NOT BLIND** for A317 (D_rho 0.621; sensitivities: steroids 0.575, RIN >= 6 0.591, common ischaemic range 0.239 on 36 of 65 pairs) and everything A317 lists; NOT seen: any clock state adjusted for ischaemic time, any within-group ischaemic gradient of the arrangement): is the brain-death change of the organ arrangement explained by ischaemic time (or RNA quality) rather than by brain death? **A317 data, groups, draws and pairs**
+
+**Why.** Cutting samples to a common ischaemic range halved the pairs and the effect (A317), which cannot separate a
+confound from noise. Adjusting each sample's state keeps every pair.
+- **H318.1 (primary).** Per tissue, the clock state of every Hardy 0 sample (both groups pooled) is regressed (complex
+  least squares, with intercept) on standardised ischaemic time and RIN; residual states replace the states (samples
+  without both attributes dropped); the same adjustment for every matched and responsive set. D_rho as A317 H317.1 on
+  the adjusted states, same draws, pairs (>= 20 shared donors after the drop) and criteria: D_rho > 0, relabelling p <
+  0.05 (2000), above the matched and the responsive q95. Pooled fitting removes any part of a true group difference
+  that is collinear with ischaemic time: the test is conservative.
+- **H318.2 (descriptive).** Within organ donors, donor-level median ischaemic time in tertiles: rho(top tertile, fast) -
+  rho(bottom tertile, fast), unadjusted states, relabelling null within organ donors (2000). If ischaemic time drove the
+  contrast, organ donors with longer ischaemic times (closer to the post-mortem range) would keep more of the arrangement
+  (positive difference).
+- **Reported:** ischaemic time and RIN medians per group (aggregates); the adjusted D_C (as A317 H317.2).
+**Readings (stated now).** H318.1 PASS: the arrangement change survives the adjustment: not explained by ischaemic
+time or RNA quality. FAIL with D_rho near 0: ischaemic time (or RNA quality) is a sufficient explanation of the
+contrast at this resolution, and the brain-death reading loses its GTEx support. FAIL with D_rho clearly > 0 but below
+the companions: not decided. H318.2 is read only beside H318.1.
+**Power stage.** SD of the adjusted D_rho under 2000 relabellings and the MDE (2.49 SD); pairs remaining. No stop rule:
+both are scored, the MDE reported.
+**Code.** `exploratory/A317_braindeath_confirm/scripts/score_a318.py --stage power | score`.
