@@ -136,12 +136,12 @@ def vector(ax, amp, shift, color, label=None, amp_ci=None, shift_ci=None, open_=
                     ha=ha, va="center", fontsize=8, color=color, linespacing=0.9)
 
 
-def legend_below(ax, entries, ncol=2):
-    """Legend under a clock face: (label, colour, marker, open)."""
+def legend_side(ax, entries):
+    """One-column legend to the right of a clock face: (label, colour, marker, open)."""
     h = [Line2D([], [], ls="", marker=m, ms=6.5, mfc="white" if o else c, mec=c, mew=1.2, label=lab)
          for lab, c, m, o in entries]
-    ax.legend(handles=h, loc="upper center", bbox_to_anchor=(0.5, 0.0), ncol=ncol, frameon=False, fontsize=8.5,
-              handletextpad=0.3, columnspacing=1.2)
+    ax.legend(handles=h, loc="center left", bbox_to_anchor=(1.0, 0.5), frameon=False, fontsize=8.5,
+              handletextpad=0.3, labelspacing=0.8)
 
 
 def liver(ax, t):
@@ -160,7 +160,7 @@ def liver(ax, t):
     vector(ax, x.amp_ratio, x.shift_h, FEED["night"], None, (x.amp_lo90, x.amp_hi90), (x.shift_lo90, x.shift_hi90))
     x = r("observed Greenwell arrhythmic")
     vector(ax, x.amp_ratio, x.shift_h, FEED["removed"], None, (x.amp_lo90, x.amp_hi90), (x.shift_lo90, x.shift_hi90))
-    legend_below(ax, [("ad libitum (reference)", REF, "o", False), ("night-restricted", FEED["night"], "o", False),
+    legend_side(ax, [("ad libitum (reference)", REF, "o", False), ("night-restricted", FEED["night"], "o", False),
                       ("feeding inverted", FEED["inverted"], "o", False),
                       ("feeding rhythm removed", FEED["removed"], "o", False),
                       ("removed: expected\nif cues add", FEED["removed"], "D", True)])
@@ -173,8 +173,8 @@ def muscle(ax, core, outputs):
     vector(ax, core.R, core.s, CS, None, (core.R_lo, core.R_hi), (core.lo90, core.hi90))
     vector(ax, outputs.ratio, outputs.shift_h, OUTPUTS, None, (outputs.ratio_lo, outputs.ratio_hi),
            (outputs.shift_lo, outputs.shift_hi))
-    legend_below(ax, [("aligned (reference)", REF, "o", False), ("core clock", CS, "o", False),
-                      ("rhythmic outputs", OUTPUTS, "o", False)], ncol=1)
+    legend_side(ax, [("aligned (reference)", REF, "o", False), ("core clock", CS, "o", False),
+                      ("rhythmic outputs", OUTPUTS, "o", False)])
 
 
 def main():

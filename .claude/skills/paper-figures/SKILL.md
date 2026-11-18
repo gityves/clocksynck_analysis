@@ -75,7 +75,7 @@ figure, then apply it to the figure at hand.
   condition is dark grey (#6E6E6E).
   Model predictions or expected values: the colour of the condition they predict, open marker of another shape
   (diamond), never a separate grey; legend entry "<condition>: expected if ...".
-  Clock faces (angle = phase shift, radius = amplitude ratio): legend below the face, no direct labels.
+  Clock faces (angle = phase shift, radius = amplitude ratio): one-column legend beside the face, no direct labels.
 
   Other recurring entities (organ systems, cohorts, cell classes) get a fixed mapping the first time they appear;
   write it in this table.
