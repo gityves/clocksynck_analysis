@@ -269,7 +269,7 @@ body time, with 90 % interval.
 **Message:** within a tissue, every resident cell class runs at the organ's time, and each class expresses that time
 with its own gain, the same in every organ: fibroblasts loudest, endothelium and mural cells next, epithelium and
 macrophage-containing myeloid cells softer. Lymphocytes are the zero-gain end of this scale: no readable clock of
-their own.
+their own. The organ also scales the gain of all its classes together (next slide, R2.3).
 
 **Bullets**
 1. Gain relative to endothelium of the same atlas (registered, A293 H293.4 pass): fibroblast 1.26 [1.07, 1.48],
@@ -357,3 +357,61 @@ atlases.
 `exploratory/A288_macrophage_pairwise/output/{per_atlas,tests}.csv`; `exploratory/A284_residency/output/tests.csv`;
 `exploratory/A281_lymphocyte_clock/output/{pairs,tests}.csv`; `exploratory/A287_lymphocyte_covariance/output/tests.csv`;
 `exploratory/A294_lymphocyte_hormonal/output/{pairs,tests}.csv`.
+
+---
+
+## R2.3 Back to the organs: composition does not set an organ's phase and explains only part of its gain
+
+**Message:** an organ's phase is not a mix of its cells: changing a sample's composition leaves its phase in place,
+except in the adrenal. Composition does change gain, but by a few percent per SD, while organs made mostly of the same
+cell class differ 1.2- to 2.6-fold: on top of its cell classes, each organ scales how strongly it expresses the body's
+time.
+
+**Bullets**
+1. Phase (A295, registered, H295.2 pass): one SD more stromal-vascular cells moves a sample's phase by −0.05 h
+   (90 % −0.12 to +0.02), one SD more lymphocytes by +0.05 h (−0.03 to +0.13), against organ offsets from −1.2 h
+   (testis) to +4.9 h (adrenal) over 26 peripheral tissues.
+2. The exception is the adrenal: one SD more cortex moves a sample −1.15 h (90 % −1.87 to −0.56) towards the body's
+   time (A299, descriptive arm); part of the adrenal offset may come from its non-cortex part. The medulla markers do
+   not carry it (H299.1 fail), nor ACTH response or cortex identity (A301).
+3. Gain: one SD more stromal-vascular cells raises gain 1.04-fold (90 % 1.02 to 1.06; descriptive), lymphocytes do not
+   detectably lower it (0.99; H295.1 fail); adrenal cortex 1.30-fold. Organ gains span 0.26 (blood) to 2.28.
+4. Tissues dominated by the same cell class differ in gain: squamous epithelium 2.6-fold (oesophagus mucosa over
+   sun-exposed skin) and 2.1-fold (over unexposed skin), adipocytes 1.6-fold (visceral over subcutaneous adipose and
+   breast), smooth muscle 1.2-fold (oesophagus muscularis over sigmoid colon), while a class's gain relative to
+   endothelium varies between organs only by a factor 1.10 to 1.36 (R2.2). Reading: an organ-wide drive scales its
+   classes together. Not tested directly (A298 closed).
+
+**Figure:** `figures/organs_composition/organs_composition.png` (`scripts/organs_composition.py`; wide). A. phase
+relative to the body [h]: top, each peripheral tissue's offset (one dot per tissue, coloured by organ system); below,
+phase change per SD of a sample's stromal-vascular or lymphocyte marker score (dots, one per tissue; black, pooled
+value with 90 % interval) and of the adrenal cortex score (purple, 90 % interval). B. gain [fold], log scale: top, each
+tissue's gain on the body's time; second row, tissues made mostly of the same cell class, higher over lower; below,
+gain change per SD of the same scores (fold = 1 + change; pooled with 90 % interval).
+
+**Speaker notes**
+- Status: A295 registered (NOT BLIND for the organ map, A291, A293): H295.2 pass (phase), H295.1 fail (lymphocyte gain);
+  the stromal-vascular gain effect is descriptive. A299 registered (H299.1 fail, medulla); the cortex arm is its
+  descriptive specificity arm. The same-class pairs are chosen post hoc (A291 post hoc table), the display is post hoc.
+- What the within-tissue slopes do not show: composition varies far more between organs than within one (blood
+  against liver), so a per-SD slope cannot be extrapolated to say how much of the between-organ gain composition
+  explains. The argument for "only part" is the same-class pairs read with R2.2: classes keep their relative gains in
+  every organ, yet organs made of the same class differ 1.2- to 2.6-fold. The pairs differ in their minor classes too, so
+  this is a reading, not a partition.
+- The direct partition (A298: predicted gain from atlas cell shares against GTEx gain) was closed before scoring: the
+  marker-based deconvolution explained little of the GTEx profiles (weighted R^2 0.008 to 0.403) and several atlases
+  lack families. It needs bulk-calibrated references or several organs of the same donors.
+- Within-tissue composition effects per tissue (descriptive): stromal-vascular gain 0.65 (adrenal) to 1.42 (testis)
+  fold per SD; the largest phase changes are in whole blood (−0.76 h stromal-vascular, +2.35 h lymphocyte), where the
+  marker scores are least meaningful.
+- Adrenal: A296 found the +4.4 h offset a whole-clock property (with and without PER1, PER2, NR1D1); in the baboon the
+  offset sits in the medulla (+5.9 h), not the cortex (+0.9 h); mouse and sheep whole adrenals show no offset (A303).
+  The cortex effect (towards the body's time) and the baboon medulla agree in direction; the human medulla markers do
+  not carry it. Leave the adrenal as an open organ-level observation.
+- Organ rows: 26 peripheral tissues of the organ map (pituitary in neither group, as R2.1 panel A); one value per
+  tissue, no per-donor values.
+
+**Source:** `presentation/output/organs_composition/rows.csv` (from `presentation/output/organs/couplings.csv`,
+`exploratory/A295_composition/output/{tissues,tests}.csv`, `exploratory/A299_adrenal_medulla/output/tests.csv`);
+`exploratory/A293_organisation_levels/output/part3/families.csv`; `exploratory/A298_organ_drive/output/design.csv`;
+`results_preliminary.md` A296, A301, A303.
