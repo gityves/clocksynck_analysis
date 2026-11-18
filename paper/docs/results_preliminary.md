@@ -6255,3 +6255,47 @@ the first.
   engaged by dying) or to humans; the data cannot separate the two.
 - Code: `exploratory/A296_genewise_offsets/scripts/score_a303.py`.
 <!-- src: paper/exploratory/A296_genewise_offsets/output/a303.csv -->
+
+## A304 (scored 2026-11-18; NOT BLIND for the A138 per-cancer correlations and the tumour-only coherence results): proliferating tumours express less of the body's rhythm (gain loss, H304.1 PASS, clock-specific) and do not drift further from it (departure rise not detected, powered); TP53 and luminal A show no departure rise (FAIL); ER descriptive
+
+- **Design** (registered, staged): TCGA paired tumour-normal, 10 cancers, 517 pairs. Per arm, on the cancer's projector,
+  gain G = |C| / V_N (the tumour's slope on its own normal sample: |g| x the normal's reliability) and departure R =
+  (V_T - |C|^2 / V_N) / V_N^all; pooled Q_G, Q_R = log(case / reference) with weights n; 2000 within-cancer label
+  permutations; 200 matched (decisive) and 200 responsive (reported) pseudo-clock sets. One run (20 s, 4 workers).
+- **Power stage (A2, simulation at the real design):** the readouts separate. A pure gain loss (x 0.5) gives Q_G -0.509,
+  Q_R -0.100 (it lowers R through the gain-times-host-error term); a pure departure rise (x 2) gives Q_G +0.087, Q_R
+  +0.625. Type I error 0.044-0.068. Powered at the registered points (alpha 0.025): H304.1 gain 0.840, departure 1.000;
+  H304.3 and H304.4 departure only (0.998, 0.854); H304.2 neither (0.120, 0.698).
+- **H304.1 gain loss PASS (primary).** Q_G -0.462 (gain ratio 0.63), permutation p 0.0055, Holm 0.011; null mean 0.005
+  (SD 0.178); below the matched q05 (-0.379; 1.5th percentile) and at the 0.5th percentile of the responsive sets.
+  Lower G in the high-proliferation arm in 7 of 10 cancers (BLCA, BRCA, KIRC, LIHC, PRAD, THCA, UCEC); higher in COAD,
+  KIRP, LUAD.
+- **H304.1 departure rise FAIL (primary, powered).** Q_R -0.190, p 0.944: the departure is if anything lower, as a pure
+  gain loss predicts (-0.100 in the simulation); a doubling would have been detected with power 1.000.
+- **Host check:** the two arms' normal samples have the same clock-plane variance (Q_N -0.089, p 0.40): the gain ratio is
+  not a difference of host reliability.
+- **Purity:** the high-proliferation arm has more stromal / immune marker expression (lower purity) in 8 of 10 cancers,
+  which by A295 would raise gain, not lower it. Sensitivity with cells = cancer x purity half (18 cells, 498 pairs): Q_G
+  -0.266, p 0.037; Q_R -0.232, p 0.96 (smaller cells inflate both arms' |C| bias, compressing the ratio).
+- **Secondary departure readouts (Holm over 2):** H304.3 TP53 altered vs intact (5 cancers, 299 pairs) Q_R -0.522, p 0.995,
+  Holm 1.0: FAIL, the departure is lower in TP53-altered tumours, at the matched q05 (5.5th percentile, not
+  clock-specific). H304.4 luminal A vs other (BRCA, 105 pairs) Q_R -0.216, p 0.86: FAIL.
+- **Descriptive (not powered):** gain, TP53 -0.049 (p 0.33); luminal A +0.924 (higher gain in luminal A, as A219; inside
+  the matched range, 93rd percentile); ER negative -0.451 (p 0.21; matched 8th percentile). ER departure +0.135 (p 0.24).
+  Pooled offset of the high- vs low-proliferation tumours +0.60 h.
+- **Reading (registered).** "Gain loss detected, departure rise not": in proliferating tumours the body's time is still
+  there, expressed at about two thirds of the gain; the tumour clock does not drift further from the patient's time. This
+  is the dilution / weakening pattern of lymphocytes in normal tissue, not a desynchronised tumour clock. Bulk cannot say
+  whether malignant cells carry a weaker clock or a smaller share of the tumour RNA comes from clock-carrying cells (A212:
+  damping and dephasing are not separable in bulk); the purity imbalance argues against more stroma as the cause.
+- **A3 (descriptive).** Tumour coupling to the body's time c_T = corr^2 / rel (rel the GTEx coupling of the matching
+  tissue; 90 % patient bootstrap): LUAD 0.54 [0.33, 0.83], LIHC 0.38 [0.22, 0.58], KIRC 0.27 [0.11, 0.50], PRAD 0.26
+  [0.06, 0.57], BRCA 0.18 [0.07, 0.33], KIRP 0.12 [0.03, 0.39], THCA 0.11 [0.03, 0.25], COAD 0.06 [0.01, 0.21]; BLCA and
+  UCEC without a matching tissue (corr 0.52 and 0.08). Gain on body time |g| = G / rel: LUAD 1.21, LIHC 0.79, KIRC 0.64,
+  PRAD 0.56, BRCA 0.48, KIRP 0.47, THCA 0.39, COAD 0.28. Per-cancer correlations reproduce A138. The ranking leans on
+  GTEx reliabilities from deaths on a multi-tissue host (lung 0.44 is low in GTEx, which lifts LUAD above 1), and the
+  normal is adjacent tissue at surgery; intervals overlap except at the ends (LUAD and LIHC against COAD and THCA).
+- **Limits.** One normal per patient: G is attenuated by its reliability, equal across arms within a cancer (host check)
+  but not between cancers. Proliferation split at the median within cancer; arms of 9 to 56 pairs.
+- Code: `exploratory/A304_cancer_gain_departure/scripts/{power_a304.py, score_a304.py} --jobs 4`.
+<!-- src: paper/exploratory/A304_cancer_gain_departure/output/power/{calibration,design,power,mde}.csv; paper/exploratory/A304_cancer_gain_departure/output/score/{tests,readouts,per_cancer,companions,sensitivity_purity,purity_imbalance,a3_per_cancer}.csv -->
