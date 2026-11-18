@@ -529,7 +529,8 @@ it.
 
 **Bullets**
 1. External time is lost: the body's clock reads the recorded hour of death in fast deaths (R 0.63, 244 donors) but
-   barely in slow deaths (0.16, p 0.079, 106) and ventilated donors (0.14, 380; post hoc readout).
+   barely in slow deaths (0.16, 106), ventilated donors with a living brain (0.16, 79) and brain-dead organ donors
+   (0.17, 301; 0.18 at 79 donors) (post hoc readouts, A27, A314).
 2. The arrangement is kept: slow deaths (Hardy 4, 103 donors) share the fast-death organ arrangement at Fisher-Lee rho
    0.784, above all 200 expression-matched (median 0.038) and all 200 stress-responsive gene sets (median 0.234)
    (registered, H293.1); ventilated donors with a living brain (79), without meals or activity, 0.690 (H293.2).
@@ -543,8 +544,7 @@ body tissues): bars for the clock genes (blue) and the medians of 200 expression
 stress-responsive gene sets (dark grey), whisker to their 95th percentile, same donors and pairs; fast deaths are the
 reference (1 by construction, outlined). B. alignment of the body's clock (host phase from the clock genes of 15
 reference tissues, fitted without time) to the recorded hour of death, R = |mean exp(i (host phase − ω t_death))|, per
-death type, with its permutation p and donor count; the ventilated readout pools living-brain and brain-dead donors
-(one light bar across both rows).
+death type (all donors of each group).
 
 **Speaker notes**- Status: A293 Part 1 registered, NOT BLIND (the clock rho of every group was known from A109 / A132; the companion
   sets were new); H293.1 and H293.2 pass. Hardy 3 and brain-dead donors descriptive by decision. Brain death vs
@@ -560,14 +560,21 @@ death type, with its permutation p and donor count; the ventilated readout pools
   SCN test was impossible (PI, Q7, 2026-10-24: the SCN reading stays a hypothesis). Consistent with SCN lesions
   destroying inter-tissue phase synchrony in mice (Yoo 2004); contrary report: Tahara 2012. Wording: "organs keep a
   shared internal time unless the central drive is lost".
-- Panel B (A27, post hoc readout, reused as context in A46, A92, A93): one host for all four groups. The registered
-  test for slow deaths (A109c H109c.1, 12 body tissues, 103 donors) gives R 0.097 against a null median 0.101 (p 0.56):
-  no detectable alignment, but alignment as strong as in ventilated donors is not excluded (80 %-power R 0.208).
-  Ventilated donors keep a small alignment (R 0.14, p 0.0005) and are pushed toward 0 / 12 h (A132); the brain-dead
-  and living-brain subgroups are not separated in this readout. Intermediate deaths: R 0.25 (p 0.039, 51 donors).
+- Panel B: fast, slow and intermediate deaths from A27 (post hoc readout, reused as context in A46, A92, A93), the two
+  ventilated groups from A314 (descriptive, post hoc split, registered before computing). Same procedure: one host per
+  group, R and its permutation p. Not on the slide: fast p 0.0001; slow p 0.079; intermediate R 0.25 (p 0.039, 51
+  donors); ventilated living brain p 0.142 (null median R 0.096 at its n); brain-dead p < 0.001 at 301 donors (null
+  median 0.046), at 79 donors median R 0.180 (range 0.09 to 0.33, p 0.076). R under no alignment shrinks with n, so
+  compare the two ventilated groups at equal n: the same. The registered test for slow deaths (A109c H109c.1, 12 body
+  tissues, 103 donors) gives R 0.097 against a null median 0.101 (p 0.56); alignment as strong as in ventilated
+  donors is not excluded (80 %-power R 0.208). Both ventilated groups are pushed toward 0 / 12 h (A132).
+- Reading: the two ventilated groups lost the external day alike but differ in the arrangement (0.690 vs 0.161), so
+  losing the external day does not by itself remove the arrangement; losing the brain does (descriptive for brain
+  death).
 
 **Source:** `exploratory/A293_organisation_levels/output/part1/{groups,sets,reproduction}.csv`;
-`results/figure_3/output/cues_lost/walltime_hosts.csv`; `exploratory/A109_coupling_nulls/output/a109c_walltime.csv`;
+`results/figure_3/output/cues_lost/walltime_hosts.csv`; `exploratory/A314_vent_walltime/output/{groups,draws}.csv`;
+`exploratory/A109_coupling_nulls/output/a109c_walltime.csv`;
 `results_preliminary.md` A109c, A132, A136; `docs/PI_QUESTIONS.md` Q7.
 
 ---

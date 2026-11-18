@@ -9,8 +9,8 @@ A. Does a death group keep the organ arrangement of fast deaths? Fisher-Lee corr
    donors descriptive). Rows in the same order in A and B.
 B. Does the body's clock still read the external day? Alignment of the host phase (clock genes of 15 reference tissues,
    fitted without time) to the recorded hour of death, R = |mean exp(i (host phase - w t_death))|, per death type, with
-   its permutation p (times shuffled over donors, 10,000) (A27, post hoc; ventilated = all Hardy 0, brain-dead and
-   living-brain donors together; one bar across both rows).
+   its permutation p (times shuffled over donors, 10,000): fast, slow and intermediate deaths from A27 (post hoc
+   readout), ventilated donors with a living brain and brain-dead organ donors from A314 (descriptive, post hoc split).
 R3.2 (`cue_removal`), designed removal of a cue in one organ:
 A. Mouse liver (A297, registered, H297.1 fail above the interval): core-clock amplitude (blue, clock genes) with the
    feeding rhythm removed (Greenwell arrhythmic feeding), relative to ad libitum, 90 % library bootstrap interval; grey
@@ -22,6 +22,7 @@ B. Human muscle after three days of 12 h-shifted sleep, light, activity and meal
    amplitude of the change relative to aligned (A257 H257.3, A261).
 
 Data: exploratory/A293_organisation_levels/output/part1/{groups,sets}.csv; results/figure_3/output/cues_lost/walltime_hosts.csv;
+exploratory/A314_vent_walltime/output/groups.csv;
 exploratory/A297_feeding_model/output/tests.csv; exploratory/A257_nightshift_muscle/output/score_tests.csv;
 exploratory/A261_nightshift_programs/output/programs.csv. GTEx aggregates only.
 Output: presentation/figures/holds_organisation/{holds_organisation,cue_removal}.{svg,png}.
@@ -46,7 +47,6 @@ CS = sns.color_palette().as_hex()[0]
 FAMILY = {"matched": ("random genes", "#BBBBBB"), "responsive": ("stress-responsive genes", "#6E6E6E")}
 ROWS = ["fast deaths", "slow deaths", "intermediate\ndeaths", "ventilated,\nbrain alive", "brain-dead\norgan donors"]
 GROUPS = {"slow_hardy4": 1, "hardy3": 2, "ventilated_postmortem": 3, "organ_donor": 4}  # A293 group -> row
-WALL = {"fast": (0, 0), "hardy4": (1, 1), "hardy3": (2, 2), "ventilator": (3, 4)}  # A27 cohort -> rows it spans
 H = 0.26  # bar height in panel A
 
 
@@ -80,18 +80,13 @@ def arrangement(ax, g):
               handlelength=1, columnspacing=0.8)
 
 
-def external(ax, w):
-    """Alignment of the body's clock to the recorded hour of death, per death type; the ventilated readout pools the
-    living-brain and brain-dead donors, so one bar spans both rows."""
-    w = w.set_index("cohort")
-    for k, (i0, i1) in WALL.items():
-        r = w.loc[k]
-        y, h = (i0 + i1) / 2, 0.55 + (i1 - i0)
-        ax.barh(y, r.R, height=h, color=CS, alpha=1 if i0 == i1 else 0.55)
-        p = f"p {r.p_R:.4f}" if r.p_R < 0.001 else f"p {r.p_R:.3f}"
-        note = f"{p}, n {int(r.donors)}" + ("\nboth groups pooled" if i1 > i0 else "")
-        ax.annotate(note, (r.R, y), xytext=(6, 0), textcoords="offset points", va="center", fontsize=8,
-                    color=MUTED)
+def external(ax, w, v):
+    """Alignment of the body's clock to the recorded hour of death, one bar per row: fast, slow and intermediate deaths
+    from A27, the two ventilated groups from A314 (all donors of each)."""
+    w, v = w.set_index("cohort"), v.set_index("group")
+    R = [w.loc["fast", "R"], w.loc["hardy4", "R"], w.loc["hardy3", "R"], v.loc["ventilated_postmortem", "R"],
+         v.loc["organ_donor", "R"]]
+    ax.barh(range(len(ROWS)), R, height=0.55, color=CS)
     ax.set_xlim(0, 1.05)
     rows(ax)
     ax.set_yticklabels([])
@@ -146,7 +141,8 @@ def main():
     p1 = EXP / "A293_organisation_levels/output/part1"
     lay = pf.Layout.slide("AB", kind="wide", col_ratios=[1.2, 1], align="all")
     arrangement(lay.axes["A"], pd.read_csv(p1 / "groups.csv"))
-    external(lay.axes["B"], pd.read_csv(PAPER / "results/figure_3/output/cues_lost/walltime_hosts.csv"))
+    external(lay.axes["B"], pd.read_csv(PAPER / "results/figure_3/output/cues_lost/walltime_hosts.csv"),
+             pd.read_csv(EXP / "A314_vent_walltime/output/groups.csv"))
     fig = lay.finalize()
     print(pf.collisions(fig))
     pf.save(fig, OUT / "holds_organisation")
