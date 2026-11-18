@@ -6399,3 +6399,42 @@ the first.
   normal approximation (upper interval bound 0.046, close to the line); not blind; composition not addressed.
 - Code: `exploratory/A308_psoriasis_calibration/scripts/score_a308.py`.
 <!-- src: paper/exploratory/A308_psoriasis_calibration/output/{tests,sets}.csv -->
+
+## A309 (scored 2026-11-18; NOT BLIND for A236 and the human fetal results): in the late mouse embryo (E15-E18.75, embryos at 00, 06, 12, 18 h) hepatocytes carry a clock-specific covariation between embryos (H309.1 liver PASS) whose signal-induced genes keep the waveform pattern (H309.2 W PASS); ventricular cardiomyocytes, nephron progenitors, lung progenitors and adrenocortical cells do not pass (heart: three quarters of the adult size excluded)
+
+- Design as registered: Qiu 2024 late-window genome-wide pseudobulks (>= 50 cells), batch (embryonic day) residualised,
+  10,000 per-gene permutations within batch, 200 matched and 200 responsive sets. Power stage 421 s; two plumbing
+  failures before the reported run (CIART below 1 count in a readout's matching table, no statistic computed; then an
+  import path of the A307 functions, after the H309.1 table had printed); the final run reproduces H309.1 exactly (64 s).
+
+| readout (cell type) | embryos | C | p | Holm | matched q95 (pct) | responsive q95 (pct) | adult pass 1 / 0.75 / 0.5 | verdict |
+|---|---|---|---|---|---|---|---|---|
+| liver (hepatocytes) | 16 | 0.642 | 0.0023 | 0.0115 | 0.425 (99.0) | 0.434 (99.5) | 1.000 / 1.000 / 0.945 | **PASS** |
+| adrenal (adrenocortical) | 13 | 0.407 | 0.068 | 0.270 | 0.417 (94.0) | 0.377 (96.0) | 1.000 / 0.975 / 0.645 | fail |
+| heart (ventricular cardiomyocytes) | 12 | 0.239 | 0.157 | 0.471 | 0.411 (78.0) | 0.351 (85.5) | 1.000 / 0.970 / 0.615 | fail |
+| lung (lung progenitors) | 16 | 0.117 | 0.399 | 0.797 | 0.457 (55.5) | 0.526 (56.0) | 1.000 / 1.000 / 0.960 | fail |
+| kidney (nephron progenitors) | 16 | -0.516 | 0.946 | 0.946 | 0.416 (7.0) | 0.423 (5.5) | 1.000 / 1.000 / 0.930 | fail |
+
+- **H309.2 (liver only):** L (GC link of PER1, PER2, NR1D1) 0.347, p 0.0016, below the matched q95 0.491 (73.5th
+  percentile): not clock-specific; W (waveform cross-agreement) 0.105, p 0.0005, above the matched q95 0.074 (98.0th):
+  PASS. Signed correlation with the GC score: PER1 +0.77, NR1D1 +0.67, NR1D2 +0.79, CRY2 +0.80, TEF +0.74, CLOCK -0.52,
+  CRY1 -0.45, PER2 +0.03: the GC score lies along the clock's own phase axis in these embryos.
+- **All ages (descriptive, quadratic E-day, global permutations, no companions):** liver 54 embryos (E9-E18.75) C 0.526,
+  p 0.0006; lung progenitors 36 (E10.75-) 0.437, p 0.013; adrenocortical 15 0.404, p 0.059; heart 12 0.300, p 0.096;
+  nephron progenitors 26 -0.012.
+- **Reading (registered).** The heart branch: fail, with an adult pass rate 0.970 at 0.75 and 0.615 at 0.5: a ventricular
+  clock synchronised across embryos at three quarters of the adult size is excluded at E15-E18.75, a smaller one is not.
+  The registered "organ split replicates" branch required adrenal / liver / lung to pass; only the liver does. Read
+  together: at the stage where the mouse heart clock is reported to function (explants, Umemura 2017), cardiomyocytes
+  of embryos sampled across the day show no clock-shaped covariation, as in the human fetal heart; the kidney is
+  negative in both species; the liver is the organ synchronised across individuals in both species. Lung (epithelial
+  progenitors here, whole lung in human) and adrenal cortex (13 embryos, p 0.068, C above both companions' q95) are
+  not replicated in the late window; lung progenitors covary over all ages (descriptive). In the liver, as in the
+  human adrenal cortex (A307), PER1, PER2 and NR1D1 move with the core genes in the clock's phase pattern beyond matched
+  genes, and the GC targets lie on the same axis without being clock-specific: a synchronised, clock-patterned state
+  of which GC-target activity is part.
+- **Limits.** 12-16 embryos per cell type; heart and adrenal powered for three quarters, not half, of the adult size;
+  stand-ins from adult pools (Wolff all ages; Manella liver shallower than the fetal hepatocytes, no thinning); cell
+  types are not the human organs (progenitor and parenchymal classes vs whole-organ or class pseudobulks); not blind.
+- Code: `exploratory/A309_mouse_embryo_organs/scripts/{power_a309.py, score_a309.py}`.
+<!-- src: paper/exploratory/A309_mouse_embryo_organs/output/{power_design,power_passrates,l1,gc_pattern,gc_genes,all_ages}.csv -->
