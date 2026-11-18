@@ -36,6 +36,12 @@
 - **Statistics.** A failed gate is uninformative, never "decoupled". Coupling scales with host spread: compare across
   groups only at a common spread (d*) or on z2/psi. Every disease contrast needs a specificity companion on the same
   permutations; check the target class's baseline coupling (and power) before choosing it.
+- **Covariates in group contrasts** (user, 2026-11-18, after CHIRAL's age/sex result shrank under death-type matching):
+  regressing a covariate out of expression, or giving it a stratum intercept (our `strata`), removes only its effect on
+  the mean, not on rhythm amplitude, coupling, z2, psi or host spread. When a covariate can change rhythm strength
+  (death type / Hardy, ventilation, cohort, RIN, age) and is unbalanced between the groups compared, balance it: match
+  or stratify the contrast on it (as A164 / A208 / A231 match within cohort on Hardy and age), and report the pooled
+  vs matched estimates when they differ.
 - **Numbers in text** come from output tables, never from memory.
 - **Style:** clean, concise, publication-grade code and docs. Long runs (> 20 min) are documented `.py` scripts;
   notebooks only for quick analyses and figures.
