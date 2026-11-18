@@ -8391,3 +8391,10 @@ error at the real design but assumes Gaussian own variation. Non-count technical
 dilutes the share (isotropic if technical). GTEx deaths. The model grid assumes additive isotropic perturbations of
 one compartment; a mixture of compartments at different mu reads as their weighted mixture.
 **Code.** `exploratory/A311_hopf/scripts/{hopf.py, power_a311.py, score_a311.py}`.
+
+### A311 power note (2026-11-18, before scoring; `power_a311.py`, 42 s; only simulated statistics computed)
+Bootstrap part of H311.1 at the real design: rejection 0.05 under isotropic own variation (type I, <= 0.10 required);
+detection 1.00 with a true tilt of 0.3 x E_o (200 replicates each). The estimated median share averages 0.164 against
+0.191 put in (attenuated by about 14 %; the scored shares are read as slightly conservative). Powered: H311.1 and
+H311.2 are scored.
+<!-- src: paper/exploratory/A311_hopf/output/{power,power_tissues}.csv -->
