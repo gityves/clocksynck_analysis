@@ -63,7 +63,12 @@ figure, then apply it to the figure at hand.
   | glia, melanocyte, progenitor | olive (8) |
   | myeloid | orange (1, as macrophage) |
 
-  Companion gene sets (expression-matched, stress-responsive): grey open markers (circle, square) or grey dots.
+  Companion gene sets (expression-matched, stress-responsive): grey open markers (circle, square) or grey dots; when
+  both families are drawn, light grey (#BBBBBB) for expression-matched and dark grey (#6E6E6E) for stress-responsive,
+  with a legend (user, 2026-11-18).
+
+  Core clock / clock-gene readouts: blue (0), in every figure, including timed readouts in other species (mouse liver,
+  human muscle); clock outputs or genome-wide rhythmic programs: ink (user, 2026-11-18).
 
   Other recurring entities (organ systems, cohorts, cell classes) get a fixed mapping the first time they appear;
   write it in this table.

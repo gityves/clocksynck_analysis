@@ -7,7 +7,7 @@ A. GTEx: does a death group keep the organ arrangement of fast deaths? Fisher-Le
    genes (blue), 200 expression-matched (light grey) and 200 stress-responsive gene sets (dark grey), same donors and
    pairs (A293 Part 1; slow deaths H293.1 and ventilated living-brain donors H293.2 registered, Hardy 3 and brain-dead
    organ donors descriptive).
-B. Mouse liver (A297, registered, H297.1 fail above the interval): clock amplitude with the feeding rhythm removed
+B. Mouse liver (A297, registered, H297.1 fail above the interval): core-clock amplitude (blue, clock genes) with the feeding rhythm removed
    (Greenwell arrhythmic feeding), relative to ad libitum, 90 % library bootstrap interval; grey open: the amplitude
    expected if the clock state were the sum of its cues, (1 + rho) / 2, rho calibrated on an inverted feeding rhythm in
    two datasets (Manella, Xin).
@@ -64,11 +64,11 @@ def arrangement(ax, g, sets):
 
 def liver(ax, t):
     obs = t[t.contrast.str.startswith("observed Greenwell")].iloc[0]
-    ax.scatter([1], [0], s=40, color=INK, zorder=2)
-    ax.plot([obs.amp_lo90, obs.amp_hi90], [1, 1], color=INK, lw=1.6, zorder=1)
-    ax.scatter([obs.amp_ratio], [1], s=40, color=INK, zorder=2)
+    ax.scatter([1], [0], s=40, color=CS, zorder=2)
+    ax.plot([obs.amp_lo90, obs.amp_hi90], [1, 1], color=CS, lw=1.6, zorder=1)
+    ax.scatter([obs.amp_ratio], [1], s=40, color=CS, zorder=2)
     ax.annotate(f"{obs.shift_h:+.1f} h", (obs.amp_hi90, 1), xytext=(6, 0), textcoords="offset points", va="center",
-                fontsize=8.5, color=INK)
+                fontsize=8.5, color=CS)
     for j, key in enumerate(("prediction from Manella", "prediction from Xin")):
         r = t[t.contrast.str.startswith(key)].iloc[0]
         y = 2 + (j - 0.5) * 0.25

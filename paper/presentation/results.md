@@ -544,7 +544,7 @@ stays near central time, damped, while its rhythmic outputs follow behaviour.
 **Figure:** `figures/holds_organisation/holds_organisation.png` (`scripts/holds_organisation.py`; wide). A. GTEx:
 correlation of each group's organ-pair phase differences with those of fast deaths (Fisher-Lee, 12 body tissues), for
 the clock genes (blue), 200 expression-matched (light grey) and 200 stress-responsive gene sets (dark grey), same donors
-and pairs. B. mouse liver: clock amplitude relative to ad libitum feeding when the feeding rhythm is removed (black,
+and pairs. B. mouse liver: core-clock amplitude relative to ad libitum feeding when the feeding rhythm is removed (blue,
 90 % bootstrap interval, phase shift beside it), and the amplitude expected if the clock state were the sum of its cues
 (grey open; calibrated on an inverted feeding rhythm in two datasets, Manella upper, Xin lower). C. human muscle:
 shift of the 07:00-to-19:00 change after a 12 h shift of behaviour against the aligned condition (dashed: 0, central
