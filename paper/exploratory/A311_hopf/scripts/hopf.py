@@ -5,7 +5,7 @@ In the frame of the drive, w = z e^{-i theta(t)} obeys dw/dt = (mu + i nu) w - |
 w* = -1 / (mu + i nu - x). Departure: stationary covariance C of additive isotropic noise (J C + C J^T + I = 0, J the
 Jacobian at w*), split along w* (radial) and across it (tangential); share = (C_tt - C_rr) / (C_tt + C_rr).
 
-    python hopf.py      -> ../output/hopf_grid.csv (mu, nu, locked, gain, lag_h, var_rad, var_tan, share)
+    python hopf.py      -> ../output/hopf_grid.csv (mu, nu, locked, gain, lag_h, var_rad, var_tan, share, elasticity)
 """
 from pathlib import Path
 
@@ -42,9 +42,18 @@ def coordinates(mu: float, nu: float = 0.0) -> dict:
                 var_tan=vt, share=(vt - vr) / (vt + vr))
 
 
+def elasticity(mu: float, nu: float = 0.0, h: float = 0.01) -> float:
+    """d log gain / d log F at F = 1 (1: gain proportional to drive; 0: saturated)."""
+    def g(F):
+        xs = np.roots([1.0, -2 * mu, mu * mu + nu * nu, -F * F])
+        return np.sqrt(xs[(abs(xs.imag) < 1e-9) & (xs.real > 0)].real.max())
+    return float((np.log(g(1 + h)) - np.log(g(1 - h))) / (np.log(1 + h) - np.log(1 - h)))
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     g = pd.DataFrame([coordinates(m, n) for n in (0.0, 0.25, 0.5) for m in np.arange(-4.0, 8.01, 0.5)])
+    g["elasticity"] = [elasticity(m, n) if l else np.nan for m, n, l in zip(g.mu, g.nu, g.locked)]
     g.to_csv(OUT / "hopf_grid.csv", index=False)
     z = g[(g.nu == 0) & g.mu.between(-4, 4)]
     slope = np.polyfit(np.log(z.gain ** 2), np.log(z.var_rad + z.var_tan), 1)[0]

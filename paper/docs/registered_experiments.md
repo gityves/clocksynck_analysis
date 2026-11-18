@@ -8405,3 +8405,36 @@ the script's check printed max |diff| 0.159 against A294b. The registered denomi
 share is recomputed as excess tilt / A294b `own` (the script's ML-based share is reported alongside). H311.1 and
 H311.2 are scored on the primary share; the null simulations use the ML psi as the isotropic own size (as in the power
 stage).
+
+## A312 (2026-11-18, user: "yes register prediction 1 and run it", prediction 2 of `docs/MODEL_hopf_2026-11-18.md`; staged: leverage and power first, then one scoring run; **NOT BLIND** for the A104 table, A291, A294b, A310, A311 (the personal departure is not phase-dominated); **seen before writing (model and simulated cohorts only):** the forced Hopf normal form's elasticity of gain to drive (0.971 at mu -4, 0.333 at mu 0, 0.050 at mu +4, F^{2/3} units; `A311_hopf/output/hopf_grid.csv`), and that `clocksync.elasticity` reads 1.06 / 0.57 / 0.07 for simulated elasticities 1 / 0.5 / 0, with leverage near 0 when persons do not differ in amplitude; NOT seen: any elasticity, leverage or host radius of GTEx): do tissues with less gain follow the persons' shared clock amplitude more steeply than tissues with more gain, as receivers nearer or below their Hopf bifurcation would? **GTEx fast deaths, the 27 peripheral tissues of A104**
+
+**Why this tests the model.** Near or below its bifurcation a receiver's amplitude is sensitive to any person-level
+systemic change (drive strength, or a shared shift of mu); far above it the amplitude saturates. If organ gains
+differed only by composition or by linear gains on one drive (alternatives (b), (c) of A310, and a linear receiver
+model), every tissue would follow the persons' shared amplitude with the same relative elasticity, whatever its gain.
+The Hopf model predicts a gradient: relative elasticity falling with gain.
+**Statistic (`clocksync.elasticity`, clocksync eed9786).** A104 rows (every peripheral tissue an anchor). Per target
+tissue k: 20 random halvings of the other 26 tissues (seed [312, k]); per halving and role swap, host states of the two
+halves (`Dataset.host`), the target's amplitude a_k along its predicted direction on host B, and the radii r_A, r_B,
+all residualised on the first two harmonics of both hosts' phases; elasticity_k = mean cov(a_k, r_A) / mean(a_k) over
+mean cov(r_B, r_A) / mean(r_B) (relative to the shared amplitude of the other tissues); leverage_k = median
+corr(r_A, r_B). Donor bootstrap (200 draws of the common donors, hosts fixed) for each tissue's SE.
+- **H312.1:** Spearman rho(elasticity_k, S_k) < 0 over the 27 tissues, one-sided tissue-label permutation p < 0.05
+  (2000).
+- **Reported (descriptive):** per-tissue elasticity with bootstrap 90 % interval and leverage; median elasticity of
+  the 9 lowest- and 9 highest-S tissues and their ratio; on the model grid, the ratio places the two groups relative
+  to the bifurcation (e.g. ratio 3.4 for mu -1 against +1).
+**Stage 1, leverage and power (run and committed before scoring; writes leverages and SEs only, no elasticity).**
+Gate: median leverage over tissues >= 0.15 (persons differ in shared amplitude beyond estimation noise) and power of
+H312.1 >= 0.8 against a relative elasticity falling log-linearly in S from 2.0 (lowest S) to 1.0 (highest), drawn with
+each tissue's bootstrap SE (2000 simulated sets of 27). If the gate fails: reported not testable, not scored.
+**Readings (stated now).** PASS: low-gain tissues follow the persons' shared amplitude more steeply than high-gain
+tissues, as the Hopf model predicts and composition or linear gains do not: gain differences between organs are, at
+least in part, distance to the bifurcation. FAIL (powered): a flat profile; organ gain differences are compatible with
+composition or linear gains; the bifurcation stays an interpretation (fetal, lymphocytes, liver saturation) without
+support from adult organ gains. A positive rho: high-gain tissues follow more steeply, against the model.
+**Limits.** The persons' shared amplitude in deaths mixes drive strength, shared mu shifts and donor-level technical
+scale (RNA quality, agonal state); a technical scale acting proportionally on every tissue does not create a gradient,
+one acting more on noisy low-gain tissues could; the bootstrap holds the hosts fixed. Elasticities are relative to the
+other tissues' composite, which is dominated by high-gain tissues.
+**Code.** `exploratory/A312_elasticity/scripts/{power_a312.py, score_a312.py}`.
