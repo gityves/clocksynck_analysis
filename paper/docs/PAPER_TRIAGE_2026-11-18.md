@@ -70,6 +70,14 @@ figures.
    reanalysis supports "rearranged"). Open: an independent human replication (Tabula Sapiens or other organ-donor
    atlases: within-organ cell-type sharing kept, organ order unlike living-brain donors), the ischaemic gradient
    within organ donors (A318 H318.2), time since brain death (not in GTEx). Decides B's high point and venue.
+   **Tabula Sapiens scout (2026-11-19): not feasible.** The held Census release (24 donors, 1.14 M cells) has at most
+   6 donors per organ with a clock-carrying class (>= 50 cells), 6 donors with >= 4 organs and no living-brain
+   reference group, against 79 donors per group in A317; A109b already found the organ arrangement unresolvable here
+   (power 0.06-0.13). Donor type (brain death vs circulatory death) is not in the Census metadata (donor summary page
+   of the TS portal: cause of death and downtime only). No public multi-organ, same-donor transcriptome of brain-dead
+   donors or of experimental brain death in animals was found (searches 2026-11-19; DBD vs DCD datasets are single-organ
+   transplant biopsies). An independent human replication needs new data (organ-procurement or autopsy cohorts:
+   outward-facing); the mouse central-clock loss (A319) is the available second line of evidence.
 2. **Responsive-gene specificity in living tissue.** A285: the responsive rule is not calibrated in bulk; the living
    internal-time results (A251, A255) stand on matched genes only. State it, or calibrate the responsive rule.
 3. **Coverage of c (A162 / A163).** The coupling intervals undercover at realistic anchor coupling. Fix or state.

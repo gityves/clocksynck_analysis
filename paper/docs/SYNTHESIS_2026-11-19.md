@@ -61,6 +61,14 @@ Ranked by how much the headline depends on it.
    (b) mouse as the second species (A319 done, explants, not blind); (c) per-mouse organ phases from the Takahashi
    lab (outward-facing). Also open: ischaemic time within organ donors runs in the confound's direction (A318 H318.2,
    +0.41, p 0.04); a PubMed check of brain-stem-dead donor endocrinology before claiming priority.
+   **Tabula Sapiens scout (2026-11-19): not feasible.** The held Census release (24 donors, 1.14 M cells) has at most
+   6 donors per organ with a clock-carrying class (>= 50 cells), 6 donors with >= 4 organs and no living-brain
+   reference group, against 79 donors per group in A317; A109b already found the organ arrangement unresolvable here
+   (power 0.06-0.13). Donor type (brain death vs circulatory death) is not in the Census metadata (donor summary page
+   of the TS portal: cause of death and downtime only). No public multi-organ, same-donor transcriptome of brain-dead
+   donors or of experimental brain death in animals was found (searches 2026-11-19; DBD vs DCD datasets are single-organ
+   transplant biopsies). An independent human replication needs new data (organ-procurement or autopsy cohorts:
+   outward-facing); the mouse central-clock loss (A319) is the available second line of evidence.
 2. **Timescale of the drift after brain death.** The model predicts disorder grows with time since loss of the
    drive; GTEx has ventilation duration, not time since brain death (A132 tertiles in the drift direction, not
    significant). State as a limit, unless a time-since-brain-death variable is found.
