@@ -8630,3 +8630,10 @@ computed); MDE = 2.49 SD. Reported with the A132b difference for reference.
 differ or are unknown; one cohort. Replication outside GTEx: Tabula Sapiens cannot resolve the arrangement (A109b, 5
 multi-organ donors, power 0.06-0.13); a mouse counterpart (organs after loss of the central clock) is a separate step.
 **Code.** `exploratory/A317_braindeath_confirm/scripts/score_a317.py --stage power | score`.
+
+### A317 power note (2026-11-18, before scoring; `score_a317.py --stage power`; relabelling nulls only)
+65 pairs. SD of D_rho under 2000 relabellings 0.223, MDE 0.554: the A132b difference (0.517, one equal-n draw) lies just
+below it, so H317.1 has roughly three-quarter power at the effect already seen. SD of D_C 0.052, MDE 0.130. No stop
+rule was registered for this stage; both hypotheses are scored. Choice fixed in the script before scoring: the
+sensitivity rows carry companion medians over 20 sets (every 10th) and 5 organ-donor draws, to bound runtime.
+<!-- src: paper/exploratory/A317_braindeath_confirm/output/power.csv -->
