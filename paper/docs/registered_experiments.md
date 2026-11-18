@@ -8259,3 +8259,12 @@ nulls and matched companions as A307 (within batch). Readings as A307.
 **Descriptive.** All-age readouts of the same cell types from the 14-gene table (`mouse_qiu`; quadratic E-day, global
 permutations, no companions): C and p only.
 **Code.** `exploratory/A309_mouse_embryo_organs/scripts/{power_a309.py, score_a309.py}`.
+
+### A309 power note (2026-11-18, adult stand-ins only; no embryo statistic computed)
+`power_a309.py --n-sub 200 --jobs 4` (421 s; `output/power_{design,subsamples,passrates}.csv`). Embryos (batches):
+adrenal 13 (4), liver 16 (4), lung 16 (4), kidney 16 (4), heart 12 (4; one batch with a single embryo). Adult pass rate
+at the full clock / 0.75 / 0.5 (shuffled): adrenal 1.000 / 0.975 / 0.645 (0.030); liver 1.000 / 1.000 / 0.945 (0.040);
+lung 1.000 / 1.000 / 0.960 (0.050); kidney 1.000 / 1.000 / 0.930 (0.065); heart 1.000 / 0.970 / 0.615 (0.050). All five
+readouts are scored (Holm over 5). Heart and adrenal: a fail excludes a clock of three quarters of the adult size, not
+one of half. Choice made in the script, not in the registration: stand-ins carry the adult sample's own library size
+(gene-wise thinning is a constant log offset per gene).
