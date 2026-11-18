@@ -8398,3 +8398,10 @@ detection 1.00 with a true tilt of 0.3 x E_o (200 replicates each). The estimate
 0.191 put in (attenuated by about 14 %; the scored shares are read as slightly conservative). Powered: H311.1 and
 H311.2 are scored.
 <!-- src: paper/exploratory/A311_hopf/output/{power,power_tissues}.csv -->
+
+### A311 deviation note (2026-11-18, during the scoring run, before any orientation statistic was printed)
+`clocksync.orientation` reports own = 2 x the ML psi; A104 / A294b's 2 psi is small-sample corrected (`on_host`), so
+the script's check printed max |diff| 0.159 against A294b. The registered denominator is the A104 2 psi: the primary
+share is recomputed as excess tilt / A294b `own` (the script's ML-based share is reported alongside). H311.1 and
+H311.2 are scored on the primary share; the null simulations use the ML psi as the isotropic own size (as in the power
+stage).
