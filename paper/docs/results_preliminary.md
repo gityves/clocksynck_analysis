@@ -6527,3 +6527,24 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
   matched to real non-clock variation (matched sets at -0.21). Fast deaths only.
 - Code: `exploratory/A311_hopf/scripts/{hopf.py, power_a311.py, score_a311.py}`; `clocksync.orientation` (f9ea9f1).
 <!-- src: paper/exploratory/A311_hopf/output/{tests,tissues,tissues_primary,sets,power}.csv -->
+
+## A312 (scored 2026-11-18; NOT BLIND for the A104 table, A310, A311; powered): lower-gain tissues follow the persons' shared clock amplitude slightly more steeply (H312.1 PASS, rho -0.34, p 0.037), but every tissue follows it nearly in proportion (elasticities 0.83 to 1.77, low/high-gain ratio 1.11): the gradient has the Hopf sign, at a small fraction of the predicted size
+
+- Design as registered; power stage (leverage 0.783, power 0.984, gate passed), then one scoring run (171 s).
+- **Persons differ strongly in shared amplitude.** The two half-host radii correlate at 0.75 to 0.86 over donors in
+  every tissue (power note): in GTEx deaths, how loudly a person's tissues express the shared rhythm is a strong
+  person-level property.
+- **H312.1 PASS.** Spearman rho(elasticity, S) -0.341, one-sided permutation p 0.037 (27 tissues).
+- **Size (descriptive).** Elasticity relative to the other tissues' composite: median 1.19, range 0.83 (aorta) to 1.77
+  (adrenal). The 90 % interval lies above 1 in 11 tissues and below 1 in none. Median of the 9 lowest-S tissues 1.19,
+  of the 9 highest 1.07, ratio 1.11. The registered alternative was 2.0 against 1.0. On the model grid, mu -1 against
+  +1 gives a ratio of 3.4, and a ratio of 1.11 corresponds to nearly the same distance from the bifurcation.
+- **Reading (registered: PASS).** The sign is the Hopf model's: tissues with less gain follow the persons' shared
+  amplitude more. The size says that most person-level amplitude variation scales every tissue together, nearly in
+  proportion. That is a linear or common-factor co-scaling (systemic amplitude, or donor-level technical scale in
+  deaths), not receivers at very different distances from their bifurcation. Organ gain differences are therefore at
+  most weakly a matter of bifurcation distance, and composition or linear gains remain the main account (A310
+  alternative (b) bound). No companion gene set is possible for this statistic (pseudo-clock sets have no host
+  amplitude); a donor-level technical scale that acts more on noisy low-gain tissues is not excluded.
+- Code: `exploratory/A312_elasticity/scripts/score_a312.py`; `clocksync.elasticity` (eed9786).
+<!-- src: paper/exploratory/A312_elasticity/output/{power,power_tissues,tissues,tests}.csv -->

@@ -52,8 +52,10 @@ With x = |w*|^2 solving x((mu - x)^2 + nu^2) = F^2 and w* = -F / (mu + i nu - x)
    Observed: median share -0.03 (90 % -0.064 to -0.007), no significant gradient (rho 0.30, p 0.064), powered for a
    0.16 share. The GTEx departure is not the phase-dominated response of a cycle above its bifurcation; it reads as
    variation added to the state (A311, A302).
-2. **Gain against drive.** Proportional below the bifurcation (fetal organs, lymphocytes), flat above it (adult
-   parenchyma).
+2. **Gain against drive (A312): sign supported, size small.** Lower-gain GTEx tissues follow the persons' shared
+   amplitude more steeply (rho -0.34, p 0.037), but every tissue follows it nearly in proportion (elasticities 0.83
+   to 1.77; low/high-gain ratio 1.11, against 3.4 for mu -1 vs +1). Adult organ gains are at most weakly a matter of
+   distance to the bifurcation.
 3. **Tumours in single cells.** A fall of mu means lower per-cell amplitude (damping), not cells drifting out of phase.
 4. **Brain death.** Organ disorder grows with time since the drive was lost (not blind: A132 seen).
 
