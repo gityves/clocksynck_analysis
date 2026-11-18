@@ -509,3 +509,64 @@ minus recorded time of death, change per decade of age, body and brain hosts, 90
 `exploratory/A231_age_coupling/output/{score_tests,score_d231_6_spread}.csv`;
 `exploratory/A208_sex_coupling/output/{tests,pooled}.csv`; `exploratory/A234_internal_time_age/output/score_tests.csv`;
 `literature/talamanca_science_2023.pdf`; `scCircadianCancer/literature/chiral_supp.pdf`.
+
+---
+
+# R3. What holds the organisation
+
+**Chapter message:** the organ arrangement does not need the daily cues: it survives slow deaths and ventilation
+without meals or activity, and a peripheral clock keeps its amplitude when its main cue is removed. It is lost when the
+brain is lost. The central drive, not the external day, holds the organs together (a hypothesis for the brain part:
+GTEx is the only data).
+
+---
+
+## R3.1 The organ arrangement survives the loss of daily cues, not the loss of the brain
+
+**Message:** slow deaths and ventilated donors whose brain is alive keep the organ arrangement of fast deaths, on the
+clock genes only; brain-dead organ donors do not. In mouse, removing the feeding rhythm leaves the liver clock running
+at three quarters of its amplitude, where additive cues predict a collapse: inputs set a peripheral clock's phase, the
+oscillator holds its amplitude.
+
+**Bullets**
+1. Slow deaths (Hardy 4, 103 donors), whose internal time is not aligned to the hour of death (A109c), keep the
+   fast-death organ arrangement: Fisher-Lee rho 0.784, above all 200 expression-matched (median 0.038) and all 200
+   stress-responsive gene sets (median 0.234) (registered, H293.1).
+2. Ventilated donors with a living brain (79 donors), without meals or activity: rho 0.690, above all companion sets
+   (H293.2). Intermediate deaths (Hardy 3, 50 donors): 0.624 (descriptive).
+3. Brain-dead organ donors (79 donors, same ventilation and intensive care): rho 0.161, not different from tissue-label
+   permutation (p 0.18), at the level of random genes (descriptive).
+4. Mouse liver (A297, registered): removing the feeding rhythm keeps 0.72 of the amplitude (90 % 0.66 to 0.79) and moves
+   the clock 1.6 h; additive cues predict 0.15 to 0.29. An inverted feeding rhythm moves it 11 to 12 h at 0.44 to 0.71
+   of its amplitude.
+
+**Figure:** `figures/holds_organisation/holds_organisation.png` (`scripts/holds_organisation.py`; wide). A. GTEx:
+correlation of each group's organ-pair phase differences with those of fast deaths (Fisher-Lee, 12 body tissues),
+clock genes (blue) and 200 expression-matched (upper grey) and 200 stress-responsive gene sets (lower grey), same
+donors and pairs. B. mouse liver: clock amplitude relative to ad libitum feeding with 90 % bootstrap interval; black,
+observed (inverted feeding in two datasets, removal of the feeding rhythm, night-restricted control); grey open, the
+amplitude predicted for removal if cues add, from each inversion; right, phase shift.
+
+**Speaker notes**
+- Status: A293 Part 1 registered, NOT BLIND (the clock rho of every group was known from A109 / A132; the companion
+  sets were new); H293.1 and H293.2 pass. Hardy 3 and brain-dead donors descriptive by decision. Brain death vs
+  ventilated as a difference: 0.517 (p 0.008, A132b), post hoc.
+- What the groups remove (A109c, A132): slow deaths are not aligned to the hour of death (R 0.097, null median 0.101;
+  entrainment as strong as in ventilated donors not excluded); their arrangement survives removing the wall-time
+  component (rho 0.750). Ventilated donors and brain-dead donors share intensive care, ventilation and the absence of
+  meals and activity; they differ in brain death. Both are pushed toward 0 / 12 h relative to fast deaths (A132).
+- Not the drugs (A136): donor-management glucocorticoids do not explain the loss (exposure not robustly different,
+  no dose-response at MDE 0.52), and the loss stays without PER1 and PER2 (0.726 vs 0.268, Holm p 0.036). The gate
+  failure is not robust when long-term steroid users are removed: a caveat.
+- Why "hypothesis" for the brain: GTEx organ donors have no brain samples, so the SCN cannot be read; the registered
+  SCN test was impossible (PI, Q7, 2026-10-24: the SCN reading stays a hypothesis). Consistent with SCN lesions
+  destroying inter-tissue phase synchrony in mice (Yoo 2004); contrary report: Tahara 2012. Wording: "organs keep a
+  shared internal time unless the central drive is lost".
+- Mouse (A297): different laboratories, strains and protocols; liver only; amplitudes read in each dataset's own
+  projector. The additive prediction (1 + rho) / 2 assumes the clock's state is the sum of its cues. The
+  night-restricted control is 1.04 (0.93 to 1.14). Reading for humans: removing one cue (as in intensive care, A46)
+  leaves a peripheral clock running near its phase; conflicting cues move it.
+
+**Source:** `exploratory/A293_organisation_levels/output/part1/{groups,sets,reproduction}.csv`;
+`exploratory/A297_feeding_model/output/{tests,arms}.csv`; `results_preliminary.md` A109c, A132, A136;
+`docs/PI_QUESTIONS.md` Q7.
