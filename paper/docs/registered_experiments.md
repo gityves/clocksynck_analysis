@@ -7666,6 +7666,11 @@ the slide says so ("not decidable against stress-responsive genes" if the floor 
 **Limits.** 400 draws (p_cal floor 0.0025; rejection-rate SE about 0.011 at 0.05), fewer than A285's 2000, for cost
 (201 fits of about 4 s per draw).
 **Code.** `exploratory/A290_a104_calibration/scripts/placebo_a290.py` (`--check`: draw 0 with 5 sets).
+**Deviation (2026-11-18, before any placebo draw was read; draw 0 only exists, it reproduces A271 Part B).** Placebo fits
+take up to about 5 min (not 4 s): 400 draws need about 11 days on 8 workers. The run goes over one weekend (user) and is
+stopped at a time fixed by the calendar, not by the draws; N = the draws completed (expected about 100). H290 and V290 are
+scored on those N draws with the same formulas (p_cal floor 1 / (N + 1); with N = 100, 0.0099; V290 SE about 0.022 at
+0.05, so "calibrated" is read as <= 0.0685 with that uncertainty stated). If N < 60, H290 is reported as not decidable.
 
 ## A291 (2026-11-17, user: "okay, register them", after the discussion of why weaker clocks share less of the body's time (A104, A271 Part B, A289) and whether oscillator theory is contradicted; a calibration of the amplitude-coupling relation at the real GTEx design; **NOT BLIND**: A104 per-tissue table (periphery rho 0.734 over 27 tissues; brain -0.115 over 13), A271 Part B and its post hoc count check, A289; NOT seen: any simulated coupling at these designs): is "stronger clocks are more coupled" what measurement alone produces? **GTEx fast deaths, the A104 rows; coupling of a perfectly locked tissue at each tissue's real design**
 
@@ -7834,21 +7839,21 @@ the core-loop C and p and the responsive percentile of every lymphocyte compartm
 compartments, so no pooled statement; A281's per-compartment p of these two is not corrected (Holm over nine: 0.11).
 **Code.** `exploratory/A294_lymphocyte_hormonal/scripts/score_a294.py` (one scoring run).
 
-## A294 (2026-11-17, user: "Okay you can launch the remaining tests"; the floor test proposed after A291's post hoc decomposition; **NOT BLIND** for the A104 table (S 85-fold, 2 psi 5-fold over 27 tissues) and A259; NOT seen: own variance of any non-clock set at these rows): is the own-variation floor of peripheral tissues specific to the clock genes? **GTEx fast deaths, A104 rows; clock own variance against 100 expression-matched pseudo-clock sets fitted the same way**
+## A294b (renumbered 2026-11-18 from a second "A294": the number was already taken by the lymphocyte entry above, registered first; 2026-11-17, user: "Okay you can launch the remaining tests"; the floor test proposed after A291's post hoc decomposition; **NOT BLIND** for the A104 table (S 85-fold, 2 psi 5-fold over 27 tissues) and A259; NOT seen: own variance of any non-clock set at these rows): is the own-variation floor of peripheral tissues specific to the clock genes? **GTEx fast deaths, A104 rows; clock own variance against 100 expression-matched pseudo-clock sets fitted the same way**
 
 **Statistic.** A104 rows and fit (every tissue an anchor, leave-one-out host, `fit(n_boot=0, gate=False)`), periphery
 block. For the clock and each of 100 matched sets (`pseudo_waveforms(kind="matched")`, GTEx waveform amplitudes and
 phases, matching as A271 Part B, seed [294, 1]): per tissue, own variance 2 psi and shared variance S = z2 V.
 Reproduction check: clock periphery rho 0.734.
-**H294.1 (primary):** the clock genes carry own variation beyond the generic floor: median over the 27 tissues of
+**H294b.1 (primary):** the clock genes carry own variation beyond the generic floor: median over the 27 tissues of
 log(2 psi_clock / median over sets of 2 psi_set) > 0, with a tissue-bootstrap 90 % interval (2000, seed 294) above 0.
-**H294.2 (conditional on H294.1 PASS):** the clock's excess own variance E = 2 psi_clock - median 2 psi_set scales with
+**H294b.2 (conditional on H294b.1 PASS):** the clock's excess own variance E = 2 psi_clock - median 2 psi_set scales with
 the shared rhythm as person-specific phase or amplitude variation would: Theil-Sen slope of log E on log S_clock
 (tissues with E > 0) with a bootstrap 90 % interval including 1 and excluding 0. Interval including 0 and excluding 1:
 additive own variation.
-**Readings.** H294.1 FAIL with the interval including 0 or below: the floor is generic (technical or sample-level,
+**Readings.** H294b.1 FAIL with the interval including 0 or below: the floor is generic (technical or sample-level,
 shared with non-clock genes); peripheral tissues are locked to the body's time up to the measurement floor and the
-amplitude-coupling relation is the gain over that floor. PASS: the clock carries own variation beyond the floor; H294.2
+amplitude-coupling relation is the gain over that floor. PASS: the clock carries own variation beyond the floor; H294b.2
 says whether it has the signature of individual clock periods (slope 1) or of additive noise (slope 0).
 **Limits.** Matched sets have their own shared state (non-clock between-person variation); their psi is the floor
 for genes of that expression read through the same projector. Aggregates only.
@@ -7935,7 +7940,7 @@ the gain predictions were not computed. A test of the organ-wide drive needs a d
 bulk-calibrated references (or single-cell data of several organs of the same donors), not available here.
 <!-- src: paper/exploratory/A298_organ_drive/output/{shares,design}.csv -->
 
-## A299 (2026-11-17, user: "Yes start these suggestions"; **NOT BLIND** for the GTEx adrenal offset (+4.42 h, A296), its own variation and coupling (4.14, 0.46; A294 / A104), the baboon cortex +0.91 h and medulla +5.90 h (A296), and A295 (composition does not move phase in other tissues); NOT seen: any medulla or cortex score in GTEx): does the medulla content of a GTEx adrenal sample move its clock phase towards the medulla's? **The one tissue where composition should move phase: two compartments at different phases**
+## A299 (2026-11-17, user: "Yes start these suggestions"; **NOT BLIND** for the GTEx adrenal offset (+4.42 h, A296), its own variation and coupling (4.14, 0.46; A294b / A104), the baboon cortex +0.91 h and medulla +5.90 h (A296), and A295 (composition does not move phase in other tissues); NOT seen: any medulla or cortex score in GTEx): does the medulla content of a GTEx adrenal sample move its clock phase towards the medulla's? **The one tissue where composition should move phase: two compartments at different phases**
 
 **Why.** If the adrenal cortex follows the body's time and the medulla (a sympathetic ganglion on the direct neural
 route) sits about 5 h earlier, as in the baboon, a bulk sample's phase is a mixture: samples with more medulla RNA should
@@ -8001,7 +8006,7 @@ A299 is not reproduced by either component. Reported: all three scores' correlat
 fixed from adrenal biology, consistency checked descriptively, not used to select genes.
 **Code.** `exploratory/A299_adrenal_medulla/scripts/score_a301.py`. Aggregates only.
 
-## A302 (2026-11-17, user: "Yes go ahead", after the reading that person-specific cue timing (e.g. meal times) would give a departure of constant size in the clock plane (A294 slope near 0); **NOT BLIND** for A291, A292, A294 (per-tissue S, own variation, coupling) and the A142 organ blocks; NOT seen: any correlation of departures between tissues; the trait-or-state test proposed with it is not registered: every repeat-biopsy cohort samples one tissue per person, so a tissue's departure cannot be separated from the person's own offset): do the departures of meal-driven tissues share a direction within a person beyond the body's time? **GTEx fast deaths, A104 periphery rows; the liver's departure against gut and adipose tissues versus other tissues**
+## A302 (2026-11-17, user: "Yes go ahead", after the reading that person-specific cue timing (e.g. meal times) would give a departure of constant size in the clock plane (A294b slope near 0); **NOT BLIND** for A291, A292, A294b (per-tissue S, own variation, coupling) and the A142 organ blocks; NOT seen: any correlation of departures between tissues; the trait-or-state test proposed with it is not registered: every repeat-biopsy cohort samples one tissue per person, so a tissue's departure cannot be separated from the person's own offset): do the departures of meal-driven tissues share a direction within a person beyond the body's time? **GTEx fast deaths, A104 periphery rows; the liver's departure against gut and adipose tissues versus other tissues**
 
 **Groups (fixed now).** Anchor: Liver (the tissue that follows feeding in both mouse inversion designs: Manella +11.7 h,
 Xin +11.3 h, A111). Meal-driven group G: Stomach, Colon - Transverse, Colon - Sigmoid, Esophagus - Mucosa, Adipose -
@@ -8154,3 +8159,11 @@ change of the organ's gain or departure beyond the MDE. Not powered: uninformati
 **Reported.** Per tissue and cohort log z2 and log psi ratios; module and companion pooled values separately; arm-prior
 sensitivity (`host_prior="arm"`, observed only); matching balance.
 **Code.** `exploratory/A306_disease_gain_departure/scripts/compute_a306.py --stage power | score`.
+
+### A306 power note (2026-11-18, permutation nulls only; no observed statistic computed)
+`compute_a306.py --stage power --jobs 4` (2218 s, peak 2.9 GB; `output/{power,power_tissues,matching,balance_summary}.csv`).
+Eligible tissues: T2D vent 8 (module 5 incl. pancreas) / fast 7 (pancreas out); hypertension 8 / 8; smoking 4 / 4.
+MDE_80 of Delta (module minus companion; bound log 2 = 0.693): T2D gain 0.327, departure 0.288; hypertension gain 0.346,
+departure 0.264; smoking gain 0.700 (not powered: descriptive), departure 0.418. Scored: five readouts, Holm over 5.
+Balance after matching (median |SMD|): BMI 0.70 (T2D fast), 0.32 (T2D vent), 0.38 (hypertension fast); T2D share 0.66 / 0.64
+in hypertension (fast / vent); age 0.53 (hypertension vent); others <= 0.28. Comorbidity not removed, as in A233.
