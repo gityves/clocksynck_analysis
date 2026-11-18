@@ -8665,3 +8665,31 @@ both are scored, the MDE reported.
 All 65 pairs kept (298 organ donors, 79 post-mortem). SD of the adjusted D_rho 0.234, MDE 0.582. Confound aggregates
 (medians over samples): ischaemic time 258 min (organ donors) vs 561 min (post-mortem); RIN 7.6 vs 7.2.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/a318_power.csv -->
+
+## A319 (2026-11-19, user: "Yes have a look" (Izumo 2014 source data, mouse counterpart of A317 / A315); reanalysis of published summaries, one scoring run, no power stage (fixed n); **NOT BLIND**: the paper's conclusions (within-mouse phase coherence lost in BKO DD, Mann-Whitney p 0.0008, and under restricted feeding, p 0.0002; amplitude lower in BKO DD and, except liver, under feeding; LD keeps both) and every number of the source-data tables, printed while checking availability on 2026-11-19; NOT computed: the independence simulation and the order share below): without a central clock, do a mouse's organs drift apart (dissolved), keep a shared phase that drifts between mice, or follow a substitute drive in a new order (rearranged)? **Izumo et al. 2014 eLife, forebrain/SCN Bmal1 KO (BKO) vs Fx/Fx, PER2::LUC explant peak phases of pituitary, liver, kidney, heart, lung, spleen; LD, DD (> 30 days), DD + restricted feeding (FR)**
+
+**Why.** The paper reads high within-mouse circular variance across organs as lost coherence. That variance mixes two
+things our model separates: organs spread around the day in a consistent order (rearranged) and organs independent
+of each other (dissolved). The source data give, per condition, each organ's mean phase and concentration across mice
+(table a) and each mouse's circular variance across its six organs (tables b, c); no per-mouse organ phases.
+- **Order variance.** V_order = 1 - |mean_t exp(i mu_t)| over the six organ means: the within-mouse variance if every
+  mouse had exactly the group's organ order. Order share = V_order / mean V_obs (mice of tables b, c).
+- **Independence null.** Each organ phase drawn independently, von Mises with mean mu_t and concentration from R_t = 1 -
+  V_t (table a); 6 organs per mouse, n mice as observed (pituitary-missing mice excluded as in the paper); 20000
+  replicates of mean V. Excess coherence E = mean V_indep - mean V_obs, one-sided p = share of replicates with mean
+  V_indep <= mean V_obs. E > 0: a mouse's organs share a phase beyond the group pattern (the whole mouse drifts).
+- **H319.1 (BKO DD, no central clock, no shared drive).** Federation prediction: organs coupled only through shared
+  drives drift independently over 30 days: E not significant (p >= 0.05). PASS = no excess: dissolved within the
+  mouse beyond the organ-specific pattern across mice.
+- **H319.2 (BKO DD + FR, feeding as a substitute drive).** Prediction: rearranged, not dissolved: (a) at least 5 of
+  6 organs cluster across mice (Rayleigh p < 0.05 from R_t and n), and (b) order share >= 0.5 (most of the within-mouse
+  spread is the new organ order). PASS needs both.
+- **Descriptive.** E, V_order, order share and Rayleigh p for every condition and genotype (WT FR in the CT frame);
+  circular distance between the BKO FR and WT FR organ means per organ; the circular correlation of the six organ means
+  BKO vs WT per condition. Amplitude: no source data (bar graphs only): the paper's statements are quoted, not reanalysed.
+**Readings (stated now).** H319.1 PASS and H319.2 PASS: the mouse shows the human pattern: without the central clock,
+a substitute drive sets a new organ order; without any drive, organs drift apart. H319.2 (b) FAIL: the feeding-driven
+state is mostly dissolution, against "rearranged". H319.1 FAIL (E > 0): organs still share a drifting phase without the
+SCN: a residual shared drive or inter-organ coupling. Caveats: explant peak phases include dissection resetting (all
+tissues of a mouse cut together at ZT/CT 10.5-13); 6 organs and 11-15 mice; von Mises fitted from R alone.
+**Code.** `exploratory/A319_izumo_mouse/scripts/score_a319.py`.
