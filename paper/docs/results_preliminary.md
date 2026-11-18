@@ -6548,3 +6548,16 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
   amplitude); a donor-level technical scale that acts more on noisy low-gain tissues is not excluded.
 - Code: `exploratory/A312_elasticity/scripts/score_a312.py`; `clocksync.elasticity` (eed9786).
 <!-- src: paper/exploratory/A312_elasticity/output/{power,power_tissues,tissues,tests}.csv -->
+
+## A314 (scored 2026-11-18; descriptive, post hoc split): ventilated donors with a living brain and brain-dead organ donors have lost alignment to the hour of death alike (R 0.158 and 0.174; 0.180 at equal n)
+
+- Design as registered (A27 procedure per group; one run, minutes).
+- **Ventilated post-mortem (living brain), 79 donors:** R 0.158 (permutation p 0.142; null median 0.096, q95 0.198).
+- **Brain-dead organ donors, 301 donors:** R 0.174 (p < 0.001; null median 0.046, q95 0.103); at the post-mortem n
+  (20 draws of 79): median R 0.180 (range 0.091 to 0.330), median p 0.076, null median 0.093.
+- Pooled Hardy 0 for reference (A27): R 0.142, 380 donors. Fast deaths (A27): 0.631, 244 donors.
+- **Reading (descriptive).** At equal n the two ventilated groups have the same weak alignment to the hour of death,
+  about a quarter of fast deaths. They differ in the organ arrangement (A293 Part 1: 0.690 vs 0.161) but not in the
+  loss of external time: losing the external day does not by itself remove the arrangement. No contrast tested.
+- Code: `exploratory/A314_vent_walltime/scripts/score_a314.py`.
+<!-- src: paper/exploratory/A314_vent_walltime/output/{groups,draws}.csv -->
