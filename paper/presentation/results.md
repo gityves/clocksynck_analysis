@@ -180,7 +180,8 @@ tissue's shift relative to the other three, untimed vs timed; dashed: identity.
 # R2. Organisation in health
 
 **Chapter message:** a person's organs share one clock state, and the stronger an organ's clock, the more it follows
-it. Inside tissues the shared clock is carried by stromal-vascular cells; lymphocytes carry none of their own. With
+it. Inside tissues the organ sets the time and each cell class sets how strongly it expresses it; lymphocytes carry
+no readable clock. With
 age, internal time advances while the organisation stays.
 
 ---
@@ -263,35 +264,60 @@ body time, with 90 % interval.
 
 ---
 
-## R2.2 Inside tissues: every resident cell class shares the tissue's clock state; lymphocytes carry no readable clock
+## R2.2 Inside tissues: the organ sets the time; each cell class sets how strongly it expresses it
 
-**Message:** read without any host or anchor, the clock state of every resident cell class (fibroblasts, endothelial
-and mural cells, epithelium, parenchyma) moves with that of the other cells of the same person's tissue, at about the
-same level; macrophages do too. Lymphocytes share no more than random genes, and not because they run a clock of their
-own: where a clock would be readable at their depth, they have none.
+**Message:** within a tissue, every resident cell class runs at the organ's time, and each class expresses that time
+with its own gain, the same in every organ: fibroblasts loudest, endothelium and mural cells next, epithelium and
+macrophage-containing myeloid cells softer. Lymphocytes are the zero-gain end of this scale: no readable clock of
+their own.
 
 **Bullets**
-1. Per cell family (post hoc, descriptive; median over compartments of ten body atlases): fibroblast 0.63, parenchyma
-   0.60, mural 0.58, epithelial 0.58, endothelial 0.58, glia / melanocyte / progenitor 0.55, myeloid 0.48, lymphocyte
-   0.22 (random genes in the same compartments: 0.26 to 0.37 for resident classes, 0.21 for lymphocytes).
-2. Registered: stromal-vascular minus lymphocyte sharing, beyond both companion gene families (calibrated, 5000 placebo draws):
-   five atlases 0.277, replication in five others 0.152, IBD cohort (IBDverse biopsies: rectum 274, ileum 242 donors) 0.413; living donors
-   only 0.225 (p_cal 0.004 to 0.020 against expression-matched, 0.011 to 0.016 against stress-responsive genes).
-3. Macrophages join the resident cells: macrophage minus lymphocyte 0.148 (p_cal 0.003 / 0.006, 8 atlases).
-4. No clock of their own (lymphocyte sharing is above no companion family in any atlas): lymphocyte clock genes are coherent between donors in 2 of 9 atlases, where fibroblasts of
-   the same donors thinned to the lymphocytes' depth are in 7 of 7 powered atlases (A281). Where a clock is readable at
-   their depth (both IBD tissues, Kong ileum), lymphocytes carry no clock-gene structure beyond random genes, whatever
-   its phase pattern (A287): "no readable clock", not "a different clock".
+1. Gain relative to endothelium of the same atlas (registered, A293 H293.4 pass): fibroblast 1.26 [1.07, 1.48],
+   mural 0.92, parenchyma 0.88, epithelial 0.80, myeloid 0.67 [0.53, 0.84] (pooled over 4 to 13 body atlases). A
+   class's gain varies between organs by a factor of 1.10 to 1.36, less than the same class differs between GTEx
+   organs (1.3 to 2.7): the organ differences come from composition and an organ-wide drive, not from classes
+   responding differently in different organs.
+2. The organ sets the phase: offsets between stromal-vascular classes stay within about 1.5 h; endothelium leads
+   fibroblasts by +0.46 h over six atlases (90 % 0.09 to 0.90), the mouse sign, but not in a consistent order
+   (H293.3 fail): a lead, not a result. A sample's composition moves its phase by at most 0.13 h per SD (A295, H295.2
+   pass); it moves only how loudly it expresses the body's time.
+3. Lymphocytes share no more of the tissue's clock state than random genes (stromal-vascular minus lymphocyte sharing
+   beyond both companion families: five atlases 0.277, replication 0.152, IBD cohort 0.413, living donors 0.225;
+   p_cal 0.004 to 0.020).
+4. No clock of their own: lymphocyte clock genes are coherent between donors in 2 of 9 atlases, fibroblasts of the
+   same donors thinned to the lymphocytes' depth in 7 of 7 powered atlases (A281); where a clock is readable at their
+   depth, no clock-gene structure beyond random genes (A287): "no readable clock on the full clock-gene set".
 
-**Figure:** `figures/celltypes_health/celltypes_health.png` (`scripts/celltypes_health.py`; wide). A. every compartment
-of the ten body atlases of A272/A274: clock state shared with the tissue's non-immune cells (median |r| over its pairs),
-by cell family, black: family median; grey open circles: the same compartments' expression-matched gene sets. B. own
-clock: signed clock-gene coherence between donors of the lymphocytes (cyan), of stromal-vascular (fibroblast-stromal)
-cells of the same donors thinned to the lymphocytes' clock-gene counts (brown, median of 20); grey bar: 5-95 % range of the lymphocytes'
-200 expression-matched gene sets (A294), nine atlases. The registered contrasts (bullets 2-3) are not plotted.
+**Figure:** `figures/celltypes_health/celltypes_health.png` (`scripts/celltypes_health.py`; wide). A. gain of each
+cell class relative to the endothelium of the same atlas (ratio of shared-rhythm amplitudes, log scale): coloured
+dots, one per atlas; black, random-effects pooled value with 95 % interval; lymphocytes: no gain estimated, the arrow
+marks the zero-gain end. B. phase offsets between stromal-vascular classes (positive = first class earlier): dots,
+human atlases (untimed pairwise); black, circular mean over atlases with atlas bootstrap 90 % interval; open
+diamonds, mouse colon and aorta against known time. C. own clock: signed clock-gene coherence between donors of the
+lymphocytes (cyan) and of stromal-vascular cells of the same donors thinned to the lymphocytes' clock-gene counts
+(brown, median of 20); grey bar, 5-95 % range of the lymphocytes' 200 expression-matched gene sets (A294), nine
+atlases.
 
 **Speaker notes**
-- Panel B, read honestly (A294, registered): the grey bar is the 5-95 % range of random expression-matched genes in
+- Status: A293 Parts 2 and 3 registered (NOT BLIND: the per-family gains and the mouse offsets were seen in earlier
+  work); H293.4 pass (tau <= 0.35 in all five families), H293.3 fail (4 of 6 atlases with the mouse sign, sign test
+  p 0.344); A295 registered (H295.2 pass, H295.1 fail).
+- The organ factor of gain is inferred, not tested: relative gains cancel any organ-wide drive, and the direct test
+  (A298, composition against organ gain in GTEx) was closed before scoring because the atlas shares were implausible.
+  Say "composition and an organ-wide drive", not which one.
+- Heterogeneity: epithelial (tau 0.305) and myeloid (0.302) are close to the bound and Q shows spread beyond the
+  bootstrap SEs (p 0.001, < 0.001); "myeloid" mixes macrophages with monocytes and dendritic cells (only macrophages
+  carry a clock, A288), which may explain part of it. Atlases have one or two compartments per family; the SE ignores
+  the covariance with endothelium.
+- Lymphocytes are not given a number on the gain axis: with no readable clock, their "gain" would be noise. The arrow
+  says where they sit on the scale, the evidence is panel C. Do not suggest a function for this.
+- Phase, mouse calibration (timed): untimed pairwise offsets between cell types match known time in the colon (A273:
+  median error 0.31 h, slope 1.005) and the aorta (A279: 0.30 h, slope 1.04). In mouse the order endothelial >
+  mural > fibroblast holds in both tissues; the human pooled endothelial lead is about a third of the mouse size.
+  The breast endothelial-mural offset (+3.2 h) is one compartment pair.
+- Composition (A295): stromal-vascular content raises gain (+0.041 per SD, positive in 21 of 27 tissues;
+  descriptive), lymphocyte content does not detectably lower it (H295.1 fail: within-tissue variation too small).
+- Panel C, read honestly (A294, registered): the grey bar is the 5-95 % range of random expression-matched genes in
   the lymphocytes. Lymphocytes sit inside it in seven of nine atlases. Breast CD4 T (0.38) is just above it, and is a
   hormonal pulse: without PER1, PER2 and NR1D1 it is not significant (p 0.081) and it is not above stress-responsive
   genes (H294.1, H294.2 fail). Heart lymphocytes (0.50, 36 donors) keep a coherence without those genes (p 0.014) and
@@ -300,11 +326,11 @@ cells of the same donors thinned to the lymphocytes' clock-gene counts (brown, m
   atlases (6 of 9 at p < 0.10, e.g. IBD ileum −0.43 to 0.40). The hormone-induced genes may mask a weak lymphocyte
   core loop; "no readable clock" holds on the full clock-gene set, and a blind core-loop test on fresh atlases is
   needed before the slide states it without qualification.
-- Panel A replaces the stromal-vascular framing (post hoc view of the scored pair tables, 2026-11-17): the registered
-  tests were written for stromal-vascular cells, but epithelial and parenchymal cells share the clock state as much;
-  A281 found every stromal-vascular and epithelial compartment coherent. The resident tissue is the unit, immune
-  cells are the exception. Myeloid compartments spread from the lymphocyte level to the resident level (macrophages
-  high, A288).
+- Sharing per cell family (post hoc, descriptive; median |r| over compartments of ten body atlases; the panel of the
+  previous version): fibroblast 0.63, parenchyma 0.60, mural 0.58, epithelial 0.58, endothelial 0.58, glia /
+  melanocyte / progenitor 0.55, myeloid 0.48, lymphocyte 0.22 (random genes 0.26 to 0.37 for resident classes, 0.21
+  for lymphocytes). Every resident class shares the clock state; immune cells are the exception. Macrophages join
+  the resident cells: macrophage minus lymphocyte 0.148 (p_cal 0.003 / 0.006, 8 atlases; A288).
 - Readout: `clocksync.pairwise`, anchor-free: for two cell classes of the same donors, the complex correlation over
   donors of their clock-plane states (|r|). No host, no anchor choice, so the A17 anchor question does not arise.
 - Status: A272 (H272.2), A274 (H274.1 replication, blind for its atlases), A280 (H280.1, blind), all restated on the
@@ -320,13 +346,12 @@ cells of the same donors thinned to the lymphocytes' clock-gene counts (brown, m
 - Not residency (A284, registered, none passes): resident T cells do not share more than circulating ones (Delta
   0.010), plasma cells share less than B cells in every atlas, alveolar over monocyte-derived macrophages misses
   (A288 H288.3, p 0.051).
-- Mouse calibration (timed): untimed pairwise offsets between cell types match known time in the colon (A273: median
-  error 0.31 h, slope 1.005) and the aorta (A279: 0.30 h, slope 1.04). Offsets between human cell types are not
-  read yet.
 - Cortex: the cell classes share a clock state pooled over three cohorts (A283 H283.5 pass) but not in the largest,
   PsychAD MSSM (A280 H280.2 fail): not claimed.
 
-**Source:** `exploratory/A272_backbone_pairwise/output/pairs.csv`; `exploratory/A274_celltype_map/output/pairs.csv`;
+**Source:** `exploratory/A293_organisation_levels/output/part3/{atlases,families}.csv`;
+`exploratory/A293_organisation_levels/output/part2/{atlases,tests}.csv`; `exploratory/A295_composition/output/tests.csv`;
+`results_preliminary.md` A293 (GTEx scale, A291 post hoc table); `exploratory/A272_backbone_pairwise/output/pairs.csv`; `exploratory/A274_celltype_map/output/pairs.csv`;
 `exploratory/A276_pairwise_calibration/output/a283/{per_atlas,tests}.csv`;
 `exploratory/A280_celltype_replication2/output/calibrated/tests.csv`; `exploratory/A282_pooled_living/output/{tests,per_atlas}.csv`;
 `exploratory/A288_macrophage_pairwise/output/{per_atlas,tests}.csv`; `exploratory/A284_residency/output/tests.csv`;
