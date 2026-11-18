@@ -8549,3 +8549,9 @@ as far as matched genes capture it; donor management (steroids, hormones) differ
 recorded; a variance loss can also come from organ-specific additive noise falling (not expected); one projector per
 tissue fitted on all death types.
 **Code.** `exploratory/A315_braindeath_gain/scripts/score_a315.py --stage power | score`.
+
+### A315 power note (2026-11-18, before scoring; `score_a315.py --stage power`, 1 min; no clock contrast computed)
+298 organ donors, 79 post-mortem donors, 12 tissues with >= 20 donors per group. SD of Q over the 200 matched sets
+0.082; SD of the clock's Q under 1000 relabellings of Hardy 0 donors 0.084; power against a clock-specific variance loss
+of 30 % 0.995. Gate passed: H315.1 is scored.
+<!-- src: paper/exploratory/A315_braindeath_gain/output/power.csv -->
