@@ -2,14 +2,15 @@
 
 R3.1 (`holds_organisation`), GTEx death types:
 A. Does a death group keep the organ arrangement of fast deaths? Fisher-Lee correlation of the organ-pair phase
-   differences of each group with those of fast deaths (12 body tissues, pairs with >= 20 shared donors), for the clock
-   genes (blue), 200 expression-matched (light grey) and 200 stress-responsive gene sets (dark grey), same donors and
-   pairs (A293 Part 1; slow deaths H293.1 and ventilated living-brain donors H293.2 registered, Hardy 3 and brain-dead
-   organ donors descriptive).
+   differences of each group with those of fast deaths (12 body tissues, pairs with >= 20 shared donors): bars for the
+   clock genes (blue) and the medians of 200 expression-matched (light grey) and 200 stress-responsive gene sets (dark
+   grey), whisker to their 95th percentile, same donors and pairs; fast deaths are the reference (1 by construction)
+   (A293 Part 1; slow deaths H293.1 and ventilated living-brain donors H293.2 registered, Hardy 3 and brain-dead organ
+   donors descriptive). Rows in the same order in A and B.
 B. Does the body's clock still read the external day? Alignment of the host phase (clock genes of 15 reference tissues,
    fitted without time) to the recorded hour of death, R = |mean exp(i (host phase - w t_death))|, per death type, with
    its permutation p (times shuffled over donors, 10,000) (A27, post hoc; ventilated = all Hardy 0, brain-dead and
-   living-brain donors together).
+   living-brain donors together; one bar across both rows).
 R3.2 (`cue_removal`), designed removal of a cue in one organ:
 A. Mouse liver (A297, registered, H297.1 fail above the interval): core-clock amplitude (blue, clock genes) with the
    feeding rhythm removed (Greenwell arrhythmic feeding), relative to ad libitum, 90 % library bootstrap interval; grey
@@ -33,6 +34,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from matplotlib.lines import Line2D
+from matplotlib.patches import Patch
 
 import paperfig as pf
 
@@ -42,48 +44,57 @@ OUT = PAPER / "presentation" / "figures" / "holds_organisation"
 INK, MUTED = "#222222", pf.GREY
 CS = sns.color_palette().as_hex()[0]
 FAMILY = {"matched": ("random genes", "#BBBBBB"), "responsive": ("stress-responsive genes", "#6E6E6E")}
-GROUPS = {"slow_hardy4": "slow deaths", "ventilated_postmortem": "ventilated,\nbrain alive",
-          "hardy3": "intermediate\ndeaths", "organ_donor": "brain-dead\norgan donors"}
+ROWS = ["fast deaths", "slow deaths", "intermediate\ndeaths", "ventilated,\nbrain alive", "brain-dead\norgan donors"]
+GROUPS = {"slow_hardy4": 1, "hardy3": 2, "ventilated_postmortem": 3, "organ_donor": 4}  # A293 group -> row
+WALL = {"fast": (0, 0), "hardy4": (1, 1), "hardy3": (2, 2), "ventilator": (3, 4)}  # A27 cohort -> rows it spans
+H = 0.26  # bar height in panel A
 
 
-def arrangement(ax, g, sets):
-    g = g.set_index("group")
-    for i, k in enumerate(GROUPS):
-        for j, (fam, (_, col)) in enumerate(FAMILY.items()):
-            v = sets[(sets.group == k) & (sets.family == fam)].rho.to_numpy()
-            y = i + (j - 0.5) * 0.3 + np.random.default_rng(10 * i + j).uniform(-0.08, 0.08, len(v))
-            ax.scatter(v, y, s=5, color=col, alpha=0.6, lw=0, zorder=1)
-        ax.scatter([g.loc[k, "rho_clock"]], [i], s=48, color=CS, zorder=3)
-    ax.axvline(0, color=MUTED, lw=0.8, ls="--", zorder=0)
-    ax.set_xlim(-0.3, 1)
-    ax.set_yticks(range(len(GROUPS)), list(GROUPS.values()))
+def rows(ax):
+    ax.set_yticks(range(len(ROWS)), ROWS)
     ax.tick_params(axis="y", length=0)
-    ax.set_ylim(len(GROUPS) - 0.4, -0.5)
+    ax.set_ylim(len(ROWS) - 0.45, -0.55)
+
+
+def arrangement(ax, g):
+    """Organ arrangement shared with fast deaths: clock genes and the medians of the two companion families, whisker to
+    their 95th percentile; fast deaths are the reference (1 by construction)."""
+    g = g.set_index("group")
+    ax.barh(0, 1, height=H, facecolor="white", edgecolor=CS, lw=1.2)
+    ax.text(0.5, 0, "reference", ha="center", va="center", fontsize=8, color=CS)
+    for k, i in GROUPS.items():
+        r = g.loc[k]
+        ax.barh(i - H, r.rho_clock, height=H, color=CS)
+        for j, (fam, (_, col)) in enumerate(FAMILY.items()):
+            y = i + j * H
+            ax.barh(y, r[f"{fam}_median"], height=H, color=col)
+            ax.plot([r[f"{fam}_median"], r[f"{fam}_q95"]], [y, y], color=col, lw=1.2)
+            ax.plot([r[f"{fam}_q95"]] * 2, [y - H / 3, y + H / 3], color=col, lw=1.2)
+    ax.axvline(0, color=MUTED, lw=0.8, zorder=0)
+    ax.set_xlim(-0.05, 1.05)
+    rows(ax)
     ax.set_xlabel("organ arrangement shared\nwith fast deaths")
-    ax.set_title("human organs (GTEx)", fontsize=13, color=INK)
-    h = [Line2D([], [], ls="", marker="o", ms=7, color=CS, label="clock genes")] + [
-        Line2D([], [], ls="", marker="o", ms=5, color=c, label=lab) for lab, c in FAMILY.values()]
+    ax.set_title("organ arrangement", fontsize=13, color=INK)
+    h = [Patch(color=CS, label="clock genes")] + [Patch(color=c, label=lab) for lab, c in FAMILY.values()]
     ax.legend(handles=h, loc="upper center", bbox_to_anchor=(0.45, -0.24), ncol=3, frameon=False, fontsize=8,
-              handletextpad=0.1, columnspacing=0.8)
-
-
-WALL = {"fast": "fast deaths", "hardy4": "slow deaths", "ventilator": "ventilated\n(all)", "hardy3": "intermediate\ndeaths"}
+              handlelength=1, columnspacing=0.8)
 
 
 def external(ax, w):
-    """Alignment of the body's clock to the recorded hour of death, per death type."""
+    """Alignment of the body's clock to the recorded hour of death, per death type; the ventilated readout pools the
+    living-brain and brain-dead donors, so one bar spans both rows."""
     w = w.set_index("cohort")
-    for i, k in enumerate(WALL):
+    for k, (i0, i1) in WALL.items():
         r = w.loc[k]
-        ax.plot([0, r.R], [i, i], color=CS, lw=1.2, alpha=0.5, zorder=1)
-        ax.scatter([r.R], [i], s=48, color=CS, zorder=2)
+        y, h = (i0 + i1) / 2, 0.55 + (i1 - i0)
+        ax.barh(y, r.R, height=h, color=CS, alpha=1 if i0 == i1 else 0.55)
         p = f"p {r.p_R:.4f}" if r.p_R < 0.001 else f"p {r.p_R:.3f}"
-        ax.annotate(f"{p}, n {int(r.donors)}", (r.R, i), xytext=(8, 0), textcoords="offset points", va="center",
-                    fontsize=8, color=MUTED)
-    ax.set_xlim(0, 1)
-    ax.set_yticks(range(len(WALL)), list(WALL.values()))
-    ax.tick_params(axis="y", length=0)
-    ax.set_ylim(len(WALL) - 0.4, -0.5)
+        note = f"{p}, n {int(r.donors)}" + ("\nboth groups pooled" if i1 > i0 else "")
+        ax.annotate(note, (r.R, y), xytext=(6, 0), textcoords="offset points", va="center", fontsize=8,
+                    color=MUTED)
+    ax.set_xlim(0, 1.05)
+    rows(ax)
+    ax.set_yticklabels([])
     ax.set_xlabel("body clock aligned to\nthe hour of death, R")
     ax.set_title("external time", fontsize=13, color=INK)
 
@@ -133,9 +144,8 @@ def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
     p1 = EXP / "A293_organisation_levels/output/part1"
-    lay = pf.Layout.slide("AB", kind="wide", col_ratios=[1.2, 1])
-    arrangement(lay.axes["A"], pd.read_csv(p1 / "groups.csv"), pd.read_csv(p1 / "sets.csv"))
-    lay.axes["A"].set_title("organ arrangement", fontsize=13, color=INK)
+    lay = pf.Layout.slide("AB", kind="wide", col_ratios=[1.2, 1], align="all")
+    arrangement(lay.axes["A"], pd.read_csv(p1 / "groups.csv"))
     external(lay.axes["B"], pd.read_csv(PAPER / "results/figure_3/output/cues_lost/walltime_hosts.csv"))
     fig = lay.finalize()
     print(pf.collisions(fig))

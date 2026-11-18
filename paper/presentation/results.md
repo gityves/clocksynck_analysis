@@ -536,12 +536,15 @@ it.
 3. Brain-dead organ donors (79, same ventilation and intensive care): 0.161, not different from tissue-label
    permutation (p 0.18), at the level of random genes (descriptive).
 
-**Figure:** `figures/holds_organisation/holds_organisation.png` (`scripts/holds_organisation.py`; wide). A. correlation
-of each group's organ-pair phase differences with those of fast deaths (Fisher-Lee, 12 body tissues), for the clock
-genes (blue), 200 expression-matched (light grey) and 200 stress-responsive gene sets (dark grey), same donors and
-pairs. B. alignment of the body's clock (host phase from the clock genes of 15 reference tissues, fitted without time)
-to the recorded hour of death, R = |mean exp(i (host phase − ω t_death))|, per death type, with its permutation p and
-donor count; ventilated = all Hardy 0 donors (brain-dead and living-brain together).
+**Figure:** `figures/holds_organisation/holds_organisation.png` (`scripts/holds_organisation.py`; wide). Rows in the
+same order in both panels: fast deaths (reference), slow, intermediate, ventilated with a living brain, brain-dead
+organ donors. A. correlation of each group's organ-pair phase differences with those of fast deaths (Fisher-Lee, 12
+body tissues): bars for the clock genes (blue) and the medians of 200 expression-matched (light grey) and 200
+stress-responsive gene sets (dark grey), whisker to their 95th percentile, same donors and pairs; fast deaths are the
+reference (1 by construction, outlined). B. alignment of the body's clock (host phase from the clock genes of 15
+reference tissues, fitted without time) to the recorded hour of death, R = |mean exp(i (host phase − ω t_death))|, per
+death type, with its permutation p and donor count; the ventilated readout pools living-brain and brain-dead donors
+(one light bar across both rows).
 
 **Speaker notes**- Status: A293 Part 1 registered, NOT BLIND (the clock rho of every group was known from A109 / A132; the companion
   sets were new); H293.1 and H293.2 pass. Hardy 3 and brain-dead donors descriptive by decision. Brain death vs
