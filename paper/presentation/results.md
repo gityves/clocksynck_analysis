@@ -386,8 +386,10 @@ time.
 relative to the body [h]: top, each peripheral tissue's offset (one dot per tissue, coloured by organ system); below,
 phase change per SD of a sample's stromal-vascular or lymphocyte marker score (dots, one per tissue; black, pooled
 value with 90 % interval) and of the adrenal cortex score (purple, 90 % interval). B. gain [fold], log scale: top, each
-tissue's gain on the body's time; second row, tissues made mostly of the same cell class, higher over lower; below,
-gain change per SD of the same scores (fold = 1 + change; pooled with 90 % interval).
+tissue's gain on the body's time; below, gain change per SD of the same scores (fold = 1 + change; pooled with 90 %
+interval). C. tissues made mostly of one cell class (squamous epithelium, adipocytes, smooth muscle; post hoc choice):
+each tissue's gain on the body's time, one labelled dot per tissue coloured by organ system; right, highest over
+lowest gain of the row.
 
 **Speaker notes**
 - Status: A295 registered (NOT BLIND for the organ map, A291, A293): H295.2 pass (phase), H295.1 fail (lymphocyte gain);

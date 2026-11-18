@@ -5,11 +5,12 @@ A. Phase. Top row: offset of each GTEx peripheral tissue from its person's body 
    tissue, coloured by organ system). Below: phase change of a tissue's clock state per SD of a marker score of its
    samples (A295, registered, H295.2 pass): stromal-vascular and lymphocyte scores, one dot per tissue, black: pooled
    value with 90 % interval; adrenal cortex score (A299, descriptive specificity arm), estimate and 90 % interval.
-B. Gain, fold on a log scale. Top row: each tissue's gain on the body's time (relative amplitude, A104 table). Second
-   row: tissues made mostly of the same cell class, higher over lower gain (post hoc pairs: squamous, oesophagus
-   mucosa over skin; adipocyte, visceral over subcutaneous adipose and breast; smooth muscle, oesophagus muscularis
-   over sigmoid colon). Below: gain change per SD of the marker scores (A295 descriptive for stromal-vascular, H295.1
-   fail for lymphocytes; A299 cortex), as fold = 1 + change.
+B. Gain, fold on a log scale. Top row: each tissue's gain on the body's time (relative amplitude, A104 table). Below:
+   gain change per SD of the marker scores (A295 descriptive for stromal-vascular, H295.1 fail for lymphocytes; A299
+   cortex), as fold = 1 + change.
+C. Tissues made mostly of one cell class (post hoc choice: squamous epithelium, oesophagus mucosa and skin; adipocytes,
+   visceral and subcutaneous adipose and breast; smooth muscle, oesophagus muscularis and sigmoid colon): each tissue's
+   gain on the body's time, one labelled dot per tissue; right, highest over lowest gain of the row.
 Status: display post hoc; every value is from a scored table. Writes the plotted rows to
 presentation/output/organs_composition/rows.csv. GTEx aggregates only (one value per tissue).
 
@@ -38,11 +39,12 @@ INK, MUTED = "#222222", pf.GREY
 TAB = sns.color_palette().as_hex()
 SCORE = {"stromal_vascular": ("+1 SD stromal-\nvascular cells", TAB[5]), "lymphocyte": ("+1 SD lymphocytes", TAB[9])}
 CORTEX = ("adrenal: +1 SD\ncortex cells", COLOR["endocrine"])
-PAIRS = [("squamous", "Esophagus - Mucosa", "Skin - Sun Exposed (Lower leg)"),
-         ("squamous", "Esophagus - Mucosa", "Skin - Not Sun Exposed (Suprapubic)"),
-         ("adipocyte", "Adipose - Visceral (Omentum)", "Adipose - Subcutaneous"),
-         ("adipocyte", "Adipose - Visceral (Omentum)", "Breast - Mammary Tissue"),
-         ("smooth muscle", "Esophagus - Muscularis", "Colon - Sigmoid")]
+CLASSES = {  # tissues made mostly of one cell class (post hoc): GTEx tissue -> short label
+    "squamous\nepithelium": {"Esophagus - Mucosa": "oesophagus\nmucosa", "Skin - Sun Exposed (Lower leg)": "skin,\nsun",
+                             "Skin - Not Sun Exposed (Suprapubic)": "skin,\nno sun"},
+    "adipocyte": {"Adipose - Visceral (Omentum)": "visceral", "Adipose - Subcutaneous": "subcut.",
+                  "Breast - Mammary Tissue": "breast"},
+    "smooth muscle": {"Esophagus - Muscularis": "oesophagus\nmuscularis", "Colon - Sigmoid": "sigmoid\ncolon"}}
 
 
 def rows():
@@ -59,9 +61,10 @@ def rows():
                       key=gtex_system(t)))
         R.append(dict(panel="gain", row="organ", label=t, value=np.exp(r.log_amp_rel), lo=np.exp(r.log_amp_lo),
                       hi=np.exp(r.log_amp_hi), key=gtex_system(t)))
-    for cls, a, b in PAIRS:
-        R.append(dict(panel="gain", row="pair", label=f"{cls}: {a} / {b}",
-                      value=np.exp(org.log_amp_rel[a] - org.log_amp_rel[b]), lo=np.nan, hi=np.nan, key=cls))
+    for cls, ts in CLASSES.items():
+        for t in ts:
+            R.append(dict(panel="class", row=cls, label=t, value=np.exp(org.log_amp_rel[t]), lo=np.exp(org.log_amp_lo[t]),
+                          hi=np.exp(org.log_amp_hi[t]), key=gtex_system(t)))
     for s in SCORE:
         t = tis[tis.score == s]
         for r in t.itertuples():
@@ -87,12 +90,6 @@ def draw(ax, R, order, labels):
             y = i + np.random.default_rng(i).uniform(-0.2, 0.2, len(d))
             ax.scatter(d.value, y, s=22, c=[COLOR[k] for k in d.key], edgecolor="white", lw=0.3, zorder=2)
             continue
-        if row == "pair":
-            ax.scatter(d.value, [i] * len(d), s=22, color=INK, zorder=2)
-            for j, (k, g) in enumerate(d.groupby("key", sort=False)):
-                ax.annotate(k, (g.value.median(), i), xytext=(0, 8 if j % 2 == 0 else -9), textcoords="offset points",
-                            ha="center", va="center", fontsize=7.5, color=MUTED)
-            continue
         if row == "cortex":
             r = d.iloc[0]
             ax.plot([r.lo, r.hi], [i, i], color=CORTEX[1], lw=1.6, zorder=2)
@@ -108,14 +105,31 @@ def draw(ax, R, order, labels):
     ax.set_ylim(len(order) - 0.5, -0.5)
 
 
+def same_class(ax, R):
+    """Gain of tissues made mostly of one cell class: one row per class, one labelled dot per tissue."""
+    for i, cls in enumerate(CLASSES):
+        d = R[R.row == cls].sort_values("value")
+        ax.plot([d.value.min(), d.value.max()], [i, i], color=MUTED, lw=0.8, zorder=1)
+        ax.scatter(d.value, [i] * len(d), s=30, c=[COLOR[k] for k in d.key], edgecolor="white", lw=0.4, zorder=2)
+        for j, r in enumerate(d.itertuples()):
+            ax.annotate(CLASSES[cls][r.label], (r.value, i), xytext=(0, 10 if j % 2 == 0 else -10),
+                        textcoords="offset points", ha="center", va="bottom" if j % 2 == 0 else "top", fontsize=7.5,
+                        color=INK, linespacing=0.9)
+        ax.annotate(f"×{d.value.max() / d.value.min():.1f}", (d.value.max(), i), xytext=(8, 0),
+                    textcoords="offset points", ha="left", va="center", fontsize=8, color=MUTED)
+    ax.set_yticks(range(len(CLASSES)), list(CLASSES))
+    ax.tick_params(axis="y", length=0)
+    ax.set_ylim(len(CLASSES) - 0.4, -0.6)
+
+
 def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
     TAB_OUT.mkdir(parents=True, exist_ok=True)
     R = rows()
     R.to_csv(TAB_OUT / "rows.csv", index=False)
-    lay = pf.Layout.slide("AB", kind="wide", col_ratios=[1, 1])
-    a, b = lay.axes["A"], lay.axes["B"]
+    lay = pf.Layout.slide("ABC", kind="wide", col_ratios=[1, 1, 0.85])
+    a, b, c = lay.axes["A"], lay.axes["B"], lay.axes["C"]
     comp = [SCORE["stromal_vascular"][0], SCORE["lymphocyte"][0], CORTEX[0]]
     draw(a, R[R.panel == "phase"], ["organ", "stromal_vascular", "lymphocyte", "cortex"], ["organ offset"] + comp)
     a.axvline(0, color=MUTED, lw=0.8, ls="--", zorder=0)
@@ -127,14 +141,17 @@ def main():
     a.annotate("adrenal", (ad.value, y_ad), xytext=(-6, 0), textcoords="offset points", ha="right", va="center",
                fontsize=7.5, color=COLOR["endocrine"])
     legend_in(a, fontsize=7.5, loc="lower right")
-    draw(b, R[R.panel == "gain"], ["organ", "pair", "stromal_vascular", "lymphocyte", "cortex"],
-         ["organ gain", "same cell class,\ntwo organs"] + comp)
-    b.axvline(1, color=MUTED, lw=0.8, ls="--", zorder=0)
-    b.set_xscale("log")
-    b.set_xlim(0.2, 3.2)
+    draw(b, R[R.panel == "gain"], ["organ", "stromal_vascular", "lymphocyte", "cortex"], ["organ gain"] + comp)
+    same_class(c, R[R.panel == "class"])
+    for ax, lim in ((b, (0.2, 3.2)), (c, (0.6, 3.2))):
+        ax.axvline(1, color=MUTED, lw=0.8, ls="--", zorder=0)
+        ax.set_xscale("log")
+        ax.set_xlim(*lim)
+        ax.minorticks_off()
     b.set_xticks([0.25, 0.5, 1, 2], ["0.25", "0.5", "1", "2"])
-    b.minorticks_off()
+    c.set_xticks([0.75, 1, 1.5, 2, 3], ["0.75", "1", "1.5", "2", "3"])
     b.set_xlabel("gain [fold]")
+    c.set_xlabel("organ gain [fold]")
     fig = lay.finalize()
     print(pf.collisions(fig))
     pf.save(fig, OUT / "organs_composition")
