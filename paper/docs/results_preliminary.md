@@ -6237,3 +6237,21 @@ the first.
   below about 0.1 could not be detected.
 - Code: `exploratory/A302_departure_groups/scripts/score_a302.py --jobs 4`.
 <!-- src: paper/exploratory/A302_departure_groups/output/{tests,pairs,sets}.csv -->
+
+## A303 (scored 2026-11-18; descriptive, fixed criterion): the whole adrenal is not offset from the other organs in mouse (pooled -1.0 h) or sheep (-0.6 h); the human +4.4 h is not seen in either species
+
+- Three plumbing failures before any statistic (minimum donors per age; bootstrap ids containing "#"; sheep strata), each
+  fixed and committed; during the second, a debug call printed the young-mouse per-tissue phases. One complete run
+  (about 25 min).
+- **Mouse (Wolff 2023, timed on CT, adrenal against heart, kidney, lung, muscle).** Pooled over ages (age as stratum, 3
+  libraries per CT): -1.00 h (90 % -1.87 to -0.39): not the human structure (criterion |offset| >= 2 h). Per age: young
+  +0.03 h, aged -3.78 h, old -0.44 h, **without valid intervals**: each age has one library per CT, so resampling within
+  CT cannot vary (a design flaw of the script; the "aged" row meets the criterion only through its degenerate interval
+  and is not counted).
+- **Sheep (untimed atlas, 21 animals with adrenal):** -0.57 h (90 % -1.64 to +0.41); median |offset| of the other
+  non-brain tissues 0.45 h. Not the human structure.
+- **Reading (registered).** A whole-gland offset near 0 in both species, with the baboon cortex at +0.9 h: the human
+  +4.4 h has no counterpart in healthy animals and fits being specific to GTEx (death; the adrenal is the organ most
+  engaged by dying) or to humans; the data cannot separate the two.
+- Code: `exploratory/A296_genewise_offsets/scripts/score_a303.py`.
+<!-- src: paper/exploratory/A296_genewise_offsets/output/a303.csv -->
