@@ -8600,3 +8600,33 @@ ZT- and sex-covering halvings of the 14 aligned libraries): mean log F ratio 0.0
 estimated from a handful of pooled libraries per arm, dominates the error (as the pool-to-pool variation in A201).
 Registered consequence: H316.1 and H316.2 are not scored; the misaligned arm was not read.
 <!-- src: paper/exploratory/A316_aorta_cells/output/{feasibility,feasibility_gate,placebo}.csv -->
+
+## A317 (2026-11-18, user: "yes go ahead with gap 1" of `docs/PAPER_TRIAGE_2026-11-18.md`; confirmatory for the biology paper's headline; staged: power first (label-permutation nulls only), then one scoring run; **NOT BLIND** for H317.1: A132b (post-mortem 0.678 vs organ donors 0.161 against fast deaths, difference 0.517, p 0.008, post hoc), A293 Part 1 (organ donors 0.161: 99th percentile of matched and 75th of responsive sets), A133 post hoc, A136 (glucocorticoid gate failed), A314 (equal loss of alignment to the hour of death), A315 (tissue amplitude kept); H109.1 pooled over all ventilated donors (C_clock 0.463 above the pseudo-clock null); **NOT seen**: C or its excess split by organ donors vs ventilated post-mortem donors, and any of the confound sensitivities below): does brain death remove the clock relation between organs, clock-specifically and beyond procurement confounds? **GTEx Hardy 0, organ donors (298) vs ventilated post-mortem donors (79); fast deaths (244) as the arrangement reference; the 12 A109 body tissues**
+
+**Data.** A109 `Tissues(200, seed 0)`: clock states, 200 expression-matched pseudo-clock sets per tissue, 200
+stress-responsive sets (`compute_h109_responsive.add_sets`). Groups as A132 (COHORT). Equal n: organ donors drawn to 79,
+20 draws (seed 317); statistics are medians over draws. Pairs with >= 20 shared donors in every group compared (A132 rule).
+- **H317.1 (arrangement, not blind).** D_rho = rho(post-mortem, fast) - rho(organ donors, fast), Fisher-Lee correlation of
+  pair phases with fast deaths (A132 / A293 estimator). Passes if (i) D_rho > 0 with donor-label permutation p < 0.05
+  (2000 relabellings of Hardy 0 donors into groups of 79 and 79, same draws), and (ii) D_rho above the q95 of the same
+  difference for the matched sets and for the responsive sets (same donors and draws).
+- **H317.2 (shared clock between organs, not seen by group).** Excess C = C_clock - median C over the 200 matched sets
+  (A109 H109.1 estimator: mean |Poisson-corrected complex correlation| over pairs). D_C = excess(post-mortem) -
+  excess(organ donors). Passes if D_C > 0 with donor-label permutation p < 0.05 (same relabellings). Reported: each
+  group's excess with its matched-set percentile, and the responsive-set excess.
+- **Confound sensitivities (pre-specified, descriptive; D_rho and D_C with their matched and responsive medians):**
+  (a) donors with long-term steroid use excluded (MHSTRDLT = 1); (b) samples restricted to the common range of
+  ischaemic time of the two groups (5th to 95th percentile of the smaller group's range); (c) samples with RIN >= 6.
+**Prediction (federation reading).** Without the central drive organs drift apart while each keeps its amplitude
+(A315): H317.1 and H317.2 pass, robust to (a)-(c).
+**Readings (stated now).** Both pass: brain death removes the clock relation between organs, beyond matched and
+responsive genes; with A315, organs lose their order, not their clocks. H317.1 passes, H317.2 fails: organs keep a
+shared clock covariance in a different arrangement (rearranged, not drifted). H317.1 fails on (ii): the arrangement
+loss is not specific to clock genes (a generic organ-donor state). A sensitivity reversing the sign: the confound named
+is a candidate explanation and is reported as such.
+**Power stage (committed before scoring).** SD of D_rho and D_C under the 2000 relabellings (observed values not
+computed); MDE = 2.49 SD. Reported with the A132b difference for reference.
+**Limits.** Not blind for the arrangement; procurement (surgical vs autopsy), donor management and time since brain death
+differ or are unknown; one cohort. Replication outside GTEx: Tabula Sapiens cannot resolve the arrangement (A109b, 5
+multi-organ donors, power 0.06-0.13); a mouse counterpart (organs after loss of the central clock) is a separate step.
+**Code.** `exploratory/A317_braindeath_confirm/scripts/score_a317.py --stage power | score`.
