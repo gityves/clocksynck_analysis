@@ -6456,3 +6456,44 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
   controls), 49 GB FASTQ, no count matrix deposited. Liver: Popescu 2019 E-MTAB-7407 (14 fetuses, CD45+ / CD45- sorted,
   probable overlap with Suo 2022). Heart, lung: no unseen cohort with >= 8 fetuses found. Kidney: <= 9 (low depth).
 <!-- src: subagent reports of 2026-11-18 (session transcript); ENA filereports PRJEB58854 (46 runs, 49.3 GB) and PRJEB26969 (313 runs) -->
+
+## A310 Stage 2a (scored 2026-11-18; NOT BLIND, descriptive fit): the driven population-of-oscillators model is INADEQUATE by the registered criterion (blocks A and B fail; C fails); Stage 2b not run
+
+- Design as registered; block A intervals from 200 donor resamples (`boot_a310.py`, replicate 0 reproduces A294b's
+  own variances exactly, 6 min). Fit in one run after a plumbing failure: the first run printed the block A-C tables
+  and stopped in the identifiability profiles (overflow at the edge of a parameter range; guarded); the rerun is
+  deterministic and printed the same tables. Deviation (same model, not a change of it): the liver's locked state
+  is solved exactly (the equation is rotation-covariant, w* = R(|F|) e^{i arg F}; checked against integration)
+  instead of integrated.
+- **Block A FAIL.** No organ variant meets both rules. The departure E_o (2 psi over the matched floor, 0.37 to 3.26)
+  falls inside the tissue's 90 % interval in 33 % (dispersion), 37 % (coupling) and 37 % (drive) of the 27 tissues,
+  against 80 % required. The model's slope of log E on log S is inside the A294b interval for dispersion (0.091) and
+  coupling (0.084), not for drive (0.000). Residual SD of log E around the best fit 0.42, against a median bootstrap SE
+  of 0.19: tissues differ in departure size beyond what their synchrony predicts. Each tissue would need its own
+  noise intensity, one parameter per observation.
+- **Block B FAIL.** 76.6 % of the 47 atlas relative gains are within 1.645 SE of their class value (78.7 % around the
+  A293 random-effects values), against 80 %; myeloid 0.67, epithelial 0.73. Phases: the fitted endothelial lead is
+  0.67 h; the 12 class-pair offsets scatter around it with RMS 0.91 h (1.10 h around a shared phase), against 0.6 h.
+- **Block C FAIL** (4 of 8 inside their intervals; 6 required). The population model reproduces the removal
+  amplitude (predicted 0.715, observed 0.724) and both inversion shifts. It cannot give the two laboratories'
+  inversion amplitudes (one value, 0.525, against 0.712 and 0.438) or the 1.6 h removal shift (predicted 0.18 h).
+  Linear damped alternative: 3 of 8 (removal amplitude 0.297); weighted SSE 82.8 (population) against 369.3 (linear).
+  The best liver fit needs no coupling (K -> 0): the amplitude is held by the cells' fixed amplitude (saturation), not
+  by synchronisation.
+- **Identifiability.** The best-fitting block A variant is degenerate (drive -> 0, compensated by the noise scale), and
+  the liver coupling is unbounded below. No parameter value is quoted.
+- **Alternative (b), composition alone (descriptive).** With classes spanning a factor 1.87 in gain (A293 Part 3),
+  composition alone needs less than half the clock-gene mRNA from clock-carrying cells only in whole blood (bound
+  0.20) and testis (0.31). Skin is next (0.60 and 0.76). The bound therefore does not require an organ synchrony factor
+  in any tissue whose dominant cells carry a clock.
+- **Global.** 14 parameters for 95 observations (rule met); the verdict is set by the blocks: **INADEQUATE**.
+- **Reading (registered).** The model is not worth it as a unifying fit. With one departure intensity and organ
+  synchrony as input, it does not reproduce the size of each tissue's personal departure or the cell-class gains
+  within their errors, and it adds nothing on organ gain. Which parts survive as qualitative statements, none of them
+  a fit:
+  - a fixed-size departure turns weak clocks more (A294b correction note, Abraham 2010);
+  - the liver keeps its amplitude without its feeding drive because single-cell amplitude saturates (A297);
+  - the arithmetic bound leaves composition able to explain organ gain except in blood and testis.
+  Stage 2b (orientation of the departure) is not run: the registration conditions it on blocks A and B.
+- Code: `exploratory/A310_clock_model/scripts/{model.py, boot_a310.py, fit_a310.py}`.
+<!-- src: paper/exploratory/A310_clock_model/output/{boot,blockA_tissues,blockA_variants,blockB_gains,blockB_phases,blockC,profiles,composition_bound,verdict}.csv -->
