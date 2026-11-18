@@ -642,18 +642,21 @@ decided without times.
    adrenocortical cells (0.41, 13 embryos) and lung progenitors not replicated in this window (A309).
 3. Without PER1, PER2 and NR1D1 the signal is not significant in the cortex or lung and not clock-specific in the liver
    (A266, A269), but these genes are not moving alone: they agree with the core genes in the clock's phase pattern
-   beyond matched genes in the cortex, lung and mouse liver (W); their link to glucocorticoid targets is clock-specific
-   in the lung only (A307, A309).
+   beyond matched genes in the cortex, lung and mouse liver (pairs that peak together in adults covary positively,
+   pairs in antiphase negatively); their link to glucocorticoid targets is clock-specific in the lung only (A307,
+   A309).
 
 **Figure:** `figures/development/development.png` (`scripts/development.py`; wide). Rows: organs; human fetus blue
 (adrenal cortex cells, whole lung, liver, heart, kidney), mouse embryo orange (adrenocortical cells, hepatocytes, lung
 progenitors, ventricular cardiomyocytes, nephron progenitors). Filled: significant and above the 95th percentile of
 both companion families; open: not. Grey tick: 95th percentile of 200 expression-matched gene sets. A. clock-gene
 covariation between individuals C (signed coherence of 14 clock genes against the adult waveform, cohort / batch and age
-adjusted); open diamond: median C of adult tissue subsampled to the same design (full-size clock). B. link of PER1,
-PER2, NR1D1 to a glucocorticoid-target score (FKBP5, TSC22D3, ZBTB16, KLF9), L = mean r^2. C. agreement of PER1, PER2,
-NR1D1 with the core genes in the adult clock's phase pattern, W = mean r cos(phase difference) over 33 pairs. B and C:
-adrenal cortex, lung, liver (human), liver (mouse).
+adjusted); open diamond: median C of adult tissue subsampled to the same design (full-size clock). B-E. one point per
+pair of a hormone-induced clock gene (PER1, PER2, NR1D1) with a core clock gene (33 pairs): correlation between
+individuals against the relation expected from the adult clock (cos of the adult phase difference: +1 = peak together,
+−1 = opposite); line through the origin, least squares. A positive slope means these genes move with the core clock in
+its phase pattern (the W statistic is the mean of r × expected); filled = W above 200 expression-matched gene sets
+(human adrenal cortex, lung; mouse liver), open = not (human liver).
 
 **Speaker notes**
 - Status: A243, A244 registered (A243 heart and kidney blind; lung, liver passes H243.1); A264, A266, A269, A307, A309
@@ -672,12 +675,22 @@ adrenal cortex, lung, liver (human), liver (mouse).
   (`docs/literature/fetal_clocks_animal_2026-11-18.md`). Tension to state: Dolatshad 2010 found no in vivo variation of
   liver clock genes at E18-19 by qPCR of whole tissue, whereas hepatocytes covary here (single-cell, cell-type
   pseudobulk, 16 embryos).
+- Mouse kidney C −0.52 (post hoc check, descriptive): one gene. Without NPAS2 it is 0.07; without any other gene it
+  stays between −0.81 and −0.14. In nephron progenitors NPAS2 (21 counts per pseudobulk) varies 3.6 times more than the
+  median clock gene (log SD 0.52 vs 0.14) and swings with sampling hour (log amplitude 0.47, peak 07 h, against an adult
+  peak at 22 h); the core genes barely move (ARNTL 0.06, CLOCK 0.02). Read: no clock in nephron progenitors, plus one
+  gene on a non-clock axis; not an anti-clock. Within the null (p 0.95 one-sided; 7th percentile of matched sets).
+- Glucocorticoid link (not on the figure): L, the mean r^2 of PER1, PER2, NR1D1 with the glucocorticoid-target score,
+  is clock-specific in the human lung only (0.20, above all matched sets); cortex 0.18 and mouse liver 0.35 not above
+  matched genes, human liver 0.06 (A307, A309). The glucocorticoid targets lie along the same axis without being
+  specific to it.
 - The fetal cortex carries the ACTH receptor complex (MC2R, MRAP) at adult or higher levels and no detectable melatonin
   receptor (A266): fetal ACTH / cortisol is a plausible driver.
 - Open: the time-free test of a running oscillator (spliced / unspliced phase relations) needs FASTQ mapping or an
   author release; an unseen adrenal cohort (del Valle 2023, 32 fetuses, FASTQ only) would give a blind replication.
 
-**Source:** `exploratory/A243_fetal_organs_pooled/output/{l1,verdicts,position_in_adult,feasibility_passrates}.csv`;
+**Source:** `presentation/output/development/{pairs,kidney}.csv` (`scripts/development_compute.py`);
+`exploratory/A243_fetal_organs_pooled/output/{l1,verdicts,position_in_adult,feasibility_passrates}.csv`;
 `exploratory/A244_fetal_adrenal_classes/output/{l1,verdicts_a244,position}.csv`;
 `exploratory/A309_mouse_embryo_organs/output/{l1,power_passrates,gc_pattern}.csv`;
 `exploratory/A307_fetal_gc_pattern/output/tests.csv`; `results_preliminary.md` A243, A244, A264, A266, A269, A307,
