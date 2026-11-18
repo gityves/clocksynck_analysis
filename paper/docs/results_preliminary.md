@@ -6611,3 +6611,27 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
   than excluding the uncoupled reading outright.
 - Code: `exploratory/A315_braindeath_gain/scripts/score_a315.py --stage score`.
 <!-- src: paper/exploratory/A315_braindeath_gain/output/{power,tests,tissues,sets,descriptive}.csv -->
+
+## A317 (scored 2026-11-18; NOT BLIND for the arrangement (A132b, A293 Part 1); the group split of C not seen): brain death changes the clock arrangement between organs clock-specifically (H317.1 PASS, D_rho 0.621 above all matched and responsive sets), but organs of brain-dead donors still share a clock state (H317.2 FAIL, excess C 0.269 vs 0.317): the order between organs is rearranged, not dissolved
+
+- Design as registered; power stage (MDE D_rho 0.554, D_C 0.130), then one scoring run (59 s). 298 organ donors drawn
+  to 79 (20 draws), 79 ventilated post-mortem donors, 244 fast deaths as reference, 65 pairs.
+- **H317.1 PASS.** D_rho = rho(post-mortem) - rho(organ donors) = 0.621 (median over draws); relabelling p 0.0025; above
+  all 200 matched (q95 0.092) and all 200 responsive sets (q95 0.152).
+- **H317.2 FAIL.** Excess C over matched sets: post-mortem 0.317 (C 0.489), organ donors 0.269 (C 0.430); D_C 0.048,
+  p 0.189 (MDE 0.130). Both groups are above all matched and all responsive sets (responsive excess 0.264 and 0.230).
+- **Sensitivities (registered, descriptive).** Long-term steroid users excluded (74 / 295 donors): D_rho 0.575, D_C 0.037.
+  RIN >= 6: D_rho 0.591, D_C 0.022. Common ischaemic-time range (5th-95th percentile of the post-mortem samples): D_rho
+  0.239 on 36 pairs (65 before), D_C 0.005; companion medians 0.030 (matched) and -0.014 (responsive). The ischaemic
+  restriction halves the pairs and the difference; whether ischaemic time explains part of the contrast or the loss of
+  pairs adds noise is not separable here: ischaemic time is a candidate confound, named as registered.
+- **Reading (registered: H317.1 passes, H317.2 fails).** Organs of brain-dead donors keep a shared, clock-specific
+  covariance of nearly the size of donors with a living brain, but in a different arrangement: rearranged, not
+  drifted. With A315 (tissue amplitude kept) and A314 (alignment to the hour of death lost equally in both groups):
+  after brain death the organs keep their clocks and still follow something shared, at different relative phases.
+- **Post hoc (not tested).** A shared drive of another kind (donor management: ventilation, infusions, temperature
+  control, hormone replacement) would give exactly this: entrained receivers lock to whatever drives them, and their
+  relative lags depend on the drive. The living brain would then set the body's organ order not by holding organs
+  together, but by being the drive whose timing produces this order.
+- Code: `exploratory/A317_braindeath_confirm/scripts/score_a317.py --stage score`.
+<!-- src: paper/exploratory/A317_braindeath_confirm/output/{power,tests,sensitivity,sets}.csv -->
