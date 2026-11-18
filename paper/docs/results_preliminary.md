@@ -6678,3 +6678,18 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
   to days, ICU cues) does not contradict but does not generalise to: the human claim is stated for the short term.
 - Code: `exploratory/A319_izumo_mouse/scripts/score_a319.py`; card `manuscript/literature/notes/izumo2014differential.md`.
 <!-- src: paper/exploratory/A319_izumo_mouse/output/{conditions,organs,tests}.csv -->
+
+## Gap 3 note (2026-11-19; post hoc development on the A163 validation rows, no new simulation): a host-reliability threshold does not rescue the c intervals; c intervals are stated as approximate
+
+- Restricting the df-corrected intervals to hosts with estimated reliability R >= r0 lowers coverage instead of
+  raising it (cells with coverage >= 0.90: 57/64 at r0 0, 51/64 at 0.8, 44/60 at 0.85, 28/41 at 0.9; minimum coverage
+  0.802 -> 0.000): replicates whose R is overestimated are under-corrected, so selecting on R selects the biased ones.
+  An observable domain rule is not available; a different interval (e.g. bias-corrected bootstrap near the boundary)
+  would need bootstrap replicates that A163 did not store and a fresh validation (about 19 h at 16 workers).
+- **Statement for the paper (gap 3 closed as "state").** Absolute c is reported df-corrected with donor-bootstrap
+  intervals labelled approximate: in simulation at the paper's designs (A163), coverage 0.80-0.98 (median 0.94),
+  57 of 64 cells >= 0.90; undercoverage is confined to c >= 0.6 (width near the boundary at c 0.9; bias with 30 donors
+  and 2 anchors at anchor coupling 0.6). Claims rest on contrasts at a common host (d, d*; calibrated, A154 V154.2), on
+  gain and departure, and on ranks; none rests on an absolute c interval.
+- Code: `exploratory/A163_reliability_correction/scripts/dev_reliability_rule.py`.
+<!-- src: paper/exploratory/A163_reliability_correction/output/validate/{summary,dev_reliability_rule}.csv -->

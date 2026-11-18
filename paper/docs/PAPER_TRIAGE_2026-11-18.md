@@ -80,7 +80,8 @@ figures.
    outward-facing); the mouse central-clock loss (A319) is the available second line of evidence.
 2. **Responsive-gene specificity in living tissue.** A285: the responsive rule is not calibrated in bulk; the living
    internal-time results (A251, A255) stand on matched genes only. State it, or calibrate the responsive rule.
-3. **Coverage of c (A162 / A163).** The coupling intervals undercover at realistic anchor coupling. Fix or state.
+3. **Coverage of c (A162 / A163).** Closed as "state" (2026-11-19, `results_preliminary.md` gap 3 note): intervals
+   approximate (coverage 0.80-0.98, median 0.94); no claim rests on an absolute c interval.
 4. **Gain decomposition, blind.** Predict sample gain from composition x conserved class gains in unseen atlases
    (replaces the closed A298).
 5. **Conflicting drives, blind.** One curve of amplitude loss and shift per tissue weight b, on an unseen multi-tissue
