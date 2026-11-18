@@ -6345,3 +6345,39 @@ the first.
   (0.70); the companion tissues are not disease-free (skin and nerve in T2D).
 - Code: `exploratory/A306_disease_gain_departure/scripts/compute_a306.py --stage power | score --jobs 4`.
 <!-- src: paper/exploratory/A306_disease_gain_departure/output/{power,power_tissues,balance_summary,score_tests,score_tissues,score_sensitivity}.csv -->
+
+## A307 (scored 2026-11-18; NOT BLIND for A243-A269): the fetal signal-induced clock genes keep the waveform's phase relations to the core genes in adrenal cortex and lung (H307.2 PASS x2); they also follow glucocorticoid-target activity clock-specifically in lung (H307.1 PASS), not beyond matched genes in cortex; liver resolves neither
+
+- Design as registered: rows and adjustment of A264 (cortex, 34 fetuses, 6 cohorts) and A269 (lung 38 / 5, liver 35 / 3);
+  L = mean r^2 of PER1, PER2, NR1D1 with the GC score (FKBP5, TSC22D3, ZBTB16, KLF9); W = mean over the 33 (signal-induced,
+  core) pairs of r cos(phase difference); 10,000 permutations, 200 matched sets. Power stage (null only) 17 s; scoring 22 s.
+
+| organ | L (GC link) | p (Holm) | matched median / q95 (pct) | W (waveform) | p (Holm) | matched median / q95 (pct) |
+|---|---|---|---|---|---|---|
+| adrenal cortex | 0.180 | 0.0020 (0.0040) | 0.094 / 0.192 (92.5) | **0.083** | 0.0003 (0.0009) | 0.001 / 0.072 (98.5) |
+| lung | **0.204** | 0.0001 (0.0003) | 0.053 / 0.138 (100) | **0.076** | 0.0003 (0.0009) | 0.000 / 0.066 (97.0) |
+| liver | 0.061 | 0.117 (0.117) | 0.131 / 0.340 (17.5) | 0.037 | 0.042 (0.042) | 0.000 / 0.062 (81.5) |
+
+- MDE (power note): L 0.096-0.122, W 0.051-0.058.
+- **Verdicts.** H307.1: lung PASS; cortex significant but not above the matched q95 (expression-matched genes follow the
+  GC score almost as much, median r^2 0.094): not clock-specific; liver fail. H307.2: cortex PASS, lung PASS; liver
+  p 0.042 (Holm 0.042) below the matched q95: not clock-specific.
+- **Signed correlation with the GC score (descriptive).** PER1 +0.51 / +0.56 / +0.25 (cortex / lung / liver), PER2 +0.49
+  / +0.51 / +0.34, NR1D1 +0.21 / +0.20 / -0.04; DBP negative in all three (-0.09, -0.38, -0.39); several core genes are
+  also positive (NR1D2 +0.55 / +0.30 / +0.35, CRY2 +0.44 / +0.43 / +0.57, CLOCK +0.44 / +0.20 / +0.57). The GC score is
+  a broad axis of the fetal rows, not a PER1 / PER2 / NR1D1-specific one; NR1D1 does not load with the GC targets.
+- **Reading (registered).** Cortex: "H307.2 pass, H307.1 fail": PER1, PER2 and NR1D1 covary with the core genes as the
+  clock's phase relations predict, beyond expression-matched genes, and their link to GC-target activity is not
+  clock-specific: loop-consistent rather than a GC-induced state. Lung: both pass: a GC-driven component on top of
+  loop-consistent covariation, not separable. Liver: not resolved.
+- **Relation to A266 / A269 (post hoc, interpretation).** A266 and A269 found the core genes alone (without PER1, PER2,
+  NR1D1) not significant or not clock-specific; here the cross block between the signal-induced and the core genes has
+  the waveform's sign pattern. The two are compatible: the core genes' covariation is weak on its own but aligned with
+  PER1 / PER2 / NR1D1 as in an adult clock. The simple reading of A266 ("a hormone-induced response of the
+  signal-induced genes alone") is therefore weakened for the cortex and the lung: the signal-induced genes do not move
+  alone; whether the shared state is a running loop or an input that moves the whole network in its clock pattern is
+  not decided without times (or spliced / unspliced counts).
+- **Limits.** Not blind; no adult power (fails read against the MDE only); the cos(phase difference) template uses adult
+  GTEx phases; Pearson r over 34-38 fetuses after cohort and age adjustment.
+- Code: `exploratory/A307_fetal_gc_pattern/scripts/score_a307.py --stage power | score`.
+<!-- src: paper/exploratory/A307_fetal_gc_pattern/output/{power,tests,genes,companions}.csv -->
