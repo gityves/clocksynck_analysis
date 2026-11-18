@@ -8197,3 +8197,8 @@ companion medians and q95 are part of scoring (they are on the true rows) and ar
 power is computed (the user asked for the cheap check): a fail is read only against the MDE, not as an exclusion of a
 loop of a given adult size.
 **Code.** `exploratory/A307_fetal_gc_pattern/scripts/score_a307.py --stage power | score`.
+
+### A307 power note (2026-11-18, nulls only; no observed statistic computed)
+`score_a307.py --stage power` (17 s; `output/power.csv`, 10,000 draws). MDE (q95 + 0.84 SD of the null): L (mean r^2 of
+SI with the GC score) cortex 0.122, lung 0.096, liver 0.104 (null means 0.028-0.035); W cortex 0.058, lung 0.051, liver
+0.053 (null means 0.000). Both statistics are scored in all three organs as registered.
