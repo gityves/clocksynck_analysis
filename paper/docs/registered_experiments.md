@@ -8590,3 +8590,13 @@ pacemaker (descriptive).
 clock genes (null-corrected only in the feasibility check); coherent power mixes rhythm amplitude with pool-to-pool
 variation in each arm.
 **Code.** `exploratory/A316_aorta_cells/scripts/score_a316.py --stage feasibility | score`.
+
+### A316 feasibility note (2026-11-18, aligned arm only; `score_a316.py --stage feasibility`): gate FAILED, not scored
+(a) Clock UMI per cell: median 6 (SMC), 4 (fibroblasts): passes. (b) Aligned D above its permuted-acrophase null in
+both (SMC 0.047 vs -0.521; fibroblasts 5.418 vs -0.136): passes, but the null means are negative and the two cell
+types differ by two orders of magnitude, so D is not stable enough here to be read as a dispersion. (c) Placebo (50
+ZT- and sex-covering halvings of the 14 aligned libraries): mean log F ratio 0.033 (SD 0.209), median jackknife SE
+0.288, above the 0.105 required: a drop of exp(-0.26) in the coherent fraction cannot be resolved; the coherent power,
+estimated from a handful of pooled libraries per arm, dominates the error (as the pool-to-pool variation in A201).
+Registered consequence: H316.1 and H316.2 are not scored; the misaligned arm was not read.
+<!-- src: paper/exploratory/A316_aorta_cells/output/{feasibility,feasibility_gate,placebo}.csv -->
