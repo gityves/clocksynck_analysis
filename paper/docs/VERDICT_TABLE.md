@@ -536,3 +536,4 @@ Source for the rows with a figure panel: `paper/exploratory/WP0_integrity/output
 | A304 | H304.1 departure rise with proliferation | genomic | H | Q_R -0.190, p 0.944 (power 1.000 at x 2) | - | FAIL | lower, as a pure gain loss predicts | A304_cancer_gain_departure/output/score/tests.csv |
 | A304 | H304.3 departure rise in TP53-altered tumours | genomic | H | Q_R -0.522, p 0.995, Holm 1.0 | - | FAIL | lower, matched 5.5th percentile | A304_cancer_gain_departure/output/score/tests.csv |
 | A304 | H304.4 departure rise in luminal A vs other (BRCA) | genomic | H | Q_R -0.216, p 0.86, Holm 1.0 | - | FAIL | gain +0.924 descriptive | A304_cancer_gain_departure/output/score/tests.csv |
+| A305 | H305.1 malignant cells share their tumour stromal-vascular clock state (pairwise, A283 form) | genomic | H | MDE 0.156 > 0.10 (2 cohorts, 3 pairs) | - | not scored (not powered) | closed at power stage | A305_malignant_stroma_pairwise/output/power/power.csv |

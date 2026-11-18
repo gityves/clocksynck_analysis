@@ -6299,3 +6299,18 @@ the first.
   but not between cancers. Proliferation split at the median within cancer; arms of 9 to 56 pairs.
 - Code: `exploratory/A304_cancer_gain_departure/scripts/{power_a304.py, score_a304.py} --jobs 4`.
 <!-- src: paper/exploratory/A304_cancer_gain_departure/output/power/{calibration,design,power,mde}.csv; paper/exploratory/A304_cancer_gain_departure/output/score/{tests,readouts,per_cancer,companions,sensitivity_purity,purity_imbalance,a3_per_cancer}.csv -->
+
+## A305 power note (2026-11-18; placebo draws only, no observed statistic computed): malignant-stroma pairwise sharing is not powered; A305 closed at the power stage
+
+- 34 single-cell tumour cohorts (A227 list); only 2 have a (malignant, stromal-vascular) pair passing the shared-donor
+  rule (min_stratum 3, min_df 15): GSE178341 colorectal (malignant-endothelial, 24 donors) and GSE183904 gastric
+  (malignant-endothelial and malignant-fibroblast, 18 donors each): 46 patients, 3 pairs. The other cohorts have 3 to 11
+  patients with both compartments.
+- 5000 placebo draws: smallest attainable p_cal 0.0036 (matched), 0.0062 (responsive); D = T_MS minus matched median:
+  placebo mean 0.0015, SD 0.0616, q95 0.106; **MDE 0.156 > 0.10**: rule (ii) fails, H305.1 not scored.
+- Reading (registered): no reading of malignant clock sharing with the tumour stroma; the A149 covariation stays
+  unresolved for clock specificity. A powered design needs single-cell tumour cohorts with >= 15 patients carrying both
+  malignant and stromal-vascular cells in one stratum.
+- Code: `exploratory/A305_malignant_stroma_pairwise/scripts/power_a305.py` (58 s; run by a Sonnet subagent; numbers
+  checked against `power.csv` and `design.csv`).
+<!-- src: paper/exploratory/A305_malignant_stroma_pairwise/output/power/{power,design,design_pairs}.csv -->
