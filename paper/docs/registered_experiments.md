@@ -8127,3 +8127,30 @@ and (ii) the MDE of T_MS minus the matched median is <= 0.10 (A286 bound). Other
 tumour's own clock environment reaches them). FAIL with MDE: not detected at that size; sharing matched by companions:
 the A149 covariation is a shared non-clock state.
 **Code.** `exploratory/A305_malignant_stroma_pairwise/scripts/power_a305.py`.
+
+## A306 (2026-11-18, lead prompt task B; staged: power stage (permutation nulls only) then a dated power note, scoring only of powered readouts; **NOT BLIND** for: A164 / A202 / A233 / A235 (module d* equivalent to 0 within about +-0.05 for T2D, hypertension and smoking; offsets equal within about 1 h), A235's descriptive module log z2 ratio (T2D -0.003 fast, -0.047 vent); per-tissue z2 of each arm was written to the A233 / A235 output tables (not read for this registration); **seen before writing:** long-term steroid counts (MHSTRDLT, aggregates: 6 fast, 8 vent cases); NOT seen: any psi of a condition arm, any module-minus-companion z2 or psi contrast): do chronic conditions change the gain or the departure of the organ they affect? **GTEx, A233 matched procedure; readouts log z2 ratio and log psi ratio**
+**Conditions and modules (fixed now).** T2D (A164 label; module = A164 MET: liver, both adiposes, pancreas, skeletal
+muscle), hypertension (MHHTN; module = arteries (aorta, coronary, tibial) and heart (left ventricle, atrial
+appendage)), smoking (MHSMKSTS; module = lung). Companion: A164 COMP (tibial nerve, both skins). Long-term steroids
+are not used (6 / 8 cases, below the A233 minimum of 10 matched cases per tissue).
+**Matching and estimation.** A233 exactly (`A231_age_coupling/scripts/matched_label.py`: up to 3 controls, exact sex and
+Hardy class, age caliper 5 y, then ischaemic time; A164 anchors; `Dataset.contrast` per tissue, pooled host prior;
+1000 permutations swapping the case label within matched sets, shared across tissues; vent and fast cohorts). Only
+module and companion tissues are fitted.
+**Readouts.** Per tissue the contrast table's log z2 ratio (gain: case / control loading on the common host) and log psi
+ratio (departure). Per condition and readout: Delta = (module pooled) - (companion pooled), inverse-null-variance
+pooling over tissues within cohort, then over cohorts (A233 module-minus-companion). Subtracting the companion
+removes what the arms' host does to every tissue alike (host gauge and spread, A258), so Delta is the organ's change
+relative to the rest of the body. Two-sided permutation p.
+**Power rule (fixed now).** MDE_80 = 2.49 x null SD of Delta (A233). A readout is scored if MDE_80 <= log 2 = 0.693
+(a doubling or halving of the organ's z2 or psi relative to the companions); otherwise descriptive. Holm over all scored
+readouts (at most 6).
+**Tests.** H306.c.g (gain) and H306.c.d (departure), c in {t2d, htn, smoking}: Delta != 0, Holm p < 0.05.
+**Readings.** d* is known to be unchanged (A164, A233), so z2 and psi can only move together (coupling = z2 V / (z2 V + 2
+psi) fixed): both readouts detected in the same direction = the organ's clock expresses more or less of everything
+(gain and departure scaled together, a change of amplitude, not of synchrony). Gain alone or departure alone detected
+would contradict the d* equivalence and is reported as such (power of the two readouts differs). Neither, powered: no
+change of the organ's gain or departure beyond the MDE. Not powered: uninformative.
+**Reported.** Per tissue and cohort log z2 and log psi ratios; module and companion pooled values separately; arm-prior
+sensitivity (`host_prior="arm"`, observed only); matching balance.
+**Code.** `exploratory/A306_disease_gain_departure/scripts/compute_a306.py --stage power | score`.
