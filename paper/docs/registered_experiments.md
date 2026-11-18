@@ -8438,3 +8438,10 @@ scale (RNA quality, agonal state); a technical scale acting proportionally on ev
 one acting more on noisy low-gain tissues could; the bootstrap holds the hosts fixed. Elasticities are relative to the
 other tissues' composite, which is dominated by high-gain tissues.
 **Code.** `exploratory/A312_elasticity/scripts/{power_a312.py, score_a312.py}`.
+
+### A312 power note (2026-11-18, before scoring; `score_a312.py --stage power`; leverages and SEs only)
+Leverage (corr of the two half-host radii over donors): median 0.783 over the 27 tissues (0.747 to 0.857): persons
+differ strongly in the amplitude with which their tissues jointly express the shared rhythm. Bootstrap SE of the
+elasticity: median 0.164 (0.088 thyroid to 0.670 whole blood). Power of H312.1 against the registered alternative
+0.984. Gate passed: H312.1 is scored.
+<!-- src: paper/exploratory/A312_elasticity/output/{power,power_tissues}.csv -->
