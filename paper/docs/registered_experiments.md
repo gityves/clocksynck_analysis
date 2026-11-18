@@ -8693,3 +8693,28 @@ state is mostly dissolution, against "rearranged". H319.1 FAIL (E > 0): organs s
 SCN: a residual shared drive or inter-organ coupling. Caveats: explant peak phases include dissection resetting (all
 tissues of a mouse cut together at ZT/CT 10.5-13); 6 organs and 11-15 mice; von Mises fitted from R alone.
 **Code.** `exploratory/A319_izumo_mouse/scripts/score_a319.py`.
+
+## A320 (2026-11-19, user: "go with option 1 and move to gap 2" (`PAPER_TRIAGE_2026-11-18.md` gap 2: responsive-gene specificity in living tissue); a calibration and calibrated restatement with a new companion family, no new biology; staged: calibration gate first, restatement only where it passes; **NOT BLIND**: every clock statistic and its matched and (narrow) responsive companions of the tests below are known (A251, A255, A138, A227, A285); NOT computed: any statistic of the broad family below): does a stress-responsive companion family that is not drawn from a 30-gene pool calibrate, and are the living internal-time results clock-specific against it? **A285 tests: A251 H251.1, H251.2a, H251.2b (skin sites); A255 H255.1 MuTHER fat-skin and H255.3 surgical pooled; A138 H138.4; A227 H227.1-2**
+
+**Why.** A285: the responsive sets are drawn from about 30 glucocorticoid and immediate-early genes, overlap and move
+together, so the q95 rule rejects 8-20 % of placebo draws and, with one to six pairs, the clock exceeds every set
+under no pairing in 6-8 % of draws: A251 and A255 MuTHER are "not decidable" against responsive genes.
+- **Broad family (fixed now).** Pool = MSigDB Hallmark TNFA_SIGNALING_VIA_NFKB and HYPOXIA (release 2024.1.Hs,
+  `$SCCC_DATA/msigdb_hallmark/`, acute inflammatory / immediate-early and ischaemic stress) plus the current
+  `GC_TARGETS` and `IMMEDIATE_EARLY`, minus `CLOCK_GENES`: 376 genes. Sets drawn by the existing responsive rule
+  (`controls.responsive_pseudo_genes`, expression-matched bins) with this pool; new kind `responsive_broad` in
+  `clocksync.paired.pseudo_waveforms`. 200 sets per test, seeds as the scored responsive family with a new tag (A251
+  and A255 tag 5, A138 46, A227 seed + [45]). Mean pairwise Jaccard overlap of the sets reported.
+- **V320 (gate, per test).** A285's placebo (pairing unit permuted within the scored strata, 2000 draws, every set
+  re-paired identically): rejection rate of the q95 rule <= 0.0646 and placebo rate of pi = 1 <= 0.02 (the clock
+  above every set must be rare under no pairing, so that p_cal < 0.05 is attainable).
+- **H320 (restatement, only where V320 passes).** Clock-specific against the broad family: clock above the broad q95
+  and p_cal (A285 calibrated percentile test) < 0.05. Primary: the living tests (A251 x3, A255 x2); A138 secondary;
+  A227 descriptive (not in its rule, A271).
+**Readings (stated now).** V320 and H320 pass: the result is clock-specific against stress-responsive genes (broad
+family); the narrow family is reported as uncalibrated. V320 passes, H320 fails: a shared stress state can explain
+the result at that design: state it as matched-specific only and say so. V320 fails: the broad family is not usable
+at that design either; the result stays "not decidable against responsive genes". Caveat: Hallmark hypoxia and NFkB
+sets include genes with daily rhythms of their own (the test is conservative where they are clock outputs).
+**Code.** `clocksync` (`responsive_broad`); `exploratory/A285_companion_calibration/scripts/placebo_a285.py --families
+matched,responsive,responsive_broad --out a320` (A285's script, generalised; its defaults reproduce A285).
