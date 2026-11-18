@@ -8092,3 +8092,17 @@ Poisson-corrected tumour-normal correlation, rel as above; BLCA and UCEC without
 tumour gain on body time |g| = G / rel, with patient-bootstrap 90 % intervals (1000, seed 304) on corr and G; ranked.
 Caveats stated with it: rel is from GTEx deaths on a multi-tissue host, the normal is adjacent tissue at surgery.
 **Code.** `exploratory/A304_cancer_gain_departure/scripts/{power_a304.py, score_a304.py}`.
+
+### A304 design addendum (2026-11-18, after the power stage; no observed contrast computed)
+`power_a304.py --jobs 4` (38 s; `output/power/{calibration,design,power,mde}.csv`). The power rule was applied at
+alpha 0.025 (Holm's first step over the two readouts of a family). Type I error at 0.05 over 500 null replicates: 0.044
+to 0.068 for every readout and contrast (Monte Carlo SE about 0.01). Cross-readouts: a pure gain loss raises Q_R in
+<= 0.03 of replicates, a pure departure rise lowers Q_G in <= 0.07: the two readouts separate. Signatures at the
+rule points (H304.1): gain x 0.5: mean Q_G -0.509, Q_R -0.100; departure x 2: Q_G +0.087, Q_R +0.625.
+| contrast | cells (pairs, case / ref) | power gain at k_G 0.5 | power departure at k_D 2 | scored |
+|---|---|---|---|---|
+| H304.1 proliferation | 10 cancers (517, 257 / 260) | 0.840 | 1.000 | gain and departure (primary, Holm over 2) |
+| H304.2 ER (BRCA) | 1 (99, 21 / 78) | 0.120 | 0.698 | descriptive only |
+| H304.3 TP53 | 5 (BRCA, COAD, LIHC, LUAD, PRAD; 299, 100 / 199) | 0.524 | 0.998 | departure (secondary) |
+| H304.4 LumA (BRCA) | 1 (105, 58 / 47) | 0.200 | 0.854 | departure (secondary) |
+Secondary family: H304.3 and H304.4 departure readouts, Holm over 2. Every other readout is reported descriptively.
