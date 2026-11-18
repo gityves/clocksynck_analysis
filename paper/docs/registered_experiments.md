@@ -8445,3 +8445,45 @@ differ strongly in the amplitude with which their tissues jointly express the sh
 elasticity: median 0.164 (0.088 thyroid to 0.670 whole blood). Power of H312.1 against the registered alternative
 0.984. Gate passed: H312.1 is scored.
 <!-- src: paper/exploratory/A312_elasticity/output/{power,power_tissues}.csv -->
+
+## A313 (2026-11-18, user: "yes register A313 and run the power stage", after the question whether cell populations of one organ are more synchronised than populations of another organ at the same physical distance; staged: power first (matched sets only), then scoring on the user's go; **NOT BLIND** for the GTEx organ offsets (A296; descriptive look of 2026-11-18: adjacent same-type pairs 0.00-0.15 h apart, oesophageal mucosa vs muscularis 1.10 h, median of all pairs 0.85 h), A302 (the liver's 21 pair correlations, 0.03 to 0.26), A293 Part 2, A310-A312; NOT seen: the departure correlation of any pair not involving the liver): do anatomically adjacent tissues share a person's departure from the body's time more than distant tissues, at equal composition? **GTEx fast deaths, A104 periphery rows, Whole Blood and Testis excluded (as A302): 25 tissues**
+
+**Why.** In the entrained-ensemble reading (cell-autonomous clocks entrained by one systemic drive, no coupling), a
+person's departures in two tissues share only what the systemic drive and sample handling share. Coupling between
+neighbouring cells, or a cue local to a body region (innervation, perfusion, temperature), makes adjacent tissues
+depart together. Similar composition can also make tissues depart together (shared technical or cell-type
+behaviour). The 2 x 2 design separates adjacency from composition. Coupling and local cues are not separated.
+**Regions (adjacent = same region; fixed now).** leg: Skin - Sun Exposed (Lower leg), Adipose - Subcutaneous, Muscle -
+Skeletal, Artery - Tibial, Nerve - Tibial. heart: Heart - Atrial Appendage, Heart - Left Ventricle, Artery - Coronary,
+Artery - Aorta. upper GI: Esophagus - Mucosa, Esophagus - Muscularis, Esophagus - Gastroesophageal Junction, Stomach.
+abdomen: Colon - Transverse, Colon - Sigmoid, Adipose - Visceral (Omentum). Every other tissue is its own region.
+**Families (similar = same family; fixed now).** squamous: both skins, Esophagus - Mucosa. adipose: both adiposes,
+Breast - Mammary Tissue. artery: the three arteries. heart: the two heart tissues. GI smooth muscle: Esophagus -
+Muscularis, Esophagus - Gastroesophageal Junction, Colon - Sigmoid. GI mucosa: Stomach, Colon - Transverse. Every
+other tissue is its own family.
+**Cells.** AS adjacent-similar (3 pairs: atrial-ventricle, aorta-coronary, muscularis-GEJ); AD adjacent-different
+(22: 10 leg, 4 heart, 5 upper GI, 3 abdomen); DS distant-similar (11); DD distant-different (the remaining pairs).
+Pairs with >= 30 shared donors.
+**Pair statistic (A302 estimator).** Host from the periphery tissues except both members; each state regressed on it
+with strata intercepts; corrected |correlation| r of the residuals (host-error leakage removed).
+- **H313.1 (local factor):** T_adj = median r(AD) - median r(DD) > 0 with (i) p < 0.05 against 10,000 random
+  reassignments of the 25 tissues to regions of the same sizes (families kept), and (ii) T_adj above the q95 of the
+  same statistic over 100 expression-matched pseudo-clock sets (A302 construction, seed [313, 1]) on the same donors.
+- **H313.2 (composition, secondary):** T_fam = median r(DS) - median r(DD) > 0, same two criteria with families
+  reassigned (regions kept).
+- **Reported:** r per pair and cell; AS; the matched medians per cell; the phase differences of the A296 offsets per
+  cell (descriptive, seen).
+**Power stage (before scoring; matched sets only, no clock pair correlation computed).** On 20 matched sets: SD of
+T_adj over sets and SD of its region-reassignment null within sets; power of H313.1 against an excess of 0.10 in the
+corrected correlation for AD pairs (the scale of A302: liver pairs 0.03 to 0.26, matched median 0.12), power =
+Phi(0.10 / SD - 1.645) with SD the larger of the two. Gate: power >= 0.8; otherwise reported as not resolvable in
+GTEx and not scored.
+**Readings (stated now).** H313.1 PASS: adjacent tissues of different composition share a person's departure beyond
+distant tissues and beyond matched genes: a local factor (coupling or a regional cue) acts on peripheral clocks;
+the uncoupled entrained-ensemble model needs a regional term. FAIL (powered): no regional sharing above 0.10; departures are
+regionally independent, as the uncoupled ensemble with one systemic drive predicts. H313.2 PASS with H313.1 FAIL:
+sharing follows composition, not location.
+**Limits.** Deaths; the departure includes sample-level technical variation (A291, A311), which can be shared by
+tissues processed together, e.g. tissues of one region collected in sequence (no GTEx field orders sample collection;
+not controlled). The correction assumes isotropic host error. Region and family sizes are small.
+**Code.** `exploratory/A313_local_coupling/scripts/score_a313.py --stage power | score`.
