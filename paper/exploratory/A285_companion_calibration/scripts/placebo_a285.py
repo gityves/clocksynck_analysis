@@ -9,7 +9,8 @@ reproduce the scored statistic and companion q95.
   H285  p_cal = (1 + #{placebo pi >= pi}) / (1 + draws), pi = the clock's percentile among its companions
 
     python placebo_a285.py --test a251|a255|a138|a227 [--draws 2000] [--jobs 4]
-Outputs (../output/<test>/): repro.csv, draws.npz, tests.csv.
+    python placebo_a285.py --test ... --families matched,responsive,responsive_broad --out a320   # A320
+Outputs (../output/[<out>/]<test>/): repro.csv, draws.npz, tests.csv (A320 also overlap.csv). Defaults reproduce A285.
 """
 
 from __future__ import annotations
@@ -30,6 +31,22 @@ from common import cli  # noqa: E402
 OUT = HERE.parents[1] / "output"
 SEED, BAND = 285, 0.0646
 TEST_CODE = {"a251": 1, "a255": 2, "a138": 3, "a227": 4}
+FAMILIES = ["matched", "responsive"]  # set by --families; seeds per family below (scored ones unchanged)
+TAG = {"a251": {"matched": 3, "responsive": 4, "responsive_broad": 5},
+       "a255": {"matched": 3, "responsive": 4, "responsive_broad": 5},
+       "a138": {"matched": 44, "responsive": 45, "responsive_broad": 46},
+       "a227": {"matched": [44], "responsive": [44], "responsive_broad": [45]}}
+OVERLAP = []  # mean pairwise Jaccard overlap of the gene sets per test x family (where computed)
+
+
+def jaccard(wfs):
+    g = [set(w.genes) for w in wfs]
+    j = [len(a & b) / len(a | b) for i, a in enumerate(g) for b in g[:i]]
+    return float(np.mean(j)) if j else np.nan
+
+
+def slices(n_sets, start=1):
+    return {f: slice(start + i * n_sets, start + (i + 1) * n_sets) for i, f in enumerate(FAMILIES)}
 
 
 def _load(name, path):
@@ -84,12 +101,13 @@ def a251():
     lm = (sum(data[l][0].loc[data[l][1].arm != "timed_men"].mean() for l in M.LAYERS) / 2 * np.log(2)).dropna()
     lm = lm[~lm.index.duplicated()]
     wfs, fam = [M.WF], {}
-    for kind, tag in (("matched", 3), ("responsive", 4)):
+    for kind in FAMILIES:
         n0 = len(wfs)
-        for w in P.pseudo_waveforms(lm, M.N_SETS, np.random.default_rng([M.SEED, tag]), M.WF, kind):
+        for w in P.pseudo_waveforms(lm, M.N_SETS, np.random.default_rng([M.SEED, TAG["a251"][kind]]), M.WF, kind):
             if M.women_states(data, w, ids) is not None:
                 wfs.append(w)
         fam[kind] = slice(n0, len(wfs))
+        OVERLAP.append(dict(test="a251", family=kind, jaccard=jaccard(wfs[n0:])))
     states = [M.women_states(data, w, ids) for w in wfs]
     Z = {c: np.array([s[c] for s in states]) for c in M.COMPS}
     tests = {k.split()[0]: p for k, p in M.families().items()}
@@ -102,7 +120,7 @@ def a251():
         perm = {c: rng.permutation(n) for c in Z}
         return {k: pooled_r(Z, p, perm) for k, p in tests.items()}
 
-    return tests, fam, draw, {k: ("matched", "responsive") for k in tests}
+    return tests, fam, draw, {k: tuple(FAMILIES) for k in tests}
 
 
 # ---- A255 -----------------------------------------------------------------------------------------------------
@@ -114,7 +132,11 @@ def a255():
     surg = {a: M.load_surg(a, False) for a in M.SURG if not (gates[gates.cohort == a].p >= 0.05).any()}
 
     def stack(c, tissues):
-        wfs = [c.wf] + c.pseudo("matched", M.N_SETS, 3) + c.pseudo("responsive", M.N_SETS, 4)
+        wfs = [c.wf]
+        for f in FAMILIES:
+            ps = c.pseudo(f, M.N_SETS, TAG["a255"][f])
+            OVERLAP.append(dict(test=f"a255 {c.name}", family=f, jaccard=jaccard(ps)))
+            wfs += ps
         zs = [c.Z(w) for w in wfs]
         return {k: np.array([z[k] for z in zs]) for k in tissues}
 
@@ -123,7 +145,7 @@ def a255():
     Zs = {a: stack(c, sp[a]) for a, c in surg.items()}
     w = np.array([M.r_pair(Zs[a][sp[a][0]][0], Zs[a][sp[a][1]][0])[2] for a in surg], float)
     w = w / w.sum()  # scored weights (persons with both tissues on the real pairing), fixed under placebo
-    fam = {"matched": slice(1, 1 + M.N_SETS), "responsive": slice(1 + M.N_SETS, 1 + 2 * M.N_SETS)}
+    fam = slices(M.N_SETS)
     names = list(surg)  # plain names only: the draw closure is shipped to joblib workers
     log("surgical cohorts", names, "weights", w.round(3))
     del surg, mu
@@ -135,7 +157,7 @@ def a255():
         out["surgical cohorts pooled"] = sum(wi * pooled_r(Zs[a], [sp[a]], perm(Zs[a])) for wi, a in zip(w, names))
         return out
 
-    return None, fam, draw, {k: ("matched", "responsive") for k in ("muther fat-skin", "surgical cohorts pooled")}
+    return None, fam, draw, {k: tuple(FAMILIES) for k in ("muther fat-skin", "surgical cohorts pooled")}
 
 
 # ---- A138 -----------------------------------------------------------------------------------------------------
@@ -170,17 +192,18 @@ def a138(jobs=4):
     st = q.tcga_states(None, 0)
     keep = [c for c in st if st[c]["gated"] and q.tr_corrected(st[c]["za"], st[c]["vA"]) > 0
             and q.tr_corrected(st[c]["zb"], st[c]["vB"]) > 0]
-    res = dict(Parallel(n_jobs=jobs)(delayed(_a138_cancer)(c, i, (("matched", 44), ("responsive", 45)))
+    res = dict(Parallel(n_jobs=jobs)(delayed(_a138_cancer)(c, i, tuple((f, TAG["a138"][f]) for f in FAMILIES))
                                      for i, c in enumerate(keep)))
     S = {}
     for c in keep:
         u = st[c]
         sets = [(u["za"], u["zb"], q.tr_corrected(u["za"], u["vA"]), q.tr_corrected(u["zb"], u["vB"]))]
-        sets += res[c]["matched"] + res[c]["responsive"]
+        for f in FAMILIES:
+            sets += res[c][f]
         S[c] = dict(za=np.array([x[0] for x in sets]), zb=np.array([x[1] for x in sets]),
                     ea=np.array([x[2] for x in sets]), eb=np.array([x[3] for x in sets]))
     w = np.array([st[c]["n"] for c in keep], float)
-    fam = {"matched": slice(1, 201), "responsive": slice(201, 401)}
+    fam = slices(200)
     log("A138 cancers", keep)
 
     def draw(d):
@@ -197,7 +220,7 @@ def a138(jobs=4):
         ww = np.where(np.isfinite(per), w[:, None], 0.0)
         return {"H138.4": np.nansum(per * ww, 0) / ww.sum(0)}
 
-    return None, fam, draw, {"H138.4": ("matched", "responsive")}
+    return None, fam, draw, {"H138.4": tuple(FAMILIES)}
 
 
 # ---- A227 -----------------------------------------------------------------------------------------------------
@@ -209,7 +232,7 @@ def _a227_mod():
     return _load("a285_a227", A227_DIR / "scripts/compute_a227.py")
 
 
-def _a227_unit(study, kind):
+def _a227_unit(study, kind, families=("matched", "responsive")):
     """Stratum-centred tumour / normal states of the clock and the 200 + 200 companion sets (scored seeds; NaN rows for
     a set without estimable states), and the strata, of one cohort x compartment."""
     M = _a227_mod()
@@ -224,8 +247,8 @@ def _a227_unit(study, kind):
     frac = ref[genes].div(ref.depth, axis=0)
     lm = np.log(frac.mean() + 1e-12)[(ref[genes].mean() >= 1) | frac.columns.isin(list(M.L.q.WF.genes))]
     za, zb = [u["za"]], [u["zb"]]
-    for fam in ("matched", "responsive"):
-        for w in pseudo_waveforms(lm, 200, np.random.default_rng(M.seed_of(kind, study) + [44]), M.L.q.WF, fam):
+    for fam in families:
+        for w in pseudo_waveforms(lm, 200, np.random.default_rng(M.seed_of(kind, study) + TAG["a227"][fam]), M.L.q.WF, fam):
             p = M.L.pair_states(G, a, b, wf=w, pts=u["pts"])
             za.append(p["za"] if p else np.full(u["n"], np.nan)), zb.append(p["zb"] if p else np.full(u["n"], np.nan))
     return study, kind, dict(za=np.array(za), zb=np.array(zb), stratum=u["stratum"], n=u["n"])
@@ -243,10 +266,10 @@ def a227(jobs=2):
     cohorts = M.cohort_list()
     keys = [(s, k) for k in kinds for s in cohorts if M.units_of(s, k)]
     log("A227 units", len(keys))
-    res = Parallel(n_jobs=jobs)(delayed(_a227_unit)(s, k) for s, k in keys)
+    res = Parallel(n_jobs=jobs)(delayed(_a227_unit)(s, k, tuple(FAMILIES)) for s, k in keys)
     U = {(s, k): u for s, k, u in res}
     del M
-    fam = {"matched": slice(1, 201), "responsive": slice(201, 401)}
+    fam = slices(200)
     names = {"myeloid": "H227.1", "T_NK": "H227.2"}
 
     def draw(d):
@@ -302,9 +325,12 @@ def main():
     ap = cli.parser(__doc__)
     ap.add_argument("--test", choices=sorted(TEST_CODE), required=True)
     ap.add_argument("--draws", type=int, default=2000)
+    ap.add_argument("--families", default="matched,responsive")
+    ap.add_argument("--out", default="")
     args = ap.parse_args()
     cli.setup(args)
-    out = OUT / args.test
+    FAMILIES[:] = args.families.split(",")
+    out = OUT / args.out / args.test if args.out else OUT / args.test
     out.mkdir(parents=True, exist_ok=True)
     tests, fam, draw, rules = BUILD[args.test](args.jobs) if args.test in ("a138", "a227") else BUILD[args.test]()
     obs = draw(None)
@@ -320,7 +346,10 @@ def main():
     log(rep.round(4).to_string())
     assert np.allclose(rep.clock, rep.scored, atol=1e-9), "draw 0 does not reproduce the scored statistic"
     for f in fam:
-        assert np.allclose(rep[f"{f}_q95"], rep[f"scored_{f}_q95"], atol=1e-9), f"draw 0: {f} q95 not reproduced"
+        if f in ("matched", "responsive"):  # scored families only
+            assert np.allclose(rep[f"{f}_q95"], rep[f"scored_{f}_q95"], atol=1e-9), f"draw 0: {f} q95 not reproduced"
+    if OVERLAP:
+        pd.DataFrame(OVERLAP).to_csv(out / "overlap.csv", index=False)
     from joblib import Parallel, delayed
     res = Parallel(n_jobs=args.jobs)(delayed(draw)(d) for d in range(args.draws))
     null = {k: np.array([r[k] for r in res]) for k in obs}
