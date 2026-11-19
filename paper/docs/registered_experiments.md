@@ -9193,3 +9193,11 @@ median V of 200 expression-matched sets) with the matched q95; beside it C (sign
 adult pass rate where the A237 / A239 feasibility tables give it for that bin. Caveat (A240): the spread of sampling
 times differs between bins (deaths and terminations at different hours), so V across bins mixes clock size and time
 spread. Script `exploratory/two_axis_map/d4_development.py`.
+
+### A331 power note (2026-11-19, before scoring; `score_a331.py --stage power`, no clock radius computed)
+GTEx person spread: median shared cv2 of the 20 half-host pairs 0.124, sigma_A 0.352. MuTHER, 680 persons: simulated
+null q95 0.067; expected leverage 0.177 at sigma_A (5th percentile 0.116), 0.055 at sigma_A / 2. Companions on the data:
+matched median 0.026, q95 0.117; responsive median 0.121, q95 0.179. **Power against the matched q95: 0.947 at sigma_A
+(gate passed), 0.047 at sigma_A / 2.** The responsive q95 lies at the expected leverage, so a PASS beyond the responsive
+sets is not expected even at the GTEx size; the matched family decides, as registered. Scoring follows unchanged.
+<!-- src: paper/exploratory/P1_person_loudness/output/power.csv -->
