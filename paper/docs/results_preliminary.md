@@ -6790,3 +6790,20 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
 - **Limits.** 8 tissues (low power for the rank test); class gains from other atlases; snRNA nuclei, not cells.
 - Code: `exploratory/A323_gain_decomposition/scripts/score_a323.py`.
 <!-- src: paper/exploratory/A323_gain_decomposition/output/{shares,tissues,tests}.csv -->
+
+## A324 (scored 2026-11-19; BLIND for heart, kidney, VAT): in Xin 2021 the pure mix of drives is rejected again (H324.1 PASS, Q 185, p 0.0005), but not every departure is above it (H324.2 FAIL: visceral fat loses slightly more): conflict costs amplitude; the tissues that barely move keep half or more, adipose (balanced weights) loses most in both datasets
+
+- Xin 2021, DRF vs NRF, 28 + 28 mice per tissue, 14 clock genes; A322's estimation and fit; one run.
+- **Complex ratios DRF / NRF:** liver 0.438 (0.413-0.465), 11.29 h; heart 0.589 (0.548-0.638), 1.59 h; kidney 0.648
+  (0.604-0.697), 2.49 h; VAT 0.111 (0.091-0.133), 23.52 h (-0.48 h).
+- **Fit:** Delta 11.42 h; b liver 0.718, heart 0.233, kidney 0.278, VAT 0.447. Model amplitudes: liver 0.441
+  (Mahalanobis 1.2), heart 0.537 (16.8, above), kidney 0.449 (148.5, above), VAT 0.131 (18.9, below).
+- **H324.1 PASS** (rejected again: parametric p 0.0005). **H324.2 FAIL:** VAT lies below the chord.
+- **Reading (registered: H324.1 passes, H324.2 fails).** Conflict can cost more amplitude than a pure mix (extra
+  dephasing in visceral fat); model part 5 is worded "conflicting drives cost amplitude". Descriptive, consistent over
+  both datasets (Manella A322, Xin): the tissues that follow the feeding drive least (lung, heart, kidney) shift 1.6 to
+  2.5 h and keep half to two thirds of their amplitude; the liver follows almost fully (11.3-11.7 h) and keeps 0.44 to
+  0.71; adipose, the tissue with the most balanced weights, loses most (WAT 0.32, VAT 0.11). Xin VAT does not match
+  Manella WAT (0.11 vs 0.32; different depots and protocols).
+- Code: `exploratory/A322_conflicting_drives/scripts/score_a324.py`.
+<!-- src: paper/exploratory/A322_conflicting_drives/output/xin/{ratios,fit,tests}.csv -->

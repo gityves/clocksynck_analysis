@@ -86,7 +86,9 @@ figures.
 4. **Gain decomposition.** Done (A323, 2026-11-19): FAIL; composition x class gains spread organ gains 1.3-fold against
    2.9-fold observed: an organ-level factor scales all classes; Figure 2 message reworded (synthesis).
 5. **Conflicting drives.** Not-blind check done (A322): a pure mix of drives is rejected; conflict costs amplitude,
-   most at balanced weights, less where tissues move least. Blind multi-tissue partial-conflict dataset still to find.
+   most at balanced weights, less where tissues move least. Blind replication in Xin 2021 (A324): mix rejected again; adipose loses most, at or beyond the mix; the pattern
+   (minor followers keep more, balanced tissues lose most) holds over both datasets. A per-organ b predicting a new
+   conflict remains open.
 6. **Age advance.** Replicate in living subjects or keep in the supplement with its caveats (A130 opposite sign).
 7. **Lymphocyte core loop.** Closed (A321, blind, 2026-11-19): no core-loop clock in 3 informative fresh compartments
    (combined p 0.47); "no readable clock" holds with the core loop included; skin T cells an uninformative exception.
