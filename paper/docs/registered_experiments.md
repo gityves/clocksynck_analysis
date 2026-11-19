@@ -9310,3 +9310,39 @@ the same groups' pseudobulks.**
 - Everything else stands: V334.0-4 and their thresholds, the gate, the aorta clock check, the placebo MDEs (placebo groups
   centred on the full aligned arm's ZT-balanced mesor, since a 6-library subset lacks a ZT), H334.1-2 and the limits. V334.2
   now simulates this estimator. `vonmises.solve` (|Gamma|) is reported as a descriptive column only.
+
+## A334b (2026-11-19, on the user's instruction after the A334 calibration gate failed (V334.1: share_R 0.59 at 8 h mixing, required 0.75); staged: aorta power, then one scoring run; **BLIND** for every misaligned-arm statistic of the aorta (D, rho^2, lambda, R never computed); **NOT BLIND**: the A334 skin calibration (mixing raised D from 9.9 to 15.1 at 4 h and from 10.2 to 14.8 at 8 h while rho fell; post hoc ideal two-population simulation share_R 0.81), the A201 / A279 phase shifts): after a 6 h advance, does the aorta lose coherent loudness, and does the within-library dispersion D rise (cells out of phase) or fall (quieter cells)? **Mouse aorta (Auerbach 2026), misaligned (8 libraries) vs aligned (14); Bmal1 KO (10) as the no-clock control**
+
+**Why model-free.** The lambda / R split depends on the von Mises shape (A334). The sign of D does not: at fixed per-cell
+amplitude, phases spreading raise the in-plane dispersion, while quieter cells lower it. Together with the coherent
+amplitude rho^2 of the same libraries, the sign of dD separates the two when one dominates; a mixture can leave D unchanged.
+
+**Design (`exploratory/A334_dephase_vs_damp/scripts/score_a334b.py`, using the A334 per-group statistics).** Groups =
+library x class (smooth muscle primary, fibroblasts secondary; >= 100 cells of >= 1,000 UMI); GTEx waveform; per group D
+(`group_stats`) and rho^2 (split-half product of the mesor-centred pseudobulk projection; mesor ZT-balanced within arm).
+Arm values are cell-weighted means; dlog D and dlog rho^2 = misaligned - aligned.
+
+**Stage 1, power (aligned and KO only).**
+- Clock check as A334: aligned D above all 20 permuted-acrophase planes, KO D <= 0.5 x aligned D; otherwise stop ("D not
+  clock-specific in the aorta").
+- Expected D changes: von Mises simulation at the aligned arm's fitted lambda, kappa, gene fractions, depths and cell
+  numbers (A334 `Model.solve`, used only to set the simulation), 100 replicates: pure dephasing and pure damping each to a
+  rho ratio of 0.8; d_deph and d_damp = median dlog D. Reported, plus the share of replicates with the right sign.
+- Placebo: 200 splits of the aligned libraries into 8 (2 per ZT) vs 6 (both on the full aligned arm's mesor); SD of
+  dlog D and dlog rho^2; MDE = 2.49 SD.
+- Gate: MDE(dlog rho^2) <= log(1 / 0.64) (a rho ratio of 0.8) and MDE(dlog D) <= min(|d_deph|, |d_damp|). Otherwise
+  "not decidable at this design".
+
+**Stage 2, score (one run).**
+- **H334b.1 (coherent loudness falls):** dlog rho^2 < 0, one-sided p < 0.05 from 2,000 permutations of arm labels within ZT.
+- **H334b.2 (sign of D; read only if H334b.1 passes):** on the same permutations, "dephasing" if dlog D > 0 with
+  one-sided p < 0.05, "damping" if dlog D < 0 with one-sided p < 0.05 (two-sided 0.10 in total), otherwise "not separated
+  (no dominant mechanism, or a mixture)". Non-clock companion: the same dlog D on the 20 permuted-acrophase planes; a
+  dephasing or damping reading also needs the clock-plane dlog D beyond the 95th (dephasing) or below the 5th (damping)
+  percentile of those planes.
+- If H334b.1 fails: dlog D and dlog rho^2 are reported with 90 % library-bootstrap intervals (within arm and ZT, 2,000
+  draws), and no mechanism is read.
+- Fibroblasts by the same rules; descriptive if their gate fails.
+- **Limits.** Pools of 2 aortas: "dephasing" includes the two animals re-entraining apart. One time after the shift, mouse.
+  D's sign separates the mechanisms only when one dominates.
+**Stop rule:** one power run, one scoring run.
