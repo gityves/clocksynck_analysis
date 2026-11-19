@@ -6746,6 +6746,27 @@ baboon's: **B1 is uninformative and stopped** (orientation not chosen; the scout
 - Code: `exploratory/A317_braindeath_confirm/scripts/b1_scout.py`.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/b1_scout.csv -->
 
+## A331 (scored 2026-11-19; BLIND for the clock statistic; powered): living women differ in a clock loudness shared by fat and skin (H331.1 PASS: leverage 0.177, above every matched set but one in twenty, 98.5th percentile), at the size the GTEx deaths predict; not beyond stress-responsive genes (93.5th percentile)
+
+- Design as registered: MuTHER, 680 women with fat and skin from one punch biopsy; A255 states; `clocksync.elasticity.
+  radius_covariance` (correlation of the two tissues' clock-plane radii after the phase harmonics are removed). Power
+  stage (power note): GTEx person spread sigma_A 0.352; power 0.947 against the matched q95. One scoring run.
+- **H331.1 PASS:** leverage 0.177 (twin-pair bootstrap 90 % 0.119 to 0.236; persons-permuted p 0.0005); matched sets
+  median 0.026, q95 0.117 (clock at the 98.5th percentile); responsive sets median 0.121, q95 0.179 (93.5th percentile).
+  The simulation at the GTEx spread expected 0.177 (5th percentile 0.116).
+- Descriptive: monozygotic 0.195 (267 women), dizygotic 0.152 (413). Shared cv2 0.043 (biased low here: noisy array
+  radii inflate the means; the leverage is the registered statistic).
+- **Reading (registered):** persons differ in a loudness shared by two tissues in living people, beyond what expression-
+  matched genes share through one biopsy and one array batch, and at the size A312 found in deaths: A312's person factor
+  is not specific to deaths. Stress-responsive genes share radius almost as much (median 0.121): a shared handling or
+  systemic state is part of what the two tissues co-vary in, and the clock is not separated from it here (one biopsy).
+  Figure 4f: "persons differ in clock loudness shared across tissues, in deaths (A312) and in living women (A331),
+  beyond expression-matched genes".
+- **Limits.** One punch biopsy and one array batch for both tissues; women only; arrays; zygosity contrast descriptive.
+- Code: `exploratory/P1_person_loudness/scripts/score_a331.py --stage power | score`; `clocksync.elasticity.radius_covariance`
+  (bf26544).
+<!-- src: paper/exploratory/P1_person_loudness/output/{power,companions,tests}.csv -->
+
 ## A330 (power stage 2026-11-19; registered re-test, NOT BLIND for the A36 baboon gains): G1 not decidable at this design: the baboon atlas has 17 passing organs but power 0.60 at a true organ-level Spearman of 0.6 (registered gate 0.8); not scored; the mouse referee (at most 8 organs, power 0.45) is not downloaded
 
 - Design as registered (18 anatomically matched organs; baboon timed gain |g| on the GTEx waveform against GTEx sqrt S).
