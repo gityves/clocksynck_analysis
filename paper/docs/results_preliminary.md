@@ -6763,6 +6763,40 @@ baboon's: **B1 is uninformative and stopped** (orientation not chosen; the scout
 - Code: `exploratory/A317_braindeath_confirm/scripts/score_a327.py --stage power | score`.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/{a327_power,a327_tests}.csv -->
 
+## A326 (scored 2026-11-19; NOT BLIND for the human results and the mouse ratio): the human lymphocyte designs could not have read a mouse-colon-sized T-cell clock (H326.1 FAIL in A281, A287, A321 at r = 0.25: design power 0, 0, 0.05); they read a clock at 0.70 of the fibroblast amplitude (A281 0.996, A321 1.00; A287 only at 1.0): "no readable clock" bounds the lymphocyte clock below about 0.7 of the fibroblasts', not below the mouse ratio
+
+- **Mouse ratio (L1 scout).** Colon chrono-atlas, undamaged arm (8 mice, ZT 1/7/13/19, 14 clock genes, debiased cosinor
+  amplitude): T cells 1.12, fibroblasts 4.55 log2-CPM, ratio 0.246 (bootstrap q95 0.404); damaged arms unresolved
+  (R-DC 0, q95 0.93; R-PC 0.39, q95 0.89). The 2026 small-intestine immune atlas (CD45+ only, no processed matrix found)
+  has no stromal reference: not used.
+- **Insertion.** Partner fibroblast-stromal rows, clock-plane states scaled by r (`clocksync.simulate.scale_clock`),
+  thinned to the lymphocyte clock-gene count, each design's own statistic; 20 replicates per unit and r.
+- **Design power** (A281: P(> 2 of 7 powered atlases pass); A287: P(>= 1 of 3 powered); A321: Stouffer over 3
+  informative compartments):
+  | r | A281 | A287 | A321 |
+  |---|---|---|---|
+  | 0.10 | 0.000 | 0.000 | 0.00 |
+  | 0.25 | 0.000 | 0.000 | 0.05 |
+  | 0.40 | 0.003 | 0.000 | 0.15 |
+  | 0.55 | 0.450 | 0.000 | 0.75 |
+  | 0.70 | 0.996 | 0.288 | 1.00 |
+  | 1.00 | 1.000 | 1.000 | 1.00 |
+  Per-unit pass rates at r = 0.25: at most 0.10 in any powered or informative unit (`pass_rates.csv`).
+- **Reading as registered.** H326.1 fails in every design at r = 0.25 and at the mouse upper bound 0.40. Bounds x
+  (smallest grid r with power >= 0.8): A281 0.70, A321 0.70, A287 > 0.70 (1.0). Wording: "tissue lymphocytes carry no
+  clock readable between donors at depths where fibroblast clocks are read; such a clock would have to be weaker than
+  about 0.7 of the fibroblast amplitude". A mouse-colon-sized T-cell clock (a quarter of the fibroblasts') would not
+  have been seen: the human negative is **not** evidence of a species, residency or tissue difference.
+- **Limits.** Scaling the clock also scales its in-plane biological noise (detection rates are lower bounds; the true
+  bound may be somewhat lower than 0.70); the inserted clock carries the fibroblasts' non-clock structure and host
+  coupling; the mouse ratio is one colon atlas of 8 mice.
+- **Code error found and fixed before reporting:** the first scoring run keyed the registered powered-atlas rates by
+  atlas name only, so A281 took A287's rates (3 instead of 7 powered atlases); per-unit pass rates were unaffected; the
+  reported design powers are from the rerun with the fixed key (`design_power_run1_keybug.csv` kept, not used).
+- Validation (r = 1) and its note: registry, A326 validation note.
+- Code: `exploratory/L1_lymphocyte_power/scripts/score_a326.py --stage validate | score`.
+<!-- src: paper/exploratory/L1_lymphocyte_power/output/{validation,validation_diag_200reps,pass_rates,design_power,replicates}.csv; scout/output/amplitude_ratios.csv -->
+
 ## A319 (scored 2026-11-19; NOT BLIND for the published tables): in forebrain Bmal1 KO mice the organs' loss of "within-mouse coherence" is mostly a new, reproducible organ order, not independent drift (H319.2 PASS: under restricted feeding all 6 organs cluster across mice and the new order accounts for all of the within-mouse spread); without any shared drive (DD) no significant shared phase is left beyond the organ order (H319.1 PASS, E 0.069, p 0.070, borderline)
 
 - Data: Izumo et al. 2014 eLife source data (organ means and circular variances across mice; per-mouse circular

@@ -91,8 +91,9 @@ Ranked by how much the headline depends on it.
 6. **Age advance** (A234; living cohorts opposite sign): supplement with caveats, or replicate.
 7. **Lymphocyte core loop: closed (A321, blind).** No core-loop clock in three informative fresh compartments
    (combined p 0.47); "no readable clock" holds with the core loop included. Skin T cells cohere but are not
-   informative (power control 0): a check, not a result. Open: could the design read a mouse-sized lymphocyte clock
-   (check L1)?
+   informative (power control 0): a check, not a result. Check L1 (A326): the designs read a lymphocyte clock only
+   above about 0.7 of the fibroblast amplitude; a mouse-colon-sized T-cell clock (0.25) would not have been seen, so
+   the negative is a bound, not a species difference.
 8. **Model document**: done, `MODEL_federation_2026-11-19.md` (with its tested limits A310, A311, A312, A313,
    A315, A319).
 9. **Literature before submission**: repeat the inter-organ / inter-tissue coherence search (PubMed, bioRxiv 2026);
@@ -146,6 +147,7 @@ We ask how that organisation is built, from cells to organs, and what holds it t
 - Brain death: "In GTEx, brain-dead organ donors carry a different organ arrangement from every post-mortem group;
   brain death and collection at procurement cannot be separated in this resource"; amplitude "equal to equally
   ventilated donors with a living brain", in the first hours to days; mouse support "explant phases, reanalysis of published summaries".
-- Lymphocytes: "no readable clock" until gap 7 is closed.
+- Lymphocytes: "no clock readable between donors at depths where fibroblast clocks are read (weaker than about
+  0.7 of the fibroblast amplitude)"; never "no clock" or "unlike mouse" (A326).
 - The departure: "added variation", not "oscillator stiffness".
 - Tumours: "express less of the patient's time", not "lose their clock".
