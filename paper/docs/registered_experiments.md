@@ -9124,3 +9124,37 @@ not sun exposed (suprapubic); STF stomach; TES testis; THR thyroid.
 **G1b (scout only, not registered).** Absolute class gains across organs of the same donors (GTEx snRNA atlas, 16 donors):
 deferred; power scout first.
 **Stop rule:** one power run, one scoring run. Aggregates only.
+
+## A331 (2026-11-19, check P1 of `PAPER_PLAN_2026-11-19.md` section 6.2, prompt `prompts/two_axis_checks_2026-11-19.md` Task 4; staged: power (with the companions' distribution, which is the decisive threshold), then one scoring run only if power >= 0.8; **BLIND for the clock statistic**: the radius correlation of the MuTHER fat and skin clock states has never been computed; **NOT BLIND**: A255 (fat-skin complex pairing r 0.533, gate shares fat 0.348 and skin 0.204, matched q95 0.304 for the pairing), A312 (persons differ in shared amplitude in GTEx, leverages 0.75-0.86)): do living persons differ in a clock loudness shared by two tissues, beyond a shared technical scale? **MuTHER (E-TABM-1140; 680 women with fat and skin from one punch biopsy; A255 preparation)**
+
+**Statistic (`exploratory/P1_person_loudness/scripts/score_a331.py`).** A255 states (GTEx waveform genes present, unweighted
+array projector, centred). `clocksync.elasticity.radius_covariance(z_fat, z_skin)` (clocksync bf26544): leverage =
+corr(r_fat, r_skin) after both radii are residualised on the first two harmonics of both phases.
+- Companions: the A255 sets, 200 expression-matched (seed tag 3) and 200 responsive (tag 4); the same statistic; the clock's
+  percentile. One biopsy and one array batch: the matched sets are the decisive companion.
+- Twins: pairs are public (A255 `muther_persons.csv`): a 2,000-draw bootstrap over twin pairs (both co-twins together;
+  singletons as their own unit) gives the interval. Zygosity is public: leverage by MZ and DZ, descriptive.
+- Covariates: age (and BMI if in the sheet) as descriptive strata (tertiles), not regressors.
+
+**Power (stage `power`; no clock radius computed).**
+- Person spread: GTEx A312 rows (fast deaths, 27 peripheral tissues), 20 random halvings of the tissues (seed [331, 1]),
+  `radius_covariance` of the two half-host states: sigma_A = sqrt(median cv2) (log person amplitude SD shared by halves).
+- MuTHER design, simulated in the clock plane (1,000 simulations, seed 331): true states A_p exp(i phi_p), A_p log-normal with
+  SD sigma_A, phi_p resampled from the observed phases of the A255 combined state (arg(z_fat + z_skin), not the statistic),
+  centred; fat and skin = gain x state + isotropic noise, with clock fractions of state variance 0.696 and 0.408 (the gate
+  share ratio and sqrt(f_fat f_skin) = 0.533, the A255 pairing); 680 persons.
+- The 200 matched and 200 responsive sets' leverages are computed on the data in this stage (the threshold, not the clock).
+- Power = share of simulations at sigma_A whose leverage exceeds the matched q95. Also reported: power against the
+  simulated null (sigma_A = 0) q95, and the expected leverage at sigma_A and at sigma_A / 2.
+- Scored only if power >= 0.8 at sigma_A; otherwise "not decidable at this design" in RP.
+
+**Readings (registered).**
+- **H331.1 PASS:** clock leverage above the matched q95 (and p < 0.05 against the persons-permuted null of the radii):
+  persons differ in a loudness shared by two tissues in living people, beyond a shared technical scale; Figure 4f stands in
+  living tissue.
+- Within the matched range: not separable from a shared technical scale (one biopsy, one batch).
+- Clearly below the A312 size with power (leverage below the 5th percentile of the simulations at sigma_A, and within the
+  matched range): the A312 leverage is specific to deaths.
+- **Limits.** Arrays (larger technical floor, A259); women only; one biopsy; the simulation assumes isotropic noise and
+  a log-normal person amplitude.
+**Stop rule:** one power run, one scoring run. Aggregates only (GTEx: no per-donor value written).
