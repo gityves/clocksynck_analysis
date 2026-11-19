@@ -46,7 +46,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
   amplitude-coupling relation was unexplained; atlas couplings failed the responsive control; death-type results were
   archive results without companions.
 - *After (11-18):* a coherent account of how the clock is organised in the body. Tissues express one shared time with
-  85-fold different gain over a clock-specific departure of nearly constant size (A291, A294); within organs
+  9-fold different gain (shared variance 85-fold) over a clock-specific departure of nearly constant size (A291, A294); within organs
   stromal-vascular, epithelial and parenchymal cells and macrophages carry it, lymphocytes do not (A272-A288);
   composition changes gain, not phase (A295); the organ arrangement holds without alignment to the day or behavioural
   cues and is lost in brain death (A293); peripheral clocks are self-sustained (mouse re-analysis, A297).

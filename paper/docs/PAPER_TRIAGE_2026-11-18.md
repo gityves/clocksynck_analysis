@@ -66,6 +66,9 @@ figures.
 
 ## Gaps before submission (in order)
 
+Numbering shared with `SYNTHESIS_2026-11-19.md` section 3 and the results entries. The drift timescale after brain
+death is MODEL prediction 1 (`MODEL_federation_2026-11-19.md` section 6), not a gap.
+
 1. **Brain death: replication.** Confirmatory GTEx test done (A317 H317.1 PASS; A318 adjusted PASS; A319 mouse
    reanalysis supports "rearranged"). Open: an independent human replication (Tabula Sapiens or other organ-donor
    atlases: within-organ cell-type sharing kept, organ order unlike living-brain donors), the ischaemic gradient
@@ -84,7 +87,8 @@ figures.
 3. **Coverage of c (A162 / A163).** Closed as "state" (2026-11-19, `results_preliminary.md` gap 3 note): intervals
    approximate (coverage 0.80-0.98, median 0.94); no claim rests on an absolute c interval.
 4. **Gain decomposition.** Done (A323, 2026-11-19): FAIL; composition x class gains spread organ gains 1.3-fold against
-   2.9-fold observed: an organ-level factor scales all classes; Figure 2 message reworded (synthesis).
+   2.9-fold observed: composition and conserved class gains do not explain the organ gain range (what sets it: check
+   G1); Figure 2 message reworded (synthesis).
 5. **Conflicting drives.** Not-blind check done (A322): a pure mix of drives is rejected; conflict costs amplitude,
    most at balanced weights, less where tissues move least. Blind replication in Xin 2021 (A324): mix rejected again; adipose loses most, at or beyond the mix; the pattern
    (minor followers keep more, balanced tissues lose most) holds over both datasets. A per-organ b predicting a new

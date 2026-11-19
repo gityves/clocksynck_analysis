@@ -6788,6 +6788,10 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
   ("organs drive their cells at different strengths"). Within a tissue, composition still moves gain (A295,
   stromal-vascular +0.041 per SD). Model part 2 is reworded accordingly.
 - **Limits.** 8 tissues (low power for the rank test); class gains from other atlases; snRNA nuclei, not cells.
+- **Wording note (2026-11-19, REVIEW_2026-11-19 section 7 item 5).** The result reads "composition and conserved class
+  gains do not explain the organ gain range". The "organ-level factor" above is an inference by elimination over 8
+  tissues; a tissue-specific technical attenuation in GTEx would produce the same pattern. It leaves the results until
+  check G1 (organ gains against timed clock amplitudes in other species) separates the two.
 - Code: `exploratory/A323_gain_decomposition/scripts/score_a323.py`.
 <!-- src: paper/exploratory/A323_gain_decomposition/output/{shares,tissues,tests}.csv -->
 
