@@ -8666,6 +8666,30 @@ All 65 pairs kept (298 organ donors, 79 post-mortem). SD of the adjusted D_rho 0
 (medians over samples): ischaemic time 258 min (organ donors) vs 561 min (post-mortem); RIN 7.6 vs 7.2.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/a318_power.csv -->
 
+### A318 post hoc note (2026-11-19, before computing): same-pairs decomposition of the common-ischaemic-range sensitivity
+**Post hoc, descriptive** (prompt `docs/prompts/cell_route_2026-11-19.md` Task 2; REVIEW_2026-11-19 section 7 item 1).
+**NOT BLIND** for A317 / A318 and their sensitivities (D_rho 0.621 on 65 pairs, 0.239 on 36 under the common ischaemic
+range); **NOT computed**: any group's rho on the 36 pairs unrestricted, any subsampled rho, the list of dropped pairs.
+**Why.** 0.239 (36 pairs, restricted samples) against 0.621 (65 pairs, all samples) mixes a change of pair set and a
+change of donor set; fewer donors per pair add phase noise, which pulls Fisher-Lee rho toward 0.
+**Design.** A317 data, groups (fast deaths 244, post-mortem ventilated 79, organ donors 298), estimator (Fisher-Lee rho
+of pair phases against fast deaths; organ donors as the median over 20 draws of 79) and the 36 pairs kept by the A317
+`ischaemic_common_range` sensitivity (5th-95th percentile of post-mortem ischaemic times, applied to every group's
+samples). Three readouts on the same 36 pairs, each with rho(post-mortem, fast), median rho(organ donors, fast) and D_rho:
+- **U36:** unrestricted samples (the A317 main organ-donor draws; also with the sensitivity's draws).
+- **R36:** restricted samples, with the sensitivity's organ-donor draws (must reproduce 0.239).
+- **S36 (noise-matched reference):** unrestricted samples, each pair's shared donors of each group (fast, post-mortem,
+  each organ-donor draw) subsampled at random to R36's shared-donor count for that pair and group; pair phase = phase of
+  the covariance over the subsampled shared donors (each tissue centred on them); 20 draws (seed 3180). The same
+  per-pair estimator without subsampling is reported for U36 as a check that it matches the A317 estimator.
+- Also reported: the 29 dropped pairs (names, shared donors per group), and the same readouts on them (U29, descriptive).
+**Readings (stated now).** R36 below the 5th percentile of S36's D_rho: the restriction removes the contrast beyond
+noise; brain death weakens, and Tasks 3-4 wait for the user. R36 within S36's range: the restriction does not remove the
+contrast beyond what fewer donors explain; if U36 is itself near R36, the fall from 0.621 came from the dropped pairs
+(named, input to B3). Organ donors' rho rising under the restriction is the H318.2 selection (longer-ischaemia samples
+kept); post-mortem rho falling is mostly noise.
+**Code.** `exploratory/A317_braindeath_confirm/scripts/same_pairs_a318.py`.
+
 ## A319 (2026-11-19, user: "Yes have a look" (Izumo 2014 source data, mouse counterpart of A317 / A315); reanalysis of published summaries, one scoring run, no power stage (fixed n); **NOT BLIND**: the paper's conclusions (within-mouse phase coherence lost in BKO DD, Mann-Whitney p 0.0008, and under restricted feeding, p 0.0002; amplitude lower in BKO DD and, except liver, under feeding; LD keeps both) and every number of the source-data tables, printed while checking availability on 2026-11-19; NOT computed: the independence simulation and the order share below): without a central clock, do a mouse's organs drift apart (dissolved), keep a shared phase that drifts between mice, or follow a substitute drive in a new order (rearranged)? **Izumo et al. 2014 eLife, forebrain/SCN Bmal1 KO (BKO) vs Fx/Fx, PER2::LUC explant peak phases of pituitary, liver, kidney, heart, lung, spleen; LD, DD (> 30 days), DD + restricted feeding (FR)**
 
 **Why.** The paper reads high within-mouse circular variance across organs as lost coherence. That variance mixes two
