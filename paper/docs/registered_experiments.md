@@ -8864,3 +8864,14 @@ companions' 5th percentile of p. Stable with power >= 0.8 at f = 1: post-mortem 
 of the organ-donor size (argues against collection mode on the post-mortem side; it does not test the organ-donor
 side, e.g. perfusion or recovery order). Stable with power < 0.8 at f = 1: uninformative.
 **Code.** `exploratory/A317_braindeath_confirm/scripts/score_a325.py --stage power | score`.
+
+### A325 power note (2026-11-19, before scoring; `score_a325.py --stage power`, null and injections only)
+Hour of death: night deaths (20-08 h) wait longer (median donor ischaemic time, fast deaths, 08-20 vs 20-08 h: 844 vs
+1039 min; Spearman with cos(hour) 0.260, sin 0.011; all post-mortem deaths 784 vs 930 min, 0.171): the stratified
+design stands as primary. Tertiles (stratified): fast deaths 82 / 82 donors, 63 pairs, ischaemic medians 1214 vs 659
+min (a 555 min contrast, larger than the organ-donor minus post-mortem 300 min); all post-mortem deaths 161 / 161,
+66 pairs, 1166 vs 581 min. Injected tissue shifts (SD 0.75 h). Null q05 of rho: 0.449 (H325.1), 0.705 (H325.2).
+Power at f = 1 / 0.5: H325.1 0.78 / 0.16; H325.2 0.99 / 0.40; unstratified fast 0.735 / 0.185.
+**Consequence, by the registered rule:** a stable H325.1 is uninformative (power 0.78 < 0.8); H325.2 is powered at
+f = 1, so the informative stable reading rests on H325.2. Both are scored as registered.
+<!-- src: paper/exploratory/A317_braindeath_confirm/output/{a325_power,a325_hour}.csv -->
