@@ -8904,3 +8904,23 @@ quarter of the fibroblast amplitude". Fails: report the bound x = smallest r of 
 ("weaker than the fibroblast clock by at least a factor 1/x"; "> 1" if none). Read at r = 0.40 as the sensitivity
 (mouse upper bound). The mouse ratio comes from one colon atlas with 8 mice: a ratio, not a mouse-wide constant.
 **Code.** `exploratory/L1_lymphocyte_power/scripts/score_a326.py --stage validate | score`.
+
+## A327 (2026-11-19, user: "Register as hypothesis" (check B3 of REVIEW_2026-11-19, perfusion split); descriptive; staged: power first, then one scoring run; **NOT BLIND** for A317, A318, the A318 post hoc note (the common-range restriction drops every pair with heart, lung or blood; those are the organ donors' short-ischaemia samples) and A325; NOT computed: D_rho or group rho by pair class): does the brain-death arrangement change depend on whether a tissue can be reached by the procurement flush?
+
+**Classification (fixed now; unverified anatomical hypothesis).** No GTEx document found on when organ-donor tissues
+were taken relative to cross-clamp and flush (procurement check 2026-11-19: GTEx FAQ, Carithers 2015, Starzl
+procurement technique, an OPO recovery-order page). Possibly reached (cardioplegia, pulmonary flush, abdominal aortic
+flush): Heart - Atrial Appendage, Lung, Adipose - Visceral (Omentum), Esophagus - Mucosa. Not reached (lower leg, below
+the distal aortic cannula): Artery - Tibial, Nerve - Tibial, Skin - Sun Exposed (Lower leg), Muscle - Skeletal, Adipose -
+Subcutaneous. Excluded as uncertain: Thyroid, Skin - Not Sun Exposed (Suprapubic); whole blood apart.
+- **Classes of the A317 pairs:** P (both possibly reached), N (both not reached), X (one of each).
+- **Statistics:** per class, rho(post-mortem, fast), median rho(organ donors, fast) over the A317 draws and D_rho (A317
+  estimator, data, groups, draws). **Delta = D_rho(N) - D_rho(P u X)** (pairs touching a possibly reached tissue);
+  donor-label relabelling null (2000, as A317 H317.1, seed 3270), two-sided p; D_rho(N) with its own relabelling p.
+- **Power stage:** pairs per class, SD of Delta and of D_rho(N) under relabelling, MDE (2.49 SD).
+**Readings (stated now).** D_rho(N) > 0 with p < 0.05: the contrast exists among tissues no flush reaches (the leg),
+against a perfusion-only collection effect. A perfusion dependence (|Delta| > MDE, p < 0.05, either sign) points to
+collection mode on the organ-donor side; loss of the central drive predicts none. Neither: not decided at this power.
+Limits stated now: the possibly reached tissues are also the early-recovered, short-ischaemia ones (heart, lung), so
+perfusion and recovery order are aliased; the classification is anatomical inference, not GTEx documentation.
+**Code.** `exploratory/A317_braindeath_confirm/scripts/score_a327.py --stage power | score`.
