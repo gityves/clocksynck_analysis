@@ -6693,6 +6693,44 @@ cross-clamp time. In the whole universe 300 organ donors, 298 Hardy 0 (one Hardy
 - Code: `exploratory/A317_braindeath_confirm/scripts/same_pairs_a318.py`.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/{same_pairs,same_pairs_summary,dropped_pairs}.csv -->
 
+### Task 3 precondition (2026-11-19; aggregate run before registering; stopped): the living surgical cohorts cannot decide brain death vs collection mode
+Prompt `docs/prompts/cell_route_2026-11-19.md` Task 3. GTEx pair offsets (phase of the pair covariance, h; A317
+estimator) of the pairs living surgical cohorts carry; organ donors as the circular mean over the A317 draws of 79;
+donor bootstrap (500) of the organ-donor (298) minus post-mortem (79) difference:
+| pair | fast | Hardy 4 | post-mortem vent | organ donors | OD - PM (95 % bootstrap) |
+|---|---|---|---|---|---|
+| subcutaneous - visceral fat | -0.86 | -1.68 | -0.45 | 0.77 | 1.22 (-0.25 to 2.86) |
+| muscle - subcutaneous fat | 1.01 | 1.81 | 0.58 | 0.58 | -0.01 (-0.92 to 1.08) |
+| subcutaneous fat - lower-leg skin | -1.04 | -1.06 | -0.45 | -0.48 | -0.03 (-1.72 to 1.35) |
+| subcutaneous fat - suprapubic skin | -1.87 | -2.39 | -1.05 | 0.63 | 1.68 (-0.24 to 3.44) |
+Against the site bound (A251 same-layer site offsets: largest 1.54 h, interval to 2.04 h) no pair's organ-donor minus
+post-mortem offset exceeds the bound with its interval (one point estimate, 1.68 h, exceeds 1.54 h; every bootstrap
+interval contains 0). **By the stated rule Task 3 cannot decide and is stopped before registration.** The brain-death
+contrast is spread over the 65 pairs; these four carry little of it.
+- Code: `exploratory/A317_braindeath_confirm/scripts/living_ref_precondition.py`.
+<!-- src: paper/exploratory/A317_braindeath_confirm/output/living_ref_precondition.csv -->
+
+## A325 (scored 2026-11-19; NOT BLIND for A132b, A293 Part 1, A314-A318): post-mortem ischaemia does not reshape the reference organ arrangement (H325.2 stable, rho 0.862, p 0.62, power 0.99 at the organ-donor effect size; H325.1 stable, rho 0.778, p 0.68, uninformative at power 0.78): the post-mortem side carries no collection-mode component of the organ-donor size
+
+- Donor ischaemic time (median over samples); tertiles cut within hour-of-death strata (08-20, 20-08 h; x death group
+  for H325.2), against 2000 random disjoint splits within the same strata. Night deaths wait longer (fast deaths 844 vs
+  1039 min; Spearman with cos(hour) 0.260): stratification was needed.
+- **H325.1 (fast deaths, 82 / 82, 63 pairs; ischaemic medians 1214 vs 659 min):** rho_tb 0.778 against null median
+  0.730, q05 0.449; p 0.680. Companions: matched p q05 0.134, responsive 0.127 (the clock is not below them). Power at the
+  full organ-donor shift 0.78: **stable, uninformative by the registered rule.**
+- **H325.2 (all post-mortem deaths, 161 / 161, 66 pairs; 1166 vs 581 min):** rho_tb 0.862 against null median 0.845,
+  q05 0.705; p 0.620. Power 0.99 at f = 1, 0.40 at f = 0.5: **stable, informative.**
+- Unstratified fast deaths (descriptive): 0.754, p 0.559.
+- **Reading as registered.** A 555-585 min contrast of post-mortem ischaemia, larger than the organ-donor minus
+  post-mortem 300 min, leaves the arrangement as stable as random splits. Post-mortem ischaemia (slow cooling, hours of
+  anoxia) does not reproduce a contrast of the organ-donor size; a component of half that size is not excluded (power
+  0.40). This argues against collection mode acting on the post-mortem side. It does not test the organ-donor side
+  (perfusion, recovery order, short ischaemia at procurement), which H318.2 and the A318 post hoc note point to.
+- **Limits.** Ischaemic time stands for the whole post-mortem collection process; the organ-donor procurement itself
+  has no counterpart among post-mortem donors.
+- Code: `exploratory/A317_braindeath_confirm/scripts/score_a325.py --stage power | score`.
+<!-- src: paper/exploratory/A317_braindeath_confirm/output/{a325_power,a325_tests,a325_sets,a325_hour}.csv -->
+
 ## A319 (scored 2026-11-19; NOT BLIND for the published tables): in forebrain Bmal1 KO mice the organs' loss of "within-mouse coherence" is mostly a new, reproducible organ order, not independent drift (H319.2 PASS: under restricted feeding all 6 organs cluster across mice and the new order accounts for all of the within-mouse spread); without any shared drive (DD) no significant shared phase is left beyond the organ order (H319.1 PASS, E 0.069, p 0.070, borderline)
 
 - Data: Izumo et al. 2014 eLife source data (organ means and circular variances across mice; per-mouse circular
