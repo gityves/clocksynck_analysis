@@ -4782,6 +4782,10 @@ sets, 200 matched gene sets; null mean of S 0.120.
   clock time within a person, as A252 / A256); it is not a positive control for host-referenced inference, and as a
   not-blind analysis it is not a pre-specified control of anything. Its place is a biological result (peripheral
   response to misalignment), with H257.1 beside A252 / A256 in Fig. 1.
+- **Correction (note 2026-11-19, PAPER_PLAN_2026-11-19 section 8; the scored text above is kept):** R = 0.233 is the
+  misaligned change projected on the aligned chord, not the excursion ratio. The excursion ratio is R / cos s =
+  0.2335 / cos(2.677 h x 15 deg/h = 40.2 deg) = 0.31 (derived from `score_tests.csv`: R 0.2335, s 2.677 h). "Flatten its
+  excursion to about a quarter" should read "to about a third"; a 2.7 h rotation alone would leave 0.77.
 <!-- src: paper/exploratory/A257_nightshift_muscle/output/{score_tests,score_descriptive}.csv -->
 
 ## A244 (scored 2026-11-13): the clock-shaped covariation of the fetal adrenal is carried by the cortex (H244.1 cortex PASS, also after foreign-RNA correction); the medulla shows none at full adult power (H244.1 medulla FAIL); the shared state of the two classes is not estimable (H244.2)
