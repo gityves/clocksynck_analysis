@@ -6731,6 +6731,17 @@ contrast is spread over the 65 pairs; these four carry little of it.
 - Code: `exploratory/A317_braindeath_confirm/scripts/score_a325.py --stage power | score`.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/{a325_power,a325_tests,a325_sets,a325_hour}.csv -->
 
+### B1 power scout (2026-11-19; before registering; stopped): the baboon cannot referee the GTEx organ arrangement
+Prompt Task 4 / REVIEW_2026-11-19 check B1. Shared A109 tissues with the baboon atlas (A36 timed phases): skeletal
+muscle, thyroid, visceral fat, suprapubic skin, subcutaneous fat, lung (15 pairs). Fisher-Lee rho of GTEx pair phases
+against baboon pair phases, exact tissue-label permutation null (720 orders), both sign conventions read: fast deaths
+|rho| 0.310 (p 0.235 in the agreeing orientation), Hardy 4 0.345 (p 0.218), post-mortem ventilated 0.171 (p 0.383),
+organ donors 0.060 (p 0.425). Over 25 tissues A36 itself found weak cross-species agreement of organ phases (r_FL 0.175,
+p 0.199; `results/figure_1/output/species/a36_readouts.csv`). The fast-death arrangement does not clearly agree with the
+baboon's: **B1 is uninformative and stopped** (orientation not chosen; the scout does not support either reading).
+- Code: `exploratory/A317_braindeath_confirm/scripts/b1_scout.py`.
+<!-- src: paper/exploratory/A317_braindeath_confirm/output/b1_scout.csv -->
+
 ## A319 (scored 2026-11-19; NOT BLIND for the published tables): in forebrain Bmal1 KO mice the organs' loss of "within-mouse coherence" is mostly a new, reproducible organ order, not independent drift (H319.2 PASS: under restricted feeding all 6 organs cluster across mice and the new order accounts for all of the within-mouse spread); without any shared drive (DD) no significant shared phase is left beyond the organ order (H319.1 PASS, E 0.069, p 0.070, borderline)
 
 - Data: Izumo et al. 2014 eLife source data (organ means and circular variances across mice; per-mouse circular

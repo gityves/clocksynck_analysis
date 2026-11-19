@@ -8875,3 +8875,32 @@ Power at f = 1 / 0.5: H325.1 0.78 / 0.16; H325.2 0.99 / 0.40; unstratified fast 
 **Consequence, by the registered rule:** a stable H325.1 is uninformative (power 0.78 < 0.8); H325.2 is powered at
 f = 1, so the informative stable reading rests on H325.2. Both are scored as registered.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/{a325_power,a325_hour}.csv -->
+
+## A326 (2026-11-19, user: "start Task 5" (prompt `docs/prompts/cell_route_2026-11-19.md`, check L1 of REVIEW_2026-11-19); staged: validation (r = 1 reproduces the registered thinned controls), then one scoring run; **NOT BLIND**: the human results (A281 H281.2 PASS, 5 of 7 powered atlases; A287 H287.2 PASS, 3 of 3; A321 H321.1 FAIL, 3 informative, combined p 0.47) and their thinned-fibroblast pass rates; the mouse amplitude ratio from the L1 scout (`exploratory/L1_lymphocyte_power/scout/output/amplitude_ratios.csv`: colon chrono-atlas, undamaged arm C-DC, 14 clock genes, debiased cosinor amplitude, T / fibroblast 0.246, bootstrap 95th percentile 0.404; damaged arms not resolved, R-DC 0 (q95 0.93), R-PC 0.39 (q95 0.89)); NOT computed: any detection rate of a scaled clock): could the human designs have read a lymphocyte clock of mouse size?
+
+**Why.** Mouse lymphocytes have clocks (druzd2017lymphocyte; a 2026 small-intestine immune atlas, no stromal reference and
+no processed data public). In the undamaged mouse colon the T-cell clock amplitude is about a quarter of the
+fibroblasts'. The human negatives were powered for a fibroblast-sized clock (thinned fibroblasts); a quarter-size
+clock was not tested.
+- **Insertion (clocksync public API).** In each atlas and compartment pair of the three designs, the partner
+  fibroblast-stromal (A281, A287) or partner (A321) rows: clock-plane states scaled by r (`clocksync.simulate.scale_clock`;
+  biological in-plane noise scaled with the clock, so detection rates are lower bounds), then thinned binomially to the
+  lymphocyte compartment's median clock-gene count exactly as each design's registered depth control; 20 replicates per
+  atlas and r (seed 3260), the design's own statistic and permutations (A281: C, 200 permutations; A287: U, pi and
+  p_perm; A321: core-loop C, 200 permutations).
+- **r grid:** 0.10, 0.25 (primary, mouse colon point), 0.40 (mouse colon q95), 0.55, 0.70, 1.0.
+- **Validation (before scoring):** at r = 1 the per-atlas pass rates reproduce the registered thinned controls within
+  0.15 (A281, A287 thinned tables; A321 power control). If not, the implementation is fixed and the validation rerun
+  before any r < 1 is computed.
+- **Design power at r** (the chance that a lymphocyte r-clock would have prevented the registered negative):
+  A281: P(the r-clock passes in more than 2 of the 7 powered atlases), i.e. H281.2 (>= 5 of 7 fail) would not have held,
+  from the per-atlas pass rates (independent atlases, Poisson-binomial); A287: P(structure in >= 1 of the 3 powered
+  atlases); A321: share of the 20 joint replicates (replicate k in every informative compartment) with Stouffer
+  combined p < 0.05.
+- **H326.1 (per design, primary r = 0.25):** design power >= 0.8.
+**Readings (stated now).** H326.1 passes in a design: that design could read a mouse-colon-sized lymphocyte clock; its
+negative is a real difference (species, residency or tissue), worded "tissue lymphocytes carry no clock readable at a
+quarter of the fibroblast amplitude". Fails: report the bound x = smallest r of the grid with design power >= 0.8
+("weaker than the fibroblast clock by at least a factor 1/x"; "> 1" if none). Read at r = 0.40 as the sensitivity
+(mouse upper bound). The mouse ratio comes from one colon atlas with 8 mice: a ratio, not a mouse-wide constant.
+**Code.** `exploratory/L1_lymphocyte_power/scripts/score_a326.py --stage validate | score`.
