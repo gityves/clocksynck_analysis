@@ -6742,6 +6742,27 @@ baboon's: **B1 is uninformative and stopped** (orientation not chosen; the scout
 - Code: `exploratory/A317_braindeath_confirm/scripts/b1_scout.py`.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/b1_scout.csv -->
 
+## A327 (scored 2026-11-19; descriptive, NOT BLIND for A317-A318, A325; underpowered): the brain-death contrast is positive in every perfusion class, leg tissues included (D_rho N 0.244, P 0.265, mixed 0.456), with no perfusion dependence (Delta -0.173, p 0.66); not decided at MDE 1.0
+
+- Perfusion split as an unverified anatomical hypothesis (registration): possibly reached atrial appendage, lung,
+  visceral fat, oesophagus mucosa; not reached tibial artery, tibial nerve, lower-leg skin, gastrocnemius, leg
+  subcutaneous fat; thyroid and suprapubic skin excluded; blood apart. A317 data, groups, draws, estimator.
+  | class | pairs | rho post-mortem | rho organ donors | D_rho |
+  |---|---|---|---|---|
+  | P (both possibly reached) | 5 | 0.925 | 0.660 | 0.265 |
+  | N (both not reached, leg) | 10 | 0.650 | 0.406 | 0.244 |
+  | X (mixed) | 20 | 0.858 | 0.402 | 0.456 |
+  | P u X | 25 | 0.871 | 0.455 | 0.416 |
+- Delta = D_rho(N) - D_rho(P u X) = -0.173, two-sided relabelling p 0.664 (MDE 0.997). D_rho(N) 0.244, p 0.253
+  (MDE 0.850).
+- **Reading as registered: neither** (no perfusion dependence detected, no significant leg-only contrast): not decided
+  at this power. Descriptively the organ donors' arrangement departs from the post-mortem one in each class, including
+  the leg tissues that no flush reaches; nothing points to a perfusion-only effect, but 10 leg pairs cannot show it.
+- **Limits.** Perfusion and recovery order are aliased (heart and lung are perfused and recovered first); the class
+  sizes (5, 10, 20 pairs) leave the test underpowered.
+- Code: `exploratory/A317_braindeath_confirm/scripts/score_a327.py --stage power | score`.
+<!-- src: paper/exploratory/A317_braindeath_confirm/output/{a327_power,a327_tests}.csv -->
+
 ## A319 (scored 2026-11-19; NOT BLIND for the published tables): in forebrain Bmal1 KO mice the organs' loss of "within-mouse coherence" is mostly a new, reproducible organ order, not independent drift (H319.2 PASS: under restricted feeding all 6 organs cluster across mice and the new order accounts for all of the within-mouse spread); without any shared drive (DD) no significant shared phase is left beyond the organ order (H319.1 PASS, E 0.069, p 0.070, borderline)
 
 - Data: Izumo et al. 2014 eLife source data (organ means and circular variances across mice; per-mouse circular
