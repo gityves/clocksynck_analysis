@@ -78,8 +78,9 @@ figures.
    donors or of experimental brain death in animals was found (searches 2026-11-19; DBD vs DCD datasets are single-organ
    transplant biopsies). An independent human replication needs new data (organ-procurement or autopsy cohorts:
    outward-facing); the mouse central-clock loss (A319) is the available second line of evidence.
-2. **Responsive-gene specificity in living tissue.** A285: the responsive rule is not calibrated in bulk; the living
-   internal-time results (A251, A255) stand on matched genes only. State it, or calibrate the responsive rule.
+2. **Responsive-gene specificity in living tissue.** Closed (A320, 2026-11-19): clock-specific against a calibrated
+   broad stress-responsive family (p_cal 0.0045-0.009); the narrow glucocorticoid / immediate-early family stays
+   stringent and decidable only with enough pairs (surgical, tumour-normal). Wording in the A320 entry.
 3. **Coverage of c (A162 / A163).** Closed as "state" (2026-11-19, `results_preliminary.md` gap 3 note): intervals
    approximate (coverage 0.80-0.98, median 0.94); no claim rests on an absolute c interval.
 4. **Gain decomposition, blind.** Predict sample gain from composition x conserved class gains in unseen atlases

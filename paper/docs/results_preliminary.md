@@ -6693,3 +6693,36 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
   gain and departure, and on ranks; none rests on an absolute c interval.
 - Code: `exploratory/A163_reliability_correction/scripts/dev_reliability_rule.py`.
 <!-- src: paper/exploratory/A163_reliability_correction/output/validate/{summary,dev_reliability_rule}.csv -->
+
+## A320 (scored 2026-11-19; calibration, NOT BLIND for the clock statistics): a broad stress-responsive family (376 genes) is calibrated at every design (V320 PASS x8) and the living internal-time results are clock-specific against it (H320 PASS x5; A138 PASS); but tumour immune pairing also passes it, so it is less stringent than the glucocorticoid / immediate-early family against a hormonal pulse
+
+- Family: Hallmark NFkB signalling and hypoxia (MSigDB 2024.1) plus the GC targets and immediate-early genes, minus the
+  clock genes; sets drawn by the responsive rule. Mean pairwise Jaccard overlap 0.05-0.13 (narrow family 0.65-1.00;
+  matched 0.001). Placebo as A285 (2000 draws); draw 0 reproduces every scored statistic and the matched and narrow
+  q95. Runs: A251 and A255 under a minute each, A138 41 s, A227 1290 s (peak 31.2 GB).
+- **V320 PASS in all 8 tests:** q95-rule rejection 0.0495-0.0635 (band 0.0646); clock above every set under no pairing
+  in 0.35-0.85 % of draws (bound 2 %). The narrow family in the same runs: 0.076-0.204 and 1.0-8.4 %.
+- **H320 (p_cal against the broad family):**
+
+| test | clock | broad q95 | p_cal broad | p_cal narrow (A285) | p_cal matched |
+|---|---|---|---|---|---|
+| A251 H251.1 skin sites | 0.628 | 0.379 | 0.0075 | 0.075 | 0.004 |
+| A251 H251.2a | 0.813 | 0.518 | 0.0090 | 0.084 | 0.0065 |
+| A251 H251.2b | 0.594 | 0.276 | 0.0045 | 0.0635 | 0.0075 |
+| A255 MuTHER fat-skin | 0.533 | 0.283 | 0.0065 | 0.0565 | 0.0105 |
+| A255 surgical pooled | 0.686 | 0.449 | 0.0060 | 0.017 | 0.0045 |
+| A138 H138.4 tumour-normal | 0.365 | 0.246 | 0.0055 | 0.011 | 0.0040 |
+| A227 H227.1 tumour myeloid (descriptive) | 0.581 | 0.549 | 0.0040 | 0.439 | 0.0185 |
+| A227 H227.2 tumour T/NK (descriptive) | 0.539 | 0.512 | 0.0080 | 0.200 | 0.0350 |
+
+- **Reading (registered) and its qualification (post hoc, from the A227 rows).** By the registered reading, the living
+  internal-time results (skin sites, fat-skin, surgical pairs) and the tumour-normal pairing are clock-specific against
+  a calibrated stress-responsive family. But the tumour immune pairings, which the narrow family does not support
+  (A271), pass the broad family too: diluting the glucocorticoid and immediate-early genes among NFkB and hypoxia genes
+  makes the family calibrated and less stringent against a hormonal pulse. The narrow family stays the stringent
+  control and is not decidable at one to six pairs. Wording for the paper: "clock-specific against expression-matched
+  genes and against a calibrated stress-responsive family; against glucocorticoid and immediate-early genes alone,
+  decided only where enough pairs exist (surgical pairs, tumour-normal)". Gap 2 is closed with this wording.
+- Code: `exploratory/A285_companion_calibration/scripts/placebo_a285.py --families matched,responsive,responsive_broad
+  --out a320`; clocksync c2203c3 (`responsive_broad`).
+<!-- src: paper/exploratory/A285_companion_calibration/output/a320/{a251,a255,a138,a227}/{repro,tests}.csv, {a251,a255}/overlap.csv -->
