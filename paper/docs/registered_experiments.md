@@ -8769,3 +8769,30 @@ changes the wording of federation part 5.
 **Blind step (later, separate registration).** A multi-tissue dataset with a partial conflict not used here; b_t from
 one contrast predicts another.
 **Code.** `exploratory/A322_conflicting_drives/scripts/score_a322.py`.
+
+## A323 (2026-11-19, user: overnight gap 4 of `PAPER_TRIAGE_2026-11-18.md`, "Gap 4: blind gain decomposition"; replaces the closed A298 composition step; one scoring run; **NOT BLIND** for the GTEx tissue gains (A104 table, A291, A310 `composition_bound.csv`) and the class gains (A293 Part 3); NOT seen: any clock-gene mRNA share per family of the reference below, any comparison of predicted and observed gains): do cell-class gains and composition predict the GTEx tissue gains? **Reference: GTEx 8-tissue single-nucleus atlas (Eraslan et al. 2022, Census dataset 4ed927e9, 209,126 nuclei, 16 GTEx donors; clock-gene pseudobulk per donor x tissue x cell type built 2026-11-19, `$SCCC_DATA/atlas/gtex_eraslan/`)**
+
+**Why A298 closed:** marker-based NNLS shares on non-GTEx atlases were poor. Here the shares come from nuclei of the same
+GTEx tissues (and partly the same donors), counted directly.
+- **Families (fixed now, from Census cell types):** fibroblast-stromal = fibroblast, skeletal muscle fibroblast, skin
+  fibroblast, fibroblast of breast, fibroblast of cardiac tissue; endothelial = endothelial cell of vascular tree, of
+  lymphatic vessel, cardiac endothelial cell; mural = enteric smooth muscle cell, smooth muscle cell, smooth muscle cell
+  of prostate, contractile cell; parenchyma = skeletal muscle fiber, fast / slow muscle cell, cardiac muscle cell,
+  subcutaneous adipocyte, adipocyte; epithelial = every epithelial, basal, luminal, keratinocyte, epidermal, sebaceous,
+  sweat-gland and glandular secretory type; myeloid = macrophage, alveolar / elicited macrophage, professional antigen
+  presenting cell, dendritic, myeloid dendritic, mast cell, neutrophil, Langerhans cell; lymphocyte = T, NK T, B;
+  other = Schwann, satellite, melanocyte, interstitial cell of Cajal, neuroendocrine, neuron.
+- **Composition:** p_c(t) = family c's share of the summed 14 clock-gene counts of tissue t (all donors pooled).
+- **Prediction:** G_t = sum_c p_c(t) exp(g_c), g_c = A293 Part 3 pooled log gain against endothelium (endothelial 0,
+  fibroblast +0.228, mural -0.079, parenchyma -0.126, epithelial -0.220, myeloid -0.399); lymphocyte and other at 0
+  (no readable clock), as A298.
+- **Observed:** sqrt(S_t), S = z2 x V of the A104 row of the matching GTEx tissue (prostate; heart left ventricle;
+  esophagus mucosa; skeletal muscle; esophagus muscularis; lung; skin sun-exposed lower leg; breast).
+- **H323.1:** Spearman rho(G_t, sqrt S_t) > 0, exact one-sided permutation p < 0.05 over the 8 tissues (needs rho >=
+  0.643; low power, stated).
+- **Descriptive:** Theil-Sen slope and R^2 of log sqrt S on log G; the ranges (max / min) of G and of sqrt S;
+  sensitivities: "other" renormalised out instead of 0; nucleus-count shares instead of clock-mRNA shares.
+**Readings (stated now).** PASS with a G range comparable to the sqrt S range: cell class and composition account for
+the organ gains. PASS with a much narrower G range: composition orders the organs but an organ-level factor scales
+them (drive or cell clock strength). FAIL: composition does not predict organ gain at this resolution (8 tissues).
+**Code.** `exploratory/A323_gain_decomposition/scripts/score_a323.py`.
