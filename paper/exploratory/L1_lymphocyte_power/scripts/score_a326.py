@@ -178,14 +178,14 @@ def pass_rates(reps):
 
 
 def design_power(reps, pr, specs):
-    info = {s["key"]: s["registered"] for s in specs}
+    info = {(s["design"], s["key"]): s["registered"] for s in specs}
     out = []
     for r in sorted(pr.r.unique()):
         a = pr[(pr.design == "A281") & (pr.r == r)].set_index("key").pass_rate
-        pw = a[[k for k in a.index if info[k] >= 0.8]]  # A281 powered atlases: registered thinned pass rate >= 0.8
+        pw = a[[k for k in a.index if info[("A281", k)] >= 0.8]]  # A281 powered atlases: registered thinned pass rate >= 0.8
         out.append(dict(design="A281", r=r, power=poibin_gt(pw.to_numpy(), 2), n_powered=len(pw)))
         a = pr[(pr.design == "A287") & (pr.r == r)].set_index("key").pass_rate
-        pw = a[[k for k in a.index if info[k] >= 0.8]]
+        pw = a[[k for k in a.index if info[("A287", k)] >= 0.8]]
         out.append(dict(design="A287", r=r, power=float(1 - np.prod(1 - pw.to_numpy())), n_powered=len(pw)))
         keys = [s["key"] for s in specs if s["design"] == "A321" and s["extra"]["informative"]]
         d = reps[(reps.design == "A321") & (reps.r == r) & reps.key.isin(keys)]
