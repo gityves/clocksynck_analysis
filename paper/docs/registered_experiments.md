@@ -9033,3 +9033,54 @@ consistent lead; a steady difference in signal level between fetuses moves both 
 - **Stop rule.** Power stage once all priority-1 deliveries are on disk; one scoring run per part. No count file is opened
   before this registration is committed. **Code (to write after delivery, before scoring):**
   `paper/exploratory/A328_fetal_running_loop/scripts/{prep_a328,score_a328}.py`.
+
+## A329 (2026-11-19, check N2 of `PAPER_PLAN_2026-11-19.md` section 6.2 and `MODEL_signal_clock_2026-11-19.md` section 6, prompt `prompts/two_axis_checks_2026-11-19.md` Task 5; one scoring run; **BLIND for the core loop**: the core-loop departure, coupling and excess of the A294b tissues have never been computed (grep of RP, A294b, A296 and A303 scripts, 2026-11-19: A296 / A303 used the core loop for the adrenal offset only, A321 for lymphocytes); **NOT BLIND** for the 14-gene values (A294b H294b.1 median log ratio 0.969, A291 couplings, A311, A313)): is the personal departure the signal layer read through PER1, PER2 and NR1D1? **GTEx fast deaths, 27 peripheral tissues (A104 / A294b rows)**
+
+**Why.** The departure (2 psi) is clock-specific, about 2.6 times that of matched genes and nearly constant across organs
+(A294b). PER1, PER2 and NR1D1 respond directly to glucocorticoid and cAMP signals; if the departure is the acute signal
+state read through them, it shrinks on the core loop and coupling rises (model part 6, "leakage").
+
+**Design (fixed; `exploratory/A329_core_departure/scripts/score_a329.py`, from `score_a294.py`).** A294b load, rows and
+fit (`A104.per_tissue`, every tissue an anchor, leave-one-out host). Gene sets:
+- `full`: the 14-gene GTEx waveform; `core`: the 11-gene waveform without PER1, PER2, NR1D1 (`A294_lymphocyte_hormonal`
+  `CORE`, as A321).
+- Companions: the 100 expression-matched sets of A294b (`pseudo_waveforms(kind="matched")`, seed [294, 1], identical sets);
+  each set's 11-gene companion is its genes at the CORE positions of the waveform (pseudo-clock genes are drawn in
+  waveform order), with the CORE amplitudes and phases. So every set is compared with matched sets of its own size, and
+  `full` and `core` are paired on the same draws.
+- Validation before any core value is read: `full` must reproduce A104 rho 0.734 and the A294b median log ratio 0.969
+  (to 3 decimals); otherwise stop.
+
+**Statistics.**
+1. **H329.1 (excess).** Per tissue, log ratio = log(2 psi_set / median over its matched sets of 2 psi), for `full` and
+   `core`; Delta_t = log ratio_core - log ratio_full. Reported: core median log ratio with a 2,000-draw tissue-bootstrap
+   90 % interval (seed 329), median Delta_t, one-sided Wilcoxon signed-rank p (Delta < 0).
+2. **H329.2 (coupling).** Delta c_t = c_core - c_full; one-sided Wilcoxon p (Delta c > 0). Companion: the same difference
+   for each matched set (11 minus 14 genes at the same positions); reported as the clock's median Delta c minus the
+   median over tissues of the matched sets' median Delta c (fewer genes alone change coupling).
+3. **H329.3 (departure on the signal state).** Per tissue and gene set: the per-sample departure d_i = beta_i - M h_i,
+   with beta_i the sample's clock-plane state (centred within its intercept group), h_i its leave-one-out host state
+   (`Dataset.host` of the other 26 tissues) and M the least-squares 2 x 2 map over the tissue's donors; R^2 of the
+   2-column d regressed on the sample's two responsive scores (glucocorticoid-target and immediate-early classes of
+   `clocksync._core.controls`, the 14 clock genes excluded; per class the mean over genes of the log fraction
+   standardised within tissue). Excess_t = R^2_set - median over its matched sets of R^2; reported per gene set: median
+   excess over tissues, tissue-bootstrap 90 % interval, tissues with R^2 above the matched q95. Aggregates only.
+
+**Readings (registered).**
+- **Leakage** = all three: (1) the core excess falls toward 0: median Delta < 0 with Wilcoxon p < 0.05 **and** the core
+  median log ratio <= 0.485 (half the full value); (2) coupling rises: Wilcoxon p < 0.05 for Delta c > 0 **and** above the
+  matched-set change; (3) the full-set departure is explained by the signal state: median excess > 0 with its 90 % interval
+  above 0. Model part 6 then reads "the acute signal state seen through signal-inducible clock genes", and clocksync gets a
+  core-loop readout for coupling.
+- **Clock-specific departure** = (1) fails (core median log ratio > 0.485, or no fall) and (3) fails: the departure stays
+  on the core loop and is not the signal state; part 6 is a person-specific clock departure with its cause open.
+- Any other combination: "partly leakage", reported per statistic; no wording of model part 6 changes beyond naming
+  which part holds.
+- **Power (analytic, before scoring).** The A294b tissue-bootstrap 90 % interval (0.889 to 1.077) gives an SE of about
+  0.057 for the median log ratio; a fall from 0.969 to 0.485 is about 8 SE. Statistics 2 and 3 have no prior size; their
+  failures are reported with their intervals, not as evidence against leakage.
+
+**Limits.** (1) GTEx deaths: agonal and handling states are part of the "signal state". (2) The core-loop projector has
+fewer genes, so its measurement noise is larger; the matched sets of the same size carry the same loss. (3) The
+responsive scores are themselves noisy measures of the signal state; a low R^2 bounds, it does not exclude.
+**Stop rule:** one validated run (`RUN_CAP_GB=30 paper/common/run.sh ... --jobs 4`). Seeds 294 (sets), 329 (bootstrap).
