@@ -6746,3 +6746,22 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
   DF arm is not exactly 12 h from AL (Delta fitted at 11.3 h).
 - Code: `exploratory/A322_conflicting_drives/scripts/score_a322.py`.
 <!-- src: paper/exploratory/A322_conflicting_drives/output/{ratios,fit,tests}.csv -->
+
+## A321 (scored 2026-11-19; BLIND for the atlases): on four fresh atlases tissue lymphocytes show no core-loop clock (H321.1 FAIL with 3 informative compartments, combined p 0.47): "no readable clock" holds with the core loop included; one uninformative exception (skin T cells)
+
+- One scoring run (600 s, 6 workers, peak 3.1 GB). Six lymphocyte compartments, 15-21 shared donors.
+- **Primary compartments (core loop C, p; power control; percentile among 200 matched 11-gene sets):**
+  - lung NK (Natri controls): C -0.357, p 0.78; power 0.80 (informative); 27.5th percentile.
+  - liver CD8 T: C 0.081, p 0.35; power 1.00; 44th.
+  - adipose T: C 0.172, p 0.30; power 1.00; 65.5th.
+  - skin T: C 0.604, p 0.012; power 0.00 (thinned fibroblasts never pass: not informative); 95th percentile.
+- **H321.1 FAIL:** Stouffer over the three informative primary compartments z 0.087, p 0.465. H321.2 not read.
+- Descriptive (secondary compartments): lung T C -0.223 (p 0.69, power 0), liver NK -0.394 (p 0.84, power 1.00). The
+  14-gene C: negative or near 0 in five of six (skin T 0.469, p 0.010).
+- **Reading (registered).** With three informative compartments, the core loop does not reveal a lymphocyte clock in
+  fresh tissues: A294's post hoc core-loop pattern does not replicate, and the wording "tissue lymphocytes carry no
+  readable clock" holds with the core loop included. Skin T cells cohere on both gene sets (95th percentile of matched
+  sets), but the skin's own fibroblasts, thinned to the T cells' counts, never pass, so the test cannot separate a
+  lymphocyte clock from other donor-shared covariation there: an exception to check, not a result.
+- Code: `exploratory/A321_lymphocyte_core_blind/scripts/score_a321.py --stage score`.
+<!-- src: paper/exploratory/A321_lymphocyte_core_blind/output/{design,compartments,tests}.csv -->
