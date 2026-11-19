@@ -301,7 +301,7 @@ The frozen claim set: every entry cited in sections 2, 3 and 5 is scored.
 | S1 fetal running loop | A328 | registered blind; waits for the server counts; timed positive control missing (user's decision) | Figure 3e stays "the open test" until scored |
 | G1 organ factor | A330 | not decidable at this design (baboon power 0.60 at true rho 0.6; mouse 0.45 at 8 organs, not downloaded) | Figure 4g: "organ" stays open |
 | P1 person loudness, living | A331 | PASS (blind, powered): leverage 0.177 beyond matched genes (98.5th), not beyond responsive (93.5th) | Figure 4f holds in living women, with the responsive caveat |
-| N2 departure on the core loop | A329 | running (blind for the core loop) | model part 6 wording |
+| N2 departure on the core loop | A329 | partly leakage: excess 2.64 -> 1.28 times matched without PER1, PER2, NR1D1 (H329.1); not the GC / IEG signal state (H329.3 FAIL); coupling falls (H329.2 FAIL) | model part 6: departure carried mainly through signal-inducible clock genes, cause open |
 | N1 output retention | A333 | registered (staged); power stage not run; archive A91 answers partly (pooled ventilated lock of clock-following genes above 1 in 23 of 26 tissues, liver highest) | Figures 1 and 7: pending |
 | D1 skin loudness | A332 | descriptive: psoriasis variance up, not beyond companions | 3, Figure 6d: loudness change not clock-specific |
 | D2 brain death per organ | A332 | descriptive: no organ loses loudness; lung, tibial artery and nerve move about 1 h | Figure 5b arrows |

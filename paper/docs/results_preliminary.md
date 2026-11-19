@@ -6746,6 +6746,35 @@ baboon's: **B1 is uninformative and stopped** (orientation not chosen; the scout
 - Code: `exploratory/A317_braindeath_confirm/scripts/b1_scout.py`.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/b1_scout.csv -->
 
+## A329 (scored 2026-11-19; BLIND for the core loop, NOT BLIND for the 14-gene values; one run): the personal departure is mostly carried by PER1, PER2 and NR1D1 (H329.1 falls: excess 2.64 -> 1.28 times matched), but it is not explained by the glucocorticoid / immediate-early signal state of the sample (H329.3 FAIL) and coupling does not rise (H329.2 FAIL): "partly leakage"
+
+GTEx fast deaths, 27 peripheral tissues, A294b fit. Validation passed (A104 rho 0.734; full median log ratio 0.969).
+- **H329.1 (excess) holds.**
+  - The core-loop (11-gene) median log ratio to matched sets is 0.250 (90 % 0.143-0.361), against 0.969 for the 14 genes.
+    So the departure goes from 2.64 to 1.28 times that of matched sets.
+  - The median per-tissue change is -0.765; Wilcoxon p < 1e-7. It falls in all 27 tissues, and the core value is at most
+    0.485 (the registered half) in 20 of 27.
+  - Highest core values: colon sigmoid 1.475, lung 0.886. Five tissues are at or below matched sets (kidney cortex -0.344,
+    breast -0.150).
+- **H329.2 (coupling rises) FAIL.** Coupling falls on the core loop instead: median change -0.076, against -0.001 for the
+  matched sets at the same positions; it falls in 25 of 27 tissues; one-sided p (rise) 1.0. Median coupling is 0.675 full
+  and 0.605 core.
+- **H329.3 (departure explained by the signal state) FAIL.**
+  - The per-sample departure regressed on the glucocorticoid-target and immediate-early scores gives a median R^2 of 0.048
+    (matched 0.056). The excess is -0.009 (90 % -0.013 to 0.022), and no tissue is above the matched q95.
+  - On the core loop the excess is 0.001 (-0.007 to 0.030), with 1 tissue above q95 (descriptive).
+- **Reading (registered): "partly leakage".**
+  - Most of the clock-specific excess of the personal departure sits on the three signal-inducible genes; the 11-gene
+    core loop keeps a smaller excess of about 1.3 times matched sets.
+  - The departure is not the sample's measured acute signal state: the glucocorticoid and immediate-early scores do not
+    explain it beyond matched genes.
+  - Coupling falls when the three genes are removed. That fits their large amplitudes carrying part of the shared clock
+    state, so the leakage reading's prediction of a cleaner core-loop coupling does not hold.
+  - Model part 6 names which part holds: the departure is carried mainly through signal-inducible clock genes, by a
+    cause that the two responsive scores do not capture. No core-loop coupling readout is added to clocksync.
+- Code: `exploratory/A329_core_departure/scripts/score_a329.py --jobs 4` (7,803 s).
+<!-- src: paper/exploratory/A329_core_departure/output/{tests,tissues,sets}.csv -->
+
 ## A332 (scored 2026-11-19; DESCRIPTIVE, NOT BLIND): the descriptive companions of the two-axis map: psoriasis gains clock-plane variance but not beyond its companions (D1); in brain death no organ loses loudness and three move by about an hour (D2); within organ donors loudness falls with ventilation time while the order is already lost (D3, organ-donor part only); developmental loudness rises after birth in brain and kidney, with a non-clock exception (D4)
 
 - **D1 (skin; `exploratory/A332_descriptive/output/d1_series.csv`).** Lesion over non-lesion clock-plane variance, r (amplitude

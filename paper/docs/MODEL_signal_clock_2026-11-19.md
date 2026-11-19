@@ -230,6 +230,14 @@ organs.
   - If the excess stays, part 6 is a person-specific clock departure, with its cause open.
 - *Blind status.* The core-loop departure of these tissues has not been computed; check before registering (A296 used
   the core loop for the adrenal offset only).
+- *Result (A329, 2026-11-19): partly leakage.*
+  - Without the three genes, the excess falls from 2.64 to 1.28 times matched sets, in all 27 tissues (core log ratio
+    0.250, 90 % 0.143-0.361).
+  - The departure is not explained by the glucocorticoid or immediate-early state of the sample (excess R^2 -0.009,
+    -0.013 to 0.022).
+  - Coupling falls on the core loop (-0.076) instead of rising.
+  - Part 6 reads: the personal departure is carried mainly through signal-inducible clock genes, by a cause the two
+    responsive scores do not capture. No core-loop coupling readout.
 - *Cost.* One A294 run, about 25 min on 4 workers.
 
 **N3. Night shift: does each signal family follow its own drive?**
