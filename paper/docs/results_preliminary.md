@@ -6653,6 +6653,46 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
 - Code: `exploratory/A317_braindeath_confirm/scripts/score_a318.py --stage score`.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/{a318_power,a318_tests,a318_sets}.csv -->
 
+### A318 post hoc (2026-11-19; registered note before computing; descriptive, NOT BLIND): same-pairs decomposition of the common-ischaemic-range sensitivity: the restriction drops every pair with heart, lung or whole blood; on the remaining 36 pairs the contrast falls from 0.43-0.53 to 0.239, half by donor noise and half by organ donors' rho rising beyond noise (H318.2 selection); R36 sits at the 5th percentile of the noise-matched draws (1 of 20 below)
+
+- Same 36 pairs, A317 estimator; rho with fast deaths (post-mortem / organ donors, median of 20 draws) and D_rho:
+  | readout | rho_pm | rho_od | D_rho |
+  |---|---|---|---|
+  | U65 (A317 H317.1, reproduced) | 0.678 | 0.057 | 0.621 |
+  | U36, A317 main draws | 0.424 | -0.109 | 0.533 |
+  | U36, sensitivity draws | 0.424 | -0.009 | 0.433 |
+  | S36, noise-matched (20 draws: q05 / median / q95) | 0.234 / 0.369 / 0.440 | -0.057 / -0.018 / 0.027 | 0.244 / 0.379 / 0.473 |
+  | R36 (A317 sensitivity, reproduced) | 0.423 | 0.184 | 0.239 |
+  | U29, the dropped pairs, unrestricted | 0.706 | 0.172 | 0.535 |
+- Per-pair estimator check: 0.435 on U36 (sensitivity draws) against 0.433 for the A317 estimator; R36 0.250 with it.
+- **Dropped pairs (29):** every pair containing Heart - Atrial Appendage, Lung or Whole Blood (Heart-Lung is not among
+  the 65). Their organ-donor samples fall mostly below the post-mortem ischaemic range (201-1271 min): shared donors per
+  pair in one organ-donor draw of 79 drop from 20-62 to 3-19 (`dropped_pairs.csv`).
+- **Reading as registered.** R36 against S36: 1 of 20 noise-matched draws below 0.239 (2 of 20 below the like-for-like
+  per-pair R36, 0.250); interpolated q05 0.244. The registered boundary ("below the 5th percentile") is met for the A317
+  estimator and missed for the per-pair one: **borderline, not decided by 20 draws.** The decomposition is clearer than
+  the boundary: post-mortem rho does not fall beyond noise (0.423 against S36 median 0.369; 17 of 20 draws lower);
+  organ donors' rho rises above every noise-matched draw (0.184 against at most 0.066). The fall of the contrast under
+  the restriction is therefore the H318.2 selection (organ-donor samples with post-mortem-range ischaemia are more
+  post-mortem-like), not noise alone. U36 is not near R36 (0.43-0.53), and the dropped pairs carry the contrast as
+  strongly as the kept ones (U29 0.535): the fall from 0.621 is not located in the dropped pairs.
+- **Note for B3.** The three dropped tissues are those the restriction removes, i.e. the organ-donor tissues recovered
+  first (heart and lung at procurement, blood): the tissues most likely reached by perfusion or recovered at cross-clamp.
+  The organ-donor samples kept in the 9 remaining tissues are the later-recovered, longer-ischaemia ones.
+- **Limits.** 20 noise-matched draws (registered); the organ-donor medians move by about 0.1 between two sets of 20
+  draws (U36: 0.533 vs 0.433), the same order as the gap to the boundary.
+
+### B4 (2026-11-19, no run): donors after circulatory death: closed, not available
+No GTEx variable records donation after circulatory death. Subject data dictionary
+(`phs000424.v8.pht002742.v8.GTEx_Subject_Phenotypes.data_dict.xml`): the candidate fields are TRTPTREF (tissue ischaemic
+time from actual death, presumed death, or cross-clamp "in the case of surgical donors") and DTHTPTREF. Aggregates in
+the analysis universe: all 298 Hardy 0 organ donors carry TRTPTREF and DTHTPTREF "Actual Death" and a cross-clamp time
+(TRCCLMP recorded in 298 of 298); post-mortem ventilated donors 77 "Actual Death", 2 "Presumed Death", none with a
+cross-clamp time. In the whole universe 300 organ donors, 298 Hardy 0 (one Hardy 2, one Hardy 3). GTEx's Surgical cohort
+(15 donors) is not in the analysis universe. The direct control (same collection, no brain death) is not in GTEx.
+- Code: `exploratory/A317_braindeath_confirm/scripts/same_pairs_a318.py`.
+<!-- src: paper/exploratory/A317_braindeath_confirm/output/{same_pairs,same_pairs_summary,dropped_pairs}.csv -->
+
 ## A319 (scored 2026-11-19; NOT BLIND for the published tables): in forebrain Bmal1 KO mice the organs' loss of "within-mouse coherence" is mostly a new, reproducible organ order, not independent drift (H319.2 PASS: under restricted feeding all 6 organs cluster across mice and the new order accounts for all of the within-mouse spread); without any shared drive (DD) no significant shared phase is left beyond the organ order (H319.1 PASS, E 0.069, p 0.070, borderline)
 
 - Data: Izumo et al. 2014 eLife source data (organ means and circular variances across mice; per-mouse circular
