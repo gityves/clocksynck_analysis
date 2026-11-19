@@ -73,14 +73,21 @@ Ranked by how much the headline depends on it.
 2. **Timescale of the drift after brain death.** The model predicts disorder grows with time since loss of the
    drive; GTEx has ventilation duration, not time since brain death (A132 tertiles in the drift direction, not
    significant). State as a limit, unless a time-since-brain-death variable is found.
-3. **Responsive-gene specificity in living tissue** (A285): the living internal-time results stand on matched genes;
-   calibrate the responsive rule or state it.
-4. **Coverage of c** (A162, A163): intervals undercover at realistic anchor coupling; fix or state as approximate.
-5. **Blind gain decomposition** (composition x conserved class gains in unseen atlases): turns findings 3-4 into a
-   prediction.
-6. **Blind conflicting-drives curve** (weight b per organ): Manella liver, lung and fat as the not-blind check;
-   Saini 2013 kinetics as a mouse calibration of b for liver.
-7. **Lymphocyte core loop** (A294): blind test before "no clock" loses "readable".
+3. **Responsive-gene specificity in living tissue: closed (A320).** Clock-specific against a calibrated broad
+   stress-responsive family (p_cal 0.0045-0.009); the narrow GC / immediate-early family stays stringent and decidable
+   only with enough pairs. Wording in the A320 entry.
+4. **Coverage of c: closed as "state".** Intervals approximate (coverage 0.80-0.98, median 0.94); a reliability
+   threshold makes coverage worse (gap 3 note); no claim rests on an absolute c interval.
+5. **Gain decomposition: done (A323, FAIL).** Composition x conserved class gains spread the organ gains 1.3-fold
+   against 2.9-fold observed (8 GTEx tissues, GTEx single-nucleus shares): an organ-level factor scales all classes.
+   Figure 2 and model part 2 reworded. Open: what sets the organ factor.
+6. **Conflicting drives: done in two mouse datasets (A322, A324).** A pure mix of drives is rejected in both; the
+   organs that follow feeding least keep half to two thirds of their amplitude, adipose loses most. Open: a per-organ
+   weight predicting a new, partial conflict (no public multi-tissue partial-conflict time series found: jet lag
+   designs are liver-only; GSE154797 is fasting / refeeding, i.e. removal).
+7. **Lymphocyte core loop: closed (A321, blind).** No core-loop clock in three informative fresh compartments
+   (combined p 0.47); "no readable clock" holds with the core loop included. Skin T cells cohere but are not
+   informative (power control 0): a check, not a result.
 8. **Age advance** (A234; living cohorts opposite sign): supplement with caveats, or replicate.
 9. **Model document**: done, `MODEL_federation_2026-11-19.md` (with its tested limits A310, A311, A312, A313,
    A315, A319).
