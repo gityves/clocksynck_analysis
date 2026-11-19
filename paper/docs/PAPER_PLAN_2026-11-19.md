@@ -62,11 +62,13 @@ untimed samples (relative amplitude |z| and offset arg z against the host). For 
   - It is set by the organ's mix of drives (A293 Part 1; mouse A297, A319, A322, A324).
 - **Loudness has three factors.**
   - Person A_p: persons differ strongly, and every tissue follows the person's amplitude nearly in proportion (A312,
-    elasticities 0.83 to 1.77).
+    elasticities 0.83 to 1.77). In living women, fat and skin share it at the size the deaths predict (A331: leverage
+    0.177, beyond matched genes, not beyond stress-responsive genes).
   - Cell class a_k: conserved relative to endothelium across organs within a factor of about 1.4 (A293 H293.4);
     lymphocytes below 0.7 of fibroblasts (A272-A288, A321, A326).
   - Organ G_o: gains 9.2-fold apart (A294b). Composition and class gains do not explain them (A323: 1.29-fold
-    predicted, 2.89-fold observed). Biological or technical: open (check G1).
+    predicted, 2.89-fold observed). Biological or technical: open; G1 is not decidable with the baboon atlas (A330:
+    power 0.60 at a true organ-level Spearman of 0.6).
 - **The departure has one size and no direction.**
   - It is clock-specific, about 2.6 times that of expression-matched genes and nearly constant across organs (A294b).
   - It is isotropic (A311) and hardly shared between organs (A302, A313).
@@ -106,7 +108,7 @@ Polar plot: angle = time relative to the person's internal time; radius = loudne
 
 | stage and organ | signal layer | clock layer | entries | status |
 |---|---|---|---|---|
-| fetal adrenal cortex, lung, liver | clock-shaped covariation between fetuses at half to three quarters of the adult size (A243); carried by PER1, PER2, NR1D1: not clock-specific on the core loop (A264, A266, A269); these genes keep the clock's phase pattern with the core genes (A307 H307.2, adrenal cortex and lung) and follow glucocorticoid activity in lung (H307.1) | a core loop of adult-like size excluded down to 0.75 of the adult size in adrenal cortex and 0.5 in lung; a smaller entrained loop not excluded | A242-A244, A264, A266, A269, A307 | not blind; no sampling times |
+| fetal adrenal cortex, lung, liver | clock-shaped covariation between fetuses at half to three quarters of the adult size (adrenal: A242 whole gland, A244 cortex before 12 wpc only; lung, liver: A243); carried by PER1, PER2, NR1D1: not clock-specific on the core loop (A264, A266, A269); these genes keep the clock's phase pattern with the core genes (A307 H307.2, adrenal cortex and lung) and follow glucocorticoid activity in lung (H307.1) | a core loop of adult-like size excluded down to 0.75 of the adult size in adrenal cortex and 0.5 in lung (pooled; lung before 12 wpc is clock-specific on the core loop, descriptive, A269); liver core loop covaries (C 0.686) but not beyond responsive genes: driven or entrained, not separable (A269); a smaller entrained loop not excluded | A242-A244, A264, A266, A269, A307 | not blind; no sampling times |
 | fetal adrenal medulla, heart, kidney, brain | none shown | none: a clock of 0.75 to 1 times the adult one excluded (A240); brain 13-22 pcw C 0.047 | A237-A240, A243, A244 | - |
 | postnatal brain, heart, kidney, liver | - | present: brain C 0.735 in infancy and childhood, 0.663 from 13 years (A239); postnatal controls C 0.54 to 0.84 (A237) | A237, A239 | - |
 | mouse late embryo (E15-E18.75) | signal-induced genes keep the waveform pattern in hepatocytes (A309 H309.2) | hepatocytes clock-specific (A309 H309.1); cardiomyocytes (three quarters of adult size excluded), nephron, lung and adrenocortical progenitors not | A309, A236 | not blind |
@@ -125,14 +127,14 @@ Polar plot: angle = time relative to the person's internal time; radius = loudne
 | condition (reference) | time | loudness | departure | entries | status |
 |---|---|---|---|---|---|
 | intensive care, living brain (fast deaths) | order kept (Fisher-Lee rho 0.690) | lower: clock-specific log variance ratio 0.404, amplitude about 0.82 (derived); within organ donors, lower with ventilation time (descriptive) | - | A293, A315 | registered re-tests, not blind |
-| brain death (ventilated, living brain) | order changed (D_rho 0.621; 0.584 adjusted); shared clock state kept | equal: clock-specific ratio 1.05 (amplitude 1.02, derived) | - | A315, A317, A318, A325, A327 | aliased with procurement; not blind |
-| human muscle, day 3 of a 12 h behavioural shift (aligned) | +2.68 h | excursion about 0.31 (derived; projection 0.233) | - | A257 | not blind; 11 men |
+| brain death (ventilated, living brain) | order changed (D_rho 0.621; 0.584 adjusted); shared clock state kept; per organ (A332 D2): lung -1.58 h, tibial artery +1.09 h, tibial nerve +0.99 h, others within 1 h | equal: clock-specific ratio 1.05 (amplitude 1.02, derived); every organ 0.92-1.13 of matched (A332 D2) | - | A315, A317, A318, A325, A327, A332 | aliased with procurement; not blind |
+| human muscle, day 3 of a 12 h behavioural shift (aligned) | +2.68 h | excursion about 0.31 (derived; projection 0.233; correction note under A257) | - | A257 | not blind; 11 men |
 | mouse, daytime feeding (night feeding) | liver 11.3-11.7 h; lung, heart, kidney 1.6-2.5 h; fat 10.60 h (Manella), -0.48 h (Xin) | liver 0.44-0.71; lung, heart, kidney 0.50-0.65; fat 0.32 and 0.11 | - | A322, A324 | A324 blind for heart, kidney, fat |
 | mouse liver, feeding rhythm removed | +1.57 h | 0.724 | - | A297 | not blind |
 | tumours, high vs low proliferation (own normal tissue) | kept: tumours pair with their patient (A138); COFE's uncoupling is an artefact (A265, A267) | gain 0.63, clock-specific | not raised (power 1.000 at a doubling) | A138, A304 | A304 not blind for A138 |
 | tumour cell classes | fibroblasts and endothelium carry the patient's time; immune cells not beyond responsive genes | - | - | A227, A271 | - |
 | chronic lesions: periodontitis, osteoarthritis, carotid plaque, fibroid, hidradenitis (own tissue) | kept: pooled +0.01 h, MDE 0.69 h | lower: variance 0.66 pooled (amplitude about 0.81, derived), clock-specific only pooled, at the line | - | A254 | powered for time |
-| psoriasis lesion (own skin) | -1.45 h, clock-specific | higher, descriptive (log variance ratio +0.50, no companions) | - | A183, A308 | not blind; check D1 |
+| psoriasis lesion (own skin) | -1.45 h, clock-specific | higher, not clock-specific (r +0.50, amplitude 1.28; 94th / 90.5th percentile of matched / responsive; A115 lesional vs uninvolved pooled +0.30, 56th / 70th) | - | A183, A308, A332 D1 | not blind |
 | psoriasis, uninvolved vs healthy skin | later (descriptive) | - | - | A115 | trait component |
 | T2D, obesity, hypertension, smoking | offsets and coupling equal (equivalence +-0.15 for T2D and obesity) | equal (powered) | equal (powered) | A164, A233, A235, A306 | - |
 | age, sex | equal | CHIRAL's age dampening shrinks with death-type matching | - | A208, A231 | - |
@@ -213,8 +215,8 @@ Polar plot: angle = time relative to the person's internal time; radius = loudne
 |---|---|---|---|
 | 1 | A slow clock, read from untimed hospital tissue | (a) the clock plane and the readout; companions as the separation of clock and signal layers (schematic); (b) living tissue, two biopsies hours apart: the clock rotates with elapsed hours, responsive sets do not (A252, A256); (c) deaths: the clock reads the hour of death, responsive and matched sets do not; baboon as the timed reference (A270); (d) night shift: clock 2.68 h at about 0.31, program 11.65 h at 0.854 (A257, A261) | method validation (A123b, A145, A209, A258, A285, A320); blood forced desynchrony (A262) |
 | 2 | Structural cells keep the clock; every cell reads the signals | (a) participation across atlases and living donors (A272, A274, A280, A282, A283, A288); (b) lymphocytes share glucocorticoid and immediate-early states, not the clock (A275), with the bound and the core loop (A326, A321); (c) Bmal1 knockout: a shared signal state without a clock (A279) | per-atlas replicates (A281, A287, A284, A152); cortex unresolved (A280, A283) |
-| 3 | Development: the signal layer comes before the clock | (a) before birth, adrenal cortex, lung and liver carry a clock-shaped covariation at half to three quarters of the adult size; medulla, heart, kidney and brain none (A237-A239, A242-A244); (b) it rests on the signal-induced genes: not clock-specific on the core loop (A264, A266, A269); they keep the clock's phase pattern and follow glucocorticoid activity in lung (A307); (c) after birth the clock is present: brain 13-22 pcw C 0.047 against 0.735 in infancy and childhood (A239), postnatal controls (A237), the loudness curve (D4); (d) mouse late embryo: hepatocytes first, heart and kidney not (A309); (e) the time-free test: spliced and unspliced phase relations, and the blind adrenal replication (S1), or stated as the open test | negatives and bounds (A236-A241); Cao design not estimable (A181); mother-fetus not resolved (A184); developmental loudness table (T5) |
-| 4 | One time, many volumes | (a) classes share the organ's time (A273, A279; A293 H293.3); (b) composition moves loudness, not time (A295); (c) the organ order held without alignment to the day and without meals (A293 Part 1); (d) conserved class gains (A293 H293.4); (e) organ gains over a departure of one size: coupling reads loudness; information in bits (A291, A294b, A311, A313; N2); (f) the person's loudness, shared by every tissue (A312; P1); (g) the organ range is not composition (A323; G1) | CHIRAL concordance (A123); order sensitivities (A109, A132, A314); A302; A310 fit; A312 per tissue |
+| 3 | Development: the signal layer comes before the clock | (a) before birth, adrenal cortex, lung and liver carry a clock-shaped covariation at half to three quarters of the adult size; medulla, heart, kidney and brain none (A237-A239, A242-A244); (b) it rests on the signal-induced genes: not clock-specific on the core loop (A264, A266, A269); they keep the clock's phase pattern and follow glucocorticoid activity in lung (A307); (c) after birth the clock is present: brain 13-22 pcw C 0.047 against 0.735 in infancy and childhood (A239), postnatal controls (A237), the loudness curve (D4); (d) mouse late embryo: hepatocytes first, heart and kidney not (A309); (e) the time-free test: spliced and unspliced phase relations, and the blind adrenal replication (S1, registered as A328; counts not yet delivered), or stated as the open test; loudness after birth (A332 D4) | negatives and bounds (A236-A241); Cao design not estimable (A181); mother-fetus not resolved (A184); developmental loudness table (T5) |
+| 4 | One time, many volumes | (a) classes share the organ's time (A273, A279; A293 H293.3); (b) composition moves loudness, not time (A295); (c) the organ order held without alignment to the day and without meals (A293 Part 1); (d) conserved class gains (A293 H293.4); (e) organ gains over a departure of one size: coupling reads loudness; information in bits (A291, A294b, A311, A313; N2); (f) the person's loudness, shared by every tissue (A312), in living women too (A331); (g) the organ range is not composition (A323); biological or technical open (A330 not decidable) | CHIRAL concordance (A123); order sensitivities (A109, A132, A314); A302; A310 fit; A312 per tissue |
 | 5 | Perturbations move loudness, rarely time | (a) the map: every condition of section 3 as an arrow; (b) intensive care lowers loudness and keeps the order, brain death changes the order and keeps loudness, in GTEx, aliased with procurement (A293, A315, A317, A318); (c) drives removed and in conflict, mouse: feeding removed (A297), central clock lost (A319), daytime feeding by organ weight (A322, A324); (d) the departure does not grow (A304, A306) | brain-death checks (A132b, A318 H318.2, A325, A327; Q41 Tasks 2-3, B1, B4); ventilation time (A132, A315; D3) |
 | 6 | Disease: chronic disease spares the clock, local disease quiets it, inflamed skin shifts it | (a) chronic systemic disease: equivalence and powered nulls (A164, A233, A235, A306); (b) tumours keep the patient's time, their stroma carries it, gain falls with proliferation, the departure stays flat (A138, A227, A271, A304), and the COFE correction (A265, A267); (c) chronic lesions keep time and lose loudness (A254); (d) psoriasis: the lesion later (A308), eczema alike (A183), uninvolved skin late (A115), its loudness (D1) | per-cancer ranking (A3); prognostic nulls (A191-A194, A198, A220); smoking lung gain (A306) |
 | 7 | Model | signal and clock layers; the clock layer built after the signal layer; time from drives, loudness from cells; time where resolved, loudness where averaged; tested parts and failures (A310, A311, A312, A313); predictions (N1, tumour single cells, per-organ drive weights, S1) | equations (MODEL_signal_clock section 3) |
@@ -290,6 +292,21 @@ The frozen claim set: every entry cited in sections 2, 3 and 5 is scored.
 3. G1, P1 and N2 next (hours; data on disk).
 4. N1 if its power scout passes.
 5. D1-D4 alongside.
+
+### 6.2b Status of the section 6 checks (2026-11-19, prompt `prompts/two_axis_checks_2026-11-19.md`)
+
+| check | amendment | status | what it changes |
+|---|---|---|---|
+| T1-T5 assembly | - | done: `exploratory/two_axis_map/` (two-axis table, polar points, development table), `docs/triage/registry_2026-11-19.tsv` (219 entries), text fixes | 2.4: adrenal band from A242; liver core loop not excluded (driven or entrained); lung before 12 wpc core-loop positive (descriptive) |
+| S1 fetal running loop | A328 | registered blind; waits for the server counts; timed positive control missing (user's decision) | Figure 3e stays "the open test" until scored |
+| G1 organ factor | A330 | not decidable at this design (baboon power 0.60 at true rho 0.6; mouse 0.45 at 8 organs, not downloaded) | Figure 4g: "organ" stays open |
+| P1 person loudness, living | A331 | PASS (blind, powered): leverage 0.177 beyond matched genes (98.5th), not beyond responsive (93.5th) | Figure 4f holds in living women, with the responsive caveat |
+| N2 departure on the core loop | A329 | running (blind for the core loop) | model part 6 wording |
+| N1 output retention | A333 | registered (staged); power stage not run; archive A91 answers partly (pooled ventilated lock of clock-following genes above 1 in 23 of 26 tissues, liver highest) | Figures 1 and 7: pending |
+| D1 skin loudness | A332 | descriptive: psoriasis variance up, not beyond companions | 3, Figure 6d: loudness change not clock-specific |
+| D2 brain death per organ | A332 | descriptive: no organ loses loudness; lung, tibial artery and nerve move about 1 h | Figure 5b arrows |
+| D3 ventilation time | A332 | organ-donor part only (loudness falls, order already lost); post-mortem tertiles not run | Figure 5 supplement |
+| D4 developmental curve | A332 | descriptive: loudness beyond matched after birth in brain and kidney | Figure 3c; V read with C |
 
 ### 6.3 Not to do (closed, not powered, or outside the freeze)
 
