@@ -8930,3 +8930,13 @@ Pairs: P 5, N 10, X 20. Relabelling SD of Delta 0.400 (MDE 0.997); of D_rho(N) 0
 A317 contrast (0.621). B3 is underpowered on both readouts: scored as registered (descriptive); a non-significant
 result does not decide.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/a327_power.csv -->
+
+### A326 validation note (2026-11-19, before scoring; `score_a326.py --stage validate`, r = 1 only)
+At r = 1 (`scale_clock` is the identity) the pass rates match the registered controls in every powered or informative
+unit (A281's 7 powered atlases within +0.10, A287's 3 powered within 0, A321's 3 informative compartments within
+-0.05). The registered "within 0.15 everywhere" rule fails in one non-powered A281 atlas: organ_colon 0.80 vs 0.55
+(optic nerve -0.15, at the limit). No code difference was found besides the random stream; a diagnostic rerun with 200
+replicates (A281, A287) brings every unit within 0.115 (organ_colon 0.62 vs 0.55): 20-replicate rates near p = 0.05
+carry a standard error of about 0.11. Decision (labelled here, before scoring): the implementation is accepted as
+validated; the design powers use only the powered / informative units, as registered; scoring keeps 20 replicates.
+<!-- src: paper/exploratory/L1_lymphocyte_power/output/{validation,validation_diag_200reps}.csv -->
