@@ -10,6 +10,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **New 2026-11-13:** results A245-A256 and what they change are summarised in `REVIEW_2026-11-10.md` §6; decisions asked there:
   the luminal A row after A224, whether to request ages (Wu 2020) and TwinsUK phenotypes (MuTHER), whether A243 is run (Q32),
   and the wording of the cancer chapter (Q24) after the synthesis in the ledger addendum of 2026-11-12.
+- **Q41** (below, new 2026-11-19): Cell Article with brain death as the climax, or Cell Resource? Brain-death checks done (A325, A327, Task 2-3, B1, B4), lymphocyte bound (A326).
 - **Q39** (below, new 2026-11-17): tally of the cell-type program (blocks A-C, A276-A283): what the cell-type line now claims, and which of B2, C1, C2 to run next?
 - **Q38** (below, new 2026-11-16): two side projects scouted (clock and cell cycle; liver zonation): start either, and with which data?
 - **Q37** (below, new 2026-11-16): add the ROSMAP single-nucleus cortex (427 donors) and RADC time of death to the Q12 request, for a human calibration of cell-type offsets?
@@ -38,6 +39,72 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
+
+### Q41 (2026-11-19): Cell Article with brain death as the climax, or Cell Resource? (after checks B1-B4, L1)
+**Question.** The public-data checks of the brain-death claim are done (prompt `prompts/cell_route_2026-11-19.md`,
+REVIEW_2026-11-19 sections 2.1, 5, 7). Which route: (a) Cell Article with brain death as the climax, (b) Cell Resource
+(method, specificity standard, atlas of clinical datasets), (c) Article only after new procurement data? **On hold:**
+the dataset sweep and Figure 1 of the Resource route (not started; inclusion rule to be registered first), figures.
+
+**Brain-death evidence (GTEx only; every test NOT BLIND, the contrast was found post hoc in A132b).**
+| check | result | reading |
+|---|---|---|
+| A317 H317.1 | D_rho 0.621, relabelling p 0.0025, above all 200 matched and 200 responsive sets | organ donors' arrangement differs from post-mortem ventilated donors, clock-specifically |
+| A317 H317.2 | excess C 0.269 vs 0.317 (FAIL) | organs of brain-dead donors still share a clock state: rearranged, not dissolved |
+| A318 H318.1 | D_rho 0.584 after linear ischaemic time + RIN adjustment (PASS) | not a linear ischaemia / RNA-quality effect (groups barely overlap: 258 vs 561 min) |
+| A318 H318.2 | organ donors with longer ischaemia keep more of the arrangement, +0.410, p 0.040 | gradient in the collection-mode direction |
+| Task 2 (A318 post hoc) | common ischaemic range: 0.239 on 36 pairs; noise-matched 0.244-0.473 (q05-q95), R36 at the 5th percentile; organ donors' rho rises beyond noise (0.184 vs <= 0.066); dropped pairs = every pair with heart, lung, blood | borderline; the fall is organ-donor samples with post-mortem-range ischaemia looking post-mortem (H318.2 again) |
+| Task 3 (living surgical reference) | precondition: no shared pair's organ-donor minus post-mortem offset beyond the site bound (1.22, -0.01, -0.03, 1.68 h; all intervals contain 0) | cannot decide; stopped |
+| B1 (baboon referee) | fast deaths vs baboon over 6 tissues |rho| 0.31, p 0.24 | the baboon cannot referee; stopped |
+| B2 (A325) | post-mortem ischaemic tertiles (555-585 min apart, hour-stratified) keep the arrangement: H325.2 rho 0.862, p 0.62, power 0.99 | the post-mortem side carries no collection component of the organ-donor size |
+| B3 (A327) | D_rho leg-only pairs 0.244, possibly perfused 0.265, mixed 0.456; no perfusion dependence (p 0.66); MDE 1.0 | consistent with brain death in unperfused tissue, underpowered |
+| B4 | no GTEx field for donation after circulatory death; all 298 organ donors brain dead with a cross-clamp time | the direct control does not exist in GTEx |
+| Literature | McTiernan 2021: brain-dead donor hearts lose PER2 / NFIL3 rhythm and shift ARNTL / NR1D1 against failing hearts (single organ, pseudo-time) | first on the order between organs, with a single-organ precedent |
+
+**Verdict on the Article route (recommendation).** The effect is large, clock-specific and survives everything that can
+be tested on the post-mortem side (A318 H318.1, A325). What remains is on the organ-donor side: within organ donors the
+arrangement moves toward the post-mortem one with longer ischaemia (H318.2, Task 2), and procurement itself (perfusion,
+recovery order, anaesthesia) has no counterpart in GTEx (B4); the checks that could separate it are uninformative or
+underpowered (Task 3, B1, B3). Public data cannot settle it. As a climax of a Cell Article it would be the least
+secure claim carrying the most weight; reviewers will raise the procurement alias first. **Recommended: not the
+climax without new data**; keep it as an open, provocative question ("In GTEx, brain-dead organ donors carry a different
+organ arrangement from every post-mortem group; brain death and collection at procurement cannot be separated in this
+resource") in either route. With new data (below) the Article route reopens.
+
+**Lymphocytes (L1, A326).** The human designs read a lymphocyte clock only above about 0.7 of the fibroblast amplitude;
+a mouse-colon-sized T-cell clock (0.25) would not have been seen. "No readable clock" stays, as a bound, not a species
+difference: it is not a provocative result either.
+
+**Resource route (one-page sketch; not started).**
+- *Message.* What untimed hospital-hours tissue can and cannot say about human clocks, with a method (clocksync), a
+  specificity standard (expression-matched and stress-responsive companions, calibrated: A283, A285, A320) and an atlas
+  of public clinical datasets with at least two compartments per person.
+- *Figure 1, "what hospital-hours tissue can and cannot say".* Can: one internal time per person across tissues in
+  living surgical cohorts (A251-A256); cell classes carrying it (A272-A283); organ relations in GTEx deaths (A293).
+  Cannot: per-sample time; lymphocyte clocks weaker than 0.7 of fibroblasts' (A326); brain death vs procurement (above).
+  Published claims our checks contradict, and only these: COFE's tumour uncoupling (A265, A267) and the published
+  prognostic clock signatures (A191-A194, A220). A123b is a method failing in one sampling regime (untimed orderers in
+  08-18 h deaths), not a contradicted claim; A207 shows disruption scores coexisting with tumour-normal pairing. The
+  edge is real hospital-hours data (A123b); in simulation A145 found none after Holm.
+- *Atlas.* A sweep of public datasets with >= 2 compartments per person (tumour-normal, multi-site surgery, multi-organ
+  donors, single-cell atlases): inclusion rule and denominator registered before any run; per dataset the gate, the
+  couplings / offsets with companions, and "uninformative" where the gate fails. Outward-facing: the public atlas holds
+  GTEx aggregates only.
+- *Biology in the Resource.* Cell-class participation, conserved class gains, the gain-over-departure warning
+  (coupling mostly measures loudness), chronic-disease nulls, psoriasis, tumours keep the patient's time.
+- *Cost.* API, tests, tutorials (planned anyway); the sweep (weeks); no new biology claims beyond the freeze.
+
+**Outward-facing options (drafts only on request; ask first).** (1) Multi-organ procurement biopsies of donors after
+brain death and after circulatory death (Swiss transplant centres; UK QUOD biobank, scope to check): the direct test.
+(2) Archived multi-organ RNA of rat brain-death models with ventilated sham controls (no public dataset found).
+(3) The in-house jet-lag data (Q29): if they become available, register before opening an ordinal predictor: organs
+with a higher feeding weight b (A322, A324) lag the SCN longer after a light shift and balanced-weight organs dip most
+in amplitude.
+
+**Also for the PI.** The i-TIMES pooled analysis (eight Roche trials, infusion time not randomised; overall survival HR
+1.039, 0.925-1.168, matched cohort) is carded from a secondary report only; the LungTIME-C01 retraction (Nat Med,
+2026-06-24) is for design and data integrity: cite as fragile clinical evidence, never as a hospital-hours false
+positive.
 
 ### Q40 (2026-11-18): where the paper stands after the organisation framework, and how the cancer chapter reads in it
 **Before / after, 2026-11-15 to 2026-11-18** (STATUS_2026-11-18 sections 1-3, updated today).
