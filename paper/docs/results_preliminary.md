@@ -6726,3 +6726,23 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
 - Code: `exploratory/A285_companion_calibration/scripts/placebo_a285.py --families matched,responsive,responsive_broad
   --out a320`; clocksync c2203c3 (`responsive_broad`).
 <!-- src: paper/exploratory/A285_companion_calibration/output/a320/{a251,a255,a138,a227}/{repro,tests}.csv, {a251,a255}/overlap.csv -->
+
+## A322 (scored 2026-11-19; NOT BLIND for the shifts and the liver amplitude): the "cells split between drives" chord does not fit liver, WAT and lung together (H322.1 rejected, Q 31.9, p 0.0005); conflicting feeding costs amplitude in all three tissues, but lung (and slightly liver) keep more than the mix predicts at their shift
+
+- Manella Alb-Cre controls, daytime feeding vs ad libitum, 24 + 24 libraries per tissue, 12 clock genes after QC; one
+  projector per tissue over both arms; library bootstrap within ZT (2000). One run.
+- **Complex ratios DF / AL:** liver amplitude 0.712 (90 % 0.660-0.768), shift 11.69 h; WAT 0.319 (0.272-0.371),
+  10.60 h; lung 0.495 (0.407-0.588), 1.90 h.
+- **Fit** (shared Delta, one weight per tissue): Delta 11.28 h (11.09-11.48); b liver 0.844, WAT 0.652, lung 0.371.
+  Model points: liver 0.692 at 11.12 h (Mahalanobis 5.8), WAT 0.316 at 10.49 h (0.08), lung 0.274 at 0.98 h (26.0).
+  Q 31.86; chi-square (2 df) p < 0.001; parametric bootstrap p 0.0005. **H322.1: rejected.**
+- **Reading (registered: rejection with |r| above the chord).** The tissue moved least (lung) keeps about half its
+  amplitude where splitting its cells between the two drives would leave about a quarter: self-sustained cells
+  re-synchronise at an intermediate phase, so conflict costs less amplitude than the mix. WAT, whose weight is near
+  one half, loses most (to a third), as the mix predicts. Federation part 5 is reworded: conflicting drives move a
+  tissue by its feeding weight and cost amplitude, most where the weights are balanced, less than a pure mix of
+  drives.
+- **Limits.** Three tissues, one design, one laboratory; tissues bootstrapped separately though from the same mice; the
+  DF arm is not exactly 12 h from AL (Delta fitted at 11.3 h).
+- Code: `exploratory/A322_conflicting_drives/scripts/score_a322.py`.
+<!-- src: paper/exploratory/A322_conflicting_drives/output/{ratios,fit,tests}.csv -->

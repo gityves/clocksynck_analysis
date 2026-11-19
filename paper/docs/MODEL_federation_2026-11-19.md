@@ -20,8 +20,10 @@ Numbers are from the results entries cited (`results_preliminary.md`), mouse num
 4. **The central drive sets the body's organ order.** Without it, organs follow the remaining shared drives in a
    different order (rearranged, not dissolved). With no shared drive at all, cells dephase and organs drift apart
    over days to weeks.
-5. **Conflicting drives cost amplitude more than phase.** When the drives disagree, organs move only part of the
-   way, and lose amplitude.
+5. **Conflicting drives cost amplitude.** When the drives disagree, an organ moves by its weight on each drive and
+   loses amplitude, most where the weights are balanced (mouse WAT to a third). The loss is smaller than a pure mix
+   of drives predicts for the organs that move least (lung keeps half, A322): self-sustained cells re-synchronise at
+   an intermediate phase.
 6. **Each person adds a departure.** Around the shared state, each organ of each person carries a personal departure
    of nearly constant size, random in direction and not shared between organs. It is added variation, not the phase
    noise of an oscillator.
@@ -35,7 +37,8 @@ For person p, organ o, cell class k:
     organ state:         x_{p,o} = G_o exp(i phi_o) theta_p + delta_{p,o}
     gain:                G_o = sum_k s_{o,k} a_k                (a_k conserved class gain, s_{o,k} composition)
     lag:                 phi_o = arg( sum_d w_{o,d} exp(i Phi_d) )   (Phi_d: phase of drive d in internal time)
-    amplitude under drive conflict:  R_o = | sum_d w_{o,d} exp(i Phi_d) | / sum_d w_{o,d}   (cells split between drives)
+    amplitude under drive conflict:  R_o >= | sum_d w_{o,d} exp(i Phi_d) | / sum_d w_{o,d}   (bound reached when cells
+                         split between drives; WAT reaches it, lung and liver stay above it, A322)
     departure:           delta_{p,o} ~ CN(0, 2 psi_o), psi_o nearly constant across organs, independent between organs
 
 - theta_p, the person's internal time, is what clocksync reads as the host. Coupling c_o = S_o / (S_o + 2 psi_o) with
@@ -55,7 +58,7 @@ For person p, organ o, cell class k:
 | 2. gain = class x composition | class gain relative to endothelium conserved across organs, within a factor of about 1.4 (A293 H293.4); composition moves gain, not phase (within 0.13 h per SD, A295); 85-fold gain range across tissues (A294b) | none at this resolution | supported; blind decomposition open (gap 4); A310: within errors not reached |
 | 3. timing set by weighted drives | cell classes share the organ phase, about 0.6 h (A273, A279); night shift: muscle moves 2.7 h after a 12 h behavioural shift (A257) | feeding sets peripheral phases, weights differ by organ (Manella 2021; Izumo 2014: liver and kidney follow feeding, heart, lung, spleen less) | supported; one weight per organ not yet fitted blind (gap 5) |
 | 4. central drive sets the order | order kept without the day (slow deaths) and without meals (ventilated living-brain donors) (A293 Part 1); rearranged in brain death, clock-specific (A317 H317.1, D_rho 0.621), after ischaemic time and RIN adjustment (A318, 0.584); shared clock between organs kept (A317 H317.2 FAIL); amplitude kept (A315, clock-specific ratio 1.05) | SCN-clock knockout: order kept under light-dark (Husse 2014; Izumo 2014); under feeding, a reproducible new order (A319 H319.2, order share 1.09, 6/6 organs cluster); in constant dark, organs drift and dampen (Husse: by day 7; Izumo: > 30 days; A319 H319.1, no significant shared phase, p 0.070); SCN lesion: organs oscillate at lower amplitude (Tahara 2012) | supported in GTEx (single cohort) and mouse (explants, not blind); replication open (gap 1) |
-| 5. conflict costs amplitude | night shift: muscle amplitude to about a quarter (A257 H257.3, R 0.233); forced desynchrony in blood (A262) | the central drive slows feeding-driven shifts (Saini 2013: liver re-phases in 1-2 d without SCN, 6-7 h after 7 d with it); removing feeding keeps 0.72 of liver amplitude, inverting it moves the liver 11.7 h (A297) | supported |
+| 5. conflict costs amplitude | night shift: muscle amplitude to about a quarter (A257 H257.3, R 0.233); forced desynchrony in blood (A262); mouse feeding inversion: liver 0.71, WAT 0.32, lung 0.50 of amplitude; a pure mix of drives is rejected (A322) | the central drive slows feeding-driven shifts (Saini 2013: liver re-phases in 1-2 d without SCN, 6-7 h after 7 d with it); removing feeding keeps 0.72 of liver amplitude, inverting it moves the liver 11.7 h (A297) | supported |
 | 6. personal departure | clock-specific, 2.6 times expression-matched genes, nearly constant size (A294b); not shared by meal-driven tissues (A302); not phase-dominated (A311 FAIL, median orientation share -0.028); persons differ in shared amplitude, every tissue follows it nearly in proportion (A312: rho -0.341, elasticities 0.83-1.77) | none | supported as added variation; its cause is open |
 
 ## 4. The paper's results in the model
