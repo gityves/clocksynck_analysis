@@ -8741,3 +8741,9 @@ covariance not beyond random expression-matched genes: "no clock beyond random g
 informative compartments: "no readable clock, core loop included" (the A281 wording stands without "readable" being
 an escape). Fewer than 2 informative: not decidable, wording unchanged.
 **Code.** `exploratory/A321_lymphocyte_core_blind/scripts/score_a321.py --stage design | score`.
+
+### A321 design note (2026-11-19, before scoring; `score_a321.py --stage design`, no clock statistic computed)
+Six lymphocyte compartments: skin T_other (partner fibroblast-stromal, 20 shared donors, primary); lung (Natri, 40
+control donors) NK (partner AT2, 15, primary: tie with T at 15 broken by order, as coded) and T (capillary EC, 15);
+liver CD8_T (endothelial, 21, primary) and NK (19); adipose T_other (adipocyte, 21, primary). Four primary compartments.
+<!-- src: paper/exploratory/A321_lymphocyte_core_blind/output/design.csv -->
