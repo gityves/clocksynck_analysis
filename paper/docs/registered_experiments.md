@@ -9236,3 +9236,57 @@ log(1 / 0.7) (a 30 % loss detectable); otherwise "not decidable at this design".
 - **Limits.** The central drive persists in these donors, so Phi counts centrally driven outputs with the clock;
   continuous feeding is not recorded; 79 donors.
 **Stop rule:** one power run; one scoring run. Aggregates only (time of death: aggregates only).
+
+## A334 (2026-11-19, on the user's instruction after the question "can we tell cell desynchrony from cells oscillating with lower amplitude?"; staged: skin calibration, then aorta power, then one aorta scoring run; **BLIND** for every per-cell amplitude (lambda) and synchrony (R) statistic: lambda / R have never been computed on either dataset; **NOT BLIND**: clock UMI per cell of both sets (lead check 2026-11-19: skin 3-11 median per sample, aorta smooth muscle 7, fibroblasts 4), the A201 / A279 pseudobulk phase shifts of the misaligned aorta and the archive CoPhaser per-cell phase accuracy on the skin (V6, MAE 1.1 h)): is a loss of clock loudness carried by cells dephasing (R) or by quieter cells (lambda)? **Timed mouse dermal skin (Duan 2023, tauFisher, GSE223109) as calibration; mouse aorta 5 days after a 6 h advance (Auerbach 2026) as the test**
+
+**Why.** In bulk and pseudobulk, dephasing of cells and damping of each cell lower the amplitude identically (A212, A214;
+PAPER_PLAN section 3: "only single cells can decide it"). The von Mises estimator (`clocksync.cells.vonmises`:
+`group_stats`, `solve`) separates them through the in-plane dispersion D (about lambda^2 (1 - R^2)) and its elongation
+|Gamma| (second circular moment). It rests on Assumption W and was never calibrated on data (A144 part 2 inconclusive,
+METHOD section 6). Both sets reach about 4-10 clock UMI per cell, which the estimator needs.
+
+**Common design (`exploratory/A334_dephase_vs_damp/scripts/score_a334.py`).**
+- Waveform: GTEx global (`cs.gtex()`, 14 genes, mouse symbols upper-cased as in A279). Sensitivity: waveform fitted on the
+  timed pseudobulks of the calibration set (`fit_waveform`); for the aorta on the aligned arm only.
+- Groups: one sample (library) x cell class, >= 100 cells, cells with >= 1,000 UMI. Per group `group_stats` (30 balanced
+  gene splits, metacells m = 1); pooled `solve` gives D, |Gamma|^2, lambda, kappa, R, rho = lambda R.
+- Signal check per class: pooled D above all 20 planes of permuted acrophases (`dispersion_null`).
+- Share of a loss carried by synchrony: share_R = dlog R / dlog rho (truth 1 for pure dephasing, 0 for pure damping).
+
+**Stage 1, skin calibration (fibroblasts primary, 18 samples ZT2-22 x 3; myeloid secondary; classes from the archive
+A70 builder, `legacy/desync/validation/paired_damping/output/mouse_skin_cells.csv.gz`).**
+- **V334.0 signal:** fibroblast D above its permuted-acrophase null.
+- **V334.1 empirical dephasing (decisive):** mixed groups made of equal halves of cells from two samples of the same
+  replicate Delta = 4 and 8 h apart (all 18 start samples per Delta), each the size of the smaller sample; reference =
+  the 18 single samples subsampled to the same sizes. Mixing adds dephasing at fixed per-cell amplitude (expected
+  rho ratio cos(pi Delta / 24): 0.866, 0.5). Pass: at Delta = 8 h, share_R >= 0.75 with the lower bound of its
+  delete-one-ZT jackknife 90 % interval >= 0.5. Delta = 4 h and 12 h (bimodal, rho near 0) descriptive.
+- **V334.2 simulated damping and dephasing at the skin's depth** (`vonmises.simulate` with the skin's fitted lambda,
+  kappa, gene fractions, cell numbers and depths; 100 replicates each): lambda lowered to a rho ratio of 0.5 at fixed
+  kappa (damping) and kappa lowered to the same ratio at fixed lambda (dephasing). Pass: median share_R <= 0.25 under
+  damping and >= 0.75 under dephasing, with < 10 % of replicates on the wrong side of 0.5.
+- **V334.3 time invariance (reported):** per-ZT lambda and R (replicates pooled, cell-bootstrap SE, 200 draws);
+  heterogeneity Q over the 6 ZTs, chi^2 5 df, p > 0.01 for both.
+- **V334.4 depth invariance (reported):** every cell's counts binomially thinned to 50 %; |dlog lambda| and |dlog R|
+  <= 0.1.
+- **Gate:** V334.0-2 must pass; otherwise the aorta decomposition is not run ("estimator not calibrated") and only D is
+  reported. V334.3-4 failures are stated as caveats.
+
+**Stage 2, aorta power (aligned arm, 14 libraries, and Bmal1 KO, 10; the misaligned arm is not loaded).** Smooth muscle
+primary, fibroblasts secondary (libraries with >= 100 cells).
+- **Clock check:** aligned D above its null; KO D <= 0.5 x aligned D. Otherwise "D not clock-specific in the aorta", stop.
+- **Power:** 200 placebo splits of the aligned libraries into 8 (2 per ZT) vs 6; SD of dlog rho, dlog lambda and
+  dlog R over splits; MDE = 2.49 SD. Scored only if all three MDEs are <= log(1 / 0.8) = 0.223; otherwise "not
+  decidable at this design".
+
+**Stage 3, aorta score (one run; misaligned 8 libraries, 1 per sex x ZT, against aligned 14).**
+- **H334.1 (cell-level loudness after the advance):** dlog rho = misaligned - aligned < 0, one-sided p < 0.05 from 2,000
+  permutations of the arm labels within ZT.
+- **H334.2 (decomposition, only if H334.1 passes):** share_R with a 90 % library bootstrap interval (within arm and ZT,
+  2,000 draws): "dephasing" if the lower bound > 0.5; "damping" if the upper bound < 0.5; otherwise "not separated".
+- dlog lambda, dlog R and dD reported with intervals either way; fibroblasts by the same rules (descriptive if not
+  powered).
+- **Limits (stated before scoring).** Each library pools 2 aortas, so R includes the phase difference between the two
+  animals; after a shift, animals re-entraining at different rates read as dephasing. "Dephasing" therefore means among
+  the cells of two animals of one arm, not necessarily within one animal. One perturbation, one time after it, mouse.
+**Stop rule:** one calibration run, one power run, one scoring run. Public data; no new download.
