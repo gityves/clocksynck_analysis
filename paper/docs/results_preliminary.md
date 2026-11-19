@@ -6746,6 +6746,21 @@ baboon's: **B1 is uninformative and stopped** (orientation not chosen; the scout
 - Code: `exploratory/A317_braindeath_confirm/scripts/b1_scout.py`.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/b1_scout.csv -->
 
+## A330 (power stage 2026-11-19; registered re-test, NOT BLIND for the A36 baboon gains): G1 not decidable at this design: the baboon atlas has 17 passing organs but power 0.60 at a true organ-level Spearman of 0.6 (registered gate 0.8); not scored; the mouse referee (at most 8 organs, power 0.45) is not downloaded
+
+- Design as registered (18 anatomically matched organs; baboon timed gain |g| on the GTEx waveform against GTEx sqrt S).
+  The estimator reproduces the A36 `g_abs` of every organ exactly.
+- **Precondition met:** 17 of 18 organs read ZT (|g| above the q95 of 2,000 ZT permutations); pituitary fails (|g| 0.81
+  against q95 0.85). Residual-bootstrap SE of log |g|: 0.05 to 0.37 (median about 0.09).
+- **Power:** 1.000 if the organ ranks were shared exactly (true Spearman 1); **0.604 at a true organ-level Spearman of 0.6**
+  (registered criterion >= 0.8); 0.455 at 8 organs, which decides the mouse referee (Zhang 2014 maps to at most 8 GTEx
+  tissues): not downloaded.
+- **Reading (registered):** not decidable at this design. With 17 organs the test detects only a near-perfect shared organ
+  ranking; "organ" stays "open" in Figure 4g. No cross-species correlation was computed. G1b (absolute class gains in the
+  GTEx single-nucleus atlas) remains a scout.
+- Code: `exploratory/G1_organ_gain_species/scripts/score_a330.py --stage power`.
+<!-- src: paper/exploratory/G1_organ_gain_species/output/{organs,power}.csv -->
+
 ## A327 (scored 2026-11-19; descriptive, NOT BLIND for A317-A318, A325; underpowered): the brain-death contrast is positive in every perfusion class, leg tissues included (D_rho N 0.244, P 0.265, mixed 0.456), with no perfusion dependence (Delta -0.173, p 0.66); not decided at MDE 1.0
 
 - Perfusion split as an unverified anatomical hypothesis (registration): possibly reached atrial appendage, lung,
