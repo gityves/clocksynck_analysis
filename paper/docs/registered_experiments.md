@@ -8747,3 +8747,25 @@ Six lymphocyte compartments: skin T_other (partner fibroblast-stromal, 20 shared
 control donors) NK (partner AT2, 15, primary: tie with T at 15 broken by order, as coded) and T (capillary EC, 15);
 liver CD8_T (endothelial, 21, primary) and NK (19); adipose T_other (adipocyte, 21, primary). Four primary compartments.
 <!-- src: paper/exploratory/A321_lymphocyte_core_blind/output/design.csv -->
+
+## A322 (2026-11-19, user: overnight gap 5 of `PAPER_TRIAGE_2026-11-18.md`, "Gap 5: conflicting drives", not-blind check first; one scoring run; **NOT BLIND**: A111 timed shifts (liver +11.7 h, WAT +10.6 h, lung +1.9 h, daytime feeding vs ad libitum), A297 liver amplitude ratio 0.712; per-arm amplitudes of WAT and lung exist in `A111_feeding_controls/output/a111_timed_truth.csv` (separate fits per arm) and are treated as possibly seen; NOT computed: the complex ratios of WAT and lung on one projector, any fit of the model below): do one phase difference between drives and one weight per tissue explain both the shifts and the amplitude losses of conflicting feeding? **Manella 2021 Alb-Cre controls, ad libitum (AL) vs daytime feeding (DF): liver, WAT, lung**
+
+**Model (federation part 5, `MODEL_federation_2026-11-19.md`).** A tissue follows the weighted mix of the central drive
+and the feeding drive, normalised by the weights present. AL: both in phase (mix 1). DF: feeding moved by Delta. The
+complex ratio of the tissue's clock amplitude DF / AL is r_t = (1 - b_t) + b_t exp(i Delta): every tissue lies on one
+chord from 1 to exp(i Delta), at position b_t (its feeding weight). The shift (arg r_t) and the amplitude loss (|r_t|)
+are therefore not independent: a partial shift needs a large amplitude loss when Delta is near 12 h.
+**Estimation.** A297's method per tissue: one projector over both arms (genes passing the A111 QC), per-arm complex
+amplitude by OLS on ZT harmonics, r_t = A_DF / A_AL; library bootstrap within ZT (2000, seed 322) for each r_t's 2 x 2
+covariance. Fit: Delta in [0, 24) h shared, b_t in [0, 1], minimising Q = sum_t Mahalanobis distance of r_t to the
+model point (grid on Delta, closed form for b_t).
+- **H322.1 (fit).** Q's p against chi-square with 2 df, and against a parametric bootstrap of Q at the fitted
+  parameters (2000): the model is retained if both p >= 0.05.
+**Readings (stated now).** Retained: one drive difference and a weight per tissue explain shifts and amplitude losses
+together (b per tissue reported with intervals). Rejected with observed |r_t| above the chord: the tissue keeps more
+amplitude than the mix predicts (self-sustained cells re-synchronise at an intermediate phase: conflict costs less
+amplitude than "cells split between drives"); below: more loss than the mix (extra dephasing). Either rejection
+changes the wording of federation part 5.
+**Blind step (later, separate registration).** A multi-tissue dataset with a partial conflict not used here; b_t from
+one contrast predicts another.
+**Code.** `exploratory/A322_conflicting_drives/scripts/score_a322.py`.
