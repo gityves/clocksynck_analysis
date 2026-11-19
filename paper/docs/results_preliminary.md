@@ -6887,8 +6887,9 @@ GTEx fast deaths, 27 peripheral tissues, A294b fit. Validation passed (A104 rho 
   both tertiles, so "order held" cannot be read there; loudness is spent with ventilation time. **The ventilated
   post-mortem tertile part (79 donors) was not run** (script `d3_ventilation.py` not written in this session).
 - **D4 (development; `exploratory/two_axis_map/output/d4_development.csv`).** log(V / median matched V) with the clock's
-  percentile among 200 matched sets, beside C (p). Brain (Kang): 13-22 pcw 0.235 (65th; C -0.234), birth-12 y 0.460
-  (75th; C 0.735, p 0.003), >= 13 y 0.683 (89.5th; C 0.662, p 0.007) (C reproduces A239). Cardoso-Moreira hindbrain:
+  percentile among 200 matched sets, beside C (p). Brain (Kang): >= 12 wpc 0.235 (n 19, 3 covariates; 65th; C -0.234), birth-12 y 0.460
+  (75th; C 0.735, p 0.003), >= 13 y 0.683 (89.5th; C 0.662, p 0.007). C reproduces A239 for the postnatal bins only; the prenatal bin differs
+  from A239's 13-22 pcw (n 14, C 0.047; -0.500 with RIN) (correction 2026-11-19, independent review). Cardoso-Moreira hindbrain:
   prenatal < 12 wpc 0.316 (68th; C 0.578, p 0.016), >= 12 wpc 0.380 (65th), birth-12 y 1.800 (99.5th; C 0.772, p 0.0005),
   >= 13 y 1.468 (98.5th; C 0.645); forebrain >= 13 y 1.893 (98th; C 0.557). Kidney: < 12 wpc -0.232 (39.5th), >= 12 wpc
   1.865 (99th; **C -0.115**), birth-12 y 1.439 (98th; C 0.719, p 0.0005). Heart prenatal 0.530 and 0.988 (79th, 90.5th;
