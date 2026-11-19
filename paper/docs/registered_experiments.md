@@ -9084,3 +9084,43 @@ fit (`A104.per_tissue`, every tissue an anchor, leave-one-out host). Gene sets:
 fewer genes, so its measurement noise is larger; the matched sets of the same size carry the same loss. (3) The
 responsive scores are themselves noisy measures of the signal state; a low R^2 bounds, it does not exclude.
 **Stop rule:** one validated run (`RUN_CAP_GB=30 paper/common/run.sh ... --jobs 4`). Seeds 294 (sets), 329 (bootstrap).
+
+## A330 (2026-11-19, check G1 of `PAPER_PLAN_2026-11-19.md` section 6.2 and REVIEW_2026-11-19 section 5, prompt `prompts/two_axis_checks_2026-11-19.md` Task 3; staged: power and precondition, then one scoring run; **registered re-test, NOT BLIND**: A36 computed the baboon timed gains |g| per tissue (`results/figure_1/output/species/a36_tissues.csv`, `g_abs`) and placed them beside the GTEx timed gains in `a36_pairs.csv` (24 pairs; only the phases were tested, R3); the GTEx organ gains sqrt S are known (A294b, 9.2-fold); no correlation of organ amplitudes across species has been computed (G1 scout 2026-11-19: A36, A123, A270, A289, A303 compare phases or GTEx with itself)): is the GTEx organ factor an organ property shared by a living timed primate? **Baboon (Mure 2018, GSE98965; 12 animals, ZT 0-22) against GTEx fast deaths (A294b, 27 peripheral tissues)**
+
+**Mapping (fixed now, anatomical only; 18 organs).** ADC adrenal gland; AOR artery - aorta; ASC colon - transverse;
+DEC colon - sigmoid; HEA heart - left ventricle; KIC kidney - cortex; LIV liver; LUN lung; MUG muscle - skeletal; OES
+esophagus - muscularis; OMF adipose - visceral (omentum); WAS adipose - subcutaneous; PIT pituitary; PRO prostate; SKI skin -
+not sun exposed (suprapubic); STF stomach; TES testis; THR thyroid.
+
+**Statistic (`exploratory/G1_organ_gain_species/scripts/score_a330.py`).**
+- Baboon organ amplitude: |g|, the 12-ZT cosinor gain on the GTEx waveform (A36 `timed_gain`, genome-wide table
+  `derived/A263/baboon_genomewide.parquet`, the same 14 genes as the GTEx gains, genes with median CPM >= 5).
+- GTEx organ gain: sqrt S (A294b `tissues.csv`).
+- rho = Spearman(|g|, sqrt S) over the matched organs that pass the precondition; one-sided p from 10,000 permutations of
+  the organ labels (seed 330).
+- Companion: 200 expression-matched pseudo-clock sets (`pseudo_waveforms(kind="matched")` on the baboon mean log CPM,
+  seed [330, 1]) with the GTEx waveform's amplitudes and phases; per set its |g| per organ and rho_set = Spearman(|g|_set,
+  sqrt S). Also reported: the clock's |g| over the median matched |g| per organ, and its Spearman with sqrt S.
+- **Precondition (power stage).** Per organ, the timed clock passes when |g| exceeds the q95 of 2,000 ZT-label
+  permutations (the atlas reads ZT). At least 8 passing organs; otherwise not decidable.
+- **Power (power stage).** Per organ, the SE of log |g| from 500 residual bootstraps of the per-gene cosinors. Simulated
+  baboon log amplitudes = a + b log sqrt S_o + species deviation (SD s) + measurement error (the organ's SE), with b set so
+  that the true organ-level Spearman over the passing organs is 0.6 (s chosen accordingly) and 1.0 (s = 0); 2,000
+  simulations; power = share with one-sided permutation p < 0.05. Scored only if power >= 0.8 at true Spearman 0.6.
+  The same computation at n = 8 organs decides the mouse referee: Zhang 2014 (GSE54652) maps to at most 8 GTEx tissues
+  (adrenal, aorta, heart, kidney, liver, lung, skeletal muscle, white fat); it is downloaded and scored with this
+  statistic only if power at 8 organs is >= 0.8; otherwise "not decidable at this design" and no download.
+
+**Readings (registered).**
+- **H330.1 PASS** (rho > 0, p < 0.05, and rho above the matched q95): organ loudness is an organ property shared across
+  species; Figure 4g states "organ" as a loudness factor.
+- rho > 0 with p < 0.05 but within the matched range: organs that are loud are loud for any gene set (a noise or
+  depth property of the organ in the atlas), not decided.
+- rho near 0 with power (p >= 0.05): GTEx-specific (a post-mortem technical scale, or a species difference); "organ" stays
+  "open" in Figure 4g.
+- **Limits.** One animal per ZT per tissue; baboon tissue sites need not match GTEx sites; male baboons only; a species
+  difference and a GTEx technical scale cannot be separated by a FAIL.
+
+**G1b (scout only, not registered).** Absolute class gains across organs of the same donors (GTEx snRNA atlas, 16 donors):
+deferred; power scout first.
+**Stop rule:** one power run, one scoring run. Aggregates only.
