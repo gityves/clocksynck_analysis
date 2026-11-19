@@ -67,8 +67,9 @@ def main():
     sh["p_cells"] = sh.cells / sh.groupby("tissue").cells.transform("sum")
     sh.to_csv(OUT / "shares.csv", index=False)
     g = pd.read_csv(A293).set_index("family").pooled.to_dict()
-    eg = {f: float(np.exp(g.get(f, 0.0))) for f in FAMILY if f not in ("lymphocyte", "other")}
+    eg = {f: float(np.exp(g[f])) for f in ("fibroblast_stromal", "mural", "parenchyma", "epithelial", "myeloid")}
     eg.update(endothelial=1.0, lymphocyte=0.0, other=0.0)
+    assert set(o.family) <= set(eg), set(o.family) - set(eg)
     gt = pd.read_csv(A104).set_index("tissue")
     rows = []
     for t, x in sh.groupby("tissue"):

@@ -6765,3 +6765,28 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
   lymphocyte clock from other donor-shared covariation there: an exception to check, not a result.
 - Code: `exploratory/A321_lymphocyte_core_blind/scripts/score_a321.py --stage score`.
 <!-- src: paper/exploratory/A321_lymphocyte_core_blind/output/{design,compartments,tests}.csv -->
+
+## A323 (scored 2026-11-19; NOT BLIND for the GTEx gains and class gains): composition and conserved class gains do not predict the GTEx organ gains (H323.1 FAIL, rho 0.52, p 0.098, 8 tissues); the composition-predicted range (1.29-fold) is far narrower than the observed one (2.89-fold): an organ-level factor scales all cell classes together
+
+- Reference: Eraslan 2022 GTEx single-nucleus atlas (Census 4ed927e9; 209,126 nuclei, 16 donors, 8 tissues),
+  clock-gene pseudobulk per donor x tissue x cell type built 2026-11-19 (Census symbol BMAL1 for ARNTL). One run.
+- **Code error found and fixed before the reported run:** the first run gave epithelial cells no weight (the family
+  is matched by keywords and was missing from the gain map); the registered g (-0.220) is used in the reported run,
+  with an assertion that every family has a gain. The first run's numbers are not used.
+- **Clock-mRNA shares:** epithelial 0.64-0.74 in breast, lung, esophagus mucosa, prostate, skin; fibroblast-stromal
+  0.45-0.49 in heart and esophagus muscularis (mural 0.37 there); parenchyma 0.73 in skeletal muscle, 0.38 in heart;
+  lymphocytes <= 0.044 everywhere.
+- **Predicted G vs observed sqrt S:** heart LV 1.047 / 2.677; esophagus muscularis 1.062 / 2.995; skeletal muscle
+  0.958 / 1.891; breast 0.877 / 1.620; esophagus mucosa 0.860 / 2.768; skin (leg) 0.852 / 1.037; prostate 0.848 /
+  2.048; lung 0.824 / 1.760.
+- **H323.1 FAIL:** Spearman 0.524, exact one-sided p 0.098. Log R^2 0.35, Theil-Sen slope 1.92. Ranges: predicted
+  1.29-fold, observed 2.89-fold. Sensitivities: "other" renormalised 0.381 (p 0.18); nucleus shares 0.381 (p 0.18).
+- **Reading (registered FAIL) and the range (descriptive).** Composition does not predict organ gain over these 8
+  tissues. Because the conserved class gains (A293: within a factor of about 1.4 against endothelium) and the measured
+  compositions can only spread organ gains 1.3-fold, while the organs spread 2.9-fold (esophagus mucosa and skin, both
+  epithelial, differ 2.7-fold), an organ-level factor scales every class of an organ together: the A298 alternative
+  ("organs drive their cells at different strengths"). Within a tissue, composition still moves gain (A295,
+  stromal-vascular +0.041 per SD). Model part 2 is reworded accordingly.
+- **Limits.** 8 tissues (low power for the rank test); class gains from other atlases; snRNA nuclei, not cells.
+- Code: `exploratory/A323_gain_decomposition/scripts/score_a323.py`.
+<!-- src: paper/exploratory/A323_gain_decomposition/output/{shares,tissues,tests}.csv -->

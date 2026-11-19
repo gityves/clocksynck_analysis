@@ -83,10 +83,10 @@ figures.
    stringent and decidable only with enough pairs (surgical, tumour-normal). Wording in the A320 entry.
 3. **Coverage of c (A162 / A163).** Closed as "state" (2026-11-19, `results_preliminary.md` gap 3 note): intervals
    approximate (coverage 0.80-0.98, median 0.94); no claim rests on an absolute c interval.
-4. **Gain decomposition, blind.** Predict sample gain from composition x conserved class gains in unseen atlases
-   (replaces the closed A298).
-5. **Conflicting drives, blind.** One curve of amplitude loss and shift per tissue weight b, on an unseen multi-tissue
-   misalignment dataset (Manella liver / lung / fat as the not-blind check first).
+4. **Gain decomposition.** Done (A323, 2026-11-19): FAIL; composition x class gains spread organ gains 1.3-fold against
+   2.9-fold observed: an organ-level factor scales all classes; Figure 2 message reworded (synthesis).
+5. **Conflicting drives.** Not-blind check done (A322): a pure mix of drives is rejected; conflict costs amplitude,
+   most at balanced weights, less where tissues move least. Blind multi-tissue partial-conflict dataset still to find.
 6. **Age advance.** Replicate in living subjects or keep in the supplement with its caveats (A130 opposite sign).
 7. **Lymphocyte core loop.** Closed (A321, blind, 2026-11-19): no core-loop clock in 3 informative fresh compartments
    (combined p 0.47); "no readable clock" holds with the core loop included; skin T cells an uninformative exception.

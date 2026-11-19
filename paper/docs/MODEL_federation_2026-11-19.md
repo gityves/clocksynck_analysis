@@ -11,9 +11,10 @@ Numbers are from the results entries cited (`results_preliminary.md`), mouse num
 1. **Cells keep time autonomously.** The clock runs in each cell of the clock-carrying classes (stromal-vascular,
    epithelial, parenchymal, macrophages). Coupling between neighbouring cells is weak and permissive: it helps
    cells stay together but does not make the rhythm.
-2. **An organ's loudness is the sum of its cells.** Each cell class has a gain that is the same in every organ.
-   The organ's gain is that class gain weighted by the organ's composition. Composition changes how loud the organ's
-   clock is, not when it peaks.
+2. **An organ's loudness is set at the organ level, shared by its cells.** Each cell class keeps the same gain
+   relative to the organ's endothelium in every organ, and composition moves a sample's gain within a tissue, not its
+   phase. Between organs, an organ-level factor scales every class together: composition and class gains spread organ
+   gains only 1.3-fold where the organs spread 2.9-fold (A323).
 3. **An organ's timing is set by its drives.** Each organ follows a weighted mix of shared drives: a central drive
    while the brain lives, and behavioural drives (feeding, activity, light reaching the body by other routes). The
    weights are organ-specific. The organs' phase order is the order of these weighted mixes.
@@ -35,7 +36,8 @@ For person p, organ o, cell class k:
     cell (class k):      dz/dt = (mu_k + i nu_k) z - |z|^2 z + sum_d w_{o,d} F_d(t) + eps * (local mean - z) + noise
                          mu_k > 0 (self-sustained), eps small (weak local coupling)
     organ state:         x_{p,o} = G_o exp(i phi_o) theta_p + delta_{p,o}
-    gain:                G_o = sum_k s_{o,k} a_k                (a_k conserved class gain, s_{o,k} composition)
+    gain:                G_o = D_o sum_k s_{o,k} a_k   (a_k conserved relative class gain, s_{o,k} composition,
+                         D_o organ-level factor: drive strength or cell clock strength; A323)
     lag:                 phi_o = arg( sum_d w_{o,d} exp(i Phi_d) )   (Phi_d: phase of drive d in internal time)
     amplitude under drive conflict:  R_o >= | sum_d w_{o,d} exp(i Phi_d) | / sum_d w_{o,d}   (bound reached when cells
                          split between drives; WAT reaches it, lung and liver stay above it, A322)
@@ -55,7 +57,7 @@ For person p, organ o, cell class k:
 | part | human (entries) | mouse (cards / entries) | status |
 |---|---|---|---|
 | 1. cells autonomous, weak local coupling | stromal-vascular, epithelial, parenchymal cells and macrophages carry the organ's time; tissue lymphocytes no readable clock (A272-A288); adjacency does not add clock-specific sharing (A313 FAIL) | hepatocyte clocks coherent without SCN (Sinturel 2021); hepatocytes shape other cells' outputs, not their clocks (Guan 2020); weak paracrine coupling (Finger 2021, TGF-beta; Noguchi 2013, density); dissociated peripheral cells not rescued by coupling (Liu 2007) | supported; local coupling not measurable in human (A313) |
-| 2. gain = class x composition | class gain relative to endothelium conserved across organs, within a factor of about 1.4 (A293 H293.4); composition moves gain, not phase (within 0.13 h per SD, A295); 85-fold gain range across tissues (A294b) | none at this resolution | supported; blind decomposition open (gap 4); A310: within errors not reached |
+| 2. gain = organ factor x class x composition | class gain relative to endothelium conserved across organs, within a factor of about 1.4 (A293 H293.4); composition moves gain, not phase (within 0.13 h per SD, A295); 85-fold gain range across tissues (A294b); composition x class gains predict a 1.3-fold organ range against 2.9-fold observed over 8 tissues (A323 FAIL) | none at this resolution | class part supported; composition alone does not set organ gain: an organ factor is needed |
 | 3. timing set by weighted drives | cell classes share the organ phase, about 0.6 h (A273, A279); night shift: muscle moves 2.7 h after a 12 h behavioural shift (A257) | feeding sets peripheral phases, weights differ by organ (Manella 2021; Izumo 2014: liver and kidney follow feeding, heart, lung, spleen less) | supported; one weight per organ not yet fitted blind (gap 5) |
 | 4. central drive sets the order | order kept without the day (slow deaths) and without meals (ventilated living-brain donors) (A293 Part 1); rearranged in brain death, clock-specific (A317 H317.1, D_rho 0.621), after ischaemic time and RIN adjustment (A318, 0.584); shared clock between organs kept (A317 H317.2 FAIL); amplitude kept (A315, clock-specific ratio 1.05) | SCN-clock knockout: order kept under light-dark (Husse 2014; Izumo 2014); under feeding, a reproducible new order (A319 H319.2, order share 1.09, 6/6 organs cluster); in constant dark, organs drift and dampen (Husse: by day 7; Izumo: > 30 days; A319 H319.1, no significant shared phase, p 0.070); SCN lesion: organs oscillate at lower amplitude (Tahara 2012) | supported in GTEx (single cohort) and mouse (explants, not blind); replication open (gap 1) |
 | 5. conflict costs amplitude | night shift: muscle amplitude to about a quarter (A257 H257.3, R 0.233); forced desynchrony in blood (A262); mouse feeding inversion: liver 0.71, WAT 0.32, lung 0.50 of amplitude; a pure mix of drives is rejected (A322) | the central drive slows feeding-driven shifts (Saini 2013: liver re-phases in 1-2 d without SCN, 6-7 h after 7 d with it); removing feeding keeps 0.72 of liver amplitude, inverting it moves the liver 11.7 h (A297) | supported |
@@ -91,7 +93,8 @@ For person p, organ o, cell class k:
 
 1. **Drift grows with time since loss of the central drive.** Organ disorder rises with time since brain death
    (GTEx has ventilation duration only; A132 tertiles in the drift direction, not significant).
-2. **Blind gain decomposition.** Sample gain = composition x conserved class gains in unseen atlases (gap 4).
+2. **Organ factor.** What sets D_o (drive reaching the organ, or the organ's cell clock strength): tested only through
+   its consequence so far (A323).
 3. **One weight per organ.** A single b per organ predicts both the shift and the amplitude loss under any drive
    conflict (gap 5; Manella liver, lung and fat as the not-blind check; Saini 2013 as the mouse liver calibration).
 4. **Within a brain-dead donor, cell types of an organ still share its phase** while the organ order differs from
