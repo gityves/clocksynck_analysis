@@ -47,12 +47,12 @@ mechanism (A334, A334b) are scored, closed at power, or registered and waiting f
 Decide:
 - **(a) S1 timed control:** add the Duan 2023 skin set to the server job? It needs FASTQ mapping, outside the approved
   exception.
-- **(b) N1:** run the A333 power stage (79 living-brain ventilated donors)?
+- **(b) N1:** answered by the user (run): not decidable at this design (median MDE 0.726 against 0.357).
 - **(c) D3:** run the remainder (post-mortem ventilation tertiles)?
 - **(d) Cell mechanism:** search for deep plate-based data with a same-tissue clock knockout, or keep "quieter" without a
   cell mechanism?
 
-**On hold:** Figure 3e (S1), Figures 1 and 7 output-retention panel (N1), Figure 5 supplement (D3).
+**On hold:** Figure 3e (S1), Figure 5 supplement (D3).
 
 | check | amendment | verdict | key numbers (source CSV under `paper/exploratory/`) | figure / wording it changes |
 |---|---|---|---|---|
@@ -61,7 +61,7 @@ Decide:
 | G1 organ factor across species | A330 | not decidable at this design | power 0.604 at true rho 0.6, 1.000 at rho 1; mouse 0.455 at 8 organs (`G1_organ_gain_species/output/power.csv`) | Figure 4g: "organ" stays open; no cross-species claim |
 | P1 person loudness, living | A331 | PASS (blind, powered); not beyond responsive genes | leverage 0.177 (twin-pair 90 % 0.119-0.236), p 0.0005; matched q95 0.117 (98.5th pct), responsive q95 0.179 (93.5th) (`P1_person_loudness/output/tests.csv`) | Figure 4f holds in living women, with the responsive caveat |
 | N2 departure on the core loop | A329 | partly leakage | core excess 0.250 (90 % 0.143-0.361) vs full 0.969; coupling -0.076 (matched -0.001); signal-state R^2 excess -0.009 (-0.013 to 0.022) (`A329_core_departure/output/tests.csv`) | model part 6: "departure carried mainly through signal-inducible clock genes, cause open"; no core-loop coupling readout |
-| N1 output retention | A333 | registered, power stage not run | archive (not blind): pooled ventilated lock above 1 in 23 of 26 tissues, liver highest (`results/figure_3/output/gtex_cues/a91_genes.csv.gz`) | Figures 1 and 7: pending (b) |
+| N1 output retention | A333 | not decidable at this design (power stage run 2026-11-19 on the user's instruction) | median MDE log Phi 0.726 (loss to 0.48 detectable; gate 0.357) (`N1_output_retention/output/power.csv`); archive A91 pooled lock, not blind | Figures 1 and 7: N1 stays an open question |
 | D1 skin loudness | A332 | descriptive | psoriasis r +0.499 (94th / 90.5th pct of companions) (`A332_descriptive/output/d1_series.csv`) | section 3, Figure 6d: loudness change not clock-specific |
 | D2 brain death per organ | A332 | descriptive | organ amplitudes 0.92-1.13; lung -1.58 h (90 % -3.11 to -0.14), tibial artery +1.09 h, tibial nerve +0.99 h (`A317_braindeath_confirm/output/d2_per_organ.csv`) | Figure 5b arrows; "rearranged, not quieter" |
 | D3 ventilation time | A332 | organ-donor part only | loudness falls with ventilation time while the order is already lost (RP A332) | Figure 5 supplement; remainder (c) |
@@ -72,7 +72,6 @@ Decide:
 **Recommendation.**
 - (a) Yes, if the server budget allows: without the timed control, S1's lead can only be read against the postnatal
   reference.
-- (b) Yes: it uses data on disk and decides the Figure 7 wording.
 - (c) Only if Figure 5 keeps a supplement.
 - (d) Keep "quieter", and scout plate-based datasets before any new registration.
 

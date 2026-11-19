@@ -6746,6 +6746,44 @@ baboon's: **B1 is uninformative and stopped** (orientation not chosen; the scout
 - Code: `exploratory/A317_braindeath_confirm/scripts/b1_scout.py`.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/b1_scout.csv -->
 
+## A333 (power stage 2026-11-19; BLIND, no observed Phi computed): N1 not decidable at this design: with 79 living-brain ventilated donors (42-66 per tissue), the median MDE of log Phi over tissues is 0.726 (a loss to 0.48 of the reference), against the registered log(1 / 0.7) = 0.357; not scored
+
+- **Design as registered.**
+  - Fast deaths with a clock table: 244, split once into halves A and B (122 each; seed [333, 1]). V: 79 donors (Hardy 0,
+    post-mortem cohort).
+  - All 12 body tissues are estimable: fast B 62-114 donors, V 42-66, program genes 58 (whole blood) to 765 (atrial
+    appendage), selected in half A with the A91 model and the responsive families excluded.
+- **Power (null construction).** The V labels were permuted among the 201 B and V donors 200 times, with each group's
+  leave-one-out host refitted every time:
+
+| tissue | SE log Phi | MDE | detectable ratio |
+|---|---|---|---|
+| tibial artery | 0.207 | 0.516 | 0.60 |
+| subcutaneous adipose | 0.224 | 0.557 | 0.57 |
+| thyroid | 0.236 | 0.587 | 0.56 |
+| tibial nerve | 0.259 | 0.646 | 0.52 |
+| suprapubic skin | 0.287 | 0.714 | 0.49 |
+| skeletal muscle | 0.290 | 0.723 | 0.49 |
+| lung | 0.293 | 0.728 | 0.48 |
+| oesophagus mucosa | 0.301 | 0.749 | 0.47 |
+| lower-leg skin | 0.358 | 0.891 | 0.41 |
+| visceral adipose | 0.384 | 0.955 | 0.39 |
+| atrial appendage | 0.449 | 1.119 | 0.33 |
+| whole blood | 0.556 | 1.384 | 0.25 |
+| **median** | | **0.726** | **0.48** (gate 0.357: FAIL) |
+
+- **Bias under the null.** The permuted log Phi has a positive mean in every tissue, 0.007 (muscle) to 0.318
+  (oesophagus mucosa). The smaller group's noisier loadings inflate the median |coefficient| of the program, so any scoring
+  would need this bias removed (descriptive).
+- **Reading.** Whether adult tissue outputs keep following their clock without behaviour is not decidable in GTEx at
+  this design. Only losses to about half would be detectable per tissue. The archive A91 lock (pooled ventilated donors,
+  brain-dead included, not blind) stays the only indication, and Figures 1 and 7 keep the N1 panel as an open question.
+  A pooled-over-tissues statistic would have more power, but tissues share donors and it is not the registered gate; it
+  would need its own registration.
+- Code: `exploratory/N1_output_retention/scripts/score_a333.py --stage power --jobs 4` (411 s); the score stage is not
+  written (stop rule).
+<!-- src: paper/exploratory/N1_output_retention/output/{program,power,power_perm}.csv -->
+
 ## A334 / A334b (scored 2026-11-19; BLIND for every per-cell statistic; one calibration run, one power run; neither aorta contrast scored): dephasing and damping of cell clocks cannot be told apart with public mouse 10x data: the lambda / R split fails the skin calibration (V334.1 FAIL: mixing-induced dephasing read 59 % as dephasing) and the dispersion D is not clock-specific in the aorta (A334b: Bmal1 knockout D 2.7 times aligned)
 
 **A334, skin calibration (GSE223109 dermal fibroblasts, 18 samples, 12,224 cells, median 13 clock UMI per cell).** The
