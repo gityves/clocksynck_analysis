@@ -6746,6 +6746,46 @@ baboon's: **B1 is uninformative and stopped** (orientation not chosen; the scout
 - Code: `exploratory/A317_braindeath_confirm/scripts/b1_scout.py`.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/b1_scout.csv -->
 
+## A332 (scored 2026-11-19; DESCRIPTIVE, NOT BLIND): the descriptive companions of the two-axis map: psoriasis gains clock-plane variance but not beyond its companions (D1); in brain death no organ loses loudness and three move by about an hour (D2); within organ donors loudness falls with ventilation time while the order is already lost (D3, organ-donor part only); developmental loudness rises after birth in brain and kidney, with a non-clock exception (D4)
+
+- **D1 (skin; `exploratory/A332_descriptive/output/d1_series.csv`).** Lesion over non-lesion clock-plane variance, r (amplitude
+  exp(r / 2)), two-sided swap p; matched / responsive percentiles. GSE154200 psoriasis 81 pairs r +0.499 (1.28; p 0.0004;
+  94th / 90.5th) (reproduces A183's +0.50); nummular eczema 36 pairs +0.387 (1.21; p 0.10; 64.5th / 85th); atopic
+  dermatitis 37 pairs +0.034 (1.02; p 0.88). A115 psoriasis lesional vs uninvolved: pooled 185 pairs +0.304 (1.16;
+  p 0.0004; 56th / 70th); per series -0.142 to +0.410. **No group is outside the central 90 % of both companion families:**
+  psoriasis lesions carry more clock-plane variance, as their matched and responsive genes partly do; inflamed skin moves
+  time (A183, A308), its loudness change is not clock-specific. Deviations: lesional rows of the A115 series from
+  `skin_lesional/processed/` and `processed_heldout/GSE13355` (`processed_a115/` holds no lesional rows; uninvolved rows
+  identical); eczema batches by the A183 rules (nummular 4;6, atopic 1;3;5); companions pooled with the clock's weights,
+  not tied to the swaps (as A254).
+- **D2 (brain death per organ; `exploratory/A317_braindeath_confirm/output/d2_per_organ.csv`; 65 pairs).** Phase change
+  organ donors minus ventilated post-mortem (tissue minus its partners, h; donor-bootstrap 90 %, not adjusted over 12
+  organs): lung -1.58 (-3.11 to -0.14), whole blood -1.22 (-3.73 to 0.78), suprapubic skin -0.63, muscle -0.27, thyroid
+  -0.19, visceral fat -0.21, oesophagus mucosa -0.06, atrial appendage +0.32, subcutaneous fat +0.62, lower-leg skin +0.80,
+  tibial nerve +0.99 (0.17 to 1.80), tibial artery +1.09 (0.19 to 2.01). Loudness (A315, amplitude against matched):
+  0.92 (tibial artery) to 1.13 (thyroid); every organ within 0.92-1.13. The arrows of Figure 5 are tangential: three organs
+  move by about an hour (lung earlier, tibial artery and nerve later), none loses loudness.
+- **D3 (ventilation time; organ-donor part from existing outputs).** Organ donors, top vs bottom ventilation tertile
+  (100 vs 100; A132): order against fast deaths rho -0.089 vs 0.247 (both p > 0.16; `A132_brain_death/output/a132_groups.csv`);
+  loudness Q* -0.236 (below every matched set; A315 `descriptive.csv`). In brain-dead donors the order is already lost in
+  both tertiles, so "order held" cannot be read there; loudness is spent with ventilation time. **The ventilated
+  post-mortem tertile part (79 donors) was not run** (script `d3_ventilation.py` not written in this session).
+- **D4 (development; `exploratory/two_axis_map/output/d4_development.csv`).** log(V / median matched V) with the clock's
+  percentile among 200 matched sets, beside C (p). Brain (Kang): 13-22 pcw 0.235 (65th; C -0.234), birth-12 y 0.460
+  (75th; C 0.735, p 0.003), >= 13 y 0.683 (89.5th; C 0.662, p 0.007) (C reproduces A239). Cardoso-Moreira hindbrain:
+  prenatal < 12 wpc 0.316 (68th; C 0.578, p 0.016), >= 12 wpc 0.380 (65th), birth-12 y 1.800 (99.5th; C 0.772, p 0.0005),
+  >= 13 y 1.468 (98.5th; C 0.645); forebrain >= 13 y 1.893 (98th; C 0.557). Kidney: < 12 wpc -0.232 (39.5th), >= 12 wpc
+  1.865 (99th; **C -0.115**), birth-12 y 1.439 (98th; C 0.719, p 0.0005). Heart prenatal 0.530 and 0.988 (79th, 90.5th;
+  C -0.153, 0.058). Liver prenatal 0.173, 0.133 (63rd, 60th; C 0.148, 0.101). Gonads prenatal near 0. Reading
+  (descriptive): clock-plane loudness beyond matched genes appears after birth in brain and kidney, together with clock
+  shape (C); before birth it is within the matched range, except kidney from 12 wpc, where the variance is large but
+  not clock-shaped (C below 0): V alone is not a clock measure, and the curve is read with C. Caveat (A240): the spread
+  of sampling times differs between bins. Postnatal Cardoso-Moreira age covariate log2(years + 0.1) (A237 used an ordinal
+  stage): those rows do not reproduce an A237 entry; no adult pass rate exists for these bins.
+- Code: `exploratory/A332_descriptive/scripts/d1_skin_loudness.py`; `exploratory/A317_braindeath_confirm/scripts/d2_per_organ.py`;
+  `exploratory/two_axis_map/d4_development.py`.
+<!-- src: paper/exploratory/A332_descriptive/output/d1_series.csv; paper/exploratory/A317_braindeath_confirm/output/d2_per_organ.csv; paper/exploratory/A132_brain_death/output/a132_groups.csv; paper/exploratory/A315_braindeath_gain/output/descriptive.csv; paper/exploratory/two_axis_map/output/d4_development.csv -->
+
 ## A331 (scored 2026-11-19; BLIND for the clock statistic; powered): living women differ in a clock loudness shared by fat and skin (H331.1 PASS: leverage 0.177, above every matched set but one in twenty, 98.5th percentile), at the size the GTEx deaths predict; not beyond stress-responsive genes (93.5th percentile)
 
 - Design as registered: MuTHER, 680 women with fat and skin from one punch biopsy; A255 states; `clocksync.elasticity.
