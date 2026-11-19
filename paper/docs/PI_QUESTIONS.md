@@ -55,7 +55,7 @@ the dataset sweep and Figure 1 of the Resource route (not started; inclusion rul
 | A318 H318.2 | organ donors with longer ischaemia keep more of the arrangement, +0.410, p 0.040 | gradient in the collection-mode direction |
 | Task 2 (A318 post hoc) | common ischaemic range: 0.239 on 36 pairs; noise-matched 0.244-0.473 (q05-q95), R36 at the 5th percentile; organ donors' rho rises beyond noise (0.184 vs <= 0.066); dropped pairs = every pair with heart, lung, blood | borderline; the fall is organ-donor samples with post-mortem-range ischaemia looking post-mortem (H318.2 again) |
 | Task 3 (living surgical reference) | precondition: no shared pair's organ-donor minus post-mortem offset beyond the site bound (1.22, -0.01, -0.03, 1.68 h; all intervals contain 0) | cannot decide; stopped |
-| B1 (baboon referee) | fast deaths vs baboon over 6 tissues |rho| 0.31, p 0.24 | the baboon cannot referee; stopped |
+| B1 (baboon referee) | fast deaths vs baboon over 6 tissues: absolute rho 0.31, p 0.24 | the baboon cannot referee; stopped |
 | B2 (A325) | post-mortem ischaemic tertiles (555-585 min apart, hour-stratified) keep the arrangement: H325.2 rho 0.862, p 0.62, power 0.99 | the post-mortem side carries no collection component of the organ-donor size |
 | B3 (A327) | D_rho leg-only pairs 0.244, possibly perfused 0.265, mixed 0.456; no perfusion dependence (p 0.66); MDE 1.0 | consistent with brain death in unperfused tissue, underpowered |
 | B4 | no GTEx field for donation after circulatory death; all 298 organ donors brain dead with a cross-clamp time | the direct control does not exist in GTEx |
