@@ -90,6 +90,7 @@ figures.
 6. **Age advance.** Replicate in living subjects or keep in the supplement with its caveats (A130 opposite sign).
 7. **Lymphocyte core loop.** Closed (A321, blind, 2026-11-19): no core-loop clock in 3 informative fresh compartments
    (combined p 0.47); "no readable clock" holds with the core loop included; skin T cells an uninformative exception.
+
 ## Counts (inventory)
 
 208 entries: PASS 31, partial 66, FAIL 73, descriptive 11, not estimable 14, gate failed 7, not scored 6. Proposed:
