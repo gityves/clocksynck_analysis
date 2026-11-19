@@ -9290,3 +9290,23 @@ primary, fibroblasts secondary (libraries with >= 100 cells).
   animals; after a shift, animals re-entraining at different rates read as dephasing. "Dephasing" therefore means among
   the cells of two animals of one arm, not necessarily within one animal. One perturbation, one time after it, mouse.
 **Stop rule:** one calibration run, one power run, one scoring run. Public data; no new download.
+
+**A334 revision (2026-11-19, same day, before any statistic of either dataset; simulation only).** A pre-data simulation
+(GTEx waveform, von Mises cells, Poisson counts) shows that the elongation |Gamma|^2 that `vonmises.solve` uses to separate
+lambda from R is not estimable at these depths: SD 0.50-0.65 at the skin design (18 groups x 700 cells, 6 clock UMI per
+cell) and 0.05-0.06 at the aorta smooth-muscle design (14 x 3,600, 9 UMI), against model values of 0.009 (R 0.45) to 0.038
+(R 0.81). D itself is recovered. The registered V334.2 would therefore fail by construction. The decomposition is
+replaced, before any data are read, by the route of A18 / METHOD section 6: **D together with the coherent amplitude of
+the same groups' pseudobulks.**
+- Per group: D from `group_stats` (as registered) and rho^2 = the product of the waveform-plane projections of two random
+  cell halves' log pseudobulks, each centred on its arm's mesor (unbiased for the squared coherent amplitude). Mesor: mean
+  over ZT of the per-ZT means of the arm's groups (equal ZT weights); the skin mesor is over its 18 samples.
+- Pooled (cell-weighted) D and rho^2 are solved for lambda and kappa with their exact von Mises counterparts (D: 
+  `model_stats`; rho^2: the projection of log I0(|q + lambda c_g|) - log I0(kappa), mesor-centred over the phase grid).
+  Per-cell power lambda^2 is about D + rho^2: it stays under dephasing (D rises as rho falls) and falls under damping.
+- Simulation at the designs (12 replicates each, without within-group renormalisation): aorta lambda SD 0.03-0.06, R SD
+  0.01-0.03 (0.23 when D is small: lambda 0.5, R 0.81); skin lambda SD 0.09-0.15, R SD 0.06-0.23; D biased up by about
+  0.03-0.07 at 6 UMI (towards a dephasing reading; V334.1 exposes it on data).
+- Everything else stands: V334.0-4 and their thresholds, the gate, the aorta clock check, the placebo MDEs (placebo groups
+  centred on the full aligned arm's ZT-balanced mesor, since a 6-library subset lacks a ZT), H334.1-2 and the limits. V334.2
+  now simulates this estimator. `vonmises.solve` (|Gamma|) is reported as a descriptive column only.
