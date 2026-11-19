@@ -9346,3 +9346,66 @@ Arm values are cell-weighted means; dlog D and dlog rho^2 = misaligned - aligned
 - **Limits.** Pools of 2 aortas: "dephasing" includes the two animals re-entraining apart. One time after the shift, mouse.
   D's sign separates the mechanisms only when one dominates.
 **Stop rule:** one power run, one scoring run.
+
+## A335 (2026-11-19, on the user's instruction after the independent plan review `docs/reviews/plan_review_2026-11-19.md`; five parts, each one scoring run; **NOT BLIND** for every original 14-gene value cited below; **BLIND** for every core-loop (11-gene), matched-donor, cross-fitted and equivalence statistic, none of which has been computed): do the map's arrows survive without the signal-inducible clock genes, balanced covariates, a held-out waveform and equivalence bounds? Decides Q41 (Article if the night-shift loss and the psoriatic shift survive part 1)
+
+Code: `exploratory/A335_review_batch/scripts/`. Core loop = `cs.gtex().drop(["PER1", "PER2", "NR1D1"])` (11 genes, GTEx
+amplitudes and phases kept). Companion rule (A329): each original pseudo set is drawn exactly as before (same seeds, the
+14-gene waveform) and then restricted to its genes at the core positions, with the core amplitudes and phases.
+
+**Part 1, core-loop reruns (same data, seeds and statistics as the originals; only the waveform changes).**
+- **1a A257 night-shift muscle** (original: shift s 2.68 h, 90 % 1.81-3.59; R 0.2335, 90 % 0.060-0.414). Core s and R with
+  the original intervals and companions. *Loss holds* if the core R's 90 % upper bound is < 1 and the core clock passes
+  the original H257.3 rule against the core companions; *shift holds* if the core s interval excludes 0. Per subject
+  (11 subjects with four arrays; descriptive): angle(dm_i conj dc_i) in hours and the amplitude ratio |dm_i| / |dc_i|,
+  for the 14-gene and core waveforms.
+- **1b A308 psoriasis** (original: pooled offset -1.45 h; q 0.0156 against the matched family, PASS). Cohorts and pooling
+  weights fixed as in A308. *Shift holds* if the core q < 0.05 against the core matched family; the responsive family
+  is reported.
+- **1c A331 person loudness, MuTHER** (original: leverage 0.177 > matched q95 0.117; responsive q95 0.179). The power
+  gate is inherited (its inputs are 14-gene). *Holds* if the core leverage > the core matched q95 and permutation p < 0.05;
+  the responsive percentile is reported.
+- **1d A315 ICU and brain-death loudness** (original: ICU, fast vs ventilated post mortem, Q* +0.404 above every
+  matched set; brain death H315.1 Q -0.136, Q* +0.046). *ICU loss holds* if the core Q* > 0 and above the core matched
+  q95. H315.1 on the core as registered.
+- **1e A332 D2 brain-death arrows** (original: lung -1.58 h, tibial artery +1.09 h, tibial nerve +0.99 h with 90 %
+  intervals excluding 0). An arrow *holds* if its core 90 % interval excludes 0 with the same sign (descriptive).
+
+**Part 2, covariate balance of the A315 contrasts.**
+- Per contrast (organ donors vs ventilated post mortem; fast vs ventilated post mortem): standardised mean differences
+  of age (exact, protected phenotypes), sex, RIN (donor median over the 12 tissues) and ischaemic time; aggregates only.
+- Matched contrast (CLAUDE.md covariate rule): the 79 post-mortem donors as cases, up to 3 controls each (organ donors,
+  or fast deaths) by the A164 rule (`A231 matched_label.match_ratio`: exact sex, age caliper 5 years, nearest age then
+  ischaemic time; Hardy is not matched across fast and Hardy 0). Q, Q* and the matched-set percentile on the matched
+  donors, 14 genes and core; SMDs after matching. Ischaemic time cannot be balanced across collection modes
+  (258 / 561 / about 900 min); it is reported, not matched.
+- *ICU loss robust* if the matched core Q* > 0 and above the core matched q95; otherwise the pooled and matched values
+  are both reported and the ICU arrow is labelled "not robust to age / sex balance".
+
+**Part 3, equivalence bounds (90 % intervals, TOST).** Margins fixed now:
+- H315.1 (brain-death loudness): Q* within +-0.357 (a 30 % change in clock-plane variance, A315's own target), with a
+  1,000-draw donor bootstrap resampling clock and matched sets together; 14 genes, core and matched donors. *Equal* only
+  if the interval lies inside the margin.
+- H293.3 (cell-class phase order): pooled endothelium-minus-fibroblast offset (atlas bootstrap from the six saved atlas
+  offsets, seed 293, 2,000 draws) within +-1 h (classes share time within 1 h); the 0.6 h margin (half the mouse
+  offset) is reported.
+- H295.1 (composition and loudness; margin post hoc, labelled so): pooled relative-gain change per SD of lymphocyte score
+  within +-0.10 (random-effects TOST from the saved per-tissue table).
+
+**Part 4, A270 with a held-out waveform.** The GTEx waveform was fitted on the same 244 fast deaths that A270 tests on.
+- The 244 donors are split once at random into halves (seed [335, 4]); hour-of-death coverage per 4-h bin is reported
+  per half (aggregate).
+- Per half: the waveform refitted on the other half (`cross_fit_waveform`, tissue as group); the clock's R with time of
+  death on this half (`Dataset.timed`, 1,000 permutations) with the cross-fitted waveform and, as reference, with the
+  shipped waveform. The 200 responsive and 200 matched sets of A270 (same seeds) are scored on the same half.
+- *Holds* if, in both halves, the cross-fitted clock R has p_R < 0.05 and is above every companion set of that half;
+  *holds at q95* if above the q95 only; otherwise *falls*.
+
+**Part 5, D3 remainder (descriptive, as registered in A332).** The 79 ventilated post-mortem donors: tertiles of
+ventilation duration (DTHVNTD, hours) cut within the 08-20 h and 20-08 h death strata (`score_a325.tertiles`); top vs
+bottom tertile: order rho against fast deaths (A293 Part 1) and loudness Q* (A315). Donors without a duration are
+dropped and counted. No verdict.
+
+**Limits.** Part 1 re-tests results already seen; the core loop loses the three highest-amplitude genes, so intervals
+widen. Part 2 cannot balance the collection mode. Part 4 halves the sample.
+**Stop rule:** one scoring run per part.
