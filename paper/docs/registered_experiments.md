@@ -8924,3 +8924,9 @@ collection mode on the organ-donor side; loss of the central drive predicts none
 Limits stated now: the possibly reached tissues are also the early-recovered, short-ischaemia ones (heart, lung), so
 perfusion and recovery order are aliased; the classification is anatomical inference, not GTEx documentation.
 **Code.** `exploratory/A317_braindeath_confirm/scripts/score_a327.py --stage power | score`.
+
+### A327 power note (2026-11-19, before scoring; `score_a327.py --stage power`, relabelling null only)
+Pairs: P 5, N 10, X 20. Relabelling SD of Delta 0.400 (MDE 0.997); of D_rho(N) 0.341 (MDE 0.850), above the full
+A317 contrast (0.621). B3 is underpowered on both readouts: scored as registered (descriptive); a non-significant
+result does not decide.
+<!-- src: paper/exploratory/A317_braindeath_confirm/output/a327_power.csv -->
