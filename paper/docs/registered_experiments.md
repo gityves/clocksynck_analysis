@@ -8940,3 +8940,96 @@ replicates (A281, A287) brings every unit within 0.115 (organ_colon 0.62 vs 0.55
 carry a standard error of about 0.11. Decision (labelled here, before scoring): the implementation is accepted as
 validated; the design powers use only the powered / informative units, as registered; scoring keeps 20 replicates.
 <!-- src: paper/exploratory/L1_lymphocyte_power/output/{validation,validation_diag_200reps}.csv -->
+
+## A328 (2026-11-19, check S1 of `PAPER_PLAN_2026-11-19.md` section 6.2, prompt `prompts/two_axis_checks_2026-11-19.md` Task 2; staged: power when the counts arrive, then one scoring run per part; **part a BLIND**: no file of del Valle 2023 (E-MTAB-12492) has been downloaded or opened by anyone in the project (the 2026-11-18 scout read ENA metadata only: 46 runs, 32 adrenals, 8 per 7, 8, 9 and 11.5 wpc, PE 43 bp); **part b BLIND**: no spliced / unspliced count of any cohort exists on disk (`$SCCC_DATA` checked 2026-11-19, no server delivery); **NOT BLIND** for the cohorts' spliced (gene) counts: A242, A244, A264, A266, A269 and A307 have been scored on Kameneva, Wang, Cheng (sasaki), Dong and Cardoso-Moreira): is the fetal clock-shaped state a running loop, and does the adrenal covariation replicate in an unseen cohort? **Server deliveries of `prompts/server_mapping_fetal_2026-11-18.md`**
+
+**Why.** Before birth, PER1, PER2 and NR1D1 covary with the core genes in the clock's pattern (A307), but the core loop
+alone is not significant (A266, adrenal cortex; lung; not clock-specific in liver, A269). Without sampling times, this is
+either a small entrained loop or an input moving the network in that pattern (STATUS_2026-11-18 section 2). Pre-mRNA
+(unspliced) and mRNA (spliced) separate them: in a running oscillator the pre-mRNA state leads the mRNA state by the
+mRNA's delay, so across individuals sampled at different phases the unspliced clock state is the spliced one turned by a
+consistent lead; a steady difference in signal level between fetuses moves both in proportion (no turn).
+
+### Part a: blind replication in del Valle 2023 (32 whole fetal adrenals)
+- *Data.* Bulk `counts_exon.tsv.gz` (gene-level exon counts, the standard gene count) of the 32 adrenal runs; the 14
+  non-adrenal controls are left out. One sample per fetus (the SDRF individual; technical runs of one fetus summed).
+- *Statistic (as A242 `early` and A266).* Signed coherence C across fetuses (`common.development.coherence`), GTEx
+  waveform, log fractions residualised gene by gene on a **stage indicator** (7, 8, 9, 11.5 wpc: 3 covariates; four
+  discrete ages make the indicator the saturated age model) and sex; 10,000 per-gene permutations **within stage**
+  (`strata`). Companions: 200 expression-matched and 200 responsive pseudo-clock sets among genes with mean count >= 1,
+  same adjustment and permutations; clock-specific: C above the q95 of both. Seed 328.
+- **H328.1 (primary):** `dv:all`, the 14 clock genes. **H328.2:** `dv:core`, the 11-gene core waveform of A266 (ARNTL,
+  CLOCK, NPAS2, PER3, CRY1, CRY2, NR1D2, DBP, RORA, TEF, CIART). Each read on its own (H328.2 is the A266 question, not a
+  discovery family).
+- *Descriptive:* `dv:-PER1-NR1D1` (A264 iii); `dv:early` (7-8 wpc) and `dv:late` (9-11.5 wpc) halves; leave-one-gene-out
+  range; unsigned R.
+- *Power first (stage `power`, before any clock statistic):* the A242 feasibility (`feasibility_a242.py`): each fetus
+  stood for by a distinct GTEx adrenal gland (deaths 08-18 h), thinned gene by gene to the del Valle clock-gene depth
+  (the cohort median count of each clock gene and each fetus's library size: the only quantities read from the counts at
+  this stage; no per-fetus clock-gene value is printed), stage and sex assigned as in the cohort; adult clock at 1, 0.75,
+  0.5 (`simulate.scale_clock`) and without a clock (false-positive rate); 200 subsamples, 500 permutations. A readout
+  with an adult pass rate < 0.8 at the full clock is "not estimable" and not computed.
+- **Readings (fixed now; A242 rules).** PASS: p < 0.05 and clock-specific. "Not clock-specific": p < 0.05, not above
+  both companions. FAIL: p >= 0.05; a FAIL bounds the size only where the adult pass rate at that size is >= 0.8 ("an
+  adult-size covariation excluded down to x", x the smallest scale with pass rate >= 0.8).
+  - H328.1 PASS: the fetal adrenal covariation replicates blind in a tenth laboratory, before 12 weeks (A242 `early`).
+  - H328.1 FAIL with power: the covariation does not replicate in whole bulk adrenals of 7-11.5 wpc at the bound reached;
+    Figure 3a loses "replicated" for the adrenal and the A242 result is reported with this negative.
+  - H328.2 PASS: the core loop covaries without the signal-induced genes, blind: an entrained loop is supported (A266
+    reading). H328.2 not clock-specific: driven or entrained, not separable. H328.2 FAIL with power: the A266 reading
+    stands blind ("a driven state carried by signal-induced genes; an adult-size core loop excluded down to x").
+- *Expected (stated, not a criterion):* H328.1 PASS, H328.2 FAIL (A242 `early` and A266).
+
+### Part b: the running-loop test on spliced and unspliced counts
+- *Units and counts.* Per individual and compartment: bulk, `counts_exon` (spliced) and `counts_intron` (unspliced);
+  single-cell, the per-fetus class pseudobulk (A244 classifier and >= 200-cell rule; cortex for the adrenal) of the
+  `spliced` and `unspliced` layers. Compartments, as delivered: adrenal cortex (Kameneva, Wang, Cheng, Dong; del Valle
+  whole adrenal as a separate readout), liver (Cardoso-Moreira prenatal), heart (Cardoso-Moreira prenatal,
+  Knight-Schrijver), kidney (Cardoso-Moreira prenatal, Hochane). Lung has no open raw reads (scout 2026-11-18): not
+  tested. Heart and kidney are the expected negatives.
+- *Clock states.* Both count types are projected on the same GTEx waveform (the spliced projector; `clocksync.paired`
+  projector, as A266 H266.2): z_s,i from spliced and z_u,i from unspliced log fractions, each residualised gene by gene on
+  cohort and the age model of A242 (cohort indicator and quadratic age; stage indicator in del Valle), so constant
+  intron / exon biases per gene cancel. Genes: the 14 clock genes; the core variant uses the 11 core genes.
+- *Statistic.* The complex cross-moment c = sum_i z_u,i conj(z_s,i) (pooled over cohorts after within-cohort centring).
+  - Correspondence gate kappa = |c| / sqrt(sum |z_u|^2 sum |z_s|^2), against 10,000 permutations of the unspliced rows
+    across individuals within cohort; the gate passes at p < 0.05.
+  - The lead delta = arg c, in hours (x 24 / 2 pi; positive = unspliced ahead in the clock's direction of rotation, the
+    GTEx waveform's phase order), with a 90 % interval from 2,000 bootstrap resamples of individuals within cohort.
+  - Companions: 200 expression-matched and 200 responsive pseudo-clock sets (each with the clock waveform and its own
+    spliced / unspliced counts), same computation; their delta among the sets whose own gate passes, and their kappa.
+- **Expected lead.** From a running-clock reference processed by the same pipeline: the postnatal Cardoso-Moreira liver,
+  heart and kidney (server job, B priority 2; untimed deaths at many hours, so their individuals span the cycle). Its
+  delta and 90 % interval, computed with the same statistic, become the expected lead if its own gate passes (scored in
+  the same run, before the fetal readouts are printed). **Timed positive control: missing** (none on disk has spliced /
+  unspliced counts; the Duan 2023 skin set of the pipeline would need FASTQ mapping outside the approved exception; the
+  user decides whether to add it to the server job). Literature fallback, if the postnatal reference is missing or its
+  gate fails: a lead between +0.5 and +4 h (nascent / pre-mRNA ahead of mRNA for clock genes in mouse liver,
+  Menet 2012, Koike 2012; from memory at writing, to be carded before scoring).
+- *Power (stage `power`, when the counts arrive, before any fetal clock statistic):* the postnatal reference subsampled
+  to each fetal compartment's n and thinned to its spliced and unspliced clock-gene depths (cohort medians); 200
+  subsamples. Pass = gate p < 0.05 and delta interval excluding 0 on the reference's side. If the reference is missing:
+  GTEx glands of the matching tissue as spliced, the unspliced counts generated by turning the state by the literature
+  midpoint (+2 h) and Poisson-thinning to the delivered intron depth. A compartment with pass rate < 0.8 is "not
+  decidable at this design" and not scored.
+- **H328.3 (per compartment; Holm over the powered compartments among adrenal cortex, del Valle adrenal, liver):**
+  running loop = gate passes, the 90 % interval of delta excludes 0 and lies within (0, 6 h), and delta exceeds the
+  q95 of the responsive sets' delta (acute responses at termination also make pre-mRNA lead).
+- **Readings (fixed now).**
+  - H328.3 PASS on the 14 genes and on the core: a running loop before birth, carried by the core genes: Figure 3e reads
+    "a small entrained loop"; the A266 "driven state" wording is replaced.
+  - PASS on the 14 genes, not on the core: the signal-induced genes run ahead, the core does not: an acute input moving
+    the network, "a driven state".
+  - Gate passes, delta interval contains 0, with power: no consistent lead: "a steady difference in signal level between
+    fetuses", a driven state; a running loop of the reference's size excluded at that design.
+  - Delta beyond the responsive q95 not reached: "not separable from an acute signal response".
+  - Gate fails: uninformative (no correspondence of the two count types), never "no loop".
+  - Heart and kidney: expected gate failure (no covariation, A237-A240); a pass there is reported as unexpected.
+- *Descriptive:* CoPhaser single-cell phases (paychere2025cophaser) on spliced and unspliced layers of the single-cell
+  cohorts where its gene coverage applies; per-gene unspliced-over-spliced angle within the projection.
+- **Limits.** (1) Intron counts from polyA and 3' 10x libraries are sparse; the power stage decides. (2) Gene-specific
+  mRNA half-lives make the lead an average. (3) A running loop shown between fetuses is not shown to be entrained to the
+  mother. (4) Part b is not blind for the spliced covariations already scored; the lead itself has never been computed.
+- **Stop rule.** Power stage once all priority-1 deliveries are on disk; one scoring run per part. No count file is opened
+  before this registration is committed. **Code (to write after delivery, before scoring):**
+  `paper/exploratory/A328_fetal_running_loop/scripts/{prep_a328,score_a328}.py`.
