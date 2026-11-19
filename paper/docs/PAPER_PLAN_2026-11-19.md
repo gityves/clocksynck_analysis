@@ -152,7 +152,7 @@ Polar plot: angle = time relative to the person's internal time; radius = loudne
   classes in bulk, the drives converging on an organ, people in a group fit) appears as lost loudness.
 - So a bulk loss of loudness can be desynchrony below the resolution. This is classic at the cell level
   (welsh2004bioluminescence, nagoshi2004circadian; Ukai 2007, to card) and only single cells can decide it. Public
-  data cannot, in human (A160, A305).
+  data cannot, in human (A160, A305), nor in timed mouse 10x tissue (A334, A334b).
 
 **Delta for the map** (derived; loudness share of Delta^2 in brackets).
 - Human: muscle 0.79 (77 %); tumours 0.37 (100 %); intensive care 0.18 (about 100 %); chronic lesions 0.19 (about
@@ -307,6 +307,7 @@ The frozen claim set: every entry cited in sections 2, 3 and 5 is scored.
 | D2 brain death per organ | A332 | descriptive: no organ loses loudness; lung, tibial artery and nerve move about 1 h | Figure 5b arrows |
 | D3 ventilation time | A332 | organ-donor part only (loudness falls, order already lost); post-mortem tertiles not run | Figure 5 supplement |
 | D4 developmental curve | A332 | descriptive: loudness beyond matched after birth in brain and kidney | Figure 3c; V read with C |
+| cell mechanism of lost loudness (user, 2026-11-19) | A334, A334b | not decidable with public mouse 10x data: the lambda / R split fails the skin calibration (8 h mixing read 59 % as dephasing); aorta D not clock-specific (Bmal1 KO D 2.7 times aligned) | section 3: "a bulk loss of loudness can be desynchrony below the resolution" stays; decisive design needs a same-tissue clock knockout with D near 0 and plate-based depth |
 
 ### 6.3 Not to do (closed, not powered, or outside the freeze)
 

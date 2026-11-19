@@ -10,6 +10,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **New 2026-11-13:** results A245-A256 and what they change are summarised in `REVIEW_2026-11-10.md` §6; decisions asked there:
   the luminal A row after A224, whether to request ages (Wu 2020) and TwinsUK phenotypes (MuTHER), whether A243 is run (Q32),
   and the wording of the cancer chapter (Q24) after the synthesis in the ledger addendum of 2026-11-12.
+- **Q42** (below, new 2026-11-19): section 6 two-axis checks scored or closed (A328-A334b); decide S1 timed control, A333 power run, D3 remainder, cell-mechanism follow-up.
 - **Q41** (below, new 2026-11-19): Cell Article with brain death as the climax, or Cell Resource? Brain-death checks done (A325, A327, Task 2-3, B1, B4), lymphocyte bound (A326).
 - **Q39** (below, new 2026-11-17): tally of the cell-type program (blocks A-C, A276-A283): what the cell-type line now claims, and which of B2, C1, C2 to run next?
 - **Q38** (below, new 2026-11-16): two side projects scouted (clock and cell cycle; liver zonation): start either, and with which data?
@@ -39,6 +40,41 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
+
+### Q42 (2026-11-19): the two-axis checks of PAPER_PLAN section 6 are run; four decisions remain
+**Question.** The section 6 checks (prompt `prompts/two_axis_checks_2026-11-19.md`) and the user's follow-up on the cell
+mechanism (A334, A334b) are scored, closed at power, or registered and waiting for data. The claim set stays frozen.
+Decide:
+- **(a) S1 timed control:** add the Duan 2023 skin set to the server job? It needs FASTQ mapping, outside the approved
+  exception.
+- **(b) N1:** run the A333 power stage (79 living-brain ventilated donors)?
+- **(c) D3:** run the remainder (post-mortem ventilation tertiles)?
+- **(d) Cell mechanism:** search for deep plate-based data with a same-tissue clock knockout, or keep "quieter" without a
+  cell mechanism?
+
+**On hold:** Figure 3e (S1), Figures 1 and 7 output-retention panel (N1), Figure 5 supplement (D3).
+
+| check | amendment | verdict | key numbers (source CSV under `paper/exploratory/`) | figure / wording it changes |
+|---|---|---|---|---|
+| T1-T5 assembly | - | done | 21 conditions; Delta muscle 0.79, tumours 0.37, ICU 0.18, lesions 0.19 (`two_axis_map/output/two_axis_table.csv`); registry of 219 amendments (`docs/triage/registry_2026-11-19.tsv`) | Figure 5a map; "amplitude to a quarter" corrected to "excursion to about a third" (A257) |
+| S1 fetal running loop | A328 | registered blind, waits for server counts | none yet | Figure 3e stays "the open test" |
+| G1 organ factor across species | A330 | not decidable at this design | power 0.604 at true rho 0.6, 1.000 at rho 1; mouse 0.455 at 8 organs (`G1_organ_gain_species/output/power.csv`) | Figure 4g: "organ" stays open; no cross-species claim |
+| P1 person loudness, living | A331 | PASS (blind, powered); not beyond responsive genes | leverage 0.177 (twin-pair 90 % 0.119-0.236), p 0.0005; matched q95 0.117 (98.5th pct), responsive q95 0.179 (93.5th) (`P1_person_loudness/output/tests.csv`) | Figure 4f holds in living women, with the responsive caveat |
+| N2 departure on the core loop | A329 | partly leakage | core excess 0.250 (90 % 0.143-0.361) vs full 0.969; coupling -0.076 (matched -0.001); signal-state R^2 excess -0.009 (-0.013 to 0.022) (`A329_core_departure/output/tests.csv`) | model part 6: "departure carried mainly through signal-inducible clock genes, cause open"; no core-loop coupling readout |
+| N1 output retention | A333 | registered, power stage not run | archive (not blind): pooled ventilated lock above 1 in 23 of 26 tissues, liver highest (`results/figure_3/output/gtex_cues/a91_genes.csv.gz`) | Figures 1 and 7: pending (b) |
+| D1 skin loudness | A332 | descriptive | psoriasis r +0.499 (94th / 90.5th pct of companions) (`A332_descriptive/output/d1_series.csv`) | section 3, Figure 6d: loudness change not clock-specific |
+| D2 brain death per organ | A332 | descriptive | organ amplitudes 0.92-1.13; lung -1.58 h (90 % -3.11 to -0.14), tibial artery +1.09 h, tibial nerve +0.99 h (`A317_braindeath_confirm/output/d2_per_organ.csv`) | Figure 5b arrows; "rearranged, not quieter" |
+| D3 ventilation time | A332 | organ-donor part only | loudness falls with ventilation time while the order is already lost (RP A332) | Figure 5 supplement; remainder (c) |
+| D4 developmental curve | A332 | descriptive | hindbrain birth-12 y logV 1.800 (99.5th pct), C 0.772; kidney >= 12 wpc logV 1.865 but C -0.115 (`two_axis_map/output/d4_development.csv`) | Figure 3c; V read with C |
+| Cell mechanism (user) | A334 | calibration gate FAIL | 8 h mixing: rho ratio 0.489 (expected 0.500), share_R 0.591 (90 % 0.384-0.799; needed >= 0.75); ZT heterogeneity p < 1e-6 (`A334_dephase_vs_damp/output/calibration.csv`, `calib_mix.csv`) | section 3: desynchrony below the resolution stays possible; not decidable with public mouse 10x data |
+| Cell mechanism, aorta D sign (user) | A334b | clock check FAIL: not decidable, not scored | smooth-muscle D aligned 3.14, Bmal1 KO 8.42 (2.68x); MDE dlog D 0.92 vs expected damping -0.47 (`A334_dephase_vs_damp/output/b_power.csv`) | as above; decisive design: same-tissue clock knockout with D near 0, plate-based depth (d) |
+
+**Recommendation.**
+- (a) Yes, if the server budget allows: without the timed control, S1's lead can only be read against the postnatal
+  reference.
+- (b) Yes: it uses data on disk and decides the Figure 7 wording.
+- (c) Only if Figure 5 keeps a supplement.
+- (d) Keep "quieter", and scout plate-based datasets before any new registration.
 
 ### Q41 (2026-11-19): Cell Article with brain death as the climax, or Cell Resource? (after checks B1-B4, L1)
 **Question.** The public-data checks of the brain-death claim are done (prompt `prompts/cell_route_2026-11-19.md`,

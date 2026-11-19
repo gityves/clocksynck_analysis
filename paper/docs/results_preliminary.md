@@ -6746,6 +6746,55 @@ baboon's: **B1 is uninformative and stopped** (orientation not chosen; the scout
 - Code: `exploratory/A317_braindeath_confirm/scripts/b1_scout.py`.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/b1_scout.csv -->
 
+## A334 / A334b (scored 2026-11-19; BLIND for every per-cell statistic; one calibration run, one power run; neither aorta contrast scored): dephasing and damping of cell clocks cannot be told apart with public mouse 10x data: the lambda / R split fails the skin calibration (V334.1 FAIL: mixing-induced dephasing read 59 % as dephasing) and the dispersion D is not clock-specific in the aorta (A334b: Bmal1 knockout D 2.7 times aligned)
+
+**A334, skin calibration (GSE223109 dermal fibroblasts, 18 samples, 12,224 cells, median 13 clock UMI per cell).** The
+estimator is the revised D + rho^2 route; the registered Gamma route is reported only as a column.
+- **V334.0 PASS (fibroblasts):**
+  - D 9.79, above all 20 permuted-acrophase planes (max 7.58, mean 0.08).
+  - lambda 6.56 and R 0.899 (GTEx-waveform units; timed mouse rhythms are larger than the human post-mortem waveform).
+  - Myeloid cells fail (D 3.74 against null max 9.79; 4 clock UMI per cell).
+- **V334.1 FAIL (decisive).** Mixing cells from samples 8 h apart lowers the coherent amplitude as expected (rho ratio
+  0.489, expected 0.500), and D rises from 10.2 to 14.8. But the estimator assigns 59 % of the loss to synchrony (share_R
+  0.591, delete-one-ZT 90 % 0.384-0.799; required >= 0.75 with lower bound >= 0.5). lambda falls by dlog -0.29 although
+  the per-cell amplitude is unchanged by construction. At 4 h: rho ratio 0.838 (expected 0.866).
+- **V334.2 PASS (simulation):** ideal von Mises cells at the skin's parameters give a median share_R of 0.009 under damping
+  and 0.987 under dephasing, with no replicate on the wrong side.
+- **V334.3 FAIL (reported):** lambda and R vary with time of day beyond their cell-bootstrap errors (Q 37.5 and 23.5, 5 df;
+  p < 1e-6 and 0.0003). D runs from 3.4 (ZT10) to 26.6 (ZT18) and R from 0.77 (ZT14) to 0.96 (ZT10). The estimator is
+  not rotation-invariant on these data, or the composition changes with time of day.
+- **V334.4 PASS:** thinning to 50 % changes log lambda by 0.025 and log R by 0.032.
+- **Gate: FAIL.** The aorta lambda / R decomposition is not run ("estimator not calibrated").
+- **Reading.** The model-free sign held in the one controlled dephasing on data: D rose while rho fell. The von Mises split
+  does not hold, and the time-of-day dependence of D shows that the skin D is not a pure clock quantity either.
+- **Run note.** The first calibration run crashed in V334.3 (a negative bootstrap seed). The seed was fixed and the run
+  repeated. All earlier checks reproduce identically (same seeds).
+
+**A334b, aorta power (aligned 14 and Bmal1 KO 10 libraries; the misaligned arm was not loaded): clock check FAIL, not
+decidable, not scored.**
+
+| class | D aligned (null max) | D Bmal1 KO | KO / aligned | MDE dlog D | expected dlog D, dephasing / damping (rho 0.8) | MDE dlog rho^2 |
+|---|---|---|---|---|---|---|
+| smooth muscle (50,219 cells, 7.3 UMI) | 3.14 (2.27) | 8.42 | 2.68 | 0.92 | +1.36 / -0.47 | 0.16 |
+| fibroblasts (7,582 cells, 5.7 UMI) | 12.8 (15.8) | 22.2 | 1.73 | 0.92 | +0.67 / -0.55 | 0.98 |
+
+- Without a clock, the knockout spreads more than the clocked aorta. In the aorta, D is mostly covariance among clock genes
+  that is not driven by the clock, so its sign cannot be read as dephasing or damping.
+- D would also be underpowered: an MDE of 0.92 against an expected damping change of 0.47.
+- The coherent amplitude itself would be powered (MDE 0.16 against the registered 0.446), but it is not a registered test
+  on its own.
+
+**Overall reading.** Whether a clock-loudness loss is carried by cells dephasing or by quieter cells is not decidable
+with public mouse 10x data:
+- the per-cell split fails a controlled dephasing on data;
+- the dispersion D carries non-clock covariance that a clock knockout exposes.
+
+A decisive design needs a clock knockout of the same tissue whose D is near zero, and the depth to resolve it (plate-based
+chemistries). The text keeps "quieter" without naming the cell mechanism (PAPER_PLAN section 3).
+- Code: `exploratory/A334_dephase_vs_damp/scripts/{score_a334.py --stage calibrate, score_a334b.py --stage power}`
+  (1,673 s and 30 s).
+<!-- src: paper/exploratory/A334_dephase_vs_damp/output/{calibration,calib_mix,calib_sim,calib_zt,b_power,b_sim,b_placebo}.csv -->
+
 ## A329 (scored 2026-11-19; BLIND for the core loop, NOT BLIND for the 14-gene values; one run): the personal departure is mostly carried by PER1, PER2 and NR1D1 (H329.1 falls: excess 2.64 -> 1.28 times matched), but it is not explained by the glucocorticoid / immediate-early signal state of the sample (H329.3 FAIL) and coupling does not rise (H329.2 FAIL): "partly leakage"
 
 GTEx fast deaths, 27 peripheral tissues, A294b fit. Validation passed (A104 rho 0.734; full median log ratio 0.969).
