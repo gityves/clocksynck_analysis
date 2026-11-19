@@ -8796,3 +8796,18 @@ GTEx tissues (and partly the same donors), counted directly.
 the organ gains. PASS with a much narrower G range: composition orders the organs but an organ-level factor scales
 them (drive or cell clock strength). FAIL: composition does not predict organ gain at this resolution (8 tissues).
 **Code.** `exploratory/A323_gain_decomposition/scripts/score_a323.py`.
+
+## A324 (2026-11-19, user: overnight gap 5, blind step; one scoring run; **BLIND** for the heart, kidney and VAT clock amplitudes and shifts of Xin 2021 (only their untimed couplings were computed, A111 `a111_xin_other_tissues.csv`); **NOT BLIND** for the Xin liver (amplitude ratio 0.438, shift 11.29 h, A297) and for A322 (Manella: chord rejected, lung and liver above the chord, WAT on it)): does the A322 pattern replicate in a second conflicting-feeding design with four tissues? **Xin 2021, day- (DRF) vs night-restricted feeding (NRF), 28-29 mice per arm, ZT 0-24: liver, heart, kidney, VAT**
+
+Same estimation and fit as A322 (`score_a322.py` functions; one projector per tissue over both arms, A111 gene QC,
+library bootstrap within ZT 2000, seed 324; shared Delta, b_t in [0, 1]; r_t = A_DRF / A_NRF).
+- **H324.1 (replication of the rejection):** the chord model is rejected (parametric bootstrap p < 0.05).
+- **H324.2 (direction, read with H324.1):** every tissue whose Mahalanobis distance to the chord exceeds 3.84 lies
+  above it (|r_t| > |model_t|): conflict costs less amplitude than a pure mix of drives, never more.
+- **Descriptive:** the shifts and amplitude ratios of all four tissues; the fitted Delta and b; whether the most
+  balanced tissue (b nearest 0.5) loses most amplitude (as WAT in A322); Xin VAT against Manella WAT.
+**Readings (stated now).** Both pass: A322's reading replicates (conflict costs amplitude, at most as much as the mix,
+least where tissues move least). H324.1 fails (chord retained): in this design a pure mix of drives suffices and
+A322's departure is not general. H324.1 passes, H324.2 fails (a tissue below the chord): conflict can cost more than
+the mix (extra dephasing) and the wording of part 5 is weakened to "costs amplitude".
+**Code.** `exploratory/A322_conflicting_drives/scripts/score_a324.py`.
