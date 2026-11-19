@@ -300,14 +300,15 @@ The frozen claim set: every entry cited in sections 2, 3 and 5 is scored.
 | T1-T5 assembly | - | done: `exploratory/two_axis_map/` (two-axis table, polar points, development table), `docs/triage/registry_2026-11-19.tsv` (219 entries), text fixes | 2.4: adrenal band from A242; liver core loop not excluded (driven or entrained); lung before 12 wpc core-loop positive (descriptive) |
 | S1 fetal running loop | A328 | registered blind; waits for the server counts; timed positive control missing (user's decision) | Figure 3e stays "the open test" until scored |
 | G1 organ factor | A330 | not decidable at this design (baboon power 0.60 at true rho 0.6; mouse 0.45 at 8 organs, not downloaded) | Figure 4g: "organ" stays open |
-| P1 person loudness, living | A331 | PASS (blind, powered): leverage 0.177 beyond matched genes (98.5th), not beyond responsive (93.5th) | Figure 4f holds in living women, with the responsive caveat |
+| P1 person loudness, living | A331, A335 1c | PASS on 14 genes (leverage 0.177); falls on the core loop (0.107 < matched q95 0.130; A335): carried by PER1, PER2, NR1D1 | Figure 4f: person loudness in living tissue not shown as a clock property; GTEx (A312) only |
 | N2 departure on the core loop | A329 | partly leakage: excess 2.64 -> 1.28 times matched without PER1, PER2, NR1D1 (H329.1); not the GC / IEG signal state (H329.3 FAIL); coupling falls (H329.2 FAIL) | model part 6: departure carried mainly through signal-inducible clock genes, cause open |
 | N1 output retention | A333 | not decidable at this design: median MDE log Phi 0.726 (only a loss to 0.48 detectable; gate 0.357); archive A91 (pooled, not blind) the only indication | Figures 1 and 7: N1 stays an open question |
 | D1 skin loudness | A332 | descriptive: psoriasis variance up, not beyond companions | 3, Figure 6d: loudness change not clock-specific |
-| D2 brain death per organ | A332 | descriptive: no organ loses loudness; lung, tibial artery and nerve move about 1 h | Figure 5b arrows |
-| D3 ventilation time | A332 | organ-donor part only (loudness falls, order already lost); post-mortem tertiles not run | Figure 5 supplement |
+| D2 brain death per organ | A332, A335 1e | descriptive: no organ loses loudness; on the core loop tibial artery (+1.20 h) and nerve (+1.54 h) hold, lung does not, lower-leg skin appears (+1.33 h) | Figure 5b arrows: artery and nerve |
+| D3 ventilation time | A332, A335 5 | organ-donor part only; the post-mortem remainder is not estimable (no tissue pair with 20 shared donors) | Figure 5 supplement: organ-donor part only |
 | D4 developmental curve | A332 | descriptive: loudness beyond matched after birth in brain and kidney | Figure 3c; V read with C |
 | cell mechanism of lost loudness (user, 2026-11-19) | A334, A334b | not decidable with public mouse 10x data: the lambda / R split fails the skin calibration (8 h mixing read 59 % as dephasing); aorta D not clock-specific (Bmal1 KO D 2.7 times aligned) | section 3: "a bulk loss of loudness can be desynchrony below the resolution" stays; decisive design needs a same-tissue clock knockout with D near 0 and plate-based depth |
+| review checks (independent review 2026-11-19) | A335 | night-shift loss and shift hold on the core loop (s 4.06 h, R 0.239); ICU loudness loss holds on the core and age / sex matched (Q* +0.457, +0.459); psoriatic shift holds at the line (core q 0.049); brain-death loudness equivalent within +-0.357; classes share time within 1 h; time-of-death reading holds with a held-out waveform | Q41: Article route by the pre-set rule; psoriasis stated with its core q; 'equal' for brain-death loudness now an equivalence |
 
 ### 6.3 Not to do (closed, not powered, or outside the freeze)
 

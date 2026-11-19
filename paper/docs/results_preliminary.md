@@ -6746,6 +6746,77 @@ baboon's: **B1 is uninformative and stopped** (orientation not chosen; the scout
 - Code: `exploratory/A317_braindeath_confirm/scripts/b1_scout.py`.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/b1_scout.csv -->
 
+## A335 (scored 2026-11-19; NOT BLIND for the 14-gene originals, BLIND for every core-loop, matched, cross-fitted and equivalence statistic; one run per part; every 14-gene original reproduced before any new value was read): the night-shift loss and shift, the ICU loudness loss and the order-reading of time of death survive the review's checks; the psoriatic shift survives at the line; living person loudness does not survive the core loop; brain-death loudness is equivalent (+-0.357); the D3 remainder is not estimable
+
+**Part 1, core loop** (11 genes, without PER1, PER2 and NR1D1; companions restricted to the core positions, as A329).
+
+| check | 14 genes (original) | core loop | registered verdict |
+|---|---|---|---|
+| 1a night shift, muscle (A257): shift s | 2.68 h (90 % 1.81-3.59) | 4.06 h (2.57-5.68) | shift holds |
+| 1a amplitude ratio R | 0.234 (0.060-0.414) | 0.239 (0.075-0.398); swap p <= 1/2048; rho_ctl - rho_mis 1.45 > matched q95 0.38 and responsive q95 0.81 | loss holds |
+| 1b psoriasis (A308): pooled offset | -1.45 h, q 0.0156 | -1.00 h, q 0.0486 (90 % 0.0003-0.130); 5.5th pct of matched, 1.0th of responsive | shift holds, at the line |
+| 1c MuTHER person loudness (A331): leverage | 0.177 (98.5th matched, 93.5th responsive) | 0.107, p 0.0025; matched q95 0.130 (89th pct), responsive 69.5th | falls |
+| 1d ICU loudness, fast vs ventilated post mortem (A315): Q* | +0.404, above all matched | +0.457, above all matched and responsive (Q 0.228 > q95 -0.086) | ICU loss holds |
+| 1d brain-death loudness, H315.1: Q* | +0.046 (69th pct) | -0.006 (47.5th pct) | FAIL as registered (no loss) |
+| 1e brain-death arrows (D2) | lung -1.58, tibial artery +1.09, tibial nerve +0.99 h | lung -1.47 (-2.92 to +0.21), artery +1.20 (0.17-2.03), nerve +1.54 (0.19-2.73), lower-leg skin +1.33 (0.18-2.64) | artery and nerve hold; lung does not; lower-leg skin added |
+
+- 1a per subject (descriptive, 11 subjects): angles -1.39 to +6.57 h (14 genes) and +0.66 to +9.30 h (core; all 11
+  positive); amplitude ratios |dm| / |dc| 0.40-0.94 and 0.34-0.92. The night-shift damping is not carried by the
+  signal-inducible genes; on the core loop the shift is larger and uniform in sign.
+- The H257.3 verdict was read with the registered swap test and R interval plus the stricter companion comparison; both pass.
+
+**Part 2, covariate balance** (standardised mean differences, post mortem minus comparator, before / after matching 79
+post-mortem cases to up to 3 controls by the A164 rule).
+- **Organ donors:**
+  - age 0.78 / 0.22, sex 0.02 / 0.10;
+  - RIN -0.82 / -0.78 and ischaemic time 1.23 / 1.26 (collection mode; not balanceable).
+- **Fast deaths:**
+  - age -0.10 / -0.10, sex -0.27 / -0.18;
+  - RIN 0.12 / 0.14, ischaemic time -1.10 / -1.06.
+- **Matched results:**
+  - ICU Q* is +0.389 (14 genes) and +0.459 (core), both above every matched set: **ICU loss robust** to age and sex.
+  - Organ donors against post mortem: Q* +0.074 and +0.017 (80th and 54.5th percentiles).
+
+**Part 3, equivalence (90 % intervals).**
+- **H315.1 brain-death loudness, Q* within +-0.357:**
+  - 14 genes: -0.135 to 0.181 pooled, -0.124 to 0.206 matched;
+  - core: -0.147 to 0.137 pooled, -0.157 to 0.161 matched.
+  - All four intervals are inside the margin: **equal within a 30 % change of clock-plane variance**.
+- **H293.3 class phase order:** the endothelium-minus-fibroblast offset is 0.46 h (0.09-0.90; reproduces A293). It lies
+  within +-1 h (equivalent), but not within +-0.6 h.
+- **H295.1 composition (margin post hoc):** -0.010 per SD (-0.029 to +0.010), within +-0.10.
+
+**Part 4, A270 with a held-out waveform.**
+- Halves of 122 fast deaths each, with 12-27 deaths in every 4-h bin.
+- The clock R with time of death through a waveform refitted on the other half is 0.562 and 0.714, against 0.546 and 0.716
+  with the shipped waveform. It is above all 400 companion sets in each half (maxima 0.211 and 0.291); p 0.001.
+- The refitted and shipped acrophases agree (phase concordance 0.987 and 0.966).
+- **Holds:** the clock's reading of time of death is not an artefact of fitting the waveform on the same donors.
+
+**Part 5, D3 remainder: not estimable as registered.**
+- All 79 post-mortem donors have a ventilation duration.
+- Tertiles were cut within day and night strata: top 24 donors (median 372 h), bottom 28 (18.5 h).
+- No tissue pair has >= 20 donors shared by fast, top and bottom, so the order rho is undefined. Loudness rests on one
+  tissue (Q* -0.259, core -0.595); this is uninformative. No relaxed rule was applied.
+
+**Reading.**
+- **Survives:**
+  - the night-shift damping and shift (stronger on the core loop);
+  - the ICU loudness loss (core and age / sex matched);
+  - the clock's reading of time of death (held-out waveform);
+  - brain death leaving loudness unchanged (now an equivalence, not a failed test);
+  - class time-sharing within 1 h;
+  - the psoriatic shift, only at the line (q 0.049).
+- **Does not survive:**
+  - living person loudness beyond matched genes (A331): it was carried by PER1, PER2 and NR1D1;
+  - the lung arrow of brain death.
+- **Not estimable:** maintenance against inertia in the ventilated post-mortem donors (D3).
+- By the rule written before scoring, the Article route stands: the night-shift loss and the psoriatic shift survive.
+  The psoriatic shift should be stated with its marginal core q.
+- Code: `exploratory/A335_review_batch/scripts/{a335_1a_nightshift.py, a335_1b_psoriasis.py, a335_1c_muther.py,
+  a335_gtex.py, a335_3_equivalence.py, a335_4_a270_crossfit.py}` (seconds to 9 min each).
+<!-- src: paper/exploratory/A335_review_batch/output/{a335_1a_nightshift,a335_1a_per_subject,a335_1b_tests,a335_1c_tests,a315_core,d2_core,balance,matched,equivalence,part3_equivalence,part4_tests,part4_hours,d3_tertiles,repro_14gene}.csv -->
+
 ## A333 (power stage 2026-11-19; BLIND, no observed Phi computed): N1 not decidable at this design: with 79 living-brain ventilated donors (42-66 per tissue), the median MDE of log Phi over tissues is 0.726 (a loss to 0.48 of the reference), against the registered log(1 / 0.7) = 0.357; not scored
 
 - **Design as registered.**

@@ -48,7 +48,7 @@ Decide:
 - **(a) S1 timed control:** add the Duan 2023 skin set to the server job? It needs FASTQ mapping, outside the approved
   exception.
 - **(b) N1:** answered by the user (run): not decidable at this design (median MDE 0.726 against 0.357).
-- **(c) D3:** run the remainder (post-mortem ventilation tertiles)?
+- **(c) D3:** answered by the user (run, A335 part 5): not estimable (no tissue pair with 20 shared donors).
 - **(d) Cell mechanism:** search for deep plate-based data with a same-tissue clock knockout, or keep "quieter" without a
   cell mechanism?
 
@@ -76,6 +76,8 @@ Decide:
 - (d) Keep "quieter", and scout plate-based datasets before any new registration.
 
 ### Q41 (2026-11-19): Cell Article with brain death as the climax, or Cell Resource? (after checks B1-B4, L1)
+**Update 2026-11-19 (A335, after the independent review `reviews/plan_review_2026-11-19.md`).** PAPER_PLAN_2026-11-19 already moved brain death to one panel of Figure 5. The review's condition for the Article (night-shift loss and psoriatic shift surviving the core loop) is met: night shift s 4.06 h, R 0.239 on the core loop; psoriasis core q 0.049 (at the line). Also: ICU loudness loss robust (core, age / sex matched), time-of-death reading holds with a held-out waveform; living person loudness (A331) does not survive the core loop. Proposed answer: (a') Cell Article on the two-axis frame, brain death one panel.
+
 **Question.** The public-data checks of the brain-death claim are done (prompt `prompts/cell_route_2026-11-19.md`,
 REVIEW_2026-11-19 sections 2.1, 5, 7). Which route: (a) Cell Article with brain death as the climax, (b) Cell Resource
 (method, specificity standard, atlas of clinical datasets), (c) Article only after new procurement data? **On hold:**
