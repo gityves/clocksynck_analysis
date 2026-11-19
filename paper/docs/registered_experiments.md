@@ -8835,3 +8835,32 @@ least where tissues move least). H324.1 fails (chord retained): in this design a
 A322's departure is not general. H324.1 passes, H324.2 fails (a tissue below the chord): conflict can cost more than
 the mix (extra dephasing) and the wording of part 5 is weakened to "costs amplitude".
 **Code.** `exploratory/A322_conflicting_drives/scripts/score_a324.py`.
+
+## A325 (2026-11-19, user: "go ahead with Tasks 3-4" (prompt `docs/prompts/cell_route_2026-11-19.md`, Task 4, check B2 of REVIEW_2026-11-19); staged: power first, then one scoring run; **NOT BLIND** for A132b, A293 Part 1, A314-A318 and the A318 post hoc note (organ donors more post-mortem-like at longer ischaemia, H318.2; the common-range restriction raises organ donors' rho); NOT computed: any arrangement split by ischaemic time within post-mortem deaths, any association of ischaemic time with the hour of death): does post-mortem ischaemia shape the reference arrangement? **GTEx fast deaths (Hardy 1-2, the A317 reference, 244 donors); secondarily all post-mortem deaths (fast, Hardy 3, Hardy 4, ventilated post-mortem); the 12 A109 body tissues**
+
+**Why.** Organ donors differ from every post-mortem group in arrangement and in ischaemic time (medians 258 vs 561 min),
+and within organ donors longer ischaemia looks more post-mortem (H318.2). If post-mortem ischaemia (slow cooling,
+hours of anoxia) itself moved organ phases, the reference arrangement would differ between short- and long-ischaemia
+fast deaths. A stable arrangement argues against a collection-mode component of the post-mortem side.
+- **Donor ischaemic time:** median over the donor's samples in the 12 tissues (as H318.2). Tertiles within the group.
+- **Hour of death (check, then stratify):** Spearman of donor ischaemic time with cos and sin of the hour of death and
+  the medians for deaths 08-20 h vs 20-08 h (aggregates). **Primary design stratified:** tertiles are cut within each of
+  the two hour-of-death strata (08-20, 20-08) and pooled, so top and bottom tertiles carry the same hour mix.
+- **H325.1 (primary, fast deaths, stratified).** rho_tb = Fisher-Lee rho between the top and bottom tertiles' pair
+  phases (A317 estimator; pairs with >= 20 shared donors in both tertiles). Null: 2000 random disjoint splits of the
+  fast deaths into groups of the same sizes, drawn within the hour strata with the same counts (seed 3251).
+  p = share of null rho at or below rho_tb. **Unstable** if p < 0.05.
+- **H325.2 (secondary).** The same on all post-mortem deaths (strata: hour of death x death group, tertiles within).
+- **Companions (reported):** the same p for 50 matched and 50 responsive sets (sets 0, 4, ..., 196) on the same splits.
+- **Reported:** median ischaemic time of the top and bottom tertiles (aggregates), the unstratified version.
+- **Power stage (before scoring).** Tissue shifts s_t fitted by least squares to the organ-donor minus post-mortem pair
+  phase differences (A317 unrestricted, 65 pairs, all 298 organ donors). Injection: 200 random stratified splits; the
+  top group's tissue states rotated by f x s_t (f = 1, 0.5); power = share of injected splits with rho below the null
+  5th percentile. Reported with the ischaemic-time difference between the tertiles against the organ-donor minus
+  post-mortem difference (about 300 min): f = 1 is the full collection-mode effect.
+**Readings (stated now).** H325.1 unstable (p < 0.05): post-mortem ischaemia moves organ phases; the brain-death
+contrast may contain a collection-mode component of the post-mortem side; clock-specific only if p is below the
+companions' 5th percentile of p. Stable with power >= 0.8 at f = 1: post-mortem ischaemia does not reproduce a contrast
+of the organ-donor size (argues against collection mode on the post-mortem side; it does not test the organ-donor
+side, e.g. perfusion or recovery order). Stable with power < 0.8 at f = 1: uninformative.
+**Code.** `exploratory/A317_braindeath_confirm/scripts/score_a325.py --stage power | score`.
