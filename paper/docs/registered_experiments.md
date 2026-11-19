@@ -9158,3 +9158,38 @@ corr(r_fat, r_skin) after both radii are residualised on the first two harmonics
 - **Limits.** Arrays (larger technical floor, A259); women only; one biopsy; the simulation assumes isotropic noise and
   a log-normal person amplitude.
 **Stop rule:** one power run, one scoring run. Aggregates only (GTEx: no per-donor value written).
+
+## A332 (2026-11-19, checks D1-D4 of `PAPER_PLAN_2026-11-19.md` section 6.2, prompt `prompts/two_axis_checks_2026-11-19.md` Task 7; **DESCRIPTIVE, NOT BLIND**; one run each; no verdict, no wording is decided by a threshold): the descriptive companions of the two-axis map
+
+**D1. Psoriasis and eczema loudness (not blind: A183 reported r +0.50 for psoriasis without companions).**
+- Statistic: the A254 H254.3 estimator (`clocksync.paired` as A183 / A254: both samples on one projector, states centred
+  within sample type, r = log ratio of clock-plane variance lesion over non-lesion; two-sided swap p, 10,000 per-person
+  swaps; 200 expression-matched and 200 responsive pseudo-clock sets on the same swaps; "beyond companions" if outside
+  their central 90 %), seed 332.
+- Data: GSE154200 with the A183 preparation (`scouts_2026-11-01/prep_gse154200/output/`), per diagnosis: psoriasis,
+  nummular eczema, atopic dermatitis (pairs as A183). Replication: the four A115 psoriasis series, lesional against
+  uninvolved skin of the same person (`skin_lesional/processed_a115/`), pooled by inverse variance.
+- Reported: r, amplitude ratio exp(r / 2), swap p, companion percentiles, per series and pooled.
+
+**D2. Brain death per organ (arrows of Figure 5; no test).** For each of the 12 A317 tissues: the phase change = circular
+mean over the tissue's pairs of (organ-donor minus ventilated post-mortem pair phase), on the A317 states and equal-n
+organ-donor draws (median over draws), with a 1,000-draw donor bootstrap (both groups resampled); the loudness ratio =
+A315 `tissues.csv` L (log clock-specific variance ratio) against its matched median, as amplitude exp((L - matched) / 2).
+Script `exploratory/A317_braindeath_confirm/scripts/d2_per_organ.py`.
+
+**D3. Ventilation time: "loudness spent, order held".** Organ donors: the A132 order by ventilation tertile (Fisher-Lee
+rho against fast deaths, `a132_groups.csv`) beside the A315 loudness top vs bottom tertile (`descriptive.csv`, Q*); no new
+statistic. Ventilated post-mortem donors (79): tertiles of ventilation duration (GTEx phenotypes, aggregates only), per
+tertile the A293 Part 1 order rho against fast deaths and the A315 loudness statistic (clock minus matched log variance
+ratio against fast deaths); bins of about 26 donors, descriptive only. Script
+`exploratory/A315_braindeath_gain/scripts/d3_ventilation.py`.
+
+**D4. The developmental loudness curve (not blind for A237 and A239).** Bins fixed now: prenatal < 12 weeks post
+conception; prenatal >= 12 weeks; infancy and childhood (birth to 12 years); adolescence and adulthood (>= 13 years).
+Data: Cardoso-Moreira 2019 (A237 loaders; brain, cerebellum, heart, kidney, liver, ovary, testis) and Kang 2011 (A239
+loaders, brain). Per organ and bin with >= 8 individuals: clock-plane variance V = mean |z|^2 of the centred states
+(GTEx waveform projector, log fractions residualised on the A237 / A239 covariates within the bin), reported as log(V /
+median V of 200 expression-matched sets) with the matched q95; beside it C (signed coherence, 2,000 permutations) and the
+adult pass rate where the A237 / A239 feasibility tables give it for that bin. Caveat (A240): the spread of sampling
+times differs between bins (deaths and terminations at different hours), so V across bins mixes clock size and time
+spread. Script `exploratory/two_axis_map/d4_development.py`.
