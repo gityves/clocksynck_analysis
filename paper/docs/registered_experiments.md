@@ -8718,3 +8718,26 @@ at that design either; the result stays "not decidable against responsive genes"
 sets include genes with daily rhythms of their own (the test is conservative where they are clock outputs).
 **Code.** `clocksync` (`responsive_broad`); `exploratory/A285_companion_calibration/scripts/placebo_a285.py --families
 matched,responsive,responsive_broad --out a320` (A285's script, generalised; its defaults reproduce A285).
+
+## A321 (2026-11-19, user: overnight gap 7 of `PAPER_TRIAGE_2026-11-18.md`, "Gap 7: lymphocyte core loop"; blind test of A294's post hoc pattern; staged: design and power control first, one scoring run; **BLIND** for the atlases below (no clock statistic of any compartment of them computed before; seen: compartment names and donor counts from a scout, 2026-11-19); NOT BLIND for the hypothesis, which comes from A294's post hoc core-loop pattern (six of nine lymphocyte compartments with core-loop p < 0.10)): do tissue lymphocytes carry a weak core clock loop once the hormone-induced clock genes are removed? **Genome-wide atlases not used by A281 / A287 / A294: skin (`skin_ganier_genome`), lung (`lung_natri_genome`, control donors only), liver (`liver_xu_genome`), adipose (`organ_adipose_genome`)**
+
+**Design (fixed now).** Lymphocyte compartments (`A150.FAM.family == "lymphocyte"`) with >= 15 donors shared with a
+partner of the same atlas: fibroblast-stromal if it has >= 15 shared donors, otherwise endothelial, otherwise a
+clock-carrying parenchymal compartment (largest donor count). Primary compartment per atlas: the lymphocyte
+compartment with most shared donors (as A281); the others descriptive. Rows: log((count + 0.5) / depth) centred
+within stratum (A281 `y_of`), stratum = the table's stratum.
+**Statistics (A281 / A294 code).** Core-loop signed coherence C (11 genes: the GTEx waveform without PER1, PER2,
+NR1D1, A294 `CORE`) with per-gene permutations within strata (1000); the 14-gene C and its p; power control: the
+partner's rows thinned to the lymphocytes' clock-gene count (20 replicates, 200 permutations) read on the core loop,
+informative if it passes (p < 0.05) in >= 80 % of replicates; specificity: the core-loop C's percentile among 200
+expression-matched 11-gene sets (`pseudo_waveforms(kind="matched")` on the atlas's log mean expression, seeds [321, k]).
+- **H321.1 (primary).** Over informative primary compartments (>= 2 needed, else not decidable), Stouffer combination
+  of the one-sided core-loop p: combined p < 0.05.
+- **H321.2 (specificity, read only if H321.1 passes).** Mean percentile of the primary core-loop C among matched sets
+  > 0.5 with every informative primary compartment above its matched median.
+**Readings (stated now).** H321.1 and H321.2 pass: lymphocytes carry a weak core loop that the hormone-induced genes
+mask: wording "a weak core clock, masked by hormone-induced clock genes". H321.1 passes, H321.2 fails: core-loop
+covariance not beyond random expression-matched genes: "no clock beyond random genes". H321.1 fails with >= 2
+informative compartments: "no readable clock, core loop included" (the A281 wording stands without "readable" being
+an escape). Fewer than 2 informative: not decidable, wording unchanged.
+**Code.** `exploratory/A321_lymphocyte_core_blind/scripts/score_a321.py --stage design | score`.
