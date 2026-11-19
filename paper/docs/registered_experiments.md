@@ -9201,3 +9201,38 @@ matched median 0.026, q95 0.117; responsive median 0.121, q95 0.179. **Power aga
 (gate passed), 0.047 at sigma_A / 2.** The responsive q95 lies at the expected leverage, so a PASS beyond the responsive
 sets is not expected even at the GTEx size; the matched family decides, as registered. Scoring follows unchanged.
 <!-- src: paper/exploratory/P1_person_loudness/output/power.csv -->
+
+## A333 (2026-11-19, check N1 of `MODEL_signal_clock_2026-11-19.md` section 6, prompt `prompts/two_axis_checks_2026-11-19.md` Task 6; staged: power, then one scoring run only if powered; **NOT BLIND for the pooled ventilated lock**: A91 / A81b-A89 computed, per tissue, the ventilated / fast lock of clock-following genes relative to the clock core in all Hardy 0 donors (brain-dead organ donors included): median 0.78 (breast) to 4.62 (liver), above 1 in 23 of 26 tissues (`results/figure_3/output/gtex_cues/{a91_genes.csv.gz, selection_genes_26.csv.gz}`, joined, lead check 2026-11-19); **BLIND** for the 79 ventilated post-mortem donors with a living brain, for held-out selection and for the responsive exclusion): without behaviour, do a tissue's daily outputs follow its clock? **GTEx: fast deaths (Hardy 1-2) and ventilated post-mortem donors with a living brain (79; A293 Part 1 group)**
+
+**What the archive leaves open.** A91's lock pools brain-dead organ donors (no central drive) with living-brain donors,
+selects genes on all fast deaths (no held-out half), keeps stress-responsive genes, has no matched floor and uses a timed
+cosinor as the fast-death reference. A333 asks the N1 question in the living-brain group.
+
+**Design (`exploratory/N1_output_retention/scripts/score_a333.py`).** Per tissue of the 12 A109 body tissues with >= 40
+fast and >= 30 ventilated donors:
+- Fast deaths split once at random into halves A (selection) and B (reference), seed [333, 1].
+- Output program: non-clock genes (outside the 14 and `CLOCK_LIKE`), outside the responsive family (GC targets,
+  immediate-early genes and `responsive_broad`), median CPM >= 5, called clock-following in half A by the A91 model
+  (internal p < 0.01 given wall time, wall-time p > 0.05; D2 covariates). Tissues with < 20 program genes: not estimable.
+- Loadings on the leave-one-out host (`Dataset.host` of the other body tissues, each group's own host): per gene the
+  complex coefficient of log CPM on the host state (2 columns, D2 covariates); L_out = median |coefficient| over the
+  program genes; L_clock = |z| of the tissue's clock state on the same host. Group B (fast) and V (ventilated).
+- Phi_o = (L_out,V / L_out,B) / (L_clock,V / L_clock,B); interval from 1,000 donor bootstraps (hosts refitted).
+- Companions: 200 expression-matched non-rhythmic sets (internal p > 0.5 in half A), of the program's size: Phi of each;
+  the responsive family as one set: its Phi.
+- Covariates: fast and ventilated donors matched on age (5-year bins), RIN (tertiles) and ischaemic time (tertiles) by
+  exact-bin matching with replacement within the fast half B; pooled and matched Phi both reported.
+
+**Power (stage `power`, before any Phi).** Donor-bootstrap SE of log Phi under the null construction (ventilated labels
+permuted among B and V donors, 200 draws): per tissue MDE = 2.49 SE. Scored only if the median MDE over tissues is <=
+log(1 / 0.7) (a 30 % loss detectable); otherwise "not decidable at this design".
+
+**Readings (registered).**
+- **H333.1 (pooled):** median log Phi over tissues; interval including 0 and excluding log 0.7: the outputs follow the clock
+  (or the central drive) without behaviour. Median Phi below 1 with interval excluding 1: outputs partly follow behaviour.
+- **H333.2 (gradient, descriptive):** Phi ordered by tissue; prediction liver lowest (archive A33). The A91 pooled lock
+  (liver highest) is the not-blind contrary indication.
+- Phi of the program within the matched companions' range: the program is not separable from non-rhythmic genes (uninformative).
+- **Limits.** The central drive persists in these donors, so Phi counts centrally driven outputs with the clock;
+  continuous feeding is not recorded; 79 donors.
+**Stop rule:** one power run; one scoring run. Aggregates only (time of death: aggregates only).
