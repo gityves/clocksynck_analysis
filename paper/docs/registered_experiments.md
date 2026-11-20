@@ -9409,3 +9409,139 @@ dropped and counted. No verdict.
 **Limits.** Part 1 re-tests results already seen; the core loop loses the three highest-amplitude genes, so intervals
 widen. Part 2 cannot balance the collection mode. Part 4 halves the sample.
 **Stop rule:** one scoring run per part.
+
+## A336 (2026-11-20, on the user's instruction, prompt `docs/prompts/two_readouts_2026-11-20.md`, after section 9 of the independent review `docs/reviews/plan_review_2026-11-19.md`; four parts, one scoring run each; **NOT BLIND** for every 14-gene value, for the core-loop values already computed (A257, A308 / A183, A315, A331, A294b: A335, A329; A321) and for the night-shift trio point estimate and sign count (core minus 14-gene shift positive in 10 of 11 subjects, median 1.91 h, `A335_review_batch/output/a335_1a_per_subject.csv`); **BLIND** for every other core-loop value, every gene-drop null, every trio-alone value, the GTEx person leverage on the core loop and its companions, and the brain-death D_rho on the core loop (A136 dropped only PER1 and PER2, 0.458)): does each main-figure statistic hold without PER1, PER2 and NR1D1, and when it falls, is that the trio or lost precision? Plus person loudness in GTEx, a detection limit for every "kept", and the brain-death order on the core loop
+
+Code and outputs: `exploratory/A336_two_readouts/{scripts,output}/`. Inventory (committed with this registration):
+`output/inventory.csv` (102 statistics: entry, script, output, registered criterion and value, existing core value, swap
+point, runtime, tier and gene-drop plan; built by `scripts/build_inventory.py` from two read-only subagent inventories).
+
+**Facts verified before registration (reviewer's, recomputed from `cs.gtex()`).**
+- Amplitudes: PER1 0.054 (rank 14 of 14, the lowest), PER2 0.222 (rank 6, peak 11.7 h), NR1D1 0.323 (rank 3, peak 3.6 h).
+  A335's limits line ("the core loop loses the three highest-amplitude genes") is wrong; corrected in the A335 results
+  entry, the registration stays as committed.
+- The trio holds 16.3 % of sum (amp / sd)^2. Singular values of the sd-scaled design: 1.94 and 0.98 (14 genes), 1.88 and
+  0.64 (core). 77 of the 364 three-gene drops (the trio included) have both singular values within +-20 % of the core's.
+  A core-loop fall of a magnitude statistic can therefore be lost precision; the gene-drop null is the control.
+
+**Part 1. Two readouts for every main-figure statistic.**
+- *Scope and tiers (fixed now, `inventory.csv`).* Tier 1 (47 statistics), run in this order: Figure 1b (A252 H252.1-3,
+  A256 H256.2-3); Figures 4, 5, 6 (A293 H293.1-2, A295, A291, A294b, A312, A331, A315, A317, A318, A304, A306, A297,
+  A322, A324, A164, A235, A138 H138.4 and H138.8, A271 H271.2, A254, A183, A308, A115, A332 D1); then Figures 1c, 1d
+  and 2 (A270, A257, A261 H261.3, A275). Tier 2 (31), registered now and run afterwards under the same rules: the
+  calibrated cell-type tests of Figure 2 (A272, A274, A280, A282, A283, A288, A326, mouse A273, A279; placebo nulls
+  redrawn per projector), A293 H293.3 (after them), A233, A227, A271 H271.1. Tier 3 (24) not run, with the reason in
+  the inventory: A313 (7 h per waveform), A311 (its reported primary share is written by no script in the repo),
+  A293 H293.4 and A323 (atlas refit chain), A319 (published phases, no genes), A265 / A267 (COFE genome-wide; 6-7 h),
+  A138 H138.1 (5.6 h threshold recalibration), A261 H261.1, A252 H252.4 and A256 H256.1 (a drop already / not scored),
+  A321 (already a core test) and Figure 3 (existing core values A264-A269 reported as they are).
+- *Readouts per statistic.*
+  1. 14 genes, reproduced exactly (stored value, tolerance 1e-6, or the entry's printed precision when only text
+     exists) before any new value is read; no reproduction, no core value.
+  2. Core loop (11 genes, `cs.gtex().drop(["PER1", "PER2", "NR1D1"])`, GTEx amplitudes and phases), companions drawn
+     exactly as originally (same seeds, 14-gene waveform) and restricted to the core positions (A329 / A335 rule; also
+     for the fetal-style designs that drew from the shorter waveform). Mouse: the same three genes (stored under human
+     symbols), after the script's own QC.
+  3. Trio contribution: 14 genes minus core on the statistic's own bootstrap draws, shared by both readouts; where the
+     statistic has no bootstrap, 200 unit bootstraps (persons / donors / pairs as the statistic's unit, seed [336, 1]);
+     90 % interval.
+  4. Gene-drop null: the clock statistic (no companions, no nulls) on every 11-gene drop of three genes from the 14
+     (364), magnitude in the direction of the original effect. Percentile of the trio drop among all drops; and among
+     the drops with both singular values within +-20 % of 1.88 and 0.64 (77 drops), read only if >= 20 are valid. Where
+     364 clock-only runs exceed about 3 h at 4 workers (`gene_drop` = 100 in the inventory), 100 random drops (seed 336)
+     plus the trio drop. Drops whose statistic is undefined (gate or estimability failure in the original's own rule) are
+     counted and excluded.
+  5. Trio alone (PER1, PER2, NR1D1, GTEx amplitudes and phases; companions at the trio positions): descriptive, reported
+     only where its gate is computable and passes: `Dataset.gate` p_pairing and p_acrophase < 0.05 for donor x
+     compartment designs; the statistic's own clock-plane test (p < 0.05) for paired designs (A252, A256, A257).
+- *Readings (fixed now).* Each statistic keeps its registered criterion on the core loop: holds, falls or at the line
+  (passes one but not all conditions, or within the stated rounding). A fall reads "carried by PER1, PER2 and NR1D1"
+  only if the trio drop lies below the 10th percentile of the gene-drop null; otherwise "not decidable: precision". A
+  statistic whose criterion is a null or an equivalence (kept, equal) "holds" if the core interval stays inside its
+  registered margin; a core interval crossing the margin reads "not decidable: precision" unless the trio drop is below
+  the 10th percentile. No statistic is dropped after scoring.
+- *Night shift (Figure 1d).* The swap test compares with a tolerance (`nul >= obs - 1e-12`), so p >= 1/2048. The one new
+  blind layer statistic: the per-subject trio-alone shift angle(dm conj dc) and amplitude ratio, with the H257.1 gate on
+  the trio (rho beyond its swap null, p < 0.05); described, no verdict. The 14-genes-versus-core difference is reported
+  as not blind.
+- *A261 H261.3* (programs 11.65 h): the program statistic is waveform-free; the core constants (s 4.06 h, R 0.239) replace
+  the 14-gene ones in its hypothesis; no drop or trio readout.
+- *Output:* `two_readouts.csv` (per statistic: 14 genes, core, trio contribution with interval, gene-drop percentiles and
+  counts, trio alone, reading).
+
+**Part 2. Person loudness in GTEx on the core loop** (`scripts/a336_person_gtex.py`).
+- Statistic: A331's leverage (`clocksync.elasticity.radius_covariance`) between the two half-host states of the same donor,
+  on the 20 random halvings of the 27 peripheral tissues of A331's power stage (`split_hosts(..., 20, seed [331, 1])`,
+  fast deaths, A104 / A312 rows, 244 donors); median over halvings.
+- Companions: 200 expression-matched and 200 responsive sets (`pseudo_waveforms` on the genome-wide log mean of these
+  rows, seeds [336, 2, 1] / [336, 2, 2]; core readout at the core positions). The matched sets are decisive. Persons-
+  permuted null: 1,000 permutations of one half's donors within each halving (seed [336, 2, 3]), p = (1 + #null >= obs) /
+  1,001. Trio contribution on 1,000 shared donor bootstraps (seed [336, 2, 4]). Gene-drop null: all 364. Trio alone
+  with its `Dataset.gate`.
+- Stages: companions first (no clock value), then one scoring run, which first reproduces A331's power-stage cv2 median
+  (0.1239) on 14 genes.
+- Not blind: the 14-gene value (A331's power stage used these halvings; A312: half-host radii correlate 0.75-0.86 per
+  tissue). Blind: core, companions, gene-drop null.
+- Covariates: fast deaths only (death type fixed). Age (bracket midpoint), ischaemic time and donor-median RIN tertiles,
+  leverage per tertile on 14 genes and core; descriptive, aggregates only.
+- Readings (fixed now):
+  - **holds** (core leverage > core matched q95 and p < 0.05): person loudness is a clock property in deaths, not shown in
+    living tissue (A331); Figure 4f keeps GTEx, labelled post-mortem;
+  - **falls, trio drop below the gene-drop 10th percentile:** claim 1 becomes "organ and cell class set the clock's
+    loudness; between persons, loudness varies through PER1, PER2 and NR1D1 (cause open, A329)"; Figure 4f becomes a
+    two-readout panel; "person" leaves the factorisation;
+  - **falls within the gene-drop range:** not decidable (precision); the person factor stays open and leaves the
+    headline.
+
+**Part 3. A detection limit beside every "kept"** (`scripts/a336_detectability.py`; power only: no observed value is
+used in any computation; observed values are only copied beside the limits; no verdict).
+- Rows: time kept in intensive care (A293 H293.2), chronic disease (A164, A233, A235), tumours (A138 H138.4) and lesions
+  (A254 H254.1); class time (A293 H293.3); composition (A295); brain-death loudness (A315 H315.1); the departure not
+  growing (A304, A306).
+- Each row: statistic; observed value and interval (copied); registered MDE in native units; MDE in hours (time) or
+  fold amplitude (loudness); nearest positive control on the same statistic (A322 daytime feeding by organ; A201 aorta
+  jet lag -2.86 h; A319 central clock lost; A257 night shift 4.06 h core; A317 brain death).
+- Missing MDEs, computed now (80 % power, one-sided alpha 0.05, MDE = 2.49 x the null or bootstrap SD where the
+  statistic is approximately normal):
+  - offsets in hours (A254, A235, A293 H293.3, A295 per SD): the registered MDE, or 2.49 x the SE from the saved
+    bootstrap or null spread (the interval width, never its centre);
+  - pairing or order statistics read as time (A138 pairing, A293 H293.2 order): (a) phases dispersed with SD x h shrink
+    a complex pairing by exp(-sigma^2 / 2), sigma = x 2 pi / 24, so x at which the pairing falls by its MDE; (b) for the
+    order rho, a simulation on the fast deaths only (the reference group, not the ventilated): 200 random donor halvings
+    (seed [336, 3]); one organ's states rotated by x h in one half (each organ in turn; median over organs), or every
+    organ by N(0, x^2) h; detection when rho(half A, half B) falls below the 5th percentile of the unshifted halvings;
+    the smallest x on a 0.25 h grid with detection >= 0.8;
+  - loudness: Q (log variance ratio) MDE converted to fold amplitude exp(MDE / 2); gains (A304, A306) as reported
+    (log scale, fold = exp);
+  - where a native MDE has no registered conversion (coupling d* of A164 / A233), the native MDE is reported and the
+    conversion marked "not available", not invented.
+- Output: `detectability.csv`, and a Figure 5a proposal: each condition's detection limit drawn as a circle around the
+  origin of the two-axis map (radius from the loudness MDE, tangential extent from the time MDE); an arrow inside its
+  circle reads "not detectable", not "no change".
+
+**Part 4. The brain-death order on the core loop** (`scripts/a336_braindeath.py`).
+- A317 H317.1 as registered: D_rho = rho(post-mortem, fast) - median over 20 organ-donor draws to 79 (seed 317) of
+  rho(organ donors, fast); 2,000 relabellings (same sequence as A317); A317's 200 matched and 200 responsive sets
+  restricted to the core positions; q95. Plus A318 H318.1 (states residualised on ischaemic time and RIN, all kinds).
+  Gene-drop null: all 364, unadjusted and adjusted. Trio contribution on 200 shared donor bootstraps (seed [336, 4]).
+  Trio alone with `Dataset.gate` on the fast deaths' 12 tissues.
+- Power stage first (core relabelling null only; no observed core D_rho): SD and MDE beside A317's (0.554).
+- 14 genes reproduced first (A317 D_rho 0.621, p, q95; A318 0.584); otherwise stop.
+- Covariates: A318's adjustment regresses ischaemic time and RIN out of the states, which removes their effect on the
+  mean only (CLAUDE.md covariate rule); A335 part 2 showed both cannot be balanced across collection modes. Stated as a
+  limit, not solved here.
+- Readings (fixed now):
+  - **holds** (D_rho > 0, p < 0.05, above the core matched and responsive q95): the rearrangement is in the core clock,
+    which answers the leakage objection; donor-management glucocorticoids acting on the core are still not excluded
+    (A136's gate failed), and the text says so;
+  - **falls, trio drop below the gene-drop 10th percentile:** the rearrangement is carried by the signal-inducible genes,
+    as high-dose methylprednisolone in donor management would produce; "central drive lost" becomes one of two
+    readings, and Figure 5b says so;
+  - **falls within the gene-drop range:** not decidable on the core loop; Figure 5b keeps the 14-gene result with that
+    caveat.
+  - The adjusted (A318) core result is reported beside it; it changes the reading only by the same rule.
+
+**Limits.** Part 1 re-tests results already seen, and the gene-drop null is clock-only (no companions per drop).
+Subsampled drops (100) give a coarser percentile. Tier 2 may not be reached in this session; it stays registered. Part 2
+inherits A331's halvings. Part 3 MDEs for order statistics rest on a simulation design fixed here.
+**Stop rule:** one scoring run per part (per statistic in part 1); no rule relaxed after scoring.
