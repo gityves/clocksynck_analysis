@@ -6862,7 +6862,7 @@ the trio drop among the 364 three-gene drops (or 100 + trio) / among the 77 drop
 | 5b | A317 H317.1 / A318 H318.1 D_rho (part 4) | 0.621 -> 0.465; 0.584 -> 0.496 | +0.16 (-0.11 to 0.35) | 16 / 39; 34 / 39 | holds; holds |
 | 5c | A297 removal / A322 Q / A324 Q, H324.2 (mouse) | 0.724 -> 0.940; 31.9 -> 27.2; 185 -> 95; FAIL -> FAIL | -0.22; +6.0; +116 | 98 / 88; 29 / 62; 2.5 / 12 | verdicts unchanged |
 | 5d, 6b | A304 gain / departure H304.1, H304.3, H304.4 | -0.462 -> -0.668; -0.190 -> 0.089; -0.522 -> 0.017; -0.216 -> -0.762 | +0.21; -0.28; -0.54; +0.55 | 98; 81; 94; 9.6 | holds x4 (departure not detected, powered) |
-| 6a | A235 H235.1 metabolic offset (equivalence +-1 h) | pending (running) | - | - | - |
+| 6a | A235 H235.1 metabolic offset, T2D / obesity (equivalence +-1 h) | +0.02 -> +0.14 h (-0.19 to 0.47); +0.20 -> +0.14 h (-0.32 to 0.59) | -0.12; +0.07 | 82 / 29; 8.9 / 33 | holds; holds |
 | 6a | A164 H164.1 / H164.2 d* (equivalence +-0.15) | 0.019 -> -0.034; 0.004 -> 0.014 | +0.053; -0.009 | 94; 55 | holds; holds |
 | 6a, 5d | A306 gain / departure, T2D, HTN, smoking | see table | - | - | departure HTN holds; five fall: interval crosses the registered MDE, nothing detected (HTN gain "carried by the trio" mechanically, core = 14-gene value) |
 | 6b | A138 H138.4 tumour-normal pairing | 0.365 -> 0.252 (< matched q95 0.275, responsive 0.313) | +0.112 (0.073 to 0.159) | 6.9 / 29 | at the line |

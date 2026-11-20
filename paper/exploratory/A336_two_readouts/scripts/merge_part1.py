@@ -65,7 +65,7 @@ def main():
     inv = pd.read_csv(OUT / "inventory.csv")
     done = set(tab.id)
     alias = {"A304_H304.3-4": "A304_H304.3", "A306_gain_departure": "A306_", "A270_clockR": "A270_clockR",
-             "A275_classes": "A275_classes"}
+             "A275_classes": "A275_classes", "A235_H235.1": "A235_H235.1_"}
     ran = lambda i: i in done or any(str(d).startswith(alias.get(i, "\0")) for d in done)  # noqa: E731
     rest = inv[~inv.id.map(ran)]
     nr = pd.DataFrame(dict(id=rest.id, figure_panel=rest.figure_panel, statistic=rest.statistic,
