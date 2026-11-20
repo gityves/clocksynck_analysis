@@ -6746,7 +6746,7 @@ baboon's: **B1 is uninformative and stopped** (orientation not chosen; the scout
 - Code: `exploratory/A317_braindeath_confirm/scripts/b1_scout.py`.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/b1_scout.csv -->
 
-## A335 (scored 2026-11-19; NOT BLIND for the 14-gene originals, BLIND for every core-loop, matched, cross-fitted and equivalence statistic; one run per part; every 14-gene original reproduced before any new value was read): the night-shift loss and shift, the ICU loudness loss and the order-reading of time of death survive the review's checks; the psoriatic shift survives at the line; living person loudness does not survive the core loop; brain-death loudness is equivalent (+-0.357); the D3 remainder is not estimable
+## A335 (scored 2026-11-19; NOT BLIND for the 14-gene originals, BLIND for every core-loop, matched, cross-fitted and equivalence statistic except the H293.3 interval, known from A293; one run per part; every 14-gene original reproduced before any new value was read): the night-shift loss and shift, the ICU loudness loss and the order-reading of time of death survive the review's checks; the psoriatic shift survives at the line; living person loudness does not survive the core loop; brain-death loudness is equivalent (+-0.357); the D3 remainder is not estimable
 
 **Part 1, core loop** (11 genes, without PER1, PER2 and NR1D1; companions restricted to the core positions, as A329).
 
@@ -6764,6 +6764,12 @@ baboon's: **B1 is uninformative and stopped** (orientation not chosen; the scout
   positive); amplitude ratios |dm| / |dc| 0.40-0.94 and 0.34-0.92. The night-shift damping is not carried by the
   signal-inducible genes; on the core loop the shift is larger and uniform in sign.
 - The H257.3 verdict was read with the registered swap test and R interval plus the stricter companion comparison; both pass.
+- Note (2026-11-20, independent review section 9).
+  - R = rho_mis / rho_ctl projects the misaligned chord on the expected one, so it contains the rotation. Shift-corrected,
+    the core R is 0.239 / cos 60.9 deg = 0.49 (derived), matching the per-subject median |dm| / |dc| of 0.47: the
+    misaligned muscle clock keeps about half its amplitude.
+  - The swap p is 1/2048. The CSV's 0 is a floating-point tie at the unswapped labelling, which an exact swap test
+    counts.
 
 **Part 2, covariate balance** (standardised mean differences, post mortem minus comparator, before / after matching 79
 post-mortem cases to up to 3 controls by the A164 rule).
@@ -6772,7 +6778,7 @@ post-mortem cases to up to 3 controls by the A164 rule).
   - RIN -0.82 / -0.78 and ischaemic time 1.23 / 1.26 (collection mode; not balanceable).
 - **Fast deaths:**
   - age -0.10 / -0.10, sex -0.27 / -0.18;
-  - RIN 0.12 / 0.14, ischaemic time -1.10 / -1.06.
+  - RIN 0.12 / 0.14, ischaemic time -1.09 / -1.06.
 - **Matched results:**
   - ICU Q* is +0.389 (14 genes) and +0.459 (core), both above every matched set: **ICU loss robust** to age and sex.
   - Organ donors against post mortem: Q* +0.074 and +0.017 (80th and 54.5th percentiles).
@@ -6781,9 +6787,12 @@ post-mortem cases to up to 3 controls by the A164 rule).
 - **H315.1 brain-death loudness, Q* within +-0.357:**
   - 14 genes: -0.135 to 0.181 pooled, -0.124 to 0.206 matched;
   - core: -0.147 to 0.137 pooled, -0.157 to 0.161 matched.
-  - All four intervals are inside the margin: **equal within a 30 % change of clock-plane variance**.
+  - All four intervals are inside the margin: **equal within a 30 % change of clock-plane variance**, relative to
+    expression-matched genes. The raw clock-plane variance is lower in organ donors (core Q -0.186, 90 % -0.307 to
+    -0.006), as is the matched sets' (median -0.181).
 - **H293.3 class phase order:** the endothelium-minus-fibroblast offset is 0.46 h (0.09-0.90; reproduces A293). It lies
-  within +-1 h (equivalent), but not within +-0.6 h.
+  within +-1 h (equivalent), but not within +-0.6 h. Not blind: the interval was known from A293 before the margin was
+  set.
 - **H295.1 composition (margin post hoc):** -0.010 per SD (-0.029 to +0.010), within +-0.10.
 
 **Part 4, A270 with a held-out waveform.**
@@ -6801,21 +6810,131 @@ post-mortem cases to up to 3 controls by the A164 rule).
 
 **Reading.**
 - **Survives:**
-  - the night-shift damping and shift (stronger on the core loop);
+  - the night-shift shift (larger on the core loop) and loss (about half the amplitude kept per subject);
   - the ICU loudness loss (core and age / sex matched);
   - the clock's reading of time of death (held-out waveform);
-  - brain death leaving loudness unchanged (now an equivalence, not a failed test);
-  - class time-sharing within 1 h;
+  - brain death leaving loudness unchanged relative to matched genes (now an equivalence, not a failed test);
+  - class time-sharing within 1 h (not blind);
   - the psoriatic shift, only at the line (q 0.049).
 - **Does not survive:**
-  - living person loudness beyond matched genes (A331): it was carried by PER1, PER2 and NR1D1;
+  - living person loudness beyond matched genes (A331): carried by PER1, PER2 and NR1D1, or lost precision (see the
+    last note);
   - the lung arrow of brain death.
 - **Not estimable:** maintenance against inertia in the ventilated post-mortem donors (D3).
 - By the rule written before scoring, the Article route stands: the night-shift loss and the psoriatic shift survive.
   The psoriatic shift should be stated with its marginal core q.
+- Note (2026-11-20, independent review): the registration's limits line ("the core loop loses the three
+  highest-amplitude genes") is wrong. In the shipped `cs.gtex()` waveform PER1, PER2 and NR1D1 rank 14th, 6th and 3rd
+  in amplitude. They hold 16 % of sum (amp / sd)^2 but fill the clock plane's weaker direction (second singular value of
+  the sd-scaled design 0.98 with 14 genes, 0.64 on the core loop; derived). A core-loop fall of a magnitude statistic
+  can therefore be lost precision; the gene-drop null of `prompts/two_readouts_2026-11-20.md` (part 1) separates the
+  two.
 - Code: `exploratory/A335_review_batch/scripts/{a335_1a_nightshift.py, a335_1b_psoriasis.py, a335_1c_muther.py,
   a335_gtex.py, a335_3_equivalence.py, a335_4_a270_crossfit.py}` (seconds to 9 min each).
 <!-- src: paper/exploratory/A335_review_batch/output/{a335_1a_nightshift,a335_1a_per_subject,a335_1b_tests,a335_1c_tests,a315_core,d2_core,balance,matched,equivalence,part3_equivalence,part4_tests,part4_hours,d3_tertiles,repro_14gene}.csv -->
+
+## A336 (scored 2026-11-20; NOT BLIND for the 14-gene values and the A335 / A329 core values; BLIND for every other core value, the gene-drop nulls, the GTEx person leverage on the core loop and the brain-death D_rho on the core loop; one scoring run per part and statistic; every 14-gene value reproduced before any new value was read): the paper's measurements survive without PER1, PER2 and NR1D1; person loudness in GTEx deaths holds on the core loop (it is a clock property in deaths); the brain-death order holds on the core loop; a detection limit now sits beside every "kept"
+
+**Part 1, two readouts** (`two_readouts.csv`; tier 1: 47 inventory statistics, 55 rows; tier 2 running, tier 3 not run,
+both listed in the table). Values: 14 genes -> core; trio contribution = 14 minus core (90 %); drop % = percentile of
+the trio drop among the 364 three-gene drops (or 100 + trio) / among the 77 drops of similar singular values (24 of
+101 where subsampled).
+
+| figure | statistic | 14 genes -> core | trio contribution (90 %) | drop % all / similar | reading |
+|---|---|---|---|---|---|
+| 1b | A252 H252.1 rotation rho, exact times | 1.265 -> 1.073 | +0.192 (0.132 to 0.253) | 3.6 / 14.3 | holds |
+| 1b | A252 H252.2 seven studies / H252.3 adipose | 2.970 -> 3.902; 2.221 -> 3.861 | -0.93; -1.64 | 95 / 77; 86 / 39 | holds; holds |
+| 1b | A256 H256.2 rho / H256.3 cells within 2 h | 2.533 -> 3.159; 17 -> 18 of 20 | -0.63; -1 (-3 to 2) | 90 / 58; 96 / 91 | holds; holds |
+| 1c | A270 clock R with hour of death, human / baboon | 0.631 -> 0.627; 0.987 -> 0.982 | +0.003; +0.006 | 49 / 42; 14 / 42 | holds; holds |
+| 1d | A257 H257.1 rho / H257.2 shift / H257.3 loss 1 - R | 1.336 -> 1.912; 2.68 -> 4.06 h; 0.767 -> 0.761 | -0.58; -1.38 h (-2.22 to -0.59); +0.005 | 96 / 81; 98 / 92; 51 / 81 | holds x3 |
+| 1d | A261 H261.3 programs (core constants 4.06 h, 0.239) | behaviour -> behaviour | - | - | holds |
+| 2b | A275 clock sharing SV_X / LY_X (descriptive) | 0.333 -> 0.295; 0.172 -> 0.159 | +0.038 (0.010 to 0.065); +0.013 | 1.1 / 2.6; 16 / 6.5 | holds (rule "both") |
+| 4b | A295 H295.2 phase per SD (half-extent, h) | 0.130 -> 0.151 | -0.02 | 8.2 / 10.4 | holds |
+| 4b | A295 H295.1 lymphocyte gain per SD | -0.010 (FAIL) -> -0.020 (p 0.040) | +0.010 | 89 / 53 | verdict changes: PASS on the core |
+| 4c | A293 H293.1 / H293.2 organ order rho (slow, ventilated) | 0.784 -> 0.831; 0.690 -> 0.700 | -0.05; -0.01 | 97 / 88; 72 / 73 | holds; holds |
+| 4e | A291 coupling ~ loudness | 0.717 -> 0.490 | +0.23 (0.09 to 0.46) | 13 / 52 | holds |
+| 4e | A294b H294b.1 departure / matched (median log ratio) | 0.969 -> 0.250 (0.14 to 0.36) | +0.72 (0.61 to 0.83) | 84 / 32 | holds |
+| 4e | A294b H294b.2 slope | 0.223 -> 0.464 | -0.24 | 64 / 25 | falls: not decidable (precision) |
+| 4f | A312 H312.1 elasticity ~ S (rho) | -0.341 -> -0.291 (p 0.063) | -0.05 | 35 / 79 | at the line |
+| 4f | A331 MuTHER person leverage | 0.177 -> 0.107 (< matched q95 0.130; p 0.0025) | +0.070 (0.008 to 0.135) | 13 / 43 | at the line (fails the matched condition) |
+| 4f | GTEx person leverage (part 2) | 0.765 -> 0.714 | +0.051 (0.020 to 0.087) | 13 / 40 | holds |
+| 5b | A315 ICU Q* / H315.1 brain-death Q* | 0.404 -> 0.457; 0.046 -> -0.006 | -0.05; +0.05 | 81 / 78; 15 / 58 | holds; holds (equivalence) |
+| 5b | A317 H317.1 / A318 H318.1 D_rho (part 4) | 0.621 -> 0.465; 0.584 -> 0.496 | +0.16 (-0.11 to 0.35) | 16 / 39; 34 / 39 | holds; holds |
+| 5c | A297 removal / A322 Q / A324 Q, H324.2 (mouse) | 0.724 -> 0.940; 31.9 -> 27.2; 185 -> 95; FAIL -> FAIL | -0.22; +6.0; +116 | 98 / 88; 29 / 62; 2.5 / 12 | verdicts unchanged |
+| 5d, 6b | A304 gain / departure H304.1, H304.3, H304.4 | -0.462 -> -0.668; -0.190 -> 0.089; -0.522 -> 0.017; -0.216 -> -0.762 | +0.21; -0.28; -0.54; +0.55 | 98; 81; 94; 9.6 | holds x4 (departure not detected, powered) |
+| 6a | A235 H235.1 metabolic offset (equivalence +-1 h) | pending (running) | - | - | - |
+| 6a | A164 H164.1 / H164.2 d* (equivalence +-0.15) | 0.019 -> -0.034; 0.004 -> 0.014 | +0.053; -0.009 | 94; 55 | holds; holds |
+| 6a, 5d | A306 gain / departure, T2D, HTN, smoking | see table | - | - | departure HTN holds; five fall: interval crosses the registered MDE, nothing detected (HTN gain "carried by the trio" mechanically, core = 14-gene value) |
+| 6b | A138 H138.4 tumour-normal pairing | 0.365 -> 0.252 (< matched q95 0.275, responsive 0.313) | +0.112 (0.073 to 0.159) | 6.9 / 29 | at the line |
+| 6b | A138 H138.8 purity D | 0.025 -> 0.109 (p 0.049) | -0.08 | 97 / 88 | falls: not decidable |
+| 6b | A271 H271.2 GTEx coupling rho | 0.734 -> 0.501 (> matched q95 0.236, < responsive 0.553) | +0.23 | 15 / 54 | at the line |
+| 6c | A254 H254.1 lesion offset / H254.3 lesion r | +0.01 -> +0.31 h (-0.14 to 0.75); -0.417 -> -0.325 | -0.29; -0.09 | 13 / 38; 20 / 65 | holds; at the line (not beyond responsive) |
+| 6d | A183 H183.1 psoriasis offset / A308 q | -1.45 -> -1.00 h; q 0.016 -> 0.049 | -0.45 h (-1.14 to -0.06) | 19 / 83 | at the line (matched q05); holds (q < 0.05) |
+| 6d | A183 H183.2 psoriasis minus eczema | -1.09 -> -0.72 h | -0.37 | 20 / 74 | falls: not decidable |
+| 6d | A115 D115.1 uninvolved skin | -1.81 -> -2.11 h | +0.30 | 85 / 55 | holds |
+| 6d | A332 D1 psoriasis r (descriptive) | +0.499 -> +0.129 | +0.37 (0.18 to 0.59) | 3.8 / 17 | descriptive |
+
+- **No statistic reads "carried by PER1, PER2 and NR1D1"** under the registered rule except A306 HTN gain, where the
+  core equals the 14-gene value (0.216 against 0.213) and only the interval crosses the margin: a mechanical reading of
+  a null. Every other fall is "not decidable: precision" (A294b H294b.2, A138 H138.8, A183 H183.2, four A306 nulls).
+- **Trio drops at an extreme of the gene-drop null** (descriptive): low (the trio carried more than three random genes)
+  for A252 H252.1 (3.6), A275 SV_X (1.1), A332 D1 (3.8), A324 Q (2.5), A138 H138.4 (6.9); high (dropping the trio
+  strengthens the statistic) for A257 shift (98), A297 (98), A304 gain (98), A293 H293.1 (97), A256 (96).
+- **Trio alone: never reportable.** With three genes the acrophase gates admit six arrangements (p >= 1/6), so every trio
+  gate failed on p_acrophase (A304's pairing test is the exception). The night-shift trio-alone shift (the one new layer
+  statistic) is therefore not read (A257 trio gate p 0.994).
+- **Night-shift swap test:** compared with a tolerance, core p = 1/2048 (A335 printed 0.0 from a floating-point tie).
+- Gene-drop subsampling (100 + trio) by the registered cost rule: A138, A164, A271, A306, A312 (A312 planned at 364 in
+  the inventory; the rule applied at 3-4 min per waveform).
+
+**Part 2, person loudness in GTEx deaths on the core loop** (`person_gtex.csv`; 244 fast deaths, 27 tissues, 20 halvings).
+- 14 genes (not blind; A331 power cv2 0.1239 reproduced): leverage 0.765.
+- Core: leverage 0.714, persons-permuted p 0.001 (null q95 0.030), above the core matched q95 0.621 (98.5th percentile)
+  and the responsive q95 0.692 (96th). **Holds.**
+- Trio contribution +0.051 (0.020 to 0.087); trio drop at the 13th / 40th percentile of the drops.
+- The matched sets are high (median 0.119, q95 0.621): a donor-level scale shared by the tissues is large in deaths, and
+  the clock is above it.
+- Strata (descriptive): core leverage 0.69-0.74 in every tertile of age, ischaemic time and RIN.
+- Reading (registered): person loudness is a clock property in deaths, not shown in living tissue (A331 at the line on
+  the core loop); Figure 4f keeps GTEx, labelled post-mortem.
+
+**Part 3, detection limits** (`detectability.csv`; power only, no verdict).
+- Time kept in intensive care (A293 H293.2): on fast-death halvings, one organ must shift by a median 3.9 h (2.25 h
+  tibial nerve to 9.75 h whole blood; lung 8.75 h) to be detected; all organs dispersed, SD 1.5 h.
+- Chronic disease time: metabolic offset MDE 0.37 h (T2D), 0.64 h (obesity); module offsets 0.28 h (HTN) to 3.07 h
+  (depression).
+- Chronic disease coupling: d* MDE 0.083 / 0.130 (A164), 0.028-0.048 (A233); no conversion to hours or fold.
+- Chronic disease loudness and departure: fold x1.30 to x1.52 (A306).
+- Tumour time (pairing): >= 2.4 h dispersion SD (lower bound).
+- Lesion time 0.69 h; class time 0.61 h; composition 0.12 h and x1.03 per SD.
+- Brain-death loudness: amplitude x0.90 / x1.11 (registered power 0.995 at Q* -0.357).
+- Tumour departure: x1.5.
+
+**Part 4, brain-death order on the core loop** (`braindeath_core.csv`; power stage: core MDE 0.622, A317 0.554).
+- 14 genes reproduced (D_rho 0.621, p 0.0025, q95 0.092 / 0.152; A318 0.584).
+- Core: D_rho 0.465, relabelling p 0.036, above the core matched q95 0.084 and responsive q95 0.180. **Holds.**
+- Adjusted for ischaemic time and RIN: core 0.496, p 0.030, above both q95 (0.091, 0.193). Holds.
+- Trio contribution +0.16 (-0.11 to 0.35). Trio drop at the 16th / 39th percentile (adjusted 34th / 39th).
+- Trio gate fails (p_acrophase 0.83).
+- The core D_rho is below its own MDE (0.622) yet significant.
+- Reading (registered): the rearrangement is in the core clock, which answers the leakage objection. Donor-management
+  glucocorticoids acting on the core are still not excluded (A136's gate failed). The A318 adjustment removes mean
+  effects only, and ischaemic time and RIN cannot be balanced across collection modes (A335 part 2).
+
+**Reading.**
+- The split is informative but not destructive. Every Figure 1 statistic holds on the core loop, and the night-shift
+  shift is larger there (not blind).
+- Person loudness is a clock property in deaths (GTEx core) but not shown beyond matched genes in living women (MuTHER
+  core at the line).
+- The brain-death order is a core-clock rearrangement.
+- Weakened to "at the line" on the core loop: the tumour-normal pairing (A138 H138.4), GTEx strong-clock coupling
+  (A271 H271.2), lesion loudness (A254 H254.3), the psoriatic offset against matched sets (A183 H183.1), and the elasticity
+  gradient (A312).
+- Five chronic-disease loudness / departure nulls (A306) lose their equivalence on the core loop (wider intervals),
+  without any detection.
+- Code: `exploratory/A336_two_readouts/scripts/` (a336_braindeath.py, a336_person_gtex.py, a336_detectability.py,
+  p1_*.py, a336_common.py, merge_part1.py).
+<!-- src: paper/exploratory/A336_two_readouts/output/{inventory,two_readouts,person_gtex,person_gtex_strata,person_gtex_companions,detectability,detectability_order_sim,braindeath_core,braindeath_core_power,braindeath_drops}.csv, output/part1/*.csv -->
 
 ## A333 (power stage 2026-11-19; BLIND, no observed Phi computed): N1 not decidable at this design: with 79 living-brain ventilated donors (42-66 per tissue), the median MDE of log Phi over tissues is 0.726 (a loss to 0.48 of the reference), against the registered log(1 / 0.7) = 0.357; not scored
 

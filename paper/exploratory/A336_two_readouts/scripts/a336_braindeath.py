@@ -252,7 +252,6 @@ def main():
     tab.loc[0, ["trio_alone_D_rho"]] = D_trio_alone if gate["trio_gate_passes"] else np.nan
     for k, v in gate.items():
         tab.loc[0, k] = v
-    core = tab[(tab.gene_set == "core")].iloc[0]
     tab["reading"] = ""
     tab.loc[tab.gene_set == "core", "reading"] = [
         "holds" if r.passes else "falls: carried by PER1, PER2 and NR1D1" if r.below_q10 else "falls: not decidable (precision)"
@@ -262,7 +261,7 @@ def main():
         OUT / "braindeath_drops.csv", index=False)
     pd.set_option("display.width", 220)
     print(tab.round(4).T.to_string())
-    print(f"reading (registered): {core.reading}; done {time.time() - t0:.0f}s", flush=True)
+    print(f"reading (registered): {tab[tab.gene_set == 'core'].reading.tolist()}; done {time.time() - t0:.0f}s", flush=True)
 
 
 if __name__ == "__main__":

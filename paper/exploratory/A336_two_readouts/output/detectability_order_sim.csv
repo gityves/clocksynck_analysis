@@ -1,0 +1,625 @@
+design,organ,x_h,detection
+one organ shifted,Muscle - Skeletal,0.25,0.04
+one organ shifted,Thyroid,0.25,0.055
+one organ shifted,Artery - Tibial,0.25,0.05
+one organ shifted,Heart - Atrial Appendage,0.25,0.055
+one organ shifted,Adipose - Visceral (Omentum),0.25,0.055
+one organ shifted,Esophagus - Mucosa,0.25,0.05
+one organ shifted,Nerve - Tibial,0.25,0.055
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),0.25,0.045
+one organ shifted,Skin - Sun Exposed (Lower leg),0.25,0.05
+one organ shifted,Adipose - Subcutaneous,0.25,0.06
+one organ shifted,Lung,0.25,0.04
+one organ shifted,Whole Blood,0.25,0.035
+organ phases dispersed (SD),all,0.25,0.075
+one organ shifted,Muscle - Skeletal,0.5,0.04
+one organ shifted,Thyroid,0.5,0.055
+one organ shifted,Artery - Tibial,0.5,0.05
+one organ shifted,Heart - Atrial Appendage,0.5,0.065
+one organ shifted,Adipose - Visceral (Omentum),0.5,0.065
+one organ shifted,Esophagus - Mucosa,0.5,0.065
+one organ shifted,Nerve - Tibial,0.5,0.09
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),0.5,0.035
+one organ shifted,Skin - Sun Exposed (Lower leg),0.5,0.055
+one organ shifted,Adipose - Subcutaneous,0.5,0.08
+one organ shifted,Lung,0.5,0.04
+one organ shifted,Whole Blood,0.5,0.035
+organ phases dispersed (SD),all,0.5,0.2
+one organ shifted,Muscle - Skeletal,0.75,0.045
+one organ shifted,Thyroid,0.75,0.06
+one organ shifted,Artery - Tibial,0.75,0.05
+one organ shifted,Heart - Atrial Appendage,0.75,0.065
+one organ shifted,Adipose - Visceral (Omentum),0.75,0.065
+one organ shifted,Esophagus - Mucosa,0.75,0.08
+one organ shifted,Nerve - Tibial,0.75,0.1
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),0.75,0.04
+one organ shifted,Skin - Sun Exposed (Lower leg),0.75,0.075
+one organ shifted,Adipose - Subcutaneous,0.75,0.09
+one organ shifted,Lung,0.75,0.035
+one organ shifted,Whole Blood,0.75,0.04
+organ phases dispersed (SD),all,0.75,0.385
+one organ shifted,Muscle - Skeletal,1.0,0.05
+one organ shifted,Thyroid,1.0,0.06
+one organ shifted,Artery - Tibial,1.0,0.055
+one organ shifted,Heart - Atrial Appendage,1.0,0.085
+one organ shifted,Adipose - Visceral (Omentum),1.0,0.07
+one organ shifted,Esophagus - Mucosa,1.0,0.11
+one organ shifted,Nerve - Tibial,1.0,0.13
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),1.0,0.045
+one organ shifted,Skin - Sun Exposed (Lower leg),1.0,0.08
+one organ shifted,Adipose - Subcutaneous,1.0,0.12
+one organ shifted,Lung,1.0,0.035
+one organ shifted,Whole Blood,1.0,0.045
+organ phases dispersed (SD),all,1.0,0.615
+one organ shifted,Muscle - Skeletal,1.25,0.065
+one organ shifted,Thyroid,1.25,0.075
+one organ shifted,Artery - Tibial,1.25,0.07
+one organ shifted,Heart - Atrial Appendage,1.25,0.09
+one organ shifted,Adipose - Visceral (Omentum),1.25,0.085
+one organ shifted,Esophagus - Mucosa,1.25,0.17
+one organ shifted,Nerve - Tibial,1.25,0.17
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),1.25,0.055
+one organ shifted,Skin - Sun Exposed (Lower leg),1.25,0.1
+one organ shifted,Adipose - Subcutaneous,1.25,0.17
+one organ shifted,Lung,1.25,0.035
+one organ shifted,Whole Blood,1.25,0.055
+organ phases dispersed (SD),all,1.25,0.715
+one organ shifted,Muscle - Skeletal,1.5,0.07
+one organ shifted,Thyroid,1.5,0.1
+one organ shifted,Artery - Tibial,1.5,0.095
+one organ shifted,Heart - Atrial Appendage,1.5,0.13
+one organ shifted,Adipose - Visceral (Omentum),1.5,0.1
+one organ shifted,Esophagus - Mucosa,1.5,0.23
+one organ shifted,Nerve - Tibial,1.5,0.25
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),1.5,0.065
+one organ shifted,Skin - Sun Exposed (Lower leg),1.5,0.14
+one organ shifted,Adipose - Subcutaneous,1.5,0.245
+one organ shifted,Lung,1.5,0.035
+one organ shifted,Whole Blood,1.5,0.065
+organ phases dispersed (SD),all,1.5,0.805
+one organ shifted,Muscle - Skeletal,1.75,0.085
+one organ shifted,Thyroid,1.75,0.125
+one organ shifted,Artery - Tibial,1.75,0.095
+one organ shifted,Heart - Atrial Appendage,1.75,0.19
+one organ shifted,Adipose - Visceral (Omentum),1.75,0.155
+one organ shifted,Esophagus - Mucosa,1.75,0.325
+one organ shifted,Nerve - Tibial,1.75,0.42
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),1.75,0.07
+one organ shifted,Skin - Sun Exposed (Lower leg),1.75,0.19
+one organ shifted,Adipose - Subcutaneous,1.75,0.365
+one organ shifted,Lung,1.75,0.035
+one organ shifted,Whole Blood,1.75,0.085
+organ phases dispersed (SD),all,1.75,0.9
+one organ shifted,Muscle - Skeletal,2.0,0.1
+one organ shifted,Thyroid,2.0,0.17
+one organ shifted,Artery - Tibial,2.0,0.145
+one organ shifted,Heart - Atrial Appendage,2.0,0.27
+one organ shifted,Adipose - Visceral (Omentum),2.0,0.21
+one organ shifted,Esophagus - Mucosa,2.0,0.445
+one organ shifted,Nerve - Tibial,2.0,0.605
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),2.0,0.085
+one organ shifted,Skin - Sun Exposed (Lower leg),2.0,0.23
+one organ shifted,Adipose - Subcutaneous,2.0,0.525
+one organ shifted,Lung,2.0,0.04
+one organ shifted,Whole Blood,2.0,0.085
+organ phases dispersed (SD),all,2.0,0.94
+one organ shifted,Muscle - Skeletal,2.25,0.12
+one organ shifted,Thyroid,2.25,0.21
+one organ shifted,Artery - Tibial,2.25,0.165
+one organ shifted,Heart - Atrial Appendage,2.25,0.355
+one organ shifted,Adipose - Visceral (Omentum),2.25,0.26
+one organ shifted,Esophagus - Mucosa,2.25,0.545
+one organ shifted,Nerve - Tibial,2.25,0.82
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),2.25,0.09
+one organ shifted,Skin - Sun Exposed (Lower leg),2.25,0.3
+one organ shifted,Adipose - Subcutaneous,2.25,0.76
+one organ shifted,Lung,2.25,0.045
+one organ shifted,Whole Blood,2.25,0.1
+organ phases dispersed (SD),all,2.25,0.96
+one organ shifted,Muscle - Skeletal,2.5,0.135
+one organ shifted,Thyroid,2.5,0.26
+one organ shifted,Artery - Tibial,2.5,0.22
+one organ shifted,Heart - Atrial Appendage,2.5,0.53
+one organ shifted,Adipose - Visceral (Omentum),2.5,0.385
+one organ shifted,Esophagus - Mucosa,2.5,0.675
+one organ shifted,Nerve - Tibial,2.5,0.955
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),2.5,0.11
+one organ shifted,Skin - Sun Exposed (Lower leg),2.5,0.37
+one organ shifted,Adipose - Subcutaneous,2.5,0.9
+one organ shifted,Lung,2.5,0.045
+one organ shifted,Whole Blood,2.5,0.12
+organ phases dispersed (SD),all,2.5,0.98
+one organ shifted,Muscle - Skeletal,2.75,0.22
+one organ shifted,Thyroid,2.75,0.295
+one organ shifted,Artery - Tibial,2.75,0.305
+one organ shifted,Heart - Atrial Appendage,2.75,0.69
+one organ shifted,Adipose - Visceral (Omentum),2.75,0.485
+one organ shifted,Esophagus - Mucosa,2.75,0.765
+one organ shifted,Nerve - Tibial,2.75,0.985
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),2.75,0.12
+one organ shifted,Skin - Sun Exposed (Lower leg),2.75,0.455
+one organ shifted,Adipose - Subcutaneous,2.75,0.975
+one organ shifted,Lung,2.75,0.055
+one organ shifted,Whole Blood,2.75,0.13
+organ phases dispersed (SD),all,2.75,0.98
+one organ shifted,Muscle - Skeletal,3.0,0.265
+one organ shifted,Thyroid,3.0,0.385
+one organ shifted,Artery - Tibial,3.0,0.38
+one organ shifted,Heart - Atrial Appendage,3.0,0.8
+one organ shifted,Adipose - Visceral (Omentum),3.0,0.605
+one organ shifted,Esophagus - Mucosa,3.0,0.855
+one organ shifted,Nerve - Tibial,3.0,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),3.0,0.13
+one organ shifted,Skin - Sun Exposed (Lower leg),3.0,0.6
+one organ shifted,Adipose - Subcutaneous,3.0,1.0
+one organ shifted,Lung,3.0,0.065
+one organ shifted,Whole Blood,3.0,0.16
+organ phases dispersed (SD),all,3.0,1.0
+one organ shifted,Muscle - Skeletal,3.25,0.335
+one organ shifted,Thyroid,3.25,0.465
+one organ shifted,Artery - Tibial,3.25,0.505
+one organ shifted,Heart - Atrial Appendage,3.25,0.885
+one organ shifted,Adipose - Visceral (Omentum),3.25,0.745
+one organ shifted,Esophagus - Mucosa,3.25,0.905
+one organ shifted,Nerve - Tibial,3.25,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),3.25,0.14
+one organ shifted,Skin - Sun Exposed (Lower leg),3.25,0.735
+one organ shifted,Adipose - Subcutaneous,3.25,1.0
+one organ shifted,Lung,3.25,0.075
+one organ shifted,Whole Blood,3.25,0.205
+organ phases dispersed (SD),all,3.25,1.0
+one organ shifted,Muscle - Skeletal,3.5,0.425
+one organ shifted,Thyroid,3.5,0.55
+one organ shifted,Artery - Tibial,3.5,0.605
+one organ shifted,Heart - Atrial Appendage,3.5,0.935
+one organ shifted,Adipose - Visceral (Omentum),3.5,0.84
+one organ shifted,Esophagus - Mucosa,3.5,0.96
+one organ shifted,Nerve - Tibial,3.5,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),3.5,0.155
+one organ shifted,Skin - Sun Exposed (Lower leg),3.5,0.8
+one organ shifted,Adipose - Subcutaneous,3.5,1.0
+one organ shifted,Lung,3.5,0.085
+one organ shifted,Whole Blood,3.5,0.225
+organ phases dispersed (SD),all,3.5,1.0
+one organ shifted,Muscle - Skeletal,3.75,0.52
+one organ shifted,Thyroid,3.75,0.66
+one organ shifted,Artery - Tibial,3.75,0.705
+one organ shifted,Heart - Atrial Appendage,3.75,0.98
+one organ shifted,Adipose - Visceral (Omentum),3.75,0.915
+one organ shifted,Esophagus - Mucosa,3.75,0.98
+one organ shifted,Nerve - Tibial,3.75,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),3.75,0.185
+one organ shifted,Skin - Sun Exposed (Lower leg),3.75,0.845
+one organ shifted,Adipose - Subcutaneous,3.75,1.0
+one organ shifted,Lung,3.75,0.095
+one organ shifted,Whole Blood,3.75,0.245
+organ phases dispersed (SD),all,3.75,0.995
+one organ shifted,Muscle - Skeletal,4.0,0.635
+one organ shifted,Thyroid,4.0,0.755
+one organ shifted,Artery - Tibial,4.0,0.775
+one organ shifted,Heart - Atrial Appendage,4.0,0.99
+one organ shifted,Adipose - Visceral (Omentum),4.0,0.95
+one organ shifted,Esophagus - Mucosa,4.0,0.99
+one organ shifted,Nerve - Tibial,4.0,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),4.0,0.21
+one organ shifted,Skin - Sun Exposed (Lower leg),4.0,0.9
+one organ shifted,Adipose - Subcutaneous,4.0,1.0
+one organ shifted,Lung,4.0,0.095
+one organ shifted,Whole Blood,4.0,0.265
+organ phases dispersed (SD),all,4.0,1.0
+one organ shifted,Muscle - Skeletal,4.25,0.725
+one organ shifted,Thyroid,4.25,0.845
+one organ shifted,Artery - Tibial,4.25,0.87
+one organ shifted,Heart - Atrial Appendage,4.25,0.99
+one organ shifted,Adipose - Visceral (Omentum),4.25,0.98
+one organ shifted,Esophagus - Mucosa,4.25,1.0
+one organ shifted,Nerve - Tibial,4.25,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),4.25,0.26
+one organ shifted,Skin - Sun Exposed (Lower leg),4.25,0.94
+one organ shifted,Adipose - Subcutaneous,4.25,1.0
+one organ shifted,Lung,4.25,0.095
+one organ shifted,Whole Blood,4.25,0.285
+organ phases dispersed (SD),all,4.25,0.995
+one organ shifted,Muscle - Skeletal,4.5,0.8
+one organ shifted,Thyroid,4.5,0.89
+one organ shifted,Artery - Tibial,4.5,0.92
+one organ shifted,Heart - Atrial Appendage,4.5,1.0
+one organ shifted,Adipose - Visceral (Omentum),4.5,0.995
+one organ shifted,Esophagus - Mucosa,4.5,1.0
+one organ shifted,Nerve - Tibial,4.5,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),4.5,0.28
+one organ shifted,Skin - Sun Exposed (Lower leg),4.5,0.965
+one organ shifted,Adipose - Subcutaneous,4.5,1.0
+one organ shifted,Lung,4.5,0.115
+one organ shifted,Whole Blood,4.5,0.305
+organ phases dispersed (SD),all,4.5,1.0
+one organ shifted,Muscle - Skeletal,4.75,0.855
+one organ shifted,Thyroid,4.75,0.92
+one organ shifted,Artery - Tibial,4.75,0.96
+one organ shifted,Heart - Atrial Appendage,4.75,1.0
+one organ shifted,Adipose - Visceral (Omentum),4.75,1.0
+one organ shifted,Esophagus - Mucosa,4.75,1.0
+one organ shifted,Nerve - Tibial,4.75,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),4.75,0.34
+one organ shifted,Skin - Sun Exposed (Lower leg),4.75,0.98
+one organ shifted,Adipose - Subcutaneous,4.75,1.0
+one organ shifted,Lung,4.75,0.13
+one organ shifted,Whole Blood,4.75,0.335
+organ phases dispersed (SD),all,4.75,1.0
+one organ shifted,Muscle - Skeletal,5.0,0.92
+one organ shifted,Thyroid,5.0,0.95
+one organ shifted,Artery - Tibial,5.0,0.98
+one organ shifted,Heart - Atrial Appendage,5.0,1.0
+one organ shifted,Adipose - Visceral (Omentum),5.0,1.0
+one organ shifted,Esophagus - Mucosa,5.0,1.0
+one organ shifted,Nerve - Tibial,5.0,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),5.0,0.395
+one organ shifted,Skin - Sun Exposed (Lower leg),5.0,0.99
+one organ shifted,Adipose - Subcutaneous,5.0,1.0
+one organ shifted,Lung,5.0,0.13
+one organ shifted,Whole Blood,5.0,0.375
+organ phases dispersed (SD),all,5.0,1.0
+one organ shifted,Muscle - Skeletal,5.25,0.945
+one organ shifted,Thyroid,5.25,0.975
+one organ shifted,Artery - Tibial,5.25,0.99
+one organ shifted,Heart - Atrial Appendage,5.25,1.0
+one organ shifted,Adipose - Visceral (Omentum),5.25,1.0
+one organ shifted,Esophagus - Mucosa,5.25,1.0
+one organ shifted,Nerve - Tibial,5.25,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),5.25,0.46
+one organ shifted,Skin - Sun Exposed (Lower leg),5.25,0.995
+one organ shifted,Adipose - Subcutaneous,5.25,1.0
+one organ shifted,Lung,5.25,0.135
+one organ shifted,Whole Blood,5.25,0.385
+organ phases dispersed (SD),all,5.25,1.0
+one organ shifted,Muscle - Skeletal,5.5,0.975
+one organ shifted,Thyroid,5.5,0.99
+one organ shifted,Artery - Tibial,5.5,0.995
+one organ shifted,Heart - Atrial Appendage,5.5,1.0
+one organ shifted,Adipose - Visceral (Omentum),5.5,1.0
+one organ shifted,Esophagus - Mucosa,5.5,1.0
+one organ shifted,Nerve - Tibial,5.5,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),5.5,0.505
+one organ shifted,Skin - Sun Exposed (Lower leg),5.5,1.0
+one organ shifted,Adipose - Subcutaneous,5.5,1.0
+one organ shifted,Lung,5.5,0.15
+one organ shifted,Whole Blood,5.5,0.42
+organ phases dispersed (SD),all,5.5,1.0
+one organ shifted,Muscle - Skeletal,5.75,0.99
+one organ shifted,Thyroid,5.75,0.99
+one organ shifted,Artery - Tibial,5.75,1.0
+one organ shifted,Heart - Atrial Appendage,5.75,1.0
+one organ shifted,Adipose - Visceral (Omentum),5.75,1.0
+one organ shifted,Esophagus - Mucosa,5.75,1.0
+one organ shifted,Nerve - Tibial,5.75,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),5.75,0.6
+one organ shifted,Skin - Sun Exposed (Lower leg),5.75,1.0
+one organ shifted,Adipose - Subcutaneous,5.75,1.0
+one organ shifted,Lung,5.75,0.165
+one organ shifted,Whole Blood,5.75,0.455
+organ phases dispersed (SD),all,5.75,1.0
+one organ shifted,Muscle - Skeletal,6.0,0.995
+one organ shifted,Thyroid,6.0,0.995
+one organ shifted,Artery - Tibial,6.0,1.0
+one organ shifted,Heart - Atrial Appendage,6.0,1.0
+one organ shifted,Adipose - Visceral (Omentum),6.0,1.0
+one organ shifted,Esophagus - Mucosa,6.0,1.0
+one organ shifted,Nerve - Tibial,6.0,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),6.0,0.63
+one organ shifted,Skin - Sun Exposed (Lower leg),6.0,1.0
+one organ shifted,Adipose - Subcutaneous,6.0,1.0
+one organ shifted,Lung,6.0,0.17
+one organ shifted,Whole Blood,6.0,0.475
+organ phases dispersed (SD),all,6.0,1.0
+one organ shifted,Muscle - Skeletal,6.25,1.0
+one organ shifted,Thyroid,6.25,0.995
+one organ shifted,Artery - Tibial,6.25,1.0
+one organ shifted,Heart - Atrial Appendage,6.25,1.0
+one organ shifted,Adipose - Visceral (Omentum),6.25,1.0
+one organ shifted,Esophagus - Mucosa,6.25,1.0
+one organ shifted,Nerve - Tibial,6.25,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),6.25,0.675
+one organ shifted,Skin - Sun Exposed (Lower leg),6.25,1.0
+one organ shifted,Adipose - Subcutaneous,6.25,1.0
+one organ shifted,Lung,6.25,0.205
+one organ shifted,Whole Blood,6.25,0.485
+organ phases dispersed (SD),all,6.25,1.0
+one organ shifted,Muscle - Skeletal,6.5,1.0
+one organ shifted,Thyroid,6.5,0.995
+one organ shifted,Artery - Tibial,6.5,1.0
+one organ shifted,Heart - Atrial Appendage,6.5,1.0
+one organ shifted,Adipose - Visceral (Omentum),6.5,1.0
+one organ shifted,Esophagus - Mucosa,6.5,1.0
+one organ shifted,Nerve - Tibial,6.5,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),6.5,0.725
+one organ shifted,Skin - Sun Exposed (Lower leg),6.5,1.0
+one organ shifted,Adipose - Subcutaneous,6.5,1.0
+one organ shifted,Lung,6.5,0.225
+one organ shifted,Whole Blood,6.5,0.525
+organ phases dispersed (SD),all,6.5,1.0
+one organ shifted,Muscle - Skeletal,6.75,1.0
+one organ shifted,Thyroid,6.75,1.0
+one organ shifted,Artery - Tibial,6.75,1.0
+one organ shifted,Heart - Atrial Appendage,6.75,1.0
+one organ shifted,Adipose - Visceral (Omentum),6.75,1.0
+one organ shifted,Esophagus - Mucosa,6.75,1.0
+one organ shifted,Nerve - Tibial,6.75,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),6.75,0.765
+one organ shifted,Skin - Sun Exposed (Lower leg),6.75,1.0
+one organ shifted,Adipose - Subcutaneous,6.75,1.0
+one organ shifted,Lung,6.75,0.26
+one organ shifted,Whole Blood,6.75,0.55
+organ phases dispersed (SD),all,6.75,1.0
+one organ shifted,Muscle - Skeletal,7.0,1.0
+one organ shifted,Thyroid,7.0,1.0
+one organ shifted,Artery - Tibial,7.0,1.0
+one organ shifted,Heart - Atrial Appendage,7.0,1.0
+one organ shifted,Adipose - Visceral (Omentum),7.0,1.0
+one organ shifted,Esophagus - Mucosa,7.0,1.0
+one organ shifted,Nerve - Tibial,7.0,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),7.0,0.805
+one organ shifted,Skin - Sun Exposed (Lower leg),7.0,1.0
+one organ shifted,Adipose - Subcutaneous,7.0,1.0
+one organ shifted,Lung,7.0,0.295
+one organ shifted,Whole Blood,7.0,0.58
+organ phases dispersed (SD),all,7.0,1.0
+one organ shifted,Muscle - Skeletal,7.25,1.0
+one organ shifted,Thyroid,7.25,1.0
+one organ shifted,Artery - Tibial,7.25,1.0
+one organ shifted,Heart - Atrial Appendage,7.25,1.0
+one organ shifted,Adipose - Visceral (Omentum),7.25,1.0
+one organ shifted,Esophagus - Mucosa,7.25,1.0
+one organ shifted,Nerve - Tibial,7.25,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),7.25,0.845
+one organ shifted,Skin - Sun Exposed (Lower leg),7.25,1.0
+one organ shifted,Adipose - Subcutaneous,7.25,1.0
+one organ shifted,Lung,7.25,0.32
+one organ shifted,Whole Blood,7.25,0.58
+organ phases dispersed (SD),all,7.25,1.0
+one organ shifted,Muscle - Skeletal,7.5,1.0
+one organ shifted,Thyroid,7.5,1.0
+one organ shifted,Artery - Tibial,7.5,1.0
+one organ shifted,Heart - Atrial Appendage,7.5,1.0
+one organ shifted,Adipose - Visceral (Omentum),7.5,1.0
+one organ shifted,Esophagus - Mucosa,7.5,1.0
+one organ shifted,Nerve - Tibial,7.5,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),7.5,0.88
+one organ shifted,Skin - Sun Exposed (Lower leg),7.5,1.0
+one organ shifted,Adipose - Subcutaneous,7.5,1.0
+one organ shifted,Lung,7.5,0.38
+one organ shifted,Whole Blood,7.5,0.61
+organ phases dispersed (SD),all,7.5,1.0
+one organ shifted,Muscle - Skeletal,7.75,1.0
+one organ shifted,Thyroid,7.75,1.0
+one organ shifted,Artery - Tibial,7.75,1.0
+one organ shifted,Heart - Atrial Appendage,7.75,1.0
+one organ shifted,Adipose - Visceral (Omentum),7.75,1.0
+one organ shifted,Esophagus - Mucosa,7.75,1.0
+one organ shifted,Nerve - Tibial,7.75,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),7.75,0.93
+one organ shifted,Skin - Sun Exposed (Lower leg),7.75,1.0
+one organ shifted,Adipose - Subcutaneous,7.75,1.0
+one organ shifted,Lung,7.75,0.44
+one organ shifted,Whole Blood,7.75,0.62
+organ phases dispersed (SD),all,7.75,1.0
+one organ shifted,Muscle - Skeletal,8.0,1.0
+one organ shifted,Thyroid,8.0,1.0
+one organ shifted,Artery - Tibial,8.0,1.0
+one organ shifted,Heart - Atrial Appendage,8.0,1.0
+one organ shifted,Adipose - Visceral (Omentum),8.0,1.0
+one organ shifted,Esophagus - Mucosa,8.0,1.0
+one organ shifted,Nerve - Tibial,8.0,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),8.0,0.945
+one organ shifted,Skin - Sun Exposed (Lower leg),8.0,1.0
+one organ shifted,Adipose - Subcutaneous,8.0,1.0
+one organ shifted,Lung,8.0,0.52
+one organ shifted,Whole Blood,8.0,0.64
+organ phases dispersed (SD),all,8.0,1.0
+one organ shifted,Muscle - Skeletal,8.25,1.0
+one organ shifted,Thyroid,8.25,1.0
+one organ shifted,Artery - Tibial,8.25,1.0
+one organ shifted,Heart - Atrial Appendage,8.25,1.0
+one organ shifted,Adipose - Visceral (Omentum),8.25,1.0
+one organ shifted,Esophagus - Mucosa,8.25,1.0
+one organ shifted,Nerve - Tibial,8.25,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),8.25,0.975
+one organ shifted,Skin - Sun Exposed (Lower leg),8.25,1.0
+one organ shifted,Adipose - Subcutaneous,8.25,1.0
+one organ shifted,Lung,8.25,0.625
+one organ shifted,Whole Blood,8.25,0.655
+organ phases dispersed (SD),all,8.25,1.0
+one organ shifted,Muscle - Skeletal,8.5,1.0
+one organ shifted,Thyroid,8.5,1.0
+one organ shifted,Artery - Tibial,8.5,1.0
+one organ shifted,Heart - Atrial Appendage,8.5,1.0
+one organ shifted,Adipose - Visceral (Omentum),8.5,1.0
+one organ shifted,Esophagus - Mucosa,8.5,1.0
+one organ shifted,Nerve - Tibial,8.5,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),8.5,0.985
+one organ shifted,Skin - Sun Exposed (Lower leg),8.5,1.0
+one organ shifted,Adipose - Subcutaneous,8.5,1.0
+one organ shifted,Lung,8.5,0.765
+one organ shifted,Whole Blood,8.5,0.675
+organ phases dispersed (SD),all,8.5,1.0
+one organ shifted,Muscle - Skeletal,8.75,1.0
+one organ shifted,Thyroid,8.75,1.0
+one organ shifted,Artery - Tibial,8.75,1.0
+one organ shifted,Heart - Atrial Appendage,8.75,1.0
+one organ shifted,Adipose - Visceral (Omentum),8.75,1.0
+one organ shifted,Esophagus - Mucosa,8.75,1.0
+one organ shifted,Nerve - Tibial,8.75,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),8.75,0.99
+one organ shifted,Skin - Sun Exposed (Lower leg),8.75,1.0
+one organ shifted,Adipose - Subcutaneous,8.75,1.0
+one organ shifted,Lung,8.75,0.89
+one organ shifted,Whole Blood,8.75,0.705
+organ phases dispersed (SD),all,8.75,1.0
+one organ shifted,Muscle - Skeletal,9.0,1.0
+one organ shifted,Thyroid,9.0,1.0
+one organ shifted,Artery - Tibial,9.0,1.0
+one organ shifted,Heart - Atrial Appendage,9.0,1.0
+one organ shifted,Adipose - Visceral (Omentum),9.0,1.0
+one organ shifted,Esophagus - Mucosa,9.0,1.0
+one organ shifted,Nerve - Tibial,9.0,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),9.0,0.995
+one organ shifted,Skin - Sun Exposed (Lower leg),9.0,1.0
+one organ shifted,Adipose - Subcutaneous,9.0,1.0
+one organ shifted,Lung,9.0,0.975
+one organ shifted,Whole Blood,9.0,0.72
+organ phases dispersed (SD),all,9.0,1.0
+one organ shifted,Muscle - Skeletal,9.25,1.0
+one organ shifted,Thyroid,9.25,1.0
+one organ shifted,Artery - Tibial,9.25,1.0
+one organ shifted,Heart - Atrial Appendage,9.25,1.0
+one organ shifted,Adipose - Visceral (Omentum),9.25,1.0
+one organ shifted,Esophagus - Mucosa,9.25,1.0
+one organ shifted,Nerve - Tibial,9.25,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),9.25,1.0
+one organ shifted,Skin - Sun Exposed (Lower leg),9.25,1.0
+one organ shifted,Adipose - Subcutaneous,9.25,1.0
+one organ shifted,Lung,9.25,0.99
+one organ shifted,Whole Blood,9.25,0.755
+organ phases dispersed (SD),all,9.25,1.0
+one organ shifted,Muscle - Skeletal,9.5,1.0
+one organ shifted,Thyroid,9.5,1.0
+one organ shifted,Artery - Tibial,9.5,1.0
+one organ shifted,Heart - Atrial Appendage,9.5,1.0
+one organ shifted,Adipose - Visceral (Omentum),9.5,1.0
+one organ shifted,Esophagus - Mucosa,9.5,1.0
+one organ shifted,Nerve - Tibial,9.5,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),9.5,1.0
+one organ shifted,Skin - Sun Exposed (Lower leg),9.5,1.0
+one organ shifted,Adipose - Subcutaneous,9.5,1.0
+one organ shifted,Lung,9.5,1.0
+one organ shifted,Whole Blood,9.5,0.795
+organ phases dispersed (SD),all,9.5,1.0
+one organ shifted,Muscle - Skeletal,9.75,1.0
+one organ shifted,Thyroid,9.75,1.0
+one organ shifted,Artery - Tibial,9.75,1.0
+one organ shifted,Heart - Atrial Appendage,9.75,1.0
+one organ shifted,Adipose - Visceral (Omentum),9.75,1.0
+one organ shifted,Esophagus - Mucosa,9.75,1.0
+one organ shifted,Nerve - Tibial,9.75,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),9.75,1.0
+one organ shifted,Skin - Sun Exposed (Lower leg),9.75,1.0
+one organ shifted,Adipose - Subcutaneous,9.75,1.0
+one organ shifted,Lung,9.75,1.0
+one organ shifted,Whole Blood,9.75,0.83
+organ phases dispersed (SD),all,9.75,1.0
+one organ shifted,Muscle - Skeletal,10.0,1.0
+one organ shifted,Thyroid,10.0,1.0
+one organ shifted,Artery - Tibial,10.0,1.0
+one organ shifted,Heart - Atrial Appendage,10.0,1.0
+one organ shifted,Adipose - Visceral (Omentum),10.0,1.0
+one organ shifted,Esophagus - Mucosa,10.0,1.0
+one organ shifted,Nerve - Tibial,10.0,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),10.0,1.0
+one organ shifted,Skin - Sun Exposed (Lower leg),10.0,1.0
+one organ shifted,Adipose - Subcutaneous,10.0,1.0
+one organ shifted,Lung,10.0,1.0
+one organ shifted,Whole Blood,10.0,0.865
+organ phases dispersed (SD),all,10.0,1.0
+one organ shifted,Muscle - Skeletal,10.25,1.0
+one organ shifted,Thyroid,10.25,1.0
+one organ shifted,Artery - Tibial,10.25,1.0
+one organ shifted,Heart - Atrial Appendage,10.25,1.0
+one organ shifted,Adipose - Visceral (Omentum),10.25,1.0
+one organ shifted,Esophagus - Mucosa,10.25,1.0
+one organ shifted,Nerve - Tibial,10.25,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),10.25,1.0
+one organ shifted,Skin - Sun Exposed (Lower leg),10.25,1.0
+one organ shifted,Adipose - Subcutaneous,10.25,1.0
+one organ shifted,Lung,10.25,1.0
+one organ shifted,Whole Blood,10.25,0.905
+organ phases dispersed (SD),all,10.25,1.0
+one organ shifted,Muscle - Skeletal,10.5,1.0
+one organ shifted,Thyroid,10.5,1.0
+one organ shifted,Artery - Tibial,10.5,1.0
+one organ shifted,Heart - Atrial Appendage,10.5,1.0
+one organ shifted,Adipose - Visceral (Omentum),10.5,1.0
+one organ shifted,Esophagus - Mucosa,10.5,1.0
+one organ shifted,Nerve - Tibial,10.5,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),10.5,1.0
+one organ shifted,Skin - Sun Exposed (Lower leg),10.5,1.0
+one organ shifted,Adipose - Subcutaneous,10.5,1.0
+one organ shifted,Lung,10.5,1.0
+one organ shifted,Whole Blood,10.5,0.945
+organ phases dispersed (SD),all,10.5,1.0
+one organ shifted,Muscle - Skeletal,10.75,1.0
+one organ shifted,Thyroid,10.75,1.0
+one organ shifted,Artery - Tibial,10.75,1.0
+one organ shifted,Heart - Atrial Appendage,10.75,1.0
+one organ shifted,Adipose - Visceral (Omentum),10.75,1.0
+one organ shifted,Esophagus - Mucosa,10.75,1.0
+one organ shifted,Nerve - Tibial,10.75,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),10.75,1.0
+one organ shifted,Skin - Sun Exposed (Lower leg),10.75,1.0
+one organ shifted,Adipose - Subcutaneous,10.75,1.0
+one organ shifted,Lung,10.75,1.0
+one organ shifted,Whole Blood,10.75,0.975
+organ phases dispersed (SD),all,10.75,1.0
+one organ shifted,Muscle - Skeletal,11.0,1.0
+one organ shifted,Thyroid,11.0,1.0
+one organ shifted,Artery - Tibial,11.0,1.0
+one organ shifted,Heart - Atrial Appendage,11.0,1.0
+one organ shifted,Adipose - Visceral (Omentum),11.0,1.0
+one organ shifted,Esophagus - Mucosa,11.0,1.0
+one organ shifted,Nerve - Tibial,11.0,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),11.0,1.0
+one organ shifted,Skin - Sun Exposed (Lower leg),11.0,1.0
+one organ shifted,Adipose - Subcutaneous,11.0,1.0
+one organ shifted,Lung,11.0,1.0
+one organ shifted,Whole Blood,11.0,0.98
+organ phases dispersed (SD),all,11.0,1.0
+one organ shifted,Muscle - Skeletal,11.25,1.0
+one organ shifted,Thyroid,11.25,1.0
+one organ shifted,Artery - Tibial,11.25,1.0
+one organ shifted,Heart - Atrial Appendage,11.25,1.0
+one organ shifted,Adipose - Visceral (Omentum),11.25,1.0
+one organ shifted,Esophagus - Mucosa,11.25,1.0
+one organ shifted,Nerve - Tibial,11.25,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),11.25,1.0
+one organ shifted,Skin - Sun Exposed (Lower leg),11.25,1.0
+one organ shifted,Adipose - Subcutaneous,11.25,1.0
+one organ shifted,Lung,11.25,1.0
+one organ shifted,Whole Blood,11.25,0.985
+organ phases dispersed (SD),all,11.25,1.0
+one organ shifted,Muscle - Skeletal,11.5,1.0
+one organ shifted,Thyroid,11.5,1.0
+one organ shifted,Artery - Tibial,11.5,1.0
+one organ shifted,Heart - Atrial Appendage,11.5,1.0
+one organ shifted,Adipose - Visceral (Omentum),11.5,1.0
+one organ shifted,Esophagus - Mucosa,11.5,1.0
+one organ shifted,Nerve - Tibial,11.5,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),11.5,1.0
+one organ shifted,Skin - Sun Exposed (Lower leg),11.5,1.0
+one organ shifted,Adipose - Subcutaneous,11.5,1.0
+one organ shifted,Lung,11.5,1.0
+one organ shifted,Whole Blood,11.5,0.99
+organ phases dispersed (SD),all,11.5,1.0
+one organ shifted,Muscle - Skeletal,11.75,1.0
+one organ shifted,Thyroid,11.75,1.0
+one organ shifted,Artery - Tibial,11.75,1.0
+one organ shifted,Heart - Atrial Appendage,11.75,1.0
+one organ shifted,Adipose - Visceral (Omentum),11.75,1.0
+one organ shifted,Esophagus - Mucosa,11.75,1.0
+one organ shifted,Nerve - Tibial,11.75,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),11.75,1.0
+one organ shifted,Skin - Sun Exposed (Lower leg),11.75,1.0
+one organ shifted,Adipose - Subcutaneous,11.75,1.0
+one organ shifted,Lung,11.75,1.0
+one organ shifted,Whole Blood,11.75,0.99
+organ phases dispersed (SD),all,11.75,1.0
+one organ shifted,Muscle - Skeletal,12.0,1.0
+one organ shifted,Thyroid,12.0,1.0
+one organ shifted,Artery - Tibial,12.0,1.0
+one organ shifted,Heart - Atrial Appendage,12.0,1.0
+one organ shifted,Adipose - Visceral (Omentum),12.0,1.0
+one organ shifted,Esophagus - Mucosa,12.0,1.0
+one organ shifted,Nerve - Tibial,12.0,1.0
+one organ shifted,Skin - Not Sun Exposed (Suprapubic),12.0,1.0
+one organ shifted,Skin - Sun Exposed (Lower leg),12.0,1.0
+one organ shifted,Adipose - Subcutaneous,12.0,1.0
+one organ shifted,Lung,12.0,1.0
+one organ shifted,Whole Blood,12.0,0.99
+organ phases dispersed (SD),all,12.0,1.0
