@@ -7411,3 +7411,62 @@ GTEx fast deaths, 27 peripheral tissues, A294b fit. Validation passed (A104 rho 
   for the user's go.
 - Delivery QC (A328 note 1, `output/qc/`): design as registered; Cardoso-Moreira exon counts agree with the authors'
   matrix (median Spearman 0.979; the 7 non-matching libraries are those the authors excluded).
+
+## A328 part a (scored 2026-11-21; BLIND): the fetal adrenal covariation replicates blind in del Valle 2023, and the core loop covaries on its own (H328.1 PASS, H328.2 PASS)
+- 32 whole fetal adrenals, 7-11.5 wpc, stage and sex removed, 10,000 permutations within stage
+  (`A328_fetal_running_loop/output/score_a/{l1,verdicts}.csv`):
+
+  | test | C | p | matched q95 | responsive q95 | leave-one-gene-out | verdict |
+  |---|---|---|---|---|---|---|
+  | H328.1 dv:all (14 genes) | 0.592 | 0.0021 | 0.381 | 0.409 | 0.492 (NPAS2) to 0.786 | PASS |
+  | H328.2 dv:core (11 genes) | 0.803 | 0.0002 | 0.470 | 0.605 | 0.683 (ARNTL) to 0.841 | PASS |
+  | dv:-PER1-NR1D1 (descriptive) | 0.736 | 0.0011 | 0.492 | 0.485 | 0.553 to 0.813 | clock-specific |
+  | dv:early, 7-8 wpc (16) | 0.645 | 0.0016 | 0.422 | 0.448 | 0.572 to 0.754 | clock-specific |
+  | dv:late, 9-11.5 wpc (16) | 0.450 | 0.025 | 0.409 | 0.363 | 0.231 to 0.592 | clock-specific |
+- Both p are below 0.01, so the stand-in false-positive rate (0.085 for dv:all) does not qualify them.
+- **Reading (registered).** H328.1: the fetal adrenal covariation replicates blind in a tenth laboratory, before 12
+  weeks. H328.2: the core loop covaries without the signal-induced genes, clock-specific against both companions:
+  "an entrained loop is supported". This is against the stated expectation (H328.2 FAIL, from A266 on the
+  single-cell cortex, where the core loop was not significant) and against claim 3(b) of `PAPER_PLAN_2026-11-19.md`
+  ("it rests on the signal-induced genes"). In del Valle the core loop is more coherent than the 14 genes (0.803 vs
+  0.592). The cause of the difference with A266 is open (whole bulk adrenal at 32 fetuses vs single-cell cortex
+  pseudobulks of fewer fetuses per cohort; A266 power at the adult size).
+- Figure 3: "replicated" stands for the adrenal; the "driven state" wording of 3(b) / 3e needs the PI's review
+  (Q to `PI_QUESTIONS.md`). Part b (running-loop test) still waits for the 10x deliveries.
+
+## A337 (scored 2026-11-21; BLIND for the unspliced counts): in timed tissues the untimed lead statistic finds the right sign but recovers a lead in only 3 of 7 rhythmic compartments (H337.1 below the registered 2/3); where it does, it equals the timed lead (H337.2 3/3); the responsive condition of H328.3 is met in none (H337.3 0/7)
+- Baboon (12 per tissue) and Greenwell liver (AL + NR, 36), 14 genes, subtraction introns
+  (`A337_timed_lead/output/baboon_greenwell/{verdicts,summary,compartments}.csv`). All 7 primary compartments are
+  rhythmic (spliced state, p <= 0.02).
+
+  | compartment | gate (Holm) | delta_U h (90 %) | delta_T h (90 %) | H337.1 | H337.2 |
+  |---|---|---|---|---|---|
+  | baboon adrenal cortex | 0.001 | 0.34 (-0.23 to 1.02) | 0.61 (0.02 to 1.26) | fail (interval spans 0) | - |
+  | baboon heart | 0.001 | 1.09 (0.42 to 1.76) | 1.27 (0.55 to 1.96) | PASS | PASS |
+  | baboon kidney cortex | 0.060 | 3.55 (0.32 to 6.76) | 3.00 (0.81 to 4.94) | fail (gate) | - |
+  | baboon kidney medulla | 0.018 | -0.08 (-2.22 to 1.16) | 2.03 (0.12 to 3.63) | fail (interval spans 0) | - |
+  | baboon liver | 0.001 | 0.45 (-0.03 to 1.07) | 0.92 (0.21 to 1.95) | fail (interval spans 0) | - |
+  | baboon lung | 0.001 | 0.48 (0.08 to 0.98) | 0.95 (0.46 to 1.45) | PASS | PASS |
+  | Greenwell liver AL + NR | 0.001 | 2.35 (1.80 to 2.84) | 2.17 (1.63 to 2.67) | PASS | PASS |
+
+- The timed lead is positive in all 7 (median 1.27 h, range 0.61-3.00); the untimed point estimate in 6 of 7. The
+  failures are precision at n = 12 (three intervals span 0, one gate at Holm 0.060), not a wrong sign.
+- Direct introns: H337.1 4/7 (liver passes, interval 0.09-1.16); core loop: 3/7 on both definitions.
+- H337.3: the lead never exceeds the responsive companions' q95 on the 14 genes (0/7; q95 0.67-5.66 h); on the core
+  loop it does in lung and Greenwell (2/7).
+- Descriptive: adrenal medulla delta_U 0.63 h (0.22-0.99), timed 0.84; Greenwell arrhythmic arms keep a lead (AR 2.87 h,
+  DR 2.24 h; timed 3.50 and 2.34): the liver clock runs under arrhythmic feeding. Per-gene timed lag of intron over
+  exon (genes with spliced amplitude > 0.15, threshold set after the run): median 1.02 h, positive in 69 % of 96
+  gene x compartment pairs.
+- **Readings (registered), carried to A328 part b:**
+  - H337.1 fails in most rhythmic compartments, mostly with the gate passing and delta_U spanning 0: the statistic lacks
+    precision at n = 12; a fetal "no consistent lead" is reported as uninformative, not "driven". It recovers the lead
+    at n = 36 (Greenwell) and where the clock is strong (heart, lung).
+  - H337.2 PASS where defined: the expected lead for A328 is the median timed lead, 1.27 h (0.61-3.00); it replaces the
+    literature midpoint of +2 h in A328's fallback power.
+  - H337.3 0/3 among the H337.1 passes: the responsive-set condition of H328.3 misses running clocks; A328 reports
+    H328.3 with and without that condition (registered criterion primary; the second reading set by A337 before any
+    fetal lead was computed).
+- Process: the first verdict table counted the adrenal medulla (descriptive in the registration) among the primary
+  compartments; verdicts were re-derived from the stored statistics with the registered set (`score_a337.py --reread`),
+  no statistic recomputed.

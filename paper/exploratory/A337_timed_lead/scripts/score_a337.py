@@ -68,7 +68,7 @@ def load(name) -> list[dict]:
     sym = ann.fillna(stable).astype(str).map(canonical).to_numpy()
     if name == "baboon":
         s["comp"], s["t"], s["group"] = s.char_tissue, s.char_time.str[2:].astype(float), "all"
-        units = [(c, True, s.comp == c) for c in sorted(s.comp.unique())]
+        units = [(c, c != "Adrenal medulla", s.comp == c) for c in sorted(s.comp.unique())]  # medulla descriptive
     elif name == "greenwell":
         s = s[~s.run_accession.isin(GREENWELL_EXCLUDED)].copy()
         src = s.geo_source_name_ch1.str.lower()
@@ -247,10 +247,16 @@ def main():
     ap.add_argument("--sets", nargs="+", default=["baboon", "greenwell"])
     ap.add_argument("--jobs", type=int, default=8)
     ap.add_argument("--check", action="store_true")
+    ap.add_argument("--reread", action="store_true", help="verdicts from the saved compartments.csv only")
     a = ap.parse_args()
     global N_PERM, N_PERM_PSEUDO, N_BOOT, N_PSEUDO
     limit_threads(1)
     t0, sfx = time.time(), "_".join(a.sets) + ("_check" if a.check else "")
+    if a.reread:
+        t = pd.read_csv(OUT / sfx / "compartments.csv")
+        t["primary"] = ~t.compartment.isin(["baboon:Adrenal medulla", "greenwell:liver AR", "greenwell:liver DR"])
+        t.to_csv(OUT / sfx / "compartments.csv", index=False)
+        return report(t, OUT / sfx)
     units = [u for name in a.sets for u in load(name)]
     if a.check:  # no real statistic: unspliced := thinned spliced, times shuffled
         N_PERM, N_PERM_PSEUDO, N_BOOT, N_PSEUDO = 200, 50, 100, 10
@@ -274,10 +280,22 @@ def main():
     t.to_csv(out / "compartments.csv", index=False)
     pd.concat(comps).to_csv(out / "companions.csv", index=False)
     pd.concat([gene_lags(u) for u in units]).to_csv(out / "genes.csv", index=False)
+    report(t, out)
+    print(f"runtime {time.time() - t0:.0f}s")
+
+
+def report(t, out):
+    """verdicts.csv and summary.csv: per waveform and intron definition, the shares of H337.1-3 over the rhythmic
+    primary compartments and the expected lead (median and range of delta_T over them)."""
     v = verdicts(t)
     v.to_csv(out / "verdicts.csv", index=False)
+    r = v[v.H337_1.notna()]
+    s = r.groupby(["waveform", "unspliced"]).agg(
+        rhythmic=("compartment", "size"), h1=("H337_1", "sum"), h2=("H337_2", "sum"), h3=("H337_3", "sum"),
+        delta_T_median=("delta_T", "median"), delta_T_min=("delta_T", "min"), delta_T_max=("delta_T", "max")).reset_index()
+    s.to_csv(out / "summary.csv", index=False)
     pd.set_option("display.width", 250)
-    print(v.round(3).to_string(index=False), f"runtime {time.time() - t0:.0f}s", sep="\n")
+    print(v.round(3).to_string(index=False), s.round(3).to_string(index=False), sep="\n")
 
 
 if __name__ == "__main__":

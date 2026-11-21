@@ -41,6 +41,20 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
 
+### Q43 (2026-11-21): del Valle replicates blind and its core loop covaries on its own (A328 H328.1 and H328.2 PASS)
+**Question.** In 32 whole fetal adrenals (del Valle 2023, 7-11.5 wpc, never opened before), the 14-gene covariation
+replicates (C 0.592, p 0.0021) and the 11-gene core loop covaries on its own, clock-specific (C 0.803, p 0.0002, above
+matched 0.470 and responsive 0.605). The registered reading is "an entrained loop is supported", against A266 (core
+loop not significant in single-cell cortex pseudobulks) and claim 3(b) ("it rests on the signal-induced genes").
+- **Paused:** the wording of Figure 3(b) / 3e and claim 3(b). Nothing is rescored.
+- **Options:** (i) state both: the core loop covaries in whole bulk adrenals (blind, 32 fetuses) but not in the
+  single-cell cortex (A266), cause open; (ii) register a follow-up that reads the del Valle design on the A266 cohorts
+  (or A266's readout thinned to del Valle's n) to locate the difference; (iii) wait for A328 part b (the lead test).
+- **My recommendation:** (i) now, (iii) for the mechanism; (ii) only if part b is not decidable.
+- **Also from A337 (timed controls):** the untimed lead statistic has the right sign in timed tissues but lacks
+  precision at n = 12 (3 of 7 recovered; all 3 agree with the timed lead); the expected fetal lead is 1.27 h. A fetal
+  "no consistent lead" will be reported as uninformative.
+
 ### Q42 (2026-11-19): the two-axis checks of PAPER_PLAN section 6 are run; four decisions remain
 **Question.** The section 6 checks (prompt `prompts/two_axis_checks_2026-11-19.md`) and the user's follow-up on the cell
 mechanism (A334, A334b) are scored, closed at power, or registered and waiting for data. The claim set stays frozen.
