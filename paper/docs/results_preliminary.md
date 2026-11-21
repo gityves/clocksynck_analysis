@@ -6833,10 +6833,10 @@ post-mortem cases to up to 3 controls by the A164 rule).
   a335_gtex.py, a335_3_equivalence.py, a335_4_a270_crossfit.py}` (seconds to 9 min each).
 <!-- src: paper/exploratory/A335_review_batch/output/{a335_1a_nightshift,a335_1a_per_subject,a335_1b_tests,a335_1c_tests,a315_core,d2_core,balance,matched,equivalence,part3_equivalence,part4_tests,part4_hours,d3_tertiles,repro_14gene}.csv -->
 
-## A336 (scored 2026-11-20; NOT BLIND for the 14-gene values and the A335 / A329 core values; BLIND for every other core value, the gene-drop nulls, the GTEx person leverage on the core loop and the brain-death D_rho on the core loop; one scoring run per part and statistic; every 14-gene value reproduced before any new value was read): the paper's measurements survive without PER1, PER2 and NR1D1; person loudness in GTEx deaths holds on the core loop (it is a clock property in deaths); the brain-death order holds on the core loop; a detection limit now sits beside every "kept"
+## A336 (scored 2026-11-20; NOT BLIND for the 14-gene values and the A335 / A329 core values; BLIND for every other core value, the gene-drop nulls, the GTEx person leverage on the core loop and the brain-death D_rho on the core loop; one scoring run per part and statistic; every 14-gene value reproduced before any new value was read): the paper's measurements survive without PER1, PER2 and NR1D1; person loudness in GTEx deaths holds on the core loop (it is a clock property in deaths); the brain-death order holds on the core loop; a detection limit now sits beside every "kept"; tier 2: the Figure 2 cell-class contrasts hold on the core loop against expression-matched genes and, in half of the tests, against responsive genes (three PASS -> at the line, cortex not decidable), tumour immune pairing at the line, chronic-disease nulls (A233) hold
 
-**Part 1, two readouts** (`two_readouts.csv`; tier 1: 47 inventory statistics, 55 rows; tier 2 running, tier 3 not run,
-both listed in the table). Values: 14 genes -> core; trio contribution = 14 minus core (90 %); drop % = percentile of
+**Part 1, two readouts** (`two_readouts.csv`; tier 1: 47 inventory statistics, 55 rows; tier 2: all 31, below; tier 3 not run,
+listed in the table). Values: 14 genes -> core; trio contribution = 14 minus core (90 %); drop % = percentile of
 the trio drop among the 364 three-gene drops (or 100 + trio) / among the 77 drops of similar singular values (24 of
 101 where subsampled).
 
@@ -6887,6 +6887,58 @@ the trio drop among the 364 three-gene drops (or 100 + trio) / among the 77 drop
 - Gene-drop subsampling (100 + trio) by the registered cost rule: A138, A164, A271, A306, A312 (A312 planned at 364 in
   the inventory; the rule applied at 3-4 min per waveform).
 
+
+**Part 1, tier 2** (scored 2026-11-20, same rules; 14-gene verdict from each entry's stored test table, column
+`verdict_14` of `two_readouts.csv`; a core "fall" on a statistic that already fails on 14 genes is no change of verdict).
+A283 is the calibrated restatement of A272 H272.1-2 and A274 H274.1-3 (same clock values; the uncalibrated q95 readings
+agree and are in the table).
+
+| figure | statistic | 14-gene verdict | 14 genes -> core | trio contribution (90 %) | drop % all / similar | reading |
+|---|---|---|---|---|---|---|
+| 2a | A283 H283.1 T_SV, A272 atlases | FAIL | 0.499 -> 0.374 (matched p_cal 0.010 -> 0.181) | +0.126 (0.050 to 0.147) | 1.0 / 4.2 | falls (no change of verdict; the matched margin is lost, trio drop low) |
+| 2a | A283 H283.2 D, A272 atlases | PASS | 0.277 -> 0.137 (matched p_cal 0.041, responsive 0.280) | +0.139 (0.025 to 0.153) | 4.0 / 16.7 | at the line |
+| 2a | A283 H283.3 D, A274 atlases | PASS | 0.152 -> 0.131 (p_cal 0.040, 0.039) | +0.020 (-0.127 to 0.084) | 39 / 33 | holds |
+| 2a | A283 H283.4 T_SV, A274 atlases (matched decisive) | PASS | 0.478 -> 0.416 (matched p_cal 0.040) | +0.061 (-0.009 to 0.101) | 13 / 50 | holds |
+| 2a | A283 H283.5 T_CX cortex | PASS | 0.497 -> 0.365 (p_cal 0.632, 0.548) | +0.132 (0.091 to 0.152) | 18 / 67 | falls: not decidable (precision) |
+| 2a | A283 V283 calibration on the core projector | PASS | max rate 0.063 -> 0.060 | - | - | holds |
+| 2a | A280 H280.1 D replication / H280.2 cortex | PASS; FAIL | 0.413 -> 0.308 (p_cal 0.002, 0.010); 0.279 -> 0.225 | +0.105 (0.044 to 0.150); +0.054 | 5.0 / 21; 19 / 63 | holds; falls (no change) |
+| 2a | A282 pooled D living / post mortem (descriptive) | both p_cal < 0.05 | 0.225 -> 0.081 (p_cal 0.221, 0.075); 0.261 -> 0.208 (0.006, 0.017) | +0.144 (-0.009 to 0.166); +0.053 | 3.0 / 12.5; 39 / 50 | living: falls, trio drop low (descriptive); post mortem: holds |
+| 2a | A282 pooled T_SV living (descriptive) | matched only | 0.450 -> 0.362 (matched p_cal 0.036) | +0.088 (0.014 to 0.132) | 2.0 / 8.3 | at the line (unchanged) |
+| 2a | A288 H288.1 T_MAC / H288.2 D_MAC | FAIL; PASS | 0.409 -> 0.331; 0.148 -> 0.098 (matched p_cal 0.011, responsive 0.143) | +0.077 (0.036 to 0.110); +0.050 (0.004 to 0.107) | 4.0 / 17; 5.0 / 21 | falls (no change); at the line |
+| 2a | A288 H288.3 alveolar vs monocyte-derived | FAIL | 0.165 -> 0.048 | +0.117 (-0.017 to 0.206) | 5.0 / 21 | falls (no change) |
+| 2b | A326 H326.1 lymphocyte bound r* (A281 / A287 / A321) | FAIL (underpowered at r 0.25) | r* 0.7 / 1 / 0.7 -> 0.7 / 1 / 0.7 | - | - | holds (same bound) |
+| 2c | A279 Bmal1 knockout (descriptive) | conditions met | max timed coupling 0.200 -> 0.204; SV pairs \|r\| 0.68-0.80 | - | 97 / 88 | at the line (rounding rule) |
+| 4a | A273 V273.1 / V273.2 mouse colon offsets | PASS | median error 0.31 -> 0.41 h; slope 1.01 -> 0.97 | - | 15; 22 | holds; holds |
+| 4a | A279 V279.1 / H279.1 mouse aorta | PASS; FAIL | 0.30 -> 0.18 h; -0.055 -> -0.071 | - | 89; 43 | holds; falls (no change) |
+| 4a | A293 H293.3 class offset, equivalence +-1 h | PASS | 0.46 h (0.09-0.90) -> 0.29 h (-0.19 to 0.80), 4 readable atlases | +0.17 | 14 / 33 | holds |
+| 6b | A227 H227.1 myeloid / H227.2 T-NK pairing with normal | PASS; PASS | 0.581 -> 0.473; 0.539 -> 0.502 (pairing p 0.002, 0.0001; below matched q95 0.543, 0.518) | +0.108 (0.001 to 0.137); +0.036 | 6.9 / 29; 29 / 54 | at the line; at the line |
+| 6b | A271 H271.1 immune pairing beyond responsive genes | FAIL | myeloid 0.473, T-NK 0.502, CD8-neg T 0.496 (all below responsive q95) | - | 6.9; 29; 34 | falls (no change) |
+| 6a | A233 H233.c.1 body-wide d*, five conditions (equivalence +-0.15) | PASS x5 | HTN -0.001 -> +0.024 (90 % -0.000 to 0.048); IHD 0.009 -> 0.005; COPD -0.017 -> -0.026; depression 0.010 -> 0.008; smoking 0.008 -> 0.008; core MDE 0.029-0.059 | HTN -0.025 (-0.041 to -0.002); others within +-0.06 | HTN 7.9 / 29; others 18-44 | holds x5 |
+| 6a | A233 H233.c.2-3 reordering Q, module d* and module offset, five conditions | null kept x15 | core Q p 0.13-0.80 (Holm >= 0.65); module p >= 0.08 (Holm >= 0.40); module offset MDE 0.37-3.68 h | - | - | holds x15 (nulls kept) |
+
+- **Verdicts that change on the core loop:**
+  - PASS -> at the line: A283 H283.2 (stromal minus lymphocyte, A272 atlases), A288 H288.2 (macrophage minus
+    lymphocyte), A227 H227.1-2 (tumour immune cells pair with normal, no longer beyond matched genes). Each keeps the
+    matched (A283, A288) or pairing (A227) condition and loses the other.
+  - PASS -> falls, not decidable: A283 H283.5 (cortex; cortex was already unresolved, A280 H280.2).
+  - Descriptive: A282 living D loses both margins, with the trio drop at the 3rd percentile.
+- **Hold:** A283 H283.3-4 and A280 H280.1 (the stromal-lymphocyte contrast and stromal sharing in the A274 / A280
+  atlases), A282 post-mortem D, the mouse offsets (A273, A279 V279.1), the human class offset (A293 H293.3), the
+  lymphocyte bound (A326).
+- **The trio carries a disproportionate share of cross-class sharing in single-cell atlases** (descriptive): its drop
+  lies at the 1st-7th percentile of the gene-drop null for A283 H283.1-2, A280 H280.1, A282 living D and T_SV, A288
+  H288.1-3 and A227 H227.1, as for A275 SV_X (1.1, tier 1). Among drops of similar singular values (24) the
+  percentiles are 4-29: lost precision explains part of it.
+- **Process notes:**
+  - `p1_a227.py` ran twice to completion (08:37 and 09:04, same seeds); the first run's log was overwritten. Values are
+    those of the second run.
+  - A279 Bmal1 KO: the "at the line" status was set by the subagent after the run under the registration's rounding
+    clause (0.2043 against the stated 0.20); numbers unchanged.
+  - A326: the registered H326.1 (power >= 0.8 at r 0.25) fails on both readouts; "holds" means the same bound.
+  - A288 and A233 were run by the lead agent after the subagents stopped (usage limit); A233's check mode needed
+    `--check-donors` (60 donors gave no estimable cohort); its first scoring launch was stopped during the core nulls
+    (no value computed) and relaunched with 12 workers (per-replicate seeds: identical draws).
+
 **Part 2, person loudness in GTEx deaths on the core loop** (`person_gtex.csv`; 244 fast deaths, 27 tissues, 20 halvings).
 - 14 genes (not blind; A331 power cv2 0.1239 reproduced): leverage 0.765.
 - Core: leverage 0.714, persons-permuted p 0.001 (null q95 0.030), above the core matched q95 0.621 (98.5th percentile)
@@ -6932,6 +6984,13 @@ the trio drop among the 364 three-gene drops (or 100 + trio) / among the 77 drop
   gradient (A312).
 - Five chronic-disease loudness / departure nulls (A306) lose their equivalence on the core loop (wider intervals),
   without any detection.
+- Tier 2: the cell-class structure of Figure 2 holds on the core loop against expression-matched genes (A283 H283.2-4,
+  A280 H280.1, A288 H288.2). Against responsive genes the stromal-lymphocyte contrast holds in three tests (A283
+  H283.3, A280 H280.1, A282 post mortem) and is lost in three (A283 H283.2 and A288 H288.2, at the line; A282 living,
+  descriptive). Cortex (A283 H283.5) is not decidable. The trio carries a disproportionate
+  share of cross-class sharing (drops at the 1st-7th percentile; descriptive). Tumour immune cells still pair with
+  their normal tissue but not beyond matched genes (A227 at the line). Class time (A273, A279, A293 H293.3), the
+  lymphocyte bound (A326) and the five A233 chronic-disease nulls hold.
 - Code: `exploratory/A336_two_readouts/scripts/` (a336_braindeath.py, a336_person_gtex.py, a336_detectability.py,
   p1_*.py, a336_common.py, merge_part1.py).
 <!-- src: paper/exploratory/A336_two_readouts/output/{inventory,two_readouts,person_gtex,person_gtex_strata,person_gtex_companions,detectability,detectability_order_sim,braindeath_core,braindeath_core_power,braindeath_drops}.csv, output/part1/*.csv -->
@@ -7342,3 +7401,13 @@ GTEx fast deaths, 27 peripheral tissues, A294b fit. Validation passed (A104 rho 
   Manella WAT (0.11 vs 0.32; different depots and protocols).
 - Code: `exploratory/A322_conflicting_drives/scripts/score_a324.py`.
 <!-- src: paper/exploratory/A322_conflicting_drives/output/xin/{ratios,fit,tests}.csv -->
+
+## A328 part a, power stage (2026-11-21; no del Valle clock statistic computed): both del Valle readouts are estimable
+- Adult stand-ins at the del Valle design (32 fetal adrenals, stage and sex, permutations within stage;
+  `A328_fetal_running_loop/output/power_a/passrates.csv`): pass rate at the full adult clock 1.000 for dv:all and
+  dv:core; at 0.75 1.000 for both; at 0.5 0.615 (dv:all) and 0.850 (dv:core). False-positive rate 0.085 (dv:all, CI
+  0.050-0.133) and 0.070 (dv:core).
+- A FAIL would exclude an adult-size covariation down to 0.75 (14 genes) and 0.5 (core loop). Scoring (one run) waits
+  for the user's go.
+- Delivery QC (A328 note 1, `output/qc/`): design as registered; Cardoso-Moreira exon counts agree with the authors'
+  matrix (median Spearman 0.979; the 7 non-matching libraries are those the authors excluded).

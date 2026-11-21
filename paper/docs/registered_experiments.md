@@ -9034,6 +9034,39 @@ consistent lead; a steady difference in signal level between fetuses moves both 
   before this registration is committed. **Code (to write after delivery, before scoring):**
   `paper/exploratory/A328_fetal_running_loop/scripts/{prep_a328,score_a328}.py`.
 
+### A328 note 1 (2026-11-21, user's go; before any clock statistic of the deliveries)
+- *Deliveries and QC.* Del Valle, Cardoso-Moreira prenatal, Greenwell 2019 and Mure 2018 (baboon) were mapped on Jed
+  (`prompts/server_mapping_jed_2026-11-20.md`) and copied to `$SCCC_DATA/sccc_mapping/` after sha256 checks. A QC that
+  reads no clock-gene value (`scripts/qc_deliveries.py`, `output/qc/`): del Valle has the design stated above (32
+  adrenals, 4 female and 4 male at each of 7, 8, 9 and 11.5 wpc, one run per sample; individuals are not given in the
+  SDRF, each adrenal sample is taken as one fetus); median 17.0 M read pairs, 86 % uniquely mapped, direct intron
+  fraction 0.046. Cardoso-Moreira: the delivered exon counts agree with the processed matrix (median Spearman 0.979 over
+  14,166 genes); all 97 libraries the authors used match their organ and stage; the 7 that do not are the libraries the
+  authors excluded (`used = No`).
+- *Order change (part a).* The power stage of part a runs now, before the 10x deliveries: part a uses del Valle only,
+  and its power stage reads only the cohort median count of each clock gene and each library size. Part b keeps the
+  stop rule.
+- *Library rule (part b).* The 7 Cardoso-Moreira prenatal libraries excluded by the authors (`used = No` in
+  `natexp/cardoso_moreira2019/library_table.csv`) are left out, as in A269 / A307, which used the authors' matrix.
+- *Intron definition (part b).* `counts_intron` (gene body minus exon, clipped at 0) as registered; the direct intron
+  counts (`counts_intron_direct`: reads entirely inside intron-only regions, exons of every gene removed and widened by
+  10 bp; delivered with the stage-2 change of 2026-11-21) are reported beside it as a sensitivity readout, never in
+  place of it.
+- *Depth for part a.* Library size = the sum of the exon counts of all genes of the run.
+
+### A328 power note, part a (2026-11-21; `scripts/power_a328a.py`, `output/power_a/passrates.csv`; no del Valle clock statistic computed)
+32 GTEx adrenal glands (pool 93, deaths 08-18 h) thinned to the del Valle clock-gene depth (no gene capped), stage
+indicator and sex, permutations within stage, 200 draws x 500 permutations. Pass rate (95 % CI):
+
+| test | a1 | a0.75 | a0.5 | shuffled |
+|---|---|---|---|---|
+| dv:all (H328.1) | 1.000 (0.982-1) | 1.000 (0.982-1) | 0.615 (0.544-0.683) | 0.085 (0.050-0.133) |
+| dv:core (H328.2) | 1.000 (0.982-1) | 1.000 (0.982-1) | 0.850 (0.793-0.896) | 0.070 (0.039-0.115) |
+
+Both readouts are estimable and are scored. A FAIL bounds the size: an adult-size covariation excluded down to 0.75
+(dv:all) and 0.5 (dv:core). The shuffled rate lies above 0.05 for dv:all (CI from 0.050): a PASS with p between 0.01
+and 0.05 is reported with this rate beside it.
+
 ## A329 (2026-11-19, check N2 of `PAPER_PLAN_2026-11-19.md` section 6.2 and `MODEL_signal_clock_2026-11-19.md` section 6, prompt `prompts/two_axis_checks_2026-11-19.md` Task 5; one scoring run; **BLIND for the core loop**: the core-loop departure, coupling and excess of the A294b tissues have never been computed (grep of RP, A294b, A296 and A303 scripts, 2026-11-19: A296 / A303 used the core loop for the adrenal offset only, A321 for lymphocytes); **NOT BLIND** for the 14-gene values (A294b H294b.1 median log ratio 0.969, A291 couplings, A311, A313)): is the personal departure the signal layer read through PER1, PER2 and NR1D1? **GTEx fast deaths, 27 peripheral tissues (A104 / A294b rows)**
 
 **Why.** The departure (2 psi) is clock-specific, about 2.6 times that of matched genes and nearly constant across organs
@@ -9545,3 +9578,81 @@ used in any computation; observed values are only copied beside the limits; no v
 Subsampled drops (100) give a coarser percentile. Tier 2 may not be reached in this session; it stays registered. Part 2
 inherits A331's halvings. Part 3 MDEs for order statistics rest on a simulation design fixed here.
 **Stop rule:** one scoring run per part (per statistic in part 1); no rule relaxed after scoring.
+
+## A337 (2026-11-21, approved by the user, on the user's go after the Jed deliveries; fills the "timed positive control: missing" of A328 part b; staged: one scoring run on baboon and Greenwell, then one on Perrin when delivered; **BLIND** for every unspliced (intron) count, every z_u and every lead: no intron count of any of these sets has been opened (the QC of A328 note 1 read exon counts genome-wide and the intron fractions of `qc.tsv` only); **NOT BLIND** for the spliced clock of baboon (A42, A263: coupling across organs, from the authors' FPKM) and Greenwell (A112: lock validation, from the authors' counts); Perrin not yet delivered): does the A328 lead statistic, applied blind to time, recover a pre-mRNA lead in tissues whose clock is known to run, and how often would the full H328.3 criterion pass there? **Mure 2018 baboon (7 tissues x 12 ZT, one animal per time), Greenwell 2019 mouse liver (4 feeding regimens x 6 ZT x 3), Perrin 2018 human muscle (10 people x 6 times)**
+
+**Why.** A328 part b reads a running loop from a consistent lead of the unspliced clock state over the spliced one
+across untimed individuals, but no dataset on disk tests that statistic where the answer is known. Timed tissues with a
+running clock give that answer twice: the statistic computed as if untimed (A328's), and the timed lead read from the
+sampling times. They also measure the sensitivity of the H328.3 criterion, whose responsive-set condition may be hard
+to meet even in a running clock, since the responsive genes are themselves rhythmic there.
+
+**Data and units.** Delivered bulk counts (`$SCCC_DATA/sccc_mapping/`): `counts_exon` (spliced) and `counts_intron`
+(unspliced; gene body minus exon, as A328); `counts_intron_direct` as the sensitivity readout (A328 note 1).
+- *Baboon:* 7 compartments (adrenal cortex, adrenal medulla, kidney cortex, kidney medulla, liver, lung, heart), 12
+  samples each (ZT0-22, every 2 h). Clock genes by Ensembl id with the Ensembl 90 symbols of the authors' table (RORA has
+  no symbol in the delivered annotation; ENSPANG00000017172).
+- *Greenwell:* liver, 72 mice. Running-clock arms: ad libitum (AL) and night-restricted (NR), 36 mice, regimen
+  indicator as covariate. Arrhythmic arms (AR, and the partly adapted DR) descriptive. The two runs whose exon counts
+  match each other's processed column (SRA AR2 ZT22 and DR3 ZT22, `output/qc/agreement.csv`) are excluded (regimen
+  uncertain; same ZT).
+- *Perrin* (when delivered): muscle, 10 people x 6 times, person as covariate (indicator), the first two lane runs of
+  each library summed.
+- Mouse and baboon symbols matched to the human panel by `clocksync.genes.canonical` (BMAL1, GM129 aliases).
+
+**Statistics (all per compartment).**
+- *Untimed (A328's statistic, unchanged):* z_s,i and z_u,i from the GTEx-waveform spliced projector
+  (`clocksync.paired.projector` / `states`), log fractions residualised gene by gene on the covariates above (none for
+  baboon), c = sum_i z_u,i conj(z_s,i) after centring; gate kappa against 10,000 permutations of the unspliced rows
+  (within regimen / person); lead delta_U = arg c (h, positive = unspliced ahead) with a 90 % interval from 2,000
+  bootstrap resamples of samples (within regimen / person); 200 matched and 200 responsive companions as in A328.
+- *Timed:* beta_s = sum_i z_s,i exp(-i 2 pi t_i / 24) and beta_u likewise (t_i the ZT or clock time; centred states);
+  delta_T = arg(beta_u conj(beta_s)) in h, 90 % bootstrap interval as above. Rhythm check: |beta_s| against 10,000
+  permutations of t_i (within regimen / person); a compartment whose spliced state is not rhythmic (p >= 0.05) is not a
+  positive control and is reported apart.
+- Genes: the 14 clock genes; the core-loop variant uses the 11 core genes (A266).
+
+**Hypotheses** (over the compartments whose spliced state is rhythmic; Holm within each hypothesis).
+- **H337.1 (recovery):** in each rhythmic compartment, the untimed gate passes and the 90 % interval of delta_U lies
+  within (0, 6 h). Read per compartment and as the share of rhythmic compartments that pass.
+- **H337.2 (agreement):** delta_U - delta_T within +-1.5 h (90 % bootstrap interval of the difference, paired
+  resamples), in each rhythmic compartment where H337.1 passes.
+- **H337.3 (sensitivity of H328.3, descriptive with a stated reading):** the share of rhythmic compartments where the full
+  H328.3 criterion passes (H337.1 and delta_U above the q95 of the responsive companions' delta_U).
+
+**Readings (fixed now).**
+- H337.1 passes in most rhythmic compartments (>= 2/3): the A328 statistic recovers a running clock from untimed
+  samples at n 12-36; A328 part b's lead readout is read as registered.
+- H337.1 fails in most rhythmic compartments with the gate passing but delta_U spanning 0: the statistic lacks precision
+  at these n and depths; a fetal "no consistent lead" (A328) is then reported as uninformative rather than "driven".
+- H337.1 gate fails in rhythmic compartments: the intron counts of polyA bulk do not carry the clock at this depth;
+  A328 part b is reported as not decidable on bulk.
+- H337.2 PASS: the untimed lead equals the timed lead; the pooled delta_T of the rhythmic compartments (median and
+  range) is the expected lead for A328 (it replaces the literature midpoint of +2 h in A328's fallback power).
+- H337.3 below 1/2 while H337.1 passes: the responsive-set condition of H328.3 misses running clocks; A328 then reports
+  H328.3 with and without that condition (the registered criterion stays primary, the second reading is labelled as
+  set by A337, before any fetal lead was computed).
+- Greenwell arrhythmic arms and the adrenal medulla (descriptive): the lead where feeding or the gland's own rhythm is
+  disturbed.
+- *Expected (stated, not a criterion):* delta_T between +0.5 and +4 h (nascent / pre-mRNA ahead of mRNA for clock genes
+  in mouse liver; Menet 2012, Koike 2012; from memory, to be carded before scoring); Greenwell's intron depth (direct
+  fraction 0.013) may leave its gate unpowered.
+
+**Descriptive.** Per-gene timed lag of intron over exon (cosine fit peak times) for the clock genes with enough intron
+counts; direct-intron sensitivity of every statistic; leave-one-gene-out range of delta_U.
+
+**Limits.** (1) n = 12 per baboon compartment, one animal per time point (animal and time confounded). (2) Mouse and
+baboon read on the human waveform (phase relations conserved; A273, A279 used it on mouse). (3) A timed lead is an
+average over genes with different mRNA half-lives. (4) Spliced clocks of baboon and Greenwell were seen before.
+
+**Stop rule.** One scoring run on baboon and Greenwell; one on Perrin after delivery, same code. No intron count is
+opened before this registration is committed. **Code:**
+`paper/exploratory/A337_timed_lead/scripts/score_a337.py`.
+
+### A337 code check (2026-11-21, before scoring; `score_a337.py --check`, `output/baboon_greenwell_check/`; no real unspliced count used)
+Unspliced replaced by spliced counts thinned to 10 % and times shuffled (true lead 0, no rhythm): delta_U from -0.61 to
++0.66 h over 40 rows (10 compartments, Greenwell AR and DR included, x 2 waveforms x 2 intron definitions); the 90 %
+interval excludes 0 in 10 rows, all on the negative side (upper bounds -0.35 to -0.01 h). At low unspliced depth the
+statistic carries a small negative bias (the 0.5 pseudocount compresses low-count genes unevenly), which makes H337.1
+conservative for a positive lead; the same holds for A328 H328.3. Rhythm check under shuffled times: p < 0.05 in 4
+of 40 rows.
