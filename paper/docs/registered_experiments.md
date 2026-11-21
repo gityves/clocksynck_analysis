@@ -9656,3 +9656,71 @@ interval excludes 0 in 10 rows, all on the negative side (upper bounds -0.35 to 
 statistic carries a small negative bias (the 0.5 pseudocount compresses low-count genes unevenly), which makes H337.1
 conservative for a positive lead; the same holds for A328 H328.3. Rhythm check under shuffled times: p < 0.05 in 4
 of 40 rows.
+
+## A338 (2026-11-21, approved by the user, on the user's question "does the fetal oscillation match a 24 h period, or follow hormonal changes that are faster and less circadian?"; extends A328 part b, scored in the same run; staged: power when the priority-1 deliveries and the postnatal Cardoso-Moreira reference are on disk, then one scoring run; **BLIND** for every fetal and postnatal unspliced count, angle and exon/intron ratio (none opened); **NOT BLIND**: A337 (timed leads at 24 h: median 1.27 h, range 0.61-3.00; untimed statistic underpowered at n = 12), A328 part a (del Valle spliced covariation), the fetal spliced covariations of A242-A307): on what timescale does the input to the fetal clock state vary? **Compartments of A328 part b; reference: Cardoso-Moreira postnatal and A337**
+
+**Why.** mRNA follows its pre-mRNA through a first-order filter, dm/dt = k p - m / tau (Wang 2018, PNAS; tau the mean
+mRNA lifetime). For an input varying at angular frequency omega, the spliced state lags the unspliced one by the
+angle phi = arctan(omega tau) in the clock plane, and its modulation is damped by cos phi. A328 reads phi as hours
+assuming 24 h; read the other way, phi with tau known gives the input's timescale, T_eff = 2 pi tau / tan phi.
+With clock-mRNA lifetimes of 1-4 h: a steady difference between fetuses (or changes over days) gives phi near 0, a
+daily input about 10-45 deg, ultradian hormone pulses (glucocorticoid, about hourly) 60-85 deg with strong damping. The
+reading is the input's timescale, not its source: a fetal loop and a maternal circadian hormone give the same phi.
+
+**Statistic (per compartment, from the A328 part b quantities, same run, same bootstrap resamples).**
+- phi_f = arg c (radians) of A328 (c = sum z_u conj(z_s), spliced projector, residualised as A328), 90 % interval from
+  the A328 bootstrap.
+- *Calibration at 24 h, same species, protocol and pipeline:* phi_ref = arg c of the Cardoso-Moreira postnatal
+  libraries of the same organ (A328's running-clock reference: untimed deaths, taken to span the day), with its own
+  bootstrap; used only if its A328 gate passes. Pooled over the postnatal organs whose gate passes for the adrenal
+  compartments, which have no postnatal counterpart. Fallback if no postnatal gate passes: the A337 timed leads
+  (phi_ref from the median delta_T, 1.27 h, with the A337 range 0.61-3.00 h as a systematic band).
+- *Lifetime correction (bulk compartments with a same-protocol postnatal counterpart: Cardoso-Moreira prenatal liver,
+  heart, kidney):* at steady state exon / intron = k tau, so per clock gene r_g = (E/I)_prenatal / (E/I)_postnatal
+  (sums over individuals; genes with mean intron count >= 10 in both), r = the median over the waveform genes, 90 %
+  interval from a bootstrap of individuals; processing rates k taken equal. del Valle and the 10x compartments get no
+  correction (different protocols; intronic 10x reads come from internal priming) and carry it as a stated limit.
+- *T_eff = 24 h x r x tan(phi_ref) / tan(phi_f)*, interval from the joint bootstrap of phi_f, phi_ref and r (paired
+  where they share no individuals: independent resamples), percentile 90 %.
+
+**Hypotheses (compartments that pass the A328 gate and the power stage; Holm on the A328 gate p over them).**
+- **H338.1 (circadian-range input):** phi_f interval above 0 and the T_eff interval above 6 h.
+- Readings (fixed now):
+  - H338.1 PASS and the T_eff interval includes 24 h and lies below 96 h: "the fetal clock state varies on a daily
+    timescale" (Figure 3e wording; the source, fetal loop or maternal rhythm, is not resolved).
+  - H338.1 PASS, T_eff interval entirely above 96 h: "a slow input" (changes over days), not daily.
+  - T_eff interval entirely below 6 h: "a fast, pulsatile input" (ultradian hormone pulses), not circadian.
+  - phi_f interval includes 0, with power (stage below): "no daily-scale input of the reference size"; without power:
+    uninformative (A337).
+  - Anything else: "timescale not resolved at this design".
+- *Expected (stated, not a criterion):* adrenal cortex daily (A242 / A328 part a); heart and kidney gate failure.
+
+**Descriptive.**
+- Damping: rho = sqrt((var_s - noise_s) / (var_u - noise_u)) of the clock-plane states (Poisson noise from
+  `paired.states`) against cos phi_f; strong damping (rho well below cos phi_f) flags fast input whatever phi_f.
+- Responsive comparator: phi and T_eff of the responsive companions whose own gate passes (median and range), same
+  fetuses (their lifetimes differ; a much larger responsive angle with a daily clock angle reads as "daily clock state
+  plus faster hormonal noise").
+- Per-gene unspliced-over-spliced angles against literature lifetimes where known (Wang 2018: Clock, Per1, Per3,
+  Nr1d1, Nr1d2, Dbp 1-2 h).
+- Covariate sensitivity, 10x cohorts: per-fetus share of cycling cells (CoPhaser cell-cycle phase, run on the class
+  cells per the CoPhaser rules: median UMI > 1,500, automatic ELBO, several seeds) added to the A328 residualisation;
+  phi_f and T_eff reported with and without.
+
+**Power (stage `power`, before any fetal or postnatal unspliced value is printed).** Stand-ins: the A337 Greenwell AL +
+NR livers and baboon compartments (true 24 h), subsampled to each fetal compartment's n and thinned to its spliced and
+unspliced clock-gene depths (cohort medians); 200 draws. Alternatives built from the same stand-ins: unspliced state =
+spliced state turned by phi_alt and scaled by 1 / cos phi_alt (the input the mRNA would follow), expressed through the
+waveform design and Poisson-thinned to the fetal intron depth, for a steady input (phi 0) and a 3 h pulsatile input
+(phi = arctan(2 pi tau / 3 h), tau from the reference). Reported: rate of the "daily" reading under 24 h (sensitivity),
+under steady and 3 h inputs (false "daily"). A compartment with sensitivity < 0.8 or false rate > 0.1 is "not decidable
+at this design" and not scored.
+
+**Limits.** (1) Fetal and adult mRNA lifetimes may differ (likely within about 2-fold): corrected only where a
+same-protocol postnatal counterpart exists; elsewhere T_eff carries that factor. (2) The 0.5-pseudocount bias at low
+intron depth (A337 code check) shrinks phi and inflates T_eff, against the fast reading and toward "slow". (3) A
+single-frequency filter: a mixture of timescales gives an average angle. (4) Timescale, not source.
+
+**Stop rule.** Power once the priority-1 deliveries and the postnatal reference are on disk; one scoring run, with
+A328 part b. **Code:** `paper/exploratory/A328_fetal_running_loop/scripts/{power_a328b,score_a328b}.py` (A338 adds
+its columns there).
