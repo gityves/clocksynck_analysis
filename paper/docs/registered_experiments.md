@@ -9967,7 +9967,7 @@ the covariation.
   observed iota is also placed against the no-clock range (descriptive: the covariation itself is clock-specific in
   these units, A328 part a and A243 / A269, so "no clock" is not the alternative tested).
 
-## A341 (2026-11-22, DRAFT for the user; follow-up of the fetal synthesis (Q43); staged: scout, power, one scoring run; **NOT BLIND** for the organ-level clock-shaped covariation sizes (A237-A244, A243, A309); **BLIND** for every organ-level glucocorticoid-responsiveness measure (A307 and A309 computed the within-organ link of PER1 / PER2 / NR1D1 to the GC score, never the GC measures ranked across organs)): does glucocorticoid responsiveness, rather than clock maturity, rank the fetal organs that carry the clock-shaped state?
+## A341 (2026-11-22, approved by the user; follow-up of the fetal synthesis (Q43); staged: scout, power, one scoring run; **NOT BLIND** for the organ-level clock-shaped covariation sizes (A237-A244, A243, A309); **BLIND** for every organ-level glucocorticoid-responsiveness measure (A307 and A309 computed the within-organ link of PER1 / PER2 / NR1D1 to the GC score, never the GC measures ranked across organs)): does glucocorticoid responsiveness, rather than clock maturity, rank the fetal organs that carry the clock-shaped state?
 **Why.** The fetal clock-shaped state is organ-selective (adrenal cortex, lung, liver yes; heart, kidney, adrenal
 medulla, brain at 13-22 pcw no; mouse hepatocytes yes, cardiomyocytes and nephron progenitors no) and carries a
 glucocorticoid component in lung and liver (A307, A340). Hypothesis: maternal glucocorticoid rhythms entrain fetal
