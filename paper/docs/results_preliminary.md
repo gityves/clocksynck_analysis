@@ -7714,3 +7714,27 @@ summed, subject as covariate. Stranded: subtraction and direct introns agree (va
   1.2-1.5 h recovered at both sites), the untimed lead recovers the timed pre-mRNA lead in both living human tissues
   tested (n 57 and 80), and in fewer animal compartments at n 12. Timed leads: muscle 1.75 h, skin 1.18-1.48 h,
   A337 animal median 1.27 h.
+
+## A344 (scored 2026-11-23; NOT BLIND for the full cycle): on hospital-hours samples alone the untimed pre-mRNA lead is recovered (H344.2 PASS); the offset keeps its value but its interval is too wide to decide (H344.1 undecidable); two daytime points are not enough (H344.3); per-visit phases degrade as the arc shrinks
+<!-- src: paper/exploratory/A342_skin_timed/output/score_a344/{subsets,verdicts}.csv; code paper/exploratory/A342_skin_timed/scripts/score_a344.py -->
+GSE326530, direct introns; subsets of clock times, truth = full-cycle timed values (A342); paired volunteer bootstraps.
+The full set reproduces A342 (untimed offset 1.33 vs timed 1.57 h; leads P 1.12, E 1.41).
+- **H344.2 PASS (D3 = 06, 12, 18 h; 60 visits):** untimed lead minus full-cycle timed lead P +0.10 h (90 % -0.44 to
+  0.63), E -0.09 (-0.57 to 0.53); core -0.13 (-0.75 to 0.54), -0.48 (-0.93 to 0.07).
+- **H344.1 undecidable (D3):** untimed offset 1.37 h vs truth 1.57 (difference -0.20, 90 % -1.68 to 0.88; core
+  +0.06, -1.28 to 1.01): the point estimate is kept but the interval exceeds +-1 h, largely the uncertainty of the
+  timed truth itself (full set: -1.00 to 0.51).
+- **H344.3 (D2 = 06, 12 h; 40 visits):** lead E passes (-0.38, -1.06 to 0.33); lead P fails (+0.85, 0.14 to 1.64);
+  core fails at both sites (P +1.05, -0.02 to 2.28; E -1.16, -2.07 to -0.24); offset undecidable (+0.26, -2.08 to
+  1.98; point 1.83 vs 1.57).
+- *Amplitude (descriptive):* the untimed log ratio stays at -0.20 to -0.26 on every subset against the timed +0.087:
+  the H342.4 offset neither worsens nor improves on partial arcs.
+- *Per-visit phase (descriptive):* concentration R and median absolute error of the visit's state angle against clock
+  time: full 0.555 / 2.03 h; D3 0.453 / 2.59 h; D2 0.358 / 3.27 h; N2 0.259 / 3.79 h (all p <= 0.015). Sample times
+  are read coarsely and worse as the arc shrinks, while the lead holds on D3: relative readouts survive hospital hours
+  better than sample times.
+- *N2 night pair (descriptive):* offset -1.27 h from truth, lead P -1.03, E -0.46.
+- **Reading:** with three daytime points per person (hospital hours) the untimed lead equals the full-cycle truth at
+  both sites; the offset keeps its value (1.37 vs 1.57 h) without a decidable interval; with two points the lead
+  drifts by up to about 1 h. Assigning times to samples degrades steadily on partial arcs, which is why the method
+  reports relationships rather than sample times.
