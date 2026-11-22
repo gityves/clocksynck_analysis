@@ -10309,3 +10309,12 @@ infiltrate); a transcriptional delay may still be compositional at the cell-type
 (3) No sampling time; the delay is relative within patient.
 
 **Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A345_tsoi_premrna/scripts/`.
+
+### A345 code check and pre-data correction (2026-11-23; `a345.py --stage check --dataset tsoi2019_skin`, `output/check/`; no intron count read)
+Check (unspliced := spliced thinned to 10 %, labels swapped in half of the patients): no delay (psoriasis delay p 0.89 /
+0.98, AD 0.65-0.82); P345.0 and H345.1 fail as expected; D near 0 (unspliced = thinned spliced). **Correction of
+H345.3 before any intron count is read:** the companions' raw offsets are uniform on the circle (q05 about -11.8 h),
+because gene sets without a shared rhythm have arbitrary angles, so "offset below the companions' q05" could never
+pass. H345.3 is restated on the coherence-weighted delay |c| sin(arg c) (c the corrected complex correlation of
+lesional with non-lesional states; negative = delay; near 0 for gene sets without a shared rhythm): the unspliced value
+below the q05 of both companion families.
