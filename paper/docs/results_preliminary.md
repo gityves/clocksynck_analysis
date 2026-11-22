@@ -7694,3 +7694,23 @@ registered subtraction count is 0 for CLOCK and PER2 in this unstranded delivery
   affected.
 - Consequence: direct introns as primary for unstranded libraries; for stranded libraries the two agree for clock
   genes. A342 is scored on direct introns (erratum, user decision).
+
+## A337 Perrin (scored 2026-11-23; BLIND for the unspliced counts): in timed human muscle the untimed lead equals the timed lead (H337.1 PASS, H337.2 PASS on the 14 genes; core loop H337.2 FAIL); responsive condition not met (H337.3 FAIL)
+<!-- src: paper/exploratory/A337_timed_lead/output/perrin/{compartments,verdicts,summary,companions,genes}.csv; code paper/exploratory/A337_timed_lead/scripts/score_a337.py --sets perrin -->
+Perrin 2018 vastus lateralis, adapter-trimmed re-map, 57 libraries (10 subjects x 6 times, one subject 3), two lane runs
+summed, subject as covariate. Stranded: subtraction and direct introns agree (values below: subtraction / direct).
+- Rhythmic (p < 0.0001, both gene sets).
+- **H337.1 PASS:** untimed lead +1.41 h (90 % 1.17 to 1.66) / +1.42 (1.18 to 1.66); core +1.66 (1.15 to 2.19) /
+  +1.63; gate p < 0.0001 (kappa 0.93; core 0.78).
+- **H337.2 PASS (14 genes):** timed lead +1.75 h (1.47 to 2.05); untimed minus timed -0.34 (-0.59 to -0.10), TOST
+  p < 0.001 within +-1.5 h. **Core loop FAIL:** timed +3.00 (2.31 to 3.80), difference -1.34 (-2.19 to -0.70),
+  TOST p 0.33: on the core loop the untimed lead under-reads the timed one by about 1.3 h.
+- **H337.3 FAIL:** delta_U below the responsive companions' q95 (3.67 h; core 7.77): rhythmic responsive genes in a
+  running clock lead as much, the H328.3 sensitivity problem A337 anticipated.
+- Per gene (cosine fits, lag of pre-mRNA over mRNA): ARNTL 1.87 h, CLOCK 3.03, NPAS2 2.52, PER1 1.41, PER2 0.67, PER3
+  2.13, CRY2 2.43, NR1D1 0.60, NR1D2 0.74; CRY1, DBP, TEF and RORA small amplitude or long genes (RORA -7.65,
+  unspliced mean 22,492: intronic reads dominated by its 700 kb of introns).
+- With baboon and Greenwell (A337 entry above: H337.1 3/7, H337.2 3/3 where H337.1 passed) and timed skin (A342: lead
+  1.2-1.5 h recovered at both sites), the untimed lead recovers the timed pre-mRNA lead in both living human tissues
+  tested (n 57 and 80), and in fewer animal compartments at n 12. Timed leads: muscle 1.75 h, skin 1.18-1.48 h,
+  A337 animal median 1.27 h.
