@@ -10258,3 +10258,54 @@ undecidable, not as a fail.
 
 **Stop rule.** One scoring run. **Code:** `paper/exploratory/A342_skin_timed/scripts/score_a344.py` (reuses
 `score_a342.py`).
+
+## A345 (2026-11-23, approved by the user: "You can draft it. When the data are available you can run it."; staged: power on the delivered depths, then one scoring run; **NOT BLIND** for the spliced clock of GSE121212: lesional minus non-lesional psoriasis offset -1.45 h over 27 pairs (authors' counts, discovery series of A54, `figure_5/output/psoriasis/a54_discovery_per_series.csv`), gate p 0.005, log variance ratio +0.24; AD in A115 uninformative; **BLIND** for every intron count of Tsoi 2019 (the delivery has not been opened beyond `samples.tsv` and `qc.tsv`)): is the psoriatic lesional clock delay carried by pre-mRNA (the clock's transcription runs late) or only by mature mRNA (stability, composition)? **Tsoi 2019, GSE121212: psoriasis 27 lesional / non-lesional pairs, atopic dermatitis 21 pairs (descriptive), healthy 38 (not used); stranded PE**
+
+**Why.** The psoriatic delay is replicated blind (A183) but its clock-specificity sits at the line (A183, A308, A335).
+Intron reads record current transcription (A343: an acute input appears in introns first; A342 / A337 Perrin: the
+pre-mRNA clock state leads mRNA by 1.2-1.75 h in living human tissue). If the clock's transcription runs late in
+lesions, the pre-mRNA state is delayed as much as the mRNA state; if only mRNA turnover or cell composition differs,
+the pre-mRNA state is not delayed (or delayed less) and the mRNA lag behind pre-mRNA grows.
+
+**Data.** `$SCCC_DATA/sccc_mapping/tsoi2019_skin_trimmed` (adapter-trimmed re-map, expected 2026-11-23) when delivered
+and sha256-verified within 24 h; otherwise the delivered untrimmed `tsoi2019_skin` (same runs; 67 % median uniquely
+mapped), stated in the result. Spliced = `counts_exon`; unspliced = `counts_intron_direct` (METHOD.md section 9);
+`counts_intron` as sensitivity (stranded: expected to agree). Pairs: patient code from the GEO title, lesional and
+non-lesional of the same patient; psoriasis primary, AD descriptive; AD chronic lesions (6) and healthy not used.
+
+**Statistic.** `clocksync.paired` (unit = patient, condition non-lesional -> lesional; GTEx not-sun-exposed skin
+waveform; 14 genes primary, core loop secondary), run separately on spliced and on unspliced counts: gate, offset
+(lesional minus non-lesional, negative = lesional delayed), delay p (one-sided), bootstrap SE, 200 expression-matched
+and 200 responsive companions (`pseudo_responsive`). The paired difference D = offset_u - offset_s from 2,000 bootstraps
+of patients resampling both readouts jointly. Lead change (descriptive): the A342 lead statistic (matched estimator,
+patient covariate) within lesional and within non-lesional samples.
+
+**Hypotheses** (psoriasis).
+- **P345.0 (positive control, not blind):** the spliced offset on the new counts is a delay (one-sided p < 0.05,
+  gate p < 0.05). If it fails, H345.1-H345.3 are uninformative.
+- **H345.1 (primary):** the unspliced gate passes and the unspliced offset is a delay (one-sided p < 0.05).
+- **H345.2 (secondary, equivalence):** |D| < 1 h (90 % interval of D inside +-1 h): pre-mRNA delayed as much as mRNA.
+- **H345.3 (secondary, specificity):** the unspliced offset lies below the q05 of both companion families.
+
+**Readings (fixed now).**
+- H345.1 and H345.2 pass: the lesional delay is transcriptional; the clock's transcription runs late in psoriatic
+  lesions. With H345.3 also passing, it is clock-specific at the level of transcription, which A183 could not show on
+  mRNA.
+- H345.1 fails with P345.0 passing and D > 0 (90 % interval above 0): the delay is post-transcriptional or
+  compositional (mRNA lags more behind pre-mRNA in lesions).
+- H345.1 fails with an unspliced interval spanning both readings: undecidable at this depth.
+- AD (descriptive): the same three numbers, as the non-psoriatic chronic-lesion comparison (A254: no delay in other
+  chronic lesions).
+
+**Power first (dated note before any intron count is read).** Unspliced stand-in: the spliced clock counts of each
+run thinned binomially to the run's expected unspliced level (exon count x genome-wide direct-intron / exon depth
+ratio of that run, from `qc.tsv`; no intron count of a gene read), 500 draws: SD of the offset over draws and its
+bootstrap SE. H345.1 decidable if a delay of 1.45 h (the spliced value) is detected in >= 80 % of draws in which the
+true delay is carried over (the thinned spliced data keep it); H345.2 decidable if the median half-width of the D
+interval (thinned spliced vs spliced) is < 1 h. Undecidable hypotheses are reported descriptively.
+
+**Limits.** (1) One series (27 pairs). (2) Lesional skin differs in composition (keratinocyte proliferation, immune
+infiltrate); a transcriptional delay may still be compositional at the cell-type level, which bulk cannot resolve.
+(3) No sampling time; the delay is relative within patient.
+
+**Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A345_tsoi_premrna/scripts/`.
