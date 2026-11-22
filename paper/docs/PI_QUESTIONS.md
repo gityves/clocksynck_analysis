@@ -84,6 +84,11 @@ loop not significant in single-cell cortex pseudobulks) and claim 3(b) ("it rest
   "the fetal clock-shaped state is two-dimensional, as a clock sampled across the day, and not a single slow factor; in
   liver an additional glucocorticoid-like axis"; the ultradian alternative stays open (A328 lead upper bounds argue
   against it only post hoc).
+- **Addition (user, 2026-11-22):** read one-sided, the pre-specified A338 fast-input threshold (T_eff < 6 h) is not
+  reached; with the registered literature lifetime (A339, tau = 1 h) the lead's upper bound implies input periods >=
+  about 10-22 h in liver and 11-24 h in the adrenal core: ultradian pulses excluded, conditional on adult-like fetal
+  mRNA lifetimes. Proposed part 3: "neither ultradian pulses (conditional on lifetime) nor a single slow factor:
+  two-dimensional, as a clock sampled across the day".
 
 ### Q42 (2026-11-19): the two-axis checks of PAPER_PLAN section 6 are run; four decisions remain
 **Question.** The section 6 checks (prompt `prompts/two_axis_checks_2026-11-19.md`) and the user's follow-up on the cell

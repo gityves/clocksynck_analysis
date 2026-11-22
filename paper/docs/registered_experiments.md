@@ -9966,3 +9966,24 @@ the covariation.
 - H340.1 scored on del Valle (14 genes, core) and liver (14 genes); Holm over the two units on the 14 genes; the
   observed iota is also placed against the no-clock range (descriptive: the covariation itself is clock-specific in
   these units, A328 part a and A243 / A269, so "no clock" is not the alternative tested).
+
+## A341 (2026-11-22, DRAFT for the user; follow-up of the fetal synthesis (Q43); staged: scout, power, one scoring run; **NOT BLIND** for the organ-level clock-shaped covariation sizes (A237-A244, A243, A309); **BLIND** for every organ-level glucocorticoid-responsiveness measure (A307 and A309 computed the within-organ link of PER1 / PER2 / NR1D1 to the GC score, never the GC measures ranked across organs)): does glucocorticoid responsiveness, rather than clock maturity, rank the fetal organs that carry the clock-shaped state?
+**Why.** The fetal clock-shaped state is organ-selective (adrenal cortex, lung, liver yes; heart, kidney, adrenal
+medulla, brain at 13-22 pcw no; mouse hepatocytes yes, cardiomyocytes and nephron progenitors no) and carries a
+glucocorticoid component in lung and liver (A307, A340). Hypothesis: maternal glucocorticoid rhythms entrain fetal
+peripheral clocks where tissues respond to them; the competing hypothesis: organs differ in clock maturity.
+**Units.** The fetal organ (and mouse cell-type) pseudobulks already used for the organ readouts (A243 pooled human
+organs, A242 / A244 adrenal cortex and medulla, A239 brain; A309 Qiu late-window cell types).
+**Measures per organ (computed once, after this registration).** GR responsiveness: (i) NR3C1 expression (median log
+CPM over fetuses); (ii) the between-fetus variance of the A307 GC-target score (FKBP5, TSC22D3, ZBTB16, KLF9), residualised
+as the organ readout. Clock maturity (competitor): (iii) the median expression of the 11 core genes; (iv) the ARNTL -
+NR1D1 expression ratio. Outcome: the organ's clock-shaped covariation size (C relative to its adult pass threshold, from
+the scored readouts; fixed now from the output tables).
+**Hypotheses.** H341.1: Spearman of outcome with (ii) > 0 across human organs (one-sided, permutation of organ labels);
+H341.2: (ii) predicts the outcome beyond (iii) (partial Spearman). Replication: the same in the mouse cell types.
+**Power (stage `power`, before any measure is computed):** with 6-8 human organs a one-sided Spearman needs rho >=
+about 0.7; the power stage states the detectable rho and, if it exceeds 0.8, H341 is reported descriptively only.
+**Scout first:** the termination protocol (medical with mifepristone vs surgical) in the metadata of the A242 / A243
+cohorts; if at least two cohorts per protocol exist, a protocol contrast of the adrenal covariation is drafted
+separately (A342), not scored here.
+**Limits.** Few organs; NR3C1 mRNA is not receptor activity; the outcome is not blind; organ composition differs.

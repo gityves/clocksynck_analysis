@@ -7500,6 +7500,16 @@ GTEx fast deaths, 27 peripheral tissues, A294b fit. Validation passed (A104 rho 
   "no daily-scale input of the reference size" (phi_f interval includes 0, compartment decidable). Post hoc caution:
   the same interval also contains the reference lead (0.33 h), and the postnatal reference is itself not resolved, so
   in substance steady and daily inputs both remain compatible: the timescale is not resolved.
+- *Fast side read alone (user, 2026-11-22; registered threshold and quantity, read one-sided after scoring):* A338
+  fixed "T_eff entirely below 6 h: a fast, pulsatile input" before scoring. With the registered postnatal reference
+  (0.33 h, itself unresolved: -0.30 to 0.78) the liver lead's upper bound (1.08 h) gives T_eff >= about 5-6 h at the
+  reference's point value (r 0.64-0.81) and no lower bound once the reference's uncertainty is included (tau could be
+  near 0). With the literature lifetime registered in A339 (tau = 1 h), T_eff = 2 pi tau / tan(phi): liver >= about
+  22 h, del Valle core >= about 24 h, del Valle 14 genes >= about 7 h; allowing for the matched estimator's under-reading
+  of the lead (about 2-fold on Greenwell): >= about 10, 11 and 3.6 h. Reading: the pre-specified fast-input reading is
+  not reached; **ultradian (hourly) pulses are excluded in liver and the adrenal core, conditional on fetal clock-mRNA
+  lifetimes near the adult 1-2 h**; the postnatal calibration is too imprecise to fix tau. A combination of registered
+  elements (A338 threshold, A339 lifetime), labelled as such.
 - *Descriptive (not decidable):* 10x cortex matched 0.86 h (0.33 to 1.62; core 1.64, 0.81 to 5.41), `cortex_minus1`
   1.36 (0.38 to 2.17); pergene intervals span 0 (14 genes 0.72, -1.68 to 1.81); below the responsive q95 (1.28).
   Per-gene lags (pergene, 14 genes) are erratic at these depths: median del Valle 0.72 h, liver 0.20, postnatal liver
