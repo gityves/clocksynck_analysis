@@ -9993,3 +9993,150 @@ One-sided exact permutation Spearman, bivariate-normal latent, 20,000 draws: wit
 rho is 0.679 and power reaches 0.8 only at r = 0.90 (6 organs: 0.771 / 0.95). The detectable rho exceeds 0.8: by the
 registered rule H341 is reported **descriptively only**. Scout of the termination protocol: deferred (no cohort metadata
 read yet); the multi-organ scout below found no protocol information in the candidate sets either.
+
+## A342 (2026-11-22, DRAFT for the user's approval, on the user's instruction "start with the skin control, and do the sun-exposure contrast directly"; staged: QC (done below, metadata and `qc.tsv` only), power, one scoring run; **BLIND** for every clock-gene count of GSE326530, spliced or unspliced (never opened; the series was only listed by the 2026-11-08 age scout, metadata); **NOT BLIND**: A251 (Wu 2018 skin arrays: untimed women, forearm-buttock offsets dermis -0.14 h, epidermis +0.73 h; timed men forearm), A337 (timed leads median 1.27 h, range 0.61-3.00; untimed lead underpowered at n = 12), A328 part b (matched estimator primary, per-gene companion)): in timed living human skin, do the untimed lead, the host-referenced offset and the relative amplitude recover the values read from the sampling times, and does sun exposure change the skin clock? **GSE326530: 20 volunteers x 2 sites (photoprotected, photoexposed) x 4 clock times (00, 06, 12, 18 h), 3 mm whole-thickness skin, PE 150 bp, unstranded**
+
+**Why.** Three readouts of the paper are inferred without time: the lead of pre-mRNA over mRNA (A328, A337), the
+offset between two compartments of one person, and their relative amplitude. A timed design with two sites per person
+gives the true value of each from the clock times, so the untimed estimate can be checked against it in living human
+tissue (A337 had one human set, Perrin, at n 10 x 6, and no two-compartment design). The two sites also form a
+perturbation contrast (chronic sun exposure) read with timed truth.
+
+**Data and units (QC, 2026-11-22, from `samples.tsv` and `qc.tsv` only).** 160 runs, one per volunteer x site x time,
+complete (20 x 2 x 4); median 25.3 M read pairs; median uniquely mapped 82.7 %, assigned to exons 64.4 %, intronic
+fraction 0.124 (direct 0.086). Run quality is bimodal: 39 runs have < 70 % uniquely mapped or < 40 % assigned to exons
+(lowest 12.5 %), all in volunteers 12-20. All runs are kept (depth enters the noise model); sensitivity: runs with
+< 30 % assigned to exons removed (rule fixed now, from QC only). Spliced = `counts_exon`, unspliced = `counts_intron`
+(subtraction, as A328 / A337), `counts_intron_direct` as sensitivity. Sites as compartments: photoprotected (P),
+photoexposed (E). Volunteer as covariate (indicator) wherever samples of one person are pooled; bootstraps resample
+volunteers. Clock time t in {0, 6, 12, 18} h is used only by the timed statistics.
+
+**Statistics.** GTEx-waveform skin projector (`clocksync.paired.projector` / `states`; the not-sun-exposed skin
+waveform for P, sun-exposed for E; the same waveform for both in a sensitivity), 14 genes; core loop (11 genes, A266)
+as the second gene set.
+- *Timed:* beta = sum_i z_i exp(-i 2 pi t_i / 24) on states centred within volunteer and site; acrophase arg beta,
+  amplitude |beta|. Rhythm: |beta| against 10,000 permutations of t within volunteer.
+- *Untimed lead:* A328 part b statistic as amended (matched estimator primary, per-gene companion, plain alongside),
+  per site, volunteer as covariate; timed lead delta_T = arg(beta_u conj(beta_s)) as A337.
+- *Untimed pairing E-P:* units = the 80 volunteer x time samples treated as untimed persons; c = sum z_E conj(z_P)
+  (states centred within site only), offset arg c (h), relative amplitude from `clocksync` (|z_E| / |z_P| on the shared
+  host axis); gate kappa against 10,000 permutations of P rows; 200 expression-matched and 200 responsive companions
+  (`pseudo_waveforms`). Timed counterparts: offset arg(beta_E conj(beta_P)), amplitude ratio |beta_E| / |beta_P|.
+  90 % intervals from 2,000 volunteer bootstraps (paired for differences).
+
+**Hypotheses.**
+- **P342.0 (positive control):** the spliced state is rhythmic in each site (p < 0.05, 14 genes). If it fails in a
+  site, every hypothesis below is uninformative there.
+- **H342.1 (lead recovery; extends H337.1):** per site, the untimed gate passes and the 90 % interval of delta_U lies
+  within (0, 6 h) (Holm over the two sites).
+- **H342.2 (lead agreement; H337.2):** delta_U - delta_T within +-1.5 h (90 % interval), per site where H342.1 passes.
+- **H342.3 (offset against timed truth):** the untimed E-P offset lies within the 90 % interval of the timed offset,
+  or the two differ by < 1 h (rule of H251.4). Requires the untimed pairing gate to pass and be clock-specific (above
+  the q95 of both companions).
+- **H342.4 (amplitude against timed truth):** the untimed relative amplitude and the timed ratio |beta_E| / |beta_P|
+  differ by < 0.15 on log scale (90 % interval of the paired difference).
+- **H342.5 (sun exposure, two-sided):** the timed log amplitude ratio log(|beta_E| / |beta_P|) has a 90 % interval
+  excluding 0, and lies outside the 5-95 % range of the same ratio on the 200 expression-matched companions (site
+  differences in depth or composition shift those too). Its phase companion is the timed offset of H342.3, read
+  against +-1 h (equivalence) in the same table.
+Families: H342.1 Holm over sites; H342.2-H342.5 one test each on the 14 genes; the core loop is the stated secondary.
+
+**Readings (fixed now).**
+- H342.1-H342.2 pass: the untimed lead works in living human tissue at n 80 per site; the fetal "uninformative" of
+  A328 part b is then a sample-size limit (fetal n 25-37), not a failure of the statistic. Fail with P342.0 passing:
+  the lead readout is shelved for the paper (stated in Methods), whatever Perrin shows.
+- H342.3 and H342.4 pass: the host-referenced offset and relative amplitude equal the timed values in living people,
+  the first ground-truth check of the method's two main readouts in human tissue. A fail is reported as a limit of
+  every offset and amplitude claim at that precision.
+- H342.5: a clock-specific amplitude difference = chronic sun exposure changes the skin clock's loudness (direction
+  reported); within +-1 h and no amplitude difference = the clock is kept under chronic exposure. Either way the result
+  is a perturbation read with timed truth, not a composition claim (whole-thickness biopsies; no deconvolution here).
+- *Expected (stated, not a criterion):* lead +0.5 to +3 h (A337); E-P offset small (A251 forearm-buttock: dermis
+  -0.14 h, epidermis +0.73 h, untimed arrays). Literature on sun exposure and the skin clock to be carded before scoring.
+
+**Descriptive.** Unspliced timed amplitude ratio E/P (is any amplitude difference transcriptional); per-gene timed
+acrophases per site; without PER1, PER2, NR1D1; the QC sensitivity; direct-intron sensitivity; volunteers 1-11 vs 12-20.
+
+**Power first (dated note before any clock count is read).** GTEx skin stand-ins (fast deaths, 08-18 h removed only if
+needed for timing; the A328 part b machinery), each draw given 20 persons x 4 times by the GTEx daily waveform at 1 and
+0.75 of adult amplitude, thinned to the delivered per-run exon and intron depths (`qc.tsv` totals x GTEx skin gene
+fractions; no clock count of this set is read), leads 0 and 1.27 h, offsets 0 and 1 h, amplitude ratios 1 and 0.8;
+1,000 draws. Decidable per hypothesis if: H342.1 passes at 1.27 h in >= 80 % of draws with false passes at lead 0
+<= 10 %; H342.3 / H342.4 intervals have half-width < 1 h / < 0.15; H342.5 detects a ratio of 0.8 with power >= 0.8.
+An undecidable hypothesis is reported descriptively.
+
+**Limits.** (1) Four time points per person (6 h spacing): the timed fit is a first harmonic only. (2) Sites differ
+in more than sun exposure (body region, skin thickness, hair follicles). (3) Whole-thickness tissue: amplitude changes
+may be composition. (4) Possible overlap of volunteers with Wu 2018's timed arm is unknown (A251 used that arm's
+forearm arrays).
+
+**Stop rule.** One scoring run after the power note, same code for both gene sets. **Code:**
+`paper/exploratory/A342_skin_timed/scripts/`.
+
+## A343 (2026-11-22, DRAFT for the user's approval, on the user's instruction after the Jed deliveries ("dexamethasone liver / fat as an acute-response positive control"); staged: QC (done below, metadata and `qc.tsv` only; identity check pending), power, one scoring run; **BLIND** for every gene count of GSE320593 used below (the authors' counts were downloaded 2026-11-12 for a scout that read series-matrix headers only; no expression value of either source has been opened)): does an acute glucocorticoid input in living human liver and fat raise pre-mRNA before mature mRNA (the premise of every lead readout), and does it move the clock state beyond PER1? **GSE320593: patients at risk of MASLD, a percutaneous pre-operative biopsy and a laparoscopic intra-operative biopsy of liver and / or subcutaneous fat; dexamethasone (DEX) at anaesthesia induction (before the surgical biopsy) or after the surgical biopsy (NO_DEX)**
+
+**Why.** The lead readouts (A328, A337, A342) assume that a change in transcription appears in intron counts before
+exon counts. Dexamethasone given at induction is an input of known kind and approximate time (GR targets respond within
+0.5-2 h, series summary) in living human tissue: its targets should show a raised intron-to-exon ratio in the surgical
+biopsy. The same design asks whether an acute glucocorticoid pulse, which every surgical sample of the cancer chapter
+may carry (A271: tumour and normal samples share one operation, often with dexamethasone), moves the core clock state or only PER1 (the reason the core loop drops PER1, PER2, NR1D1).
+
+**Data and units (QC, 2026-11-22, from `samples.tsv` and `qc.tsv` only).** 172 runs: fat 61 patients, liver 25, each
+with one non-surgical (N) and one surgical (S) biopsy; DEX / NO_DEX: fat 49 / 12, liver 14 / 11. 22 patient codes
+carry both tissues (11 DEX, 11 NO_DEX), with DEX status identical across the two tissues; whether a shared code is one
+person is checked before scoring by sex-chromosome genes (XIST, RPS4Y1, DDX3Y, UTY; a non-clock check), and the
+two-tissue analysis below runs only on codes that agree. Median uniquely mapped 94.6 %, intronic fraction 0.084.
+**Library type is confounded with arm:** reverse-stranded runs are fat S NO_DEX 12 / 12, fat S DEX 16 / 49, liver S
+NO_DEX 6 / 11, liver S DEX 1 / 14 (others mostly unstranded; batches A-D as the scout reported). Strandedness changes
+the intron features and the counting of antisense reads. Therefore: (i) the primary unit is a patient whose N and S runs
+share strandedness (fat DEX 38, liver DEX 13; NO_DEX fat 7, liver 5); (ii) the primary statistic is within sample,
+GR targets against matched genes of the same run, so library-wide intron capture cancels.
+
+**Statistics.** Per run and gene g: r_g = log((u_g + 0.5) / (s_g + 0.5)) (u = `counts_intron`, s = `counts_exon`).
+GR set (fixed, the A307 GC-target score): FKBP5, TSC22D3, ZBTB16, KLF9. Per run, R_GR = mean r_g over the GR set minus
+the mean r_g of 50 control genes matched to each GR gene on N-run exon expression and intron-only length
+(`gene_annotation.tsv.gz`), drawn from genes outside the responsive family and the clock panel. Per patient,
+D = R_GR(S) - R_GR(N). Exon induction: E = mean over the GR set of the S - N change in log CPM, minus the same for the
+matched genes. Specificity companions: 200 sets of four genes matched like the GR set, the same D computed (the q95 of
+the companion means is the bar).
+Clock: per run, the clock-plane state (GTEx liver or subcutaneous-adipose waveform, 14 genes and core loop); per
+patient, the S - N displacement; PER1 S - N change in log CPM.
+
+**Hypotheses** (per tissue; Holm over fat and liver within each).
+- **P343.0 (DEX acted):** in DEX patients, E > 0 (one-sided sign-flip test over patients, 10,000) and above the q95 of
+  the companions. If it fails in a tissue, H343.1 is uninformative there.
+- **H343.1 (primary; pre-mRNA ahead):** in DEX patients, mean D > 0 (one-sided sign-flip test) and above the q95 of
+  the companions.
+- **H343.2 (secondary; DEX-specific):** mean D of DEX patients exceeds that of NO_DEX patients (permutation of arm
+  labels, 10,000), primary units; also on all patients with library type as a covariate.
+- **H343.3 (secondary; PER1 versus the core loop):** in DEX minus NO_DEX, the PER1 S - N change is > 0 (one-sided)
+  while the core-loop displacement difference is within an equivalence bound of 0.25 of the GTEx adult daily amplitude
+  of that tissue's core state (90 % interval). Read only where the power note shows the bound is reachable.
+
+**Readings (fixed now).**
+- P343.0 and H343.1 pass: an acute transcriptional input in living human tissue appears in pre-mRNA before mature mRNA
+  at bulk depth; the premise of the lead readouts holds with a known input. H343.1 fails with P343.0 passing: either
+  the biopsy came too late after DEX (the ratio returns towards baseline as mRNA catches up; time from DEX to biopsy is
+  not in GEO) or intron counts do not carry the burst at this depth; reported as such, not as a refutation.
+- H343.3 passes: an acute glucocorticoid pulse moves PER1 but not the core loop within the surgical window; surgical
+  samples (cancer chapter) are read on the core loop with this as support. Core displacement beyond the bound: the
+  cancer-chapter limit on perioperative glucocorticoids is strengthened in the text.
+- *Expected (stated, not a criterion):* FKBP5 and TSC22D3 induced in the DEX surgical biopsies (series summary reports
+  DEX effects on anti-inflammatory genes).
+
+**Descriptive.** Per-gene D and E for the GR set and PER1; direct-intron sensitivity; the NO_DEX S - N change (surgery
+and time of day without DEX); in the 22 two-tissue patients, the liver-fat host-referenced pairing at N and at S
+(c, offset; n too small for a verdict).
+
+**Power first (dated note before any GR or clock count is read).** Null SD of the patient mean D from 1,000 random
+four-gene sets drawn as the companions (non-GR genes; their intron and exon counts are not the blind targets), per
+tissue and arm on the primary units; MDE = 2.49 x SD. Decidable if the MDE <= 0.4 (log, about 1.5-fold): a smaller
+pre-mRNA excess than that is not of interest for a GR burst. H343.3: the core-displacement interval half-width from
+the same null; reachable if < 0.25 of the GTEx daily amplitude.
+
+**Limits.** (1) Time from DEX to biopsy unknown; the NO_DEX arm differs in library type. (2) N and S biopsies differ in
+approach (percutaneous vs laparoscopic), anaesthesia and clock time; within-sample R_GR removes library effects, not
+biology of surgery, which H343.2 addresses only on few NO_DEX patients. (3) Obese patients at risk of MASLD.
+
+**Stop rule.** One scoring run after the identity check and the power note. **Code:**
+`paper/exploratory/A343_dex_acute/scripts/`.
