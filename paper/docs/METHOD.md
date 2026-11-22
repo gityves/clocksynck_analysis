@@ -159,3 +159,11 @@ inconclusive (A144 part 2). Resolution depends on clock UMI per cell; eligibilit
   0.05 inside every CI), as with permutations across all individuals (0.040-0.080).
 - `sccc.api` defaults (200 gate permutations, 200 bootstraps, 40 MDE replicates) are lower than the paper settings
   (1000, 500, 100).
+- Unspliced (pre-mRNA) counts from the Jed bulk deliveries (2026-11-22, A342 / A343 and the per-gene check in
+  `results_preliminary.md`): use `counts_intron_direct` (reads entirely inside intron-only regions, every gene's exons
+  removed, 10 bp trimmed) as the primary unspliced count. `counts_intron` (gene body minus exon, clipped at 0) loses
+  genes whose body overlaps another gene, because featureCounts without `-O` drops overlap reads at gene-body level
+  only: in unstranded libraries CLOCK and PER2 are 0 and PER3 and RORA a few per cent of the direct count (GSE326530),
+  reduced in mixed libraries (GSE320593). In stranded deliveries the two agree for clock genes (direct / subtraction
+  0.5-2). Check strandedness (`qc.tsv`, `strand_used`) before using `counts_intron`; amendments registered before
+  2026-11-22 keep their registered definition as primary.
