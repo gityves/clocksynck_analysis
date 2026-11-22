@@ -10190,3 +10190,10 @@ GTEx's own lower-leg vs suprapubic difference. Site-specific waveforms stay a se
 - **H342.5 not decidable:** timed log amplitude ratio SE 0.126-0.130 against the 0.090 needed to detect 0.8 with power
   0.8 (the shifted setting moves it by -0.225 = log 0.8, as built). Reported descriptively with its companion range.
 H342.1-H342.3 are scored as registered; H342.4 and H342.5 descriptive.
+
+### A342 code check (2026-11-22, before scoring; `score_a342.py --check`, `output/score_check/`)
+Unspliced := spliced thinned to 10 %, one permutation of times per volunteer (both sites), P runs permuted across
+volunteers. H342.1 fails in all four rows (matched delta -0.16 to -0.06 h, intervals spanning 0 or below it: the
+small negative bias of A337's check); pairing gate p 0.58 / 0.38 (coherence 0.08 / 0.11, below the matched q95 0.21 /
+0.20), H342.3 fails; rhythm p < 0.05 in 1 of 4 rows (0.04, P 14 genes) under shuffled times. Scoring proceeds as
+registered.
