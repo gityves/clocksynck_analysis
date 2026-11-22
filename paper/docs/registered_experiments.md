@@ -9933,3 +9933,26 @@ rotation). (2) Collection times of the fetal cohorts are unknown; the GTEx 08-18
 frame. (3) Fetal amplitude below the adult one lowers the separation (power stage). (4) Not blind for the existence of
 the covariation.
 **Code.** `paper/exploratory/A340_fetal_geometry/scripts/{power_a340,score_a340}.py`.
+
+### A339 power note (2026-11-22; `A328_fetal_running_loop/scripts/power_a339.py`, `output/power_a339/{passrates,decisions}.csv`; no fetal or postnatal rho computed)
+- *Noise term, changed after the code check (no fetal value):* the registered Poisson variance (delta method on the
+  observed counts, `paired.states`) gave 2 for a zero count and over-corrected at fetal intron depths (steady del Valle
+  rho 1.97 against 1 in the check). Replaced by the exact variance of log(Poisson(lam) + 0.5) at the expected count
+  (cohort median fraction x depth; `scripts/lognoise.py`), for A339 and A340.
+- 200 draws; matched estimator, 5 thinning replicates. Median rho: 3 h 0.27-0.36 (true 0.34), 6 h 0.51-0.58 (0.59),
+  24 h 0.89-0.99 (0.95), steady 0.96-1.05; Greenwell (real counts, true 24 h) 0.55-0.99. False rates 0.000-0.010.
+- *Decidable (sensitivity and Greenwell >= 0.8, false <= 0.1):* **H339.1 (<= 3 h): del Valle 14 genes and core, liver
+  14 genes and core.** **H339.2 (<= 6 h): del Valle and liver, 14 genes**; core not (Greenwell 0.55 and 0.32).
+  Descriptive: 10x cortex H339.1 14 genes decidable (core not, Greenwell 0.58); `cortex_minus1` both on 14 genes;
+  heart, kidney H339.1 14 genes.
+- Scored as registered on these readouts (Holm over del Valle and liver per hypothesis and gene set).
+
+### A340 power note (2026-11-22; `A340_fetal_geometry/scripts/power_a340.py`, `output/power/{pools,quantiles,decisions}.csv`; no fetal iota computed)
+- GTEx fast deaths at 08-18 h: adrenal 31 (del Valle has 32: the pool is used whole, 31 per draw), liver 62. 1,000
+  draws; noise term as in the A339 note.
+- At 0.75 of the adult clock (registered scale), iota_daily 5-95 % / iota_line q05: del Valle 14 genes 0.144-0.354 /
+  0.990; del Valle core 0.085-0.338 / 0.927; liver 14 genes 0.141-0.523 / 0.987: **separated, decidable**. Liver core
+  0.215-0.587 / 0.517: not separated (separated only at the full adult size), not decidable. 10x cortex 14 genes
+  0.131-0.587 / 0.951 (descriptive), core not separated.
+- H340.1 scored on del Valle (14 genes, core) and liver (14 genes); Holm over the two units on the 14 genes. Thresholds
+  (line q05 at 0.75) and daily ranges as above.
