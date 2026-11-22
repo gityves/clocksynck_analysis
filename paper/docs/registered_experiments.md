@@ -10214,3 +10214,47 @@ Unspliced := spliced thinned to 10 %, times shuffled: no rhythm (p 0.20-0.59), d
 intervals spanning 0 (the small negative bias of the baboon / Greenwell check). Fixed: `verdicts` no longer fails when
 no compartment is rhythmic. Scoring proceeds as registered (subtraction introns primary; Perrin is stranded, where the
 two definitions agree for clock genes, METHOD.md section 9; direct reported alongside).
+
+## A344 (2026-11-23, DRAFT for the user's approval, on the user's question "what if we had only half of the cycle (hospital hours)?"; one scoring run; **NOT BLIND**: every full-cycle A342 statistic (`results_preliminary.md`: timed leads P +1.18 h, E +1.48 h; untimed leads P +1.19, E +1.41; timed E-P offset +1.57 h, untimed +1.33; timed log amplitude ratio +0.087, untimed -0.253); **BLIND**: every statistic on a time subset and every per-visit phase (none computed)): do the untimed readouts survive when only daytime samples exist, and do per-visit clock states follow clock time? **GSE326530 (A342 units, direct introns as in the A342 erratum)**
+
+**Why.** The method's practical claim is that it works on samples taken in hospital hours, because offsets shared by a
+person's tissues cancel. GTEx deaths cover the whole day, and earlier tests were simulations or baboon time windows.
+Here the truth is known from the full cycle, so each readout computed on a daytime subset can be compared with it.
+
+**Subsets (fixed now).** D3 = {06, 12, 18 h} (hospital hours, primary); D2 = {06, 12 h} (strict daytime);
+N2 = {00, 06 h} (night pair, descriptive contrast); full = all four (reference). Within a subset every volunteer keeps
+the same times, so cluster bootstraps stay balanced.
+
+**Readouts per subset (untimed, as A342; one projector over both sites).**
+- Offset E-P = arg sum z_E conj(z_P), states centred within site over the subset.
+- Lead per site: matched estimator, direct introns, volunteer as covariate (A342).
+- Log relative amplitude E/P: half `log_var_ratio` (A342 H342.4 statistic).
+- Per-visit phase: each visit's shared state, the mean of its P and E states (one projector), its angle against the
+  clock time of the visit, after removing one common rotation (circular mean of angle minus time); circular
+  correlation and median absolute error (h). Computed on the full cycle and on each subset (states centred within the
+  subset, as an untimed user would).
+Truth: the full-cycle timed values of A342 (offset +1.57 h; leads +1.18 / +1.48 h; amplitude +0.087), with their
+bootstrap draws for paired intervals (volunteers resampled jointly).
+
+**Hypotheses.**
+- **H344.1 (offset, primary):** on D3 the untimed offset lies within +-1 h of the full-cycle timed offset (90 % paired
+  interval of the difference inside +-1 h).
+- **H344.2 (lead):** on D3, per site, the untimed lead minus the full-cycle timed lead within +-1.5 h (90 % paired
+  interval; Holm over sites).
+- **H344.3 (secondary, strict daytime):** H344.1 and H344.2 on D2.
+- **D344.4 (descriptive):** log relative amplitude on each subset against the full-cycle timed ratio; per-visit phase
+  correlation and median error on each subset; the N2 contrast.
+
+**Readings (fixed now).** H344.1-H344.2 pass: offset and lead are recovered from hospital-hours samples alone, the
+method's practical claim shown in living tissue against known times. Pass on D3 but not D2: two time points are not
+enough. Per-visit phase recovered on the full cycle but distorted on subsets: assigning times needs the cycle covered,
+while relative readouts (offset, lead) do not, which is why the method reports relationships and not sample times.
+Amplitude: expected to stay off truth (H342.4), and a subset may bias it further, since a partial arc shrinks the
+daily variance seen within each site differently from the non-daily part.
+
+**Power.** No new power stage: on the full cycle (n 80 per site) the offset and lead intervals had half-widths
+0.5-1.1 h and 0.3-0.6 h; D3 keeps 60 visits and D2 40. A subset whose interval is wider than its bound is reported as
+undecidable, not as a fail.
+
+**Stop rule.** One scoring run. **Code:** `paper/exploratory/A342_skin_timed/scripts/score_a344.py` (reuses
+`score_a342.py`).
