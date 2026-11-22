@@ -7595,9 +7595,13 @@ GTEx fast deaths, 27 peripheral tissues, A294b fit. Validation passed (A104 rho 
 ## Scout (2026-11-22; metadata only): no open fetal cohort supports the host-referenced organ-offset test
 - Sonnet subagent (web metadata) plus a check of the GSE66302 sample names on disk. Roost 2015 (DeepSAGE, 18 fetuses,
   21 organs): only 5 fetuses have >= 2 of adrenal, liver, lung (2 with all three: CC2, CF2; liver + lung: CI1, CR1,
-  DJ1). Cao 2020: many organs per fetus but not estimable at its depth (A241, adult pass rate 0.14). Suntharalingham
+  DJ1). Cao 2020 (GSE156793, open processed counts, on disk): 28 fetuses, but each organ was taken from only 3-11 of
+  them; with >= 1,000 cells, adrenal + liver 4 fetuses, adrenal + lung 6, liver + lung 6, all three 4 (organ
+  pseudobulk depths 1-190 M UMI, adequate): the limit is the number of fetuses sharing organs, not depth or access
+  (A241: 7 fetuses with an adrenal, adult pass rate 0.14). Suntharalingham
   2025 (45,X and controls, HDBR): no adrenal, lung only pooled. Gerrard 2016: pooled embryos. Han 2020 HCL: same-donor
   overlap not shown. ENCODE / Roadmap fetal donors: not resolved (no shared adrenal-lung-liver donor found). No source
   reports collection time; termination type, where stated, is elective surgical.
 - Consequence: the coupling and phase offsets between fetal organs of one individual, clocksync's own readout, cannot be
-  measured on open data; it stays a prediction for a multi-organ fetal cohort (closed: Cao raw reads, dbGaP; Q32).
+  measured on open data; it stays a prediction for a fetal cohort in which >= 20 fetuses each give two clock-positive
+  organs (Cao's dbGaP raw reads would not add fetuses).
