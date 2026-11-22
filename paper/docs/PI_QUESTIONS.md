@@ -68,6 +68,14 @@ loop not significant in single-cell cortex pseudobulks) and claim 3(b) ("it rest
      ACTH receptor A266); no readout separates a maternal input from a fetal oscillator.
   If part 3 is not decidable, the chapter keeps 1, 2 and 4 with 3 as the open test. A328 note 2 (draft) rewords the
   H328.3 PASS readings accordingly before any lead is computed.
+- **Update 2026-11-22: A328 part b and A338 scored (blind).** The registered lead estimator turned out depth-biased at
+  fetal intron depths (false leads under no lead in up to 52 % of simulated draws); with the user-approved matched
+  estimator, the two decidable compartments show no consistent pre-mRNA lead: del Valle 14 genes 0.90 h (-0.78 to
+  2.86), core 0.04 h (-1.10 to 0.98); prenatal liver 14 genes 0.60 h (-0.11 to 1.08), core gate fails. Uninformative,
+  not "driven": the running postnatal liver clock gives 0.33 h (-0.30 to 0.78) with the same estimator. A338
+  timescale not resolved. So option (iii) does not decide the mechanism: part 3 of the proposed framing (daily
+  timescale) stays the open test; parts 1, 2 and 4 are unaffected. The time-free route seems exhausted on open data;
+  deciding it would need fetal samples with known collection times or deeper intronic coverage (total RNA-seq).
 
 ### Q42 (2026-11-19): the two-axis checks of PAPER_PLAN section 6 are run; four decisions remain
 **Question.** The section 6 checks (prompt `prompts/two_axis_checks_2026-11-19.md`) and the user's follow-up on the cell

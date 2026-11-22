@@ -7470,3 +7470,47 @@ GTEx fast deaths, 27 peripheral tissues, A294b fit. Validation passed (A104 rho 
 - Process: the first verdict table counted the adrenal medulla (descriptive in the registration) among the primary
   compartments; verdicts were re-derived from the stored statistics with the registered set (`score_a337.py --reread`),
   no statistic recomputed.
+
+## A328 part b and A338 (scored 2026-11-22; BLIND for every unspliced count, lead and exon / intron ratio; one run): no consistent pre-mRNA lead in the two decidable compartments (H328.3 FAIL: del Valle, liver), uninformative rather than "driven": the running postnatal liver clock shows the same picture and the real intervals are 1.6-2.9 times wider than the power model's; A338 timescale not resolved in liver
+- Design as registered with the power-note decision (matched estimator primary, pergene companion, plain beside;
+  scored: del Valle and prenatal liver, Holm over the two; 10,000 permutations, 2,000 bootstrap resamples, 200 + 200
+  companions). Code check first (`score_a328b.py --check`, unspliced := thinned spliced: no H328.3 pass, leads -0.72 to
+  +0.60 h). Run 287 s (`A328_fetal_running_loop/output/score_b/{compartments,verdicts,companions,genes,a338}.csv`).
+
+  | unit (n) | genes | gate p (Holm), matched | lead h, matched (90 %) | lead h, pergene (90 %) | lead h, plain (90 %) | H328.3 |
+  |---|---|---|---|---|---|---|
+  | del Valle (32) | 14 | 0.0017 (0.0017) | 0.90 (-0.78 to 2.86) | 0.54 (-1.44 to 1.88) | 0.30 (-1.26 to 1.92) | FAIL |
+  | del Valle (32) | core | 0.0001 (0.0002) | 0.04 (-1.10 to 0.98) | -0.11 (-1.26 to 1.32) | -0.03 (-0.86 to 0.83) | FAIL |
+  | liver (37) | 14 | 0.0001 (0.0002) | 0.60 (-0.11 to 1.08) | -0.15 (-3.13 to 3.24), gate 0.22 | 0.79 (0.08 to 1.27) | FAIL |
+  | liver (37) | core | 0.13 (0.13) | 1.48 (-0.48 to 5.13) | -1.66 (-8.22 to 1.09) | 1.12 (-0.36 to 2.85) | gate fails: uninformative |
+
+  Direct introns agree (del Valle 14 genes 1.19, -0.86 to 3.90; core -0.05, -1.18 to 0.99; liver 14 genes 0.51, -0.49
+  to 1.28). With the responsive condition: FAIL in all (responsive q95 0.63-1.37 h).
+- *Running-clock reference, same estimator:* postnatal liver (12 libraries, ages 0.04-58 y) matched 0.33 h (-0.30 to
+  0.78), gate p 0.0001; pergene 0.47 (0.01 to 1.15); postnatal heart (10) 0.79 (-0.00 to 1.45); postnatal kidney (9)
+  gate fails. The statistic does not resolve the lead of a running postnatal clock at n = 10-12 either.
+- *Precision against the power stage:* observed matched interval widths del Valle 3.64 h (14 genes) and 2.08 h
+  (core), liver 1.18 h, against the GTEx-model medians 1.27, 1.29 and 0.74 h: the model, which shares all biological
+  noise between the two count types, overstated precision by 1.6-2.9 times, as the power note anticipated.
+- *The gate is not clock-specific:* expression-matched pseudo-clocks pass it in 46-92 % of sets and responsive sets in
+  74-100 % (`companions.csv`); spliced and unspliced share any between-fetus variation. Its passes in heart (matched
+  0.34 h, 0.005 to 0.84) and kidney (0.12 h, -0.29 to 0.50), the expected negatives, carry no clock meaning.
+- *A338 (liver, 14 genes, matched):* phi_f 0.60 h (-0.11 to 1.08); phi_ref = postnatal liver 0.33 h (its gate
+  passed); lifetime ratio r 0.81 (0.64 to 1.05; 10 genes); T_eff 10.7 h, 90 % interval unbounded. Registered reading:
+  "no daily-scale input of the reference size" (phi_f interval includes 0, compartment decidable). Post hoc caution:
+  the same interval also contains the reference lead (0.33 h), and the postnatal reference is itself not resolved, so
+  in substance steady and daily inputs both remain compatible: the timescale is not resolved.
+- *Descriptive (not decidable):* 10x cortex matched 0.86 h (0.33 to 1.62; core 1.64, 0.81 to 5.41), `cortex_minus1`
+  1.36 (0.38 to 2.17); pergene intervals span 0 (14 genes 0.72, -1.68 to 1.81); below the responsive q95 (1.28).
+  Per-gene lags (pergene, 14 genes) are erratic at these depths: median del Valle 0.72 h, liver 0.20, postnatal liver
+  0.36; positive in 57 %, 50 % and 71 % of genes.
+- **Readings.**
+  - H328.3 FAILS in both decidable compartments. By A337's carried reading ("a fetal 'no consistent lead' is reported
+    as uninformative, not 'driven'"), and because the running postnatal liver clock gives the same unresolved lead with
+    the same estimator, the result is **uninformative about loop vs drive**, not evidence for a driven state. The
+    registered "with power" branch ("a driven state; a running loop of the reference's size excluded") does not apply:
+    the power stage overstated precision (above) and the reference itself is not resolved.
+  - Figure 3e stays "the open test" for the running-loop question; claim 3 parts 1, 2 and 4 of the proposed framing
+    (Q43) are unaffected; part 3 (daily timescale) is not established by A328 / A338.
+  - Not done (registered descriptive): CoPhaser phases on the spliced / unspliced layers, the cycling-share covariate
+    sensitivity, the damping rho.
