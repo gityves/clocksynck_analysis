@@ -76,6 +76,14 @@ loop not significant in single-cell cortex pseudobulks) and claim 3(b) ("it rest
   timescale not resolved. So option (iii) does not decide the mechanism: part 3 of the proposed framing (daily
   timescale) stays the open test; parts 1, 2 and 4 are unaffected. The time-free route seems exhausted on open data;
   deciding it would need fetal samples with known collection times or deeper intronic coverage (total RNA-seq).
+- **Update 2026-11-22 (later): A339 and A340 scored (blind).** A339 (damping ratio, fast vs slow input): uninformative
+  (the running postnatal clocks also read rho 0.53-0.89, well below the ~0.97 a daily input gives; intronic noise beyond
+  counting biases rho). A340 (geometry): the fetal states are **not a single slow displacement** (del Valle 14 genes
+  iota 0.41, core 0.55, liver 0.68, against >= 0.91 for a line; all p 0.001), somewhat more elongated than a daily clock
+  in hospital hours; in liver the elongation lies along the glucocorticoid direction (8 deg). Proposed wording for part 3:
+  "the fetal clock-shaped state is two-dimensional, as a clock sampled across the day, and not a single slow factor; in
+  liver an additional glucocorticoid-like axis"; the ultradian alternative stays open (A328 lead upper bounds argue
+  against it only post hoc).
 
 ### Q42 (2026-11-19): the two-axis checks of PAPER_PLAN section 6 are run; four decisions remain
 **Question.** The section 6 checks (prompt `prompts/two_axis_checks_2026-11-19.md`) and the user's follow-up on the cell

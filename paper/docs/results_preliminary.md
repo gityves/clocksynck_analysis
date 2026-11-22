@@ -7514,3 +7514,48 @@ GTEx fast deaths, 27 peripheral tissues, A294b fit. Validation passed (A104 rho 
     (Q43) are unaffected; part 3 (daily timescale) is not established by A328 / A338.
   - Not done (registered descriptive): CoPhaser phases on the spliced / unspliced layers, the cycling-share covariate
     sensitivity, the damping rho.
+
+## A339 (scored 2026-11-22; BLIND for rho; one run): fast input not excluded (H339.1, H339.2 FAIL), uninformative: the running postnatal clocks also read rho well below 1, so extra-Poisson intronic variation biases rho down beyond what the power stage captured
+- Matched estimator, 20 thinning replicates, exact log-count noise term (power note), 2,000 bootstrap resamples
+  (`A328_fetal_running_loop/output/score_a339/{rho,verdicts}.csv`). Code check first (unspliced := thinned spliced:
+  rho 0.73-1.85, above 1 where the shared counting noise is over-subtracted, as expected for that check).
+
+  | unit (n) | genes | rho (90 %) | unspliced noise share | H339.1 (> 0.43) Holm p | H339.2 (> 0.69) Holm p |
+  |---|---|---|---|---|---|
+  | del Valle (32) | 14 | 2.29 (0.87 to 13.54) | 0.85 | 0.36 FAIL | 0.37 FAIL |
+  | del Valle (32) | core | 0.63 (0.41 to 1.07) | 0.36 | 0.16 FAIL | - |
+  | liver (37) | 14 | 0.45 (0.28 to 0.72) | 0.26 | 0.42 FAIL | 0.94 FAIL |
+  | liver (37) | core | 0.45 (0.18 to 0.85) | 0.43 | 0.43 FAIL | - |
+
+- *Running-clock references, same estimator:* postnatal liver 0.74 (0.58 to 0.92), heart 0.89 (0.79 to 1.01), kidney
+  0.53 (0.23 to 1.36), against about 0.97 expected for a daily input at tau = 1 h; the Greenwell check of the power stage
+  predicted about 0.9 at fetal depths. Descriptive fetal: 10x cortex 0.85 (0.49 to 1.39), heart 0.57, kidney 0.95.
+- **Reading (registered):** "a fast component is not excluded"; not "the input is fast" (that reading needed the
+  postnatal references near 1, and they are not). Post hoc: real unspliced counts carry variation beyond counting noise
+  (intron retention, nascent-RNA bursts), which lowers rho in every unit; fetal liver below postnatal liver cannot be
+  separated from noisier fetal introns (unspliced clock-gene median 39). The damping route is uninformative here.
+
+## A340 (scored 2026-11-22; BLIND for the fetal geometry; one run): the fetal clock-plane states are not a single slow displacement (H340.1 PASS: del Valle 14 genes and core, liver), but more elongated than a daily clock sampled in hospital hours; in liver the elongation lies along the glucocorticoid-target direction
+- Improperness iota (counting-noise corrected), references noise-matched to each unit (power note), 2,000 bootstrap
+  resamples (`A340_fetal_geometry/output/score/{iota,verdicts}.csv`). Code check first (genes permuted within cohort:
+  iota inside the no-clock reference ranges).
+
+  | unit (n) | genes | iota (90 %) | line q05 | daily 5-95 % | no clock 5-95 % | p vs line (Holm) | H340.1 | main axis to GC direction |
+  |---|---|---|---|---|---|---|---|---|
+  | del Valle (32) | 14 | 0.41 (0.26 to 0.71) | 0.97 | 0.13-0.37 | 0.56-0.83 | 0.001 (0.002) | PASS | 32 deg |
+  | del Valle (32) | core | 0.55 (0.28 to 0.78) | 0.91 | 0.10-0.42 | 0.72-0.91 | 0.001 | PASS | 88 deg |
+  | liver (37) | 14 | 0.68 (0.50 to 0.83) | 0.95 | 0.14-0.53 | 0.42-0.74 | 0.001 (0.002) | PASS | 8 deg |
+
+  Descriptive: liver core 0.83 (0.71 to 0.90; not decidable), axis 2 deg from GC; 10x cortex 0.58 (0.39 to 0.81), inside
+  its daily range (0.13-0.60), p vs line 0.008; `cortex_minus1` 0.65.
+- **Reading.** H340.1 PASS in all three: the fetal clock-shaped covariation is **not a single slow factor** moving
+  fetuses along one line (age error, glucocorticoid tone or termination protocol acting alone). The registered readings
+  did not foresee the position found: every point estimate lies above the daily 5-95 % range (del Valle 14 genes just
+  above, 0.41 vs 0.37), and far below the line. Post hoc wording: "two-dimensional like a clock sampled across the day,
+  with an additional axial component", or a narrower collection window than the 08-18 h GTEx frame; the bootstrap
+  intervals overlap the daily range in del Valle (14 genes and core) and touch it in liver. In liver the main axis lies
+  8 deg (core 2 deg) from the glucocorticoid-target direction, consistent with a glucocorticoid-like axial component on
+  top of the turning state; in the del Valle adrenal it does not (32 and 88 deg). Del Valle 14 genes and core lie below
+  the no-clock range, liver inside it (the covariation itself is clock-specific in these units, A328 part a, A243 / A269).
+- **For claim 3 (Q43 framing):** part 3 ("daily timescale") now has a lead-free argument against the single-slow-factor
+  alternative; the ultradian alternative is not excluded (A339 uninformative, A328 lead upper bounds post hoc only).
