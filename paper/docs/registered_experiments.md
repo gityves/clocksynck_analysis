@@ -10197,3 +10197,11 @@ volunteers. H342.1 fails in all four rows (matched delta -0.16 to -0.06 h, inter
 small negative bias of A337's check); pairing gate p 0.58 / 0.38 (coherence 0.08 / 0.11, below the matched q95 0.21 /
 0.20), H342.3 fails; rhythm p < 0.05 in 1 of 4 rows (0.04, P 14 genes) under shuffled times. Scoring proceeds as
 registered.
+
+### A342 erratum (2026-11-22, user decision): unspliced count corrected to direct introns
+The registered unspliced count (`counts_intron`, gene body minus exon) is defective in this unstranded delivery: it is
+0 for CLOCK and PER2 and a few per cent of the true count for PER3 and RORA (genes overlapping another gene; per-gene
+check in `results_preliminary.md`, METHOD.md section 9). The user ruled this a bug, not a choice: A342 is scored on
+`counts_intron_direct` (`score_a342.py --direct`, `output/score_direct/`), with `counts_intron` as the sensitivity. The
+first run (`output/score/`) is kept as the bugged run. Only H342.1-H342.2 depend on introns; P342.0 and H342.3-H342.5
+are unchanged (identical tables).

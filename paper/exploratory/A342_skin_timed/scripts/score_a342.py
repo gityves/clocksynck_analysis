@@ -22,7 +22,10 @@ genes ("all") and the core loop. Bootstraps (2,000) resample volunteers with all
 Descriptive: unspliced timed amplitude ratio; per-gene timed acrophases; QC sensitivity (runs < 30 % assigned to exons
 removed, with their pair partner for the pairing); direct introns (lead); site waveforms; volunteers 1-11 vs 12-20.
 
-    python score_a342.py [--check]
+    python score_a342.py [--check] [--direct]
+`--direct` (bug fix, user decision 2026-11-22): `counts_intron_direct` as the unspliced count and `counts_intron` as
+the sensitivity; outputs to `../output/score_direct/`. This is the scored run: `counts_intron` loses CLOCK and PER2 in
+these unstranded libraries (METHOD.md section 9); `../output/score/` is the bugged first run, kept for the record.
 `--check`: unspliced := spliced thinned to 10 %, times permuted within volunteer, P rows permuted across volunteers
 (true lead 0, no rhythm, no pairing). Outputs (`../output/score[_check]/`): verdicts.csv, leads.csv, pairing.csv,
 genes.csv, sensitivity.csv.
@@ -215,7 +218,8 @@ def run(variant, s_all, u_all, d, rng, waveform_for_site=None, pair=True) -> tup
 def main():
     global CHECK, GENOME, LOGMEAN
     CHECK = "--check" in sys.argv
-    out = OUT / ("score_check" if CHECK else "score")
+    direct = "--direct" in sys.argv
+    out = OUT / ("score_check" if CHECK else "score_direct" if direct else "score")
     out.mkdir(parents=True, exist_ok=True)
     limit_threads(4)
     t0 = time.time()
@@ -224,6 +228,8 @@ def main():
     ex, it, itd = load("exon"), load("intron"), load("intron_direct")
     q = pd.read_csv(A.DATA / "qc.tsv", sep="\t").set_index("run")
     s_all, u_all, ud_all = ex[d.run].T, it[d.run].T, itd[d.run].T
+    if direct:
+        u_all, ud_all = ud_all, u_all  # direct primary, subtraction as the sensitivity
     if CHECK:
         u_all = pd.DataFrame(rng.binomial(s_all.to_numpy(np.int64), 0.1), index=s_all.index, columns=s_all.columns)
         ud_all = u_all

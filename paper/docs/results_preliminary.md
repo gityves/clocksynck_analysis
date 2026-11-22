@@ -7636,22 +7636,21 @@ GR set FKBP5, TSC22D3, ZBTB16, KLF9 against matched controls of the same runs; 2
   Acute glucocorticoid raises PER1 (+0.5 log) within the surgical window; whether the core loop moves is not decidable
   here.
 
-## A342 (computed 2026-11-22): timed living skin. Untimed lead positive but larger than the timed one on subtraction introns (H342.1 PASS, H342.2 FAIL), equal on direct introns (sensitivity); E-P offset equals the timed offset but the pairing is not clock-specific (H342.3 FAIL); no sun-exposure amplitude difference (descriptive)
-<!-- src: paper/exploratory/A342_skin_timed/output/score/{verdicts,leads,pairing,genes,sensitivity}.csv; code paper/exploratory/A342_skin_timed/scripts/score_a342.py -->
+## A342 (computed 2026-11-22; unspliced count corrected to direct introns, see erratum): in timed living skin the untimed pre-mRNA lead equals the timed lead (H342.1, H342.2 PASS); the E-P offset equals the timed offset but the pairing is not clock-specific (H342.3 FAIL); no sun-exposure amplitude difference (descriptive)
+<!-- src: paper/exploratory/A342_skin_timed/output/score_direct/{verdicts,leads,pairing,genes,sensitivity}.csv (scored run); output/score/ = the bugged first run (subtraction introns); code paper/exploratory/A342_skin_timed/scripts/score_a342.py --direct -->
 GSE326530, 20 volunteers x photoprotected (P) / photoexposed (E) x 4 times; one waveform (GTEx not-sun-exposed skin)
-for all statistics (power note); volunteer-cluster bootstraps.
+for all statistics (power note); volunteer-cluster bootstraps. Unspliced = `counts_intron_direct` (A342 erratum: the
+registered subtraction count is 0 for CLOCK and PER2 in this unstranded delivery; user ruled it a bug).
 - **P342.0 PASS:** spliced state rhythmic at both sites (p < 0.0001, 14 genes and core).
-- **H342.1 PASS (both sites, both gene sets):** untimed lead, matched estimator: P +2.89 h (90 % 1.91 to 4.04), E +1.81
-  (1.00 to 2.92); core P +3.84 (2.08 to 5.67), E +1.92 (0.19 to 3.65); gates p <= 0.006. Plain P +1.88, E +1.34;
-  per-gene P +1.19 (0.53 to 1.92), E +1.81 (1.16 to 2.62).
-- **H342.2 FAIL:** timed lead on subtraction introns P +0.23 h (-0.90 to 1.19), E +0.57 (-1.08 to 2.07), not
-  resolved from 0; untimed minus timed P +2.66 h (1.47 to 4.27), E +1.24 (-0.05 to 3.09), outside +-1.5 h.
-- *Direct-intron sensitivity (descriptive, registered):* the timed lead becomes clearly positive, P +1.18 h (0.58 to
-  1.89), E +1.48 (1.08 to 1.95) (core +1.21, +2.25), and the untimed matched lead equals it: P +1.16 (0.81 to 1.59),
-  E +1.42 (1.08 to 1.84) (per-gene +0.80, +1.03). Cause (post hoc per-gene check below, which corrects a first reading
-  of contamination by mature transcripts): in these unstranded libraries the subtraction intron of four clock genes
-  whose gene bodies overlap another gene is lost (CLOCK and PER2 zero, PER3 and RORA a few per cent of the direct
-  count). The timed direct-intron lead (1.2-1.5 h) matches A337's median 1.27 h.
+- **H342.1 PASS (both sites, both gene sets):** untimed lead, matched estimator: P +1.19 h (90 % 0.81 to 1.64), E +1.41
+  (1.08 to 1.79); core P +1.19 (0.74 to 1.76), E +1.92 (1.34 to 2.52); gates p < 0.0001. Plain P +1.19, E +1.45;
+  per-gene P +0.80 (0.45 to 1.11), E +1.03 (0.65 to 1.45).
+- **H342.2 PASS (all four):** timed lead P +1.18 h (0.59 to 1.86), E +1.48 (1.08 to 1.93) (core +1.21, +2.25);
+  untimed minus timed P +0.01 (-0.43 to 0.56), E -0.07 (-0.47 to 0.37), core -0.02 (-0.57 to 0.60), -0.33 (-0.77 to
+  0.16), all within +-1.5 h. The timed lead (1.2-1.5 h) matches A337's median 1.27 h.
+- Sensitivities: QC (58 visits) and site waveforms keep every lead within +-1.25 h of the timed one. On subtraction
+  introns (the bugged first run) the timed lead is not resolved from 0 (P +0.23, E +0.57) and the untimed lead is
+  inflated (P +2.89, E +1.81): four of 14 genes carry no unspliced signal there.
 - **H342.3 FAIL (on clock-specificity only):** untimed E-P offset +1.33 h (0.35 to 2.46) vs timed +1.57 (0.42 to
   2.95), inside the timed interval (core +1.02 vs +1.19): the offsets agree. The pairing gate passes (coherence 0.467,
   p < 0.0001) but sits below both companions' q95 (matched 0.549, responsive 0.644): pseudo-clock genes pair as
@@ -7664,19 +7663,15 @@ for all statistics (power note); volunteer-cluster bootstraps.
 - *H342.5 (descriptive):* timed log amplitude ratio E/P +0.087 (-0.319 to 0.514; core -0.017), inside the matched
   companions' 5-95 % range (-1.45 to 1.56): no detectable sun-exposure change in clock amplitude. Timed E-P offset
   +1.57 h (0.42 to 2.95; sign as clocksync's offset, case minus reference), not within +-1 h: the exposed forearm and
-  the protected buttock differ in phase by about 1.5 h, the same size as A251's untimed epidermis forearm-buttock
-  +0.73 h; body site, not exposure, cannot be separated here.
-- QC sensitivity (58 visits; runs < 30 % exonic removed with their partner) and site-specific waveforms change none of
-  these readings (sensitivity.csv).
-- Run note: a first launch crashed in the sensitivity block (unequal volunteer sizes in the cluster bootstrap) after
-  the main tables were written; the rerun reproduced leads.csv, pairing.csv and verdicts.csv byte for byte (md5).
-- **Readings:** (1) pre-mRNA leads mRNA in timed living human skin by about 1.2-1.5 h (direct introns), and the untimed
-  statistic recovers it there; on subtraction introns it recovers a positive lead of the wrong size. Every lead
-  readout on unstranded libraries should use direct introns as primary (post hoc recommendation; see the per-gene
-  check below). (2) The
-  host-referenced offset equals the timed offset in living people (1.3 vs 1.6 h), but in this design the pairing
-  cannot be shown clock-specific against companions. (3) Chronic sun exposure leaves skin-clock amplitude unchanged
-  within the precision of 20 people.
+  the protected buttock differ in phase by about 1.5 h (A251 untimed epidermis forearm-buttock +0.73 h); body site and
+  exposure cannot be separated here.
+- Run notes: the bugged first run crashed once in the sensitivity block and its rerun reproduced its main tables byte
+  for byte (md5); the scored direct-intron run reproduces the pairing table of the first run exactly.
+- **Readings:** (1) pre-mRNA leads mRNA by about 1.2-1.5 h in timed living human skin, and the untimed lead statistic
+  recovers it at both sites: the first human ground-truth validation of the lead readout. (2) The host-referenced
+  offset equals the timed offset in living people (1.3 vs 1.6 h), but in this design the pairing cannot be shown
+  clock-specific against companions. (3) Chronic sun exposure leaves skin-clock amplitude unchanged within the
+  precision of 20 people.
 
 ### 2026-11-22 post hoc per-gene check: why subtraction and direct introns differ (descriptive; no hypothesis)
 <!-- src: paper/exploratory/A342_skin_timed/output/intron_definitions/genes.csv; code paper/exploratory/A342_skin_timed/scripts/intron_definitions.py -->
@@ -7698,5 +7693,4 @@ for all statistics (power note); volunteer-cluster bootstraps.
   no clock gene shows the loss (direct / subtraction <= 2 for all 14), so A328 part b, A338, A339 and A337 are not
   affected.
 - Consequence: direct introns as primary for unstranded libraries; for stranded libraries the two agree for clock
-  genes. The skin direct-intron reading (timed lead 1.2-1.5 h, recovered untimed) stands; it remains a registered
-  sensitivity, not a verdict.
+  genes. A342 is scored on direct introns (erratum, user decision).
