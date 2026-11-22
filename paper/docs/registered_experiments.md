@@ -9863,3 +9863,73 @@ single-frequency filter: a mixture of timescales gives an average angle. (4) Tim
 **Stop rule.** Power once the priority-1 deliveries and the postnatal reference are on disk; one scoring run, with
 A328 part b. **Code:** `paper/exploratory/A328_fetal_running_loop/scripts/{power_a328b,score_a328b}.py` (A338 adds
 its columns there).
+
+## A339 (2026-11-22, approved by the user; follow-up of A328 part b / A338; staged: power, then one scoring run; **BLIND** for the damping ratio rho of every unit (never computed; the per-gene amplitude ratios written by `score_a328b.py` to `output/score_b/genes.csv` are not opened before scoring); **NOT BLIND**: every A328 part b / A338 lead and gate (`results_preliminary.md`, 2026-11-22), the A337 timed leads, the part b power stage): is the input to the fetal clock state fast (ultradian pulses) or slow?
+**Why.** A338's angle could not resolve the input's timescale. The same first-order filter (mRNA follows pre-mRNA,
+dm/dt = k p - m / tau) also damps the modulation: rho = spliced / unspliced clock-plane amplitude = cos phi =
+1 / sqrt(1 + (omega tau)^2). With tau = 1 h (lower end of 1-2 h for clock mRNAs, Wang 2018; the conservative choice,
+since a shorter tau makes fast inputs less damped): steady 1.00, 24 h 0.97, 12 h 0.89, 6 h 0.69, 3 h 0.43, 1 h 0.16.
+Daily and steady inputs cannot be told apart this way; fast and slow can. The user's question (2026-11-22): exclude
+that the clock-shaped fetal variation is carried by short-period fluctuations.
+
+**Statistic (per unit, matched estimator of the power note, same residualisation and thinning replicates as A328).**
+rho = |sum_i z_u,i conj(z_s,i)| / (sum_i |z_u,i|^2 - N_u), N_u = sum_i of the Poisson variance of z_u,i
+(`clocksync.paired.states` trace on the unspliced counts and depths); spliced noise does not bias the cross-moment.
+90 % interval from 2,000 bootstrap resamples within cohort. 14 genes primary, core secondary.
+- **H339.1 (primary; del Valle and prenatal liver, the A328-decidable units; Holm over the two):** periods <= 3 h
+  excluded: the 90 % lower bound of rho exceeds 0.43 (3 h at tau = 1 h).
+- **H339.2 (secondary, same units):** periods <= 6 h excluded: lower bound above 0.69.
+- Descriptive: 10x cortex (and `cortex_minus1`), heart, kidney (no clock covariation expected; rho not interpretable
+  without one), postnatal liver, heart, kidney (running-clock references; expected rho near 1); pergene amplitude ratios
+  per gene against literature lifetimes.
+- *Companion, NOT BLIND (seen 2026-11-22, post hoc):* the matched lead's upper bound read as a minimum period at
+  tau = 1 h, T_min = 2 pi tau / tan(phi_hi): liver 14 genes about 22 h, del Valle core about 24 h, del Valle 14 genes
+  about 7 h; caveat: the matched estimator reads lead magnitudes low (about half on Greenwell), so T_min is an
+  overestimate by up to about 2-fold.
+**Power (stage `power`, before any rho is computed on fetal or postnatal data; extends `power_a328b.py`).** Settings
+of the part b power with rho added: `a338_24h` (truth 0.95 at the stand-ins' tau), `a338_3h` (truth 0.34), a new
+`a338_6h`, `steady` (1.0); Greenwell AL + NR real counts thinned to each unit (true 24 h; carries real extra-Poisson
+intronic noise, which biases rho downward, toward "fast"). A unit is decidable for H339.1 if the H339.1 criterion holds
+in >= 0.8 of draws under `a338_24h` and in Greenwell, and in <= 0.1 under `a338_3h`; same for H339.2 with 6 h.
+**Readings (fixed now).** H339.1 PASS: "the fetal clock-shaped state does not follow ultradian (<= 3 h) hormone
+pulses; its input varies slowly (hours to days)". H339.2 PASS in addition: "slower than about 6 h". FAIL with power:
+"a fast component is not excluded" (not "the input is fast", which would need rho well below the 6 h value with the
+postnatal references near 1). Not decidable: stated as such.
+**Limits.** (1) Extra-Poisson unspliced noise lowers rho (conservative for H339.1); pseudocount compression is
+equalised by the matched estimator. (2) tau of fetal clock mRNAs is not measured (A338 r: liver 0.81, 0.64-1.05).
+(3) A mixture of a slow and a fast input gives an intermediate rho. (4) Timescale, not source.
+**Code.** `paper/exploratory/A328_fetal_running_loop/scripts/{power_a339,score_a339}.py` (power reuses the `power_a328b.py` stand-ins).
+
+## A340 (2026-11-22, approved by the user; follow-up of A328 / A338 and of the proposed fetal framing (Q43, part 3); staged: power, then one scoring run; **BLIND** for the geometry of the fetal clock-plane states (grep of the fetal scripts 2026-11-22: no pseudo-covariance, axial or improperness statistic computed on any fetal or embryonic human unit; the mouse embryo of A236 had a post hoc eigenvalue ratio 0.058); **NOT BLIND**: the fetal spliced covariations (A242-A307, A328 part a), the A328 part b / A338 results): does a single slow factor (age error, maternal glucocorticoid tone, termination protocol) explain the fetal clock-shaped covariation, or does the state turn like a clock sampled across the day?
+**Why.** Slow inputs (days) look steady to the lead and to rho (A339), and a single slow factor moves every fetus along
+one line in the clock plane (a displacement, A133). A daily clock with fetuses collected at different hours spreads
+them along an arc. Hospital-hours collection shortens the arc, so a real clock also looks elongated: the comparison
+must be calibrated on adult clocks sampled the same way.
+
+**Statistic (per unit; spliced counts only).** States z_i from the spliced log fractions residualised as A328 part b
+(cohort and quadratic age; stage in del Valle), one projector (`clocksync.paired`, GTEx waveform). Improperness
+iota = |sum_i (z_i^2 - nu_i)| / sum_i (|z_i|^2 - t_i), nu_i and t_i the Poisson pseudo-variance and variance of z_i
+(from L diag(1 / counts) L^T): 0 for a cloud with no preferred axis, 1 for points on a line. 90 % bootstrap interval
+within cohort. Descriptive: the main axis's direction against the glucocorticoid-target direction of A307 (angle).
+**Reference distributions (stage `power`, before any fetal iota is computed).** Per unit, n distinct GTEx samples of the
+matching tissue (adrenal for del Valle, liver), **fast deaths (Hardy 1-2) at 08-18 h** (a daily clock sampled in
+hospital hours; time of death in memory only), thinned to the unit's spliced clock-gene depths with the clock at 1,
+0.75 and 0.5 of the adult size (`scale_clock`), 1,000 draws: iota_daily. The same draws with every clock-plane state
+replaced by its projection on the draw's main axis, variance kept (`simulate.thin_clock`): iota_line. Decidable if the
+q95 of iota_daily at 0.75 lies below the q05 of iota_line at 0.75 (separation at the expected fetal size).
+- **H340.1 (primary; del Valle, liver; Holm):** observed iota below the q05 of iota_line at the matching size (scale
+  chosen by the unit's coherence relative to the adult, A242 / A328 part a: 0.75 unless stated otherwise in the power
+  note): "not a single slow displacement".
+- Readings (fixed now): H340.1 PASS and iota within the iota_daily 5-95 % range: "the fetal state turns like a clock
+  sampled across the day" (with A339 H339.1: "neither ultradian pulses nor a single slow factor"). PASS but iota below
+  the daily range: "less elongated than a daily clock in hospital hours" (several independent inputs or a wider
+  sampling window; not resolved). FAIL with iota inside the iota_line range: "a single slow displacement, in the
+  direction of ..." (axis angle; if it matches the glucocorticoid direction, "a slow glucocorticoid-like factor").
+  Not decidable: stated as such.
+- Descriptive: 10x cortex (and `cortex_minus1`), the A243 pooled lung, heart and kidney if their covariation passes.
+**Limits.** (1) Several independent slow factors can fill the plane without a daily rhythm; they would have no reason
+to follow the waveform's phase order, but iota alone does not test the order (the untimed cloud has no direction of
+rotation). (2) Collection times of the fetal cohorts are unknown; the GTEx 08-18 h window is the assumed sampling
+frame. (3) Fetal amplitude below the adult one lowers the separation (power stage). (4) Not blind for the existence of
+the covariation.
+**Code.** `paper/exploratory/A340_fetal_geometry/scripts/{power_a340,score_a340}.py`.
