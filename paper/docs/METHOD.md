@@ -174,4 +174,11 @@ inconclusive (A144 part 2). Resolution depends on clock UMI per cell; eligibilit
   -0.25 against a timed +0.09 (difference -0.34, 90 % -0.73 to 0.00), on every time subset. Write such results as
   loudness, not amplitude. The host-referenced |z|^2 and c (anchored host, non-shared scatter in psi) and the A304 gain
   slope (scatter of the case excluded, normal reliability cancelling in contrasts) are the amplitude-type readouts.
-  Whether group contrasts of loudness track timed amplitude in GTEx (time of death) is checked separately.
+  Against timed truth in GTEx (time of death): host-referenced relative amplitudes of 40 tissues from 08-18 h deaths
+  correlate with the timed amplitudes at 0.976 (log2 Pearson; A123 H123.2), and same-time variance ratios track timed
+  amplitude ratios over 572 tissue pairs (V52: Spearman 0.94, 0.91 at 08-18 h, 92 % sign agreement) but attenuated
+  (slope 0.64-0.68). Loudness ratios are therefore reliable in rank and sign and conservative in size; the sign can flip
+  when the true ratio is near 1, as for the two skin sites (timed ratio +0.09, interval spanning 0). No group contrast
+  (e.g. ventilated vs fast) has a timed benchmark in GTEx: ventilated donors lose agreement with time of death (host
+  vs recorded time 0.14 vs 0.63); the mouse knockout contrast (A260 V260.2) gives untimed vs timed log amplitude ratios
+  Spearman 0.870 over 1,545 genes.
