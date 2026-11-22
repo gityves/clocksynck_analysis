@@ -167,3 +167,11 @@ inconclusive (A144 part 2). Resolution depends on clock UMI per cell; eligibilit
   reduced in mixed libraries (GSE320593). In stranded deliveries the two agree for clock genes (direct / subtraction
   0.5-2). Check strandedness (`qc.tsv`, `strand_used`) before using `counts_intron`; amendments registered before
   2026-11-22 keep their registered definition as primary.
+- Loudness versus daily amplitude (2026-11-23, A342 / A344). A clock-plane variance ratio (`paired.log_var_ratio`, the
+  `paired()` r, the A315 W ratio, the A254 r) measures loudness: all in-plane variance after the Poisson correction,
+  i.e. the daily rhythm plus person-to-person phase spread plus non-shared scatter. It equals the daily-amplitude
+  ratio only if the non-daily parts scale alike. In timed skin (two sites, same persons) the untimed log ratio was
+  -0.25 against a timed +0.09 (difference -0.34, 90 % -0.73 to 0.00), on every time subset. Write such results as
+  loudness, not amplitude. The host-referenced |z|^2 and c (anchored host, non-shared scatter in psi) and the A304 gain
+  slope (scatter of the case excluded, normal reliability cancelling in contrasts) are the amplitude-type readouts.
+  Whether group contrasts of loudness track timed amplitude in GTEx (time of death) is checked separately.
