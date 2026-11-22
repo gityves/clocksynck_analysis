@@ -7569,3 +7569,35 @@ GTEx fast deaths, 27 peripheral tissues, A294b fit. Validation passed (A104 rho 
   the no-clock range, liver inside it (the covariation itself is clock-specific in these units, A328 part a, A243 / A269).
 - **For claim 3 (Q43 framing):** part 3 ("daily timescale") now has a lead-free argument against the single-slow-factor
   alternative; the ultradian alternative is not excluded (A339 uninformative, A328 lead upper bounds post hoc only).
+
+## A341 (computed 2026-11-22; descriptive by the power rule): neither glucocorticoid responsiveness nor clock maturity ranks the fetal organs that carry the clock-shaped state
+- 7 organ readouts as scored (A244 cortex and medulla, A243 lung, liver, heart, kidney, A239 prenatal brain); measures
+  residualised as each readout (`A341_gr_ranking/output/{measures,spearman}.csv`).
+
+  | organ (n) | C | NR3C1 log CPM | GC-score variance (noise-corrected) | core-gene log CPM | ARNTL - NR1D1 |
+  |---|---|---|---|---|---|
+  | adrenal cortex (34) | 0.608 | 2.13 | 0.129 | 2.04 | 0.17 |
+  | liver (35) | 0.583 | 3.86 | 0.113 | 2.57 | 0.92 |
+  | lung (38) | 0.530 | 5.05 | 0.057 | 3.19 | 0.61 |
+  | heart (72) | 0.032 | 4.53 | 0.174 | 3.08 | 0.37 |
+  | kidney (53) | 0.017 | 4.17 | 0.052 | 3.18 | 0.64 |
+  | adrenal medulla (30) | -0.048 | 3.75 | 0.175 | 2.29 | 0.24 |
+  | brain (20, arrays) | -0.166 | - | 0.007 (3 GC genes, uncorrected) | - | - |
+
+  Spearman with C (one-sided exact p): NR3C1 -0.20 (0.67, 6 organs), GC-score variance 0.25 (0.30, 7), core-gene level
+  -0.26 (0.72, 6), ARNTL - NR1D1 -0.03 (0.54, 6).
+- **Reading (descriptive):** no measure orders the organs. Heart and adrenal medulla have the largest between-fetus
+  glucocorticoid-target variation yet no clock-shaped covariation; the adrenal cortex has the lowest NR3C1 level and the
+  strongest covariation. "Organs are selected by glucocorticoid responsiveness" is not supported at the organ level (with
+  the power caveat: 7 organs, detectable rho 0.90), nor is a simple clock-maturity ranking. Not done: the mouse
+  cell-type replication (descriptive in the registration).
+
+## Scout (2026-11-22; metadata only): no open fetal cohort supports the host-referenced organ-offset test
+- Sonnet subagent (web metadata) plus a check of the GSE66302 sample names on disk. Roost 2015 (DeepSAGE, 18 fetuses,
+  21 organs): only 5 fetuses have >= 2 of adrenal, liver, lung (2 with all three: CC2, CF2; liver + lung: CI1, CR1,
+  DJ1). Cao 2020: many organs per fetus but not estimable at its depth (A241, adult pass rate 0.14). Suntharalingham
+  2025 (45,X and controls, HDBR): no adrenal, lung only pooled. Gerrard 2016: pooled embryos. Han 2020 HCL: same-donor
+  overlap not shown. ENCODE / Roadmap fetal donors: not resolved (no shared adrenal-lung-liver donor found). No source
+  reports collection time; termination type, where stated, is elective surgical.
+- Consequence: the coupling and phase offsets between fetal organs of one individual, clocksync's own readout, cannot be
+  measured on open data; it stays a prediction for a multi-organ fetal cohort (closed: Cao raw reads, dbGaP; Q32).

@@ -9987,3 +9987,9 @@ about 0.7; the power stage states the detectable rho and, if it exceeds 0.8, H34
 cohorts; if at least two cohorts per protocol exist, a protocol contrast of the adrenal covariation is drafted
 separately (A342), not scored here.
 **Limits.** Few organs; NR3C1 mRNA is not receptor activity; the outcome is not blind; organ composition differs.
+
+### A341 power note (2026-11-22; `A341_gr_ranking/scripts/power_a341.py`, `output/power.csv`; no organ-level GR measure computed)
+One-sided exact permutation Spearman, bivariate-normal latent, 20,000 draws: with the 7 registered units the critical
+rho is 0.679 and power reaches 0.8 only at r = 0.90 (6 organs: 0.771 / 0.95). The detectable rho exceeds 0.8: by the
+registered rule H341 is reported **descriptively only**. Scout of the termination protocol: deferred (no cohort metadata
+read yet); the multi-organ scout below found no protocol information in the candidate sets either.
