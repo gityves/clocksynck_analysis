@@ -30,7 +30,7 @@ import pandas as pd  # noqa: E402
 from clocksync import waveform as W  # noqa: E402
 from clocksync._core.controls import CLOCK_LIKE, RESPONSIVE_GENES  # noqa: E402
 from clocksync._core.responsive_broad import RESPONSIVE_BROAD  # noqa: E402
-from clocksync.genes import CLOCK_GENES  # noqa: E402
+from clocksync.genes import CLOCK_GENES, canonical  # noqa: E402
 from clocksync.paired import projector, states  # noqa: E402
 from clocksync.waveform import Waveform  # noqa: E402
 
@@ -57,6 +57,7 @@ def samples() -> pd.DataFrame:
 
 def load(name: str) -> pd.DataFrame:
     x = pd.read_csv(DATA / f"counts_{name}.tsv.gz", sep="\t")
+    x["symbol"] = x.symbol.astype(str).map(canonical)  # BMAL1 -> ARNTL (GENCODE v45 symbol)
     x = x.drop_duplicates("symbol").set_index("symbol").drop(columns="gene_id")
     return x
 

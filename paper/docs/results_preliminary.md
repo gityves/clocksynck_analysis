@@ -7605,3 +7605,33 @@ GTEx fast deaths, 27 peripheral tissues, A294b fit. Validation passed (A104 rho 
 - Consequence: the coupling and phase offsets between fetal organs of one individual, clocksync's own readout, cannot be
   measured on open data; it stays a prediction for a fetal cohort in which >= 20 fetuses each give two clock-positive
   organs (Cao's dbGaP raw reads would not add fetuses).
+
+## A343 (computed 2026-11-22): an acute dexamethasone input raises pre-mRNA far ahead of mature mRNA in living human fat (H343.1 PASS) and liver (descriptive, same size)
+<!-- src: paper/exploratory/A343_dex_acute/output/score/{verdicts,genes,h343_2,h343_3,two_tissue}.csv; code paper/exploratory/A343_dex_acute/scripts/score_a343.py -->
+GSE320593, pre-operative (N) vs intra-operative (S) biopsies; primary units = patients whose two runs share library type.
+GR set FKBP5, TSC22D3, ZBTB16, KLF9 against matched controls of the same runs; 200 matched four-gene companions.
+- **P343.0 PASS (fat):** DEX patients (38), S - N mRNA change of the GR set (log CPM, vs controls) +0.377, sign-flip
+  p < 0.0001, companion q95 0.110. Liver (13, descriptive): +0.990, q95 0.129.
+- **H343.1 PASS (fat):** intron-to-exon ratio change D = +1.934 (log), p < 0.0001, companion q95 0.226 (median 0.011).
+  Liver (descriptive): +2.393, q95 0.305. Direct-intron sensitivity smaller but above the bar in both: fat +0.963
+  (q95 0.184), liver +1.277 (0.224). The pre-mRNA excess (D) exceeds the mRNA rise (E) about five-fold (fat) and
+  2.4-fold (liver): the biopsies catch transcription before mature mRNA has caught up.
+- Per gene (DEX, primary; D subtraction / direct): FKBP5 2.01 / 1.95 (fat), 2.38 / 2.40 (liver) agree across intron
+  definitions; TSC22D3 (1.38 / 0.21 fat, 4.24 / 0.80 liver) and ZBTB16 (4.01 / 1.26, 2.69 / 1.72) are larger by
+  subtraction, read as DEX-induced transcripts outside the annotated exons counted as intron by subtraction (GILZ
+  isoforms of TSC22D3); the direct definition is the conservative figure. KLF9 small (0.31, 0.40).
+- *H343.2 (descriptive):* DEX minus NO_DEX in D: fat +1.709 (permutation p 0.002; 38 vs 7), liver +1.973 (p < 0.001;
+  13 vs 5). On all patients the NO_DEX liver D (+1.171, above its q95) carries the library-type artefact the design
+  anticipated (6 of 11 NO_DEX surgical runs stranded); primary NO_DEX: fat +0.226, liver +0.420.
+- *H343.3 (descriptive):* PER1 S - N change, DEX minus NO_DEX: fat +0.495 (90 % 0.240 to 0.770), liver +0.522 (0.071
+  to 0.945). Core-loop displacement difference not resolved (fat primary 1.37, 90 % upper bound 2.26 state units;
+  liver 0.76, 1.57): the S - N displacement is about one to two daily amplitudes in both arms (time of day and surgery
+  differ between the two biopsies), so the design cannot say whether acute DEX moves the core loop.
+- *Two-tissue (descriptive, 21 patients, code 53 excluded):* liver-fat complex correlation of the 14-gene state 0.754
+  at N (offset liver minus fat +2.85 h) and 0.491 at S (+3.60 h); no companions, no claim.
+- Run note: a first launch crashed before computing anything (`ARNTL` absent: GENCODE v45 names it BMAL1); symbols are
+  now mapped through `clocksync.genes.canonical`; the run above is the single scoring run.
+- **Reading (as registered):** an acute transcriptional input of known kind appears in pre-mRNA well before mature mRNA
+  in living human tissue at bulk depth: the premise of the lead readouts (A328, A337, A342) holds with a known input.
+  Acute glucocorticoid raises PER1 (+0.5 log) within the surgical window; whether the core loop moves is not decidable
+  here.

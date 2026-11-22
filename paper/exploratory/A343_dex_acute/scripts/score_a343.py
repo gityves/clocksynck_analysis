@@ -183,7 +183,9 @@ def main():
     rng = np.random.default_rng(SEED)
     t = PW.samples()
     ex, it, itd = PW.load("exon"), PW.load("intron"), PW.load("intron_direct")
-    ann = pd.read_csv(PW.DATA / "gene_annotation.tsv.gz", sep="\t").drop_duplicates("symbol").set_index("symbol")
+    ann = pd.read_csv(PW.DATA / "gene_annotation.tsv.gz", sep="\t")
+    ann["symbol"] = ann.symbol.astype(str).map(PW.canonical)
+    ann = ann.drop_duplicates("symbol").set_index("symbol")
     if CHECK:
         pts = PW.primary(t, "A")
         m = Matcher(ex, ann, pts.run_N.tolist())
