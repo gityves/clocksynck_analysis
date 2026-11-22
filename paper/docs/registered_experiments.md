@@ -9067,6 +9067,59 @@ Both readouts are estimable and are scored. A FAIL bounds the size: an adult-siz
 (dv:all) and 0.5 (dv:core). The shuffled rate lies above 0.05 for dv:all (CI from 0.050): a PASS with p between 0.01
 and 0.05 is reported with this rate beside it.
 
+### A328 note 2 (2026-11-22, DRAFT for the user; before any part b / A338 power or clock statistic; applies to A328 part b and A338)
+Seen before writing: the derived cell and library tables (`$SCCC_DATA/sccc_mapping_derived/`, `common/mapping/derive.py`):
+cell counts, UMI totals and classes per fetus; no clock-gene value, no intron or unspliced count of any gene, no
+genome-wide unspliced fraction (task 1 QC not yet run).
+
+- *Single-cell units.* Adrenal cortex: the A244 cells (`a244_cell`) of the `_cells200` deliveries, A244 class
+  `cortex`, one pseudobulk per fetus (one GSM per fetus in all four cohorts), fetuses with >= 200 cortex cells:
+  Kameneva 10 (12,324 cells), Wang 9 (10,694), Cheng 3 (2,043), Dong 3 (18,617); 25 fetuses. Medulla and stroma are not
+  part b compartments. Heart (Knight-Schrijver) and kidney (Hochane): one whole-organ pseudobulk per fetus over non-blood
+  cells (`blood` False) with >= 500 Gene UMIs (A242 floor), GSMs and regions of a fetus summed, fetuses with >= 200 such
+  cells: heart 6 of 6 (9,132-25,555 cells), kidney 4 of 5 (Hochane fetus 9, GSM3509837, has 130 and is left out). They
+  join the Cardoso-Moreira prenatal heart (34) and kidney (26) as further cohorts, centred within cohort as registered.
+  Wang GSM5114030 / GSM5114032 are taken with the corrected labels (public deposit swapped; `derive.py` `SWAP`).
+- *Count types.* Single cell: spliced = the `spliced` layer, unspliced = the `unspliced` layer; `ambiguous` is not used
+  (neither type). Bulk: `counts_exon` and `counts_intron` as registered; `counts_intron_direct` as sensitivity (note 1).
+  Not applied (labelled sensitivities only if the task 1 QC gives a reason): doublet calling, ambient (soup) correction,
+  unspliced-fraction or stress gates.
+- *Cardoso-Moreira postnatal.* Neither the SDRF nor the authors' library table gives individuals; each used library is
+  taken as one individual (`donor` = `lib<library>`): liver 12, heart 10, kidney 9 libraries. Prenatal: the 97 libraries
+  the authors used (liver 37, heart 34, kidney 26), as note 1.
+- *QC flags (rules fixed now, applied after the task 1 QC, before any clock value).* Dong GSM4088787 / GSM4088788 (loose
+  STARsolo calls): no effect, only the A244 cells are used. Kameneva GSM4734601 / GSM4446536, Knight-Schrijver (56-65 %
+  uniquely mapped): kept; mapping rate enters only through depth. Hochane GSM3509837: out by the cell rule. A GSM is
+  excluded only if its spliced sums over the A244 cells correlate (Spearman over all genes) better with another fetus's
+  A242 pseudobulk than with its own (identity mismatch); a GSM whose own correlation is below 0.9 is flagged and scored
+  with a leave-it-out sensitivity.
+- *Power reference (change to part b, before the power stage).* The registered reference, the Cardoso-Moreira postnatal
+  libraries subsampled to each fetal compartment's n, cannot be drawn: it has 9-12 libraries per organ against fetal n
+  of 25-37, and A337 shows the statistic lacks precision at n = 12, so its gate is not expected to be informative as a
+  power source. The power stage therefore uses the registered fallback, made primary: per compartment, n distinct GTEx
+  samples of the matching tissue (adrenal gland for cortex and del Valle; liver; heart left ventricle; kidney cortex),
+  deaths 08-18 h as in the part a power, spliced = thinned to the compartment's spliced clock-gene depths (cohort
+  medians, library sizes as delivered), unspliced = the spliced state turned by the expected lead and Poisson-thinned to
+  the unspliced clock-gene depths; expected lead 1.27 h with the A337 range ends 0.61 and 3.00 h as sensitivity
+  (A337 reading; replaces the +2 h midpoint). A tissue pool smaller than n is used whole and stated. The A337 Greenwell
+  AL + NR livers (n 36, real spliced and unspliced counts, true 24 h) subsampled and thinned to each compartment are
+  reported beside it as a model-free check. The A338 power uses the same GTEx stand-ins for its 24 h, steady and 3 h
+  alternatives (tau from the 1.27 h lead at 24 h, tau = 24 h x tan(2 pi x 1.27 / 24) / 2 pi), with the Greenwell check
+  beside it. The postnatal reference keeps its registered role for the expected lead and phi_ref only if its own gate
+  passes; otherwise the A337 values are used, as registered.
+- *Readings of H328.3 (wording, before any lead is computed).* A lead says the clock state varies in time within
+  fetuses; it does not say whether a fetal oscillator or a maternal daily input drives it (A338 limit 4 applies to A328).
+  The PASS readings become:
+  - PASS on the 14 genes and the core: "the fetal clock network varies coherently in time, the core genes included, with
+    the lead of a running clock"; with A338 T_eff including 24 h and below 96 h: "on a daily timescale". Source (fetal
+    loop or maternal rhythm, glucocorticoid the parsimonious candidate) is stated as interpretation, not result.
+  - PASS on the 14 genes, not on the core: "the signal-induced genes lead, the core does not": the
+    driven-state reading stands.
+  - The other readings (no consistent lead with power, gate fails, not decidable) are unchanged; H328.3 is reported with
+    and without the responsive condition (A337).
+- *Perrin 2018* (human muscle, 10 people x 6 times) is delivered and verified (`sccc_mapping/perrin2018_muscle`); its
+  A337 run follows the A337 registration (loader to write, `--check` first, one run). Not used by A328 / A338.
+
 ## A329 (2026-11-19, check N2 of `PAPER_PLAN_2026-11-19.md` section 6.2 and `MODEL_signal_clock_2026-11-19.md` section 6, prompt `prompts/two_axis_checks_2026-11-19.md` Task 5; one scoring run; **BLIND for the core loop**: the core-loop departure, coupling and excess of the A294b tissues have never been computed (grep of RP, A294b, A296 and A303 scripts, 2026-11-19: A296 / A303 used the core loop for the adrenal offset only, A321 for lymphocytes); **NOT BLIND** for the 14-gene values (A294b H294b.1 median log ratio 0.969, A291 couplings, A311, A313)): is the personal departure the signal layer read through PER1, PER2 and NR1D1? **GTEx fast deaths, 27 peripheral tissues (A104 / A294b rows)**
 
 **Why.** The departure (2 psi) is clock-specific, about 2.6 times that of matched genes and nearly constant across organs

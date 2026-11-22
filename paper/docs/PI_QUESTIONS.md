@@ -54,6 +54,20 @@ loop not significant in single-cell cortex pseudobulks) and claim 3(b) ("it rest
 - **Also from A337 (timed controls):** the untimed lead statistic has the right sign in timed tissues but lacks
   precision at n = 12 (3 of 7 recovered; all 3 agree with the timed lead); the expected fetal lead is 1.27 h. A fetal
   "no consistent lead" will be reported as uninformative.
+- **Proposed framing of the development chapter (user and agent, 2026-11-22; for the PI's decision, no result changed).**
+  "Running loop vs driven state" is the wrong contrast before birth: a clock network entrained by the mother is the
+  expected biology and is still a functional clock. Proposed claim 3, in four parts with their current evidence:
+  1. *the clock network moves as a unit before birth*: core loop on its own in del Valle (A328a, blind); signal-induced
+     and core genes in the waveform pattern in cortex, lung and mouse hepatocytes (A307, A309); single-cell core alone
+     fails in cortex (A266), cause open;
+  2. *organ-selective, in two species*: adrenal cortex, lung, liver yes; heart, kidney no, powered (A240-A244, A309);
+  3. *on a daily timescale*, not ultradian pulses nor steady differences between fetuses: A328 part b + A338, not yet
+     scored; the most exposed part on power (del Valle 32 and prenatal liver 37 are the realistic readouts; 10x cortex
+     25 fetuses with sparse intronic reads);
+  4. *most parsimoniously entrained by maternal (glucocorticoid) rhythms*: interpretation only (A307 lung GC link,
+     ACTH receptor A266); no readout separates a maternal input from a fetal oscillator.
+  If part 3 is not decidable, the chapter keeps 1, 2 and 4 with 3 as the open test. A328 note 2 (draft) rewords the
+  H328.3 PASS readings accordingly before any lead is computed.
 
 ### Q42 (2026-11-19): the two-axis checks of PAPER_PLAN section 6 are run; four decisions remain
 **Question.** The section 6 checks (prompt `prompts/two_axis_checks_2026-11-19.md`) and the user's follow-up on the cell
