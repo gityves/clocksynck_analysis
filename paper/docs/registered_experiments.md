@@ -10164,3 +10164,29 @@ skipped. No row passes P343.0 or H343.1 (fat DEX primary: E and D below the comp
 companion bar is binding: liver DEX primary D = 0.209 with sign-flip p = 0.001, yet below the companion q95 (0.274),
 as the power note anticipated (surgery moves the intron-to-exon ratio of random genes). H343.2 random-set differences
 -0.17 to 0.02 (p 0.45-0.95). Scoring proceeds as registered.
+
+### A342 power note (2026-11-22; `A342_skin_timed/scripts/power_a342.py`, `output/power/{draws,rates}.csv`; no clock-gene count of GSE326530 read)
+Stand-ins: GTEx fast deaths (Hardy 1-2) with both skin tissues and death within +-2 h of 0 / 6 / 12 / 18 h (25, 31,
+29, 33 donors; all classes were tried first and dropped: ventilator deaths damp the clock and made the timed rhythm
+fail in 2 of 3 check draws), 20 per bin per draw, thinned to the delivery's per-run exon and intron depths (intron
+depth = `intronic_fraction` x `assigned_genebody_n`); 1,000 draws. Two features bias the stand-ins in opposite
+directions: unspliced counts are derived from the same GTEx samples as spliced (they share biological noise:
+optimistic for the lead), and timed fits use bin centres for deaths up to 2 h away and four different donors per
+"volunteer" (pessimistic for every timed quantity).
+**Pre-data clarification.** The pairing statistics (H342.3-H342.5) use one waveform (GTEx not-sun-exposed skin) and one
+projector for both sites: with site-specific waveforms the E-P offset and amplitude ratio would be read relative to
+GTEx's own lower-leg vs suprapubic difference. Site-specific waveforms stay a sensitivity, as registered.
+- **P342.0:** rhythm detected in 100 % of draws at both sites and both gene sets.
+- **H342.1 decidable:** pass rate 1.00 at lead 1.27 h and at 0.75 amplitude (both sites, both gene sets, all three
+  estimators; matched 90 % interval width 0.23-0.49 h). False pass at lead 0: matched 0.088-0.101, plain 0.04-0.08,
+  per-gene 0.085-0.12; at the 10 % limit for the primary estimator (optimistic stand-in: read with this caveat).
+- **H342.2 decidable:** untimed and timed leads within 1.5 h in 100 % of draws.
+- **H342.3 decidable:** untimed offset interval half-width 0.54-0.59 h (< 1 h); agreement by the registered rule
+  (within the timed interval or < 1 h apart) 99.9-100 %; point estimates main setting -1.03 vs -1.31 h (14 genes).
+- **H342.4 not decidable by its registered rule:** untimed log-amplitude half-width 0.09-0.11 (< 0.15), but the paired
+  difference interval has half-width 0.16-0.18, wider than the +-0.15 bound, so agreement can pass in only 3-5 % of
+  draws although the point estimates agree within 0.15 in 86-97 % (main: untimed -0.167 vs timed -0.196). The width
+  comes from the timed ratio (SE 0.127). Reported descriptively (point difference and interval).
+- **H342.5 not decidable:** timed log amplitude ratio SE 0.126-0.130 against the 0.090 needed to detect 0.8 with power
+  0.8 (the shifted setting moves it by -0.225 = log 0.8, as built). Reported descriptively with its companion range.
+H342.1-H342.3 are scored as registered; H342.4 and H342.5 descriptive.
