@@ -10205,3 +10205,12 @@ check in `results_preliminary.md`, METHOD.md section 9). The user ruled this a b
 `counts_intron_direct` (`score_a342.py --direct`, `output/score_direct/`), with `counts_intron` as the sensitivity. The
 first run (`output/score/`) is kept as the bugged run. Only H342.1-H342.2 depend on introns; P342.0 and H342.3-H342.5
 are unchanged (identical tables).
+
+### A337 Perrin code check (2026-11-23, before scoring; `score_a337.py --sets perrin --check`, `output/perrin_check/`)
+Delivery: `perrin2018_muscle_trimmed` (adapter / poly-A / quality-trimmed re-map of the same 114 runs; sha256 verified;
+median uniquely mapped 75.4 % of raw pairs vs 59.2 % untrimmed). Loader: subject and clock time from the GEO title,
+the two lane runs of each library summed; 57 libraries, 10 subjects, times 0-20 h every 4 h (one subject 3 times).
+Unspliced := spliced thinned to 10 %, times shuffled: no rhythm (p 0.20-0.59), delta_U -0.33 to -0.10 h with
+intervals spanning 0 (the small negative bias of the baboon / Greenwell check). Fixed: `verdicts` no longer fails when
+no compartment is rhythmic. Scoring proceeds as registered (subtraction introns primary; Perrin is stranded, where the
+two definitions agree for clock genes, METHOD.md section 9; direct reported alongside).

@@ -1,5 +1,5 @@
 """A337 scoring (registered in `paper/docs/registered_experiments.md`): does the A328 lead statistic, blind to time,
-recover the pre-mRNA lead of tissues whose clock runs (baboon, Greenwell mouse liver; Perrin muscle when delivered)?
+recover the pre-mRNA lead of tissues whose clock runs (baboon, Greenwell mouse liver; Perrin muscle, the adapter-trimmed re-map)?
 
 Per compartment, spliced (`counts_exon`) and unspliced (`counts_intron`; `counts_intron_direct` as sensitivity) log
 fractions are residualised gene by gene on the covariates (none for baboon; regimen for Greenwell; person for Perrin),
@@ -57,7 +57,7 @@ def by_symbol(path, cols, symbols) -> pd.DataFrame:
 def load(name) -> list[dict]:
     """Compartments of one set: {name, primary, spliced, unspliced, direct (samples x symbols), obs (t, group)}."""
     d = SRC / {"baboon": "mure2018_baboon", "greenwell": "greenwell2019_mouse_liver",
-               "perrin": "perrin2018_muscle"}[name]
+               "perrin": "perrin2018_muscle_trimmed"}[name]  # Perrin: adapter-trimmed re-map (user, 2026-11-22)
     s = pd.read_csv(d / "samples.tsv", sep="\t")
     ann = pd.read_csv(d / "counts_exon.tsv.gz", sep="\t", index_col=0, usecols=[0, 1]).symbol
     stable = pd.Series(ann.index.str.split(".").str[0], index=ann.index)
@@ -76,11 +76,19 @@ def load(name) -> list[dict]:
         s["t"] = s.geo_title.str[-2:].astype(float)
         units = [("liver AL+NR", True, s.group.isin(["AL", "NR"])), ("liver AR", False, s.group == "AR"),
                  ("liver DR", False, s.group == "DR")]
-    else:  # perrin: columns to be fixed from samples.tsv at delivery, before scoring (person, clock time)
-        raise NotImplementedError("Perrin: map person and clock time from samples.tsv after delivery")
+    else:  # perrin: person and clock time from the GEO title ("<subject>_S<k>_<hh>:00"); two lane runs per library
+        s["group"] = s.geo_title.str.split("_").str[0]
+        s["t"] = s.char_time.str.split(":").str[0].astype(float)
+        assert s.groupby("sample_accession").run_accession.size().eq(2).all()
+        units = [("muscle", True, pd.Series(True, index=s.index))]
     runs = s.run_accession.tolist()
     tabs = {k: by_symbol(d / f"counts_{f}.tsv.gz", runs, sym)
             for k, f in (("spliced", "exon"), ("unspliced", "intron"), ("direct", "intron_direct"))}
+    if name == "perrin":  # sum the two lane runs of each library; one row per library, keyed by its first run
+        first = s.groupby("sample_accession").run_accession.transform("first")
+        tabs = {k: v.groupby(first.to_numpy()).sum() for k, v in tabs.items()}
+        s = s[s.run_accession == first].copy()
+        units = [("muscle", True, pd.Series(True, index=s.index))]
     out = []
     for comp, primary, m in units:
         r = s.run_accession[m.to_numpy()].tolist()
@@ -237,9 +245,9 @@ def verdicts(t: pd.DataFrame) -> pd.DataFrame:
             r["H337_3"] = r.H337_1 & (r.delta_U > r.responsive_delta_q95)
         rows.append(pd.concat([r, x[x.rhythm_p >= .05].assign(H337_1=np.nan)]))
     v = pd.concat(rows)
-    return v[["waveform", "unspliced", "compartment", "n", "rhythm_p", "kappa", "gate_p", "gate_holm", "delta_U",
+    return v.reindex(columns=["waveform", "unspliced", "compartment", "n", "rhythm_p", "kappa", "gate_p", "gate_holm", "delta_U",
               "dU_lo", "dU_hi", "delta_T", "dT_lo", "dT_hi", "diff", "diff_lo", "diff_hi", "tost_p", "tost_holm",
-              "responsive_delta_q95", "H337_1", "H337_2", "H337_3"]]
+              "responsive_delta_q95", "H337_1", "H337_2", "H337_3"])  # no rhythmic row: verdict columns empty
 
 
 def main():
