@@ -10157,3 +10157,10 @@ biology of surgery, which H343.2 addresses only on few NO_DEX patients. (3) Obes
   DEX - NO_DEX displacement difference 0.73-1.07 state units against the 0.25 bound: **not reachable**, descriptive
   (PER1 change and core displacement reported with intervals, no equivalence verdict).
 - P343.0 is computed as registered (it conditions H343.1 in fat).
+
+### A343 code check (2026-11-22, before scoring; `score_a343.py --check`, `output/score_check/`; no GR or clock count read)
+GR set replaced by four random control-pool genes (MYO1B, C4A, KDSR, SLC37A3); PER1, core loop and two-tissue pairing
+skipped. No row passes P343.0 or H343.1 (fat DEX primary: E and D below the companions' q95). One row shows why the
+companion bar is binding: liver DEX primary D = 0.209 with sign-flip p = 0.001, yet below the companion q95 (0.274),
+as the power note anticipated (surgery moves the intron-to-exon ratio of random genes). H343.2 random-set differences
+-0.17 to 0.02 (p 0.45-0.95). Scoring proceeds as registered.
