@@ -6,8 +6,13 @@ the same libraries is already on disk, the all-gene agreement of the delivered e
 CPM over shared genes; each delivered library matched to its best processed column). del Valle has no processed
 matrix on disk and stays blind (A328 part a).
 
-Output: paper/exploratory/A328_fetal_running_loop/output/qc/{summary.csv, design.csv, agreement.csv}.
-Usage: python qc_deliveries.py
+`--cells` (A328 note 2, task 1): the 10x deliveries only. Spliced sums over the A244 cells per fetus against every
+A242 whole-adrenal pseudobulk (Spearman over all genes except the clock and core genes; identity mismatch = best match
+is another fetus; flag = own r < 0.9), and the genome-wide unspliced fraction per GSM and class (totals over all genes).
+
+Output: paper/exploratory/A328_fetal_running_loop/output/qc/{summary.csv, design.csv, agreement.csv};
+`--cells`: {agreement_10x_a242.csv, unspliced_fraction_10x.csv}.
+Usage: python qc_deliveries.py [--cells]
 """
 from pathlib import Path
 
@@ -134,5 +139,72 @@ def main():
             print(t.loc[t["match"] == False, ["run", "best", "expected", "r_best"]].head(10).to_string(index=False))
 
 
+ADRENAL_10X = ("kameneva2021_fetal_adrenal", "wang2022_fetal_adrenal", "cheng2022_fetal_adrenal",
+               "dong2020_fetal_adrenal")
+ORGAN_10X = ("knightschrijver2023_fetal_heart", "hochane2019_fetal_kidney")
+
+
+def spearman_matrix(a: pd.DataFrame, b: pd.DataFrame) -> pd.DataFrame:
+    """Spearman of log CPM between the rows of a and b (samples x genes) over genes expressed in both."""
+    la, lb = (np.log2(m.div(m.sum(1), axis=0) * 1e6 + 1) for m in (a, b))
+    keep = (la.mean() > 1) & (lb.mean() > 1)
+    ra = np.apply_along_axis(rankdata, 1, la.loc[:, keep].to_numpy())
+    rb = np.apply_along_axis(rankdata, 1, lb.loc[:, keep].to_numpy())
+    ra = (ra - ra.mean(1, keepdims=True)) / ra.std(1, keepdims=True)
+    rb = (rb - rb.mean(1, keepdims=True)) / rb.std(1, keepdims=True)
+    return pd.DataFrame(ra @ rb.T / keep.sum(), index=a.index, columns=b.index).assign(genes=int(keep.sum()))
+
+
+def main_cells():
+    """A328 note 2 QC (task 1): identity agreement of the delivered spliced sums over the A244 cells with the A242
+    whole-adrenal pseudobulks (clock genes and the core genes excluded from the genes compared), and the genome-wide
+    unspliced fraction per GSM and class from the derived cells tables (totals over all genes; no gene-level value)."""
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+    from common.mapping import load
+
+    OUT.mkdir(parents=True, exist_ok=True)
+    drop = set(CLOCK_GENES) | set(CORE)
+    old = pd.read_parquet(DATA / "natexp/fetal_adrenal_open/pseudobulk.parquet")
+    rows, frac = [], []
+    for ds in ADRENAL_10X:
+        # 'a244_spliced': the note 2 rule as fixed (spliced layer, A244 cells); 'gene_all': like for like with A242
+        # (Gene counts = X, every non-blood barcode >= 500 UMI), added after the first comparison did not discriminate
+        for kind, (new, sheet) in (("a244_spliced", load.pseudobulk(ds, "spliced", min_cells=0)),
+                                   ("gene_all", load.pseudobulk(ds, "X", group=None, min_cells=0))):
+            new = new.groupby(sheet.donor.to_numpy()).sum()
+            genes = new.columns.intersection(old.columns).difference(list(drop))
+            ref = old.loc[:, genes].dropna(axis=1, how="any")
+            r = spearman_matrix(new[ref.columns], ref)
+            n_genes = int(r.pop("genes").iloc[0])
+            for d in new.index:
+                o = r.loc[d].sort_values(ascending=False)
+                rows.append({"dataset": ds, "kind": kind, "donor": d, "in_a242": d in ref.index,
+                             "r_own": r.loc[d, d] if d in ref.index else np.nan, "best": o.index[0],
+                             "r_best": o.iloc[0], "second": o.index[1], "r_second": o.iloc[1], "genes": n_genes})
+    for ds in ADRENAL_10X + ORGAN_10X:
+        c = load.cells(ds)
+        if ds in ADRENAL_10X:
+            c = c[c.a244_class.astype(str).ne("") & (c.total_counts >= 500)]
+            cls = c.a244_class.astype(str)
+        else:
+            c = c[~c.blood.astype(bool) & (c.total_counts >= 500)]
+            cls = pd.Series("organ", index=c.index)
+        g = c.assign(cls=cls).groupby(["gsm", "donor", "cls"])[["spliced", "unspliced", "ambiguous"]].sum()
+        g["cells"] = c.assign(cls=cls).groupby(["gsm", "donor", "cls"]).size()
+        g["unspliced_frac"] = g.unspliced / (g.spliced + g.unspliced)
+        frac.append(g.reset_index().assign(dataset=ds))
+    a = pd.DataFrame(rows)
+    a["mismatch"] = a.in_a242 & (a.best != a.donor)
+    a["flag_low"] = a.in_a242 & (a.r_own < 0.9)
+    f = pd.concat(frac, ignore_index=True)
+    a.to_csv(OUT / "agreement_10x_a242.csv", index=False)
+    f.to_csv(OUT / "unspliced_fraction_10x.csv", index=False)
+    pd.set_option("display.width", 200)
+    print(a.round(3).to_string(index=False))
+    print(f.groupby(["dataset", "cls"]).unspliced_frac.describe()[["count", "min", "50%", "max"]].round(3).to_string())
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+    main_cells() if "--cells" in sys.argv else main()

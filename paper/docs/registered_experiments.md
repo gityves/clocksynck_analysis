@@ -9120,6 +9120,25 @@ genome-wide unspliced fraction (task 1 QC not yet run).
 - *Perrin 2018* (human muscle, 10 people x 6 times) is delivered and verified (`sccc_mapping/perrin2018_muscle`); its
   A337 run follows the A337 registration (loader to write, `--check` first, one run). Not used by A328 / A338.
 
+### A328 note 2, addendum: task 1 QC (2026-11-22; `scripts/qc_deliveries.py --cells`, `output/qc/{agreement_10x_a242,unspliced_fraction_10x}.csv`; no clock-gene value, clock and core genes excluded from the comparison, unspliced fractions are genome-wide totals)
+- *Identity rule, corrected after its first output (QC values seen, no clock value).* The note 2 comparison (spliced
+  sums over the A244 cells vs the A242 whole-tissue pseudobulks) does not discriminate fetuses: own r 0.719-0.881
+  (Spearman, about 5,600 genes), below 0.9 for all 30, and 7 "best match elsewhere" by margins of 0.000-0.074 over the
+  own pseudobulk, because cell subset and count type differ from A242. Applied
+  mechanically it would drop 7 fetuses for no identity reason. The identity check is therefore made like for like:
+  the delivered Gene counts (`X`) over every non-blood barcode >= 500 UMI against A242 (`kind = gene_all`); the first
+  comparison is kept in the file and not used for exclusion.
+- *Result.* 29 of 30 fetuses present in A242 match their own pseudobulk best (own r 0.951-0.975, next fetus 0.841-0.963).
+  The exception, Cheng `sasaki:5wpf` (own 0.858, best Wang 7GW_male1 0.956), is explained: A242 summed GSM5815985 with
+  GSE291218 GSM8831095 for this age, and the latter was not mapped. It has 160 cortex cells and is outside the cortex
+  compartment by the cell rule. No GSM is excluded. The two Dong fetuses absent from A242 (`dong2020:F366`, `F379`)
+  have no A244 classes and are not used. Cortex fetuses: Kameneva 10, Wang 9, Cheng 3 (8, 9, 12 wpf), Dong 3.
+- *Genome-wide unspliced fraction* (unspliced / (spliced + unspliced), cells >= 500 UMI): medians cortex 0.16-0.25,
+  medulla 0.20-0.41, stroma 0.18-0.39 across the four adrenal cohorts; heart 0.30, kidney 0.26. Kameneva cortex spans
+  0.033-0.460: two fetuses (10X_19_088 0.042, 10X_20_016 = GSM4734601 0.033) have a cortex-only shortfall (their
+  medulla and stroma 0.26-0.42, as the other fetuses). No gate (note 2); the power stage uses cohort medians, which
+  overstate the unspliced depth of these two fetuses.
+
 ## A329 (2026-11-19, check N2 of `PAPER_PLAN_2026-11-19.md` section 6.2 and `MODEL_signal_clock_2026-11-19.md` section 6, prompt `prompts/two_axis_checks_2026-11-19.md` Task 5; one scoring run; **BLIND for the core loop**: the core-loop departure, coupling and excess of the A294b tissues have never been computed (grep of RP, A294b, A296 and A303 scripts, 2026-11-19: A296 / A303 used the core loop for the adrenal offset only, A321 for lymphocytes); **NOT BLIND** for the 14-gene values (A294b H294b.1 median log ratio 0.969, A291 couplings, A311, A313)): is the personal departure the signal layer read through PER1, PER2 and NR1D1? **GTEx fast deaths, 27 peripheral tissues (A104 / A294b rows)**
 
 **Why.** The departure (2 psi) is clock-specific, about 2.6 times that of matched genes and nearly constant across organs
