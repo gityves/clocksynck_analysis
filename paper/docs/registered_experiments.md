@@ -10140,3 +10140,20 @@ biology of surgery, which H343.2 addresses only on few NO_DEX patients. (3) Obes
 
 **Stop rule.** One scoring run after the identity check and the power note. **Code:**
 `paper/exploratory/A343_dex_acute/scripts/`.
+
+### A343 identity check and power note (2026-11-22; `A343_dex_acute/scripts/power_a343.py`, `output/power/`; no GR or clock-gene count read)
+- *Identity* (`identity.csv`): sex from XIST vs RPS4Y1 / DDX3Y / UTY / KDM5D agrees across all runs of 63 of 64 patient
+  codes; of the 22 two-tissue codes, 21 agree. Code 53 (liver and fat disagree) is excluded from the two-tissue
+  descriptive analysis; its single-tissue rows stay.
+- *H343.1* (`power_gr.csv`, 1,000 random four-gene sets with matched controls; MDE = 2.49 x max(SD over sets, median
+  sign-flip SE)): fat DEX primary units (38 patients) MDE 0.33, **decidable**; liver DEX primary (13) MDE 0.41, above
+  the 0.4 limit, **not decidable**: reported descriptively. The SD over gene sets (fat 0.133, liver 0.165) dominates
+  the sign-flip SE (0.048, 0.080): surgery moves the intron-to-exon ratio of random genes, which is why the companion
+  bar is binding. Mixing library types inflates it (fat DEX, all 49 patients: SD 0.233, MDE 0.58), as the design
+  anticipated. H343.1 is therefore scored in fat only (no Holm partner).
+- *H343.2* (NO_DEX primary units: fat 7, liver 5; MDE 0.42 / 0.40 for the arm alone, larger for the difference):
+  **not decidable**, descriptive.
+- *H343.3* (`power_core.csv`, 200 pseudo core-loop sets of random non-target genes): median 90 % upper bound of the
+  DEX - NO_DEX displacement difference 0.73-1.07 state units against the 0.25 bound: **not reachable**, descriptive
+  (PER1 change and core displacement reported with intervals, no equivalence verdict).
+- P343.0 is computed as registered (it conditions H343.1 in fat).
