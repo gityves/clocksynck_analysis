@@ -7635,3 +7635,44 @@ GR set FKBP5, TSC22D3, ZBTB16, KLF9 against matched controls of the same runs; 2
   in living human tissue at bulk depth: the premise of the lead readouts (A328, A337, A342) holds with a known input.
   Acute glucocorticoid raises PER1 (+0.5 log) within the surgical window; whether the core loop moves is not decidable
   here.
+
+## A342 (computed 2026-11-22): timed living skin. Untimed lead positive but larger than the timed one on subtraction introns (H342.1 PASS, H342.2 FAIL), equal on direct introns (sensitivity); E-P offset equals the timed offset but the pairing is not clock-specific (H342.3 FAIL); no sun-exposure amplitude difference (descriptive)
+<!-- src: paper/exploratory/A342_skin_timed/output/score/{verdicts,leads,pairing,genes,sensitivity}.csv; code paper/exploratory/A342_skin_timed/scripts/score_a342.py -->
+GSE326530, 20 volunteers x photoprotected (P) / photoexposed (E) x 4 times; one waveform (GTEx not-sun-exposed skin)
+for all statistics (power note); volunteer-cluster bootstraps.
+- **P342.0 PASS:** spliced state rhythmic at both sites (p < 0.0001, 14 genes and core).
+- **H342.1 PASS (both sites, both gene sets):** untimed lead, matched estimator: P +2.89 h (90 % 1.91 to 4.04), E +1.81
+  (1.00 to 2.92); core P +3.84 (2.08 to 5.67), E +1.92 (0.19 to 3.65); gates p <= 0.006. Plain P +1.88, E +1.34;
+  per-gene P +1.19 (0.53 to 1.92), E +1.81 (1.16 to 2.62).
+- **H342.2 FAIL:** timed lead on subtraction introns P +0.23 h (-0.90 to 1.19), E +0.57 (-1.08 to 2.07), not
+  resolved from 0; untimed minus timed P +2.66 h (1.47 to 4.27), E +1.24 (-0.05 to 3.09), outside +-1.5 h.
+- *Direct-intron sensitivity (descriptive, registered):* the timed lead becomes clearly positive, P +1.18 h (0.58 to
+  1.89), E +1.48 (1.08 to 1.95) (core +1.21, +2.25), and the untimed matched lead equals it: P +1.16 (0.81 to 1.59),
+  E +1.42 (1.08 to 1.84) (per-gene +0.80, +1.03). Read with A343 (TSC22D3, ZBTB16): in unstranded libraries the
+  subtraction intron (gene body minus exon) also collects reads of unannotated or overlapping transcripts, which carry
+  mature-mRNA timing; the direct intron is the cleaner pre-mRNA readout. The timed direct-intron lead (1.2-1.5 h)
+  matches A337's median 1.27 h.
+- **H342.3 FAIL (on clock-specificity only):** untimed E-P offset +1.33 h (0.35 to 2.46) vs timed +1.57 (0.42 to
+  2.95), inside the timed interval (core +1.02 vs +1.19): the offsets agree. The pairing gate passes (coherence 0.467,
+  p < 0.0001) but sits below both companions' q95 (matched 0.549, responsive 0.644): pseudo-clock genes pair as
+  strongly across the two sites of one person at one time. The untimed pairing has no volunteer covariate (as
+  registered), so person-, visit- and processing-level covariance shared by the two biopsies of a visit enters every
+  gene set. Offsets agree in every variant (QC 1.10 vs 1.13; volunteers 1-11 0.87 vs 0.73; 12-20 1.99 vs 2.79).
+- *H342.4 (descriptive):* untimed log relative amplitude E/P -0.253 (-0.429 to -0.081) vs timed +0.087 (-0.319 to
+  0.514); difference -0.34 (-0.73 to 0.00). The untimed ratio reports a quieter exposed site that the timed fit does
+  not see (likely more non-daily in-plane variance at the protected site).
+- *H342.5 (descriptive):* timed log amplitude ratio E/P +0.087 (-0.319 to 0.514; core -0.017), inside the matched
+  companions' 5-95 % range (-1.45 to 1.56): no detectable sun-exposure change in clock amplitude. Timed E-P offset
+  +1.57 h (0.42 to 2.95; sign as clocksync's offset, case minus reference), not within +-1 h: the exposed forearm and
+  the protected buttock differ in phase by about 1.5 h, the same size as A251's untimed epidermis forearm-buttock
+  +0.73 h; body site, not exposure, cannot be separated here.
+- QC sensitivity (58 visits; runs < 30 % exonic removed with their partner) and site-specific waveforms change none of
+  these readings (sensitivity.csv).
+- Run note: a first launch crashed in the sensitivity block (unequal volunteer sizes in the cluster bootstrap) after
+  the main tables were written; the rerun reproduced leads.csv, pairing.csv and verdicts.csv byte for byte (md5).
+- **Readings:** (1) pre-mRNA leads mRNA in timed living human skin by about 1.2-1.5 h (direct introns), and the untimed
+  statistic recovers it there; on subtraction introns it recovers a positive lead of the wrong size. Every lead
+  readout should use direct introns as primary in future amendments (post hoc recommendation, A342 and A343). (2) The
+  host-referenced offset equals the timed offset in living people (1.3 vs 1.6 h), but in this design the pairing
+  cannot be shown clock-specific against companions. (3) Chronic sun exposure leaves skin-clock amplitude unchanged
+  within the precision of 20 people.

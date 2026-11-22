@@ -110,7 +110,8 @@ def site_stats(s, u, dd, wf, rng, B) -> dict:
         out.update({f"{est}_kappa": k, f"{est}_gate_p": float((1 + np.sum(kp >= k)) / (1 + N_PERM)),
                     f"{est}_delta": d, f"{est}_lo": lo, f"{est}_hi": hi, f"{est}_diff_lo": dlo, f"{est}_diff_hi": dhi})
     # per-gene estimator (A328 part b companion), volunteer-cluster bootstrap
-    P.boot = lambda groups, r, n: cluster_boot(groups, r, n)
+    equal = len(set(np.bincount(vol)[np.unique(vol)])) == 1
+    P.boot = (lambda groups, r, n: cluster_boot(groups, r, n)) if equal else P.score_a337.boot
     P.N_PERM, P.N_BOOT = 2000, N_BOOT
 
     def Y(x, depth):
