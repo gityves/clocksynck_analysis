@@ -7648,10 +7648,10 @@ for all statistics (power note); volunteer-cluster bootstraps.
   resolved from 0; untimed minus timed P +2.66 h (1.47 to 4.27), E +1.24 (-0.05 to 3.09), outside +-1.5 h.
 - *Direct-intron sensitivity (descriptive, registered):* the timed lead becomes clearly positive, P +1.18 h (0.58 to
   1.89), E +1.48 (1.08 to 1.95) (core +1.21, +2.25), and the untimed matched lead equals it: P +1.16 (0.81 to 1.59),
-  E +1.42 (1.08 to 1.84) (per-gene +0.80, +1.03). Read with A343 (TSC22D3, ZBTB16): in unstranded libraries the
-  subtraction intron (gene body minus exon) also collects reads of unannotated or overlapping transcripts, which carry
-  mature-mRNA timing; the direct intron is the cleaner pre-mRNA readout. The timed direct-intron lead (1.2-1.5 h)
-  matches A337's median 1.27 h.
+  E +1.42 (1.08 to 1.84) (per-gene +0.80, +1.03). Cause (post hoc per-gene check below, which corrects a first reading
+  of contamination by mature transcripts): in these unstranded libraries the subtraction intron of four clock genes
+  whose gene bodies overlap another gene is lost (CLOCK and PER2 zero, PER3 and RORA a few per cent of the direct
+  count). The timed direct-intron lead (1.2-1.5 h) matches A337's median 1.27 h.
 - **H342.3 FAIL (on clock-specificity only):** untimed E-P offset +1.33 h (0.35 to 2.46) vs timed +1.57 (0.42 to
   2.95), inside the timed interval (core +1.02 vs +1.19): the offsets agree. The pairing gate passes (coherence 0.467,
   p < 0.0001) but sits below both companions' q95 (matched 0.549, responsive 0.644): pseudo-clock genes pair as
@@ -7672,7 +7672,31 @@ for all statistics (power note); volunteer-cluster bootstraps.
   the main tables were written; the rerun reproduced leads.csv, pairing.csv and verdicts.csv byte for byte (md5).
 - **Readings:** (1) pre-mRNA leads mRNA in timed living human skin by about 1.2-1.5 h (direct introns), and the untimed
   statistic recovers it there; on subtraction introns it recovers a positive lead of the wrong size. Every lead
-  readout should use direct introns as primary in future amendments (post hoc recommendation, A342 and A343). (2) The
+  readout on unstranded libraries should use direct introns as primary (post hoc recommendation; see the per-gene
+  check below). (2) The
   host-referenced offset equals the timed offset in living people (1.3 vs 1.6 h), but in this design the pairing
   cannot be shown clock-specific against companions. (3) Chronic sun exposure leaves skin-clock amplitude unchanged
   within the precision of 20 people.
+
+### 2026-11-22 post hoc per-gene check: why subtraction and direct introns differ (descriptive; no hypothesis)
+<!-- src: paper/exploratory/A342_skin_timed/output/intron_definitions/genes.csv; code paper/exploratory/A342_skin_timed/scripts/intron_definitions.py -->
+- Skin (GSE326530, all 160 runs unstranded), totals over runs, subtraction vs direct: CLOCK 0 vs 16,143; PER2 0 vs
+  10,529; RORA 2,989 vs 176,924; PER3 6,979 vs 29,498. The other ten clock genes agree (direct / subtraction 0.51-0.83:
+  direct is the stricter region). All four affected gene bodies overlap another gene (CLOCK: TMEM165; RORA: RORA-AS1;
+  PER2, PER3: lncRNAs or UTS2). Mechanism (provenance caveat of the delivery): featureCounts without `-O` drops reads in
+  the overlap at gene-body level but keeps them at exon level, so gene body minus exon is clipped to 0. In unstranded
+  runs genes on opposite strands overlap too, hence the loss. The direct count uses intron-only regions with every
+  other gene's exons removed, and is unaffected.
+- Timed lags of intron over exon per gene agree between definitions where both counts are sound (protected site:
+  ARNTL 3.46 / 3.46 h, PER1 1.07 / 1.12, CRY1 1.49 / 1.56, CRY2 0.57 / 0.64, TEF -1.73 / -1.46, DBP 0.57 / 0.34) and
+  are undefined by subtraction for CLOCK and PER2 (constant zero). The A342 subtraction-intron lead was therefore read
+  on a state in which four of 14 genes carry no unspliced signal.
+- Dexamethasone set (125 unstranded, 47 stranded runs): CLOCK and PER2 reduced (direct / subtraction 2.5 and 2.3),
+  not lost; the GR genes of A343 are not affected in this way (FKBP5 agrees; TSC22D3 and ZBTB16 are larger by
+  subtraction, the opposite direction, not explained by this mechanism).
+- Every other delivery is stranded (Cardoso-Moreira, del Valle, Greenwell, baboon, oral mucosa, Lundell, Perrin, Tsoi):
+  no clock gene shows the loss (direct / subtraction <= 2 for all 14), so A328 part b, A338, A339 and A337 are not
+  affected.
+- Consequence: direct introns as primary for unstranded libraries; for stranded libraries the two agree for clock
+  genes. The skin direct-intron reading (timed lead 1.2-1.5 h, recovered untimed) stands; it remains a registered
+  sensitivity, not a verdict.
