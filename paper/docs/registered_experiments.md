@@ -9135,9 +9135,76 @@ genome-wide unspliced fraction (task 1 QC not yet run).
   have no A244 classes and are not used. Cortex fetuses: Kameneva 10, Wang 9, Cheng 3 (8, 9, 12 wpf), Dong 3.
 - *Genome-wide unspliced fraction* (unspliced / (spliced + unspliced), cells >= 500 UMI): medians cortex 0.16-0.25,
   medulla 0.20-0.41, stroma 0.18-0.39 across the four adrenal cohorts; heart 0.30, kidney 0.26. Kameneva cortex spans
-  0.033-0.460: two fetuses (10X_19_088 0.042, 10X_20_016 = GSM4734601 0.033) have a cortex-only shortfall (their
-  medulla and stroma 0.26-0.42, as the other fetuses). No gate (note 2); the power stage uses cohort medians, which
-  overstate the unspliced depth of these two fetuses.
+  0.033-0.460: 10X_20_016 (= GSM4734601, 652 cortex cells) has a cortex-only shortfall, 0.033 (its medulla and
+  stroma 0.35 and 0.26, as the other fetuses). (10X_19_088, 0.042, has 2 cortex cells >= 500 UMI and is outside the
+  cortex compartment by the cell rule; first listed here as a second shortfall in error, corrected 2026-11-22 before
+  the power run.) No gate (note 2). **Sensitivity (user, 2026-11-22, before any clock value):** the cortex readouts
+  are also reported without 10X_20_016 (`cortex_minus1`, 24 fetuses), beside the primary with all 25.
+
+### A328 / A338 power note, part b (2026-11-22, user-approved; `scripts/power_a328b.py`, `output/power_b/{design,detection,pools,passrates,decisions}.csv`; no fetal or postnatal clock statistic computed)
+- *Design read.* Cohort medians of the clock genes (median over genes), spliced / unspliced: cortex 90-204 / 55-205
+  (4 cohorts, 25 fetuses), del Valle 217 / 13 (32), liver 231 / 39 (37), heart and kidney Cardoso 629-631 / 82-118
+  (+ 6 and 4 10x fetuses). GTEx pools (deaths 08-18 h): adrenal 93, liver 106, heart LV 152, kidney cortex 44.
+  Direction check without thinning: lead 1.25-1.27 h for a 1.27 h turn, 4.51-4.72 h for the 3 h alternative (4.67).
+  200 draws, 500 permutations, 500 bootstrap resamples per draw.
+- *Finding: a depth bias of the registered estimator (`plain`).* With no lead (`steady`), the interval of delta excludes
+  0 on the positive side in 7-52 % of draws (del Valle core 0.52, median false lead 0.50 h; liver core 0.23; cortex
+  0.16-0.18), against about 0.05 expected: unequal, gene-specific spliced and unspliced depths compress each gene
+  differently at the 0.5 pseudocount, and through the common projector this turns the state. The real-count check
+  shows it too: Greenwell (untimed lead 2.35 h at full depth, A337) reads 2.83-3.11 h on the 14 genes and 4.57-5.88 h
+  on the core at fetal depths.
+- *Two candidate estimators, tested here (post hoc, not registered):*
+  - `matched`: the spliced counts thinned gene by gene to the unspliced count level within each depth cohort before the
+    states are formed.
+  - `pergene` (user's suggestion, the lab's usual approach adapted to an arc): for each gene, the spliced state without
+    that gene (leave-gene-out projector) is the regressor; the gene's spliced and unspliced log fractions are regressed
+    on its two coordinates (a Fourier fit on the inferred phase that stays defined on a partial cycle, samples near the
+    origin weighing little); lead = arg sum_g b_s,g conj(b_u,g), the amplitude-weighted circular mean of the gene lags.
+    A compressive transform of one gene keeps its phase, and the inferred-phase origin cancels in each gene's lag.
+    It estimates gene-level lags: on Greenwell at full depth 0.81 h (90 % 0.45-1.18; core 0.44), against the A337
+    timed per-gene lags (median 1.02 h) rather than the state-level 2.35 h. The GTEx generator turns the waveform
+    plane, not each gene's profile, so its a1 truth is not the per-gene estimand (pergene a1 median 0.53-1.00 h).
+  - Steady median lead: plain -0.01 to 0.50 h, matched -0.08 to 0.13, pergene -0.03 to 0.08. Greenwell at fetal depths,
+    14 genes: matched 0.66-1.29 h, pergene 0.77-1.27 h (full-depth pergene 0.81: stable under thinning).
+- *Pass rates* (A328 pass = gate and interval above 0; a1 = adult clock, 1.27 h turn; Greenwell = real counts, n <= 36;
+  the GTEx model shares all biological noise between the two count types, so its intervals are narrow and its steady
+  rate is an upper bound), plain / matched / pergene:
+
+  | compartment | n | a1, 14 genes | a1, core | steady, 14 genes | steady, core | Greenwell, 14 genes | Greenwell, core |
+  |---|---|---|---|---|---|---|---|
+  | cortex | 25 | 0.95 / 0.79 / 0.73 | 0.95 / 0.89 / 0.53 | 0.17 / 0.14 / 0.12 | 0.17 / 0.15 / 0.12 | 0.98 / 0.41 / 0.26 | 0.97 / 0.56 / 0.04 |
+  | cortex_minus1 | 24 | 0.98 / 0.84 / 0.95 | 0.95 / 0.90 / 0.67 | 0.16 / 0.13 / 0.13 | 0.18 / 0.15 / 0.14 | 0.98 / 0.69 / 0.23 | 0.96 / 0.52 / 0.07 |
+  | del Valle | 32 | 1.00 / 0.92 / 0.96 | 1.00 / 0.82 / 0.70 | 0.12 / 0.09 / 0.04 | 0.52 / 0.07 / 0.04 | 1.00 / 0.95 / 0.61 | 1.00 / 0.97 / 0.11 |
+  | liver | 37 | 1.00 / 1.00 / 0.99 | 0.99 / 0.94 / 0.71 | 0.13 / 0.07 / 0.10 | 0.23 / 0.09 / 0.06 | 1.00 / 0.85 / 0.56 | 1.00 / 0.82 / 0.12 |
+  | heart | 40 | 1.00 / 1.00 / 1.00 | 0.99 / 0.95 / 0.99 | 0.12 / 0.09 / 0.04 | 0.07 / 0.08 / 0.07 | 1.00 / 0.51 / 0.66 | 1.00 / 0.40 / 0.18 |
+  | kidney | 30 | 0.99 / 0.94 / 0.99 | 0.99 / 0.87 / 0.95 | 0.14 / 0.07 / 0.04 | 0.07 / 0.04 / 0.07 | 1.00 / 0.65 / 0.57 | 1.00 / 0.49 / 0.17 |
+
+  Shuffled (no correspondence): 0.00-0.06 everywhere.
+- *A338* (daily reading: sensitivity under a 24 h input >= 0.8, false rate under steady and 3 h inputs <= 0.1), plain /
+  matched: decidable for heart (14 genes; 0.80 / 0.82) and liver (14 genes matched 0.86, plain 0.79; core plain 0.80,
+  matched 0.66); not for
+  cortex, del Valle or kidney (<= 0.78). Pergene is not calibrated for A338 here (phi_ref = 1.27 h is a state-level
+  lead; its own reference would be a per-gene timed lead, about 1 h).
+- *Reading.* Every compartment passes the registered 0.8 power gate with the plain estimator, but that estimator gives
+  false "running clock" leads under no lead at 7-52 %, so its PASS would not be interpretable. Matched passes the model
+  and the real-count check (>= 0.8) in del Valle (0.95 / 0.97) and liver (0.85 / 0.82) only; pergene is unbiased and
+  stable under thinning but below 0.8 on real counts everywhere (14 genes 0.23-0.66).
+- **Decision (user, 2026-11-22, before any fetal or postnatal clock statistic; changes A328 part b and A338 as
+  registered).**
+  - *Primary estimator:* `matched`. *Registered companion:* `pergene`; the plain estimator is reported beside them as
+    the registered original, never read alone.
+  - *Decidable compartments:* model power >= 0.8 at a1, steady false rate <= about 0.1 and real-count check >= 0.8, on
+    the matched estimator: **del Valle and prenatal liver, 14 genes and core** (Holm over these two compartments for
+    the gate). 10x cortex (and `cortex_minus1`): not decidable at this design (real-count check 0.41-0.69), reported
+    descriptively. Heart and kidney: expected negatives, gate and lead reported descriptively.
+  - *H328.3 PASS* (per decidable compartment and gene set): matched gate passes (Holm), the matched 90 % interval of
+    delta lies within (0, 6 h), and the pergene lead has the same sign (point estimate > 0). Reported with and without
+    the responsive-companion condition (A337). The magnitude is read from pergene (gene lags) and is not compared with
+    1.27 h (a state-level lead).
+  - *A338:* the daily-timescale reading is scored in liver, 14 genes, matched estimator only (sensitivity 0.86, false
+    0.00); elsewhere phi, T_eff and the per-gene lags against literature lifetimes are descriptive.
+  - Readings of note 2 otherwise unchanged; the postnatal Cardoso-Moreira reference keeps its registered role for the
+    expected lead and phi_ref only if its own (matched) gate passes, otherwise the A337 values.
 
 ## A329 (2026-11-19, check N2 of `PAPER_PLAN_2026-11-19.md` section 6.2 and `MODEL_signal_clock_2026-11-19.md` section 6, prompt `prompts/two_axis_checks_2026-11-19.md` Task 5; one scoring run; **BLIND for the core loop**: the core-loop departure, coupling and excess of the A294b tissues have never been computed (grep of RP, A294b, A296 and A303 scripts, 2026-11-19: A296 / A303 used the core loop for the adrenal offset only, A321 for lymphocytes); **NOT BLIND** for the 14-gene values (A294b H294b.1 median log ratio 0.969, A291 couplings, A311, A313)): is the personal departure the signal layer read through PER1, PER2 and NR1D1? **GTEx fast deaths, 27 peripheral tissues (A104 / A294b rows)**
 
