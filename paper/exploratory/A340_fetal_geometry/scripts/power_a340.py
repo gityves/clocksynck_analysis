@@ -2,8 +2,13 @@
 
 iota = |sum_i (z_i^2 - nu_i)| / sum_i (|z_i|^2 - t_i): 0 for a clock-plane cloud with no preferred axis, 1 for points
 on a line; z_i the spliced clock-plane state (log fractions residualised as A328 part b, one projector), nu_i and t_i
-its counting pseudo-variance and variance (V_i = L diag(v_i) L^T, v the exact variance of log(Poisson(lam) + 0.5) at the
-expected count, `lognoise`; times the residual degrees of freedom).
+its counting pseudo-variance and variance (exact log-count noise, `lognoise`).
+Noise matching (after the score code check, 2026-11-22, before any fetal iota): genes permuted independently gave iota
+0.56-0.93, because each gene's biological variance projected through the unequal projector weights is itself
+elongated. Every reference draw is therefore given independent per-gene log-normal noise up to the fetal unit's
+per-gene residual variance of the spliced log fractions (`match_noise`; the fetal clock signal is part of that
+variance, so the added noise is an upper bound and the separation conservative); a no-clock reference (genes permuted
+across the drawn samples) shows where pure noise falls.
 
 Reference distributions per unit (del Valle, prenatal liver; 10x cortex descriptive): n distinct GTEx samples of the
 matching tissue, fast deaths (Hardy 1-2) at 08-18 h (time of death in memory only), clock at 1, 0.75 and 0.5 of the
@@ -56,6 +61,20 @@ def iota(s, depth, Z, wf, groups) -> float:
     return float(np.abs(np.sum(z ** 2) - nu.sum()) / (np.sum(np.abs(z) ** 2) - t.sum()))
 
 
+def gene_var(s, depth, Z) -> np.ndarray:
+    """Per-gene variance of the residualised log fractions (all 14 genes)."""
+    y = dev.residual(np.log((s + 0.5) / depth[:, None]), Z)
+    return y.var(0, ddof=1 + Z.shape[1])
+
+
+def match_noise(s, depth, Z, target, rng):
+    """Counts with independent log-normal per-gene noise added until each gene's residual variance reaches the fetal
+    unit's (`target`); genes already above it are left as they are."""
+    extra = np.clip(target - gene_var(s, depth, Z), 0, None)
+    eps = rng.normal(0, np.sqrt(extra), s.shape) - extra / 2
+    return rng.poisson(s * np.exp(eps))
+
+
 def line(x, depth, rng):
     """Counts whose centred clock-plane states are projected on their main axis (total variance kept)."""
     df = pd.DataFrame(x, columns=P.GENES).assign(depth=depth)
@@ -82,8 +101,10 @@ def one(task) -> list:
     out = []
     for a in SCALES:
         x = pool["x"][a][pick]
-        for kind, xx in (("daily", x), ("line", line(x, depth, rng))):
+        null = np.column_stack([rng.permutation(c) for c in x.T])  # no between-gene covariance
+        for kind, xx in (("daily", x), ("line", line(x, depth, rng)), ("noclock", null)):
             s, _ = P.thin(xx, ts, depth, rng)
+            s = match_noise(s, ds, Z, S["fvar"][unit], rng)
             for w, wf in P.WAVEFORMS.items():
                 idx = [P.GENES.index(g) for g in wf.genes]
                 out.append(dict(unit=unit, scale=a, kind=kind, waveform=w, sub=i, n=n,
@@ -117,6 +138,15 @@ def main():
     S.update(pools=pools, obs={u: design[design.compartment == u].reset_index(drop=True) for u in UNITS},
              tissue={u: design[design.compartment == u].tissue.iloc[0] for u in UNITS})
     S["ts"] = {u: P.targets(S["obs"][u], det[det.compartment == u], "spliced") for u in UNITS}
+    import score_a328b as B
+    fv = {}
+    for u in B.load_units():
+        if u["name"] in UNITS:
+            s = u["s"][P.GENES].to_numpy(np.int64)
+            fv[u["name"]] = gene_var(s, u["obs"].depth_s.to_numpy(float), B.covariates(u["obs"]))
+    S["fvar"] = fv
+    print("fetal per-gene residual variance (median over genes):", {k: round(float(np.median(v)), 3) for k, v in fv.items()},
+          flush=True)
     n = 5 if a.check else a.n_sub
     tasks, res = [(u, i) for i in range(n) for u in UNITS], []
     with Pool(a.jobs, initializer=limit_threads, initargs=(1,)) as p:

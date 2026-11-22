@@ -9949,10 +9949,20 @@ the covariation.
 
 ### A340 power note (2026-11-22; `A340_fetal_geometry/scripts/power_a340.py`, `output/power/{pools,quantiles,decisions}.csv`; no fetal iota computed)
 - GTEx fast deaths at 08-18 h: adrenal 31 (del Valle has 32: the pool is used whole, 31 per draw), liver 62. 1,000
-  draws; noise term as in the A339 note.
-- At 0.75 of the adult clock (registered scale), iota_daily 5-95 % / iota_line q05: del Valle 14 genes 0.144-0.354 /
-  0.990; del Valle core 0.085-0.338 / 0.927; liver 14 genes 0.141-0.523 / 0.987: **separated, decidable**. Liver core
-  0.215-0.587 / 0.517: not separated (separated only at the full adult size), not decidable. 10x cortex 14 genes
-  0.131-0.587 / 0.951 (descriptive), core not separated.
-- H340.1 scored on del Valle (14 genes, core) and liver (14 genes); Holm over the two units on the 14 genes. Thresholds
-  (line q05 at 0.75) and daily ranges as above.
+  draws; exact log-count noise term as in the A339 note.
+- *Noise matching (added after the score code check, before any fetal iota).* With every fetal gene permuted
+  independently (`score_a340.py --check`), iota was 0.56-0.93, not near 0: each gene's biological variance projected
+  through the unequal projector weights is itself elongated, and fetal data are noisier than the adult stand-ins
+  (fetal per-gene residual variance, median over genes: del Valle 0.082, liver 0.167, cortex 0.231). A between-gene-
+  covariance version of iota was tried and dropped (unstable: dropping the diagonal also removes much of the clock
+  signal when the projector leans on a few genes). Every reference draw is instead given independent per-gene
+  log-normal noise up to the fetal unit's per-gene residual variance (the fetal clock signal is part of it, so the
+  added noise is an upper bound and the separation conservative), and a no-clock reference (genes permuted across the
+  drawn samples) is added.
+- At 0.75 of the adult clock (registered scale), iota_daily 5-95 % / iota_line q05 / no-clock 5-95 %: del Valle 14
+  genes 0.127-0.369 / 0.974 / 0.561-0.834; del Valle core 0.103-0.419 / 0.907 / 0.718-0.910; liver 14 genes
+  0.136-0.526 / 0.945 / 0.417-0.740: **separated, decidable**. Liver core 0.195-0.595 / 0.479: not decidable. 10x
+  cortex 14 genes 0.125-0.597 / 0.830 (descriptive), core not separated.
+- H340.1 scored on del Valle (14 genes, core) and liver (14 genes); Holm over the two units on the 14 genes; the
+  observed iota is also placed against the no-clock range (descriptive: the covariation itself is clock-specific in
+  these units, A328 part a and A243 / A269, so "no clock" is not the alternative tested).
