@@ -9,8 +9,8 @@ B. Phase offsets between stromal-vascular classes of the same atlas (A293 Part 2
    coloured dots, human atlases (untimed pairwise offsets); black: circular mean over atlases with atlas bootstrap
    90 % interval; black open diamonds: mouse colon and aorta against known time (A273, A279). Positive = the first
    class earlier.
-Lymphocytes: no gain is estimated; the label carries the bound of A326 (a clock at 0.7 of the fibroblasts' would have
-been read in A281 and A321; per-atlas coherence and design power in the speaker notes).
+Lymphocytes: no gain on this scale; they do not share the tissue's clock state (pairwise, A272-A288; coupling median
+0.13 in the A17 atlas fits). Whether they keep a clock of their own is open (A281, A321, bound A326: speaker notes).
 A also shows the core-loop pooled gains (open blue, A350, blind; mural tau above the bound: "not conserved").
 
 Data: exploratory/A293_organisation_levels/output/part3/{atlases,families}.csv;
@@ -61,11 +61,8 @@ def gain(ax, at, fam, core):
         if f == "endothelial":
             ax.scatter([1], [i], s=40, marker="D", color=col, edgecolor="white", lw=0.5, zorder=3)
             continue
-        if f == "lymphocyte":
-            ax.annotate("", xy=(lo_edge * 1.05, i), xytext=(0.5, i),
-                        arrowprops=dict(arrowstyle="-|>", color=col, lw=1.6, mutation_scale=10))
-            ax.text(lo_edge * 1.05, i - 0.32, "no readable clock (< 0.7 of fibroblasts')", color=col, va="center",
-                    ha="left", fontsize=8)
+        if f == "lymphocyte":  # no gain on this scale: they do not share the tissue's clock state (A272-A288)
+            ax.text(0.5, i, "not coupled to the tissue's clock", color=col, va="center", ha="center", fontsize=9)
             continue
         a = at[at.family == f]
         y = i + np.random.default_rng(i).uniform(-0.2, 0.2, len(a))

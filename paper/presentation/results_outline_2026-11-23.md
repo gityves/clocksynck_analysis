@@ -309,7 +309,7 @@ maternal or ACTH signal remains open. No sampling times: these are shared states
 | slide | status | figure |
 |---|---|---|
 | 3.1 The reference organisation: GTEx fast deaths, whole day | **new** (below) | `figures/reference_map/` |
-| 3.2 Inside tissues: cell classes run at the organ's time with their own loudness; lymphocytes have no readable clock | **revised** from `results.md` R2.3 (below) | `figures/celltypes_health/` |
+| 3.2 Inside tissues: cell classes run at the organ's time with their own loudness; lymphocytes do not share it | **revised** from `results.md` R2.3 (below) | `figures/celltypes_health/` |
 | 3.3 Composition moves neither time nor, much, loudness | revise `results.md` R2.2 (phase panel flipped to peak time) | `figures/organs_composition/` |
 | 3.4+ Loudness (organ gains, coupling reads loudness, person loudness, blood) | to build | |
 | 3.last The organ arrangement holds when the body no longer reads the hour (bridge to section 4) | **revised** from `results.md` R3.1 (below) | `figures/organ_arrangement/` |
@@ -348,7 +348,7 @@ tissues chosen for the deck).
 
 **Source:** `presentation/output/organs/couplings.csv` (A263 R2 fit with donor bootstrap, `scripts/organs_compute.py`).
 
-## 3.2 Inside tissues: every resident class runs at the organ's time with its own loudness; lymphocytes have no readable clock
+## 3.2 Inside tissues: every resident class runs at the organ's time with its own loudness; lymphocytes do not share it
 
 **Bullets**
 1. Each cell class has its own gain relative to endothelium of the same atlas, the same across organs: fibroblast 1.26
@@ -356,11 +356,13 @@ tissues chosen for the deck).
    On the core loop (A350, blind) conserved in four of five classes; mural cells not (tau 0.10 -> 0.39, H350.1 fail).
 2. Classes run at the organ's time: stromal-vascular classes peak within about 1 h of each other; endothelium peaks
    0.46 h before fibroblasts (90 % 0.09 to 0.90), the mouse direction, but the order is not shown (H293.3 fail).
-3. Lymphocytes are the zero-gain end: no readable clock of their own (bound: below about 0.7 of the fibroblasts').
+3. Lymphocytes do not share the tissue's clock state (pairwise, beyond matched and stress-responsive genes, A272-A288;
+   coupling median 0.13 in the atlas fits). Whether they keep a clock of their own is open: the own-clock test would
+   only see one about as loud as the fibroblasts'.
 
 **Figure:** `figures/celltypes_health/celltypes_health.png` (`scripts/celltypes_health.py`; wide, two panels). A. gain
 relative to endothelium per class: atlases (dots), pooled 14 genes (black, 95 %), pooled core loop (open blue; mural
-"not conserved"); lymphocytes at the zero-gain end with the A326 bound. B. lead of the first class between
+"not conserved"); lymphocytes at the label "not coupled to the tissue's clock", no position on the gain scale. B. lead of the first class between
 stromal-vascular classes [h]: human atlases, circular mean with 90 % atlas bootstrap, mouse against known time
 (diamonds). Lymphocyte panels removed (user, 2026-11-23): too much weight on a negative.
 
@@ -377,6 +379,15 @@ loop; A281 registered; A321 blind for the atlases; A326 registered, not blind fo
   with monocytes and dendritic cells.
 - Sharing per family, the calibrated stromal-vascular minus lymphocyte contrast (A272-A288), living donors (HLCA) and
   residency (A284): as in `results.md` R2.3 speaker notes.
+- Why myeloid gain is read at 0.53 of the fibroblasts' while a lymphocyte clock below 0.7 is not: different tests. The
+  gain is host-referenced (a class's states regressed on the tissue's shared state, estimated from all compartments);
+  the own-clock test (A281, A321) asks the class's clock genes to cohere among themselves with no reference, and A326
+  calibrated it on fibroblasts. Classes relative to fibroblasts: endothelial 0.79, mural 0.73, parenchyma 0.70,
+  epithelial 0.63, myeloid 0.53; a lymphocyte clock of myeloid size is not excluded by the own-clock test.
+- In the host-referenced A17 atlas fits (descriptive, post hoc; `results/figure_2/output/atlas_fits/a17_healthy_fits.csv`,
+  medians over compartments): coupling fibroblast 0.65, endothelial 0.53, myeloid 0.27, lymphocyte 0.13 (66
+  compartments, 24 % fitted at the coupling boundary); width of the log-amplitude interval 0.92, 0.87, 1.58, 2.09. A
+  lymphocyte gain on panel A's scale would need its own registration (A293 part 3 method, power note first).
 - Lymphocytes (detail for questions, not on the slide):
   - No readable clock: their coherence between donors is above matched genes in 1 of 9 atlases (breast,
     a hormonal pulse, A294), fibroblasts of the same donors thinned to their depth in 7 of 9; blind on the core loop in
