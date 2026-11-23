@@ -36,6 +36,8 @@ TAG = {"a251": {"matched": 3, "responsive": 4, "responsive_broad": 5},
        "a255": {"matched": 3, "responsive": 4, "responsive_broad": 5},
        "a138": {"matched": 44, "responsive": 45, "responsive_broad": 46},
        "a227": {"matched": [44], "responsive": [44], "responsive_broad": [45]}}
+CORE = [False]  # --core (A348): clock and companions on the core loop (gene set minus PER1, PER2, NR1D1)
+PAIRP = {}  # test -> pairing p of the clock from 10,000 within-compartment permutations (--core only)
 OVERLAP = []  # mean pairwise Jaccard overlap of the gene sets per test x family (where computed)
 
 
@@ -55,6 +57,14 @@ def _load(name, path):
     sys.modules[name] = mod
     spec.loader.exec_module(mod)
     return mod
+
+
+def core_of(base, ws):
+    """A348: (core clock, companions restricted to the core positions) of waveforms `ws` drawn against `base`."""
+    sys.path.insert(0, str(PAPER / "exploratory/A336_two_readouts/scripts"))
+    import a336_common as a3
+    keep = a3.core(base)
+    return keep, [a3.restrict(w, base, keep) for w in ws]
 
 
 def log(*a):
@@ -104,14 +114,22 @@ def a251():
     for kind in FAMILIES:
         n0 = len(wfs)
         for w in P.pseudo_waveforms(lm, M.N_SETS, np.random.default_rng([M.SEED, TAG["a251"][kind]]), M.WF, kind):
-            if M.women_states(data, w, ids) is not None:
+            if M.women_states(data, w, ids) is not None:  # filter on the full 14-gene draw, as scored
                 wfs.append(w)
         fam[kind] = slice(n0, len(wfs))
         OVERLAP.append(dict(test="a251", family=kind, jaccard=jaccard(wfs[n0:])))
+    if CORE[0]:
+        keep, rest = core_of(M.WF, wfs[1:])
+        wfs = [keep] + rest
+        log("A251 core genes", list(keep.genes))
     states = [M.women_states(data, w, ids) for w in wfs]
     Z = {c: np.array([s[c] for s in states]) for c in M.COMPS}
     tests = {k.split()[0]: p for k, p in M.families().items()}
     n = len(ids)
+    if CORE[0]:  # pairing p as compute_a251.run: M.null (rng [251, 2], 10,000) on the clock's states
+        nul = M.null({c: v[0] for c, v in Z.items()}, M.families(), M.N_PERM, np.random.default_rng([M.SEED, 2]))
+        for k, p in M.families().items():
+            PAIRP[k.split()[0]] = M.p_up(nul[k], M.pooled({c: v[0] for c, v in Z.items()}, p))
 
     def draw(d):
         if d is None:
@@ -137,17 +155,33 @@ def a255():
             ps = c.pseudo(f, M.N_SETS, TAG["a255"][f])
             OVERLAP.append(dict(test=f"a255 {c.name}", family=f, jaccard=jaccard(ps)))
             wfs += ps
+        if CORE[0]:
+            keep, rest = core_of(c.wf, wfs[1:])
+            log(f"A255 {c.name}: base {len(c.wf.genes)} genes, core {len(keep.genes)}", list(keep.genes))
+            wfs = [keep] + rest
         zs = [c.Z(w) for w in wfs]
         return {k: np.array([z[k] for z in zs]) for k in tissues}
+
+    def stack_clock(c, k):  # the clock's (core, with --core) centred states of tissue k
+        return c.Z(core_of(c.wf, [])[0] if CORE[0] else None)[k]
 
     Zm = stack(mu, ("fat", "skin"))
     sp = {a: tuple(c.t)[:2] for a, c in surg.items()}
     Zs = {a: stack(c, sp[a]) for a, c in surg.items()}
     w = np.array([M.r_pair(Zs[a][sp[a][0]][0], Zs[a][sp[a][1]][0])[2] for a in surg], float)
     w = w / w.sum()  # scored weights (persons with both tissues on the real pairing), fixed under placebo
+    obs0 = sum(wi * M.r_pair(Zs[a][sp[a][0]][0], Zs[a][sp[a][1]][0])[0] for wi, a in zip(w, surg))
     fam = slices(M.N_SETS)
     names = list(surg)  # plain names only: the draw closure is shipped to joblib workers
     log("surgical cohorts", names, "weights", w.round(3))
+    if CORE[0]:  # pairing p as compute_a255.run: one rng [255, 2] stream, muther pairs first, then the surgical cohorts
+        rng = np.random.default_rng([M.SEED, 2])
+        Zc = {k: stack_clock(mu, k) for k in mu.t}
+        nul = {p: M.perm_null(Zc[p[0]], Zc[p[1]], M.N_PERM, rng) for p in [("fat", "skin"), ("fat", "lcl"), ("skin", "lcl")]}
+        PAIRP["muther fat-skin"] = M.p_up(nul[("fat", "skin")], M.r_pair(Zc["fat"], Zc["skin"])[0])
+        nulS = {a: M.perm_null(*[stack_clock(c, k) for k in sp[a]], M.N_PERM, rng) for a, c in surg.items()}
+        pooled_null = sum(wi * nulS[a] for wi, a in zip(w, surg))
+        PAIRP["surgical cohorts pooled"] = M.p_up(pooled_null, float(obs0))
     del surg, mu
 
     def draw(d):
@@ -327,9 +361,12 @@ def main():
     ap.add_argument("--draws", type=int, default=2000)
     ap.add_argument("--families", default="matched,responsive")
     ap.add_argument("--out", default="")
+    ap.add_argument("--core", action="store_true", help="A348: clock and companions on the core loop (a251, a255)")
     args = ap.parse_args()
     cli.setup(args)
     FAMILIES[:] = args.families.split(",")
+    CORE[0] = args.core
+    assert not args.core or args.test in ("a251", "a255"), "--core is for a251 and a255"
     out = OUT / args.out / args.test if args.out else OUT / args.test
     out.mkdir(parents=True, exist_ok=True)
     tests, fam, draw, rules = BUILD[args.test](args.jobs) if args.test in ("a138", "a227") else BUILD[args.test]()
@@ -338,15 +375,20 @@ def main():
     sc = scored(args.test)
     for k, v in obs.items():
         row = sc[sc.test.astype(str).str.startswith(k)].iloc[0]
+        if args.core:  # 14-gene stored values do not apply to the core loop
+            row = pd.Series(dtype=float)
         rep.append(dict(test=k, clock=float(v[0]), scored=float(row.get("r", np.nan)),
                         **{f"{f}_q95": float(np.nanquantile(v[s], 0.95)) for f, s in fam.items()},
                         **{f"scored_{f}_q95": float(row.get(f"{f}_q95", np.nan)) for f in fam}))
     rep = pd.DataFrame(rep)
     rep.to_csv(out / "repro.csv", index=False)
     log(rep.round(4).to_string())
-    assert np.allclose(rep.clock, rep.scored, atol=1e-9), "draw 0 does not reproduce the scored statistic"
+    if args.core:
+        rep["pairing_p"] = [PAIRP[k] for k in rep.test]
+        rep.to_csv(out / "repro.csv", index=False)
+    assert args.core or np.allclose(rep.clock, rep.scored, atol=1e-9), "draw 0 does not reproduce the scored statistic"
     for f in fam:
-        if f in ("matched", "responsive"):  # scored families only
+        if f in ("matched", "responsive") and not args.core:  # scored families only
             assert np.allclose(rep[f"{f}_q95"], rep[f"scored_{f}_q95"], atol=1e-9), f"draw 0: {f} q95 not reproduced"
     if OVERLAP:
         pd.DataFrame(OVERLAP).to_csv(out / "overlap.csv", index=False)
@@ -358,6 +400,8 @@ def main():
     for k in obs:
         rows += readout(k, obs[k], null[k], fam, rules[k])
     T = pd.DataFrame(rows)
+    if args.core:
+        T["pairing_p"] = T.test.map(PAIRP)
     T.to_csv(out / "tests.csv", index=False)
     pd.set_option("display.width", 250)
     log(T.round(4).to_string())

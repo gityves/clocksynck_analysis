@@ -7766,3 +7766,30 @@ lesional minus non-lesional (negative = lesional delayed), 90 % patient-bootstra
   "transcriptional" reading also needs H345.2, which is not decided: the data favour a pre-mRNA delay at least as
   large as the mRNA delay, and rule out a delay confined to mRNA turnover or composition only at the interval's edge.
   Limits: one series; a transcriptional delay can still be compositional at cell-type level (bulk).
+
+## A348 (scored 2026-11-23; NOT BLIND for the 14-gene values, BLIND for every core value; one run per part): tissues of the same living person share one clock state on the core loop, beyond matched and calibrated broad responsive genes, in skin sites, skin layers and the surgical fat-skin pairs (H348 PASS x4); MuTHER fat-skin falls to the line (matched p_cal 0.057)
+
+- Part 1: draw 0 on 14 genes reproduces every stored A320 statistic, q95, p_cal and placebo rate exactly (max |difference|
+  0.0). Part 2 (core loop: 11 genes; GSE133979 lacks RORA, 10 genes), 2,000 placebo draws, pairing p from 10,000
+  permutations (0.0001 in every test, the floor). Runs under a minute each (`--jobs 4`); one code-bug crash in the repro
+  block before any output was written, fixed and rerun.
+
+| test | 14 genes -> core | matched q95 / p_cal | broad responsive q95 / p_cal | narrow responsive q95 / p_cal (floor) | H348 |
+|---|---|---|---|---|---|
+| A251 H251.1 skin sites | 0.628 -> 0.573 | 0.472 / 0.022 | 0.398 / 0.013 | 0.470 / 0.026 (0.025) | PASS |
+| A251 H251.2a | 0.813 -> 0.696 | 0.458 / 0.008 | 0.638 / 0.013 | 0.712 / 0.127 (0.017) | PASS |
+| A251 H251.2b | 0.594 -> 0.510 | 0.262 / 0.024 | 0.318 / 0.013 | 0.388 / 0.021 (0.020) | PASS |
+| A255 H255.1 MuTHER fat-skin | 0.533 -> 0.311 | 0.328 / 0.057 | 0.278 / 0.019 | 0.348 / 0.197 (0.031) | FAIL (matched) |
+| A255 H255.3 surgical pooled | 0.686 -> 0.719 | 0.406 / 0.004 | 0.450 / 0.003 | 0.507 / 0.013 (0.012) | PASS |
+
+- **V348:** matched and broad families calibrated in every test (q95-rule placebo rate 0.037-0.061); the narrow family
+  is not (0.080-0.105), as in A285, and is read by p_cal only. Its pi = 1 floor is below 0.05 in all five tests, so on
+  the core loop it is decidable: it passes in H251.1, H251.2b and H255.3 and fails in H251.2a and MuTHER.
+- **Reading (registered).** Skin sites and layers (A251) and the surgical fat-skin pairs (A255 H255.3, 83 persons) share
+  one clock state without PER1, PER2 and NR1D1, beyond expression-matched and calibrated broad responsive genes; the
+  surgical pairs also beyond glucocorticoid / immediate-early genes. MuTHER fat-skin (one punch biopsy, one array batch)
+  keeps the pairing and the broad family but falls below matched genes: at the line on the core loop. Gap 2 of the
+  story audit is closed with this wording.
+- Code: `exploratory/A285_companion_calibration/scripts/placebo_a285.py --test a251|a255 --core --families
+  matched,responsive,responsive_broad --out a348` (14-gene check: `--out a348_check14`).
+<!-- src: paper/exploratory/A285_companion_calibration/output/a348/{a251,a255}/{repro,tests}.csv, output/a348_check14/ -->
