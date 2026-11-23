@@ -165,13 +165,13 @@ Polar plot: angle = time relative to the person's internal time; radius = loudne
 
 | condition (reference) | time | loudness | departure | entries | status |
 |---|---|---|---|---|---|
-| intensive care, living brain (fast deaths) | order kept (Fisher-Lee rho 0.690; registered re-test, A293, of the descriptive A132 readout after H109.2 failed); offsets compressed toward 0 / 12 h (0.58 of fast deaths, A132b), read as a shared non-temporal state on running clocks (A109); detection limit simulated on fast deaths | lower: clock-specific log variance ratio 0.404, loudness about 0.82 (derived); holds on the core loop (+0.457) and matched on age and sex (+0.459), with raw clock variance higher in fast deaths while matched genes go the other way (A335); within organ donors, lower with ventilation time (descriptive) | - | A293, A315, A335 | registered re-tests, not blind; core loop and matching blind (A335) |
+| intensive care, living brain (fast deaths) | order kept (Fisher-Lee rho 0.690; registered re-test, A293, of the descriptive A132 readout after H109.2 failed); offsets compressed toward 0 / 12 h (0.58 of fast deaths, A132b), read as a shared non-temporal state on running clocks (A109); detection limit at the ventilated design: one organ about 6-7 h (5.6 h core), dispersion SD 2.25 h (A349): "no large disruption" | lower: clock-specific log variance ratio 0.404, loudness about 0.82 (derived); holds on the core loop (+0.457) and matched on age and sex (+0.459), with raw clock variance higher in fast deaths while matched genes go the other way (A335); within organ donors, lower with ventilation time (descriptive) | - | A293, A315, A335 | registered re-tests, not blind; core loop and matching blind (A335) |
 | brain death (ventilated, living brain) | order changed (D_rho 0.621; 0.584 adjusted); shared clock state kept; per organ (A332 D2): lung -1.58 h, tibial artery +1.09 h, tibial nerve +0.99 h (90 % intervals exclude 0); whole blood -1.22 h (-3.73 to +0.78); the other eight within 0.8 h. On the core loop artery (+1.20 h) and nerve (+1.54 h) hold, lung does not, lower-leg skin (+1.33 h) appears (A335). 3 of 12 intervals exclude 0 on either gene set, against 1.2 expected by chance: descriptive | equal relative to expression-matched genes: clock-specific ratio 1.05 (loudness 1.02, derived), equivalent within +-0.357 on 14 genes and the core loop, pooled and matched (A335); raw clock variance lower in organ donors, as for matched genes (core Q -0.186, matched median -0.181); every organ 0.92-1.13 of matched (A332 D2) | - | A315, A317, A318, A325, A327, A332, A335 | aliased with procurement and donor management; not blind |
 | human muscle, day 3 of a 12 h behavioural shift (aligned) | core loop +4.06 h (90 % 2.57-5.68; all 11 subjects the same sign); 14 genes +2.68 h | core loop: excursion about 0.49 (derived; projection 0.239), per subject 0.34-0.92 (median 0.47, all 11 below 1); 14 genes: about 0.31 (derived; projection 0.233; correction note under A257) | - | A257, A335 | 14 genes not blind; core loop blind (A335); 11 men |
 | mouse, daytime feeding (night feeding) | liver 11.3-11.7 h; lung, heart, kidney 1.6-2.5 h; fat 10.60 h (Manella), -0.48 h (Xin) | liver 0.44-0.71; lung, heart, kidney 0.50-0.65; fat 0.32 and 0.11 | - | A322, A324 | A324 blind for heart, kidney, fat |
 | mouse liver, feeding rhythm removed | +1.57 h | 0.724 | - | A297 | not blind |
 | tumours, high vs low proliferation (own normal tissue) | kept: tumours pair with their patient, at the line on the core loop (0.252 against matched q95 0.275, A336) (A138; pairing is blind to a constant tumour-normal offset); COFE's uncoupling is an artefact (A265, A267) | gain 0.63, clock-specific; within purity halves Q_G -0.266 (gain about 0.77, derived; A304 sensitivity) | not raised (power 1.000 at a doubling) | A138, A304 | A304 not blind for A138 |
-| tumour cell classes | fibroblasts and endothelium pair with the patient's normal stroma beyond matched genes (post hoc, A149 note 5; not confirmed, A226; no core-loop run); immune cells pair with normal tissue, not beyond responsive genes, and on the core loop not beyond matched genes (A227 at the line, A336) | - | - | A227, A271, A336 | - |
+| tumour cell classes | fibroblasts keep the patient's normal fibroblast clock state on the core loop, beyond matched and broad responsive genes (A346; 0.686 → 0.683); endothelium pairs but is not beyond matched genes on the core loop (A346); malignant epithelium not clock-specific (A346 D346); no independent cohort (A226); immune cells pair with normal tissue, not beyond responsive genes, and on the core loop not beyond matched genes (A227 at the line, A336) | - | - | A227, A271, A336 | - |
 | chronic lesions: periodontitis, osteoarthritis, carotid plaque, fibroid, hidradenitis (own tissue) | kept: pooled +0.01 h, MDE 0.69 h | lower: variance 0.66 pooled (loudness about 0.81, derived), clock-specific only pooled, at the line | - | A254 | powered for time |
 | psoriasis lesion (own skin) | 14 genes -1.45 h, q 0.016 (A308 rule, adopted after A183's rule failed); core loop -1.00 h, q 0.049, at the line (5.5th percentile of matched sets, as on 14 genes; A335): suggestive | higher, not clock-specific (r +0.50, loudness 1.28; 94th / 90.5th percentile of matched / responsive; A115 lesional vs uninvolved pooled +0.30, 56th / 70th) | - | A183, A308, A332 D1, A335 | not blind; core loop blind (A335) |
 | psoriasis, uninvolved vs healthy skin | later (descriptive) | - | - | A115 | trait component |
@@ -493,13 +493,23 @@ true desynchrony in human tissue is rare and local, and most reported "disruptio
 - **New supplementary figure: "the readout sees time move when it moves".**
   - Positive controls: A111 (Xin feeding, against timed truth), A129, A319, A273 / A279, A251 H251.4, A342 (offset
     against timed truth), A257.
-  - Beside them, every null with its detection limit (A336 part 3; the intensive-care limit recomputed at the
-    ventilated design, audit follow-up task 4).
+  - Beside them, every null with its detection limit (A336 part 3; intensive care at the ventilated design, A349).
+- **Figure 1** also shows A348: living tissues share one time on the core loop (4 of 5 tests; MuTHER fat-skin at the
+  line).
 - **Figure 1** adds A251 and A255 (living organs share one time; a person's cell line does not) beside A252 / A256.
-- **Figure 6d** becomes "inflamed skin":
-  - psoriasis delay (A183, A308, A345 pre-mRNA);
-  - atopic lesions, descriptive, until the audit follow-up task 2;
-  - non-skin lesions kept (A254).
+- **Figure 6d**: psoriasis is the exception.
+  - Psoriasis delay: A183 blind, A308, A345 pre-mRNA, A347 pooled -1.51 / -0.96 h.
+  - Psoriasis runs later than atopic lesions (A347: -1.25 / -0.75 h). The atopic delay is small, not clock-specific
+    and not on the core loop; it is not shown to be zero (equivalence failed).
+  - Hidradenitis is descriptive.
+  - Non-skin lesions are kept (A254).
+- **Intensive care** moves out of the "order kept" claims into the loudness claims.
+  - The order statement is "no large disruption": one organ about 6-7 h, dispersion SD 2.25 h (A349).
+  - Intensive care serves as the reference group for brain death.
+  - The loudness loss is host-referenced too (A349 log z2 > 0) and largest in the organs with the strongest clocks
+    (A349, Spearman about 0.82; descriptive).
+- **Tumours**: "stay paired with the patient's time, carried at least by their fibroblasts" (A346). Do not write
+  "only fibroblasts": endothelium, cancer cells and immune cells are not resolved on the core loop.
 - **Supplementary registry table** with blind status (70 blind, 42 partly blind of 219; registry 2026-11-19) and a
   methods paragraph: no new human or animal sampling, every result from public or consented data, pre-registered.
 
