@@ -8066,3 +8066,14 @@ Check run (`--check`): the clock |r| reproduces A279 `pairs.csv` in every arm (a
   CIART absent on its array); the skin contrast is near 1 with a wide interval.
 - Code: `exploratory/A355_living_gain_ratios/scripts/a355.py --stage score`.
 <!-- src: paper/exploratory/A355_living_gain_ratios/output/{score_pairs,score_pooled,score_descriptive}.csv, boot.npz -->
+
+## A356 power note (2026-11-23; permutation nulls only, no split gain computed): both pooled within-tissue tests are decidable (MDE 0.042 ischaemic time, 0.048 RIN, against the 0.10 bound); across 25 tissues the Spearman test has power 0.80 at rho -0.5
+
+- 25 peripheral tissues (A263 fit, whole blood excluded); median 128 donors per tissue with an ischaemic time, 111 with
+  a RIN; median of the halves' medians: ischaemic time 19.0 h (long) vs 12.2 h (short), RIN 7.0 vs 6.0.
+- Per-tissue permutation SD of Delta: median 0.097 (ischaemic time), 0.105 (RIN). Pooled (inverse variance): SD 0.017,
+  MDE 0.042 (ischaemic time); SD 0.019, MDE 0.048 (RIN): **decidable** (bound 0.10).
+- Labels are permuted among different donors of a tissue, so the null carries between-donor sampling variance (unlike
+  the within-person swaps of A355).
+- Code: `exploratory/A356_gain_attenuation/scripts/a356.py --stage power` (16 s).
+<!-- src: paper/exploratory/A356_gain_attenuation/output/{power,power_tissues}.csv (per-tissue aggregates) -->
