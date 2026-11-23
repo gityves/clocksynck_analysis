@@ -7836,3 +7836,39 @@ once (part 2: 166 s, peak 1.9 GB). Aggregates only.
   is not uniform: it scales with clock strength.
 - Code: `exploratory/A349_icu_limits/scripts/{a349_common,a349_part1,a349_part2,a349_d4}.py`.
 <!-- src: paper/exploratory/A349_icu_limits/output/{part1_limits,part1_sim,part2_spread,part2_summary,part2_tissues,d4_compression}.csv -->
+
+## A347 (scored 2026-11-23; NOT BLIND on 14 genes, BLIND on the core loop; one scoring run, 167 s): psoriatic lesions run late on both readouts and more than atopic lesions (H347.3 PASS); atopic lesions show a small delay on 14 genes (-0.26 h, p 0.034) that is not clock-specific and not detected on the core loop (-0.21 h, p 0.097, MDE 0.37 h): by the registered reading the psoriatic exception stands
+
+17 gated series (authors' counts): psoriasis 9 / 465 pairs, AD 8 / 298. Pooled offset lesional minus non-lesional
+(negative = delay), 10,000 swaps; companions calibrated on 2,000 swap draws (A308 q).
+
+| | 14 genes | core loop |
+|---|---|---|
+| P347 psoriasis offset (p) | -1.507 h (< 1e-4); q matched < 0.001 | -0.958 h (< 1e-4); q matched < 0.001 |
+| H347.1 AD offset (p; MDE) | -0.256 h (0.034; 0.35 h): PASS | -0.205 h (0.097; 0.37 h): FAIL |
+| H347.2 AD q matched / narrow / broad | 0.114 / 0.101 / 0.103: FAIL | 0.128 / 0.078 / 0.185: FAIL |
+| H347.3 D = PSO - AD (90 %) | -1.251 h (-1.613 to -0.920): PASS | -0.753 h (-1.166 to -0.368): PASS |
+| H347.4 equivalence +-0.75 h | FAIL | FAIL |
+
+- V347: calibrated (pass rate <= 0.0646) in 11 of 12 family x disease x readout cells; psoriasis core narrow
+  responsive 0.070 (read with care; its q < 0.001).
+- Per series (core): psoriasis 9 of 9 negative (-0.21 to -2.68 h); AD 7 of 8 negative (-0.06 to -1.70 h; GSE58558
+  +0.15 h); the 1/se^2 weights (variance-ratio precision) give the two series nearest 0 (GSE58558, GSE99802) the largest
+  AD weights. The Tsoi AD series reads -0.94 h (A345 mapped counts: -1.17 h).
+- The 14-gene AD value reproduces the archive A79 pooled value (-0.257 h, p 0.040; not blind).
+- **D347 (descriptive).** GSE154200 atopic eczema (3 gated batches, 37 pairs): -0.20 h (14 genes; 90 % -2.04 to +1.68,
+  MDE 2.19 h), core +0.43 h: uninformative. Hidradenitis (GSE151243, 20 pairs, gate p 0.005 on both readouts): -1.07 h
+  (-1.80 to -0.14, p 0.047), core -0.88 h (-1.58 to -0.05, p 0.053), q 0.31-0.38 against every family: delayed, not
+  clock-specific. Tsoi lead (A342 matched estimator) within condition, plain form: psoriasis lesional 0.69 h against
+  non-lesional 1.34 h (difference -0.65, 90 % -1.80 to +0.40; core 1.41 against 1.76 h), AD 0.37 against 0.76 h (core
+  0.56 against 0.65 h): no lead change resolved. The registered patient-covariate form is degenerate within one
+  condition (one sample per patient; it returns the same lead in both conditions) and is not reported. Not fully blind:
+  the smoke check on shuffled labels showed the approximate overall lead per disease.
+- **Reading (registered; the core loop decides wording).** H347.1 fails on the core with an MDE (0.37 h) below 0.75 h:
+  "the psoriatic exception stands; atopic lesions do not run detectably late". On 14 genes a small AD delay is seen,
+  not beyond companions; psoriasis runs later than AD on both readouts (by 1.25 h on 14 genes, 0.75 h on the core).
+  Proposed wording: "psoriatic lesions run about 1-1.5 h late (core loop 0.96 h), more than atopic lesions, which lean
+  late by about 0.2 h without a clock-specific or core-loop delay; hidradenitis leans late (descriptive, not
+  clock-specific)". The Tsoi AD series alone (-0.94 to -1.17 h) is the largest AD value of the eight.
+- Code: `exploratory/A347_inflamed_skin/scripts/{a347,d347}.py`.
+<!-- src: paper/exploratory/A347_inflamed_skin/output/{power/power.csv,score/{families,difference,hypotheses,per_series}.csv,d347/*.csv} -->
