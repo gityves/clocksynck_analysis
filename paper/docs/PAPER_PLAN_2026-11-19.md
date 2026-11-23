@@ -102,9 +102,14 @@ untimed samples (relative amplitude |z| and offset arg z against the host). For 
     not decidable (A330). In a timed primate organ amplitudes span 2.8-fold (10th-90th percentile, A36 table,
     descriptive) (revised 2026-11-23).
 - **The departure varies little and has no dominant direction.**
-  - It is clock-specific, about 2.6 times that of expression-matched genes (A294b); on the core loop its excess falls
-    to 1.28 times matched (A329), about as much as dropping three random genes of similar weight (A336 gene-drop null,
-    32nd percentile): it is not shown to ride on PER1, PER2 and NR1D1 (revised 2026-11-23).
+  - It is clock-specific, about 2.6 times that of expression-matched genes (A294b). It is a coherent shift of the
+    tissue's whole clock state, about 2.0 times matched gene-level variation and present in all 27 tissues; it is not
+    carried by PER1, PER2 and NR1D1. The core-loop fall to 1.28 times matched (A329) is the 11-gene projector's 3.1-fold
+    noise gain (A329 erratum, post hoc; A336 gene-drop null, 32nd percentile) (revised 2026-11-23).
+  - A small part of it is a person-level glucocorticoid-like state read unequally by tissues: the signal-gene
+    residuals of a person's other tissues explain a median R^2 of 0.027 of a tissue's departure, against 0.008 for
+    matched genes (A357, registered; skeletal muscle 0.195); this state tracks the person's glucocorticoid-target
+    state (r 0.77, descriptive). Daily cortisol history and an agonal surge are not separated (revised 2026-11-23).
   - Across the 27 peripheral tissues 2 psi spans 4.6-fold, against 85-fold for S (A104 table, derived).
   - It is not phase-dominated (A311) and hardly shared between organs (A302, A313).
   - Coupling c = S / (S + 2 psi) therefore ranks compartments mostly by loudness (A291). A quiet organ's time is read
@@ -375,8 +380,9 @@ The frozen claim set: every entry cited in sections 2, 3 and 5 is scored.
 | G1 organ factor | A330 | not decidable at this design (baboon power 0.60 at true rho 0.6; mouse 0.45 at 8 organs, not downloaded) | Figure 4g: "organ" stays open |
 | G1b living pairs | A355 | scored 2026-11-23: living gain ratios do not follow GTEx as a set (H355.1 FAIL); omental / subcutaneous fat 1.38 vs GTEx 1.59, not decidable; cardia / squamous opposite (anatomy mismatch); swap-null power optimistic | Figure 4g: living reproduction not shown |
 | G2 post-mortem attenuation | A356 | scored 2026-11-23: no effect of ischaemic time or RIN on gain within tissues (H356.1-2 FAIL, decidable); at most about 4 % of the organ spread | Figure 4g: "not post-mortem attenuation" |
+| N2b departure as a systemic signal read unequally | A357 | scored 2026-11-23: person-level signal-gene state explains a small, clock-specific part of each tissue's departure (H357.2 PASS, median R^2 0.027 vs 0.008); tracks the GC-target state (r 0.77, descriptive); sharing across tissues not resolvable (H357.1 not powered) | model part 6: departure mostly a coherent clock-state shift of unknown cause; a small GC-like component read unequally |
 | P1 person loudness, living | A331, A335 1c | PASS on 14 genes (leverage 0.177); falls on the core loop (0.107 < matched q95 0.130; A335): carried by PER1, PER2, NR1D1 | Figure 4f: person loudness in living tissue not shown as a clock property; GTEx (A312) only |
-| N2 departure on the core loop | A329 | partly leakage: excess 2.64 -> 1.28 times matched without PER1, PER2, NR1D1 (H329.1); not the GC / IEG signal state (H329.3 FAIL); coupling falls (H329.2 FAIL) | model part 6: departure carried mainly through signal-inducible clock genes, cause open |
+| N2 departure on the core loop | A329 (+ erratum 2026-11-23) | the core-loop fall (2.64 -> 1.28 times matched) and coupling fall are the 11-gene projector's noise gain (3.1-fold), not leakage: the departure is a coherent clock-state shift, 2.0 times matched gene-level variation, in 27 of 27 tissues; not the sample's GC / IEG state (H329.3 FAIL) | model part 6: departure carried mainly through signal-inducible clock genes, cause open |
 | N1 output retention | A333 | not decidable at this design: median MDE log Phi 0.726 (only a loss to 0.48 detectable; gate 0.357); archive A91 (pooled, not blind) the only indication | Figures 1 and 7: N1 stays an open question |
 | D1 skin loudness | A332 | descriptive: psoriasis variance up, not beyond companions | 3, Figure 6d: loudness change not clock-specific |
 | D2 brain death per organ | A332, A335 1e | descriptive: no organ loses loudness; on the core loop tibial artery (+1.20 h) and nerve (+1.54 h) hold, lung does not, lower-leg skin appears (+1.33 h) | Figure 5b arrows: artery and nerve, descriptive (3 of 12 intervals exclude 0 on either gene set; 1.2 expected by chance) |

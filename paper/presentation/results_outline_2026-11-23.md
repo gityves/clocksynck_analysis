@@ -456,10 +456,11 @@ post hoc display (same-class rows chosen post hoc).
    (0.90 to 4.14) and barely grows with S (slope of log D on log S 0.07).
 2. Coupling = S / (S + D), so it follows loudness: louder organs read as more coupled (Spearman rho +0.734 with
    amplitude). Not measurement: a perfectly locked tissue would read 0.97 at every tissue's real design (A291).
-3. The departure exceeds that of expression-matched genes: 2.6-fold on the 14 clock genes (90 % 2.4 to 2.9, all 27
-   tissues; A294b), but only 1.28-fold on the 11-gene core loop (90 % 1.15 to 1.44; 22 of 27 tissues; A329): most of
-   the clock-specific excess is carried by PER1, PER2 and NR1D1, and it is not the glucocorticoid / immediate-early
-   state of the sample (H329.3 fail).
+3. The departure is clock-specific: 2.6 times that of expression-matched genes (90 % 2.4 to 2.9, all 27 tissues;
+   A294b). It is a coherent shift of the tissue's whole clock state, about 2.0 times matched gene-level variation and
+   present in every tissue, not carried by PER1, PER2 and NR1D1 (A329 erratum, post hoc). A person-level
+   glucocorticoid-like state, read from the person's other tissues, explains a small part of it (median R^2 0.027
+   against 0.008 for matched genes; A357, registered, blind).
 4. The brain follows the rule. In the baboon, where each animal's time is known, coupling rises with each tissue's
    rhythm amplitude (Spearman 0.82 over 57 tissues; periphery 0.77, brain 0.74), and weakly rhythmic brain regions fall
    on the peripheral line (A289: median residual -0.001). Human brain couples at 0.406 against 0.679 in the periphery.
@@ -467,14 +468,13 @@ post hoc display (same-class rows chosen post hoc).
 **Figure:** `figures/organs_health/organs_health.png` (`scripts/organs_health.py`; wide). A. S against D per tissue
 (log axes, same range), Theil-Sen line. B. coupling against the shared amplitude sqrt(S); grey: S / (S + D) at the
 median D (1.9), the definition of coupling at a constant departure, not a fit. C. own departure of the clock genes
-against that of expression-matched genes (median of 100 sets): 14 genes (filled, system colours) and core loop (open
-blue, against its own matched sets); dashed 1:1, dotted the median ratios 2.6 and 1.28. D. baboon: amplitude against
+against that of expression-matched genes (median of 100 sets); dashed 1:1, dotted the median ratio 2.6. D. baboon: amplitude against
 known time (A36 timed gain, estimated without the host) against coupling, 35 peripheral tissues and 22 brain regions;
 grey: peripheral line.
 
 **Tags:** A104 registered (H104.1, rho < 0, not supported; the positive relation is post hoc, made registered by A144
 and A271 Part B). A291 registered (H291.1 pass); the S / D table is A291 post hoc. A294b registered (H294b.1 pass).
-A329 registered, blind for the core loop (H329.1 falls, H329.2-3 fail). A289 H289.3 registered (fail: brain on the
+A329 erratum: post hoc diagnosis. A357 registered, blind (H357.2 pass; H357.1 not powered, not scored). A289 H289.3 registered (fail: brain on the
 line, the outcome shown); panel D display post hoc.
 
 **Caveats (speaker notes)**
@@ -486,9 +486,16 @@ line, the outcome shown); panel D display post hoc.
 - Slope reading (post hoc): a departure independent of amplitude (slope 0) means person-specific cue timing or
   additive noise; individual intrinsic periods would give slope 2. Observed 0.07 (0.22 for the excess over matched
   genes) excludes intrinsic periods as the main source. Feeding cue history not supported (A302, H302.1 fail).
-- Core loop: the matched sets of the 11 genes have larger departures than those of the 14 (different matching), so
-  compare each set to its own matched sets, not the two clouds to each other. On the core loop coupling falls
-  (median change -0.076; H329.2 fail). Reading: "partly leakage" of output genes; source of the departure open.
+- Why not the core loop (A329 erratum): the projector maps a coherent clock-state shift the same way with 14 or 11
+  genes, but the 11-gene projector amplifies gene-level variation 3.1-fold. So the core-loop ratio (1.28) and coupling
+  fall without the coherent part changing. Split per tissue: coherent departure median 1.42 (0.62 to 3.69, positive in
+  27 of 27), clock genes' gene-level part 0.47 against 0.71 for matched genes. Agrees with the A336 gene-drop null
+  (the trio's drop at the 32nd percentile of similar three-gene drops).
+- A357: the person-level factor (PER1, PER2, NR1D1 residuals of the other tissues) tracks the glucocorticoid-target
+  state of those tissues (r 0.77, descriptive, no companion); it explains up to 0.195 in skeletal muscle, 0.088 in
+  liver, about 0.05 in skin. Reading: one systemic signal read unequally by tissues displaces their clock states a
+  little (internal desynchrony at the signal layer); daily cortisol history and an agonal surge are not separated.
+  Whether the signal-gene residuals are shared across tissues (H357.1) is not resolvable in GTEx.
 - The departure in hours (A259): SD across donors 1.0 h (thyroid) to 3.2 h (lung); an upper bound, not above the
   companion sets on that statistic.
 - The stress-responsive calibration of "stronger clocks are more coupled" (A290) is registered but not scored (only
@@ -497,10 +504,11 @@ line, the outcome shown); panel D display post hoc.
   and pituitary couple less than brain regions in baboon and sheep). Wording: "the brain is less coupled to the body's
   shared state", never "the brain's clock is the exception".
 
-**Source:** `exploratory/A294_floor/output/{tissues,tests}.csv`; `exploratory/A329_core_departure/output/{tissues,tests}.csv`;
+**Source:** `exploratory/A294_floor/output/{tissues,tests}.csv`; `exploratory/A329_core_departure/output/coherent_split.csv`;
+`exploratory/A357_signal_departure/output/{score_tests,score_tissues}.csv`;
 `exploratory/A291_attenuation/output/tissues.csv`; `results/figure_2/output/organs/r2_couplings.csv`;
 `results/figure_1/output/species/a36_tissues.csv`; `presentation/results.md` R2.1; `docs/results_preliminary.md` A289,
-A291, A294b, A302, A329.
+A291, A294b, A302, A329 erratum, A357.
 
 ## 3.last The organ arrangement is internal: it holds when the body's clock no longer reads the hour of death
 

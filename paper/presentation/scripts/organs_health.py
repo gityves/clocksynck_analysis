@@ -10,14 +10,14 @@ B. Coupling against the shared amplitude sqrt(S); grey: c = S / (S + D) at the m
    definition of c drawn at a constant D, not a fit: the finding is that D is nearly constant (A).
 C. Is the own variation specific to the clock genes? Own variance of the clock genes against the median of 100
    expression-matched gene sets in the same tissue (A294b, registered, H294b.1 pass); dashed: identity; dotted: median
-   ratio. Open blue: the same on the 11-gene core loop against its own matched sets (A329, registered, blind; median
-   ratio 1.28).
+   ratio. The core-loop values (A329) are not shown: the 11-gene projector has 3.1 times the noise gain, so its ratio is
+   not comparable (A329 erratum).
 D. Baboon (Mure 2018, 12 animals): rhythm amplitude against known time (A36 timed gain |g|, estimated without the host)
    against coupling (A42 readout 2), 35 peripheral tissues and 22 brain regions; grey: the peripheral least-squares line.
    Post hoc panel (A289 H289.3 registered the untimed amplitude: brain on the line). Pineal, pituitary and ocular tissues
    not shown.
 
-Data: exploratory/A294_floor/output/{tissues,tests}.csv; exploratory/A329_core_departure/output/{tissues,tests}.csv; results/figure_2/output/organs/r2_couplings.csv;
+Data: exploratory/A294_floor/output/{tissues,tests}.csv; results/figure_2/output/organs/r2_couplings.csv;
 results/figure_1/output/species/a36_tissues.csv. GTEx aggregates only (one value per tissue).
 Output: presentation/figures/organs_health/organs_health.{svg,png}.
 
@@ -28,8 +28,6 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import seaborn as sns
-from matplotlib.lines import Line2D
 
 import paperfig as pf
 
@@ -40,7 +38,6 @@ PAPER = Path(__file__).resolve().parents[2]
 EXP = PAPER / "exploratory"
 OUT = PAPER / "presentation" / "figures" / "organs_health"
 INK, MUTED = "#222222", pf.GREY
-CORE = sns.color_palette().as_hex()[0]
 
 
 def scatter(ax, t, system, title, x="own_amplitude", xlabel="clock-gene variation"):
@@ -99,23 +96,20 @@ def coupling_curve(ax, t):
     ax.set_ylabel("coupling")
 
 
-def specific(ax, t, ratio, core, ratio_core):
-    """Own variance of the clock genes against that of expression-matched genes, per tissue (14 genes: filled; core
-    loop: open blue); `ratio`, `ratio_core`: median clock / matched over tissues."""
+def specific(ax, t, ratio):
+    """Own variance of the clock genes against that of expression-matched genes, per tissue; `ratio`: median clock /
+    matched over tissues."""
     ax.scatter(t.own_matched_median, t.own, s=24, c=[COLOR[gtex_system(k)] for k in t.index], edgecolor="white", lw=0.4,
                zorder=2)
-    ax.scatter(core.own_matched_median_core, core.own_core, s=22, facecolor="white", edgecolor=CORE, lw=1.1, zorder=3)
-    lo, hi = 0.4, 10
+    lo, hi = 0.25, 8
     ax.plot([lo, hi], [lo, hi], color=MUTED, lw=0.8, ls="--", zorder=1)
-    for r in (ratio, ratio_core):
-        ax.plot([lo, hi / r], [lo * r, hi], color=MUTED, lw=0.8, ls=":", zorder=1)
-    ax.text(5, 5 * 0.85, "1:1", fontsize=8.5, color=MUTED, ha="left", va="top")
+    ax.plot([lo, hi / ratio], [lo * ratio, hi], color=MUTED, lw=0.8, ls=":", zorder=1)
+    ax.text(4, 4 * 0.85, "1:1", fontsize=8.5, color=MUTED, ha="left", va="top")
     ax.text(hi / ratio * 1.05, hi * 0.95, f"\u00d7{ratio:.1f}", fontsize=8.5, color=MUTED, ha="left", va="top")
-    ax.text(4.2, 4.2 * ratio_core * 1.1, f"\u00d7{ratio_core:.2f}", fontsize=8.5, color=CORE, ha="right", va="bottom")
     log_ticks(ax, lo, hi)
     log_ticks(ax, lo, hi, "y")
-    ax.set_xticks([0.5, 1, 3, 10], ["0.5", "1", "3", "10"])
-    ax.set_yticks([0.5, 1, 3, 10], ["0.5", "1", "3", "10"])
+    ax.set_xticks([0.3, 1, 3], ["0.3", "1", "3"])
+    ax.set_yticks([0.3, 1, 3], ["0.3", "1", "3"])
     ax.set_xlabel("own departure,\nexpression-matched genes")
     ax.set_ylabel("own departure, clock genes")
 
@@ -132,16 +126,9 @@ def main():
     legend_in(lay.axes["A"], fontsize=7.5, loc="upper left")
     coupling_curve(lay.axes["B"], t)
     tests = pd.read_csv(EXP / "A294_floor/output/tests.csv").set_index("test")
-    core = pd.read_csv(EXP / "A329_core_departure/output/tissues.csv", index_col="tissue")
-    t329 = pd.read_csv(EXP / "A329_core_departure/output/tests.csv").set_index("test").loc["H329.1"]
-    specific(lay.axes["C"], t, float(np.exp(tests.loc["H294.1", "median_log_ratio"])), core,
-             float(np.exp(t329.median_log_ratio_core)))
-    h = [Line2D([], [], ls="", marker="o", ms=6, color=INK, label="14 clock genes"),
-         Line2D([], [], ls="", marker="o", ms=6, mfc="white", mec=CORE, label="core loop")]
-    lay.axes["C"].legend(handles=h, loc="lower right", frameon=False, fontsize=8, handletextpad=0.1)
+    specific(lay.axes["C"], t, float(np.exp(tests.loc["H294.1", "median_log_ratio"])))
     print("S fold", round(t.S.max() / t.S.min(), 1), "gain fold", round(np.sqrt(t.S.max() / t.S.min()), 2),
-          "D fold", round(t.own.max() / t.own.min(), 2), "median D", round(t.own.median(), 2),
-          "core ratio", round(float(np.exp(t329.median_log_ratio_core)), 3))
+          "D fold", round(t.own.max() / t.own.min(), 2), "median D", round(t.own.median(), 2))
     for k in "ABC":
         lay.axes[k].set_title("human", fontsize=13, color=INK)
     timed = pd.read_csv(PAPER / "results/figure_1/output/species/a36_tissues.csv", index_col="tissue").g_abs

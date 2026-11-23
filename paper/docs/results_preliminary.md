@@ -7086,6 +7086,9 @@ chemistries). The text keeps "quieter" without naming the cell mechanism (PAPER_
 
 ## A329 (scored 2026-11-19; BLIND for the core loop, NOT BLIND for the 14-gene values; one run): the personal departure is mostly carried by PER1, PER2 and NR1D1 (H329.1 falls: excess 2.64 -> 1.28 times matched), but it is not explained by the glucocorticoid / immediate-early signal state of the sample (H329.3 FAIL) and coupling does not rise (H329.2 FAIL): "partly leakage"
 
+> **Erratum 2026-11-23:** the readings of H329.1 and H329.2 ("carried by PER1, PER2 and NR1D1", "coupling falls")
+> are projector artefacts; see "A329 erratum" at the end of this file. The statistics stand as computed.
+
 GTEx fast deaths, 27 peripheral tissues, A294b fit. Validation passed (A104 rho 0.734; full median log ratio 0.969).
 - **H329.1 (excess) holds.**
   - The core-loop (11-gene) median log ratio to matched sets is 0.250 (90 % 0.143-0.361), against 0.969 for the 14 genes.
@@ -8154,3 +8157,30 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
     over many tissues, is the less noisy measure of the signal state; this reconciliation is post hoc.
 - Code: `exploratory/A357_signal_departure/scripts/score_a357.py --stage score`.
 <!-- src: paper/exploratory/A357_signal_departure/output/{score_tests,score_tissues}.csv (per-tissue aggregates) -->
+
+## A329 erratum (2026-11-23; post hoc diagnosis, on the user's question why removing PER1, PER2 and NR1D1 moves the departure so close to random genes when the glucocorticoid state explains little of it): the fall of the departure excess on the core loop (2.6 -> 1.28 times matched) and of core-loop coupling is a change of projector noise gain, not the trio carrying the departure; the departure is a coherent clock-state shift, about 2.0 times matched noise in every tissue
+
+- **Mechanism.** The projector satisfies L X = I, so a coherent clock-state departure (a shift of the whole waveform in
+  phase or amplitude) projects the same with 14 or 11 genes, while gene-level variation is amplified by the projector's
+  noise gain. Without NR1D1 (amplitude 0.32) and PER2 (0.22) the 11-gene projector has 3.1 times the noise gain of the
+  14-gene one (unweighted trace(L L')). Matched genes, nearly pure gene-level variation, rise by about that factor
+  (median own departure 0.709 -> 2.331); the clock genes rise less (1.893 -> 3.145). A ratio (C + g N) / (g N_matched)
+  shrinks toward 1 as g grows even when the coherent part C is unchanged, so log ratios on projectors with different
+  noise gains cannot be compared. The same added gene-level variation lowers coupling S / (S + D) on the core loop.
+- **Split (per tissue, solving D_14 = C + N and D_core = C + g N with g from the tissue's matched sets; median g 3.13).**
+  - Coherent clock-state departure C: median 1.42 (0.62 to 3.69), positive in 27 of 27 tissues.
+  - Gene-level part of the clock genes N: median 0.47, against 0.71 for matched genes: the clock genes are not noisier
+    gene by gene.
+  - C / matched gene-level variation: median 2.0.
+- **Corrected reading.** The clock-specific personal departure is a coherent shift of each tissue's clock state, present
+  in every tissue; it is not carried by PER1, PER2 and NR1D1. This agrees with the A336 gene-drop null (the trio's drop of
+  the H294b.1 ratio at the 32nd percentile of three-gene drops of similar weight) and with A357 (a person-level
+  glucocorticoid-like state explains about 3 % of it). H329.3 is unaffected (within one projector).
+- **Scope.** Within-projector tests against their own matched sets stand (A346, A348, A350, A321 verdicts). Differences
+  between the 14-gene and core-loop values of noise-sensitive statistics (departure ratios, coupling, pairing r) are not
+  attributable to the trio without a gene-drop null: the A346 endothelial "14-gene specificity rests on PER1, PER2 and
+  NR1D1 (trio contribution 0.17)" and the A348 MuTHER fall (0.533 -> 0.311) are read as the core projector's loss of
+  precision unless a gene-drop null says otherwise; A336 rows that carry the gene-drop null already make this
+  comparison.
+- Code: `exploratory/A329_core_departure/scripts/coherent_split.py` (from `tissues.csv`).
+<!-- src: paper/exploratory/A329_core_departure/output/{coherent_split,coherent_summary}.csv -->
