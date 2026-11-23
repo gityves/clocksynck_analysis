@@ -7872,3 +7872,27 @@ once (part 2: 166 s, peak 1.9 GB). Aggregates only.
   clock-specific)". The Tsoi AD series alone (-0.94 to -1.17 h) is the largest AD value of the eight.
 - Code: `exploratory/A347_inflamed_skin/scripts/{a347,d347}.py`.
 <!-- src: paper/exploratory/A347_inflamed_skin/output/{power/power.csv,score/{families,difference,hypotheses,per_series}.csv,d347/*.csv} -->
+
+## A351 calibration (2026-11-23; stop rule): V351 FAIL, the waveform screen does not separate per-tumour rewiring from damping (H vs D AUC 0.801 in SCAN-B, 0.890 in METABRIC; bar 0.90); "not separable at gene level", no condition scored
+
+- A212 plasmode reproduced with its own generators, seeds and matched strengths (B1: rho 0.832, W 1.806 h, H 2.152 h;
+  B2: rho 0.834, H 2.501 h, W at its strongest 2.0 h); 200 replicates per mechanism. Per gene: OLS complex coefficient
+  on a fixed projector score per half, a_g = log amplitude ratio, phi_g = phase shift; 50 unit bootstraps for the
+  variances; Q_a, Q_phi Cochran heterogeneity; joint AUC = 5-fold cross-validated LDA on (log Q_a, log Q_phi). 25 s.
+
+| base | readout | W vs D joint (Q_phi alone) | H vs D joint (Q_a alone, Q_phi alone) |
+|---|---|---|---|
+| B1 SCAN-B | 14 genes | 0.999 (0.999) | 0.801 (0.212, 0.566) |
+| B1 SCAN-B | core | 0.975 (0.977) | 0.804 (0.203, 0.615) |
+| B2 METABRIC | 14 genes | 1.000 (1.000) | 0.890 (0.112, 0.341) |
+| B2 METABRIC | core | 0.978 (0.974) | 0.682 (0.314, 0.519) |
+
+- **V351 FAIL** (registered: all four 14-gene AUCs >= 0.90). Shared rewiring (W) is separated from uniform damping
+  almost perfectly through Q_phi; per-tumour rewiring (H) is not: random per-tumour phase shifts average out in the
+  pooled per-gene coefficient and read as a uniform attenuation (median Q_phi 16.5 under H against 14.2 under D, B1).
+- **Reading (registered stop rule).** "Not separable at gene level": a uniform-looking loss cannot distinguish damping
+  or dephasing from rewiring that differs between tumours; no condition of A351 is scored. Post hoc note, not a
+  result: a screen restricted to "shared rewiring against uniform scaling" would be calibrated (AUC >= 0.975 on both
+  bases and readouts); it would need its own registration.
+- Code: `exploratory/A351_waveform_screen/scripts/a351_calib.py`.
+<!-- src: paper/exploratory/A351_waveform_screen/output/calibration/{auc,replicates}.csv -->
