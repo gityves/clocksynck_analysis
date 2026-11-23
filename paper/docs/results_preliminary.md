@@ -8018,3 +8018,22 @@ Check run (`--check`): the clock |r| reproduces A279 `pairs.csv` in every arm (a
   clock. Caveat for the human cell-type results: they rest on pooled contrasts over many atlases and calibrated
   p-values (A283), not on one pair above q95; the knockout bounds what a non-clock pair can reach at the top of the
   companion range. Limits: one atlas, 10-14 libraries of pooled aortas.
+
+## A355 power note (2026-11-23; gates and swap nulls only, no gain ratio computed): the pooled test and the skin pair are decidable, the fat and oesophagus pairs are not; the pooled weight is about 86 % skin
+
+- Gates (`Dataset.gate`, all compartments, 1000 permutations): GSE119717 p 0.001 (clock share 0.274, null 0.083; 12
+  genes), GSE39491 p 0.001 (0.532, null 0.105; 12 genes), Wu 2020 p 0.001 (0.665, null 0.086; 14 genes). All enter.
+- Swap-null SD of Delta (1000 swaps) and MDE (2.49 SD) against the GTEx log ratio: GSE119717 omental / subcutaneous 0.250,
+  MDE 0.622 vs 0.465: **not decidable**; GSE39491 cardia / squamous 0.196, MDE 0.489 vs 0.293: **not decidable**; Wu
+  exposed / protected 0.062, MDE 0.155 vs 0.211: **decidable**; pooled T 0.057, MDE 0.143 vs 0.232: **decidable**.
+- Weights 1 / SD^2: Wu 260, GSE39491 26, GSE119717 16: the pooled T is about 86 % the skin pair, whose contrast (sun
+  exposure and site) is the weakest same-composition case; the reading states this.
+- Choices not fixed by the registration, made before any observed Delta: (i) a clock gene absent from a cohort is
+  dropped from its waveform (A255 rule): GSE119717 lacks NR1D1 and NPAS2 (the submitters' detection filter removed the
+  probes from the deposited matrix), GSE39491 two genes absent on U133A 2.0; (ii) GSE119717 subjects 50 and 51 carry two
+  arrays labelled subcutaneous each (flagged by the scout): both dropped as ambiguous (subcutaneous 26 persons, omental
+  29); (iii) GSE39491 has one host compartment and `Dataset.fit` needs two anchors: its ratio is the cross-moment ratio
+  log |sum z_cardia conj z_barrett| - log |sum z_squamous conj z_barrett| against the same single host (the gain ratio
+  under the one-factor model, free of each target's own noise).
+- Code: `exploratory/A355_living_gain_ratios/scripts/a355.py --stage power` (295 s).
+<!-- src: paper/exploratory/A355_living_gain_ratios/output/{gates,power}.csv, swap_nulls.npz -->
