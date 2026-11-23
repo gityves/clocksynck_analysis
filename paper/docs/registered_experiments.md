@@ -10455,3 +10455,39 @@ at the line for that test. A test whose pairing fails on the core: the living-sh
 one run per amendment (A251, then A255). **Limits.** Few pairs (three to six compartments in A251, one in MuTHER): the
 narrow family is not decidable there (A285). **Stop rule.** One scoring run per part. **Code:** `placebo_a285.py --core`
 (new flag), outputs `A285_companion_calibration/output/a348/{a251,a255}/`.
+
+## A349 (2026-11-23, prompt `docs/prompts/audit_followups_2026-11-23.md` Task 4, audit gap 3; **POWER AND DESCRIPTIVE ONLY, no verdict, no new claim**; one run per part; **NOT BLIND**: A109 (ventilated excess 0.310 against 0.469 in fast deaths, non-temporal fraction 0.44), A132 / A132b (order kept, compression 0.58), A293 H293.2 (rho 0.690), A315 / A335 (Q* +0.404 fast over ventilated post-mortem; age / sex matched), A336 part 3 (fast-death detection limits: one organ 3.9 h, dispersion SD 1.5 h); **BLIND** for the detection limit at the ventilated design, the host spread V per group, the per-tissue host-referenced log z2 fast vs ventilated at a common spread, the relative organ-gain pattern and the axis-removed compression ratio (none computed)): how large a change in the intensive-care organ order could have been seen, and what do host spread and host-referenced gain look like beside the loudness loss? **GTEx: fast deaths (Hardy 1-2) and the 79 ventilated post-mortem donors with a living brain (A293 Part 1 group); 12 body tissues of A109 / A317**
+
+**Part 1, detection limit at the ventilated design (power).** The A336 part 3 simulation (`a336_detectability.order_sim`)
+with the ventilated arm in place of a fast-death half: in each of 200 draws the 79 ventilated donors are resampled with
+replacement (their own pair coherence and n), one organ's states are rotated by x h (each organ in turn; 0.25 h grid to 12
+h), or every organ by N(0, x^2) (dispersion); detection = the Fisher-Lee rho between the full fast-death map and the
+ventilated map falls below the 5th percentile of the unrotated draws; limit = the smallest x with detection >= 0.8 (median
+over organs and range). Companion row: the same with 79 fast deaths drawn without replacement in place of the ventilated
+arm, which separates the effect of n from that of coherence. 14 genes and core loop.
+
+**Part 2, descriptives** (`clocksync.Dataset` fits per group as A306; aggregates only):
+- **D349.1** host spread V per group (fast; ventilated post-mortem), separate fits, 14 genes and core.
+- **D349.2** per tissue the host-referenced log z2 ratio, fast over ventilated, at a common spread (`Dataset.contrast`,
+  `log_z2_ratio` and `d_star`, as A306), donor bootstrap 90 % (500); pooled, and matched on age and sex (A335 matching),
+  both reported; beside the A315 Q*.
+- **D349.3** relative organ-gain pattern under the overall loss (review question 1): per tissue log z2 ratio minus its
+  median over tissues; Spearman of the per-tissue loss with the tissue's fast-death z2.
+- **D349.4** the A132b compression ratio after removing the A109 non-temporal axis (host states projected off the
+  leading displacement axis, `A109_coupling_nulls/scripts/_helpers.host_frame` / `share_along`), against 0.58 as stored.
+
+**Reading.** None fixed beyond: Part 1 replaces the A336 "kept" limit for intensive care in the text; D349.1-4 are
+reported as stated. **Stop rule.** One run per part. **Code:** `paper/exploratory/A349_icu_limits/scripts/`.
+
+## A350 (2026-11-23, prompt `docs/prompts/audit_followups_2026-11-23.md` Task 5, audit gap 7; scouted cost: the A17 atlas refit took 2.2-3.3 h on 4 workers (jobs.tsv 2026-10-26, 2026-10-28), under a day; one scoring run; **NOT BLIND** for the 14-gene H293.4 (tau 0.181-0.305, all <= 0.35); **BLIND** for every core-loop atlas fit and tau (A336 tier 3 not run)): is the conserved class gain relative to endothelium (A293 H293.4) a property of the core loop? **The A17 healthy atlases of A293 Part 3**
+
+**Statistic.** Refit the A17 healthy atlas fits (`results/figure_2/scripts/atlas_fits/compute_atlas_fits.py`) with
+waveform = `a336_common.core(cs.gtex())`, learned anchors frozen as in the 14-gene table (`common/anchors_a17.csv`),
+n_boot 500, to a new output table; then `A293_organisation_levels/scripts/part3_relative_gain.py` on it unchanged
+(families with >= 4 atlases, random-effects tau, Q). Companions: none (H293.4 has none on 14 genes); trio contribution
+descriptive (14-gene minus core g per family, with the bootstrap intervals).
+
+**H350.1:** tau <= 0.35 in every family with >= 4 atlases on the core loop. **Readings.** PASS: "relative class gain is
+conserved across organs on the core loop". FAIL in a family: that family's conservation rests on PER1, PER2 or NR1D1 or
+on lost precision (bootstrap SE ratio core / 14 reported); the wording keeps the 14-gene result with the core caveat.
+**Stop rule.** One refit, one scoring. **Code:** `paper/exploratory/A350_class_gain_core/scripts/`.
