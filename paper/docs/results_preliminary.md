@@ -7896,3 +7896,58 @@ once (part 2: 166 s, peak 1.9 GB). Aggregates only.
   bases and readouts); it would need its own registration.
 - Code: `exploratory/A351_waveform_screen/scripts/a351_calib.py`.
 <!-- src: paper/exploratory/A351_waveform_screen/output/calibration/{auc,replicates}.csv -->
+
+## A346 (scored 2026-11-23; NOT BLIND on 14 genes, BLIND on the core loop; one scoring run): tumour fibroblasts keep the patient's normal fibroblast clock state on the core loop, unchanged (0.686 -> 0.683) and beyond all three companion families; tumour endothelium does not (0.677 -> 0.510, below matched genes); on 14 genes both pass the calibrated rule (narrowly against the narrow responsive family)
+
+A227 cohorts and tables; 10,000 within-cohort permutations; 200 matched, 200 narrow responsive, 200 broad responsive
+sets per cohort (core: restricted); 2,000 placebo draws; Holm over the two compartments. Power note: H346.1 was not
+decidable at the registered delta (narrow family), so H346.1 is descriptive; pairing, matched and broad are decidable.
+
+| compartment (patients / cohorts) | readout | clock | pairing p (Holm) | matched q95 / p_cal Holm | narrow responsive q95 / p_cal Holm | broad q95 / p_cal Holm |
+|---|---|---|---|---|---|---|
+| fibroblast (93 / 16) | 14 genes | 0.686 | 0.0002 | 0.539 / 0.010 | 0.638 / 0.0500 (0.04998) | 0.542 / 0.010 |
+| fibroblast | core | 0.683 | 0.0002 | 0.558 / 0.009 | 0.635 / 0.012 | 0.540 / 0.012 |
+| endothelial (101 / 14) | 14 genes | 0.677 | 0.0002 | 0.512 / 0.010 | 0.659 / 0.0500 (0.04998) | 0.529 / 0.010 |
+| endothelial | core | 0.510 | 0.0009 | 0.529 / 0.104 | 0.663 / 0.841 | 0.529 / 0.091 |
+| D346 malignant-normal epithelium (190 / 27) | 14 genes | 0.433 | 0.017 | 0.451 / 0.178 (raw) | 0.503 / 0.631 | 0.458 / 0.134 |
+| D346 epithelium | core | 0.361 | 0.47 | 0.461 / 0.866 | 0.495 / 0.987 | 0.445 / 0.859 |
+
+- **V346:** matched and broad calibrated everywhere (placebo rate 0.047-0.063) except epithelium core (0.076 / 0.079);
+  the narrow family is not (0.071-0.091) and is read by p_cal only.
+- **Trio contribution (14 minus core, 90 %, 200 patient bootstraps):** fibroblast +0.003 (-0.054 to +0.072);
+  endothelial +0.167 (+0.058 to +0.208); epithelium +0.072 (-0.032 to +0.112).
+- **H346.3 (14 genes) PASS** for both compartments: pairing, matched and narrow responsive (Holm 0.04998, at the line)
+  calibrated; the A149 note 5 / A271 stromal result now has a calibrated registered form on 14 genes.
+- **H346.1 (core; descriptive by the power note):** fibroblasts meet every condition (narrow p_cal Holm 0.012);
+  endothelium keeps the pairing (p 0.0009) but falls below matched genes (0.510 against q95 0.529): its 14-gene
+  specificity rests on PER1, PER2 and NR1D1 (trio contribution 0.17). **H346.2 (broad, core):** fibroblast PASS (0.012),
+  endothelial FAIL (0.091).
+- **Reading (registered).** "Tumour fibroblasts keep the patient's normal fibroblast clock state, clock-specifically,
+  without PER1, PER2 and NR1D1, in the cohorts available" (beyond matched and broad responsive genes as a registered
+  test; beyond glucocorticoid / immediate-early genes as a descriptive, since that condition was not decidable at the
+  power stage). The endothelial pairing is not clock-specific on the core loop. The stroma clause can be worded for
+  fibroblasts only; no independent cohort (A226). Malignant-normal epithelium stays not clock-specific (D346).
+- Code: `exploratory/A346_tumour_stroma_core/scripts/a346.py` (power 2,510 s, peak 21.3 GB; score from the cache).
+<!-- src: paper/exploratory/A346_tumour_stroma_core/output/{power/{repro14,power},score/{tests,trio}}.csv -->
+
+## A350 (scored 2026-11-23; BLIND on the core loop; one refit, 4,555 s): relative class gain stays conserved on the core loop in four of five families, but the mural family exceeds the bound (tau 0.097 -> 0.389): H350.1 FAIL
+
+A17 healthy atlas fits refitted on the core loop (21 atlases of A293 Part 3; gate passes in 14), learned anchors
+frozen, 500 bootstraps; A293 Part 3 code unchanged.
+
+| family | atlases 14 / core | pooled g, 14 -> core | tau, 14 -> core | Q p core | SE ratio core / 14 |
+|---|---|---|---|---|---|
+| fibroblast-stromal | 13 / 11 | +0.228 -> +0.192 | 0.181 -> 0.212 | 0.072 | 1.30 |
+| epithelial | 11 / 9 | -0.220 -> -0.146 | 0.305 -> 0.283 | 0.030 | 1.11 |
+| myeloid | 12 / 10 | -0.399 -> -0.214 | 0.302 -> 0.245 | 0.038 | 1.01 |
+| parenchyma | 4 / 4 | -0.126 -> -0.058 | 0.145 -> 0.093 | 0.346 | 1.20 |
+| mural | 7 / 7 | -0.079 -> -0.023 | 0.097 -> **0.389** | 0.001 | 2.39 |
+
+- **H350.1 FAIL** (registered: tau <= 0.35 in every tested family): mural cells exceed the bound on the core loop; the
+  mural atlas values spread from -0.83 (heart) to +0.93 (skeletal muscle), and the pooled SE more than doubles.
+- **Reading (registered).** Relative gain is conserved across organs on the core loop for fibroblasts, epithelium,
+  myeloid cells and parenchyma; mural cells' conservation is not shown without the trio (or with the core's lost
+  precision: SE ratio 2.39). Wording: "class gains are conserved across organs (14 genes; on the core loop in four of
+  five classes, not mural cells)".
+- Code: `exploratory/A350_class_gain_core/scripts/a350.py`.
+<!-- src: paper/exploratory/A350_class_gain_core/output/{compare,gates_core,a17_healthy_fits_core}.csv, output/part3/{atlases,families}.csv -->
