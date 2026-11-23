@@ -7793,3 +7793,46 @@ lesional minus non-lesional (negative = lesional delayed), 90 % patient-bootstra
 - Code: `exploratory/A285_companion_calibration/scripts/placebo_a285.py --test a251|a255 --core --families
   matched,responsive,responsive_broad --out a348` (14-gene check: `--out a348_check14`).
 <!-- src: paper/exploratory/A285_companion_calibration/output/a348/{a251,a255}/{repro,tests}.csv, output/a348_check14/ -->
+
+## A349 (run 2026-11-23; POWER AND DESCRIPTIVE, no verdict; BLIND for every value below except the D349.4 reproduction): at the ventilated design an organ-order change is detectable only from about 6-7 h in one organ (not 3.9 h) or a dispersion SD of 2.25 h; the ventilated host spread is about half that of fast deaths; host-referenced amplitude falls in most organs, most in organs with a strong fast-death clock; removing the A109 non-temporal axis relaxes the A132b compression from 0.58 to 0.77
+
+GTEx fast deaths (244) against the 79 ventilated post-mortem donors with a living brain, 12 body tissues; each part run
+once (part 2: 166 s, peak 1.9 GB). Aggregates only.
+
+- **Part 1, detection limit (200 draws; 66 organ pairs per draw).** Ventilated arm resampled with replacement against
+  the full fast-death map; companion = 79 fast deaths drawn without replacement against the remaining 165 (the full map
+  cannot contain the test donors).
+
+| gene set | arm | unrotated rho median (5th pct) | one organ: median limit (range) | dispersion SD limit |
+|---|---|---|---|---|
+| 14 genes | ventilated | 0.577 (0.395) | 6.75 h (2.25-12.0; skin not sun-exposed never) | 2.25 h |
+| 14 genes | fast, 79 | 0.778 (0.550) | 5.13 h (2.75-10.5) | 2.00 h |
+| core | ventilated | 0.593 (0.421) | 5.63 h (2.5-11.25) | 2.25 h |
+| core | fast, 79 | 0.813 (0.627) | 4.13 h (2.75-8.75) | 1.50 h |
+
+  The A336 fast-death limit (3.9 h, SD 1.5 h) is optimistic for intensive care: at 79 donors and their weaker shared
+  signal, one organ must move about 6-7 h (14 genes; 5.6 h on the core) to be seen; nerve and subcutaneous fat about
+  2.25-2.5 h, blood only at 12 h.
+- **D349.1, host spread V** (separate fits, median over targets): 14 genes fast 3.61, ventilated 1.79; core 4.43 against
+  2.09 (sigma_f trace 3.61 / 1.66 and 4.39 / 1.99). Median log V ratio fast / ventilated in the joint contrast 0.53
+  (pooled) and 0.52 (age / sex matched; core 0.50 / 0.48). The ventilated spread is about half that of fast deaths,
+  not a tenth (the A315 registration's figure from separate fits on a different scale).
+- **D349.2, host-referenced log z2 fast over ventilated at a common spread** (median over 12 tissues; donor bootstrap
+  500): 14 genes 0.142 pooled, 0.111 matched; core 0.201, 0.205. Above 0 in 7 (14 genes) and 8 (core) of 12 tissues;
+  90 % interval excluding 0 in 6 / 12 (14 genes) and 3 / 12 (core). Largest losses thyroid +1.06 (0.73-1.44), oesophagus
+  mucosa +0.77, heart +0.53; gains in whole blood -1.95 (-2.97 to -0.99), skin not sun-exposed -0.61 (-1.10 to -0.10).
+  Median d* 0.075 / 0.059 (14 genes), 0.067 / 0.059 (core); coupling fast 0.686 against ventilated 0.437 (14 genes
+  pooled). Beside A315 / A335 Q* +0.404 (pooled), +0.389 / +0.459 (matched, 14 genes / core): the same direction.
+- **D349.3, relative gain under the loss:** per-tissue ratio minus the median spans -2.10 (blood) to +0.92 (thyroid);
+  the loss rises with the tissue's fast-death z2 (Spearman 0.818 pooled, 0.839 matched; core 0.797, 0.755): the organs
+  with the strongest clocks lose most, blood and skin least.
+- **D349.4, compression after removing the non-temporal axis.** Reproduction: 0.585 (stored 0.585, 34 pairs). Host
+  component along the A109 axis (3.90 h, eigenvalue share 0.66) removed per group: ratio 0.767 (30 pairs), same pole
+  0.909, order Spearman 0.219. The removal overshoots (share along the axis -0.10 fast, -0.34 post mortem), so 0.767 is
+  an approximate, operator-dependent value (the registration did not define the projection; chosen in the script).
+- **Reading (descriptive).** For the paper: intensive care keeps the organ order at a detection limit of about 6-7 h for
+  one organ (SD 2.25 h for dispersion), not 3.9 h; the compression toward 0 / 12 h is partly the shared non-temporal
+  axis (0.58 -> about 0.77 after its removal). The loudness loss is host-referenced too (log z2 > 0 in most tissues) and
+  is not uniform: it scales with clock strength.
+- Code: `exploratory/A349_icu_limits/scripts/{a349_common,a349_part1,a349_part2,a349_d4}.py`.
+<!-- src: paper/exploratory/A349_icu_limits/output/{part1_limits,part1_sim,part2_spread,part2_summary,part2_tissues,d4_compression}.csv -->
