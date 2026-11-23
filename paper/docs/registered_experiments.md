@@ -10737,3 +10737,51 @@ body; forearm, cheek, buttock vs lower leg, suprapubic); men only in GSE119717, 
 blind (above); gains read against small hosts (one to three compartments), so precision is lower than in GTEx.
 
 **Stop rule.** Power stage once; scoring run once if decidable. **Code:** `paper/exploratory/A355_living_gain_ratios/scripts/a355.py --stage power|score`, output `paper/exploratory/A355_living_gain_ratios/output/`.
+
+## A356 (2026-11-23, check G2, on the user's instruction "okay let's register it", after A355 failed to reproduce the GTEx organ gain ratios in living pairs and the user's concern that the gain concept must not rest on post-mortem artefacts; staged: power (label permutations only, no split gain computed), then one scoring run; **NOT BLIND**: the GTEx organ gains (`presentation/output/organs/couplings.csv`, A104 / A263 / A294b / A323), the A143 RIN adjustment of brain departures and the A325 / A336 ischaemic-time adjustments of the brain-death order; **BLIND**: every gain of a donor group split by ischaemic time or RIN, and every relation between organ gain and a tissue's ischaemic time or RIN (none computed; grep 2026-11-23)): is the GTEx organ gain a post-mortem attenuation? **GTEx v10 fast deaths (A263 R2 table), the peripheral tissues of the A263 fit except whole blood (ischaemic time is not defined for a blood draw)**
+
+**Question.** If organ gains came from tissue-specific post-mortem RNA degradation, a sample's gain would fall with its
+own ischaemic time and rise with its RNA integrity (RIN), within a tissue, and organs with longer median ischaemia or
+lower median RIN would read lower gains.
+
+**Gain of a donor group.** Host per tissue t: `Dataset(A263 R2 table, anchors = peripheral tissues).host(anchors =
+peripheral tissues except t)` (leave-one-out, as the A263 fit reads peripheral targets). Tissue states z_td: clock-plane
+states of t's samples (log fraction of the 14 genes, centred within t, the A263 waveform projector). Gain of a group G of
+t's donors: g_G = |sum_{d in G} z_td conj h_d| / sum_{d in G} |h_d|^2 (complex regression slope of the tissue state on
+the host state). Code check (not a hypothesis): over tissues, log g of all donors against `couplings.csv` log_amp_rel
+(Spearman reported).
+
+**Covariates.** Ischaemic time of the sample (`_shared.sample_ischaemic_h`), RIN (`SMRIN`, sample attributes as A143);
+first sample of a duplicate. Per tissue, donors split at the tissue median of the covariate (ties to the low half).
+Delta_isch,t = log g(long) - log g(short); Delta_RIN,t = log g(high RIN) - log g(low RIN).
+
+**Null and power.** Per tissue and covariate, the covariate labels permuted among the tissue's donors (1000
+permutations, seeds [356, covariate, tissue index, j]); SD_t = SD of the permutation Delta. Pooled Delta = inverse-
+variance weighted mean over tissues (weights 1 / SD_t^2), its null from the permutations (draw j over tissues).
+Relevance bound: a 10 % gain difference between halves (|log| 0.10). Pooled test decidable if MDE = 2.49 SD <= 0.10;
+not decidable: not scored. Across tissues: n tissues, power of a one-sided Spearman permutation test at rho -0.5
+reported.
+
+**Hypotheses (score stage; technical-attenuation predictions).**
+- **H356.1:** pooled Delta_isch < 0, one-sided permutation p < 0.05 (longer ischaemia, lower gain).
+- **H356.2:** pooled Delta_RIN > 0, one-sided p < 0.05 (higher RIN, higher gain).
+- **H356.3 (across tissues, Holm over two):** Spearman of organ log_amp_rel (`couplings.csv`) with the tissue median
+  ischaemic time < 0, and with the tissue median RIN > 0, one-sided tissue-permutation p (10,000).
+- **D356.4 (descriptive):** per-hour and per-RIN-unit slopes (pooled Delta over the pooled difference of the halves'
+  median covariate) times the across-tissue spread (10th to 90th percentile) of tissue medians: the organ log gain spread
+  that attenuation could produce, against the observed 10th-90th percentile spread of organ log gains; per-tissue Delta
+  with 90 % permutation-calibrated intervals; core loop (11 genes) pooled Deltas.
+
+**Readings (fixed now).**
+- H356.1, H356.2 and H356.3 all FAIL with the pooled tests decidable: no sign that post-mortem ischaemia or RNA
+  degradation lowers clock gain within tissues or ranks organs; GTEx organ gains stand with this check (other technical
+  routes, e.g. agonal state or autolysis, are not tested here). D356.4 bounds the share attenuation could explain.
+- Any PASS: attenuation contributes to organ gain; D356.4 gives the size; organ gains are then reported with and without
+  the attenuation component (descriptive), and Figure 4g states the corrected range.
+- Pooled tests not decidable: as A330, "open".
+
+**Limits.** Host posterior states shrink with a donor's number of tissues (both halves alike in expectation); ischaemic
+time and RIN covary with collection centre and procurement order; fast deaths only (Hardy 1-2, where agonal time is
+short); GTEx sample attributes are controlled access: per-tissue aggregates only leave the machine.
+
+**Stop rule.** Power stage once; scoring run once if decidable. **Code:** `paper/exploratory/A356_gain_attenuation/scripts/a356.py --stage power|score`, output `paper/exploratory/A356_gain_attenuation/output/` (aggregates only).
