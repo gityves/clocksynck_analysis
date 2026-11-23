@@ -80,7 +80,10 @@ def rows():
                   hi=cx.phase_hi90, key="cortex"))
     R.append(dict(panel="gain", row="cortex", label="Adrenal Gland", value=1 + cx.gain_change, lo=1 + cx.gain_lo90,
                   hi=1 + cx.gain_hi90, key="cortex"))
-    return pd.DataFrame(R)
+    R = pd.DataFrame(R)
+    ph = R.panel == "phase"  # peak time (user, 2026-11-23): clocksync offsets (> 0 advanced) negated, as CHIRAL Fig. 1B
+    R.loc[ph, ["value", "lo", "hi"]] = -R.loc[ph, ["value", "hi", "lo"]].to_numpy()
+    return R
 
 
 def draw(ax, R, order, labels):
@@ -133,14 +136,14 @@ def main():
     comp = [SCORE["stromal_vascular"][0], SCORE["lymphocyte"][0], CORTEX[0]]
     draw(a, R[R.panel == "phase"], ["organ", "stromal_vascular", "lymphocyte", "cortex"], ["organ offset"] + comp)
     a.axvline(0, color=MUTED, lw=0.8, ls="--", zorder=0)
-    a.set_xlim(-2.5, 5.5)
-    a.set_xlabel("phase relative to the body [h]")
+    a.set_xlim(-5.5, 2.5)
+    a.set_xlabel("peak time relative to the body [h]")
     ad = R[(R.panel == "phase") & (R.row == "organ") & (R.label == "Adrenal Gland")].iloc[0]
     y_ad = a.collections[0].get_offsets()[list(R[(R.panel == "phase") & (R.row == "organ")].label).index(
         "Adrenal Gland")][1]
-    a.annotate("adrenal", (ad.value, y_ad), xytext=(-6, 0), textcoords="offset points", ha="right", va="center",
+    a.annotate("adrenal", (ad.value, y_ad), xytext=(6, 0), textcoords="offset points", ha="left", va="center",
                fontsize=7.5, color=COLOR["endocrine"])
-    legend_in(a, fontsize=7.5, loc="lower right")
+    legend_in(a, fontsize=7.5, loc="lower left")
     draw(b, R[R.panel == "gain"], ["organ", "stromal_vascular", "lymphocyte", "cortex"], ["organ gain"] + comp)
     same_class(c, R[R.panel == "class"])
     for ax, lim in ((b, (0.2, 3.2)), (c, (0.6, 3.2))):

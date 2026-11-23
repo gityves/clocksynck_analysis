@@ -309,8 +309,10 @@ maternal or ACTH signal remains open. No sampling times: these are shared states
 | slide | status | figure |
 |---|---|---|
 | 3.1 The reference organisation: GTEx fast deaths, whole day | **new** (below) | `figures/reference_map/` |
-| 3.2 The organ arrangement holds when the body no longer reads the hour | **revised** from `results.md` R3.1 (below) | `figures/organ_arrangement/` |
-| 3.3 Composition does not set an organ's phase | kept (`results.md` R2.2), to review | `figures/organs_composition/` |
+| 3.2 Inside tissues: cell classes run at the organ's time with their own loudness; lymphocytes have no readable clock | revise `results.md` R2.3 (next) | `figures/celltypes_health/` |
+| 3.3 Composition moves neither time nor, much, loudness | revise `results.md` R2.2 (phase panel flipped to peak time) | `figures/organs_composition/` |
+| 3.4+ Loudness (organ gains, coupling reads loudness, person loudness, blood) | to build | |
+| 3.last The organ arrangement holds when the body no longer reads the hour (bridge to section 4) | **revised** from `results.md` R3.1 (below) | `figures/organ_arrangement/` |
 
 CHIRAL concordance (A123) is slide 1.1. The ventilated and brain-dead rows of `results.md` R3.1 go to sections 4 and 7
 (`figures/holds_organisation/`, unchanged).
@@ -342,11 +344,11 @@ tissues chosen for the deck).
 - Whole blood has no readable core clock (post hoc entry 2026-11-03): its phase interval spans 1.09 to 3.72 h.
 - The brain is read on a host built from peripheral tissues: its offset is relative to the periphery, and its low gain
   partly reflects that reference (R2.1, A289).
-- Fast deaths are the reference because their body clock reads the hour of death (R 0.63, slide 3.2).
+- Fast deaths are the reference because their body clock reads the hour of death (R 0.63, slide 3.last).
 
 **Source:** `presentation/output/organs/couplings.csv` (A263 R2 fit with donor bootstrap, `scripts/organs_compute.py`).
 
-## 3.2 The organ arrangement is internal: it holds when the body's clock no longer reads the hour of death
+## 3.last The organ arrangement is internal: it holds when the body's clock no longer reads the hour of death
 
 **Bullets**
 1. The body's clock reads the hour of death in fast deaths (R 0.63, 244 donors), barely in slow deaths (0.16, 106) and

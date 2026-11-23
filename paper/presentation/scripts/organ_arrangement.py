@@ -1,4 +1,4 @@
-"""Slide figure (results, adult health, 3.1): the organ arrangement is internal: it holds when the body's clock no longer
+"""Slide figure (results, adult health, last slide of section 3): the organ arrangement is internal: it holds when the body's clock no longer
 reads the hour of death.
 
 Rows: GTEx fast deaths (Hardy 1-2; reference), slow deaths (Hardy 4) and intermediate deaths (Hardy 3).
