@@ -7989,3 +7989,26 @@ permutations.
   well-entrained protocol (hourly isocaloric meals, controlled light): the most favourable design. Sample times degrade
   as the arc shrinks (median error 1.42 h full, 2.51 h on 08-16 h, 4.00 h on 08-12 h) while the lead holds: relative
   readouts survive partial sampling better than sample times, as in skin.
+
+## A354 (scored 2026-11-23; NOT BLIND for every clock-gene |r| of A279, BLIND for every companion value; one scoring run after one check run that computed no companion): in the clock-intact aorta every cell-type pair is above both companion families (H354.2 PASS, 6 of 6); in the Bmal1 knockout the stromal pairs fall to the top edge of the expression-matched sets, one above them (H354.1 FAIL: EC-fibroblast 99th percentile)
+<!-- src: paper/exploratory/A279_aorta_pairwise_truth/output/a354/{pairs,design,verdicts}.csv; code paper/exploratory/A279_aorta_pairwise_truth/scripts/score_a354.py -->
+Auerbach 2026 aorta, genome-wide library x cell type pseudobulks (integer counts), A279 filters; aligned 14 libraries,
+4 classes; misaligned 8, 3; knockout 10, 4. 200 matched and 200 responsive sets per arm (28 responsive genes expressed).
+Check run (`--check`): the clock |r| reproduces A279 `pairs.csv` in every arm (assert), no companion computed.
+- **H354.2 PASS (aligned):** clock |r| 0.83-0.98, above the matched q95 (0.58-0.78) and the responsive q95 (0.71-0.94)
+  in all 6 pairs (100th percentile of both families in 5 of 6; EC-macrophage 99.5th matched).
+- **H354.1 FAIL (knockout, stromal pairs):** clock |r| against matched q95 (percentile): EC-fibroblast 0.753 against
+  0.618 (99.0th; above the responsive q95 0.664 too, 99.5th), EC-SMC 0.629 against 0.636 (94.5th), fibroblast-SMC
+  0.661 against 0.666 (93.5th; responsive 33.5th, q95 0.926). Two of three at or below the matched q95, as registered
+  all three were required.
+- *D354.3 (descriptive):* knockout pairs with macrophages 0.11-0.35, at the matched median (10.5th-58th percentile).
+  Misaligned arm (3 stromal pairs): 0.89-0.96, at the 100th percentile of both families. Matched medians are similar in
+  every arm (0.28-0.48): the generic co-variation between cell types of a library does not change with the clock.
+- **Reading (registered).** The companion contrast separates a running clock from none: with the clock intact every
+  pair is far above both families; without BMAL1 the stromal pairs drop to the top edge of the matched range. H354.1
+  fails on one pair (EC-fibroblast, 99th percentile of matched and 99.5th of responsive): by the registered reading,
+  clock genes of endothelium and fibroblasts covary beyond generic co-variation even without BMAL1 (a non-clock program
+  shared by clock genes, or residual clock-gene regulation), so a single pair above the matched q95 is not proof of a
+  clock. Caveat for the human cell-type results: they rest on pooled contrasts over many atlases and calibrated
+  p-values (A283), not on one pair above q95; the knockout bounds what a non-clock pair can reach at the top of the
+  companion range. Limits: one atlas, 10-14 libraries of pooled aortas.
