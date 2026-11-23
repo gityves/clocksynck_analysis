@@ -10679,3 +10679,61 @@ on human genes (orthology by symbol).
 
 **Stop rule.** One scoring run. **Code:** `paper/exploratory/A279_aorta_pairwise_truth/scripts/score_a354.py`, output
 `paper/exploratory/A279_aorta_pairwise_truth/output/a354/`.
+
+## A355 (2026-11-23, on the user's instruction "Let's first register and run the amendment and see what comes out", after the question whether organ gain is set by composition or by the organ (A323: composition predicts 1.29-fold, GTEx organs span 2.89-fold; A330 / G1 not decidable); staged: power (swap nulls only, no ratio computed), then one scoring run; **NOT BLIND**: the GTEx organ gains (A104 / A263 table `presentation/output/organs/couplings.csv`, A294b, A323), the Wu 2020 pairings, offsets and gates (A251, A348), and for GSE39491 the A254 total clock-plane variance ratios of Barrett mucosa against squamous oesophagus (r +0.151) and against gastric cardia (r +0.124), which imply a cardia / squamous total-variance ratio near 1; **BLIND**: GSE119717 (four fat depots, never analysed: A254 excluded it) and every host-referenced gain of every living compartment (none computed)): are the GTEx organ gain ratios present in living tissue, where post-mortem attenuation cannot act? **Living cohorts with three or more tissues per person: GSE119717, GSE39491, Wu 2020 (GSE139300 / GSE139301)**
+
+**Question.** A323 showed that composition and conserved class gains do not explain the GTEx organ gain range; the
+remaining organ factor could be biological (organs scale all their classes together) or a tissue-specific technical
+attenuation in GTEx (post-mortem RNA decay, ischaemic time). If biological, the GTEx gain ratio of two organs of similar
+composition reappears between the same organs of a living person. If technical, the living ratio is near 1 (the
+composition prediction).
+
+**Pairs and GTEx predictions** (log ratio of `log_amp_rel`, `couplings.csv`, A263 R2 fit of fast deaths):
+| pair (a / b) | living cohort | persons | common host | GTEx log ratio (fold) |
+|---|---|---|---|---|
+| omental (visceral) / subcutaneous abdominal fat | GSE119717 (AAA surgery, men, Illumina HT-12 v4) | 29-30 | the two perivascular depots (dilated and non-dilated) | +0.465 (1.59) |
+| gastric cardia / squamous oesophagus | GSE39491 (Barrett patients, Affymetrix U133A 2.0) | 40 | Barrett mucosa | -0.293 (0.75; GTEx Stomach / Esophagus - Mucosa) |
+| sun-exposed (forearm, cheek) / protected (buttock) skin | Wu 2020 (women, two arrays: epidermis, dermis) | about 146-150 | the other layer (all three sites) | -0.211 (0.81; GTEx Skin Sun Exposed lower leg / Not Sun Exposed suprapubic) |
+
+**Estimate.** Arrays as pseudo-counts (precedent `results/figure_1/scripts/windows/compute_chen_windows.py`): counts
+1e6 exp(ln 2 (y - median over the compartment's samples of y)) for the 14 clock genes, constant depth 1e8 (equal gene
+weights, negligible Poisson variance). `clocksync.Dataset(anchors = host compartments).fit(gate=False, targets = the two
+targets)`; Delta = log_amp_rel(a) - log_amp_rel(b), both read against the same host, so the host scale cancels. Wu:
+Delta = mean over the two layers of [mean over forearm and cheek of log_amp_rel] - log_amp_rel(buttock), each layer's
+three sites read against a host of the other layer's three sites (two fits). Loaders: GSE119717 series matrix with the
+GPL10558 annotation by the A254 `array_expr` rule (best-median probe per symbol; persons from the scout sheet);
+GSE39491 the A254 prep (`output/prep/GSE39491_*`); Wu the A251 `load`.
+
+**Precondition.** Per cohort, `Dataset.gate` (all compartments, 1000 permutations) p_pairing < 0.05; a failed cohort
+leaves the pool.
+
+**Null and power (power stage; no Delta computed).** Swap null: per person, the two target labels swapped with
+probability 1/2 (Wu: the three site labels permuted within woman and layer), then refitted; 1000 swaps per cohort,
+seeds [355, cohort index, swap]. SD_c = SD of the swap Delta. MDE_c = 2.49 SD_c (one-sided alpha 0.05, power 0.8).
+Pair c is decidable if MDE_c <= |GTEx_c|. Pooled: T = sum_c w_c s_c Delta_c / sum_c w_c with s_c = sign(GTEx_c),
+w_c = 1 / SD_c^2, over gated cohorts; its swap null from the joint swaps; decidable if MDE_T <= sum_c w_c |GTEx_c| /
+sum_c w_c. Not decidable: not scored (registered power rule), stated as such.
+
+**Hypotheses (score stage).**
+- **H355.1 (primary):** T > 0, one-sided swap p < 0.05: the living gain ratios point the way the GTEx ratios do.
+- **H355.2 (per decidable pair, Holm over decidable pairs):** s_c Delta_c > 0 with one-sided swap p < 0.05 (Holm) and
+  GTEx_c inside the 90 % person-bootstrap interval of Delta_c (500 resamples of persons, seed 355): the ratio is
+  reproduced in direction and size.
+- **D355.1 (descriptive):** the same Delta on the core loop (11 genes).
+- **D355.2 (descriptive, companion):** per pair, the total clock-plane log variance ratio a / b (`paired.log_var_ratio`)
+  for the clock genes and for 200 expression-matched pseudo-clock sets (`paired.pseudo_waveforms`, seed 355): is a
+  total-variance difference between the two tissues specific to the clock genes?
+
+**Readings (fixed now).**
+- H355.1 PASS: the organ gain ratios seen in GTEx deaths are present in living tissue for organs of similar
+  composition; the organ factor is not a post-mortem artefact for these pairs (Figure 4g: "organ" as a loudness factor,
+  with these pairs). H355.2 per pair says which ratios are reproduced at the GTEx size.
+- H355.1 FAIL with T decidable: the living ratios do not follow GTEx; tissue-specific post-mortem attenuation stays a
+  live explanation, as do cohort differences (patients, arrays, anatomical sites): "organ" stays open.
+- Not decidable: as A330, "open".
+
+**Limits.** Patients, not healthy donors (AAA, Barrett); arrays; anatomical sites differ from GTEx (cardia vs stomach
+body; forearm, cheek, buttock vs lower leg, suprapubic); men only in GSE119717, women only in Wu; GSE39491 partly not
+blind (above); gains read against small hosts (one to three compartments), so precision is lower than in GTEx.
+
+**Stop rule.** Power stage once; scoring run once if decidable. **Code:** `paper/exploratory/A355_living_gain_ratios/scripts/a355.py --stage power|score`, output `paper/exploratory/A355_living_gain_ratios/output/`.
