@@ -1,7 +1,8 @@
 """Slide figure (results, R1.4): a primate sampled around the clock (baboon atlas, Mure 2018; A36, archive amendment re-run on
 current code, descriptive).
 
-A. Organ map as the GTEx figure: per tissue, angle = untimed peak time (later peaks clockwise; clocksync offset negated), radius = untimed relative amplitude,
+Panels left to right: B (tissues), C (animals), A (organ map).
+A. Organ map as the GTEx figure, direct labels on the tissues labelled on the human reference map (slide 3.1): per tissue, angle = untimed peak time (later peaks clockwise; clocksync offset negated), radius = untimed relative amplitude,
    coloured by organ system; grey rings joined by a line: the timed offset and amplitude (cosinor gain) of the same tissue.
 B. 63 tissues: untimed peak time (negated offset; clocksync, every tissue an anchor, GTEx waveform) against the timed one (phase of the
    tissue's 12-ZT cosinor gain on the waveform), both centred on the timed circular mean after one common shift; coloured
@@ -29,6 +30,10 @@ INK, MUTED = "#222222", pf.GREY
 TAB = sns.color_palette().as_hex()
 CS = TAB[0]
 W = 2 * np.pi / 24
+# direct labels on the face, as the human reference map (slide 3.1): code -> (text, offset points, ha)
+LABEL = {"ADM": ("adrenal medulla", (-4, 30), "center"), "ADC": ("adrenal cortex", (-34, 16), "right"),
+         "LUN": ("lung", (14, 24), "left"), "SKI": ("skin", (-34, -10), "right"), "THR": ("thyroid", (8, 4), "left"),
+         "TES": ("testis", (18, -4), "left"), "HIP": ("brain regions", (-70, -38), "right")}
 
 
 def wrap(h):
@@ -54,6 +59,12 @@ def clock_map(ax, t):
         ax.plot([a[0], b[0]], [a[1], b[1]], color=GHOST, lw=0.7, zorder=1)
     ax.scatter(*q.T, s=18, facecolor="none", edgecolor=GHOST, lw=0.8, zorder=2)
     ax.scatter(*p.T, s=26, c=[COLOR[baboon_system(k)] for k in t.tissue], edgecolor="white", lw=0.5, zorder=3)
+    codes = list(t.tissue)
+    for k, (lab, off, ha) in LABEL.items():
+        col = COLOR[baboon_system(k)]
+        ax.annotate(lab, p[codes.index(k)], xytext=off, textcoords="offset points", ha=ha, va="center", fontsize=9,
+                    color=col, zorder=4, arrowprops=dict(arrowstyle="-", color=col, lw=0.6, shrinkA=1, shrinkB=3)
+                    if max(abs(off[0]), abs(off[1])) > 12 else None)
     ax.set_title("organ map", fontsize=13, color=INK)
 
 
@@ -93,7 +104,7 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     t = pd.read_csv(PAPER / "results/figure_1/output/species/a36_tissues.csv")
     h = pd.read_csv(PAPER / "presentation/output/baboon/host_phase.csv")
-    lay = pf.Layout.slide("ABC", kind="wide", col_ratios=[1.5, 1, 1])
+    lay = pf.Layout.slide("BCA", kind="wide", col_ratios=[1, 1, 1.9])  # tissues, animals, organ map on the right
     clock_map(lay.axes["A"], t)
     tissues(lay.axes["B"], t)
     animals(lay.axes["C"], h)
