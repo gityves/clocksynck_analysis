@@ -9,7 +9,8 @@ The framing is that of `ABSTRACT_DRAFT_2026-11-22.md` (revised 2026-11-23) and `
 "loudness, not time". The mechanism found in mouse (drives set time) holds in human; the desynchrony that mouse models
 predict is absent; true internal desynchrony is rare and local.
 
-Read first: CLAUDE.md, the memory index, the abstract draft (abstract, change list, wording limits), plan section 11,
+Read first: CLAUDE.md, the memory index, the existing `paper/presentation/{introduction,method,results}.md` (reuse what
+still holds, mark what the new framing replaces), the abstract draft (abstract, change list, wording limits), plan section 11,
 `STORY_AUDIT_2026-11-23.md` sections 7-8, and the results entries named below.
 
 ## Rules
