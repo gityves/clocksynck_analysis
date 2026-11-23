@@ -10503,3 +10503,65 @@ companions, all 10,000 give the clock's swap p. (3) V347 per swap draw d: q_d = 
 s_c^2)), m_d and tau2_d from that draw's family offsets (tau2 floored at 0). (4) D bootstrap: 2,000 within-series patient
 resamples per arm, weights fixed, D wrapped, interval taken circularly around the observed D. (5) D347 rows (GSE154200,
 hidradenitis, Tsoi leads) come from their own scripts, after the main run.
+
+## A351 (2026-11-23, prompt `docs/prompts/mechanisms_2026-11-23.md` Task 1, on the user's instruction; staged: plasmode calibration (stop rule), then power at each design, then one scoring run; **NOT BLIND** for every condition-level loudness / gain value (A304, A254, A315 / A335, A183, A345, A164 / A306) and the A212 plasmode summaries (dlog_plane, dlog_off; V212.1 FAIL, W vs D AUC 0.894, H vs D 0.909); **BLIND** for every per-gene log amplitude ratio and per-gene phase shift of these conditions and their across-gene heterogeneity (never computed as a screen; grep 2026-11-23)): is each loss of clock loudness a uniform scaling of the clock waveform (intact but quieter) or gene-specific (rewired or a partial input)? **Tumours (A304 TCGA, high vs low proliferation), chronic lesions (A254), intensive care (A315 groups, fast vs ventilated post mortem, age / sex matched as A335), psoriasis (A183 GSE154200; A345 Tsoi spliced and pre-mRNA); negative references A164 / A306 chronic-disease contrasts**
+
+**Readout.** Per condition and gene g (14 genes; core loop = the 11 core genes as a second readout): case against
+control log amplitude ratio a_g and phase shift phi_g, from the condition's estimator (paired designs: per-gene paired
+complex ratio of the projected clock states' gene loadings; group designs: the per-gene complex coefficient of the group
+fits on a shared host, as the scored entry). Screen statistics: Q_a = across-gene Cochran heterogeneity of a_g (inverse
+bootstrap-variance weights) and Q_phi = the same for phi_g (wrapped, around the weighted circular mean).
+
+**Nulls.** (i) Uniform-scaling simulation at each design: the control arm's states with every gene scaled by the
+condition's common factor and shifted by its common phase, sampling noise by unit bootstrap (500); p_unif = share of
+simulated Q >= observed. (ii) Case / control labels permuted within strata (1,000; the no-change reference). (iii) 200
+expression-matched and 200 narrow responsive pseudo-waveforms, same Q on the same units: the clock's Q percentile.
+
+**Calibration first (V351, stop rule).** On the A212 plasmode (`A212_coherence_mechanisms/scripts/compute_a212.py`,
+bases B1 SCAN-B and B2 METABRIC, mechanisms planted at the registered matched strengths, 200 replicates each): AUC of
+(Q_a, Q_phi) separating D (damping / dephasing: uniform) from W (shared rewiring) and from H (per-tumour rewiring) must
+be >= 0.90 for both, on both bases (the A212 bar). If V351 fails, stop and report "not separable at gene level"; no
+condition is scored.
+
+**Hypotheses (scored only if V351 passes and the condition's power is >= 0.8 to detect the A212 W strength).**
+- **H351.1 (per loss condition: tumours, lesions, intensive care):** uniform: p_unif >= 0.05 for Q_a and Q_phi.
+  Gene-specific: p_unif < 0.05 (Holm over the three conditions) and Q above the matched q95.
+- **H351.2 (psoriasis):** the delay is gene-specific (Q_phi p_unif < 0.05) rather than a common shift.
+- **D351:** genes driving Q (standardised residuals), flagged as PER1, PER2, NR1D1 (signal layer) or core; negative
+  references read as calibration of the false-positive rate.
+
+**Readings.** Uniform in tumours, lesions and intensive care: "the clock is intact but quieter" (uniform scaling does
+not separate dephasing among cells from per-cell damping, stated). Gene-specific: name the genes and arm; if confined to
+PER1, PER2, NR1D1, "a signal-layer input on an intact core". Psoriasis delay concentrated on a few genes: a local input
+rather than a shifted clock.
+
+**Limits.** Bulk; gene-level noise at small n; the estimators differ across designs (paired vs group). **Stop rule.**
+Calibration once; then power; then one scoring run. **Code:** `paper/exploratory/A351_waveform_screen/scripts/`.
+
+## A352 (2026-11-23, prompt `docs/prompts/mechanisms_2026-11-23.md` Task 2, on the user's instruction; order: registered after A347 was scored on the same series (pooled per-disease offsets, 14 genes and core, are seen); staged: power (swap nulls), then one scoring run; **NOT BLIND** for the per-series and pooled per-disease offsets (A53, A54, A183, A345, A347); **BLIND** for every signature score, every signature stratum and every per-stratum offset or trend (never computed)): does the inflamed-skin delay scale with IL-17 / TNF activity, and less with Th2 activity? **The 17 gated series of A347 (`skin_lesional/processed`), GSE154200 (A183), Tsoi 2019 with pre-mRNA (A345)**
+
+**Signatures (fixed now from the literature; no clock gene).** IL-17 / TNF: IL17A, IL17F, IL17C, IL36G, IL36A,
+DEFB4A, S100A7A, LCN2, CXCL1, CXCL8, CCL20, PI3, TNF, TNFAIP6. Th2: IL4, IL5, IL13, IL31, CCL17, CCL18, CCL22, CCL26,
+POSTN, CISH. Per patient: the lesional minus non-lesional mean z-score (log expression z-scored within series) of the
+genes present on the platform (>= 60 % of the list, else the series is dropped for that signature).
+
+**Statistic.** Within series, patients split into signature tertiles (T1 low to T3 high). Pooled paired offset per
+tertile over series (`clocksync.paired`, as A347; series as strata). Trend = weighted slope of the pooled offset on the
+tertile index (negative = more delay with more signal). Null: tertile labels permuted within series (2,000; same
+permutations for companions); companions: 200 matched and 200 narrow responsive sets, same trend on the same
+permutations (A308-style q on the trend). 14 genes and core loop.
+
+**Hypotheses.**
+- **H352.1 (primary, within psoriasis, core loop):** the IL-17 / TNF trend is negative, one-sided permutation p < 0.05,
+  and below the matched and responsive companions (q < 0.05).
+- **H352.2 (within AD):** the same for IL-17 / TNF and for Th2 (Holm over the two).
+- **H352.3 (secondary, across diseases):** pooled over both diseases with disease as a stratum, IL-17 / TNF trend
+  negative (p < 0.05); disease is both contrast and confounder, so secondary.
+- **D352:** GSE154200 (psoriasis, eczema) as a replication row; Tsoi per-gene pre-mRNA against mRNA delays by tertile
+  (which genes move first).
+
+**Readings.** H352.1 PASS: "an inflammatory (IL-17 / TNF) input delays the clock's transcription in lesions", the
+mechanism of the paper's one local phase shift. No trend with power: the delay is a disease-level property, cause open.
+**Power first.** Swap-null SD of each tertile's pooled offset -> MDE of the trend (T3 - T1), and the trend detectable
+if the MDE <= 0.75 h. **Limits.** Signature scores are lesional activity, not cytokine dose; cross-sectional.
+**Stop rule.** Power, then one scoring run. **Code:** `paper/exploratory/A352_cytokine_delay/scripts/`.
