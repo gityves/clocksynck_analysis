@@ -10318,3 +10318,11 @@ because gene sets without a shared rhythm have arbitrary angles, so "offset belo
 pass. H345.3 is restated on the coherence-weighted delay |c| sin(arg c) (c the corrected complex correlation of
 lesional with non-lesional states; negative = delay; near 0 for gene sets without a shared rhythm): the unspliced value
 below the q05 of both companion families.
+
+### A345 power note (2026-11-23; `a345.py --stage power --dataset tsoi2019_skin_trimmed`, `output/power/summary.csv`, `draws.csv`; no intron count read)
+Delivered dataset: `tsoi2019_skin_trimmed` (147 runs, reverse-stranded; QC line in the mapping handoff prompt, task 6),
+as registered. Psoriasis, 27 pairs; unspliced stand-in = spliced clock counts thinned per run to the run's
+direct-intron / exon ratio; 500 draws. Spliced offset on the trimmed counts: -1.38 h (14 genes), -1.20 h (core).
+Stand-in: H345.1 rate 1.00 (14 genes) and 0.88 (core); offset median -1.41 / -1.28 h (SD 0.21 / 0.30); median 90 %
+half-width of D 0.31 / 0.46 h. **Both H345.1 and H345.2 are decidable on both waveforms; proceed to the single
+scoring run.** Caveat: the stand-in keeps the spliced rhythm amplitude; a weaker pre-mRNA rhythm lowers this power.
