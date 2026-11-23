@@ -131,6 +131,81 @@ def power():
     print(t.groupby("covariate")[["donors", "null_sd", "median_high", "median_low"]].median().round(3))
 
 
+def pooled(D, nulls, cov, obs, sd):
+    w = {t: 1 / sd[(cov, t)] ** 2 for t in D}
+    W = sum(w.values())
+    T = sum(w[t] * obs[(cov, t)] for t in D) / W
+    T0 = sum(w[t] * nulls[(cov, t)] for t in D) / W
+    p = float((1 + np.sum(SIGN[cov] * T0 >= SIGN[cov] * T)) / (1 + len(T0)))
+    return float(T), float(np.std(T0)), p, w
+
+
+def score():
+    from scipy.stats import spearmanr
+    D = inputs()
+    z = np.load(OUT / "perm_nulls.npz")
+    nulls = {tuple(k.split("|")): z[k] for k in z.files}
+    sd = {k: float(np.std(v)) for k, v in nulls.items()}
+    obs = {(c, t): delta(D[t], c) for c in COVS for t in D}
+    cp = pd.read_csv(PAPER / "presentation/output/organs/couplings.csv").set_index("tissue")
+    rows = []
+    for c in COVS:
+        for t, d in D.items():
+            ok, high = split(d[c])
+            o, n0 = obs[(c, t)], nulls[(c, t)]
+            rows.append(dict(covariate=c, tissue=t, donors=int(ok.sum()), delta=o, lo90=o - 1.645 * sd[(c, t)],
+                             hi90=o + 1.645 * sd[(c, t)],
+                             p_one_sided=float((1 + np.sum(SIGN[c] * n0 >= SIGN[c] * o)) / (1 + len(n0))),
+                             median_high=float(np.median(d[c][high])), median_low=float(np.median(d[c][ok & ~high]))))
+    T = pd.DataFrame(rows)
+    pool = []
+    for c, h in (("isch", "H356.1"), ("rin", "H356.2")):
+        v, s0, p, w = pooled(D, nulls, c, obs, sd)
+        sub = T[T.covariate == c].set_index("tissue")
+        dx = sum(w[t] * (sub.median_high[t] - sub.median_low[t]) for t in D) / sum(w.values())
+        pool.append(dict(test=h, covariate=c, pooled_delta=v, null_sd=s0, lo90=v - 1.645 * s0, hi90=v + 1.645 * s0,
+                         p_one_sided=p, verdict="PASS" if p < 0.05 else "FAIL", fold=float(np.exp(v)),
+                         covariate_diff=float(dx), slope_per_unit=float(v / dx)))
+    pool = pd.DataFrame(pool)
+    # across tissues
+    tis = list(D)
+    lg = cp.loc[tis, "log_amp_rel"].to_numpy()
+    med = {c: np.array([np.nanmedian(D[t][c]) for t in tis]) for c in COVS}
+    rng = np.random.default_rng([SEED, 7])
+    acr = []
+    for c, h in (("isch", "H356.3a"), ("rin", "H356.3b")):
+        r = spearmanr(lg, med[c])[0]
+        null = np.array([spearmanr(lg, rng.permutation(med[c]))[0] for _ in range(N_PERM_T)])
+        p = float((1 + np.sum(SIGN[c] * null >= SIGN[c] * r)) / (1 + N_PERM_T))
+        acr.append(dict(test=h, covariate=c, spearman=float(r), p_one_sided=p, tissues=len(tis)))
+    acr = pd.DataFrame(acr).sort_values("p_one_sided")
+    acr["p_holm"] = np.minimum(1, np.maximum.accumulate([(2 - i) * p for i, p in enumerate(acr.p_one_sided)]))
+    acr["verdict"] = np.where(acr.p_holm < 0.05, "PASS", "FAIL")
+    # D356.4: spread attenuation could produce vs observed organ spread; code check; core loop
+    obs_spread = float(np.quantile(lg, 0.9) - np.quantile(lg, 0.1))
+    desc = [dict(item="code check: Spearman log g (all donors) vs couplings log_amp_rel",
+                 value=float(spearmanr([np.log(gain(D[t]["z"], D[t]["h"])) for t in tis], lg)[0])),
+            dict(item="observed organ log gain spread (p90 - p10)", value=obs_spread)]
+    for r in pool.itertuples():
+        spread = float(np.quantile(med[r.covariate], 0.9) - np.quantile(med[r.covariate], 0.1))
+        desc += [dict(item=f"tissue median {r.covariate} spread (p90 - p10)", value=spread),
+                 dict(item=f"organ log gain spread implied by {r.covariate} attenuation", value=abs(r.slope_per_unit) * spread)]
+    Dc = inputs(core=True)
+    for k, c in enumerate(COVS):
+        oc = {(c, t): delta(Dc[t], c) for t in Dc}
+        nc = {(c, t): perm_null(Dc[t], c, 10 + k, i, 200) for i, t in enumerate(Dc)}
+        v, s0, p, _ = pooled(Dc, nc, c, oc, {kk: float(np.std(vv)) for kk, vv in nc.items()})
+        desc.append(dict(item=f"core loop pooled delta {c}", value=v, null_sd=s0, p_one_sided=p))
+    T.to_csv(OUT / "score_tissues.csv", index=False)
+    pool.to_csv(OUT / "score_pooled.csv", index=False)
+    acr.to_csv(OUT / "score_across.csv", index=False)
+    pd.DataFrame(desc).to_csv(OUT / "score_descriptive.csv", index=False)
+    pd.set_option("display.width", 220)
+    for x in (pool, acr, pd.DataFrame(desc)):
+        print(x.round(4).to_string(index=False))
+    print(T.groupby("covariate").delta.describe().round(3))
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--stage", choices=["power", "score"], required=True)
@@ -140,7 +215,7 @@ def main(argv=None):
     if a.stage == "power":
         power()
     else:
-        raise SystemExit("score stage: written after the power note")
+        score()
 
 
 if __name__ == "__main__":
