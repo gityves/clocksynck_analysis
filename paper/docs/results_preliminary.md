@@ -7738,3 +7738,31 @@ The full set reproduces A342 (untimed offset 1.33 vs timed 1.57 h; leads P 1.12,
   both sites; the offset keeps its value (1.37 vs 1.57 h) without a decidable interval; with two points the lead
   drifts by up to about 1 h. Assigning times to samples degrades steadily on partial arcs, which is why the method
   reports relationships rather than sample times.
+
+## A345 (scored 2026-11-23; NOT BLIND for the spliced psoriasis delay, BLIND for introns): the psoriatic lesional delay is carried by pre-mRNA (H345.1 PASS) and is clock-specific at the transcription level (H345.3 PASS, narrowly); equality with the mRNA delay not shown (H345.2 fails as registered: interval too wide), the point estimate puts pre-mRNA at least as late as mRNA
+<!-- src: paper/exploratory/A345_tsoi_premrna/output/score/results.csv, output/power/summary.csv; code paper/exploratory/A345_tsoi_premrna/scripts/a345.py -->
+Tsoi 2019 (GSE121212), `tsoi2019_skin_trimmed` (delivered 2026-11-23 within the registered window); psoriasis 27
+lesional / non-lesional pairs, AD 21 (descriptive). Spliced `counts_exon`, unspliced `counts_intron_direct`; offsets
+lesional minus non-lesional (negative = lesional delayed), 90 % patient-bootstrap intervals.
+- **P345.0 PASS:** spliced offset -1.38 h (90 % -2.25 to -0.67; delay p 0.001, gate p 0.005); core -1.20 h (p 0.006).
+  Reproduces the authors'-count value (-1.45 h).
+- **H345.1 PASS:** unspliced offset -2.44 h (-4.35 to -1.05; delay p 0.001, gate p 0.005); core -1.79 h (-2.88 to
+  -0.71; p 0.006). Subtraction introns (sensitivity, stranded): -2.26 / -1.50 h, p 0.001 / 0.005.
+- **H345.2 fails as registered:** D = unspliced - spliced -1.05 h (-2.64 to +0.11); core -0.59 h (-1.54 to +0.36).
+  Neither interval lies inside +-1 h. The realised half-widths (1.37 / 0.95 h) are about three and two times the
+  power stand-in's (0.31 / 0.46 h): real pre-mRNA states are noisier than thinned mRNA (the power-note caveat). The
+  interval does not exclude equality and excludes the post-transcriptional reading (D > 0) only at its upper end
+  (+0.11 / +0.36): pre-mRNA is not less delayed than mRNA.
+- **H345.3 PASS (narrow on matched):** coherence-weighted unspliced delay |c| sin(arg c) -0.345 vs matched q05 -0.316
+  and responsive q05 -0.229; core -0.299 vs -0.293 and -0.092.
+- *AD (descriptive):* spliced -1.15 h (p 0.001), core -1.17 h; unspliced -1.30 h (p 0.007), core -0.81 h (p 0.10,
+  gate p 0.015); D -0.15 (-0.77 to +0.47; inside +-1), core +0.36 (-0.52 to +1.35); companions not passed (-0.257 vs
+  matched q05 -0.222 but responsive q05 -0.411). On these counts AD lesions also show a spliced delay, unlike A115
+  (authors' counts, uninformative) and the A254 reading (no delay in other chronic lesions); descriptive, one series.
+- *Not computed:* the registered descriptive lead change within lesional and non-lesional samples (the A342 lead
+  statistic) is not in `a345.py`; it can be added as a descriptive follow-up.
+- **Reading:** the lesional delay is present in the clock's current transcription, not only in mature mRNA, and beats
+  matched and stress-responsive gene sets at the pre-mRNA level, which A183 could not show on mRNA. The registered
+  "transcriptional" reading also needs H345.2, which is not decided: the data favour a pre-mRNA delay at least as
+  large as the mRNA delay, and rule out a delay confined to mRNA turnover or composition only at the interval's edge.
+  Limits: one series; a transcriptional delay can still be compositional at cell-type level (bulk).
