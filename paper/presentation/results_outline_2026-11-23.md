@@ -267,7 +267,7 @@ replication), beyond matched and stress-responsive genes.
 ## 3.1 Tissues of one living person, sampled once without a recorded time, share one clock state; her own cell line does not
 
 **Bullets**
-1. Two tissues of a living person share one clock state: skin sites and layers r 0.59-0.81 (A251, 148-150 women), fat and
+1. Two tissues of a living person share one clock state: skin sites and layers r 0.59-0.81 (A251, 146-150 women per pair), fat and
    muscle or visceral fat at surgery 0.69 (A255 H255.3, 83 persons), fat and skin 0.53 (A255 H255.1, 680 women); each above
    200 expression-matched and 200 stress-responsive gene sets.
 2. The woman's own cell line, which carries her genome but not her body time, shares none of it: r 0.04 with fat, 0.07 with
