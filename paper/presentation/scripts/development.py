@@ -1,30 +1,35 @@
-"""Slide figure (results, development): before birth, some organs carry a clock-shaped state shared between individuals.
+"""Slide figure (results, before birth, 2.1): before birth, some organs carry a clock-shaped state shared between
+individuals; others, at adult power, do not.
 
-A. Clock-gene covariation between individuals (C, signed coherence of the 14 clock genes against the adult waveform,
-   cohort / batch and age adjusted) per organ, human fetus (adrenal cortex A244; lung, liver, heart, kidney A243, pooled
-   open cohorts, 4-20 wpc) and late mouse embryo (A309, Qiu 2024, E15-E18.75: adrenocortical cells, hepatocytes, lung
-   progenitors, ventricular cardiomyocytes, nephron progenitors). Filled: significant (Holm) and above the 95th percentile
-   of 200 expression-matched and 200 stress-responsive gene sets; open: not. Open diamond: median C of adult tissue
-   subsampled to the same design (full-size clock). Grey tick: 95th percentile of the expression-matched sets.
-B-E. Pairs of a hormone-induced clock gene (PER1, PER2, NR1D1) with a core clock gene (33 pairs): correlation between
-   individuals against cos(adult phase difference), least-squares line through the origin; human adrenal cortex, lung,
-   liver (A307 rows), mouse hepatocytes (A309). Filled = W (mean of r x expected) significant and above the matched q95.
+Clock-gene covariation between individuals (C, signed coherence of the 14 clock genes against the adult waveform,
+cohort / batch and age adjusted) per organ:
+- human fetus (blue): adrenal cortex cells (A244, single-cell pseudobulks, 34 fetuses); whole adrenal, blind replication
+  (A328 part a, del Valle 2023, 32 fetuses, 7-11.5 wpc, stage and sex removed; H328.1); lung, liver, heart, kidney (A243,
+  pooled open cohorts, 4-20 wpc); adrenal medulla cells (A244, 30 fetuses); brain (A239, arrays, 20 fetuses);
+- late mouse embryo (orange; A309, Qiu 2024, E15-E18.75): adrenocortical cells, hepatocytes, lung progenitors,
+  ventricular cardiomyocytes, nephron progenitors.
+Organs along x; bars: measured C, filled when significant and above the 95th percentile of 200 expression-matched and
+200 stress-responsive gene sets, open when not. Open diamond: median C of adult (brain: postnatal) tissue subsampled to the same design with the full-size clock
+(A243, A244, A309 power tables; A328 power stage; A240 array curve). Grey line across each bar: 95th percentile of the expression-matched
+sets.
 
-Status: A243, A244 registered; A307, A309 registered, NOT BLIND for the earlier fetal results. Aggregates only.
+Status: A243, A244, A239 registered (blind); A309 registered, NOT BLIND for the earlier fetal results; A328 part a
+registered, BLIND. Aggregates only.
 Data: exploratory/A243_fetal_organs_pooled/output/{l1,verdicts,position_in_adult}.csv;
 exploratory/A244_fetal_adrenal_classes/output/{l1,verdicts_a244,position}.csv;
-exploratory/A309_mouse_embryo_organs/output/{l1,power_passrates,gc_pattern}.csv; exploratory/A307_fetal_gc_pattern/output/tests.csv;
-presentation/output/development/pairs.csv (scripts/development_compute.py).
-Output: presentation/figures/development/development.{svg,png}.
+exploratory/A328_fetal_running_loop/output/{score_a/l1,score_a/verdicts,power_a/passrates}.csv;
+exploratory/A239_fetal_brain/output/{l1,verdicts}.csv; exploratory/A240_fetal_amplitude/output/curve_array.csv;
+exploratory/A309_mouse_embryo_organs/output/{l1,power_passrates}.csv.
+Output: presentation/figures/development/development.{svg,png} (half).
 
     python scripts/development.py
 """
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 import seaborn as sns
 from matplotlib.lines import Line2D
+from matplotlib.patches import Patch
 
 import paperfig as pf
 
@@ -34,8 +39,10 @@ OUT = PAPER / "presentation" / "figures" / "development"
 TAB = sns.color_palette().as_hex()
 SPECIES = {"human": TAB[0], "mouse": TAB[1]}  # human fetus, mouse embryo
 MATCHED = "#BBBBBB"
-ORGANS = ["adrenal cortex", "liver", "lung", "heart", "kidney"]
-DY = {"human": -0.17, "mouse": 0.17}
+ORGANS = ["adrenal cortex", "whole adrenal, blind", "liver", "lung", "heart", "kidney", "adrenal medulla", "brain"]
+DX, BAR = {"human": -0.19, "mouse": 0.19}, 0.33
+LABEL = {"adrenal cortex": "adrenal\ncortex", "whole adrenal, blind": "whole\nadrenal,\nblind",
+         "adrenal medulla": "adrenal\nmedulla"}
 
 
 def covariation():
@@ -52,6 +59,22 @@ def covariation():
     rows.append(dict(organ="adrenal cortex", species="human", C=c.C, q95=c.matched_q95,
                      ok=pd.read_csv(a244 / "verdicts_a244.csv").set_index("test").loc["cortex", "verdict"] == "PASS",
                      adult=pd.read_csv(a244 / "position.csv").set_index("test").loc["cortex", "adult_median"]))
+    med = pd.read_csv(a244 / "verdicts_a244.csv").set_index("test").loc["medulla"]
+    rows.append(dict(organ="adrenal medulla", species="human", C=med.C, ok=med.verdict.upper() == "PASS",
+                     q95=pd.read_csv(a244 / "l1.csv").set_index("test").loc["medulla", "matched_q95"],
+                     adult=pd.read_csv(a244 / "position.csv").set_index("test").loc["medulla", "adult_median"]))
+    a328 = EXP / "A328_fetal_running_loop/output"
+    dv = pd.read_csv(a328 / "score_a/l1.csv").set_index("test").loc["dv:all"]
+    rows.append(dict(organ="whole adrenal, blind", species="human", C=dv.C, q95=dv.matched_q95,
+                     ok=pd.read_csv(a328 / "score_a/verdicts.csv").set_index("test").loc["dv:all", "verdict"] == "PASS",
+                     adult=pd.read_csv(a328 / "power_a/passrates.csv").query("test == 'dv:all' and setting == 'a1'")
+                     .median_C.iloc[0]))
+    br = pd.read_csv(EXP / "A239_fetal_brain/output/l1.csv").set_index("test").loc["brain_mean:prenatal"]
+    curve = pd.read_csv(EXP / "A240_fetal_amplitude/output/curve_array.csv")
+    rows.append(dict(organ="brain", species="human", C=br.C, q95=br.matched_q95,
+                     ok=pd.read_csv(EXP / "A239_fetal_brain/output/verdicts.csv").set_index("test")
+                     .loc["brain_mean:prenatal", "verdict"] == "PASS",
+                     adult=curve.query("label == 'brain_mean:postnatal@20' and setting == 1.0").median_stat.iloc[0]))
     a309 = EXP / "A309_mouse_embryo_organs/output"
     m = pd.read_csv(a309 / "l1.csv").set_index("readout")
     pw = pd.read_csv(a309 / "power_passrates.csv").query("setting == 'a1'").set_index("readout")
@@ -62,79 +85,38 @@ def covariation():
     return pd.DataFrame(rows)
 
 
-def pattern():
-    """Pair-level W: (signal-induced, core) pairs, observed r and the adult expectation; pass flags from A307 / A309."""
-    d = pd.read_csv(PAPER / "presentation/output/development/pairs.csv")
-    h = pd.read_csv(EXP / "A307_fetal_gc_pattern/output/tests.csv").query("statistic == 'W'").set_index("organ")["pass"]
-    m = pd.read_csv(EXP / "A309_mouse_embryo_organs/output/gc_pattern.csv").query("statistic == 'W'").set_index("readout")["pass"]
-    ok = {("human", o): bool(v) for o, v in h.items()} | {("mouse", o): bool(v) for o, v in m.items()}
-    return d.assign(ok=[ok[s, o] for s, o in zip(d.species, d.organ)])
-
-
-def mark(ax, x, y, species, ok, q95, adult=None):
-    c = SPECIES[species]
-    ax.plot([q95, q95], [y - 0.13, y + 0.13], color=MATCHED, lw=2.2, solid_capstyle="butt", zorder=1)
-    if adult is not None:
-        ax.scatter([adult], [y], s=34, marker="D", facecolor="white", edgecolor=c, lw=1.1, zorder=2)
-    ax.scatter([x], [y], s=46, color=c if ok else "white", edgecolor=c, lw=1.4, zorder=3)
-
-
-def rows(ax, n):
-    ax.axvline(0, color=pf.GREY, lw=0.6, zorder=0)
-    ax.set_yticks(range(n), ORGANS[:n])
-    ax.tick_params(axis="y", length=0)
-    ax.set_ylim(n - 0.5, -0.5)
-
-
 def panel_a(ax, d):
+    """Organs along x; per organ one bar per species, at fixed slots (mouse slot empty when not measured) (measured C; filled = clock-specific, open = not), the adult-size
+    expectation (open diamond) and the matched-genes q95 (grey tick) at the bar's position."""
     for _, r in d.iterrows():
-        mark(ax, r.C, ORGANS.index(r.organ) + DY[r.species], r.species, r.ok, r.q95, r.adult)
-    rows(ax, len(ORGANS))
-    ax.set_xlim(-0.6, 1.0)
-    ax.set_xlabel("clock-gene covariation\nbetween individuals, C")
-
-
-def panel_pairs(ax, d, species, organ, title, xlab, ylab):
-    x = d[(d.species == species) & (d.organ == organ)]
-    c, ok = SPECIES[species], bool(x.ok.iloc[0])
-    ax.axhline(0, color=pf.GREY, lw=0.6, zorder=0)
-    ax.axvline(0, color=pf.GREY, lw=0.6, zorder=0)
-    ax.scatter(x.expected, x.r, s=18, color=c if ok else "white", edgecolor=c, lw=0.9, zorder=2)
-    b = np.sum(x.expected * x.r) / np.sum(x.expected ** 2)
-    ax.plot([-1, 1], [-b, b], color=c, lw=1.6, zorder=3)
-    ax.set_xlim(-1.1, 1.1)
-    ax.set_ylim(-1, 1)
-    ax.set_xticks([-1, 0, 1])
-    ax.set_yticks([-0.5, 0, 0.5])
-    ax.set_title(title, fontsize=13)
-    ax.set_xlabel(xlab)
-    ax.set_ylabel(ylab)
-    if not xlab:
-        ax.set_xticklabels([])
-    if not ylab:
-        ax.set_yticklabels([])
+        x, w = ORGANS.index(r.organ) + DX[r.species], BAR
+        c = SPECIES[r.species]
+        ax.bar([x], [r.C], width=w, color=c if r.ok else "white", edgecolor=c, lw=1.4, zorder=2)
+        ax.plot([x - w / 2, x + w / 2], [r.q95] * 2, color=MATCHED, lw=2.2, solid_capstyle="butt", zorder=3)
+        ax.scatter([x], [r.adult], s=34, marker="D", facecolor="white", edgecolor=c, lw=1.1, zorder=4)
+    ax.axhline(0, color=pf.GREY, lw=0.6, zorder=1)
+    ax.set_xticks(range(len(ORGANS)), [LABEL.get(o, o) for o in ORGANS])
+    ax.tick_params(axis="x", length=0)
+    ax.set_xlim(-0.6, len(ORGANS) - 0.4)
+    ax.set_ylim(-0.6, 1.0)
+    ax.set_ylabel("clock-gene covariation\nbetween individuals, C")
 
 
 def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
-    lay = pf.Layout.slide([["A", "B", "C"], ["A", "D", "E"]], kind="wide", col_ratios=[1.5, 1, 1])
-    panel_a(lay.axes["A"], covariation())
-    p = pattern()
-    for k, (sp, org, title, xl, yl) in zip("BCDE", (
-            ("human", "cortex", "adrenal cortex", "", "correlation\nbetween fetuses"),
-            ("human", "lung", "lung", "", ""),
-            ("human", "liver", "liver", "expected from\nthe adult clock", "correlation\nbetween fetuses"),
-            ("mouse", "liver", "liver (mouse)", "expected from\nthe adult clock", ""))):
-        panel_pairs(lay.axes[k], p, sp, org, title, xl, yl)
-    h = [Line2D([], [], ls="", marker="o", ms=8, color=SPECIES["human"], label="human fetus"),
-         Line2D([], [], ls="", marker="o", ms=8, color=SPECIES["mouse"], label="mouse embryo"),
-         Line2D([], [], ls="", marker="o", ms=8, mfc="white", mec="#222222", label="not clock-specific"),
+    lay = pf.Layout.slide("A", kind="half", height=125)
+    d = covariation()
+    panel_a(lay.axes["A"], d)
+    h = [Patch(facecolor=SPECIES["human"], edgecolor=SPECIES["human"], label="human fetus"),
+         Patch(facecolor=SPECIES["mouse"], edgecolor=SPECIES["mouse"], label="mouse embryo"),
+         Patch(facecolor="white", edgecolor="#222222", label="not clock-specific"),
          Line2D([], [], ls="", marker="D", ms=7, mfc="white", mec="#222222", label="expected at adult size"),
-         Line2D([], [], ls="", marker="|", ms=12, mew=2.2, color=MATCHED, label="matched genes, 95th pct")]
-    lay.shared_legend("ABCDE", h, [x.get_label() for x in h], side="bottom", ncol=5, fontsize=11,
-                      handletextpad=0.3, columnspacing=1.2)
+         Line2D([], [], color=MATCHED, lw=2.2, label="matched genes, 95th pct")]
+    lay.shared_legend("A", h, [x.get_label() for x in h], side="bottom", ncol=3, fontsize=10,
+                      handletextpad=0.3, columnspacing=1.0)
     fig = lay.finalize()
+    print(d.round(3).to_string(index=False))
     print(pf.collisions(fig))
     pf.save(fig, OUT / "development")
 

@@ -120,3 +120,52 @@ noticed at scoring).
 
 **Source:** `exploratory/A111_feeding_controls/output/{a111_h111_1,a111_h111_3}.csv`; `docs/results_preliminary.md` WP3
 (A111, A129).
+
+---
+
+# 2. Before birth: gates and coherence only
+
+| slide | status | figure |
+|---|---|---|
+| 2.1 Where the fetal clock-shaped state is | **revised** from `results.md` R4 panel A (below) | `figures/development/` |
+| 2.2 Is it a clock? Core loop and geometry | next | new |
+| 2.3 Running or driven: open | to do | - |
+
+## 2.1 Before birth, some organs share a clock-shaped state between individuals; others, at adult power, do not
+
+**Bullets**
+1. Human fetus: clock genes covary between individuals in the clock's pattern in the adrenal cortex (C 0.61, 34
+   fetuses), liver (0.58, 35) and lung (0.53, 38), above expression-matched and stress-responsive gene sets, at about
+   two thirds of the adult value at the same design (0.85, 0.86, 0.84) (A243, A244).
+2. The adrenal replicates blind in a new laboratory before 12 weeks: whole adrenal, del Valle 2023, C 0.59, p 0.002, 32
+   fetuses at 7-11.5 wpc (A328 part a, H328.1 pass).
+3. None in the heart (0.03, 72 fetuses), kidney (0.02, 53) or adrenal medulla (-0.05, 30), where an adult-size clock
+   gives 0.80-0.90 and passes in 100 % of subsamples; none in the brain (-0.17, 20; A239).
+4. Late mouse embryo (E15-E18.75, A309): hepatocytes replicate (0.64); ventricular cardiomyocytes (0.24) and nephron
+   progenitors do not covary.
+
+**Figure:** `figures/development/development.png` (`scripts/development.py`; half). Organs along x; bars: measured C,
+human fetus blue, mouse embryo orange (right slot empty when not measured), filled when significant and above both
+companion families, open when not; open diamond: median C of adult tissue subsampled to the same design (brain:
+postnatal brain at 20, A240); grey line: matched genes, 95th percentile. The R4 pair panels (B-E, PER1 / PER2 / NR1D1
+with the core genes, A307) are off this slide.
+
+**Tags:** A243, A244, A239 registered, blind; A328 part a registered, blind; A309 registered, not blind for the earlier
+fetal results. Aggregates only.
+
+**Caveats (speaker notes)**
+- No sampling times: C reads a shared state between individuals, not a rhythm.
+- "Two thirds of adult": C is not linear in amplitude, a rough reading.
+- Brain: the negative excludes only a full-size clock (adult pass rate 0.95 at full size, 0.365 at three quarters; A240).
+  Hindbrain at 4-8 wpc covaries in one cohort (descriptive, not established).
+- Mouse adrenocortical cells (0.41, 13 embryos) and lung progenitors (0.12) do not replicate in this window; mouse
+  kidney -0.52 is one gene (NPAS2; 0.07 without it).
+- Mouse heart clocks run in explants at E15-E18 (Umemura 2017) yet show no shared state in vivo: cells able to
+  oscillate, not synchronised.
+
+**Source:** `exploratory/A243_fetal_organs_pooled/output/{l1,verdicts,position_in_adult}.csv`;
+`exploratory/A244_fetal_adrenal_classes/output/{l1,verdicts_a244,position}.csv`;
+`exploratory/A328_fetal_running_loop/output/{score_a/l1,score_a/verdicts,power_a/passrates}.csv`;
+`exploratory/A239_fetal_brain/output/{l1,verdicts}.csv`; `exploratory/A240_fetal_amplitude/output/curve_array.csv`;
+`exploratory/A309_mouse_embryo_organs/output/{l1,power_passrates}.csv`; `docs/results_preliminary.md` A237-A240, A243,
+A244, A309, A328.
