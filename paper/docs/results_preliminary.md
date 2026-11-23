@@ -8103,3 +8103,22 @@ Check run (`--check`): the clock |r| reproduces A279 `pairs.csv` in every arm (a
   attenuation by ischaemia or RNA integrity (A356); their reproduction in living tissue is not shown (A355, A330).
 - Code: `exploratory/A356_gain_attenuation/scripts/a356.py --stage score`.
 <!-- src: paper/exploratory/A356_gain_attenuation/output/{score_pooled,score_across,score_descriptive,score_tissues}.csv (per-tissue aggregates) -->
+
+## A357 power note (2026-11-23; matched sets only, no clock-gene residual computed): H357.2 is decidable (power 1.00 at a median R^2 excess of 0.03); H357.1 is not (power 0.08 on the registered SD, 0.66 on a robust SD): not scored
+
+- One power run on the 100 matched sets of A294b (7,442 s, 12 workers, peak 2.7 GB; no errors). A first launch failed on a
+  path before loading any data. A check run on 2 sets (timing only) preceded it.
+- **H357.2 (decidable).** Median over tissues of the R^2 of the clock-plane departure on the person signal factor:
+  matched median 0.008, q95 0.0153; SD over sets 0.0032, tissue-bootstrap SD 0.0027; power 1.00 against an excess of 0.03.
+- **H357.1 (not decidable, not scored).** SD of Delta over sets 0.394 and of rho_sig 0.375 (98 sets with a value; 2 sets
+  lack a sig-position value): power 0.08 against Delta = 0.10. The SD is inflated by the estimator: the host-error
+  correction leaves a near-zero corrected variance for some matched genes, giving 14 of 1,321 per-gene medians outside
+  [-1, 1] (9 sets; e.g. -3.30, +2.98) and 79 undefined. On a robust SD (IQR / 1.349: Delta 0.049, rho_sig 0.035) the
+  power is still 0.66, below the 0.8 gate. With three signal genes, the per-set statistic is too noisy to resolve a 0.10
+  difference in GTEx. By the registered rule H357.1 is not scored: the score stage computes no clock pair
+  correlation output (`score_a357.py`, `h1_ok`), and its descriptive companions (per-gene rho of the glucocorticoid and
+  immediate-early genes) are dropped with it.
+- The H357.2 reading without H357.1 follows the registered line "H357.2 PASS without H357.1: reported as such; not read
+  as the signal-layer mechanism" only if H357.1 had failed; with H357.1 unscored, an H357.2 PASS is read as "a
+  person-level state of the signal-gene residuals explains part of the departure", without the sharing step.
+<!-- src: paper/exploratory/A357_signal_departure/output/{power,power_sets,power_genes}.csv -->

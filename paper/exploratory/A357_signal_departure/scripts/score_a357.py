@@ -247,13 +247,16 @@ def score_stage(t0):
     ms = pd.read_csv(OUT / "power_sets.csv").dropna(subset=["delta"])
     mt = pd.read_csv(OUT / "power_tissues.csv")
     core_wf = S["wf"].subset([g for g in S["wf"].genes if canonical(g) not in SIG])
+    h1_ok = bool(pw.loc["H357.1", "decidable"])
     pairs, tis = analyse("clock", S["wf"], S["pb"], extra=S["resp"], core_wf=core_wf)
-    g, row = summarise(pairs)
-    pairs.to_csv(OUT / "score_pairs.csv", index=False)
-    resp = pairs[pairs.role == "responsive"].groupby("gene").r.median().rename("rho")
-    g = pd.concat([g, resp.reset_index().assign(
-        role=lambda x: np.where(x.gene.isin(GC_TARGETS), "glucocorticoid", "immediate-early"))], ignore_index=True)
-    g.to_csv(OUT / "score_genes.csv", index=False)
+    if h1_ok:  # registered rule: a hypothesis without power is not scored, so its pair correlations are not read
+        g, row = summarise(pairs)
+        pairs.to_csv(OUT / "score_pairs.csv", index=False)
+        resp = pairs[pairs.role == "responsive"].groupby("gene").r.median().rename("rho")
+        g = pd.concat([g, resp.reset_index().assign(
+            role=lambda x: np.where(x.gene.isin(GC_TARGETS), "glucocorticoid", "immediate-early"))], ignore_index=True)
+        g.to_csv(OUT / "score_genes.csv", index=False)
+    del pairs
     # descriptive: person signal factor against the glucocorticoid / immediate-early scores of the other tissues
     sc = A329.responsive_scores(S["pb"])
     sc.index = pd.MultiIndex.from_arrays([S["pb"].donor.astype(str), S["pb"].compartment])
@@ -268,11 +271,13 @@ def score_stage(t0):
     tis["excess"] = tis.r2_sig - tis.r2_matched_median
     tis.to_csv(OUT / "score_tissues.csv")
     tests = []
-    p1 = pw.loc["H357.1"]
-    h1 = dict(test="H357.1", decidable=bool(p1.decidable), **row, q95_delta=float(ms.delta.quantile(0.95)),
-              q95_rho_sig=float(ms.rho_sig.quantile(0.95)),
-              pct_delta=float((ms.delta < row["delta"]).mean()), pct_rho_sig=float((ms.rho_sig < row["rho_sig"]).mean()))
-    h1["passes"] = bool(h1["delta"] > h1["q95_delta"] and h1["rho_sig"] > h1["q95_rho_sig"])
+    if h1_ok:
+        h1 = dict(test="H357.1", decidable=True, **row, q95_delta=float(ms.delta.quantile(0.95)),
+                  q95_rho_sig=float(ms.rho_sig.quantile(0.95)), pct_delta=float((ms.delta < row["delta"]).mean()),
+                  pct_rho_sig=float((ms.rho_sig < row["rho_sig"]).mean()))
+        h1["passes"] = bool(h1["delta"] > h1["q95_delta"] and h1["rho_sig"] > h1["q95_rho_sig"])
+    else:
+        h1 = dict(test="H357.1", decidable=False, passes="not scored")
     ex = tis.excess.dropna().to_numpy()
     lo, hi = boot_median(ex, np.random.default_rng(357))
     med_r2 = float(tis.r2_sig.median())
@@ -286,12 +291,14 @@ def score_stage(t0):
     desc = dict(test="descriptive", median_r2_core_factor=float(tis.r2_core.median()),
                 median_r2_sig_on_core_departure=float(tis.r2_sig_coredep.median()),
                 median_r2_core_on_core_departure=float(tis.r2_core_coredep.median()),
-                median_cor_gc=float(tis.cor_gc.median()), median_cor_ieg=float(tis.cor_ieg.median()),
-                rho_gc_median=float(g[g.role == "glucocorticoid"].rho.median()),
-                rho_ieg_median=float(g[g.role == "immediate-early"].rho.median()))
+                median_cor_gc=float(tis.cor_gc.median()), median_cor_ieg=float(tis.cor_ieg.median()))
+    if h1_ok:
+        desc.update(rho_gc_median=float(g[g.role == "glucocorticoid"].rho.median()),
+                    rho_ieg_median=float(g[g.role == "immediate-early"].rho.median()))
     tests = pd.DataFrame([h1, h2, desc])
     tests.to_csv(OUT / "score_tests.csv", index=False)
-    print(g.round(3).to_string(index=False), flush=True)
+    if h1_ok:
+        print(g.round(3).to_string(index=False), flush=True)
     print(tis.round(3).to_string(), flush=True)
     print(tests.round(4).T.to_string(), flush=True)
 
