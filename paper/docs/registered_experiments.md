@@ -10491,3 +10491,15 @@ descriptive (14-gene minus core g per family, with the bootstrap intervals).
 conserved across organs on the core loop". FAIL in a family: that family's conservation rests on PER1, PER2 or NR1D1 or
 on lost precision (bootstrap SE ratio core / 14 reported); the wording keeps the 14-gene result with the core caveat.
 **Stop rule.** One refit, one scoring. **Code:** `paper/exploratory/A350_class_gain_core/scripts/`.
+
+### A347 power note and implementation details (2026-11-23; `a347.py --stage power`, `output/power/{power,unit_counts}.csv`; swap draws only, no observed offset)
+Units reproduce the registration: psoriasis 9 series / 465 pairs, AD 8 / 298. Pooled swap-null offset (10,000 per-pair
+swaps, identity never used; offsets wrapped to [-12, 12) h, null mean |<= 0.002| h): SD psoriasis 0.204 h (14 genes) /
+0.154 h (core), AD 0.140 / 0.147 h. **AD MDE 0.35 h (14 genes) and 0.37 h (core), below 0.75 h: H347.1 decidable;
+expected 90 % half-width of D 0.41 / 0.35 h, below 0.75 h: H347.3-4 decidable. Proceed to the single scoring run.**
+Fixed before scoring: (1) power used the stored A53 1/se^2 weights; the score stage recomputes the weights per readout
+(1,000 bootstraps). (2) One swap stream `[347, 99, d]`; its first 2,000 rows (row 0 = identity) calibrate the
+companions, all 10,000 give the clock's swap p. (3) V347 per swap draw d: q_d = Phi((o_c,d - m_d) / sqrt(tau2_d +
+s_c^2)), m_d and tau2_d from that draw's family offsets (tau2 floored at 0). (4) D bootstrap: 2,000 within-series patient
+resamples per arm, weights fixed, D wrapped, interval taken circularly around the observed D. (5) D347 rows (GSE154200,
+hidradenitis, Tsoi leads) come from their own scripts, after the main run.
