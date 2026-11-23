@@ -8030,10 +8030,39 @@ Check run (`--check`): the clock |r| reproduces A279 `pairs.csv` in every arm (a
   exposure and site) is the weakest same-composition case; the reading states this.
 - Choices not fixed by the registration, made before any observed Delta: (i) a clock gene absent from a cohort is
   dropped from its waveform (A255 rule): GSE119717 lacks NR1D1 and NPAS2 (the submitters' detection filter removed the
-  probes from the deposited matrix), GSE39491 two genes absent on U133A 2.0; (ii) GSE119717 subjects 50 and 51 carry two
+  probes from the deposited matrix), GSE39491 lacks PER1 and CIART on U133A 2.0; (ii) GSE119717 subjects 50 and 51 carry two
   arrays labelled subcutaneous each (flagged by the scout): both dropped as ambiguous (subcutaneous 26 persons, omental
   29); (iii) GSE39491 has one host compartment and `Dataset.fit` needs two anchors: its ratio is the cross-moment ratio
   log |sum z_cardia conj z_barrett| - log |sum z_squamous conj z_barrett| against the same single host (the gain ratio
   under the one-factor model, free of each target's own noise).
 - Code: `exploratory/A355_living_gain_ratios/scripts/a355.py --stage power` (295 s).
 <!-- src: paper/exploratory/A355_living_gain_ratios/output/{gates,power}.csv, swap_nulls.npz -->
+
+## A355 (scored 2026-11-23; NOT BLIND for the GTEx gains, A251 and the A254 GSE39491 variance ratios; BLIND for GSE119717 and every living gain; one scoring run, 279 s): the living gain ratios do not follow the GTEx organ ratios as a set (H355.1 FAIL, pooled T 0.003, p 0.50; H355.2 FAIL for skin); fat goes the GTEx way at about two thirds of the size (not decidable), the cardia / squamous pair goes against it: the organ factor stays open
+
+| pair (a / b) | living Delta (fold) | GTEx (fold) | one-sided p | 90 % person bootstrap | status |
+|---|---|---|---|---|---|
+| omental / subcutaneous fat, GSE119717 (12 genes) | +0.323 (1.38) | +0.465 (1.59) | 0.193 | -0.147 to 0.657 (GTEx inside) | not decidable |
+| cardia / squamous oesophagus, GSE39491 (12 genes) | +0.395 (1.49) | -0.293 (0.75) | 0.980 | 0.087 to 0.786 (GTEx outside) | not decidable |
+| exposed / protected skin, Wu 2020 (14 genes) | -0.023 (0.98) | -0.211 (0.81) | 0.354 (Holm 0.354) | -0.583 to 0.095 (GTEx inside) | **H355.2 FAIL** |
+| pooled T (weights fat 0.053, oesophagus 0.087, skin 0.860) | 0.003 | 0.232 | 0.498 | -0.112 to 0.463 | **H355.1 FAIL** |
+
+- **D355.1, core loop (10-11 genes):** fat +0.367 (-0.366 to 0.847), oesophagus +0.216 (-0.385 to 0.612), skin +0.186
+  (-0.351 to 0.327).
+- **D355.2, total clock-plane log variance ratio a / b against 200 matched sets:** fat 0.672 (83.5th percentile; matched
+  median 0.185), oesophagus 0.027 (68th; -0.212), skin -0.381 (4.5th; -0.058): not clock-specific in fat or oesophagus;
+  in skin the exposed sites carry less clock variance than matched genes would.
+- **The power rule was optimistic.** For skin the person-bootstrap interval (width 0.68) is about three times wider than
+  the swap-null SD (0.062) implied: swapping labels within persons keeps the persons and misses between-person sampling
+  variance. The "decidable" skin test therefore carried less information than planned (its interval holds both 1 and
+  the GTEx value). Future gain-ratio registrations: power from a person bootstrap or a plasmode, not from within-person
+  swaps.
+- **Reading (registered: H355.1 fails with T decidable).** The living ratios do not follow the GTEx organ gain ratios as
+  a set, so tissue-specific post-mortem attenuation stays a live explanation, as do cohort and anatomical differences;
+  "organ" stays open (Figure 4g). Descriptively, the cleanest same-composition pair, omental over subcutaneous fat, goes
+  the GTEx way at about two thirds of its size (1.38 vs 1.59), not decidable at 26-29 men, and its total-variance
+  difference is not clock-specific; the cardia / squamous pair goes against GTEx, where the anatomy does not match
+  (GTEx Stomach is full-thickness stomach body with its muscle layers, GSE39491 mucosal biopsies of the cardia; PER1 and
+  CIART absent on its array); the skin contrast is near 1 with a wide interval.
+- Code: `exploratory/A355_living_gain_ratios/scripts/a355.py --stage score`.
+<!-- src: paper/exploratory/A355_living_gain_ratios/output/{score_pairs,score_pooled,score_descriptive}.csv, boot.npz -->
