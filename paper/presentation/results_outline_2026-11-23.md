@@ -299,3 +299,69 @@ In liver and lung the 14 clock genes covary in the clock's pattern, but the sign
 from, signal-responsive genes, consistent with a systemic input; glucocorticoids are a candidate, not shown. Heart,
 kidney, adrenal medulla and brain show none at adult power. Whether the adrenal clock runs on its own or follows a daily
 maternal or ACTH signal remains open. No sampling times: these are shared states, not rhythms.
+
+---
+
+# 3. Adult health: one time per person, many volumes
+
+| slide | status | figure |
+|---|---|---|
+| 3.1 The reference organisation: GTEx fast deaths, whole day | **new** (below) | `figures/reference_map/` |
+| 3.2 The organ arrangement holds when the body no longer reads the hour | **revised** from `results.md` R3.1 (below) | `figures/organ_arrangement/` |
+| 3.3 Composition does not set an organ's phase | kept (`results.md` R2.2), to review | `figures/organs_composition/` |
+
+CHIRAL concordance (A123) is slide 1.1. The ventilated and brain-dead rows of `results.md` R3.1 go to sections 4 and 7
+(`figures/holds_organisation/`, unchanged).
+
+## 3.1 The reference organisation: each organ keeps its place on the body's time, and organs differ mostly in loudness
+
+**Bullets**
+1. Most peripheral organs sit within about 1.5 h after the person's body time, with gains of about 1.2 to 2.3; a few are
+   clearly later: adrenal +4.86 h (95 % 4.23 to 5.57), lung +2.88 h, unexposed skin +2.19 h.
+2. Brain regions read on the body's host are earlier (−0.97 to −2.58 h) and quieter (gain 0.40 to 0.57).
+3. Gains span 0.26 (whole blood) to 2.28 (gastro-oesophageal junction); testis 0.38. Loudness, not timing, is where
+   organs differ most (sections 3.4 onwards).
+
+**Figure:** `figures/reference_map/reference_map.png` (`scripts/reference_map.py`; half). Clock face of slide 1.1: angle =
+offset from the person's body time (0 h, host from the peripheral tissues, peripheral tissues read leave-one-out), radius
+= relative amplitude (gain); crosses: 95 % donor-bootstrap intervals (200 draws). 40 tissues, 41 to 220 fast-death donors
+each; organ-system colours; direct labels only on tissues discussed later.
+
+**Tags:** A263 R2 fit (registered readout), per-tissue intervals from `organs_compute.py`; display descriptive (labelled
+tissues chosen for the deck).
+
+**Caveats (speaker notes)**
+- 0 h here is the person's body time; on slide 1.1 it is the mean over tissues.
+- Whole blood has no readable core clock (post hoc entry 2026-11-03): its phase interval spans 1.09 to 3.72 h.
+- The brain is read on a host built from peripheral tissues: its offset is relative to the periphery, and its low gain
+  partly reflects that reference (R2.1, A289).
+- Fast deaths are the reference because their body clock reads the hour of death (R 0.63, slide 3.2).
+
+**Source:** `presentation/output/organs/couplings.csv` (A263 R2 fit with donor bootstrap, `scripts/organs_compute.py`).
+
+## 3.2 The organ arrangement is internal: it holds when the body's clock no longer reads the hour of death
+
+**Bullets**
+1. The body's clock reads the hour of death in fast deaths (R 0.63, 244 donors), barely in slow deaths (0.16, 106) and
+   intermediate deaths (0.25, 51) (post hoc readout, A27).
+2. Slow deaths keep the fast-death organ arrangement: Fisher-Lee rho 0.78 (103 donors, 12 body tissues), above the 95th
+   percentile of 200 expression-matched (0.13) and 200 stress-responsive gene sets (0.44) (A293 H293.1, pass).
+   Intermediate deaths 0.62 (50 donors; responsive q95 0.57; descriptive).
+3. The arrangement is a property of the body, not imposed by the day at death.
+
+**Figure:** `figures/organ_arrangement/organ_arrangement.png` (`scripts/organ_arrangement.py`; half). Rows: fast (reference,
+dashed), slow, intermediate deaths. A. arrangement shared with fast deaths, clock genes (blue bar) with matched (light
+grey) and stress-responsive (dark grey) q95 lines. B. alignment R of the body clock to the hour of death.
+
+**Tags:** A293 part 1 registered, NOT BLIND (clock rho known from A109 / A132; companions new); intermediate deaths
+descriptive; panel B post hoc readout (A27).
+
+**Caveats (speaker notes)**
+- Slow deaths are not aligned to the hour (A109c H109c.1: R 0.097 against a null median 0.101, p 0.56), but alignment
+  as strong as in ventilated donors is not excluded (80 %-power R 0.208).
+- The arrangement survives removing the wall-time component (rho 0.750, A109c).
+- Donor counts differ between A (12 body tissues, A293) and B (all donors of the group, A27): 103 against 106.
+
+**Source:** `exploratory/A293_organisation_levels/output/part1/groups.csv`;
+`results/figure_3/output/cues_lost/walltime_hosts.csv`; `exploratory/A109_coupling_nulls/output/a109c_walltime.csv`;
+`docs/results_preliminary.md` A109c, A293.
