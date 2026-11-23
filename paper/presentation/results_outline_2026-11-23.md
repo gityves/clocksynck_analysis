@@ -14,7 +14,8 @@ blind / descriptive / post hoc. Every number below was read from the output tabl
 | 1.2 Living patients: breast, heart, adipose | kept as is (`results.md` R1.3; user, 2026-11-23) | `figures/living_patients/` |
 | 1.3 Baboon atlas, 63 tissue offsets | kept (`results.md` R1.4; user, 2026-11-23) | `figures/baboon_offsets/` |
 | 1.4 Timed living skin and muscle, and hospital hours | **new** (below) | `figures/living_timed/` |
-| 1.5 Positive controls: time moves | to revise (next) | `figures/positive_controls/` |
+| 1.5a Positive controls, cell types: offsets and the knockout | **new** (below) | `figures/celltype_controls/` |
+| 1.5b Positive controls, organs and organisms: time moves | to revise (next) | `figures/positive_controls/` |
 
 ## 1.4 In timed living skin and muscle, the untimed readouts match the timed ones, and survive hospital hours
 
@@ -59,3 +60,35 @@ Perrin blind for the unspliced counts; A344 and A353 not blind for the full cycl
 `exploratory/A337_timed_lead/output/perrin/verdicts.csv`; `exploratory/A342_skin_timed/output/score_a344/subsets.csv`;
 `exploratory/A337_timed_lead/output/a353/subsets.csv`; `docs/results_preliminary.md` A251, A337 Perrin, A342, A344,
 A353.
+
+## 1.5a Between cell types of one sample, untimed offsets equal timed ones; without a clock they stop being clock-specific
+
+**Bullets**
+1. Mouse colon (A273): offsets between cell classes of one sample, clocksync against timed, median error 0.31 h over 43
+   pairs (undamaged 28, regenerating after injury 15), on the identity line also where the classes move apart.
+2. Mouse aorta (A279, Auerbach 2026): median error 0.30 h over 6 pairs of EC, SMC, fibroblast, macrophage.
+3. Clock intact, every aorta pair correlates above both companion families: clock |r| 0.83-0.98 against matched q95
+   0.58-0.78 (A354 H354.2 pass, 6 of 6).
+4. Bmal1 knockout: macrophage pairs fall to the companion median (|r| 0.11-0.35); stromal pairs fall to the top edge of
+   the matched range (EC-SMC 0.629 vs q95 0.636; fib-SMC 0.661 vs 0.666), EC-fibroblast stays above (0.753 vs 0.618;
+   H354.1 fail).
+
+**Figure:** `figures/celltype_controls/celltype_controls.png` (`scripts/celltype_controls.py`; half). A. offset between
+cell types, clocksync against timed: colon (green filled), regenerating colon (green open), aorta (red); dashed:
+identity. B. aorta, |r| between the clock states of two cell types, clock intact (filled, upper row) and Bmal1 knockout
+(open, lower row), beside the 5-95 % range and median of 200 expression-matched (light grey) and 200 stress-responsive
+(dark grey) gene sets.
+
+**Tags:** A273 registered calibration (not blind for the per-class timed phases); A279 registered (not blind for
+A201's per-cell-type shifts); A354 registered, not blind for the clock |r|, blind for every companion value.
+
+**Caveats (speaker notes)**
+- One pair above the matched q95 is not proof of a running clock: EC and fibroblasts keep clock-gene covariation beyond
+  random genes without BMAL1 (shared non-clock regulation of the same genes). The human cell-type results rest on pooled
+  contrasts over many atlases with calibrated p-values (A283), not on single pairs.
+- Stress-responsive genes covary strongly between stromal classes (q95 up to 0.94): the clock is separated from them
+  only with the clock intact.
+- Mouse, timed designs: calibration of the offset readout, not a test in human tissue.
+
+**Source:** `exploratory/A273_pairwise_offset_truth/output/pairs.csv`; `exploratory/A279_aorta_pairwise_truth/output/pairs.csv`;
+`exploratory/A279_aorta_pairwise_truth/output/a354/{pairs,verdicts}.csv`; `docs/results_preliminary.md` A273, A279, A354.
