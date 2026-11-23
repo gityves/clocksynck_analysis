@@ -7816,7 +7816,7 @@ once (part 2: 166 s, peak 1.9 GB). Aggregates only.
 - **D349.1, host spread V** (separate fits, median over targets): 14 genes fast 3.61, ventilated 1.79; core 4.43 against
   2.09 (sigma_f trace 3.61 / 1.66 and 4.39 / 1.99). Median log V ratio fast / ventilated in the joint contrast 0.53
   (pooled) and 0.52 (age / sex matched; core 0.50 / 0.48). The ventilated spread is about half that of fast deaths,
-  not a tenth (the A315 registration's figure from separate fits on a different scale).
+  not the tenth recorded in the A315 registration (cause of the difference not checked).
 - **D349.2, host-referenced log z2 fast over ventilated at a common spread** (median over 12 tissues; donor bootstrap
   500): 14 genes 0.142 pooled, 0.111 matched; core 0.201, 0.205. Above 0 in 7 (14 genes) and 8 (core) of 12 tissues;
   90 % interval excluding 0 in 6 / 12 (14 genes) and 3 / 12 (core). Largest losses thyroid +1.06 (0.73-1.44), oesophagus
