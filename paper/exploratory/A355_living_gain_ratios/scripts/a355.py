@@ -212,6 +212,95 @@ def power(jobs):
     print(pw.round(3).to_string(index=False))
 
 
+def var_ratio(e, sheet, a, b, wf):
+    """Total clock-plane log variance ratio a / b (lists of compartments, averaged) on log expression (ln), persons
+    with both, states centred within compartment; one projector over the pair."""
+    g = [x for x in wf.genes if x in e.columns]
+    y = e.loc[sheet["sample"], g].astype(float).set_axis(sheet.index) * np.log(2)
+    L = P.projector(y, wf if len(g) == len(wf.genes) else wf.subset(g), counts=False)
+
+    def tr(k):
+        t = y[sheet.compartment == k].to_numpy()
+        bb = (t - t.mean(0)) @ L.T
+        return float(np.sum(bb ** 2) / (len(t) - 1))
+    return float(np.mean([np.log(tr(x)) for x in a]) - np.mean([np.log(tr(x)) for x in b]))
+
+
+def companions(e, sheet, cohort, k):
+    """D355.2: clock and 200 expression-matched sets, total variance ratio per target pair (averaged over the design)."""
+    lm = (e.astype(float) * np.log(2)).mean()
+    lm = lm[~lm.index.duplicated()].dropna()
+    wf = waveform(e)
+    sets = P.pseudo_waveforms(lm, N_SETS, np.random.default_rng([SEED, 90, k]), wf, "matched")
+    out = []
+    for w in [wf] + list(sets):
+        out.append(np.mean([var_ratio(e, sheet, a, b, w) for _, a, b in design(cohort)]))
+    return out[0], np.array(out[1:])
+
+
+def score(jobs):
+    G = gtex_ratio()
+    pw = pd.read_csv(OUT / "power.csv").set_index("test")
+    nulls = dict(np.load(OUT / "swap_nulls.npz"))
+    ok = [c for c in COHORTS if c in nulls]
+    rows, desc, data = [], [], {}
+    for c in ok:
+        e, sheet = LOADERS[c]()
+        wf, wfc = waveform(e), waveform(e, core=True)
+        pb = pseudobulk(e, sheet, wf)
+        data[c] = (e, sheet, wf, wfc, pb)
+    obs = {c: delta(data[c][4], c, data[c][2]) for c in ok}
+    bs = dict(zip(ok, Parallel(n_jobs=jobs)(delayed(boot)(data[c][4], c, COHORTS.index(c), N_BOOT, data[c][2])
+                                            for c in ok)))
+    np.savez(OUT / "boot.npz", **bs)
+    for c in ok:
+        s = np.sign(G[c])
+        p = float((1 + np.sum(s * nulls[c] >= s * obs[c])) / (1 + len(nulls[c])))
+        lo, hi = np.nanquantile(bs[c], [0.05, 0.95])
+        rows.append(dict(test=c, delta=obs[c], gtex_log_ratio=G[c], fold_living=float(np.exp(obs[c])),
+                         fold_gtex=float(np.exp(G[c])), p_one_sided=p, lo90=lo, hi90=hi,
+                         gtex_inside=bool(lo <= G[c] <= hi), decidable=bool(pw.loc[c, "decidable"]),
+                         genes=len(data[c][2].genes), boot_valid=int(np.isfinite(bs[c]).sum())))
+    t = pd.DataFrame(rows)
+    dec = t[t.decidable]
+    m = len(dec)
+    t["p_holm"] = np.nan
+    if m:
+        order = dec.p_one_sided.sort_values().index
+        adj = np.maximum.accumulate([min(1, (m - i) * t.loc[j, "p_one_sided"]) for i, j in enumerate(order)])
+        t.loc[order, "p_holm"] = adj
+    t["H355_2"] = np.where(t.decidable, np.where((t.p_holm < 0.05) & t.gtex_inside, "PASS", "FAIL"), "not scored")
+    w = {c: 1 / float(pw.loc[c, "null_sd"]) ** 2 for c in ok}
+    T = sum(w[c] * np.sign(G[c]) * obs[c] for c in ok) / sum(w.values())
+    T0 = sum(w[c] * np.sign(G[c]) * nulls[c] for c in ok) / sum(w.values())
+    pT = float((1 + np.sum(T0 >= T)) / (1 + len(T0)))
+    Tb = sum(w[c] * np.sign(G[c]) * bs[c] for c in ok) / sum(w.values())
+    pooled = dict(test="pooled T (H355.1)", delta=float(T), gtex_log_ratio=float(pw.loc["pooled T", "gtex_log_ratio"]),
+                  p_one_sided=pT, lo90=float(np.nanquantile(Tb, 0.05)), hi90=float(np.nanquantile(Tb, 0.95)),
+                  decidable=bool(pw.loc["pooled T", "decidable"]),
+                  H355_1=("PASS" if pT < 0.05 else "FAIL") if pw.loc["pooled T", "decidable"] else "not scored",
+                  weights=str({c: round(w[c] / sum(w.values()), 3) for c in ok}))
+    t.to_csv(OUT / "score_pairs.csv", index=False)
+    pd.DataFrame([pooled]).to_csv(OUT / "score_pooled.csv", index=False)
+    for c in ok:
+        e, sheet, wf, wfc, pb = data[c]
+        k = COHORTS.index(c)
+        pbc = pseudobulk(e, sheet, wfc)
+        dc = delta(pbc, c, wfc)
+        bc = boot(pbc, c, k, 200, wfc)
+        vc, vs = companions(e, sheet, c, k)
+        desc.append(dict(cohort=c, core_genes=len(wfc.genes), core_delta=dc, core_lo90=float(np.nanquantile(bc, 0.05)),
+                         core_hi90=float(np.nanquantile(bc, 0.95)), clock_log_var_ratio=vc,
+                         matched_median=float(np.median(vs)), matched_q05=float(np.quantile(vs, 0.05)),
+                         matched_q95=float(np.quantile(vs, 0.95)), clock_pct_among_matched=float(np.mean(vs < vc)),
+                         missing_genes=str([g for g in WF.genes if g not in wf.genes])))
+    pd.DataFrame(desc).to_csv(OUT / "score_descriptive.csv", index=False)
+    pd.set_option("display.width", 250)
+    print(t.round(3).to_string(index=False))
+    print(pd.DataFrame([pooled]).round(3).to_string(index=False))
+    print(pd.DataFrame(desc).round(3).to_string(index=False))
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--stage", choices=["power", "score"], required=True)
@@ -222,7 +311,7 @@ def main(argv=None):
     if a.stage == "power":
         power(a.jobs)
     else:
-        raise SystemExit("score stage: written after the power note")
+        score(a.jobs)
 
 
 if __name__ == "__main__":
