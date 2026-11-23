@@ -34,10 +34,11 @@ receives from the brain and from behaviour. How loudly a sample expresses that t
 the cell class; a person factor is shown in GTEx deaths (A312) but, in living tissue, not on the core loop (A331,
 A335). The tissue clock is slower than the signal layer: it carries the person's time through the acute states of
 surgery and dying that reset the fast signal layer every cell reads, which is why single untimed hospital samples can
-be read. The clock layer is built around birth (wording paused, Q43: the core loop covaries on its own in del
-Valle, A328 part a, blind). Before birth, adrenal cortex and lung carry the signal layer in the
-clock's pattern without an adult-size clock, and liver does when stages are pooled. Heart and kidney show no
-clock-shaped covariation; brain shows none at 13-22 pcw but covaries before 12 wpc in one cohort (descriptive). The
+be read. Before birth (revised 2026-11-23), the adrenal already carries a clock-like organisation: its core loop
+covaries between fetuses on its own, replicated blind (A328 part a), and its states turn in two dimensions (A340).
+Liver and lung carry the signal layer in the clock's pattern, not shown to be a clock, and not explained by
+glucocorticoid activity alone (A269, A307, A341). Heart, kidney and adrenal medulla show no clock-shaped covariation;
+brain shows none at 13-22 pcw but covaries before 12 wpc in one cohort (descriptive). The
 clock is present in postnatal tissue. Perturbations then fall on two axes:
 - **loudness moves often:** body-wide in intensive care, locally in tumours as they proliferate and in chronic lesions,
   and under conflicting drives;
@@ -139,25 +140,27 @@ Polar plot: angle = time relative to the person's internal time; radius = loudne
 | composition | does not move time (A295) | stromal-vascular content raises gain (A295, descriptive); lymphocyte content dilutes relative gain slightly (-0.020 per SD on the core loop, p 0.040, A336; within the post hoc ±0.10 margin, A335) | - |
 | organ | order held without alignment to the day, under intensive-care feeding (unrecorded; A293 Part 1); concordant with CHIRAL (A123) | 9.2-fold, 3.1-fold without blood and testis (A104 table, derived); not composition (A323) | varies little, not phase-dominated, not shared (A294b, A311, A313); mostly PER1, PER2, NR1D1 (A329) |
 | person | internal time advances with elapsed hours in living tissue (A252, A256) and reads the hour of death (A270; held-out waveform, A335) | shared by all tissues in deaths (A312); in living tissue not on the core loop (A331, A335) | - |
-| development | before birth, the signal-induced genes keep the clock's phase pattern (A307) | below adult size before birth, present after (section 2.4) | - |
+| development | before birth, liver and lung: the signal layer in the clock's pattern (A269, A307) | adrenal before birth: a clock-like organisation, core loop clock-specific (A328 part a, A340); other organs below adult size before birth, present after (section 2.4) | - |
 
-### 2.4 Development: the signal layer before the clock
+### 2.4 Development: a clock-like adrenal, the signal layer elsewhere (revised 2026-11-23)
 
 | stage and organ | signal layer | clock layer | entries | status |
 |---|---|---|---|---|
-| fetal adrenal cortex, lung, liver | clock-shaped covariation between fetuses at half to three quarters of the adult size (adrenal: A242 whole gland, A244 cortex before 12 wpc only; lung, liver: A243 pooled over stages; before 12 wpc lung passes, C 0.679, liver does not, C 0.169); carried by PER1, PER2, NR1D1: not clock-specific on the core loop (A264, A266, A269); these genes keep the clock's phase pattern with the core genes (A307 H307.2, adrenal cortex and lung) and follow glucocorticoid activity in lung (H307.1) | a core loop of adult-like size excluded down to 0.75 of the adult size in adrenal cortex and 0.5 in lung (pooled; lung before 12 wpc is clock-specific on the core loop, descriptive, A269); liver core loop covaries (C 0.686) but not beyond responsive genes: driven or entrained, not separable (A269); a smaller entrained loop not excluded | A242-A244, A264, A266, A269, A307 | not blind; no sampling times |
+| fetal adrenal | clock-shaped covariation of the 14 genes at about two thirds of the adult size (A244 cortex cells, C 0.61; A242 whole gland), replicated blind before 12 wpc (del Valle, C 0.59, A328 part a H328.1) | core loop clock-specific on its own in del Valle (C 0.80, A328 part a H328.2); two-dimensional states, not one slow factor (A340 H340.1); fast pulsatile input excluded (post hoc, A328 part b, A338, A339 at tau = 1 h); single-cell cortex core loop 0.42, three quarters of the adult size excluded, half not (A266): the datasets differ, cause open | A242, A244, A264, A266, A328, A340 | del Valle blind; no sampling times |
+| fetal lung, liver | clock-shaped covariation of the 14 genes (lung 0.53, liver 0.58; A243 pooled; before 12 wpc lung passes, C 0.679, liver does not, C 0.169); PER1, PER2, NR1D1 keep the clock's phase pattern with the core genes (A307 H307.2, lung) and follow glucocorticoid activity in lung (H307.1); the covariation survives adjustment for glucocorticoid-target activity (A269 H269.2); glucocorticoid responsiveness does not rank the organs (A341) | lung: core loop small (0.47; adult size excluded down to 0.5, A269); liver: core loop covaries (0.69) but not beyond responsive genes, states in the no-clock elongation range with the main axis along the glucocorticoid-target direction (A340, descriptive): driven or entrained, not separable | A243, A269, A307, A340, A341 | not blind; no sampling times |
 | fetal adrenal medulla, heart, kidney, brain | none shown, except brain before 12 wpc | none: a clock of 0.75 to 1 times the adult one excluded (A240; heart also at half, A243); brain 13-22 pcw C 0.047 (A239); hindbrain and forebrain before 12 wpc covary, C 0.578 and 0.465 (p 0.016, 0.027; Cardoso-Moreira, D4, descriptive) | A237-A240, A243, A244, A332 D4 | the negatives exclude 0.75 to 1 times the adult size; the positives sit at 0.5-0.75 |
 | postnatal brain, heart, kidney, liver | - | present: brain C 0.735 in infancy and childhood, 0.663 from 13 years (A239); postnatal controls C 0.54 to 0.84 (A237); Cardoso-Moreira birth-12 y: hindbrain 0.772, forebrain 0.044 (D4) | A237, A239, A332 D4 | - |
 | mouse late embryo (E15-E18.75) | signal-induced genes keep the waveform pattern in hepatocytes (A309 H309.2) | hepatocytes clock-specific (A309 H309.1); cardiomyocytes (three quarters of adult size excluded), nephron, lung and adrenocortical progenitors not | A309, A236 | not blind |
 
 **Reading.**
-- The systemic drive reaches fetal organs before a core loop of adult size is detectable.
+- Before birth the adrenal carries a clock-like organisation (core loop, blind); in liver and lung a systemic input
+  moves the clock genes in the clock's pattern, glucocorticoids a candidate, not shown.
 - The clock's loudness is built around birth. In brain the covariation appears in infancy in Kang 2011 (A239); in
   Cardoso-Moreira forebrain it is present before 12 wpc and absent at birth-12 y (D4): the cohorts disagree.
 - In mouse, hepatocytes come first (A309); in human, lung is shown before 12 wpc and liver is not (A243). Heart and
   kidney are negative before birth in both species.
-- Open: is the fetal state a small entrained loop, or an input moving the whole network in the clock's pattern?
-  Spliced and unspliced counts decide it (check S1, STATUS_2026-11-18 section 2).
+- Open: does the adrenal clock run on its own or follow a daily maternal / ACTH signal? The spliced / unspliced lead
+  did not decide it (A328 part b, A338, A339: uninformative, the running postnatal liver is not resolved either).
 - Precedent (animal): maternally driven before autonomous; explants rhythmic while flat in vivo (fetal_clocks_animal).
   New here: organ and cell-class resolution in human, and the postnatal appearance.
 
@@ -238,16 +241,19 @@ Polar plot: angle = time relative to the person's internal time; radius = loudne
      descriptive); the output program moves 11.65 h (A261).
    - It is why untimed hospital tissue can be read; the companions are the operational separation of the two layers.
    - The concept is the mouse consensus, credited as such. The human demonstration and its use are new.
-5. **The human clock layer is built around birth.**
-   - Organ by organ: the signal layer comes before the clock in adrenal cortex and lung, and in liver when stages are
-     pooled (not before 12 wpc; A243).
+5. **Before birth, a clock-like adrenal; the signal layer elsewhere (revised 2026-11-23).**
+   - The adrenal core loop covaries between fetuses on its own, replicated blind before 12 wpc (A328 part a), with
+     two-dimensional states (A340). Lung and liver carry the signal layer in the clock's pattern, not shown to be a
+     clock; not explained by glucocorticoid activity alone (A269, A307, A341). Liver passes only when stages are pooled
+     (not before 12 wpc; A243).
    - Heart and kidney show no clock-shaped covariation before birth. Brain shows none at 13-22 pcw but covaries before
      12 wpc in one cohort (D4, descriptive); when it appears after birth differs between cohorts (A239, D4).
    - In the mouse embryo hepatocytes come first (A309); in human, lung, not liver, is shown before 12 wpc (A243).
    - The animal literature has the maternally driven fetal state; the human organ and cell-class resolution and the
      postnatal appearance are new.
-   - Caveats: not blind, no sampling times, signal or small entrained loop undecided until S1; the positives sit at
-     0.5-0.75 of the adult size while the negatives exclude 0.75 to 1 (A240), and only heart is powered at half (A243).
+   - Caveats: no sampling times; the adrenal running on its own or driven daily is undecided (S1 lead not decidable);
+     the two adrenal datasets disagree on the core loop (A266 vs A328); the positives sit at 0.5-0.75 of the adult
+     size while the negatives exclude 0.75 to 1 (A240), and only heart is powered at half (A243).
 6. **Corrections of published claims.**
    - COFE's tumour uncoupling (A265, A267).
    - CHIRAL's age dampening: its rhythmic-gene count shrinks with death-type matching (WP0 item 5, timed, not
@@ -275,7 +281,7 @@ Polar plot: angle = time relative to the person's internal time; radius = loudne
 |---|---|---|---|
 | 1 | A slow clock, read from untimed hospital tissue | (a) the clock plane and the two readouts (14 genes and the core loop without PER1, PER2 and NR1D1, with the gene-drop null; A336); companions as the separation of clock and signal layers (schematic); (b) living tissue, two biopsies hours apart: the clock rotates with elapsed hours, responsive sets do not, on 14 genes and on the core loop (A252, A256, A336); (c) deaths: the clock reads the hour of death, responsive and matched sets do not, also with a waveform fitted on other donors; baboon as the timed reference (A270, A335); (d) night shift: the core loop moves 4.06 h and keeps about half its amplitude (14 genes 2.68 h at about 0.31), PER1, PER2 and NR1D1 move less (not blind), the program 11.65 h at 0.854 and still 'behaviour' with the core constants (A257, A261, A335, A336); the trio alone is not readable (three-gene gates cannot pass) | method validation (A123b, A145, A209, A258, A285, A320); blood forced desynchrony (A262) |
 | 2 | Structural cells keep the clock; every cell reads the signals | (a) participation across atlases and living donors (A272, A274, A280, A282, A283, A288); (b) lymphocytes share glucocorticoid and immediate-early states, not the clock (A275), with the bound and the core loop (A326, A321); (c) Bmal1 knockout: a shared signal state without a clock (A279) | per-atlas replicates (A281, A287, A284, A152); cortex unresolved (A280, A283); core loop (A336): the structural-lymphocyte contrast holds in the A274 / A280 atlases and post mortem, and only against matched genes in the A272 atlases and for macrophages (at the line), cortex falls (not decidable), living pooled D falls (descriptive); Bmal1 knockout at the line |
-| 3 | Development: the signal layer comes before the clock | (a) before birth, adrenal cortex and lung carry a clock-shaped covariation at half to three quarters of the adult size, and liver when stages are pooled; medulla, heart and kidney none; brain none at 13-22 pcw, covarying before 12 wpc in one cohort (A237-A239, A242-A244, D4); (b) it rests on the signal-induced genes: not clock-specific on the core loop (A264, A266, A269); they keep the clock's phase pattern and follow glucocorticoid activity in lung (A307); (c) after birth the clock is present: brain 13-22 pcw C 0.047 against 0.735 in infancy and childhood (A239), postnatal controls (A237), the loudness curve (D4); (d) mouse late embryo: hepatocytes first, heart and kidney not (A309); (e) the time-free test: spliced and unspliced phase relations, and the blind adrenal replication (S1, registered as A328; counts not yet delivered), or stated as the open test; loudness after birth (A332 D4) | negatives and bounds (A236-A241); Cao design not estimable (A181); mother-fetus not resolved (A184); developmental loudness table (T5) |
+| 3 | Development: before birth the adrenal carries a clock-like organisation; liver and lung carry the clock genes' signal layer (revised 2026-11-23, user) | (a) before birth, the 14 clock genes covary between individuals in the clock's pattern in adrenal cortex, liver and lung at about two thirds of the adult size (A243, A244), replicated blind in the whole adrenal before 12 wpc (A328 part a H328.1, C 0.59); adrenal medulla, heart, kidney none at adult power; brain none (A237-A240, A244); (b) adrenal: the core loop covaries on its own, clock-specific, in the blind cohort (A328 part a H328.2, C 0.80); the states are two-dimensional, not one slow factor (A340 H340.1); fast pulsatile input excluded (post hoc: lead upper bounds at tau = 1 h, A328 part b, A338, A339); in the single-cell cortex cohorts the core loop is 0.42 (three quarters of the adult size excluded, half not; A266): the two adrenal datasets differ, cause open; (c) liver and lung: the covariation sits in the signal-responsive genes. Lung core loop small (0.47, below the half-size median 0.70, power 0.84; A269); liver core loop covaries (0.69) but not beyond stress-responsive genes (q95 0.71), and its states lie in the no-clock elongation range with the main axis along the glucocorticoid-target direction (A340, descriptive). Consistent with a systemic input; glucocorticoids are a candidate, not shown: adjusting for glucocorticoid-target activity keeps the covariation (A269 H269.2), the PER1 / PER2 / NR1D1 link to glucocorticoid targets is clock-specific in lung only (A307), glucocorticoid responsiveness does not rank the organs (A341); (d) mouse late embryo: hepatocytes, heart and kidney not (A309); (e) after birth the clock is present (A237, A239, D4); open: does the adrenal clock run on its own or follow a daily maternal / ACTH signal (the lead is not decidable: A328 part b, A338, A339) | negatives and bounds (A236-A241); phase-pattern pairs (A307); organ ranking (A341); core-loop power tables (A266, A269, A328); Cao design not estimable (A181); mother-fetus not resolved (A184); developmental loudness table (T5) |
 | 4 | One time, many volumes | (a) classes share the organ's time, in human within 1 h with a small endothelial offset of the mouse sign (A273, A279; A293, A335); (b) composition does not move time, and its loudness effect is descriptive (A295, A335); (c) the organ order held without alignment to the day, under intensive-care feeding (A293 Part 1); (d) conserved class gains (A293 H293.4); (e) organ gains over a departure that varies little: coupling reads mostly loudness; information in bits (A291, A294b, A311, A313; N2, A329); (f) the person's loudness, shared by every tissue in deaths, on 14 genes and on the core loop beyond matched and responsive genes, labelled post-mortem (A312, A336); in living women at the line on the core loop (A331, A335, A336); (g) the organ range is not composition (A323); biological or technical open (A330 not decidable) | CHIRAL concordance (A123); order sensitivities (A109, A132, A314); A302; A310 fit; A312 per tissue |
 | 5 | Perturbations move loudness, rarely time | (a) the map: every condition of section 3 as an arrow, each with its detection limit drawn as a circle around the origin (an arrow inside its circle reads 'not detectable', not 'no change'; A336 part 3), overall loudness drawn apart from the relative pattern; (b) intensive care lowers loudness and keeps the order (robust on the core loop and matched); brain death changes the order, also on the core loop and after ischaemic-time / RIN adjustment (A336; glucocorticoids on the core not excluded), and keeps loudness relative to matched genes; in GTEx, aliased with procurement and donor management; per-organ arrows descriptive (A293, A315, A317, A318, A335); (c) drives removed and in conflict, mouse: feeding removed (A297), central clock lost (A319), daytime feeding by organ weight (A322, A324); (d) the departure does not grow (A304, A306) | brain-death checks (A132b, A318 H318.2, A325, A327; Q41 Tasks 2-3, B1, B4); ventilation time (A132, A315; D3) |
 | 6 | Disease: chronic disease spares the clock, local disease quiets it, inflamed skin may delay it | (a) chronic systemic disease: equivalence and powered nulls (A164, A233, A235, A306); (b) tumours keep the patient's time, their stroma carries it (immune cells at the line on the core loop, A227, A336), gain falls with proliferation, the departure stays flat (A138, A227, A271, A304), and the COFE correction (A265, A267); (c) chronic lesions keep time and lose loudness (A254); (d) psoriasis: the lesion later, at the line on the core loop (A308, A335; rule revised after A183), eczema alike (A183), uninvolved skin late (A115), its loudness (D1) | per-cancer ranking (A3); prognostic nulls (A191-A194, A198, A220); smoking lung gain (A306) |
@@ -396,7 +402,7 @@ The frozen claim set: every entry cited in sections 2, 3 and 5 is scored.
 | loudness has non-clock causes (composition, attenuation, death) | every loudness claim against matched and responsive sets and referenced to the person; matched genes also lose variance (A254, A315), and the clock is read beyond them |
 | brain death | one panel, with its aliases (procurement, donor-management glucocorticoids) and the checks (Q41, A335) |
 | GTEx deaths carry Figures 4 and 5 | living cohorts carry Figures 1-2, the lesions and P1; registry table for blind status |
-| fetal results: not blind, no sampling times, signal or small loop undecided | state the bounds (A240) and call it a driven state; S1 is the blind, time-free test |
+| fetal results: no sampling times; adrenal running or driven undecided | state the bounds (A240); adrenal: "a clock-like organisation" (core loop, blind, A328 part a; geometry A340); liver and lung: "the signal layer in the clock's pattern"; the lead is not decidable (A328 part b, A338, A339) |
 | the model is structural | A310 failed as a joint fit, and the paper says so; each part has its own test |
 | human dynamics are not timed | time constants from mouse; one human point (A257: the core loop 4.06 h on day 3, A335) |
 | PER1, PER2 and NR1D1 carry signals into the clock genes | every main-figure statistic on the core loop and as the three genes' contribution, with a gene-drop null (`prompts/two_readouts_2026-11-20.md`) |
@@ -417,8 +423,8 @@ The frozen claim set: every entry cited in sections 2, 3 and 5 is scored.
   - "Desynchrony" only for phase relations.
   - "Quieter", not "disrupted", for a loss of loudness.
   - "Tumours express less of the patient's time" stays (SYNTHESIS wording rules).
-  - Before birth: "a driven state carried by signal-induced genes", not "a fetal clock". Also "an adult-size core loop
-    excluded down to x of the adult size; a smaller entrained loop is not excluded".
+  - Before birth (revised 2026-11-23): adrenal, "a clock-like organisation (its core loop covaries on its own)", not
+    "a running fetal clock"; liver and lung, "the signal layer in the clock's pattern", not "glucocorticoid-driven".
 - **Review wording (2026-11-20), applied in sections 1-5.**
   - Psoriasis: "suggestive", with its core-loop q (0.049) and the rule history (A308 adopted after A183's rule failed).
   - Brain-death loudness: "equal relative to expression-matched genes".

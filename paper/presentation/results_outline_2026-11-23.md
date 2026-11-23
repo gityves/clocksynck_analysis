@@ -128,15 +128,16 @@ noticed at scoring).
 | slide | status | figure |
 |---|---|---|
 | 2.1 Where the fetal clock-shaped state is | **revised** from `results.md` R4 panel A (below) | `figures/development/` |
-| 2.2 Is it a clock? Core loop and geometry | next | new |
-| 2.3 Running or driven: open | to do | - |
+| 2.2 Is it a clock? Only the adrenal holds | **new** (below) | `figures/fetal_clock/` |
+| 2.3 Liver and lung: not current glucocorticoid activity under another name | **new** (below) | `figures/fetal_signal/` |
 
 ## 2.1 Before birth, some organs share a clock-shaped state between individuals; others, at adult power, do not
 
 **Bullets**
-1. Human fetus: clock genes covary between individuals in the clock's pattern in the adrenal cortex (C 0.61, 34
+1. Human fetus: a clock-shaped covariation of the 14 clock genes between individuals in the adrenal cortex (C 0.61, 34
    fetuses), liver (0.58, 35) and lung (0.53, 38), above expression-matched and stress-responsive gene sets, at about
-   two thirds of the adult value at the same design (0.85, 0.86, 0.84) (A243, A244).
+   two thirds of the adult value at the same design (0.85, 0.86, 0.84) (A243, A244). Whether it is a clock is tested
+   on the next slide (only the adrenal holds).
 2. The adrenal replicates blind in a new laboratory before 12 weeks: whole adrenal, del Valle 2023, C 0.59, p 0.002, 32
    fetuses at 7-11.5 wpc (A328 part a, H328.1 pass).
 3. None in the heart (0.03, 72 fetuses), kidney (0.02, 53) or adrenal medulla (-0.05, 30), where an adult-size clock
@@ -157,7 +158,8 @@ fetal results. Aggregates only.
 - No sampling times: C reads a shared state between individuals, not a rhythm.
 - "Two thirds of adult": C is not linear in amplitude, a rough reading.
 - Brain: the negative excludes only a full-size clock (adult pass rate 0.95 at full size, 0.365 at three quarters; A240).
-  Hindbrain at 4-8 wpc covaries in one cohort (descriptive, not established).
+  Hindbrain at 4-8 wpc: C 0.41, unadjusted p 0.040, Holm 0.278, not clock-specific (A237 H237.3: suggestive, not
+  established).
 - Mouse adrenocortical cells (0.41, 13 embryos) and lung progenitors (0.12) do not replicate in this window; mouse
   kidney -0.52 is one gene (NPAS2; 0.07 without it).
 - Mouse heart clocks run in explants at E15-E18 (Umemura 2017) yet show no shared state in vivo: cells able to
@@ -169,3 +171,82 @@ fetal results. Aggregates only.
 `exploratory/A239_fetal_brain/output/{l1,verdicts}.csv`; `exploratory/A240_fetal_amplitude/output/curve_array.csv`;
 `exploratory/A309_mouse_embryo_organs/output/{l1,power_passrates}.csv`; `docs/results_preliminary.md` A237-A240, A243,
 A244, A309, A328.
+
+## 2.2 Only the fetal adrenal carries a clock-like organisation
+
+**Bullets**
+1. In the blind adrenal cohort the core loop (11 genes, without PER1, PER2, NR1D1) covaries between fetuses on its own:
+   C 0.80 against 0.59 on the 14 genes, above both companion families (A328 part a H328.2, pass). In liver (0.69) it is
+   significant but not above stress-responsive genes (q95 0.71); in lung (0.47) and the single-cell adrenal cortex
+   (0.42) it is not significant (A266, A269).
+2. The fetal states are not one slow factor moving fetuses along a line (A340 H340.1, pass in the adrenal on 14 genes
+   and the core loop, and in liver), but more elongated than a daily clock sampled in hospital hours.
+3. No fast pulsatile drive: the pre-mRNA lead stays below what an input every 6 h or faster gives (3.09 h at a 1 h mRNA
+   lifetime), in the adrenal core loop (upper bound 0.98 h; input slower than 24 h) and liver (1.08 h; 22 h) (post hoc).
+
+**Figure:** `figures/fetal_clock/fetal_clock.png` (`scripts/fetal_clock.py`; wide). A. C, 14 genes (black) and core loop
+alone (blue), filled when clock-specific; lines across each bar: matched (light grey) and stress-responsive (dark grey)
+95th percentiles. B. elongation of the fetal states (0 circle, 1 line), 90 % interval, against a daily clock sampled in
+hospital hours (blue band), no clock (grey band) and the lower bound of one slow factor (dark line). C. pre-mRNA lead
+over mRNA [h], 90 % interval, with the running postnatal liver (grey); dashed: expected lead for a daily input; red
+band: input period <= 6 h.
+
+**Tags:** A328 part a, A340 registered, blind; A266, A269 registered, not blind for the earlier fetal results; panel C
+post hoc (A338 threshold, A339 lifetime; the minimum-period companion of A339 not blind).
+
+**Caveats (speaker notes)**
+- Not lost power: an adult clock at half size gives core-loop C 0.69 in liver and 0.70 in lung and passes in 91 % and 84 %
+  of subsamples (A269 power stage); a three-quarter-size loop is excluded in the single-cell cortex (0.995), a half-size
+  one not (0.63) (A266). Liver is a specificity problem, lung a small core loop.
+- The two adrenal datasets disagree on the core loop (whole adrenal 0.80, cortex cells 0.42); cause open (whole tissue vs
+  cortex cells, one cohort of 32 vs several smaller).
+- Liver states lie inside the no-clock elongation range (0.42-0.74) with their main axis 8 deg from the
+  glucocorticoid-target direction (adrenal 32 and 88 deg; descriptive).
+- The matched estimator reads leads about 2-fold low (A337): minimum periods may be overestimated up to 2-fold (adrenal
+  core and liver still about 11 and 10 h; adrenal 14 genes not excluded). Conditional on fetal clock-mRNA lifetimes near
+  the adult 1-2 h. The damping test (A339) was uninformative.
+- The lead does not separate a running loop from a daily drive: the running postnatal liver is unresolved too (A328
+  part b, A338).
+
+**Source:** `exploratory/A328_fetal_running_loop/output/{score_a/l1,score_b/verdicts}.csv`;
+`exploratory/A244_fetal_adrenal_classes/output/{l1,verdicts_a244}.csv`; `exploratory/A266_fetal_adrenal_drive/output/{l1,feasibility_passrates}.csv`;
+`exploratory/A243_fetal_organs_pooled/output/l1.csv`; `exploratory/A269_fetal_organs_drive/output/{l1,feasibility_passrates}.csv`;
+`exploratory/A340_fetal_geometry/output/score/verdicts.csv`; `presentation/output/fetal_clock/lead_bounds.csv`;
+`docs/results_preliminary.md` A266, A269, A328, A338, A339, A340.
+
+## 2.3 The fetal liver and lung covariation is not current glucocorticoid activity under another name
+
+**Bullets**
+1. Regressing out current glucocorticoid-target activity (four direct receptor targets, FKBP5, TSC22D3, ZBTB16, KLF9;
+   linear, own slope per clock gene) leaves the covariation intact: liver 0.58 to 0.59, lung 0.53 to 0.57, still
+   clock-specific (A269 H269.2, pass). A single shared glucocorticoid axis is excluded; a rhythmic glucocorticoid input
+   acting with delays is not.
+2. Glucocorticoid activity does not rank the fetal organs: heart and adrenal medulla vary most between fetuses and show
+   no clock-shaped covariation; lung varies little and covaries (Spearman 0.25, one-sided p 0.30; A341, descriptive).
+
+**Figure:** `figures/fetal_signal/fetal_signal.png` (`scripts/fetal_signal.py`; half). A. 14-gene C before (filled) and
+after the glucocorticoid score is regressed out (hatched); grey line: matched genes, 95th percentile. B. seven fetal
+organs, 14-gene C against the between-fetus variance of the glucocorticoid-target score; filled: clock-specific; brain
+open (three genes, not noise-corrected). Colours: organ systems.
+
+**Tags:** A243 registered, blind; A269 registered, not blind for the earlier fetal results; A341 descriptive by its power
+rule.
+
+**Caveats (speaker notes)**
+- Four genes are a noisy measure of glucocorticoid activity: the adjustment may remove less than the true effect.
+- PER1, PER2 and NR1D1 keep the clock's phase pattern with the core genes in lung, and follow glucocorticoid activity
+  there only (A307).
+- A341 has seven organs: only a very strong ranking (rho about 0.90) is detectable.
+- Other systemic inputs (cAMP, feeding, temperature) are not addressed.
+
+**Source:** `exploratory/A243_fetal_organs_pooled/output/l1.csv`; `exploratory/A269_fetal_organs_drive/output/l1.csv`;
+`exploratory/A341_gr_ranking/output/{measures,spearman}.csv`; `docs/results_preliminary.md` A269, A307, A341.
+
+## Section 2 conclusion
+
+Before birth, a clock-like organisation is established in one organ, the adrenal: its core loop covaries between
+fetuses on its own, replicated blind before 12 weeks, and its states turn in two dimensions rather than along a line.
+In liver and lung the 14 clock genes covary in the clock's pattern, but the signal sits in, or cannot be separated
+from, signal-responsive genes, consistent with a systemic input; glucocorticoids are a candidate, not shown. Heart,
+kidney, adrenal medulla and brain show none at adult power. Whether the adrenal clock runs on its own or follows a daily
+maternal or ACTH signal remains open. No sampling times: these are shared states, not rhythms.

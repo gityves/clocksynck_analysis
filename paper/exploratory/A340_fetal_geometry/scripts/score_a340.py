@@ -4,7 +4,8 @@ the fetal clock-plane states (spliced counts). One run.
 iota = |sum_i (z_i^2 - nu_i)| / sum_i (|z_i|^2 - t_i) (`power_a340.iota`; residualisation of A328 part b, exact log-count
 noise); references noise-matched to each unit (power note). 90 % interval from 2,000 bootstrap resamples within cohort. H340.1 (del Valle 14 genes and core, liver 14
 genes): one-sided p = share of the power stage's iota_line draws at 0.75 of the adult clock that are <= the observed
-iota (Holm over the two units on the 14 genes); position against the iota_daily 5-95 % range. Descriptive: 10x cortex,
+iota (Holm over the two units on the 14 genes); position against the iota_daily 5-95 % range. The no-clock 5-95 %
+range of the power stage is carried into the table (added 2026-11-23, reference only, no verdict uses it). Descriptive: 10x cortex,
 `cortex_minus1`, liver core; the angle between the main axis (arg of the pseudo-variance / 2) and the glucocorticoid-
 target direction (regression of the states on the A307 GC score: FKBP5, TSC22D3, ZBTB16, KLF9), as an axis (0-90 deg).
 `--check`: every gene permuted within cohort before any statistic (no real iota).
@@ -99,6 +100,8 @@ def main():
                              line_q05=q.loc[(unit_ref, w, "line"), "q05"],
                              daily_q05=q.loc[(unit_ref, w, "daily"), "q05"],
                              daily_q95=q.loc[(unit_ref, w, "daily"), "q95"],
+                             noclock_q05=q.loc[(unit_ref, w, "noclock"), "q05"],
+                             noclock_q95=q.loc[(unit_ref, w, "noclock"), "q95"],
                              main_axis_deg=main_deg, axis_to_gc_deg=gc_deg))
             print(u["name"], w, f"{time.time() - t0:.0f}s", flush=True)
     t = pd.DataFrame(rows)

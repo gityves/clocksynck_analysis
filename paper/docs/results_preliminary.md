@@ -7569,6 +7569,10 @@ GTEx fast deaths, 27 peripheral tissues, A294b fit. Validation passed (A104 rho 
   the no-clock range, liver inside it (the covariation itself is clock-specific in these units, A328 part a, A243 / A269).
 - **For claim 3 (Q43 framing):** part 3 ("daily timescale") now has a lead-free argument against the single-slow-factor
   alternative; the ultradian alternative is not excluded (A339 uninformative, A328 lead upper bounds post hoc only).
+- *Output addendum (2026-11-23, no statistic changed):* `score_a340.py` now writes the power stage's no-clock 5-95 %
+  range (`noclock_q05`, `noclock_q95`) into `iota.csv` / `verdicts.csv`; the rerun reproduces every earlier column
+  exactly (max difference 0). No-clock ranges: del Valle 14 genes 0.56-0.83, core 0.72-0.91, liver 0.42-0.74.
+<!-- src: paper/exploratory/A340_fetal_geometry/output/score/{iota,verdicts}.csv -->
 
 ## A341 (computed 2026-11-22; descriptive by the power rule): neither glucocorticoid responsiveness nor clock maturity ranks the fetal organs that carry the clock-shaped state
 - 7 organ readouts as scored (A244 cortex and medulla, A243 lung, liver, heart, kidney, A239 prenatal brain); measures
