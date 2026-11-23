@@ -15,7 +15,7 @@ blind / descriptive / post hoc. Every number below was read from the output tabl
 | 1.3 Baboon atlas, 63 tissue offsets | kept (`results.md` R1.4; user, 2026-11-23) | `figures/baboon_offsets/` |
 | 1.4 Timed living skin and muscle, and hospital hours | **new** (below) | `figures/living_timed/` |
 | 1.5a Positive controls, cell types: offsets and the knockout | **new** (below) | `figures/celltype_controls/` |
-| 1.5b Positive controls, organs and organisms: time moves | to revise (next) | `figures/positive_controls/` |
+| 1.5b Positive controls, organs: the readout moves when the clock is broken or shifted | **revised** (below) | `figures/positive_controls/` |
 
 ## 1.4 In timed living skin and muscle, the untimed readouts match the timed ones, and survive hospital hours
 
@@ -92,3 +92,31 @@ A201's per-cell-type shifts); A354 registered, not blind for the clock |r|, blin
 
 **Source:** `exploratory/A273_pairwise_offset_truth/output/pairs.csv`; `exploratory/A279_aorta_pairwise_truth/output/pairs.csv`;
 `exploratory/A279_aorta_pairwise_truth/output/a354/{pairs,verdicts}.csv`; `docs/results_preliminary.md` A273, A279, A354.
+
+## 1.5b The readout moves when a clock is broken or shifted (mouse organs)
+
+**Bullets**
+1. Liver Bmal1 knockout (Manella 2021, ad libitum, 24 vs 24 mice): liver coupling falls by 0.287 at the control's host
+   spread (95 % -0.411 to -0.118, p 0.001); white fat (-0.009) and lung (+0.019) do not move (A129 / H111.3 pass;
+   companions on the same permutations).
+2. Daytime feeding moves the liver clock against the other tissues; the untimed offset changes follow the timed ones:
+   Xin 2021 (night to day feeding, 4 tissues), Fisher-Lee 0.988, exact p 0.042 (H111.1 pass); Manella 2021 (ad
+   libitum to day feeding, 3 tissues), 0.986, exact p 0.167, the minimum with 3 tissues (H111.1 fail by design).
+
+**Figure:** `figures/positive_controls/positive_controls.png` (`scripts/positive_controls.py`; half). A. change in
+coupling, knockout minus control, per tissue (95 % interval from the permutations). B. per tissue, offset change after
+the feeding switch, clocksync against timed, centred on the dataset's circular mean; circles Xin, squares Manella;
+dashed: identity. Colours: organ systems.
+
+**Tags:** registered (A111, A129), not blind (scored on timed data); Manella H111.1 fails by design (registration flaw
+noticed at scoring).
+
+**Caveats (speaker notes)**
+- 3-4 tissues per dataset: the exact p cannot be small.
+- A whole-body shift is not identifiable untimed: only relative shifts are compared.
+- Manella lung reads about 1.6 h short (untimed -5.76 h, timed -7.37 h).
+- Night shift (A257), forebrain knockout (A319), conflicting drives (A322, A324) and feeding removal (A297) go to
+  section 4 (drives).
+
+**Source:** `exploratory/A111_feeding_controls/output/{a111_h111_1,a111_h111_3}.csv`; `docs/results_preliminary.md` WP3
+(A111, A129).
