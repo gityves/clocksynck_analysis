@@ -4586,7 +4586,9 @@ sets, 200 matched gene sets; null mean of S 0.120.
 - **H251.3 FAIL by the registered rule (5 of 6 within +/- 1.5 h):** same-layer site offsets: dermis forearm-buttock
   -0.14 h (-0.48 to 0.21), forearm-cheek -0.85 (-1.11 to -0.58), buttock-cheek -0.71 (-0.99 to -0.40); epidermis
   forearm-buttock +0.73 (0.20 to 1.32), forearm-cheek -0.78 (-1.11 to -0.43), buttock-cheek -1.54 (-2.04 to -1.08). The
-  cheek is the latest site in both layers (first minus second compartment).
+  cheek is the latest site in both layers (first minus second compartment). *Erratum 2026-11-23 (wording only): offsets
+  are first minus second in the clocksync convention (> 0: advanced, peaks earlier; `compute_a251.offsets`, arg za conj zb),
+  so the cheek is the most advanced site, its clock genes peaking earliest, not latest.*
 - **H251.4 PASS:** dermis minus epidermis at the forearm: women (untimed) -1.58 h (-1.81 to -1.34); timed men -1.98 h
   (-3.15 to -0.95). The untimed estimate lies inside the timed interval; difference 0.40 h. Across all nine
   layer pairs the dermis is 0.5 to 2.8 h behind the epidermis.
@@ -4596,7 +4598,7 @@ sets, 200 matched gene sets; null mean of S 0.120.
   batch and the cross-site pairs come from separate biopsies, a shared array batch or a shared biopsy cannot produce
   it. The responsive companion is itself high (median 0.37, and 0.66 within one biopsy): women also share a
   stress-type state across sites, which the clock pairing exceeds. Offsets between sites are small (0.1 to 1.5 h) but
-  not all within the registered bound: the cheek runs later than the other two sites; whether that is sun exposure, site
+  not all within the registered bound: the cheek runs later than the other two sites [erratum 2026-11-23: earlier, i.e. advanced; see above]; whether that is sun exposure, site
   or batch cannot be told (each compartment is one batch, and a gene-specific batch shift cannot move an offset
   estimated from centred states, but tissue composition can). The untimed layer offset reproduces the timed one within
   0.4 h. This is the living-cohort support the robustness arm lacked; it is one cohort, women only, on arrays, and age

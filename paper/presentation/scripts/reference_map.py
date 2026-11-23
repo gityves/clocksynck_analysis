@@ -1,8 +1,9 @@
 """Slide figure (results, adult health, 3.1): the reference organisation of the body's clock, GTEx fast deaths over the
 whole day, read untimed by clocksync.
 
-One dot per tissue on the clock face of slide 1.1: angle = phase offset of the tissue from the person's body time (0 h,
-host from the peripheral tissues; peripheral tissues read leave-one-out, later clockwise), radius = relative amplitude
+One dot per tissue on the clock face of slide 1.1: angle = peak time of the tissue's clock genes relative to the person's
+body time (0 h, host from the peripheral tissues; peripheral tissues read leave-one-out; later peaks clockwise, the
+clocksync offset negated), radius = relative amplitude
 (gain on the body's time, linear). Bars: 95 % donor-bootstrap intervals (200 draws) of the offset (arc) and of the
 amplitude (radial). Colours: organ systems; 13 brain regions read on the peripheral host. Direct labels on the
 tissues discussed in the deck.
@@ -24,19 +25,19 @@ from gtex_organ_map import HOURS, face
 
 PAPER = Path(__file__).resolve().parents[2]
 OUT = PAPER / "presentation" / "figures" / "reference_map"
-LABEL = {"Adrenal Gland": ("adrenal", (6, 4), "left"), "Lung": ("lung", (6, 0), "left"),
-         "Skin - Not Sun Exposed (Suprapubic)": ("skin", (6, -2), "left"),
-         "Whole Blood": ("blood", (6, -6), "left"), "Testis": ("testis", (-22, -26), "right"),
-         "Thyroid": ("thyroid", (8, 2), "left"), "Brain - Hippocampus": ("brain regions", (-10, 8), "right")}
+LABEL = {"Adrenal Gland": ("adrenal", (-6, 4), "right"), "Lung": ("lung", (-6, 0), "right"),
+         "Skin - Not Sun Exposed (Suprapubic)": ("skin", (-6, -2), "right"),
+         "Whole Blood": ("blood", (-6, -6), "right"), "Testis": ("testis", (22, -26), "left"),
+         "Thyroid": ("thyroid", (-8, 2), "right"), "Brain - Hippocampus": ("brain regions", (10, 8), "left")}
 
 
 def xy(off, amp):
-    th = np.asarray(off) / HOURS
+    th = -np.asarray(off) / HOURS  # peak time: clocksync offset (> 0 advanced) negated, as CHIRAL Fig. 1B
     return np.asarray(amp) * np.sin(th), np.asarray(amp) * np.cos(th)
 
 
 def draw(ax, d, rmax):
-    face(ax, rmax, labelled=(1.0, 2.0))
+    face(ax, rmax, label_h=5.0, labelled=(1.0, 2.0))
     for r in d.itertuples():
         col = COLOR[gtex_system(r.tissue)]
         lo, hi = np.exp(r.log_amp_lo), np.exp(r.log_amp_hi)

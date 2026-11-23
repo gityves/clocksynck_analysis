@@ -1,7 +1,7 @@
 """Slide figure (results, R1.1): the GTEx organ clock map, as in the CHIRAL paper, from deaths between 08 and 18 h.
 
-One dot per tissue on a clock face: angle = clock phase offset of the tissue (h, centred on the circular mean over tissues,
-later clockwise), radius = relative clock amplitude (linear, relative to the geometric mean over tissues).
+One dot per tissue on a clock face: angle = peak time of the tissue's clock genes (h, centred on the circular mean over
+tissues; later peaks clockwise, as CHIRAL Fig. 1B; the clocksync offset, > 0 advanced, drawn negated), radius = relative clock amplitude (linear, relative to the geometric mean over tissues).
 A. Timed reference, truth (i): per-tissue cosinor of the 14 clock genes on the recorded time of death of all fast deaths
    (Hardy 1-2, whole day), rank-1 complex SVD.
 B. clocksync on the 111 fast deaths who died 08-18 h, times hidden (A123, waveform cross-fitted outside the window).
@@ -33,8 +33,10 @@ RINGS = (0.5, 1.0, 2.0)
 
 
 def xy(offset_h, log2_amp):
-    """Clock face: 0 h on top, clockwise; radius the linear relative amplitude."""
-    th, r = np.asarray(offset_h) / HOURS, 2.0 ** np.asarray(log2_amp)
+    """Clock face: 0 h on top, clockwise; radius the linear relative amplitude. Angle = peak time: offsets are given in
+    the clocksync convention (> 0: advanced, the tissue's clock genes peak earlier) and drawn negated, so that later
+    peaks are clockwise, as in the CHIRAL paper (Talamanca 2023, Fig. 1B)."""
+    th, r = -np.asarray(offset_h) / HOURS, 2.0 ** np.asarray(log2_amp)
     return np.column_stack([r * np.sin(th), r * np.cos(th)])
 
 

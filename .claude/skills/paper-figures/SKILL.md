@@ -105,6 +105,13 @@ figure, then apply it to the figure at hand.
   say which in the caption.
 - Bands at low alpha (≈ 0.1); the method of interest drawn thicker and on top.
 
+## Phase sign (user, 2026-11-23)
+
+- Figures show peak time: + = the clock genes peak later, later peaks clockwise on clock faces, as the CHIRAL paper
+  (Talamanca 2023, Fig. 1B). clocksync offsets use the opposite sign (> 0 = advanced = peaks earlier): negate them
+  when drawing (`gtex_organ_map.xy` does), and quote the drawn sign in slide text. Offsets between two compartments
+  say their direction in words ("dermis peaks 1.6 h after epidermis"), never a bare sign with "later/earlier".
+
 ## Statistics shown in figures
 
 - Untimed orderers (CHIRAL, CoFE, CYCLOPS) fix neither the direction nor the origin of their cycle: compare methods

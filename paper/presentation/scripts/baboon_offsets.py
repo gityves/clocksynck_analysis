@@ -1,9 +1,9 @@
 """Slide figure (results, R1.4): a primate sampled around the clock (baboon atlas, Mure 2018; A36, archive amendment re-run on
 current code, descriptive).
 
-A. Organ map as the GTEx figure: per tissue, angle = untimed offset (later clockwise), radius = untimed relative amplitude,
+A. Organ map as the GTEx figure: per tissue, angle = untimed peak time (later peaks clockwise; clocksync offset negated), radius = untimed relative amplitude,
    coloured by organ system; grey rings joined by a line: the timed offset and amplitude (cosinor gain) of the same tissue.
-B. 63 tissues: untimed offset (clocksync, every tissue an anchor, GTEx waveform) against the timed offset (phase of the
+B. 63 tissues: untimed peak time (negated offset; clocksync, every tissue an anchor, GTEx waveform) against the timed one (phase of the
    tissue's 12-ZT cosinor gain on the waveform), both centred on the timed circular mean after one common shift; coloured
    by organ system as the GTEx organ map (`_systems.py`); dashed: identity.
 C. Host phase of each animal (one animal per ZT) against its ZT, after one common shift; dashed: identity.
@@ -49,7 +49,7 @@ def clock_map(ax, t):
     lg = np.log2(t.g_abs) - np.log2(t.g_abs).mean()
     p, q = xy(wrap(untimed - c), la), xy(wrap(timed - c), lg)
     rmax = 1.05 * float(2 ** max(la.max(), lg.max()))
-    face(ax, rmax, label_h=-5.5, labelled=(1.0, 2.0))  # the 0.5x ring sits in the brain cluster
+    face(ax, rmax, label_h=5.5, labelled=(1.0, 2.0))  # ring labels on the side without data; 0.5x sits in the brain cluster
     for a, b in zip(q, p):
         ax.plot([a[0], b[0]], [a[1], b[1]], color=GHOST, lw=0.7, zorder=1)
     ax.scatter(*q.T, s=18, facecolor="none", edgecolor=GHOST, lw=0.8, zorder=2)
@@ -60,8 +60,8 @@ def clock_map(ax, t):
 def tissues(ax, t):
     timed = t.timed_phase / W
     untimed = t.offset_h - cmean(t.offset_h - timed)
-    x = wrap(timed - cmean(timed))
-    y = x + wrap(untimed - timed)
+    x = -wrap(timed - cmean(timed))  # peak time: offsets (> 0 advanced) negated, as the organ maps
+    y = x - wrap(untimed - timed)
     ax.plot([-7, 7], [-7, 7], color=MUTED, lw=1, ls="--", zorder=1)
     ax.scatter(x, y, s=26, c=[COLOR[baboon_system(k)] for k in t.tissue], edgecolor="white", lw=0.5, zorder=3)
     ax.set_xlim(-7, 7)
@@ -69,8 +69,8 @@ def tissues(ax, t):
     ax.set_xticks(range(-6, 7, 3))
     ax.set_yticks(range(-6, 7, 3))
     ax.set_aspect("equal")
-    ax.set_xlabel("phase offset timed [h]")
-    ax.set_ylabel("phase offset clocksync [h]")
+    ax.set_xlabel("peak time timed [h]")
+    ax.set_ylabel("peak time clocksync [h]")
     ax.set_title("tissues", fontsize=13, color=INK)
 
 

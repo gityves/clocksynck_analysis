@@ -1,6 +1,8 @@
 # Results section outline (2026-11-23, built slide by slide with the user)
 
-Prompt: `docs/prompts/presentation_results_2026-11-23.md`. Framing: "loudness, not time" (`docs/ABSTRACT_DRAFT_2026-11-22.md`,
+Prompt: `docs/prompts/presentation_results_2026-11-23.md`. Phase convention on slides (user, 2026-11-23): peak time,
++ = later, as CHIRAL Fig. 1B (clocksync offsets, > 0 advanced, are shown negated); offsets between two compartments
+state their direction in words. Framing: "loudness, not time" (`docs/ABSTRACT_DRAFT_2026-11-22.md`,
 `docs/PAPER_PLAN_2026-11-19.md` section 11). Slides kept from `results.md` are referenced, not repeated. Tags: blind / not
 blind / descriptive / post hoc. Every number below was read from the output table named in its **Source** line.
 
@@ -316,14 +318,16 @@ CHIRAL concordance (A123) is slide 1.1. The ventilated and brain-dead rows of `r
 ## 3.1 The reference organisation: each organ keeps its place on the body's time, and organs differ mostly in loudness
 
 **Bullets**
-1. Most peripheral organs sit within about 1.5 h after the person's body time, with gains of about 1.2 to 2.3; a few are
-   clearly later: adrenal +4.86 h (95 % 4.23 to 5.57), lung +2.88 h, unexposed skin +2.19 h.
-2. Brain regions read on the body's host are earlier (−0.97 to −2.58 h) and quieter (gain 0.40 to 0.57).
+1. Most peripheral organs peak up to about 1.5 h before the person's body time, with gains of about 1.2 to 2.3; a
+   few peak clearly earlier: adrenal −4.86 h (95 % −5.57 to −4.23), lung −2.88 h, unexposed skin −2.19 h.
+2. Brain regions read on the body's host peak later (+0.97 to +2.58 h) and are quieter (gain 0.40 to 0.57).
 3. Gains span 0.26 (whole blood) to 2.28 (gastro-oesophageal junction); testis 0.38. Loudness, not timing, is where
    organs differ most (sections 3.4 onwards).
 
 **Figure:** `figures/reference_map/reference_map.png` (`scripts/reference_map.py`; half). Clock face of slide 1.1: angle =
-offset from the person's body time (0 h, host from the peripheral tissues, peripheral tissues read leave-one-out), radius
+peak time of the tissue's clock genes relative to the person's body time (0 h; later peaks clockwise, as CHIRAL
+Fig. 1B: the clocksync offset, > 0 advanced, negated; host from the peripheral tissues, peripheral tissues read
+leave-one-out), radius
 = relative amplitude (gain); crosses: 95 % donor-bootstrap intervals (200 draws). 40 tissues, 41 to 220 fast-death donors
 each; organ-system colours; direct labels only on tissues discussed later.
 
@@ -332,6 +336,9 @@ tissues chosen for the deck).
 
 **Caveats (speaker notes)**
 - 0 h here is the person's body time; on slide 1.1 it is the mean over tissues.
+- Sign convention (user, 2026-11-23): organ maps show peak times (+ = clock genes peak later), as CHIRAL; numbers on
+  these slides are peak times. `couplings.csv` and the clocksync API keep the method's convention (offset > 0 =
+  advanced = peaks earlier): the adrenal is +4.86 h there.
 - Whole blood has no readable core clock (post hoc entry 2026-11-03): its phase interval spans 1.09 to 3.72 h.
 - The brain is read on a host built from peripheral tissues: its offset is relative to the periphery, and its low gain
   partly reflects that reference (R2.1, A289).
