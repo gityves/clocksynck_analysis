@@ -10635,3 +10635,47 @@ with a well-entrained clock, the most favourable case). Not blind for the full-c
 
 **Stop rule.** One scoring run. **Code:** `paper/exploratory/A337_timed_lead/scripts/score_a353.py` (reuses
 `score_a337.py`), output `paper/exploratory/A337_timed_lead/output/a353/`.
+
+## A354 (2026-11-23, approved by the user: "yes go ahead", on the user's request to show "what the other gene sets would look like" beside the A279 knockout pairs in the presentation; one scoring run; **NOT BLIND**: every clock-gene |r| of A279 (aligned 0.83-0.98; Bmal1 knockout stromal pairs 0.63-0.75, pairs with macrophages 0.11-0.35; misaligned 0.89-0.96); **BLIND**: every companion gene-set value in this atlas (none computed)): is the high clock-gene correlation between cell types without a clock (A279 knockout) also shown by gene sets that are not the clock, and does the clock-intact correlation exceed them? **Auerbach 2026 mouse aorta (A201 / A279 loader), library x cell type pseudobulks, genome-wide counts**
+
+**Why.** In the Bmal1 knockout the stromal-vascular pairs keep |r| 0.63-0.75 with no clock (A279): the size of a
+pairwise |r| is not a clock measure. The human cell-type results are read against expression-matched and
+stress-responsive companions (A272, A283) for that reason, but the companion was never computed where the absence of a
+clock is known. This puts the two side by side.
+
+**Data and readout (as A279).** Cells of SMC, fibroblast, EC and macrophage; library x cell type pseudobulks with >= 30
+cells; compartments in >= 10 libraries of the arm (all libraries when the arm has fewer). Pseudobulks are summed over
+all genes (genome-wide counts, same cells as A279). Pairwise statistic: `score_a272.atlas_states` + `pair_r` (A279);
+the clock |r| must reproduce A279 `pairs.csv` (checked before any companion is computed; a mismatch stops the run).
+Companions: 200 expression-matched (`clocksync.paired.pseudo_waveforms`, kind "matched") and 200 stress-responsive
+(kind "responsive", as A272) gene sets per arm, from that arm's mean log fractions; mouse symbols upper-cased to match
+the human lists (as A309); each set uses its own projector; seeds [354, arm index, family index]. The number of
+responsive genes available in the aorta is reported.
+
+**Per pair and arm:** clock |r|; companion median, 5th and 95th percentiles; percentile of the clock |r| within each
+family.
+
+**Hypotheses.**
+- **H354.1 (knockout):** the three stromal-vascular pairs (EC-fibroblast, EC-SMC, fibroblast-SMC) have a clock |r| at
+  or below the expression-matched 95th percentile in all three: without a clock, the high correlation is shared by
+  non-clock genes.
+- **H354.2 (clock intact, aligned arm):** the clock |r| exceeds the expression-matched 95th percentile in at least 4 of
+  the 6 pairs.
+- **D354.3 (descriptive):** the responsive family in both arms; the misaligned arm; knockout pairs with macrophages.
+
+**Readings (fixed now).** H354.1 and H354.2 PASS: the companion contrast separates a running clock from none where the
+truth is known; the human readout's rule (clock above companions, never |r| alone) is the one that works. H354.1 FAIL
+(knockout clock |r| above matched genes): clock genes covary between cell types beyond generic co-variation even
+without BMAL1 (a non-clock program shared by clock genes, or residual clock-gene regulation); the companion contrast
+alone then cannot exclude non-clock covariation of clock genes, a caveat for the human cell-type results. H354.2 FAIL
+with H354.1 PASS: at 14 libraries the companion range is too wide to separate a running clock in this atlas (power,
+not absence).
+
+**Power.** No power stage. With 10-14 libraries the companion ranges are wide; this is stated as a limit, and H354.2 is
+read only as above.
+
+**Limits.** One atlas, pools of 2 aortas, 1-3 pools per sex x ZT; knockout arm size as in A279; responsive list defined
+on human genes (orthology by symbol).
+
+**Stop rule.** One scoring run. **Code:** `paper/exploratory/A279_aorta_pairwise_truth/scripts/score_a354.py`, output
+`paper/exploratory/A279_aorta_pairwise_truth/output/a354/`.
