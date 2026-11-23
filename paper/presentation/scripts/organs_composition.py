@@ -1,7 +1,8 @@
 """Slide figure (results, R2.3): back to the organs. A sample's cell composition does not set its organ's phase, and it
 explains only part of the organ's gain.
 
-A. Phase. Top row: offset of each GTEx peripheral tissue from its person's body time (organ map, A104 table; one dot per
+A. Peak time (clocksync offsets negated, as CHIRAL Fig. 1B; user, 2026-11-23). Top row: peak time of each GTEx
+   peripheral tissue relative to its person's body time (organ map, A104 table; one dot per
    tissue, coloured by organ system). Below: phase change of a tissue's clock state per SD of a marker score of its
    samples (A295, registered, H295.2 pass): stromal-vascular and lymphocyte scores, one dot per tissue, black: pooled
    value with 90 % interval; adrenal cortex score (A299, descriptive specificity arm), estimate and 90 % interval.
@@ -115,9 +116,10 @@ def same_class(ax, R):
         ax.plot([d.value.min(), d.value.max()], [i, i], color=MUTED, lw=0.8, zorder=1)
         ax.scatter(d.value, [i] * len(d), s=30, c=[COLOR[k] for k in d.key], edgecolor="white", lw=0.4, zorder=2)
         for j, r in enumerate(d.itertuples()):
-            ax.annotate(CLASSES[cls][r.label], (r.value, i), xytext=(0, 10 if j % 2 == 0 else -10),
+            ax.annotate(CLASSES[cls][r.label], (r.value, i), xytext=(0, 10 if j % 2 == 0 else -14),
                         textcoords="offset points", ha="center", va="bottom" if j % 2 == 0 else "top", fontsize=7.5,
-                        color=INK, linespacing=0.9)
+                        color=INK, linespacing=0.9, zorder=3,
+                        bbox=dict(boxstyle="square,pad=0.1", facecolor="white", edgecolor="none"))
         ax.annotate(f"×{d.value.max() / d.value.min():.1f}", (d.value.max(), i), xytext=(8, 0),
                     textcoords="offset points", ha="left", va="center", fontsize=8, color=MUTED)
     ax.set_yticks(range(len(CLASSES)), list(CLASSES))
@@ -134,7 +136,7 @@ def main():
     lay = pf.Layout.slide("ABC", kind="wide", col_ratios=[1, 1, 0.85])
     a, b, c = lay.axes["A"], lay.axes["B"], lay.axes["C"]
     comp = [SCORE["stromal_vascular"][0], SCORE["lymphocyte"][0], CORTEX[0]]
-    draw(a, R[R.panel == "phase"], ["organ", "stromal_vascular", "lymphocyte", "cortex"], ["organ offset"] + comp)
+    draw(a, R[R.panel == "phase"], ["organ", "stromal_vascular", "lymphocyte", "cortex"], ["organ peak time"] + comp)
     a.axvline(0, color=MUTED, lw=0.8, ls="--", zorder=0)
     a.set_xlim(-5.5, 2.5)
     a.set_xlabel("peak time relative to the body [h]")

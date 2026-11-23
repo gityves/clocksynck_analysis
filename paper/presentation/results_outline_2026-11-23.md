@@ -310,7 +310,7 @@ maternal or ACTH signal remains open. No sampling times: these are shared states
 |---|---|---|
 | 3.1 The reference organisation: GTEx fast deaths, whole day | **new** (below) | `figures/reference_map/` |
 | 3.2 Inside tissues: cell classes run at the organ's time with their own loudness; lymphocytes do not share it | **revised** from `results.md` R2.3 (below) | `figures/celltypes_health/` |
-| 3.3 Composition moves neither time nor, much, loudness | revise `results.md` R2.2 (phase panel flipped to peak time) | `figures/organs_composition/` |
+| 3.3 Composition moves neither time nor, much, loudness | **revised** from `results.md` R2.2 (below) | `figures/organs_composition/` |
 | 3.4+ Loudness (organ gains, coupling reads loudness, person loudness, blood) | to build | |
 | 3.last The organ arrangement holds when the body no longer reads the hour (bridge to section 4) | **revised** from `results.md` R3.1 (below) | `figures/organ_arrangement/` |
 
@@ -401,6 +401,45 @@ loop; A281 registered; A321 blind for the atlases; A326 registered, not blind fo
 `exploratory/A350_class_gain_core/output/compare.csv`; `exploratory/A281_lymphocyte_clock/output/pairs.csv`;
 `exploratory/A294_lymphocyte_hormonal/output/pairs.csv`; `exploratory/L1_lymphocyte_power/output/design_power.csv`,
 `scout/output/ratios_vs_fibroblast.csv`; `docs/results_preliminary.md` A293, A321, A326, A350.
+
+## 3.3 Composition moves neither an organ's time nor, much, its loudness: the organ scales its classes
+
+**Bullets**
+1. Peak time (A295, registered, H295.2 pass): one SD more stromal-vascular cells moves a sample's peak by +0.05 h (90 %
+   −0.02 to +0.12), one SD more lymphocytes by −0.05 h (−0.13 to +0.03), against organ peak times from −4.86 h
+   (adrenal) to +1.20 h (testis) over 26 peripheral tissues.
+2. The exception is the adrenal: one SD more cortex moves a sample +1.15 h (0.56 to 1.87) towards the body's time
+   (A299, descriptive arm); the medulla markers do not carry it (H299.1 fail).
+3. Gain: one SD more stromal-vascular cells 1.04-fold (1.02 to 1.06; descriptive); lymphocytes 0.99 (H295.1 fail);
+   adrenal cortex 1.30 (1.15 to 1.49).
+4. Organs made mostly of one cell class differ in gain: squamous epithelium 2.6-fold (oesophagus mucosa over sun-exposed
+   skin; 2.1 over unexposed skin), adipocytes 1.6-fold (visceral over subcutaneous and breast), smooth muscle 1.2-fold
+   (oesophagus muscularis over sigmoid colon), while a class's relative gain varies between organs within about 1.4
+   (3.2). On top of its classes, each organ scales how loudly it expresses the body's time.
+
+**Figure:** `figures/organs_composition/organs_composition.png` (`scripts/organs_composition.py`; wide). A. peak time
+relative to the body [h] (peak-time convention): top, each peripheral tissue; below, change per SD of a sample's
+stromal-vascular or lymphocyte score (dots per tissue; black, pooled with 90 %), adrenal cortex score (purple). B. gain
+[fold], log scale: organ gains and the change per SD of the same scores. C. tissues made mostly of one class (post hoc
+choice): each tissue's gain, highest over lowest per row.
+
+**Tags:** A295 registered, NOT BLIND for the organ map, A291 and A293 (H295.2 pass, H295.1 fail; stromal-vascular gain
+descriptive); A299 registered (cortex arm descriptive); same-class rows post hoc.
+
+**Caveats (speaker notes)**
+- Read after 3.2: classes differ in loudness, so composition could move gain; they peak within about 1 h of each other,
+  so it can barely move phase. Both hold.
+- A per-SD slope within a tissue cannot be extrapolated to the composition differences between organs (blood against
+  liver): the argument for "the organ scales its classes" is the same-class rows read with 3.2, a reading, not a
+  partition. The direct partition (A298) was closed before scoring (deconvolution explained little of GTEx profiles).
+- Adrenal: whole-clock property (A296); in the baboon the early adrenal is the medulla (slide 1.3), the cortex arm here
+  moves samples towards the body's time; leave as an open organ-level observation (A301, A303).
+- Whole blood shows the largest within-tissue phase changes (stromal-vascular −0.76 h, lymphocyte +2.35 h in the method's
+  sign; descriptive), where marker scores are least meaningful.
+
+**Source:** `presentation/output/organs_composition/rows.csv` (from `presentation/output/organs/couplings.csv`,
+`exploratory/A295_composition/output/{tissues,tests}.csv`, `exploratory/A299_adrenal_medulla/output/tests.csv`);
+`docs/results_preliminary.md` A295, A296, A298, A299, A301, A303.
 
 ## 3.last The organ arrangement is internal: it holds when the body's clock no longer reads the hour of death
 
