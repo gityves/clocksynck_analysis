@@ -8077,3 +8077,29 @@ Check run (`--check`): the clock |r| reproduces A279 `pairs.csv` in every arm (a
   the within-person swaps of A355).
 - Code: `exploratory/A356_gain_attenuation/scripts/a356.py --stage power` (16 s).
 <!-- src: paper/exploratory/A356_gain_attenuation/output/{power,power_tissues}.csv (per-tissue aggregates) -->
+
+## A356 (scored 2026-11-23, check G2; NOT BLIND for the GTEx organ gains, BLIND for every split gain and gain-covariate relation; one scoring run, 28 s): post-mortem attenuation does not make the GTEx organ gains: within tissues, gain does not fall with ischaemic time or rise with RIN (H356.1 FAIL, H356.2 FAIL, both decidable); across tissues, ischaemia and RIN could produce at most about 4 % of the organ gain spread
+
+| test | estimate | 90 % (permutation-calibrated) | one-sided p | verdict |
+|---|---|---|---|---|
+| H356.1 pooled Delta, long minus short ischaemia (6.7 h apart, 25 tissues) | +0.010 (1.01-fold) | -0.018 to +0.038 | 0.756 | FAIL |
+| H356.2 pooled Delta, high minus low RIN (0.9 units apart) | -0.006 (0.99-fold) | -0.038 to +0.026 | 0.631 | FAIL |
+| H356.3a organ log gain vs tissue median ischaemic time | Spearman -0.366 | - | 0.038, Holm 0.076 | FAIL |
+| H356.3b organ log gain vs tissue median RIN | Spearman -0.235 (against the prediction) | - | 0.875, Holm 0.875 | FAIL |
+
+- **Code check:** per-tissue gain of all donors against the A263 `log_amp_rel`: Spearman 0.893.
+- **D356.4:** organ log gains spread 0.732 (10th-90th percentile, 25 tissues); tissue median ischaemic time spreads
+  0.94 h and median RIN 1.05 units; at the within-tissue slopes (0.0015 per hour, -0.0065 per RIN unit) attenuation
+  produces a spread of 0.001 (ischaemia) and 0.007 (RIN); at the 90 % bounds of the slopes at most about 0.003 and 0.030,
+  about 4 % of the observed spread. Per-tissue Delta: ischaemia median +0.015 (range -0.305 to +0.145), RIN +0.023
+  (-0.497 to +0.347). Core loop pooled: ischaemia +0.011 (SD 0.020, p 0.72), RIN +0.000 (0.021, p 0.50).
+- **Reading (registered: all FAIL with the pooled tests decidable).** No sign that post-mortem ischaemia or RNA
+  degradation lowers clock gain within tissues or ranks organs; the GTEx organ gains stand with this check. The
+  across-tissue rank correlation with median ischaemia (-0.37, at the line before Holm) cannot be attenuation: the
+  within-tissue effect is null and organs differ by under an hour in median ischaemia; it more likely reflects
+  procurement order confounded with organ. Not tested: agonal state and autolysis (fast deaths only, where agonal time is
+  short), and handling routes other than ischaemia and RIN. With A355 (living pairs not reproduced as a set; fat in the
+  GTEx direction, not decidable), the organ factor reads: organ gains are not composition (A323) and not post-mortem
+  attenuation by ischaemia or RNA integrity (A356); their reproduction in living tissue is not shown (A355, A330).
+- Code: `exploratory/A356_gain_attenuation/scripts/a356.py --stage score`.
+<!-- src: paper/exploratory/A356_gain_attenuation/output/{score_pooled,score_across,score_descriptive,score_tissues}.csv (per-tissue aggregates) -->
