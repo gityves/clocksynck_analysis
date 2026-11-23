@@ -10587,3 +10587,51 @@ per tertile), AD 8 / 298 (101), both 17 / 763 (259). MDE of T3 - T1 (2.49 x swap
 decidable; H352.3 (IL-17 / TNF) is not decidable. A352 is closed at the power stage (as A305): no scoring run.** Also
 noted: the score stage returned p 0.005 for the pooled IL-17 / TNF trend on randomly swapped smoke labels (signatures
 recomputed after the swap), so its null is not verified; a rerun would first need a label-independent null check.
+
+## A353 (2026-11-23, approved by the user: "Yes let's create a new amendment for it", after asking whether the muscle was also sampled over the whole day; one scoring run; **NOT BLIND**: every full-cycle A337 Perrin statistic (`results_preliminary.md`: timed lead +1.75 h, untimed +1.42 h, difference -0.34 h (-0.59 to -0.10) on 14 genes, direct introns; core loop timed +2.97 h, untimed +1.63 h, H337.2 core FAIL) and the A344 skin result (lead recovered at both sites on 06, 12, 18 h; on 06, 12 h the protected-site lead failed); **BLIND**: every statistic on a time subset and every per-sample phase of Perrin (none computed)): is the pre-mRNA lead of human muscle recovered from daytime biopsies alone? **Perrin 2018 vastus lateralis (`perrin2018_muscle_trimmed`, 57 libraries: 10 subjects x 00, 04, 08, 12, 16, 20 h, one subject without 00, 04, 08 h), direct introns, A337 units**
+
+**Why.** A344 cut the timed skin cohort to hospital hours: the lead survived on three daytime points, not on two. Skin
+had four clock times; muscle has six over the day, so daytime subsets keep three or four points per person and give a
+second living tissue for the hospital-hours claim of the lead readout. Muscle has one compartment per person: there is
+no between-compartment offset to test, only the lead and per-sample phase.
+
+**Subsets (fixed now).** D3 = {08, 12, 16 h} (hospital hours, primary); D4 = {08, 12, 16, 20 h} (waking day,
+secondary); D2 = {08, 12 h} (strict daytime, secondary); N3 = {20, 00, 04 h} (night, descriptive contrast); full = all
+six (reference, reproduces A337 Perrin). Within a subset only subjects with every time of the subset are kept (the
+subject without 00, 04, 08 h drops from D3, D2 and N3), so each subject contributes the same times.
+
+**Readouts per subset (untimed, as A337 Perrin, 14 genes, direct introns).**
+- The projector is computed on the subset's spliced counts and states are residualised on the subject indicator within
+  the subset, as an untimed user with only these biopsies would.
+- Lead: `delta_U` of `score_a337.py` (subject as covariate), gate kappa and its within-subject permutation p.
+- Per-sample phase (descriptive): each sample's spliced state angle against its clock time after removing one common
+  rotation (circular mean of angle minus time); concentration R and median absolute error (h), as A344.
+Truth: the full-cycle timed lead of A337 Perrin (+1.75 h), recomputed in the same run from the full data.
+Intervals: 90 %, 2,000 subject-cluster bootstraps (subjects resampled with replacement), the same subject draw used for
+the subset statistic and the full-cycle truth, so the difference is paired. Core loop (11 genes) computed alongside,
+descriptive: its full-cycle untimed lead already misses the timed one (H337.2 core FAIL), so a core subset value cannot
+pass a test against the timed truth.
+
+**Hypotheses.**
+- **H353.1 (lead, primary):** on D3 the untimed lead minus the full-cycle timed lead lies within +-1.5 h (90 % paired
+  interval inside the bound), with the gate passing (p < 0.05).
+- **H353.2 (secondary):** the same on D4 and on D2 (reported separately, no correction: secondary).
+- **D353.3 (descriptive):** per-sample phase R and median error on every subset; the N3 contrast; the core loop on
+  every subset; the subset lead against the subset's own timed lead (does the lead itself shift on a partial arc).
+
+**Readings (fixed now).** H353.1 PASS: the muscle lead is recovered from hospital-hours biopsies, a second living tissue
+after skin (A344). H353.1 FAIL with a narrow interval lying outside the bound: the partial arc biases the lead in
+muscle; report the shift. Interval wider than the bound on both sides: undecidable, not a fail. D2 failing
+while D3 passes reproduces A344 (two points are not enough). Per-sample phase degrading with the arc while the lead
+holds: relative readouts survive partial sampling better than sample times, as in skin.
+
+**Power.** No new power stage: on the full cycle (57 libraries) the untimed lead interval half-width was 0.24 h and the
+difference interval 0.25 h; D3 keeps 27-30 libraries (9-10 subjects x 3), so a half-width of about 0.4-0.6 h is
+expected, below the 1.5 h bound. The subject-cluster bootstrap (A344 form) is wider than A337's within-subject resampling;
+the full-cycle row is reported with both so the change of interval is visible.
+
+**Limits.** Ten men, one muscle, one study (Perrin 2018, hourly isocaloric feeding and controlled light: a timed protocol
+with a well-entrained clock, the most favourable case). Not blind for the full-cycle values and for the skin outcome.
+
+**Stop rule.** One scoring run. **Code:** `paper/exploratory/A337_timed_lead/scripts/score_a353.py` (reuses
+`score_a337.py`), output `paper/exploratory/A337_timed_lead/output/a353/`.
