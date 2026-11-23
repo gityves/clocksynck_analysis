@@ -10,6 +10,7 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **New 2026-11-13:** results A245-A256 and what they change are summarised in `REVIEW_2026-11-10.md` §6; decisions asked there:
   the luminal A row after A224, whether to request ages (Wu 2020) and TwinsUK phenotypes (MuTHER), whether A243 is run (Q32),
   and the wording of the cancer chapter (Q24) after the synthesis in the ledger addendum of 2026-11-12.
+- **Q44** (below, new 2026-11-23): mechanism of lost loudness at the cell level: may we use the lab's single-cell clock / cell-cycle time-lapse data? And the abstract revision after the story audit.
 - **Q42** (below, new 2026-11-19): section 6 two-axis checks scored or closed (A328-A334b); decide S1 timed control, A333 power run, D3 remainder, cell-mechanism follow-up.
 - **Q41** (below, new 2026-11-19): Cell Article with brain death as the climax, or Cell Resource? Brain-death checks done (A325, A327, Task 2-3, B1, B4), lymphocyte bound (A326).
 - **Q39** (below, new 2026-11-17): tally of the cell-type program (blocks A-C, A276-A283): what the cell-type line now claims, and which of B2, C1, C2 to run next?
@@ -40,6 +41,29 @@ Each entry: date, question, what is on hold until it is answered, the evidence (
 - **Phase 8** (naming, scorecard, figure regeneration, hardening, tutorials, METHOD/CHANGELOG update): PI.
 - **Closed 2026-11-01:** Q21, Q22, A136 (registered). **Closed 2026-10-31:** Q8, Q13, Q16, Q17, Q18, Q19, Q20, and the
   A121 and A135 placements.
+
+### Q44 (2026-11-23): a cell-level mechanism for lost loudness, and the revised abstract
+**Question.**
+- **(a) Single-cell data.** Bulk data cannot tell whether a tissue loses loudness because its cells dephase or because
+  each cell's clock is damped (A334, A334b, A212). The lab's existing single-cell time-lapse data on clock and cell
+  cycle (Bieler 2014 and follow-ups) could answer it for proliferation, which lowers tumour gain (A304): does faster
+  division dephase or damp the clock? May an agent use these data, and who owns them?
+- **(b) The revised abstract.** `ABSTRACT_DRAFT_2026-11-22.md` (revised 2026-11-23 with the user, after
+  `STORY_AUDIT_2026-11-23.md`) now says:
+  - inflamed skin (most in psoriasis), not psoriasis alone;
+  - tumours "stay paired", with the stroma clause dropped until a core-loop re-test;
+  - "the mouse-predicted desynchrony is absent at our detection limits" as the conceptual claim;
+  - brain death as "keep a shared clock but lose the healthy order".
+
+  Agree?
+- **(c) The in-house jet-lag data.** Would they be available as a blind, prospective positive control of the time
+  axis (no new animals)?
+- **(d) CHIRAL age correction.** Rescore it with companions and death-type matching, or drop it from the corrections
+  (plan claim 6)?
+
+**On hold.** The single-cell mechanism task (outside `prompts/mechanisms_2026-11-23.md`); CHIRAL rescore (draft only in
+`prompts/audit_followups_2026-11-23.md`, task 6).
+**Evidence.** STORY_AUDIT_2026-11-23 sections 1.2, 3, 6, 7; PAPER_PLAN section 11.
 
 ### Q43 (2026-11-21): del Valle replicates blind and its core loop covaries on its own (A328 H328.1 and H328.2 PASS)
 **Question.** In 32 whole fetal adrenals (del Valle 2023, 7-11.5 wpc, never opened before), the 14-gene covariation

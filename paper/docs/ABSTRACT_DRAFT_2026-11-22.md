@@ -4,21 +4,42 @@ Working abstract agreed with the user on 2026-11-22. It still needs PI review. J
 the PI; Cell is the current target.
 Fill the bracketed counts from output tables (never from memory) before the draft is used anywhere.
 
-## Abstract (about 170 words)
+## Abstract (about 180 words; revised 2026-11-23 after the story audit)
 
 > Circadian clocks run in nearly every human tissue, and their misalignment between organs, internal desynchrony, is
-> thought to contribute to disease, yet no method has measured it across a person's organs. We introduce an approach
-> that reads each tissue's clock against the same person's other tissues, so it needs no sampling time, and apply it
-> across the human lifespan in [N] tissues from [N] donors and [N] disease cohorts. Before birth, the clock network
-> already moves as a whole in selected organs. In adults, organs keep a common body time through chronic disease,
-> intensive care and cancer. What disease changes is how loudly a tissue expresses that time, not the time itself.
-> Tumours follow their own patient's clock: the surrounding stroma carries it, and cancer cells stay coupled but grow
-> quieter as they proliferate. Inflamed psoriatic skin is an exception, running about 1.5 h late, replicated in an
-> independent cohort. At the end of life, brain death rearranges the order between organs, the only state in which the
-> shared time itself comes apart.
+> thought to contribute to disease, yet it has never been measured between the organs of the same people. We introduce
+> an approach that reads each tissue's clock against the same person's other tissues, so it needs no sampling time,
+> and apply it across the human lifespan in [N] tissues from [N] donors and [N] disease cohorts. Before birth, the
+> clock genes of selected organs already move together in the clock's pattern. In adults, organs keep their order
+> through chronic disease and intensive care, and tumours stay paired with their patient's time: the desynchrony that
+> mouse models predict for metabolic disease and ageing is absent at our detection limits. What changes is how loudly
+> tissues express that time: intensive care, chronic lesions and proliferating tumours quieten tissues without moving
+> their time. Time moves locally in inflamed skin, most in psoriasis, whose lesions run 1 to 1.5 h late, replicated in
+> an independent cohort. At the end of life, brain-dead organ donors keep a shared clock but lose the healthy order
+> between organs.
 
 If it must be shortened, cut "and apply it across the human lifespan in [N] tissues..." first; the counts can go in the
 highlights.
+
+**Changes from the 2026-11-22 version** (`STORY_AUDIT_2026-11-23.md` sections 1.2, 5 and 7, discussed with the user).
+- **The gap.** Now "never measured between the organs of the same people". The old sentence read as a per-person
+  estimate (A259, A344).
+- **Before birth.** "Clock genes move together in the clock's pattern" replaces "the clock network moves as a whole".
+  The final term waits for Q43; "a driven state whose source is open" is the alternative.
+- **Intensive care.** "Keep their order": the order is kept and the offsets are compressed by a shared non-temporal
+  state (A109, A132b).
+- **Tumours.** "Stay paired" (A138, at the line on the core loop). The stroma clause is dropped until the core-loop
+  re-test (`prompts/audit_followups_2026-11-23.md`, task 1).
+- **Cancer cells.** "Cancer cells stay coupled" becomes "proliferating tumours quieten": A304 is bulk, and malignant
+  coupling failed (A138 H138.1).
+- **New sentence: mouse-predicted desynchrony absent** (A235, A164, A306, A231; with detection limits and positive
+  controls).
+- **Loudness.** "What disease changes" is restricted to the three conditions that move loudness. Chronic systemic
+  disease moves neither.
+- **Inflamed skin, not psoriasis alone.** Atopic lesions lean the same way (A345, archive A53), and A254 reads the
+  shift as specific to inflamed skin. The size is given as 1 to 1.5 h, matching the core-loop values.
+- **Brain death.** "Keep a shared clock but lose the healthy order" (A317 H317.1-2). It replaces "the only state in
+  which the shared time comes apart" and keeps brain death from reading as the climax (Q41).
 
 ## Framing decisions (user, 2026-11-22)
 
@@ -36,11 +57,13 @@ highlights.
 
 | sentence | evidence | do not write |
 |---|---|---|
-| fetal "moves as a whole in selected organs" | A340 (H340.1 pass), gate, organ selectivity in two species | "running", "24 h", "maternal" / glucocorticoid entrainment (A338 one-sided, conditional on lifetime; A341 descriptive) |
-| tumours follow the patient's clock; stroma carries it | A138, A227, A271 (fibroblasts and endothelium beyond both nulls), A304 | "immune cells carry it" (A271: not beyond the stress-responsive null) |
-| psoriasis about 1.5 h late, replicated | A183, blind (-1.45 h, 81 persons) | "clock-specific" (A183 matched null at the line; A308 not blind; A335 at the line) |
-| brain death rearranges order | A132b, A314-A317 (descriptive) | any cause; "only" is safe only for the conditions tested |
-| intensive care: loudness falls, order kept | A293, A335 (GTEx ventilated) | COVID cohorts as evidence (A109c uninformative) |
+| fetal clock genes "move together in the clock's pattern" in selected organs | A328 part a (blind; core loop clock-specific in del Valle), A340 (H340.1), organ selectivity in two species | "running", "24 h", "fetal clock", "maternal" / glucocorticoid entrainment (A338 one-sided, conditional on lifetime; A341 descriptive); the core loop is not shown in the cortex, lung or liver (A266, A269) |
+| tumours stay paired with the patient's time | A138 H138.4 (beyond both families on 14 genes; at the line on the core loop, A336) | "follow" without the core-loop caveat; "stroma carries it" (post hoc A149 note 5, not confirmed A226, no core run); "immune cells carry it" (A271) |
+| proliferating tumours quieten without drifting | A304 (gain 0.63, departure not raised; holds on the core loop; purity-stratified -0.266) | "cancer cells stay coupled" (A138 H138.1 failed; A304 is bulk) |
+| mouse-predicted desynchrony absent | A235 (high-fat-diet liver advance excluded, ±1 h), A164 / A306 (T2D, obesity), A231 (age), A233; positive controls A111, A129, A257 | "human clocks resist desynchrony": the drives stay aligned in these conditions; with conflicting drives time moves (A257) |
+| inflamed skin late, most in psoriasis, 1-1.5 h, replicated | A183 (blind, -1.45 h; core -1.00 h, A335), A54 held-out, A345 (pre-mRNA delay; H345.3 narrow); AD A345 and archive A53 (descriptive) | "psoriasis-specific" (A183 H183.2); "clock-specific" in the abstract (at the line on the core loop) |
+| brain-dead donors keep a shared clock, lose the healthy order | A317 H317.1-2, A318, A336 part 4 (core loop), descriptive origin A132b | any cause; "time comes apart"; organ-level arrows (not stable across gene sets, A335) |
+| intensive care: loudness falls, order kept | A293, A315, A335 (GTEx ventilated) | "amplitude" (variance ratios measure loudness, METHOD section 9); "same offsets" (compressed, A132b); COVID cohorts as evidence (A109c uninformative) |
 
 ## Introduction outline (agreed)
 
@@ -56,13 +79,31 @@ highlights.
 4. What we do: read each tissue against the same person's other tissues, so shared offsets cancel. A model-free gate
    confirms the shared signal is clock-shaped.
 5. What we find: "loudness, not time", leading into the chapters in lifespan order.
+6. What it means (added 2026-11-23). The mechanism the mouse work established, drives setting time, holds in human
+   tissue. The clock's inertia carries time through acute states, and drive strength, phase coherence and composition
+   set loudness.
+   - That mechanism predicts robust human time under chronic disease and ageing, where the drives stay aligned. It
+     predicts shifts only where drives conflict (night shift, A257) or locally (inflamed skin).
+   - The desynchrony extrapolated from mouse models and cultured cells (high-fat feeding, metabolic disease, ageing)
+     is therefore absent at powered limits.
+   - The field's usual synchrony metrics read mostly loudness (A291, A294b).
 
-## Risks at review (ranked)
+## Risks at review (ranked; updated 2026-11-23)
 
-1. Brain death: open confound; state it plainly and show the dissociation between order and amplitude.
-2. Psoriasis clock-specificity is at the line; have that figure ready.
+1. Brain death: open confound. State it plainly and show the dissociation between order and loudness.
+2. Inflamed skin: the psoriatic delay is at the line on the core loop, and the atopic part is descriptive. Have that
+   figure ready (audit follow-up task 2 decides the atopic part).
 3. Fetal evidence comes from single-organ measures, not organ-to-organ offsets.
-4. Reanalysis only. A small prospective test (blind run on the in-house jet-lag data) would help most.
+4. **Mechanism.** It is verified at the systems level in human, and the mouse consensus is credited. The cell-level
+   cause of lost loudness (dephasing or per-cell damping) is not decidable with public data (A334). Planned: the
+   waveform screen and the cytokine dose-response in skin (`prompts/mechanisms_2026-11-23.md`); in-house single-cell
+   time-lapse (PI).
+5. **Reanalysis only.** The answer is the record:
+   - pre-registration, with 70 blind and 42 partly blind of 219 registered tests (registry 2026-11-19);
+   - blind replications on unseen data (A256, A274, A280, A183, A328 part a, A321, A337 Perrin);
+   - no new human or animal sampling, which is an ethical strength to state, not to apologise for.
+
+   A prospective blind test on the in-house jet-lag data would still strengthen it.
 
 Possible next step, decided by the user and the PI: a Cell presubmission inquiry (this abstract plus a paragraph on the
 cancer result); a Cell Press transfer keeps Cell Genomics open.

@@ -21,6 +21,11 @@ and 9) and the A335 results are applied in sections 1-5, 6.2b, 7, 8 and 10. Stru
 9; the follow-up checks are `prompts/two_readouts_2026-11-20.md`. Steps that need data or access not available now:
 `DATA_ROADMAP_2026-11-20.md`.
 
+**Revision (2026-11-23).** After the story audit (`STORY_AUDIT_2026-11-23.md`) and the discussion with the user, the
+wording fixes are applied in place (sections 1-4 and 10), and section 11 records the framing changes: the mechanism,
+the mouse-predicted desynchrony found absent, the positive-control figure, the record of blind tests, and the
+mechanism additions. The abstract is revised in `ABSTRACT_DRAFT_2026-11-22.md`.
+
 ## 1. The message
 
 At the resolution of tissues and cell classes, human tissues keep one time at many volumes. The clock-carrying classes
@@ -29,7 +34,8 @@ receives from the brain and from behaviour. How loudly a sample expresses that t
 the cell class; a person factor is shown in GTEx deaths (A312) but, in living tissue, not on the core loop (A331,
 A335). The tissue clock is slower than the signal layer: it carries the person's time through the acute states of
 surgery and dying that reset the fast signal layer every cell reads, which is why single untimed hospital samples can
-be read. The clock layer is built around birth. Before birth, adrenal cortex and lung carry the signal layer in the
+be read. The clock layer is built around birth (wording paused, Q43: the core loop covaries on its own in del
+Valle, A328 part a, blind). Before birth, adrenal cortex and lung carry the signal layer in the
 clock's pattern without an adult-size clock, and liver does when stages are pooled. Heart and kidney show no
 clock-shaped covariation; brain shows none at 13-22 pcw but covaries before 12 wpc in one cohort (descriptive). The
 clock is present in postnatal tissue. Perturbations then fall on two axes:
@@ -74,7 +80,7 @@ untimed samples (relative amplitude |z| and offset arg z against the host). For 
   - In mouse it is set by the organ's mix of drives (A297, A319, A322, A324); in human only the order is shown (A293
     Part 1).
 - **Loudness: organ and class factors, approximately separable; the person factor is shown in deaths.**
-  - Person A_p: persons differ strongly, and every tissue follows the person's amplitude nearly in proportion (A312,
+  - Person A_p: persons differ strongly, and every tissue follows the person's loudness nearly in proportion (A312,
     elasticities 0.83 to 1.77). In living women, fat and skin share it at the size the deaths predict (A331: leverage
     0.177, beyond matched genes, not beyond stress-responsive genes). On the core loop the living leverage falls to
     0.107, below the matched q95 of 0.130 (A335): at the line, with the trio drop at the 13th percentile of the
@@ -89,7 +95,8 @@ untimed samples (relative amplitude |z| and offset arg z against the host). For 
     Spearman of 0.6).
 - **The departure varies little and has no dominant direction.**
   - It is clock-specific, about 2.6 times that of expression-matched genes (A294b); on the core loop its excess falls
-    to 1.28 times matched (A329), so it rides mostly on PER1, PER2 and NR1D1.
+    to 1.28 times matched (A329), about as much as dropping three random genes of similar weight (A336 gene-drop null,
+    32nd percentile): it is not shown to ride on PER1, PER2 and NR1D1 (revised 2026-11-23).
   - Across the 27 peripheral tissues 2 psi spans 4.6-fold, against 85-fold for S (A104 table, derived).
   - It is not phase-dominated (A311) and hardly shared between organs (A302, A313).
   - Coupling c = S / (S + 2 psi) therefore ranks compartments mostly by loudness (A291). A quiet organ's time is read
@@ -97,8 +104,9 @@ untimed samples (relative amplitude |z| and offset arg z against the host). For 
 - **The plane is the slow clock layer.**
   - The fast signal layer (glucocorticoid, feeding and immediate-early states) is read by every cell, lymphocytes and
     fetal cells included (A275, A279, A243-A269).
-  - It enters the clock genes through PER1, PER2 and NR1D1, which carry most of the departure's excess (N2, A329) and,
-    in living tissue, most of the person leverage (A335; precision check pending).
+  - It enters the clock genes through PER1, PER2 and NR1D1, but neither the departure's excess nor the living person
+    leverage is carried by them beyond what three random genes of similar weight carry (A336 gene-drop null; revised
+    2026-11-23).
   - In single-cell atlases they also carry a disproportionate share of what classes share: dropping them puts the
     cross-class statistics at the 1st-7th percentile of all three-gene drops (A275, A280, A282, A283, A288, A227;
     A336, descriptive; 4th-29th among drops of similar precision). The structural-lymphocyte contrast survives on the
@@ -128,7 +136,7 @@ Polar plot: angle = time relative to the person's internal time; radius = loudne
 | level | time (angle) | loudness (radius) | departure |
 |---|---|---|---|
 | cell class | shares the organ's time (A273, A279); human classes within 1 h, endothelium minus fibroblast 0.46 h (A293, A335; not blind) | conserved class gains (A293 H293.4); lymphocytes no readable clock, bound 0.7 (A272-A288, A321, A326) | - |
-| composition | does not move time (A295) | stromal-vascular content raises gain (A295, descriptive); lymphocyte content leaves relative gain unchanged (A335: equivalence, post hoc margin) | - |
+| composition | does not move time (A295) | stromal-vascular content raises gain (A295, descriptive); lymphocyte content dilutes relative gain slightly (-0.020 per SD on the core loop, p 0.040, A336; within the post hoc ±0.10 margin, A335) | - |
 | organ | order held without alignment to the day, under intensive-care feeding (unrecorded; A293 Part 1); concordant with CHIRAL (A123) | 9.2-fold, 3.1-fold without blood and testis (A104 table, derived); not composition (A323) | varies little, not phase-dominated, not shared (A294b, A311, A313); mostly PER1, PER2, NR1D1 (A329) |
 | person | internal time advances with elapsed hours in living tissue (A252, A256) and reads the hour of death (A270; held-out waveform, A335) | shared by all tissues in deaths (A312); in living tissue not on the core loop (A331, A335) | - |
 | development | before birth, the signal-induced genes keep the clock's phase pattern (A307) | below adult size before birth, present after (section 2.4) | - |
@@ -157,18 +165,18 @@ Polar plot: angle = time relative to the person's internal time; radius = loudne
 
 | condition (reference) | time | loudness | departure | entries | status |
 |---|---|---|---|---|---|
-| intensive care, living brain (fast deaths) | order kept (Fisher-Lee rho 0.690) | lower: clock-specific log variance ratio 0.404, amplitude about 0.82 (derived); holds on the core loop (+0.457) and matched on age and sex (+0.459), with raw clock variance higher in fast deaths while matched genes go the other way (A335); within organ donors, lower with ventilation time (descriptive) | - | A293, A315, A335 | registered re-tests, not blind; core loop and matching blind (A335) |
-| brain death (ventilated, living brain) | order changed (D_rho 0.621; 0.584 adjusted); shared clock state kept; per organ (A332 D2): lung -1.58 h, tibial artery +1.09 h, tibial nerve +0.99 h (90 % intervals exclude 0); whole blood -1.22 h (-3.73 to +0.78); the other eight within 0.8 h. On the core loop artery (+1.20 h) and nerve (+1.54 h) hold, lung does not, lower-leg skin (+1.33 h) appears (A335). 3 of 12 intervals exclude 0 on either gene set, against 1.2 expected by chance: descriptive | equal relative to expression-matched genes: clock-specific ratio 1.05 (amplitude 1.02, derived), equivalent within +-0.357 on 14 genes and the core loop, pooled and matched (A335); raw clock variance lower in organ donors, as for matched genes (core Q -0.186, matched median -0.181); every organ 0.92-1.13 of matched (A332 D2) | - | A315, A317, A318, A325, A327, A332, A335 | aliased with procurement and donor management; not blind |
+| intensive care, living brain (fast deaths) | order kept (Fisher-Lee rho 0.690; registered re-test, A293, of the descriptive A132 readout after H109.2 failed); offsets compressed toward 0 / 12 h (0.58 of fast deaths, A132b), read as a shared non-temporal state on running clocks (A109); detection limit simulated on fast deaths | lower: clock-specific log variance ratio 0.404, loudness about 0.82 (derived); holds on the core loop (+0.457) and matched on age and sex (+0.459), with raw clock variance higher in fast deaths while matched genes go the other way (A335); within organ donors, lower with ventilation time (descriptive) | - | A293, A315, A335 | registered re-tests, not blind; core loop and matching blind (A335) |
+| brain death (ventilated, living brain) | order changed (D_rho 0.621; 0.584 adjusted); shared clock state kept; per organ (A332 D2): lung -1.58 h, tibial artery +1.09 h, tibial nerve +0.99 h (90 % intervals exclude 0); whole blood -1.22 h (-3.73 to +0.78); the other eight within 0.8 h. On the core loop artery (+1.20 h) and nerve (+1.54 h) hold, lung does not, lower-leg skin (+1.33 h) appears (A335). 3 of 12 intervals exclude 0 on either gene set, against 1.2 expected by chance: descriptive | equal relative to expression-matched genes: clock-specific ratio 1.05 (loudness 1.02, derived), equivalent within +-0.357 on 14 genes and the core loop, pooled and matched (A335); raw clock variance lower in organ donors, as for matched genes (core Q -0.186, matched median -0.181); every organ 0.92-1.13 of matched (A332 D2) | - | A315, A317, A318, A325, A327, A332, A335 | aliased with procurement and donor management; not blind |
 | human muscle, day 3 of a 12 h behavioural shift (aligned) | core loop +4.06 h (90 % 2.57-5.68; all 11 subjects the same sign); 14 genes +2.68 h | core loop: excursion about 0.49 (derived; projection 0.239), per subject 0.34-0.92 (median 0.47, all 11 below 1); 14 genes: about 0.31 (derived; projection 0.233; correction note under A257) | - | A257, A335 | 14 genes not blind; core loop blind (A335); 11 men |
 | mouse, daytime feeding (night feeding) | liver 11.3-11.7 h; lung, heart, kidney 1.6-2.5 h; fat 10.60 h (Manella), -0.48 h (Xin) | liver 0.44-0.71; lung, heart, kidney 0.50-0.65; fat 0.32 and 0.11 | - | A322, A324 | A324 blind for heart, kidney, fat |
 | mouse liver, feeding rhythm removed | +1.57 h | 0.724 | - | A297 | not blind |
-| tumours, high vs low proliferation (own normal tissue) | kept: tumours pair with their patient (A138; pairing is blind to a constant tumour-normal offset); COFE's uncoupling is an artefact (A265, A267) | gain 0.63, clock-specific; within purity halves Q_G -0.266 (gain about 0.77, derived; A304 sensitivity) | not raised (power 1.000 at a doubling) | A138, A304 | A304 not blind for A138 |
-| tumour cell classes | fibroblasts and endothelium carry the patient's time; immune cells pair with normal tissue, not beyond responsive genes, and on the core loop not beyond matched genes (A227 at the line, A336) | - | - | A227, A271, A336 | - |
-| chronic lesions: periodontitis, osteoarthritis, carotid plaque, fibroid, hidradenitis (own tissue) | kept: pooled +0.01 h, MDE 0.69 h | lower: variance 0.66 pooled (amplitude about 0.81, derived), clock-specific only pooled, at the line | - | A254 | powered for time |
-| psoriasis lesion (own skin) | 14 genes -1.45 h, q 0.016 (A308 rule, adopted after A183's rule failed); core loop -1.00 h, q 0.049, at the line (5.5th percentile of matched sets, as on 14 genes; A335): suggestive | higher, not clock-specific (r +0.50, amplitude 1.28; 94th / 90.5th percentile of matched / responsive; A115 lesional vs uninvolved pooled +0.30, 56th / 70th) | - | A183, A308, A332 D1, A335 | not blind; core loop blind (A335) |
+| tumours, high vs low proliferation (own normal tissue) | kept: tumours pair with their patient, at the line on the core loop (0.252 against matched q95 0.275, A336) (A138; pairing is blind to a constant tumour-normal offset); COFE's uncoupling is an artefact (A265, A267) | gain 0.63, clock-specific; within purity halves Q_G -0.266 (gain about 0.77, derived; A304 sensitivity) | not raised (power 1.000 at a doubling) | A138, A304 | A304 not blind for A138 |
+| tumour cell classes | fibroblasts and endothelium pair with the patient's normal stroma beyond matched genes (post hoc, A149 note 5; not confirmed, A226; no core-loop run); immune cells pair with normal tissue, not beyond responsive genes, and on the core loop not beyond matched genes (A227 at the line, A336) | - | - | A227, A271, A336 | - |
+| chronic lesions: periodontitis, osteoarthritis, carotid plaque, fibroid, hidradenitis (own tissue) | kept: pooled +0.01 h, MDE 0.69 h | lower: variance 0.66 pooled (loudness about 0.81, derived), clock-specific only pooled, at the line | - | A254 | powered for time |
+| psoriasis lesion (own skin) | 14 genes -1.45 h, q 0.016 (A308 rule, adopted after A183's rule failed); core loop -1.00 h, q 0.049, at the line (5.5th percentile of matched sets, as on 14 genes; A335): suggestive | higher, not clock-specific (r +0.50, loudness 1.28; 94th / 90.5th percentile of matched / responsive; A115 lesional vs uninvolved pooled +0.30, 56th / 70th) | - | A183, A308, A332 D1, A335 | not blind; core loop blind (A335) |
 | psoriasis, uninvolved vs healthy skin | later (descriptive) | - | - | A115 | trait component |
 | T2D, obesity, hypertension, smoking | offsets and coupling equal (equivalence +-0.15 for T2D and obesity; A233 and A235 hold on the core loop, A336) | equal (powered) | equal (powered) | A164, A233, A235, A306 | - |
-| age, sex | equal | CHIRAL's age dampening shrinks with death-type matching | - | A208, A231 | - |
+| age, sex | equal | CHIRAL's rhythmic-gene excess in the young shrinks with death-type matching (WP0 item 5, timed, not registered) | - | A208, A231 | - |
 
 **Reading.**
 - Loudness moves often: intensive care, tumours, chronic lesions, conflicting drives.
@@ -242,9 +250,11 @@ Polar plot: angle = time relative to the person's internal time; radius = loudne
      0.5-0.75 of the adult size while the negatives exclude 0.75 to 1 (A240), and only heart is powered at half (A243).
 6. **Corrections of published claims.**
    - COFE's tumour uncoupling (A265, A267).
-   - CHIRAL's age dampening, which shrinks with death-type matching (A208, A231; rescore with companions before
+   - CHIRAL's age dampening: its rhythmic-gene count shrinks with death-type matching (WP0 item 5, timed, not
+     registered; TMM p 0.092; A208 and A231 test coupling and offsets, not amplitude). Keep only after a registered
+     rescore (audit addition 3; PI) or drop; rescore with companions before
      submission).
-   - Prognostic clock signatures reduce to proliferation (A191-A194, A220).
+   - Published clock prognostic signatures add nothing beyond proliferation or random gene sets (A192-A194, A220).
    - Human T2D and obesity "disruption" from cultured cells, against powered in vivo nulls (A164, A306).
 
 **Human firsts (not headlines).**
@@ -431,7 +441,8 @@ The frozen claim set: every entry cited in sections 2, 3 and 5 is scored.
 
 ## 10. Conversions
 
-- Variance to amplitude: square root of exp(log ratio) (A315, A254, A183).
+- Variance to loudness: square root of exp(log ratio) (A315, A254, A183). A loudness ratio, not a daily-amplitude ratio
+  (METHOD section 9); do not set it on one scale with the timed amplitude ratios (A257, mouse).
 - A304 gain: a slope (|C| / V_N), on the amplitude scale.
 - A257: excursion ratio = R / cos s = 0.233 / cos 40.2 deg = 0.31; core loop (A335): 0.239 / cos 60.9 deg = 0.49.
 - Night shift on the core loop: Delta = 0.87, loudness share 34 % (R 0.49, phi 4.06 h).
@@ -440,3 +451,65 @@ The frozen claim set: every entry cited in sections 2, 3 and 5 is scored.
   9.24, and 3.10 without whole blood and testis; 2 psi spans 0.90-4.14 (4.6-fold).
 - Delta^2 = (1 - R)^2 + 4 R sin^2(phi / 2), with phi in radians (hours x 2 pi / 24).
 - Intensive care: exp(-0.404 / 2) = 0.82. Brain death: exp(0.046 / 2) = 1.02. Lesions: exp(-0.417 / 2) = 0.81.
+
+## 11. Framing after the story audit (2026-11-23)
+
+### 11.1 The mechanism, as tested in human
+
+The paper has a systems mechanism, tested in independent examples:
+
+| part | tested in | outcome |
+|---|---|---|
+| time is set by the drives an organ follows | mouse: A322 / A324 (daytime feeding), A319 (forebrain Bmal1 knockout), A129 (hepatocyte knockout); human: A293 (order without daily alignment), brain death (aliased) | holds qualitatively; the quantitative chord was rejected (A322 H322.1) |
+| the clock's inertia carries time through acute states | A252 / A256 (through surgery), A270 (hour of death), A257 / A261 (core loop +4 h, program 11.65 h), A343 (glucocorticoid reaches PER1 transcription within hours) | holds |
+| a fast signal layer read by every cell, a clock layer in structural cells | A275, A279, A281-A287, A321 | holds |
+| loudness follows drive strength, conflict and composition | A315 / A335 (intensive care), A322 and A257 (conflicting drives), A304 (proliferation), A295 (composition, small) | holds as a pattern; the cell-level cause is undetermined (A334) |
+| quantitative oscillator model | A310, A311, A312, A323 | failed or much smaller than predicted (Supplement) |
+
+Credit the mouse consensus for the parts. The new content is the human demonstration of each part, and two human
+rules: conserved class gains and the personal departure.
+
+### 11.2 The conceptual claim: mouse-predicted desynchrony is absent in human disease
+
+Each mouse expectation, its human test and the result:
+- **High-fat feeding advances the liver clock by hours.** Excluded in T2D and obesity, equivalent within ±1 h (A235;
+  MDE 0.37 h).
+- **Metabolic disease "disrupts" peripheral clocks** (often from cultured cells). Coupling equivalent within ±0.15;
+  no gain or departure change (A164, A306).
+- **Ageing desynchronises organs.** Coupling equivalent; no organ shift larger than 0.20 h (A231).
+- **Chronic disease and lesions shift local clocks.** No reordering (A233); lesions within 0.69 h (A254).
+
+The mechanism explains the difference: in mouse, desynchrony needs conflicting drives (rest-phase feeding), which
+human chronic disease rarely imposes. Where human drives conflict, time moves (night shift, A257), and locally in
+inflamed skin. Wording: "the same mechanism predicts robust human time under chronic disease and ageing; the
+desynchrony extrapolated from mouse models and cultured cells is absent at our detection limits". Do not write
+"human clocks resist desynchrony".
+
+Together with "the usual synchrony metrics read mostly loudness" (A291, A294b), this is the claim about the field:
+true desynchrony in human tissue is rare and local, and most reported "disruption" is loss of loudness.
+
+### 11.3 Figures
+
+- **New supplementary figure: "the readout sees time move when it moves".**
+  - Positive controls: A111 (Xin feeding, against timed truth), A129, A319, A273 / A279, A251 H251.4, A342 (offset
+    against timed truth), A257.
+  - Beside them, every null with its detection limit (A336 part 3; the intensive-care limit recomputed at the
+    ventilated design, audit follow-up task 4).
+- **Figure 1** adds A251 and A255 (living organs share one time; a person's cell line does not) beside A252 / A256.
+- **Figure 6d** becomes "inflamed skin":
+  - psoriasis delay (A183, A308, A345 pre-mRNA);
+  - atopic lesions, descriptive, until the audit follow-up task 2;
+  - non-skin lesions kept (A254).
+- **Supplementary registry table** with blind status (70 blind, 42 partly blind of 219; registry 2026-11-19) and a
+  methods paragraph: no new human or animal sampling, every result from public or consented data, pre-registered.
+
+### 11.4 Mechanism additions (to register; prompts on disk)
+
+1. A waveform screen of uniform scaling against gene-specific change, across tumours, lesions, intensive care and
+   psoriasis. Calibrate it on the A212 plasmode first. It separates "intact but quieter" from "rewired", not
+   dephasing from per-cell damping.
+2. A cytokine dose-response of the skin delay: IL-17 / TNF against Th2 strata; pre-mRNA in Tsoi.
+3. In-house single-cell time-lapse of clock and cell cycle: does faster division dephase or damp the clock? This
+   needs the PI (Q44).
+
+Prompts: `prompts/audit_followups_2026-11-23.md` (gaps) and `prompts/mechanisms_2026-11-23.md` (items 1-2).
