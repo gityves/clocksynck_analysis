@@ -77,7 +77,11 @@ def unit(study, kind):
     warnings.filterwarnings("ignore")
     from clocksync.paired import pseudo_waveforms
     if kind == "epithelium":
-        pb, mal = L.table(study)
+        try:
+            pb, mal = L.table(study)
+        except Exception as e:  # noqa: BLE001  (as compute_a149: a cohort that cannot be built is reported, not fatal)
+            print(f"epithelium unit {study} not built: {type(e).__name__}: {e}", flush=True)
+            return None
         a, b = mal, L.NORM
         if a not in set(pb.compartment) or b not in set(pb.compartment):
             return None

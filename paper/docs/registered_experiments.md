@@ -10565,3 +10565,16 @@ mechanism of the paper's one local phase shift. No trend with power: the delay i
 **Power first.** Swap-null SD of each tertile's pooled offset -> MDE of the trend (T3 - T1), and the trend detectable
 if the MDE <= 0.75 h. **Limits.** Signature scores are lesional activity, not cytokine dose; cross-sectional.
 **Stop rule.** Power, then one scoring run. **Code:** `paper/exploratory/A352_cytokine_delay/scripts/`.
+
+### A346 power note (2026-11-23; `a346.py --stage power`, `output/power/{repro14,power}.csv`; the core clock on the real pairing not computed)
+One code fix before any output: an A149 cohort whose table cannot be rebuilt (GSE117570, epithelium only) is reported
+and skipped, as `compute_a149` does. 14 genes reproduce the stored A227 anchors exactly (fibroblast 0.6864, 93 patients
+/ 16 cohorts, matched q95 0.5391, narrow responsive q95 0.6378; endothelial 0.6769, 101 / 14, 0.5120 / 0.6589).
+Epithelium (D346): 190 patients / 27 cohorts, 0.4329. Core loop: pooled-null MDE 0.122 (fibroblast), 0.116
+(endothelial); companion q95 matched 0.558 / 0.529, narrow responsive 0.635 / 0.663, broad 0.540 / 0.529. Holm p_cal of
+a core value 0.10 below the 14-gene value: matched 0.034 / 0.015, broad 0.014 / 0.009, **narrow responsive 0.45 / 0.51**
+(0.15 / 0.23 at delta 0.05). Core placebo rate of the narrow q95 rule 0.075 / 0.076 (above the band: read by p_cal only).
+**H346.1 is not decidable in either compartment** (the narrow family's core q95 lies at the 14-gene clock value): by the
+registration it is reported descriptively. The pairing, matched and broad conditions are decidable; the single scoring
+run proceeds and reads them as registered (pairing + matched + broad = "beyond matched and calibrated broad responsive
+genes"; the narrow-family wording stays post hoc).
