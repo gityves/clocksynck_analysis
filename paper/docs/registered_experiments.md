@@ -10785,3 +10785,75 @@ time and RIN covary with collection centre and procurement order; fast deaths on
 short); GTEx sample attributes are controlled access: per-tissue aggregates only leave the machine.
 
 **Stop rule.** Power stage once; scoring run once if decidable. **Code:** `paper/exploratory/A356_gain_attenuation/scripts/a356.py --stage power|score`, output `paper/exploratory/A356_gain_attenuation/output/` (aggregates only).
+
+## A357 (2026-11-23, on the user's instruction "let's write an amendment", after the question whether the personal departure carried by PER1, PER2 and NR1D1 (A329) hints at internal desynchrony: "difference between systemic signals and clock would lead to the offset we see?"; staged: power (matched sets only, no clock-gene residual computed), then one scoring run; **NOT BLIND**: A294b (departure 2.6 times matched genes), A329 (core loop 1.28 times matched; coupling falls on the core loop; the sample's own glucocorticoid / immediate-early scores do not explain the departure, R^2 0.048 vs matched 0.056), A311 (the departure is not phase-dominated), A302 (the liver's departure not shared preferentially with meal-driven tissues) and A313 (corrected pair correlations of the 14-gene clock-plane residuals over 261 pairs: medians 0.129-0.265 by cell, matched genes 0.115-0.210; adjacency gradient shared by matched genes); **BLIND**: every per-gene residual of a clock gene against the body's clock state, every cross-tissue correlation of such residuals, the person signal factor defined below and every regression on it (none computed; grep of A302, A311, A313, A329 scripts and `results_preliminary.md`, 2026-11-23)): is the signal-gene part of the personal departure a person-level systemic signal that tissues read unequally? **GTEx v10 fast deaths, A104 periphery rows, Whole Blood and Testis excluded (as A302 / A313): 25 tissues**
+
+**Why.** A329 put most of the clock-specific excess of the personal departure on the three signal-inducible clock genes,
+by a cause the sample's own acute signal scores do not capture. One reading is internal desynchrony at the signal layer:
+a systemic signal (glucocorticoid, feeding, sympathetic, or agonal) reaches every tissue of a person, but tissues read
+it with unequal sensitivity, so it displaces each tissue's clock state differently. A signal read by all tissues in
+proportion to their clock gain is absorbed into the body's clock state (the host) and leaves no departure; only the
+unequal part reaches the departure. This reading predicts (1) that the residuals of PER1, PER2 and NR1D1 after the
+body's clock state are shared across a person's tissues, more than those of core-loop genes and of expression-matched
+genes, and (2) that this person-level signal state, read from the other tissues, explains part of a tissue's clock-plane
+departure. Tissue-local causes (dissection, composition, local handling) predict neither.
+
+**Data and fit (fixed; from `score_a329.py`).** A329 load (`gtex.load`, A104 minimum donors, peripheral rows), minus
+Whole Blood and Testis; A294b 14-gene waveform; `cs.Dataset` with every tissue an anchor. Per-gene values: y = log((count
++ 0.5) / depth), centred within each tissue's intercept group (A104 strata).
+- **Per-gene residual.** For tissue k and a host H built from a given set of other tissues (`Dataset.host`, posterior
+  mean x, y, centred over the tissue's donors): least-squares regression of y_g on the two host columns over the tissue's
+  donors; residual r_kg, standardised within tissue.
+- **Pair correlation (H357.1).** For a pair (k, l) with >= 30 shared donors: host from all tissues except k and l; per
+  gene, signed correlation of r_kg and r_lg over the shared donors, with the host-error leakage removed as in A302 (the
+  cross-moment minus b_kg' S b_lg, S the mean posterior host covariance over the shared donors; the same for each
+  variance). rho_g = median over pairs of the corrected correlation.
+- **Person signal factor (H357.2).** For tissue k and donor i: s_i(-k) = mean over the donor's other tissues l of the
+  mean standardised residual of PER1, PER2 and NR1D1 in l, each residual computed on a host excluding both k and l;
+  donors with >= 3 other tissues.
+- **Clock-plane departure (H357.2).** d_ik = beta_ik minus its least-squares 2 x 2 map of the host excluding k (A329
+  H329.3 definition, 14-gene projector).
+
+**Gene sets.** sig = PER1, PER2, NR1D1; core = the other 11 genes (A329 `CORE`). Companions: the 100 expression-matched
+sets of A294b (`pseudo_waveforms(kind="matched")`, seed [294, 1]); each set's genes at the sig and core positions of the
+waveform play the roles of sig and core (as A329), and the set's own projector gives its d. Reported, not decisive: the
+glucocorticoid-target and immediate-early genes of `clocksync._core.controls` (per-gene rho_g, family medians).
+
+**Statistics.**
+- **H357.1 (person-level sharing on the signal genes).** rho_sig = mean of rho_g over sig, rho_core = mean over core,
+  Delta = rho_sig - rho_core. PASS if (i) Delta > the q95 of Delta over the 100 matched sets and (ii) rho_sig > the q95 of
+  the matched sets' rho_sig.
+- **H357.2 (the shared signal state explains the departure).** Per tissue: R^2_k of d_ik (2 columns) regressed on
+  s_i(-k) with an intercept; excess_k = R^2_k minus the median over matched sets of the same R^2 (each set with its own d
+  and its own s). PASS if the median excess over the 25 tissues is > 0 with its tissue-bootstrap 90 % interval (2,000
+  draws, seed 357) above 0, and the clock's median R^2 is above the q95 of the matched sets' median R^2.
+- **Reported (descriptive):** rho_g per gene; rho_sig and rho_core per tissue pair class of A313 (adjacent / distant);
+  the median R^2 with s replaced by s built from core genes; the same regression for the core-loop d (11-gene projector);
+  the correlation, over donors, of s(-k) with the mean glucocorticoid-target and immediate-early scores of the other
+  tissues (aggregates only).
+
+**Power (stage 1, matched sets only; no clock-gene residual is computed).** On the 100 matched sets: SD of Delta and of
+rho_sig over sets; SD of the median R^2 over sets and of its tissue bootstrap. Power of H357.1 against Delta = 0.10
+(the scale of A302 / A313 correlations), power of H357.2 against a median R^2 excess of 0.03 (half the matched median
+R^2 of A329 H329.3), each Phi(effect / SD - 1.645) with SD the larger of the two. Gate: power >= 0.8 for a
+hypothesis, else that hypothesis is reported as not resolvable in GTEx and not scored.
+
+**Readings (stated now).**
+- **Both PASS:** a person-level signal state, read unequally by tissues through PER1, PER2 and NR1D1, produces part of the
+  personal departure: internal desynchrony at the signal layer (tissues read one systemic signal differently). Its source
+  (daily cue history or the agonal state) is not separated in deaths.
+- **H357.1 PASS, H357.2 FAIL (powered):** the signal genes carry a shared person state, but it does not reach the clock
+  plane beyond matched genes: it is absorbed by the body's clock state or orthogonal to the departure.
+- **H357.1 FAIL (powered):** the signal-gene part of the departure is tissue-local; the systemic-signal reading of the
+  departure is not supported, with A302 and A313 (local or technical causes remain).
+- **H357.2 PASS without H357.1:** reported as such; not read as the signal-layer mechanism.
+
+**Limits.** Deaths: an agonal signal is a systemic signal too, so a PASS does not identify daily cues. The host absorbs
+the part of any signal read in proportion to clock gain, so the test sees only unequal reading. Three genes; the
+leakage correction assumes the posterior host covariance is correct; shared sample handling can be shared by any gene
+(the matched sets carry it). Aggregates only (per-gene and per-pair correlations, per-tissue R^2); no per-donor value
+leaves the machine.
+
+**Stop rule.** Power stage once; scoring run once per powered hypothesis. **Code:**
+`paper/exploratory/A357_signal_departure/scripts/score_a357.py --stage power|score` (long runs through
+`paper/common/run.sh`), output `paper/exploratory/A357_signal_departure/output/` (aggregates only).
