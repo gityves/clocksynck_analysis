@@ -393,3 +393,17 @@ The user's questions on sections 1-2, and what the record supports. No new analy
 
   In deaths (27 tissues) it holds on the core loop, beside a large donor-level non-clock scale. More tissues per
   living person (STARNET, addition 5) would decide it.
+
+## 8. Follow-up results (2026-11-23; proposed wording, not applied)
+
+Prompt `prompts/audit_followups_2026-11-23.md`. Each amendment was committed before scoring; numbers from RP.
+
+| gap / addition | result | wording it allows |
+|---|---|---|
+| Gap 1 / addition 1, tumour stroma (A346) | Fibroblasts: core 0.683 (14 genes 0.686), beyond matched, broad and narrow responsive (narrow descriptive: not decidable at the power stage); endothelium falls on the core (0.510 < matched q95 0.529; trio share 0.17). 14 genes: both pass the calibrated rule (narrow at the line) | "tumour fibroblasts keep the patient's normal fibroblast clock state, clock-specifically, also without PER1, PER2 and NR1D1 (in the discovery cohorts)"; drop endothelium from the clause; "cancer cells" stays out (D346 epithelium not clock-specific) |
+| Addition 2, inflamed skin (A347) | Psoriasis -1.51 h / core -0.96 h; AD -0.26 h on 14 genes (p 0.034, not clock-specific), -0.21 h on the core (p 0.097, MDE 0.37 h); psoriasis minus AD -1.25 h / -0.75 h, both intervals below 0; hidradenitis -1.07 h, not clock-specific (descriptive) | the registered reading keeps the psoriatic exception: "psoriatic lesions run about 1 to 1.5 h late (core loop about 1 h), more than atopic lesions, which lean late by a fraction of an hour without a core-loop or clock-specific delay"; replaces section 7's "inflamed skin, largest in psoriasis" |
+| Gap 2, living organ sharing (A348) | Core loop PASS in A251 H251.1, H251.2a-b and A255 H255.3 (beyond matched and broad; surgical pairs also beyond narrow); MuTHER fat-skin at the line (matched p_cal 0.057) | "tissues of the same living person share one clock state, also without PER1, PER2 and NR1D1 (skin sites and layers, surgical fat-skin pairs)"; A251 / A255 can enter Figure 1 or 4 |
+| Gap 3, intensive care (A349) | Ventilated detection limit: one organ 6.75 h (core 5.6 h), dispersion SD 2.25 h (not 3.9 h / 1.5 h); host spread about half of fast deaths; host-referenced log z2 lower in most tissues, the loss scales with clock strength (rho 0.82); compression 0.58 -> about 0.77 after removing the non-temporal axis | "the order is kept within a detection limit of about 6-7 h for one organ"; "offsets compressed, partly by a shared non-temporal state"; the loudness loss is host-referenced and largest in the strongest clocks (descriptive) |
+| Gap 7, class gains (A350) | Core-loop tau within 0.35 in four of five families; mural 0.389 (FAIL; SE x2.4) | "class gains are conserved across organs (on the core loop in four of five classes, not mural cells)" |
+| Addition 3, CHIRAL (Task 6) | drafted only (`prompts/chiral_age_rescore_DRAFT_2026-11-23.md`) | none until the user and PI decide |
+| Gap 8, provenance | A336 tier-2 scripts and table committed (Task 0) | - |
