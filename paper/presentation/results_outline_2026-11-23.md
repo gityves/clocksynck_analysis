@@ -309,7 +309,7 @@ maternal or ACTH signal remains open. No sampling times: these are shared states
 | slide | status | figure |
 |---|---|---|
 | 3.1 The reference organisation: GTEx fast deaths, whole day | **new** (below) | `figures/reference_map/` |
-| 3.2 Inside tissues: cell classes run at the organ's time with their own loudness; lymphocytes have no readable clock | revise `results.md` R2.3 (next) | `figures/celltypes_health/` |
+| 3.2 Inside tissues: cell classes run at the organ's time with their own loudness; lymphocytes have no readable clock | **revised** from `results.md` R2.3 (below) | `figures/celltypes_health/` |
 | 3.3 Composition moves neither time nor, much, loudness | revise `results.md` R2.2 (phase panel flipped to peak time) | `figures/organs_composition/` |
 | 3.4+ Loudness (organ gains, coupling reads loudness, person loudness, blood) | to build | |
 | 3.last The organ arrangement holds when the body no longer reads the hour (bridge to section 4) | **revised** from `results.md` R3.1 (below) | `figures/organ_arrangement/` |
@@ -347,6 +347,48 @@ tissues chosen for the deck).
 - Fast deaths are the reference because their body clock reads the hour of death (R 0.63, slide 3.last).
 
 **Source:** `presentation/output/organs/couplings.csv` (A263 R2 fit with donor bootstrap, `scripts/organs_compute.py`).
+
+## 3.2 Inside tissues: every resident class runs at the organ's time with its own loudness; lymphocytes have no readable clock
+
+**Bullets**
+1. Each cell class has its own gain relative to endothelium of the same atlas, the same across organs: fibroblast 1.26
+   (95 % 1.07 to 1.48), mural 0.92, parenchyma 0.88, epithelial 0.80, myeloid 0.67 (0.53 to 0.84) (A293 H293.4, pass).
+   On the core loop (A350, blind) conserved in four of five classes; mural cells not (tau 0.10 -> 0.39, H350.1 fail).
+2. Classes run at the organ's time: stromal-vascular classes peak within about 1 h of each other; endothelium peaks
+   0.46 h before fibroblasts (90 % 0.09 to 0.90), the mouse direction, but the order is not shown (H293.3 fail).
+3. Lymphocytes have no readable clock: their coherence between donors is above matched genes in 1 of 9 atlases (breast,
+   a hormonal pulse, A294), fibroblasts of the same donors thinned to their depth in 7 of 9; blind on the core loop in
+   fresh atlases, none (A321, 3 informative compartments, combined p 0.47).
+4. What that excludes (A326): a lymphocyte clock at 0.7 of the fibroblasts' would have been read (design power 0.996
+   and 1.00); a mouse-colon-sized one (0.25 of the fibroblasts', q95 0.40) would not (0.00 and 0.05). A bound, not a
+   species or residency difference.
+
+**Figure:** `figures/celltypes_health/celltypes_health.png` (`scripts/celltypes_health.py`; wide). A. gain relative to
+endothelium per class: atlases (dots), pooled 14 genes (black, 95 %), pooled core loop (open blue); lymphocytes at the
+zero-gain end. B. lead of the first class between stromal-vascular classes [h]: human atlases, circular mean with
+90 % atlas bootstrap, mouse against known time (diamonds). C. per atlas, coherence between donors of lymphocytes and
+thinned fibroblasts, with the lymphocytes' matched-gene 95th percentile. D. chance the designs read a lymphocyte clock
+of a given size relative to fibroblasts, with the mouse colon ratio.
+
+**Tags:** A293 parts 2-3 registered, NOT BLIND (per-family gains and mouse offsets seen earlier); A350 blind on the core
+loop; A281 registered; A321 blind for the atlases; A326 registered, not blind for the human results.
+
+**Caveats (speaker notes)**
+- Why this slide before composition: classes differ in loudness and lymphocytes have none, so composition could move an
+  organ's gain; classes sit within about 1 h of each other, so it can barely move its phase (3.3 tests both).
+- "Lead of the first class" is in words: positive = the first class peaks earlier (unaffected by the sign convention).
+- Heart lymphocytes (0.50) sit just below matched genes (0.58); breast CD4 T (0.38) above (0.30) is a hormonal pulse:
+  without PER1, PER2, NR1D1 not significant (A294).
+- Epithelial and myeloid tau are close to the bound (0.30); "myeloid" mixes macrophages (which carry a clock, A288)
+  with monocytes and dendritic cells.
+- Sharing per family, the calibrated stromal-vascular minus lymphocyte contrast (A272-A288), living donors (HLCA) and
+  residency (A284): as in `results.md` R2.3 speaker notes.
+- Skin T cells (A321) cohere but their thinned fibroblasts never pass: uninformative, an exception to check.
+
+**Source:** `exploratory/A293_organisation_levels/output/part3/families.csv`, `part2/tests.csv`;
+`exploratory/A350_class_gain_core/output/compare.csv`; `exploratory/A281_lymphocyte_clock/output/pairs.csv`;
+`exploratory/A294_lymphocyte_hormonal/output/pairs.csv`; `exploratory/L1_lymphocyte_power/output/design_power.csv`,
+`scout/output/ratios_vs_fibroblast.csv`; `docs/results_preliminary.md` A293, A321, A326, A350.
 
 ## 3.last The organ arrangement is internal: it holds when the body's clock no longer reads the hour of death
 
