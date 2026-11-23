@@ -311,7 +311,8 @@ maternal or ACTH signal remains open. No sampling times: these are shared states
 | 3.1 The reference organisation: GTEx fast deaths, whole day | **new** (below) | `figures/reference_map/` |
 | 3.2 Inside tissues: cell classes run at the organ's time with their own loudness; lymphocytes do not share it | **revised** from `results.md` R2.3 (below) | `figures/celltypes_health/` |
 | 3.3 Organs differ in loudness: not their cells, not post-mortem attenuation | **new** (below; composition figure to backup) | `figures/organ_gain/` |
-| 3.4+ Loudness (organ gains, coupling reads loudness, person loudness, blood) | to build | |
+| 3.4 Coupling mostly reads loudness: one departure size, 9.2-fold different gains | **revised** from `results.md` R2.1 (below) | `figures/organs_health/` |
+| 3.5+ Loudness (person loudness, blood) | to build | |
 | 3.last The organ arrangement holds when the body no longer reads the hour (bridge to section 4) | **revised** from `results.md` R3.1 (below) | `figures/organ_arrangement/` |
 
 CHIRAL concordance (A123) is slide 1.1. The ventilated and brain-dead rows of `results.md` R3.1 go to sections 4 and 7
@@ -436,6 +437,9 @@ post hoc display (same-class rows chosen post hoc).
   squamous oesophagus opposite to GTEx (mucosal biopsies against full-thickness stomach); skin near 1; the pooled test
   fails. In the timed baboon, organ amplitudes span 2.8-fold (10th-90th percentile, descriptive).
 - Not tested: agonal state and autolysis (fast deaths only).
+- Loudness is per-cell amplitude times synchrony among the cells; bulk and pseudobulk cannot separate the two, and
+  public 10x data cannot either (A334: the split fails a controlled dephasing; the dispersion is not clock-specific in
+  the aorta). Either way it is a property of the organ.
 - Panel C excludes whole blood (ischaemic time undefined for a draw). Across tissues, organ gain vs median ischaemia
   rho -0.37 (Holm 0.076): organs differ by under 1 h in median ischaemia, so this cannot be attenuation.
 
@@ -443,6 +447,60 @@ post hoc display (same-class rows chosen post hoc).
 `exploratory/A356_gain_attenuation/output/{score_tissues,score_pooled,score_across,score_descriptive}.csv`;
 `exploratory/A355_living_gain_ratios/output/{score_pairs,score_pooled}.csv`; `presentation/output/organs/couplings.csv`;
 `presentation/output/organs_composition/rows.csv`; `docs/results_preliminary.md` A295, A299, A323, A355, A356.
+
+## 3.4 Coupling mostly reads loudness: organs share the body's time at 9.2-fold different gains over a departure of nearly constant size
+
+**Bullets**
+1. Across 27 GTEx peripheral tissues, the clock variation shared with the body (S) spans 85-fold (0.12, whole blood, to
+   10.3), i.e. a 9.2-fold range of gain; each tissue's own departure from the body's clock state (D) spans 4.6-fold
+   (0.90 to 4.14) and barely grows with S (slope of log D on log S 0.07).
+2. Coupling = S / (S + D), so it follows loudness: louder organs read as more coupled (Spearman rho +0.734 with
+   amplitude). Not measurement: a perfectly locked tissue would read 0.97 at every tissue's real design (A291).
+3. The departure exceeds that of expression-matched genes: 2.6-fold on the 14 clock genes (90 % 2.4 to 2.9, all 27
+   tissues; A294b), but only 1.28-fold on the 11-gene core loop (90 % 1.15 to 1.44; 22 of 27 tissues; A329): most of
+   the clock-specific excess is carried by PER1, PER2 and NR1D1, and it is not the glucocorticoid / immediate-early
+   state of the sample (H329.3 fail).
+4. The brain follows the rule. In the baboon, where each animal's time is known, coupling rises with each tissue's
+   rhythm amplitude (Spearman 0.82 over 57 tissues; periphery 0.77, brain 0.74), and weakly rhythmic brain regions fall
+   on the peripheral line (A289: median residual -0.001). Human brain couples at 0.406 against 0.679 in the periphery.
+
+**Figure:** `figures/organs_health/organs_health.png` (`scripts/organs_health.py`; wide). A. S against D per tissue
+(log axes, same range), Theil-Sen line. B. coupling against the shared amplitude sqrt(S); grey: S / (S + D) at the
+median D (1.9), the definition of coupling at a constant departure, not a fit. C. own departure of the clock genes
+against that of expression-matched genes (median of 100 sets): 14 genes (filled, system colours) and core loop (open
+blue, against its own matched sets); dashed 1:1, dotted the median ratios 2.6 and 1.28. D. baboon: amplitude against
+known time (A36 timed gain, estimated without the host) against coupling, 35 peripheral tissues and 22 brain regions;
+grey: peripheral line.
+
+**Tags:** A104 registered (H104.1, rho < 0, not supported; the positive relation is post hoc, made registered by A144
+and A271 Part B). A291 registered (H291.1 pass); the S / D table is A291 post hoc. A294b registered (H294b.1 pass).
+A329 registered, blind for the core loop (H329.1 falls, H329.2-3 fail). A289 H289.3 registered (fail: brain on the
+line, the outcome shown); panel D display post hoc.
+
+**Caveats (speaker notes)**
+- S = z2 V_h (gain squared times host spread; invariant to the host's scale); D = 2 psi (scatter around the state the
+  body predicts, in amplitude and phase, net of counting noise). Both in clock-plane log-expression units squared.
+  Definitions as in `results.md` R2.1 speaker notes.
+- Panel B is not a test: the curve is the definition of c. The finding is panel A (D nearly constant while S spans
+  85-fold).
+- Slope reading (post hoc): a departure independent of amplitude (slope 0) means person-specific cue timing or
+  additive noise; individual intrinsic periods would give slope 2. Observed 0.07 (0.22 for the excess over matched
+  genes) excludes intrinsic periods as the main source. Feeding cue history not supported (A302, H302.1 fail).
+- Core loop: the matched sets of the 11 genes have larger departures than those of the 14 (different matching), so
+  compare each set to its own matched sets, not the two clouds to each other. On the core loop coupling falls
+  (median change -0.076; H329.2 fail). Reading: "partly leakage" of output genes; source of the departure open.
+- The departure in hours (A259): SD across donors 1.0 h (thyroid) to 3.2 h (lung); an upper bound, not above the
+  companion sets on that statistic.
+- The stress-responsive calibration of "stronger clocks are more coupled" (A290) is registered but not scored (only
+  placebo draws on disk).
+- Brain: lower coupling is not clock-specific (A263; every gene set drops); not the blood-brain barrier (A289: pineal
+  and pituitary couple less than brain regions in baboon and sheep). Wording: "the brain is less coupled to the body's
+  shared state", never "the brain's clock is the exception".
+
+**Source:** `exploratory/A294_floor/output/{tissues,tests}.csv`; `exploratory/A329_core_departure/output/{tissues,tests}.csv`;
+`exploratory/A291_attenuation/output/tissues.csv`; `results/figure_2/output/organs/r2_couplings.csv`;
+`results/figure_1/output/species/a36_tissues.csv`; `presentation/results.md` R2.1; `docs/results_preliminary.md` A289,
+A291, A294b, A302, A329.
 
 ## 3.last The organ arrangement is internal: it holds when the body's clock no longer reads the hour of death
 

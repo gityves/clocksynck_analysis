@@ -1,21 +1,23 @@
-"""Slide figure (results, R2.1): each organ expresses the body's time with its own gain over a clock-specific departure
-of nearly constant size; coupling follows, the brain included.
+"""Slide figure (results, 3.4; formerly R2.1): coupling mostly reads loudness. Each organ expresses the body's time with
+its own gain over a departure of nearly constant size; coupling follows, the brain included.
 
 Notation (A104 table, GTEx fast deaths, peripheral tissues read leave-one-out on the peripheral host): S = z2 V_h, the
 clock-plane variance a tissue shares with the body's clock state (gain squared times host spread); D = 2 psi, its clock-plane variance
 at a fixed body state, net of counting noise (own departure in amplitude and phase); coupling c = S / (S + D).
 A. Shared against own clock variation, one dot per tissue (log axes, same range), coloured by organ system; grey: Theil-Sen
    line of log D on log S (A294b descriptive slope). Post hoc display (A291 post hoc table).
-B. Coupling against S; grey: c = S / (S + D) at the median D over tissues. The curve is the definition of c drawn at a
-   constant D, not a fit: the finding is that D is nearly constant (A).
+B. Coupling against the shared amplitude sqrt(S); grey: c = S / (S + D) at the median D over tissues. The curve is the
+   definition of c drawn at a constant D, not a fit: the finding is that D is nearly constant (A).
 C. Is the own variation specific to the clock genes? Own variance of the clock genes against the median of 100
-   expression-matched gene sets in the same tissue (A294b, registered, H294b.1 pass); grey: identity.
+   expression-matched gene sets in the same tissue (A294b, registered, H294b.1 pass); dashed: identity; dotted: median
+   ratio. Open blue: the same on the 11-gene core loop against its own matched sets (A329, registered, blind; median
+   ratio 1.28).
 D. Baboon (Mure 2018, 12 animals): rhythm amplitude against known time (A36 timed gain |g|, estimated without the host)
    against coupling (A42 readout 2), 35 peripheral tissues and 22 brain regions; grey: the peripheral least-squares line.
    Post hoc panel (A289 H289.3 registered the untimed amplitude: brain on the line). Pineal, pituitary and ocular tissues
    not shown.
 
-Data: exploratory/A294_floor/output/{tissues,tests}.csv; results/figure_2/output/organs/r2_couplings.csv;
+Data: exploratory/A294_floor/output/{tissues,tests}.csv; exploratory/A329_core_departure/output/{tissues,tests}.csv; results/figure_2/output/organs/r2_couplings.csv;
 results/figure_1/output/species/a36_tissues.csv. GTEx aggregates only (one value per tissue).
 Output: presentation/figures/organs_health/organs_health.{svg,png}.
 
@@ -26,6 +28,8 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import seaborn as sns
+from matplotlib.lines import Line2D
 
 import paperfig as pf
 
@@ -36,6 +40,7 @@ PAPER = Path(__file__).resolve().parents[2]
 EXP = PAPER / "exploratory"
 OUT = PAPER / "presentation" / "figures" / "organs_health"
 INK, MUTED = "#222222", pf.GREY
+CORE = sns.color_palette().as_hex()[0]
 
 
 def scatter(ax, t, system, title, x="own_amplitude", xlabel="clock-gene variation"):
@@ -78,32 +83,40 @@ def shared_own(ax, t, slope):
 
 
 def coupling_curve(ax, t):
-    """Coupling against S, with S / (S + D) at the median D."""
-    ax.scatter(t.S, t.coupling, s=24, c=[COLOR[gtex_system(k)] for k in t.index], edgecolor="white", lw=0.4, zorder=2)
-    xs = np.geomspace(0.08, 15, 80)
+    """Coupling against the shared amplitude sqrt(S), with S / (S + D) at the median D."""
+    ax.scatter(np.sqrt(t.S), t.coupling, s=24, c=[COLOR[gtex_system(k)] for k in t.index], edgecolor="white", lw=0.4,
+               zorder=2)
+    xs = np.geomspace(0.3, 4, 80)
     d = t.own.median()
-    ax.plot(xs, xs / (xs + d), color=MUTED, lw=1.2, zorder=1)
-    ax.text(3, 0.12, f"S / (S + {d:.1f})", ha="center", fontsize=8.5, color=MUTED)
-    log_ticks(ax, 0.08, 15)
+    ax.plot(xs, xs**2 / (xs**2 + d), color=MUTED, lw=1.2, zorder=1)
+    ax.text(2.2, 0.12, f"S / (S + {d:.1f})", ha="center", fontsize=8.5, color=MUTED)
+    ax.set_xscale("log")
+    ax.set_xlim(0.3, 4)
+    ax.set_xticks([0.5, 1, 2, 4], ["0.5", "1", "2", "4"])
+    ax.minorticks_off()
     ax.set_ylim(-0.05, 1.05)
-    ax.set_xlabel("shared with the body, S")
-    ax.set_ylabel("coupling to the\nbody's clock state")
+    ax.set_xlabel("amplitude shared\nwith the body, \u221aS")
+    ax.set_ylabel("coupling")
 
 
-def specific(ax, t, ratio):
-    """Own variance of the clock genes against that of expression-matched genes, per tissue; `ratio`: median clock /
-    matched over tissues."""
+def specific(ax, t, ratio, core, ratio_core):
+    """Own variance of the clock genes against that of expression-matched genes, per tissue (14 genes: filled; core
+    loop: open blue); `ratio`, `ratio_core`: median clock / matched over tissues."""
     ax.scatter(t.own_matched_median, t.own, s=24, c=[COLOR[gtex_system(k)] for k in t.index], edgecolor="white", lw=0.4,
                zorder=2)
-    ax.plot([0.2, 6], [0.2, 6], color=MUTED, lw=0.8, ls="--", zorder=1)
-    ax.plot([0.2, 6 / ratio], [0.2 * ratio, 6], color=MUTED, lw=0.8, ls=":", zorder=1)
-    ax.text(2.2, 2.2 * 0.8, "1:1", fontsize=8.5, color=MUTED, ha="left", va="top")
-    ax.text(1.6, 1.6 * ratio, f"×{ratio:.1f}", fontsize=8.5, color=MUTED, ha="left", va="top")
-    log_ticks(ax, 0.2, 6)
-    log_ticks(ax, 0.2, 6, "y")
-    ax.set_xticks([0.3, 1, 3], ["0.3", "1", "3"])
-    ax.set_yticks([0.3, 1, 3], ["0.3", "1", "3"])
-    ax.set_xlabel("own departure,\nrandom genes")
+    ax.scatter(core.own_matched_median_core, core.own_core, s=22, facecolor="white", edgecolor=CORE, lw=1.1, zorder=3)
+    lo, hi = 0.4, 10
+    ax.plot([lo, hi], [lo, hi], color=MUTED, lw=0.8, ls="--", zorder=1)
+    for r in (ratio, ratio_core):
+        ax.plot([lo, hi / r], [lo * r, hi], color=MUTED, lw=0.8, ls=":", zorder=1)
+    ax.text(5, 5 * 0.85, "1:1", fontsize=8.5, color=MUTED, ha="left", va="top")
+    ax.text(hi / ratio * 1.05, hi * 0.95, f"\u00d7{ratio:.1f}", fontsize=8.5, color=MUTED, ha="left", va="top")
+    ax.text(4.2, 4.2 * ratio_core * 1.1, f"\u00d7{ratio_core:.2f}", fontsize=8.5, color=CORE, ha="right", va="bottom")
+    log_ticks(ax, lo, hi)
+    log_ticks(ax, lo, hi, "y")
+    ax.set_xticks([0.5, 1, 3, 10], ["0.5", "1", "3", "10"])
+    ax.set_yticks([0.5, 1, 3, 10], ["0.5", "1", "3", "10"])
+    ax.set_xlabel("own departure,\nexpression-matched genes")
     ax.set_ylabel("own departure, clock genes")
 
 
@@ -119,13 +132,23 @@ def main():
     legend_in(lay.axes["A"], fontsize=7.5, loc="upper left")
     coupling_curve(lay.axes["B"], t)
     tests = pd.read_csv(EXP / "A294_floor/output/tests.csv").set_index("test")
-    specific(lay.axes["C"], t, float(np.exp(tests.loc["H294.1", "median_log_ratio"])))
+    core = pd.read_csv(EXP / "A329_core_departure/output/tissues.csv", index_col="tissue")
+    t329 = pd.read_csv(EXP / "A329_core_departure/output/tests.csv").set_index("test").loc["H329.1"]
+    specific(lay.axes["C"], t, float(np.exp(tests.loc["H294.1", "median_log_ratio"])), core,
+             float(np.exp(t329.median_log_ratio_core)))
+    h = [Line2D([], [], ls="", marker="o", ms=6, color=INK, label="14 clock genes"),
+         Line2D([], [], ls="", marker="o", ms=6, mfc="white", mec=CORE, label="core loop")]
+    lay.axes["C"].legend(handles=h, loc="lower right", frameon=False, fontsize=8, handletextpad=0.1)
+    print("S fold", round(t.S.max() / t.S.min(), 1), "gain fold", round(np.sqrt(t.S.max() / t.S.min()), 2),
+          "D fold", round(t.own.max() / t.own.min(), 2), "median D", round(t.own.median(), 2),
+          "core ratio", round(float(np.exp(t329.median_log_ratio_core)), 3))
     for k in "ABC":
         lay.axes[k].set_title("human", fontsize=13, color=INK)
     timed = pd.read_csv(PAPER / "results/figure_1/output/species/a36_tissues.csv", index_col="tissue").g_abs
     bab = bab.set_index("compartment").assign(timed_amp=timed)
     scatter(lay.axes["D"], bab, baboon_system, "baboon", x="timed_amp", xlabel="rhythm amplitude\nagainst known time")
     lay.axes["D"].set_ylabel("coupling")
+    lay.axes["D"].set_xlabel("amplitude against\nknown time")
     fig = lay.finalize()
     print(pf.collisions(fig))
     pf.save(fig, OUT / "organs_health")
