@@ -16,6 +16,25 @@ import a336_common as C  # noqa: E402
 
 OUT = HERE.parents[1] / "output"
 
+# Stored 14-gene verdicts, read from each entry's own test table (filled where checked; empty = not filled here). A
+# core "fall" on a statistic that already fails on 14 genes is no change of verdict.
+VERDICT_14 = {
+    "A227_H227.1": "PASS", "A227_H227.2": "PASS", "A271_H271.1": "FAIL", "A271_H271.1:myeloid": "FAIL",
+    "A271_H271.1:T_NK": "FAIL", "A271_H271.1:CD8neg_T": "FAIL", "A272_H272.1": "FAIL (above matched, not responsive q95)",
+    "A272_H272.2": "PASS", "A273_V273.1": "PASS", "A273_V273.2": "PASS", "A274_H274.1": "PASS", "A274_H274.2": "PASS",
+    "A274_H274.3": "PASS", "A279_V279.1": "PASS", "A279_H279.1": "FAIL", "A279_Bmal1KO": "descriptive (conditions met)",
+    "A280_H280.1": "PASS", "A280_H280.2": "FAIL", "A282_living_D": "descriptive (both p_cal < 0.05)",
+    "A282_living_T_SV": "descriptive (matched p_cal < 0.05 only)", "A282_postmortem_D": "descriptive (both p_cal < 0.05)",
+    "A283_H283.1": "FAIL (matched p_cal 0.010, responsive 0.299)", "A283_H283.2": "PASS", "A283_H283.3": "PASS",
+    "A283_H283.4": "PASS", "A283_H283.5": "PASS", "A283_V283": "PASS", "A293_H293.3": "PASS (equivalence, A335)",
+    "A326_H326.1:A281": "FAIL (power < 0.8 at r = 0.25)", "A326_H326.1:A287": "FAIL (power < 0.8 at r = 0.25)",
+    "A326_H326.1:A321": "FAIL (power < 0.8 at r = 0.25)", "A288_H288.1": "FAIL (responsive p_cal 0.133)",
+    "A288_H288.2": "PASS", "A288_H288.3": "FAIL", "A295_H295.1": "FAIL", "A324_H324.2": "FAIL",
+    **{f"A233_H233.c.1:{c}": "PASS (equivalent)" for c in ("htn", "ihd", "copd", "depression", "smoking")},
+    **{f"A233_H233.c.2-3:{c}:{k}": "null kept" for c in ("htn", "ihd", "copd", "depression", "smoking")
+       for k in ("Q", "module_d_star", "module_offset")},
+}
+
 
 def part4():
     b = pd.read_csv(OUT / "braindeath_core.csv")
@@ -60,12 +79,15 @@ def part2():
 
 def main():
     parts = [pd.read_csv(f) for f in sorted((OUT / "part1").glob("*.csv"))]
+    parts = [p for p in parts if list(p.columns) == C.COLUMNS]  # row files only (not replicate / pair tables)
     extra = pd.DataFrame(part4() + part2())
     tab = pd.concat(parts + [extra], ignore_index=True)
     inv = pd.read_csv(OUT / "inventory.csv")
     done = set(tab.id)
     alias = {"A304_H304.3-4": "A304_H304.3", "A306_gain_departure": "A306_", "A270_clockR": "A270_clockR",
-             "A275_classes": "A275_classes", "A235_H235.1": "A235_H235.1_"}
+             "A275_classes": "A275_classes", "A235_H235.1": "A235_H235.1_", "A233_H233.c.1": "A233_H233.c.1:",
+             "A233_H233.c.2-3": "A233_H233.c.2-3:", "A271_H271.1": "A271_H271.1",
+             "A326_H326.1": "A326_H326.1:"}
     ran = lambda i: i in done or any(str(d).startswith(alias.get(i, "\0")) for d in done)  # noqa: E731
     rest = inv[~inv.id.map(ran)]
     nr = pd.DataFrame(dict(id=rest.id, figure_panel=rest.figure_panel, statistic=rest.statistic,
@@ -75,7 +97,8 @@ def main():
     for col in C.COLUMNS:
         if col not in tab:
             tab[col] = np.nan
-    tab[C.COLUMNS].to_csv(OUT / "two_readouts.csv", index=False)
+    tab["verdict_14"] = tab.id.map(VERDICT_14)
+    tab[C.COLUMNS + ["verdict_14"]].to_csv(OUT / "two_readouts.csv", index=False)
     print(tab.reading.value_counts().to_string())
 
 
