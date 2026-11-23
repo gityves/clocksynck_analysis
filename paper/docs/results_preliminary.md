@@ -7962,3 +7962,30 @@ a third of the cohort (swap-null SD 0.15-0.59 h). Reading: not a negative result
 activity cannot be read with tertile strata on these series. The score stage's null was not verified (smoke p 0.005 on
 swapped labels). Code: `exploratory/A352_cytokine_delay/scripts/a352.py`.
 <!-- src: paper/exploratory/A352_cytokine_delay/output/power/{power,coverage}.csv -->
+
+## A353 (scored 2026-11-23; NOT BLIND for the full-cycle A337 Perrin values and the A344 skin outcome, BLIND for every subset value; one scoring run after one code check): the muscle pre-mRNA lead is recovered from hospital-hours biopsies (H353.1 PASS on 08, 12, 16 h; H353.2 PASS on 08-20 h and on 08, 12 h); reading each biopsy as a time of day degrades as the arc shrinks
+<!-- src: paper/exploratory/A337_timed_lead/output/a353/{subsets,verdicts}.csv; code paper/exploratory/A337_timed_lead/scripts/score_a353.py -->
+Perrin 2018 muscle, direct introns, 14 genes; truth = full-cycle timed lead (all 57 libraries) +1.75 h (90 % subject
+bootstrap 1.49 to 2.02); paired 90 % intervals from 2,000 subject-cluster bootstraps; gate p from 10,000 within-subject
+permutations.
+- **Full cycle (reference, reproduces A337 Perrin):** untimed +1.42 h (1.19 to 1.66; A337's within-subject interval 1.19
+  to 1.65), minus truth -0.32 h (-0.54 to -0.13).
+- **H353.1 PASS (08, 12, 16 h; 9 subjects, 27 samples):** untimed +1.74 h (1.21 to 2.38), gate kappa 0.94 (p 0.0001);
+  minus truth -0.01 h (-0.50 to 0.63), inside +-1.5 h.
+- **H353.2 PASS x2:** 08-20 h (36 samples) +1.40 h, minus truth -0.35 (-0.57 to -0.10); 08, 12 h (18 samples) +1.90 h,
+  minus truth +0.16 (-0.55 to 0.89), gate p 0.002.
+- *Per-sample phase (descriptive):* R / median absolute error against clock time: full 0.79 / 1.42 h; 08-20 h 0.88 /
+  1.30 h; 08, 12, 16 h 0.74 / 2.51 h; 08, 12 h 0.45 / 4.00 h; night 20, 00, 04 h 0.42 / 3.18 h.
+- *Night 20, 00, 04 h (descriptive):* +1.05 h, minus truth -0.70 (-1.14 to -0.31).
+- *Core loop (descriptive; full-cycle H337.2 core FAIL):* full minus truth -1.34 h (-2.48 to -0.59); 08, 12, 16 h -0.37
+  (-1.74 to 0.64); 08-20 h -1.04 (-1.85 to -0.61); 08, 12 h -0.77 (-2.25 to 0.47).
+- Code check (`--check`: thinned spliced counts as unspliced, times shuffled within subject): untimed leads -0.36 to
+  +0.08 h, timed truth uninformative, every verdict undecidable. One fix after the check, before the scoring run: the
+  full-cycle row kept only subjects with all six times (54 libraries); it now keeps all 57, as registered. The
+  registration's list of subsets the three-time subject drops from omitted D4, which contains 08 h; the rule (subjects
+  with every time of the subset) decides and drops it.
+- **Reading (registered).** The muscle lead is recovered from three daytime biopsies per person, a second living tissue
+  after skin (A344). Unlike skin, two daytime points (08, 12 h) also pass here, with six full-day times and a
+  well-entrained protocol (hourly isocaloric meals, controlled light): the most favourable design. Sample times degrade
+  as the arc shrinks (median error 1.42 h full, 2.51 h on 08-16 h, 4.00 h on 08-12 h) while the lead holds: relative
+  readouts survive partial sampling better than sample times, as in skin.
