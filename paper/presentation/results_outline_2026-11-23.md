@@ -356,19 +356,13 @@ tissues chosen for the deck).
    On the core loop (A350, blind) conserved in four of five classes; mural cells not (tau 0.10 -> 0.39, H350.1 fail).
 2. Classes run at the organ's time: stromal-vascular classes peak within about 1 h of each other; endothelium peaks
    0.46 h before fibroblasts (90 % 0.09 to 0.90), the mouse direction, but the order is not shown (H293.3 fail).
-3. Lymphocytes have no readable clock: their coherence between donors is above matched genes in 1 of 9 atlases (breast,
-   a hormonal pulse, A294), fibroblasts of the same donors thinned to their depth in 7 of 9; blind on the core loop in
-   fresh atlases, none (A321, 3 informative compartments, combined p 0.47).
-4. What that excludes (A326): a lymphocyte clock at 0.7 of the fibroblasts' would have been read (design power 0.996
-   and 1.00); a mouse-colon-sized one (0.25 of the fibroblasts', q95 0.40) would not (0.00 and 0.05). A bound, not a
-   species or residency difference.
+3. Lymphocytes are the zero-gain end: no readable clock of their own (bound: below about 0.7 of the fibroblasts').
 
-**Figure:** `figures/celltypes_health/celltypes_health.png` (`scripts/celltypes_health.py`; wide). A. gain relative to
-endothelium per class: atlases (dots), pooled 14 genes (black, 95 %), pooled core loop (open blue); lymphocytes at the
-zero-gain end. B. lead of the first class between stromal-vascular classes [h]: human atlases, circular mean with
-90 % atlas bootstrap, mouse against known time (diamonds). C. per atlas, coherence between donors of lymphocytes and
-thinned fibroblasts, with the lymphocytes' matched-gene 95th percentile. D. chance the designs read a lymphocyte clock
-of a given size relative to fibroblasts, with the mouse colon ratio.
+**Figure:** `figures/celltypes_health/celltypes_health.png` (`scripts/celltypes_health.py`; wide, two panels). A. gain
+relative to endothelium per class: atlases (dots), pooled 14 genes (black, 95 %), pooled core loop (open blue; mural
+"not conserved"); lymphocytes at the zero-gain end with the A326 bound. B. lead of the first class between
+stromal-vascular classes [h]: human atlases, circular mean with 90 % atlas bootstrap, mouse against known time
+(diamonds). Lymphocyte panels removed (user, 2026-11-23): too much weight on a negative.
 
 **Tags:** A293 parts 2-3 registered, NOT BLIND (per-family gains and mouse offsets seen earlier); A350 blind on the core
 loop; A281 registered; A321 blind for the atlases; A326 registered, not blind for the human results.
@@ -383,6 +377,13 @@ loop; A281 registered; A321 blind for the atlases; A326 registered, not blind fo
   with monocytes and dendritic cells.
 - Sharing per family, the calibrated stromal-vascular minus lymphocyte contrast (A272-A288), living donors (HLCA) and
   residency (A284): as in `results.md` R2.3 speaker notes.
+- Lymphocytes (detail for questions, not on the slide):
+  - No readable clock: their coherence between donors is above matched genes in 1 of 9 atlases (breast,
+    a hormonal pulse, A294), fibroblasts of the same donors thinned to their depth in 7 of 9; blind on the core loop in
+    fresh atlases, none (A321, 3 informative compartments, combined p 0.47).
+  - What that excludes (A326): a lymphocyte clock at 0.7 of the fibroblasts' would have been read (design power 0.996
+    and 1.00); a mouse-colon-sized one (0.25 of the fibroblasts', q95 0.40) would not (0.00 and 0.05). A bound, not a
+    species or residency difference.
 - Skin T cells (A321) cohere but their thinned fibroblasts never pass: uninformative, an exception to check.
 
 **Source:** `exploratory/A293_organisation_levels/output/part3/families.csv`, `part2/tests.csv`;

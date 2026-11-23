@@ -9,15 +9,8 @@ B. Phase offsets between stromal-vascular classes of the same atlas (A293 Part 2
    coloured dots, human atlases (untimed pairwise offsets); black: circular mean over atlases with atlas bootstrap
    90 % interval; black open diamonds: mouse colon and aorta against known time (A273, A279). Positive = the first
    class earlier.
-C. Do lymphocytes keep a clock of their own? Per atlas, signed clock-gene coherence between donors (A281,
-   `decompose.signed_coherence`, per-sample offset fitted out) of the lymphocytes (cyan) and of the same donors'
-   fibroblast-stromal cells thinned to the lymphocytes' clock-gene counts (brown, median of 20 thinnings), joined by a
-   line; grey tick: 95th percentile of the lymphocytes' 200 expression-matched gene sets (A294 recompute of A281's sets
-   and seeds). Nine atlases (A281 H281.1 fail: 2 of 9 lymphocyte compartments coherent; H281.2 pass).
-D. What "no readable clock" excludes (A326, registered; not blind for the human results): chance that the designs read
-   a lymphocyte clock scaled to r times the fibroblasts' (A281, 14 genes, nine atlases; A321, core loop, four fresh
-   atlases, blind); dotted: 0.8; cyan band: mouse colon T-cell / fibroblast amplitude ratio, point 0.246 to q95 0.404
-   (L1 scout, undamaged arm).
+Lymphocytes: no gain is estimated; the label carries the bound of A326 (a clock at 0.7 of the fibroblasts' would have
+been read in A281 and A321; per-atlas coherence and design power in the speaker notes).
 A also shows the core-loop pooled gains (open blue, A350, blind; mural tau above the bound: "not conserved").
 
 Data: exploratory/A293_organisation_levels/output/part3/{atlases,families}.csv;
@@ -71,7 +64,8 @@ def gain(ax, at, fam, core):
         if f == "lymphocyte":
             ax.annotate("", xy=(lo_edge * 1.05, i), xytext=(0.5, i),
                         arrowprops=dict(arrowstyle="-|>", color=col, lw=1.6, mutation_scale=10))
-            ax.text(lo_edge * 1.05, i - 0.3, "no readable clock", color=col, va="center", ha="left", fontsize=8)
+            ax.text(lo_edge * 1.05, i - 0.32, "no readable clock (< 0.7 of fibroblasts')", color=col, va="center",
+                    ha="left", fontsize=8)
             continue
         a = at[at.family == f]
         y = i + np.random.default_rng(i).uniform(-0.2, 0.2, len(a))
@@ -123,70 +117,20 @@ def phase(ax, at, tests):
     ax.legend(handles=h, loc="upper right", frameon=False, fontsize=8, handletextpad=0.1)
 
 
-def own_clock(ax, p, rng_):
-    """Per atlas: coherence between donors of the lymphocytes' clock genes (cyan) and of the same donors' fibroblast-
-    stromal cells thinned to the lymphocytes' counts (brown), joined by a line; grey tick: 95th percentile of the
-    lymphocytes' 200 expression-matched gene sets (A294)."""
-    p = p.merge(rng_[["atlas", "matched_q95"]], on="atlas").sort_values("C_stromal_thinned_median", ascending=False)
-    for i, r in enumerate(p.itertuples()):
-        ax.plot([r.C_lymph, r.C_stromal_thinned_median], [i, i], color="#DDDDDD", lw=1.2, zorder=1)
-        ax.plot([r.matched_q95] * 2, [i - 0.32, i + 0.32], color=MATCHED, lw=2.2, solid_capstyle="butt", zorder=2)
-        ax.scatter([r.C_stromal_thinned_median], [i], s=34, color=CELL["stromal-vascular"], edgecolor="white", lw=0.5,
-                   zorder=3)
-        ax.scatter([r.C_lymph], [i], s=34, color=CELL["lymphocyte"], edgecolor="white", lw=0.5, zorder=3)
-    ax.set_yticks(range(len(p)), [ATLAS[a] for a in p.atlas])
-    ax.tick_params(axis="y", length=0)
-    ax.set_ylim(len(p) - 0.5, -0.5)
-    ax.axvline(0, color=MUTED, lw=0.8, ls="--", zorder=0)
-    ax.set_xlim(-0.6, 1)
-    ax.set_xlabel("clock-gene coherence\nbetween donors")
-    return p
-
-
-def bound(ax, dp, mouse):
-    """What 'no readable clock' excludes (A326): chance that the lymphocyte designs would have read a clock of size r
-    relative to the fibroblasts' (A281, 14 genes, nine atlases; A321, core loop, fresh atlases, blind); band: the
-    mouse colon T-cell / fibroblast amplitude ratio, point to q95 (L1 scout)."""
-    ax.axvspan(mouse.ratio_point, mouse.ratio_q95, color=CELL["lymphocyte"], alpha=0.15, lw=0, zorder=0)
-    ax.text((mouse.ratio_point + mouse.ratio_q95) / 2, 0.45, "mouse\ncolon T", ha="center", va="center", fontsize=9,
-            color=CELL["lymphocyte"])
-    for d, ls, lab in (("A281", "-", "14 genes"), ("A321", "--", "core loop")):
-        x = dp[dp.design == d].sort_values("r")
-        ax.plot(x.r, x.design_power, color=INK, lw=1.4, ls=ls, marker="o", ms=4, label=lab, zorder=2)
-    ax.axhline(0.8, color=MUTED, lw=0.6, ls=":", zorder=0)
-    ax.set_xlim(0, 1.05)
-    ax.set_ylim(-0.03, 1.03)
-    ax.set_xlabel("lymphocyte clock size\n[fraction of fibroblasts']")
-    ax.set_ylabel("chance it is read")
-    ax.legend(loc="upper left", frameon=False, fontsize=9, handlelength=1.6)
-
-
 def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
-    lay = pf.Layout.slide("ABCD", kind="wide", col_ratios=[1.1, 0.95, 0.95, 0.8])
+    lay = pf.Layout.slide("AB", kind="wide", col_ratios=[1.2, 1])
     p3, p2 = EXP / "A293_organisation_levels/output/part3", EXP / "A293_organisation_levels/output/part2"
     gain(lay.axes["A"], pd.read_csv(p3 / "atlases.csv"), pd.read_csv(p3 / "families.csv"),
          pd.read_csv(EXP / "A350_class_gain_core/output/compare.csv"))
     phase(lay.axes["B"], pd.read_csv(p2 / "atlases.csv"), pd.read_csv(p2 / "tests.csv"))
-    oc = own_clock(lay.axes["C"], pd.read_csv(EXP / "A281_lymphocyte_clock/output/pairs.csv"),
-                   pd.read_csv(EXP / "A294_lymphocyte_hormonal/output/pairs.csv"))
-    L1 = EXP / "L1_lymphocyte_power"
-    mouse = pd.read_csv(L1 / "scout/output/ratios_vs_fibroblast.csv").query(
-        "arm == 'C-DC' and compartment == 'T' and gene_set == 'all14'").iloc[0]
-    dp = pd.read_csv(L1 / "output/design_power.csv")
-    bound(lay.axes["D"], dp, mouse)
     h = [Line2D([], [], ls="", marker="o", ms=7, color=INK, label="pooled, 14 genes"),
-         Line2D([], [], ls="", marker="o", ms=7, mfc="white", mec=CORE, label="pooled, core loop"),
-         Line2D([], [], ls="", marker="o", ms=7, color=CELL["stromal-vascular"], label="fibroblasts, thinned"),
-         Line2D([], [], ls="", marker="o", ms=7, color=CELL["lymphocyte"], label="lymphocytes"),
-         Line2D([], [], color=MATCHED, lw=2.2, label="matched genes, 95th pct")]
-    lay.shared_legend("ABCD", h, [x.get_label() for x in h], side="bottom", ncol=5, fontsize=10, handletextpad=0.3,
+         Line2D([], [], ls="", marker="o", ms=7, mfc="white", mec=CORE, label="pooled, core loop")]
+    lay.shared_legend("A", h, [x.get_label() for x in h], side="bottom", ncol=2, fontsize=10, handletextpad=0.3,
                       columnspacing=1.0)
     fig = lay.finalize()
     pd.set_option("display.width", 200)
-    print(oc[["atlas", "C_lymph", "C_stromal_thinned_median", "matched_q95"]].round(3).to_string(index=False))
-    print("mouse T/fibroblast ratio", round(mouse.ratio_point, 3), "q95", round(mouse.ratio_q95, 3))
     print(pf.collisions(fig))
     pf.save(fig, OUT / "celltypes_health")
 
