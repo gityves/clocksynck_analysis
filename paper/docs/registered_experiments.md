@@ -10326,3 +10326,61 @@ direct-intron / exon ratio; 500 draws. Spliced offset on the trimmed counts: -1.
 Stand-in: H345.1 rate 1.00 (14 genes) and 0.88 (core); offset median -1.41 / -1.28 h (SD 0.21 / 0.30); median 90 %
 half-width of D 0.31 / 0.46 h. **Both H345.1 and H345.2 are decidable on both waveforms; proceed to the single
 scoring run.** Caveat: the stand-in keeps the spliced rhythm amplitude; a weaker pre-mRNA rhythm lowers this power.
+
+## A346 (2026-11-23, prompt `docs/prompts/audit_followups_2026-11-23.md` Task 1, audit addition 1 / gap 1 (`STORY_AUDIT_2026-11-23.md`); chosen after seeing the results (post hoc choice of test); staged: power at the core projector, then one scoring run; **NOT BLIND** for every 14-gene value: A149 note 5 / A151 note 2 (A151 cohort set: fibroblasts 0.699 vs pseudo q95 0.542, endothelium 0.701 vs 0.527, malignant-normal epithelium 0.433 vs 0.461), A227 anchors on the A227 tables (fibroblast 0.686, 93 patients / 16 cohorts, matched q95 0.539, narrow responsive q95 0.638; endothelial 0.677, 101 / 14, 0.512 / 0.659), A271 Part A; **BLIND** for every core-loop value of the tumour-normal stromal and epithelial pairings (no stromal or epithelial row in A336; grep 2026-11-23), every placebo draw with the seeds below and every broad-family (`responsive_broad`) value of these compartments): do tumour fibroblasts and endothelium keep the patient's normal stromal clock state beyond both companion families, on 14 genes and on the core loop? **Single-cell tumour / adjacent-normal cohorts of A227 (A149 + A226 tables)**
+
+**Why.** The abstract's stroma clause rests on a post hoc result (A149 note 5) that was not confirmed in new cohorts
+(A226: too few patients) and never run without PER1, PER2 and NR1D1. In single-cell atlases the trio carries an extra
+share of cross-class sharing (A336 tier 2: trio contribution +0.04 to +0.14, drops at the 1st-7th percentile), so the
+core loop is the decisive readout.
+
+**Data and units.** The A227 cohort list and tables (`compute_a227.cohort_list`, `table`); compartments
+`tumour:fibroblast` / `adjacent_normal:fibroblast` and `tumour:endothelial` / `adjacent_normal:endothelial`; patients
+with both (A149 `pair_states`, >= 4 per cohort), states centred within chemistry stratum. Companion readout: malignant
+(or tumour epithelium) against adjacent-normal epithelium, A149 S1 units (`a149_lib.units`), A149 cohorts.
+
+**Statistic** (the A149 note 5 / A227 form). Per cohort the uncorrected |complex correlation| of tumour and own-normal
+states (`compute_a227.raw_stat`), pooled over cohorts with patient-count weights. Two readouts: 14 genes (the A227
+waveform) and the core loop (11 genes; `a336_common.core`). Companions: 200 expression-matched, 200 narrow responsive
+(glucocorticoid / immediate-early) and 200 broad responsive (`responsive_broad`, A320) sets per cohort, drawn with the
+A227 / A285 / A320 seeds (`seed_of(kind, study) + [44]`, `[44]`, `[45]`); the core readout uses the same sets
+restricted to the core positions (`a336_common.restrict`). Pairing p: 10,000 within-cohort permutations of the normal
+rows (`perm_null_raw`, seed `seed_of + [1]`). Calibration (A283 / A285 form): 2,000 placebo draws, normal-side rows
+permuted within chemistry stratum within cohort, every companion set re-paired identically (seeds `[346, k, d]`);
+p_cal = (1 + #{placebo pi >= pi}) / (1 + 2000), pi = the clock's percentile among its companions
+(`clocksync.pairwise.calibrated_p`). Trio contribution (descriptive): 14 minus core over 200 patient bootstraps within
+cohort, shared resamples.
+
+**Hypotheses** (Holm over the two compartments within each family).
+- **V346 (calibration):** placebo rejection rate of the q95 rule <= 0.0646 per compartment x family x readout. A family
+  that fails is read by p_cal only.
+- **H346.1 (primary, core loop, per compartment):** pairing p (Holm) < 0.05, p_cal matched (Holm) < 0.05 and p_cal narrow
+  responsive (Holm) < 0.05.
+- **H346.2 (secondary, core loop):** p_cal broad responsive (Holm) < 0.05.
+- **H346.3 (14 genes, not blind for the statistic, blind for the calibration):** the H346.1 rule on 14 genes (the A227
+  anchors were descriptive and never calibrated).
+- **D346 (descriptive):** malignant-normal epithelium on both readouts with the three families and p_cal.
+
+**Readings (fixed now).**
+- H346.1 passes for both compartments: "tumour fibroblasts and endothelium keep the patient's normal stromal clock
+  state, clock-specifically, without PER1, PER2 and NR1D1" (registered; the confirmation in new cohorts, A226, stays
+  missing, so "in the cohorts available"). One compartment: the clause is worded for that compartment only.
+- Pairing and matched pass, narrow responsive fails (at the line), or any fail: the stroma clause stays post hoc; the
+  tumour sentence becomes "tumours stay paired with the patient's time" (A138), with the stroma pairing "beyond matched
+  genes" if the matched condition holds.
+- An undecidable compartment (power below) is reported descriptively, not as a failure.
+
+**Power first (before any core value on the real pairing is computed).** On the core loop: the pooled within-cohort
+permutation null (SD, MDE = 2.49 SD), the companion statistics on the real pairing (comparators, not the target) and
+the 2,000 placebo draws (identity pairing never evaluated). For hypothetical core values v = 14-gene value - delta,
+delta in {0.05, 0.10, 0.15} (the A336 tier-2 trio contributions), the Holm-adjusted p_cal v would obtain against the
+matched and narrow responsive families. A compartment is decidable if at delta = 0.10 both are < 0.05. The power note
+is dated and committed before the scoring run. States of every set may be cached by the power stage; the clock's core
+statistic on the real pairing is computed only by the scoring stage.
+
+**Limits.** (1) The cohorts are those of the post hoc discovery (no independent cohort; A226). (2) Tumour and normal
+samples share one operation (anaesthesia, steroid premedication): a shared responsive state is the alternative the
+narrow family tests. (3) Pairing is a patient-level relation; it does not give tumour-stroma gain or offset.
+
+**Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A346_tumour_stroma_core/scripts/a346.py`
+(`--stage power|score`; via `paper/common/run.sh`, RUN_CAP_GB 40, 2 workers).
