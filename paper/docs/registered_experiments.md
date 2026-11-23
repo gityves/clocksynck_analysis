@@ -10384,3 +10384,74 @@ narrow family tests. (3) Pairing is a patient-level relation; it does not give t
 
 **Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A346_tumour_stroma_core/scripts/a346.py`
 (`--stage power|score`; via `paper/common/run.sh`, RUN_CAP_GB 40, 2 workers).
+
+## A347 (2026-11-23, prompt `docs/prompts/audit_followups_2026-11-23.md` Task 2, audit addition 2; chosen after seeing the results (post hoc choice of test); staged: power (swap nulls only), then one scoring run; **NOT BLIND** for every 14-gene offset: the A53 per-series offsets (`results/figure_5/output/psoriasis_details/a53_skin_per_series.csv`: AD median -0.45 h, 6 of 8 gated series negative; psoriasis -1.50 h, 9 of 9), the A54 discovery pooled psoriasis offset -1.499 h (9 series, 465 pairs), the archive A79 pooled AD 14-gene offset -0.257 h (p 0.040, `a79_atopic_dermatitis_sets.csv`), A183 (GSE154200 atopic eczema +0.14 h), A254 (hidradenitis -1.07 h), A345 (Tsoi AD spliced -1.15 h, unspliced -1.30 h); **BLIND** for every core-loop pooled offset of these 17 series, every companion and placebo value with the seeds below, the psoriasis-minus-AD difference on either readout, and the A345 within-lesional / within-non-lesional leads (never computed)): is the lesional clock delay specific to psoriasis, or shared by atopic dermatitis? **The 17 gated discovery series of `$SCCC_DATA/skin_lesional/processed/` (authors' counts; psoriasis 9 series / 465 pairs, AD 8 series / 298 pairs); Tsoi 2019 mapped counts for the lead descriptive**
+
+**Why.** The abstract calls psoriatic skin the exception; atopic lesions also lean late (A345, A53, A79), and
+psoriasis-specificity was not supported (A183 H183.2, not decidable on the core loop, A336).
+
+**Data and units.** `common/datasets/skin_paired_discovery/build.py` (unit = patient, cohort = series, non-lesional ->
+lesional), the gated series of A53 (non-lesional reference gate p < 0.05, >= 5 pairs). GSE121212 contributes distinct
+psoriasis and AD patients and stays in both arms; the A345 mapped counts of the same persons are not added (no double
+counting). GSE154200 (A183, other platform, batch design) and hidradenitis (A254, GSE151243) are descriptive rows,
+reported from their own scripts on both readouts.
+
+**Statistic.** Per disease, the pooled paired offset of `clocksync.paired` (lesional minus non-lesional, negative =
+lesional delayed; `pooled_offset` with weights 1 / se^2; one-sided delay p from 10,000 per-pair label swaps), on 14 genes
+(GTEx not-sun-exposed skin waveform, as A54) and on the core loop (`a336_common.core`). Companions: 200 expression-matched,
+200 narrow responsive and 200 broad responsive (`responsive_broad`) sets per disease, drawn once against the 14-gene
+waveform (seeds `[347, disease, family]`) and restricted to the core positions for the core readout. Calibration (A308
+form): the companions' pooled offsets on the same 2,000 per-person label-swap draws as the clock (draw 0 = no swap); q =
+Phi((o_c - m) / sqrt(tau^2 + s_c^2)), m and tau^2 from each family (A308), s_c the clock's placebo SD; V347 = share of swap
+draws in which the clock passes q < 0.05 (calibrated if <= 0.0646). Difference D = offset_PSO - offset_AD with a 90 %
+interval from 2,000 patient bootstraps within series (both arms resampled independently).
+
+**Hypotheses** (each on 14 genes and on the core loop; the core loop decides wording).
+- **H347.1 (AD delay):** the AD pooled offset is a delay (one-sided swap p < 0.05).
+- **H347.2 (AD clock-specific):** AD q < 0.05 against the matched and the narrow responsive families (broad reported).
+- **H347.3 (psoriasis larger):** 90 % interval of D entirely below 0.
+- **H347.4 (equivalence):** 90 % interval of D inside +-0.75 h (half the psoriatic delay).
+- **P347 (positive control, not blind on 14 genes):** psoriasis pooled delay p < 0.05 and q < 0.05 against matched. If it
+  fails on a readout, H347.1-4 on that readout are uninformative.
+- **D347 (descriptive):** per-series offsets; GSE154200 atopic eczema and hidradenitis rows; the A345 registered
+  descriptive, the A342 lead statistic (matched estimator, patient covariate) within lesional and within non-lesional
+  Tsoi samples, psoriasis and AD.
+
+**Readings (fixed now).**
+- H347.1 and H347.4 pass: "inflamed skin runs late"; the abstract's psoriasis exception becomes an inflamed-skin
+  property.
+- H347.1 and H347.3 pass: "inflamed skin runs late, most in psoriasis", with the AD size stated.
+- H347.1 fails with the AD MDE below 0.75 h: the psoriatic exception stands ("atopic lesions do not run detectably late").
+- H347.1 fails with the MDE above 0.75 h: AD undecidable; the wording stays "atopic lesions lean the same way".
+- H347.2 decides "clock-specific" for AD as A308 / A345 did for psoriasis.
+
+**Power first.** From swap nulls only (no observed offset): the SD of the pooled swap-null offset per disease and
+readout, MDE = 2.49 SD; the expected 90 % half-width of D, 1.645 sqrt(SD_PSO^2 + SD_AD^2). The AD delay is decidable if the
+MDE <= 0.75 h; equivalence is decidable if the half-width < 0.75 h. Dated note before scoring.
+
+**Limits.** (1) Different persons per disease; series differ in platform and biopsy site. (2) Lesion composition
+(proliferation, infiltrate) differs between diseases. (3) Not blind on 14 genes.
+
+**Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A347_inflamed_skin/scripts/a347.py`.
+
+## A348 (2026-11-23, prompt `docs/prompts/audit_followups_2026-11-23.md` Task 3, audit gap 2; staged: 14-gene reproduction and placebo floor, then one scoring run per amendment part (A251, A255); **NOT BLIND** for every 14-gene value and its calibration (A251 H251.1 0.628, H251.2a 0.813, H251.2b 0.594; A255 H255.1 MuTHER fat-skin 0.533, H255.3 surgical pooled 0.686; A285 / A320 p_cal), and for the descriptive rows without PER1 and NR1D1 (PER2 kept, no companions: A251 0.637 / 0.759 / 0.585, A255 MuTHER 0.387); **BLIND** for every core-loop (11-gene) value with or without companions and every placebo draw on the core loop): do the living-person organ-sharing results hold on the core loop against calibrated companions? **A251 skin sites (Wu 2018); A255 MuTHER fat-skin and surgical pairs (GSE73439, GSE133979)**
+
+**Statistic.** The A285 / A320 placebo test (`A285_companion_calibration/scripts/placebo_a285.py`, functions a251 and a255)
+unchanged except the waveform: the clock on the core loop (`a336_common.core` of the cohort's base waveform) and every
+companion (matched, narrow responsive, broad responsive; scored seeds) drawn as originally and restricted to the core
+positions (`a336_common.restrict`; for A255 cohorts whose base waveform lacks a core gene, the core genes present).
+2,000 placebo draws (seeds as A285 / A320); pairing p from 10,000 within-compartment permutations as the scored scripts;
+p_cal per family.
+
+**Hypotheses (core loop).** For each of H251.1, H251.2a, H251.2b, H255.1, H255.3: **H348.x** pairing p < 0.05, p_cal
+matched < 0.05 and p_cal broad responsive < 0.05 (the registered A320 wording); narrow responsive reported (decidable only
+where its placebo floor, the share of draws with pi = 1, is < 0.05). V348: q95-rule placebo rate <= 0.0646 per family.
+
+**Readings.** All pass: "tissues of the same living person share one clock state, without PER1, PER2 and NR1D1,
+beyond expression-matched and calibrated stress-responsive genes". A test that keeps pairing and matched but loses broad:
+at the line for that test. A test whose pairing fails on the core: the living-sharing claim rests on the remaining tests.
+
+**Order.** Part 1: draw 0 on 14 genes must reproduce every stored statistic and q95 (else stop). Part 2: core scoring,
+one run per amendment (A251, then A255). **Limits.** Few pairs (three to six compartments in A251, one in MuTHER): the
+narrow family is not decidable there (A285). **Stop rule.** One scoring run per part. **Code:** `placebo_a285.py --core`
+(new flag), outputs `A285_companion_calibration/output/a348/{a251,a255}/`.
