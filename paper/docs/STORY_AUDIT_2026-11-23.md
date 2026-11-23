@@ -87,7 +87,7 @@ were checked against the RP lines it cited before use.
 | "the surrounding stroma carries it" (abstract l. 15); limits table: "A271 (fibroblasts and endothelium beyond both nulls)" | A271 Part A lists fibroblast 0.686 (responsive q95 0.638) and endothelium 0.677 (0.659) as descriptive "anchors". The clock-specific stromal pairing is post hoc: A149 note 5, fibroblasts 0.699 against pseudo q95 0.542, endothelium 0.701 against 0.527. It could not be confirmed in new cohorts (A226: 11 and 13 new patients). The registered statistic shows a patient-specific pairing only (A151 H151.1 PASS; H151.2 uninterpretable) | post hoc, unconfirmed, and no core-loop run (A336 has no stromal row) |
 | "cancer cells stay coupled but grow quieter as they proliferate" (l. 15-16) | A304 is bulk tumour: gain ratio 0.63 (Q_G -0.462, Holm 0.011), departure not raised. Malignant host coupling FAILED (A138 H138.1: 0.076, below the calibrated threshold 0.083). A305 was not powered. A304 itself: "bulk cannot say whether malignant cells carry a weaker clock" | "cancer cells" is not shown; "tumours" is |
 | "Tumours follow their own patient's clock" (l. 15) | A138 H138.4 PASS on 14 genes (0.365); at the line on the core loop: 0.252 against matched q95 0.275 and responsive q95 0.313 (A336). Tumour time is a pairing; only a dispersion of 2.4 h or more is detectable (A336 part 3) | "follow" is at the line on the core loop |
-| "organs keep a common body time through ... intensive care" (l. 13-14) | The registered primary H109.2 FAILED in ventilated donors (rho 0.261, p 0.165). The order kept in ventilated post-mortem donors comes from a per-group readout registered as descriptive (A132; the between-group test, A132b, is post hoc). A293 H293.2 PASS (rho 0.690) is a registered re-test, not blind. The offsets are compressed toward 0 / 12 h: deviations at 0.58 of fast deaths (A132b); folded distance 0.77 against 1.01-1.02 h (A132). Only a single-organ shift of a median 3.9 h, or a dispersion SD of 1.5 h, is detectable (A336 part 3) | the order is kept; "time" is kept only at the stated limit, and the result is a descriptive readout after a failed primary |
+| "organs keep a common body time through ... intensive care" (l. 13-14) | The registered primary H109.2 FAILED in ventilated donors (rho 0.261, p 0.165). The order kept in ventilated post-mortem donors comes from a per-group readout registered as descriptive (A132; the between-group test, A132b, is post hoc). A293 H293.2 PASS (rho 0.690) is a registered re-test, not blind. The offsets are compressed toward 0 / 12 h: deviations at 0.58 of fast deaths (A132b); folded distance 0.77 against 1.01-1.02 h (A132). Only a single-organ shift of a median 3.9 h, or a dispersion SD of 1.5 h, is detectable (A336 part 3) | the order is kept, and the compression reads as a shared non-temporal displacement on running clocks (A109 circularity, A132b): "same order, offsets compressed", not "same offsets". "Time" is kept only at the stated limit, and the result is a descriptive readout after a failed primary |
 | "What disease changes is how loudly a tissue expresses that time, not the time itself" (l. 14) | Holds for tumours (A304, holds on the core), intensive care (A315 / A335, holds on the core and matched) and lesions (A254 H254.3 at the line; at the line on the core). Chronic systemic disease changes neither (A306; five loudness and departure nulls lose their equivalence on the core, A336). Inflamed skin changes time | a pattern over three conditions stated as a rule |
 | "Inflamed psoriatic skin is an exception, running about 1.5 h late" (l. 16-17) | Atopic lesions run late as well: Tsoi AD spliced -1.15 h, p 0.001 (A345, descriptive). The archive A53 per-series table gives AD a median of -0.45 h, 6 of 8 gated series negative, against -1.50 h for psoriasis, 9 of 9 (derived from `figure_5/output/psoriasis_details/a53_skin_per_series.csv`). Psoriasis-specificity was not supported (A183 H183.2, NR1D1-dependent; on the core it falls, not decidable, A336). A254's own reading is "specific to inflamed skin" (hidradenitis -1.07 h, not significant after Holm). Core loop -1.00 h (A335); Tsoi core -1.20 h (A345) | "psoriatic" should be "inflamed skin, largest in psoriasis"; "about 1-1.5 h" on the core loop |
 | "brain death ... the only state in which the shared time itself comes apart" (l. 17-18) | A317 H317.2 FAIL: the organs of brain-dead donors keep a shared clock state ("rearranged, not dissolved"). Psoriatic lesions are a local phase offset between a person's compartments, which is internal desynchrony as the project defines it. The order change holds on the core loop (D_rho 0.465, below its MDE 0.622 but significant; A336), aliased with procurement (Q41) | "comes apart" contradicts H317.2; "only" holds for body-wide order only |
@@ -137,7 +137,7 @@ comes apart" makes it the climax. Q41's recommendation is "not the climax withou
 | tension | evidence | consequence |
 |---|---|---|
 | **AD delay against the psoriasis framing** (not against A254) | A345: AD spliced -1.15 h (p 0.001); archive A53: AD median -0.45 h against psoriasis -1.50 h (derived); A183 H183.2: psoriasis minus eczema -1.09 h, not clock-specific, NR1D1-dependent. A254 found no delay in four non-skin lesions (pooled +0.01 h, MDE 0.69 h) and itself reads the shift as "specific to inflamed skin" (hidradenitis -1.07 h). The A345 registration and results text call A254 "no delay in other chronic lesions", which drops that qualifier | the record supports "inflamed skin runs late, psoriasis most", not a psoriasis exception; addition 2 would decide it |
-| **Living person loudness falls on the core loop** | A331 0.177 → 0.107, below matched q95 0.130 (A335); the trio drop is at the 13th / 43rd percentile (A336), so the fall may be lost precision. GTEx holds on the core (0.714 against matched q95 0.621), but the matched sets are high there too (median 0.119): a donor-level scale is large in deaths (A336 part 2) | the person factor is a property of deaths only; it does not touch the abstract, but Figure 4f and the clock-plane model's A_p must say so |
+| **Living person loudness falls on the core loop** | A331 0.177 → 0.107, below matched q95 0.130 (A335); the trio drop is at the 13th / 43rd percentile (A336), so the fall may be lost precision. GTEx holds on the core (0.714 against matched q95 0.621), but the matched sets are high there too (median 0.119): a donor-level scale is large in deaths (A336 part 2) | shown as a clock property in deaths only. The living limit is the design (two tissues from one punch biopsy, one array batch), not hospital hours. It does not touch the abstract, but Figure 4f and the model's A_p must say so |
 | **Brain-death arrows not stable across gene sets** | D2: lung -1.58 h on 14 genes, -1.47 h (-2.92 to +0.21) on the core; lower-leg skin +1.33 h appears; heart +0.32 → -1.12 h; 3 of 12 intervals exclude 0 on either gene set against 1.2 expected by chance (A332, A335) | "rearranges the order" holds as one statistic; no organ-level arrow can be named |
 | **Fetal: driven or running is undecided, and the core loop disagrees between cohorts** | A328 part a: core C 0.803, blind; A266: cortex core C 0.417, p 0.057; A269: lung core p 0.060, liver core not beyond responsive; A328 part b, A338, A339 uninformative; A340 PASS | the abstract's "moves as a whole" stands; the plan's "signal before clock" does not; Q43 open |
 | **Intensive care: order kept, offsets compressed** | A109: H109.2 FAIL pooled; the ventilated shared covariance is about half a displacement along one axis (best-matching fraction 0.44), host phases axially concentrated (axial R 0.26 against 0.03 in fast deaths; Rayleigh R 0.014). A132b: deviations at 0.58 of fast deaths | "time kept" means rank order kept with a shared non-temporal displacement; state it, or reviewers will find it in the archive |
@@ -343,3 +343,53 @@ exception (worded as above); brain death stays descriptive; before birth is "a d
 9. **Outward-facing additions.** Ask the owner of the jet-lag data (addition 4)? Apply for STARNET (addition 5)?
 10. **A342.** In the registry table, label it "rescored after the registered run was seen (count definition
     corrected)"?
+
+## 7. Addendum after the user's review (2026-11-23)
+
+The user's questions on sections 1-2, and what the record supports. No new analysis; numbers as in sections 1-3.
+
+- **Stroma and cancer cells.**
+  - In healthy tissue, stromal-vascular cells carry the clock at high gain: fibroblasts about 1.26 times endothelium
+    (A293 H293.4), above lymphocytes (A272-A283).
+  - In tumours, the stromal pairing with the patient's normal stroma is post hoc (A149 note 5), unconfirmed (A226),
+    and not on the core loop; tumour-stroma gain is not measured.
+  - For cancer cells the evidence is indirect: the gain loss is not explained by stromal content. The proliferative
+    arm has more stroma, and the purity-stratified loss remains (-0.266, p 0.037; A304).
+  - Malignant host coupling was tested and failed (A138 H138.1).
+  - Wording: "tumours express less of the patient's time as they proliferate; the loss is not explained by stromal
+    content", not "cancer cells stay coupled".
+- **Intensive care.** The organs share a clock state per patient (H109.1, excess 0.310) and keep the fast-death order
+  (rho 0.690). About half of the shared covariance is a displacement along one axis, mostly glucocorticoid (A109:
+  fraction 0.44). This "running clock plus a shared non-temporal factor" reading explains the compression of the
+  offsets (0.58 of fast deaths; A132b). The fetal elongation test (A340) is a different analysis. Wording: "same
+  order, offsets compressed by a shared non-temporal state". The caveats of section 3.3 item 3 stand.
+- **Brain death.** "The healthy order between organs is lost, while the organs still share a clock state" (A317
+  H317.1-2), with the procurement alias.
+- **Inflamed skin.** The main idea (changes of loudness are more common than shifts of time) is unchanged. What can be
+  claimed:
+  - psoriatic lesions run late against the same person's skin: replicated blind (A183, -1.45 h), in held-out series
+    (A54, -0.93 h) and in pre-mRNA (A345); at the line on the core loop;
+  - atopic lesions lean the same way, smaller and less consistent (descriptive);
+  - non-skin chronic lesions keep their time (A254, pooled +0.01 h, MDE 0.69 h).
+
+  Psoriasis-specificity cannot be claimed. Wording: "phase shifts are rare and local: among the lesions tested, only
+  in inflamed skin, largest in psoriasis; elsewhere lesions lose loudness without a shift". Addition 2 would make the
+  atopic part a test.
+- **Before birth.** The plan's "signal layer before the clock" is outdated. The core loop covarying on its own is
+  shown in one blind cohort (A328 part a). The single-cell cortex (A266), lung and liver (A269) do not show it, and
+  driven against running stays open (Q43).
+- **PER1, PER2 and NR1D1.**
+  - In the bulk results, the core-loop falls are what dropping any three genes of similar weight does (departure:
+    32nd percentile; living leverage: 43rd; A336). No statistic is "carried by the trio". The glucocorticoid-bias
+    concern is answered there: "not shown to ride on them", not "disproven".
+  - In single-cell atlases the trio does carry an extra share of cross-class sharing (1st-7th percentile; 4th-29th
+    among similar drops). Those contrasts hold against matched genes, and against responsive genes in half of the
+    tests.
+- **Person loudness.** Hospital hours are not the limit: MuTHER is untimed clinic sampling, and A331 passes beyond
+  matched genes on 14 genes. The limits are these:
+  - two tissues from one punch biopsy on one array batch, so shared handling is not separated (not beyond
+    responsive genes);
+  - a fall to the line on the core loop, likely precision.
+
+  In deaths (27 tissues) it holds on the core loop, beside a large donor-level non-clock scale. More tissues per
+  living person (STARNET, addition 5) would decide it.
