@@ -89,7 +89,9 @@ untimed samples (relative amplitude |z| and offset arg z against the host). For 
     core loop: half-host leverage 0.714 against matched q95 0.621 and responsive q95 0.692 (A336 part 2): a clock
     property in deaths, not shown in living tissue.
   - Cell class a_k: conserved relative to endothelium across organs within a factor of about 1.4 (A293 H293.4);
-    lymphocytes below 0.7 of fibroblasts (A272-A288, A321, A326; the bound is unchanged on the core loop, A336).
+    lymphocytes do not share the tissue's clock state (A272-A288); an own clock is not excluded below about 0.7 of the
+    fibroblasts', a level other resident classes such as myeloid (0.53) also sit below (A281, A321, A326; the bound is
+    unchanged on the core loop, A336) (revised 2026-11-23).
   - Organ G_o: gains 9.2-fold apart, 3.1-fold without whole blood and testis (27 peripheral tissues; A104 table,
     derived). Composition and class gains do not explain them (A323: 1.29-fold predicted, 2.89-fold observed).
     Biological or technical: open; G1 is not decidable with the baboon atlas (A330: power 0.60 at a true organ-level
@@ -136,7 +138,7 @@ Polar plot: angle = time relative to the person's internal time; radius = loudne
 
 | level | time (angle) | loudness (radius) | departure |
 |---|---|---|---|
-| cell class | shares the organ's time (A273, A279); human classes within 1 h, endothelium minus fibroblast 0.46 h (A293, A335; not blind) | conserved class gains (A293 H293.4); lymphocytes no readable clock, bound 0.7 (A272-A288, A321, A326) | - |
+| cell class | shares the organ's time (A273, A279); human classes within 1 h, endothelium minus fibroblast 0.46 h (A293, A335; not blind) | conserved class gains (A293 H293.4); lymphocytes do not share the tissue's clock state (A272-A288); own clock not excluded below about 0.7 of fibroblasts, where myeloid (0.53) also sits (A281, A321, A326; revised 2026-11-23) | - |
 | composition | does not move time (A295) | stromal-vascular content raises gain (A295, descriptive); lymphocyte content dilutes relative gain slightly (-0.020 per SD on the core loop, p 0.040, A336; within the post hoc ±0.10 margin, A335) | - |
 | organ | order held without alignment to the day, under intensive-care feeding (unrecorded; A293 Part 1); concordant with CHIRAL (A123) | 9.2-fold, 3.1-fold without blood and testis (A104 table, derived); not composition (A323) | varies little, not phase-dominated, not shared (A294b, A311, A313); mostly PER1, PER2, NR1D1 (A329) |
 | person | internal time advances with elapsed hours in living tissue (A252, A256) and reads the hour of death (A270; held-out waveform, A335) | shared by all tissues in deaths (A312); in living tissue not on the core loop (A331, A335) | - |
