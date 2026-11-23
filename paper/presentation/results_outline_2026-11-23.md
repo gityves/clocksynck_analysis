@@ -434,8 +434,9 @@ descriptive); A299 registered (cortex arm descriptive); same-class rows post hoc
   partition. The direct partition (A298) was closed before scoring (deconvolution explained little of GTEx profiles).
 - Adrenal: whole-clock property (A296); in the baboon the early adrenal is the medulla (slide 1.3), the cortex arm here
   moves samples towards the body's time; leave as an open organ-level observation (A301, A303).
-- Whole blood shows the largest within-tissue phase changes (stromal-vascular −0.76 h, lymphocyte +2.35 h in the method's
-  sign; descriptive), where marker scores are least meaningful.
+- Whole blood shows the largest within-tissue peak-time changes per SD (stromal-vascular −0.87 h, lymphocyte −2.35 h;
+  descriptive, `rows.csv`), where marker scores are least meaningful. (`results.md` R2.2 quotes −0.76 / +2.35 h in the
+  method's sign: the −0.76 does not match the current table.)
 
 **Source:** `presentation/output/organs_composition/rows.csv` (from `presentation/output/organs/couplings.csv`,
 `exploratory/A295_composition/output/{tissues,tests}.csv`, `exploratory/A299_adrenal_medulla/output/tests.csv`);
