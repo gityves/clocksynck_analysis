@@ -1,4 +1,4 @@
-"""Slide figure (results, adult health, 3.1): tissues of one living person, sampled once without a recorded time, share
+"""Slide figure (results, validation, 1.6, negative control): tissues of one living person, sampled once without a recorded time, share
 one clock state; the person's own cell line, which carries her genome but not her body time, does not.
 
 State: per sample, the 14 clock genes' log expression projected on the clock plane of the GTEx waveform (unweighted

@@ -1,4 +1,4 @@
-"""Per-person clock phases of MuTHER fat, skin and lymphoblastoid cell line, for the example panel of slide 3.1
+"""Per-person clock phases of MuTHER fat, skin and lymphoblastoid cell line, for the example panel of slide 1.6
 (descriptive; illustrates A255 H255.1 and H255.2, changes no statistic).
 
 States exactly as A255 (`exploratory/A255_living_tissues/scripts/compute_a255.py`): clock-plane state of the 14 genes

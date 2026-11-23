@@ -11,11 +11,18 @@ blind / descriptive / post hoc. Every number below was read from the output tabl
 | slide | status | figure |
 |---|---|---|
 | 1.1 GTEx organ map from working-hours deaths | kept (`results.md` R1.1) | `figures/gtex_organ_map/` |
-| 1.2 Living patients: breast, heart, adipose | kept as is (`results.md` R1.3; user, 2026-11-23) | `figures/living_patients/` |
+| 1.2 Living patients: breast, heart, adipose | kept as is (`results.md` R1.3; user, 2026-11-23); speaker note below | `figures/living_patients/` |
 | 1.3 Baboon atlas, 63 tissue offsets | kept (`results.md` R1.4; user, 2026-11-23) | `figures/baboon_offsets/` |
 | 1.4 Timed living skin and muscle, and hospital hours | **new** (below) | `figures/living_timed/` |
 | 1.5a Positive controls, cell types: offsets and the knockout | **new** (below) | `figures/celltype_controls/` |
 | 1.5b Positive controls, organs: the readout moves when the clock is broken or shifted | **revised** (below) | `figures/positive_controls/` |
+| 1.6 Negative control: tissues of one living person share one time; her cell line does not | **new** (below) | `figures/living_tissues/` |
+
+
+**1.2 speaker note (within-person rotation, not shown):** between two biopsies of one day the state moves along the
+clock circle in the protocol's direction (13 of 14 cells within 1 h, A252; 17 of 20 within 2 h, A256 blind replication),
+beyond matched and stress-responsive genes. Source: `exploratory/A252_elapsed_time/output/score_datasets.csv`,
+`exploratory/A256_elapsed_replication/output/score_cells.csv`.
 
 ## 1.4 In timed living skin and muscle, the untimed readouts match the timed ones, and survive hospital hours
 
@@ -120,6 +127,48 @@ noticed at scoring).
 
 **Source:** `exploratory/A111_feeding_controls/output/{a111_h111_1,a111_h111_3}.csv`; `docs/results_preliminary.md` WP3
 (A111, A129).
+
+## 1.6 Tissues of one living person, sampled once without a recorded time, share one clock state; her own cell line does not
+
+**Bullets**
+1. Two tissues of a living person share one clock state: skin sites and layers r 0.59-0.81 (A251, 146-150 women per pair), fat and
+   muscle or visceral fat at surgery 0.69 (A255 H255.3, 83 persons), fat and skin 0.53 (A255 H255.1, 680 women); each above
+   200 expression-matched and 200 stress-responsive gene sets.
+2. The woman's own cell line, which carries her genome but not her body time, shares none of it: r 0.04 with fat, 0.07 with
+   skin (H255.2). The shared state is body time, not constitutive clock-gene expression.
+3. On the core loop (11 genes, A348 blind) it holds in skin sites (0.57), skin layers (0.70, 0.51) and the surgical pairs
+   (0.72); fat-skin from one punch biopsy falls to the line (0.31 against matched genes q95 0.33, p_cal 0.057).
+
+**Figure:** `figures/living_tissues/living_tissues.png` (`scripts/living_tissues_compute.py`, `scripts/living_tissues.py`;
+wide). A, B: MuTHER, pointwise mutual information [bits] of the clock-state angle in fat against skin (A) and against
+the own cell line (B); von Mises kernel density on the 24 h torus (SD 1.5 h), grey where fewer than 0.5 persons are
+expected per 1 h cell. Mean on the diagonal 0.87 bits (fat-skin) against 0.03 (fat-cell line). C: r per tissue pair, 14
+genes (ink) and core loop (blue), with matched and stress-responsive q95 lines; open = not clock-specific.
+
+**Tags:** A251, A255 registered, not blind for the earlier GTEx pairing; A348 blind for every core value; A and B
+descriptive (kernel width and grey cut-off chosen for display; the compute script reproduces the scored r exactly).
+
+**Placement:** after the positive controls (1.5a/b) as the negative control: same genome, no body time, no pairing.
+Moved from section 3 (user, 2026-11-23): it validates the premise (one time per person) rather than adding biology,
+and it closes the post-mortem objection before the GTEx results of section 3.
+
+**Caveats (speaker notes)**
+- These are living people: the GTEx pairing between organs is not a property of death.
+- The angle is the direction of a person's deviation from the cohort mean, not her time of day. With biopsies at clinic
+  hours the states lie on a short arc (almost a chord); a woman seen earlier than average points one way, one seen later
+  the opposite way. Hence the two red blobs about 12 h apart on the diagonal (fat angles: 189 women at 9-12 h, 185 at
+  21-24 h, 51-84 in the other 3 h bins). It does not mean persons are shifted by many hours.
+- r = |sum za conj(zb)| / sqrt(sum |za|^2 sum |zb|^2) on the clock-plane projection (no model fit): 1 when each person's
+  state in one tissue is her state in the other turned by one common angle.
+- MuTHER fat and skin come from one punch biopsy and one array batch; the responsive companion bounds what shared
+  handling gives. Women only, arrays.
+- Companion families differ: narrow responsive sets on 14 genes (A251, A255), calibrated broad sets on the core loop
+  (A348; the narrow family is not calibrated there).
+- Co-twins (H255.4) not shown.
+
+**Source:** `exploratory/A251_skin_sites/output/score_tests.csv`; `exploratory/A255_living_tissues/output/score_tests.csv`;
+`exploratory/A285_companion_calibration/output/a348/{a251,a255}/tests.csv`;
+`presentation/output/living_tissues/{muther_phases,check}.csv`; `docs/results_preliminary.md` A251, A252, A255, A256, A348.
 
 ---
 
@@ -250,54 +299,3 @@ In liver and lung the 14 clock genes covary in the clock's pattern, but the sign
 from, signal-responsive genes, consistent with a systemic input; glucocorticoids are a candidate, not shown. Heart,
 kidney, adrenal medulla and brain show none at adult power. Whether the adrenal clock runs on its own or follows a daily
 maternal or ACTH signal remains open. No sampling times: these are shared states, not rhythms.
-
----
-
-# 3. Adult health: one time per person, many volumes
-
-| slide | status | figure |
-|---|---|---|
-| 3.1 Tissues of one living person share one time; her cell line does not | **new** (below) | `figures/living_tissues/` |
-
-The within-person rotation over the day (A252, A256) is not shown here: it validates the readout, as slides 1.2 and 1.4
-already do (user, 2026-11-23). One line in the 1.2 speaker notes: between two biopsies of one day the state moves along
-the clock circle in the protocol's direction (13 of 14 cells within 1 h, A252; 17 of 20 within 2 h, A256 blind
-replication), beyond matched and stress-responsive genes.
-
-## 3.1 Tissues of one living person, sampled once without a recorded time, share one clock state; her own cell line does not
-
-**Bullets**
-1. Two tissues of a living person share one clock state: skin sites and layers r 0.59-0.81 (A251, 146-150 women per pair), fat and
-   muscle or visceral fat at surgery 0.69 (A255 H255.3, 83 persons), fat and skin 0.53 (A255 H255.1, 680 women); each above
-   200 expression-matched and 200 stress-responsive gene sets.
-2. The woman's own cell line, which carries her genome but not her body time, shares none of it: r 0.04 with fat, 0.07 with
-   skin (H255.2). The shared state is body time, not constitutive clock-gene expression.
-3. On the core loop (11 genes, A348 blind) it holds in skin sites (0.57), skin layers (0.70, 0.51) and the surgical pairs
-   (0.72); fat-skin from one punch biopsy falls to the line (0.31 against matched genes q95 0.33, p_cal 0.057).
-
-**Figure:** `figures/living_tissues/living_tissues.png` (`scripts/living_tissues_compute.py`, `scripts/living_tissues.py`;
-wide). A, B: MuTHER, pointwise mutual information [bits] of the clock-state angle in fat against skin (A) and against
-the own cell line (B); von Mises kernel density on the 24 h torus (SD 1.5 h), grey where fewer than 0.5 persons are
-expected per 1 h cell. Mean on the diagonal 0.87 bits (fat-skin) against 0.03 (fat-cell line). C: r per tissue pair, 14
-genes (ink) and core loop (blue), with matched and stress-responsive q95 lines; open = not clock-specific.
-
-**Tags:** A251, A255 registered, not blind for the earlier GTEx pairing; A348 blind for every core value; A and B
-descriptive (kernel width and grey cut-off chosen for display; the compute script reproduces the scored r exactly).
-
-**Caveats (speaker notes)**
-- These are living people: the GTEx pairing between organs is not a property of death.
-- The angle is the direction of a person's deviation from the cohort mean, not her time of day. With biopsies at clinic
-  hours the states lie on a short arc (almost a chord); a woman seen earlier than average points one way, one seen later
-  the opposite way. Hence the two red blobs about 12 h apart on the diagonal (fat angles: 189 women at 9-12 h, 185 at
-  21-24 h, 51-84 in the other 3 h bins). It does not mean persons are shifted by many hours.
-- r = |sum za conj(zb)| / sqrt(sum |za|^2 sum |zb|^2) on the clock-plane projection (no model fit): 1 when each person's
-  state in one tissue is her state in the other turned by one common angle.
-- MuTHER fat and skin come from one punch biopsy and one array batch; the responsive companion bounds what shared
-  handling gives. Women only, arrays.
-- Companion families differ: narrow responsive sets on 14 genes (A251, A255), calibrated broad sets on the core loop
-  (A348; the narrow family is not calibrated there).
-- Co-twins (H255.4) not shown.
-
-**Source:** `exploratory/A251_skin_sites/output/score_tests.csv`; `exploratory/A255_living_tissues/output/score_tests.csv`;
-`exploratory/A285_companion_calibration/output/a348/{a251,a255}/tests.csv`;
-`presentation/output/living_tissues/{muther_phases,check}.csv`; `docs/results_preliminary.md` A251, A252, A255, A256, A348.
