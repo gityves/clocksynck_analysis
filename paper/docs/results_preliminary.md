@@ -8122,3 +8122,35 @@ Check run (`--check`): the clock |r| reproduces A279 `pairs.csv` in every arm (a
   as the signal-layer mechanism" only if H357.1 had failed; with H357.1 unscored, an H357.2 PASS is read as "a
   person-level state of the signal-gene residuals explains part of the departure", without the sharing step.
 <!-- src: paper/exploratory/A357_signal_departure/output/{power,power_sets,power_genes}.csv -->
+
+## A357 (scored 2026-11-23; BLIND for every per-gene residual and the person signal factor; one scoring run, 76 s; H357.1 not scored, not powered): a person-level state of the signal-inducible clock genes, read from a person's other tissues, explains a small, clock-specific part of each tissue's departure (H357.2 PASS: median R^2 0.027 against 0.008 for matched genes); that state tracks the person's glucocorticoid-target state (descriptive r 0.77)
+
+GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-gene waveform, every tissue an anchor.
+- **H357.2 PASS (decidable).**
+  - Median over tissues of the R^2 of the clock-plane departure on the person signal factor s(-k): 0.027, above all
+    100 matched sets (median 0.008, q95 0.0153).
+  - Median excess over matched sets 0.019 (tissue bootstrap 90 % 0.0085 to 0.029).
+  - Above the tissue's matched q95 in 6 of 25 tissues: skeletal muscle 0.195, liver 0.088, sun-exposed skin 0.061,
+    oesophago-gastric junction 0.063, non-exposed skin 0.052, pituitary 0.044.
+    Adrenal 0.096 and transverse colon 0.065 are below their (wider) matched q95.
+- **H357.1 not scored** (power note: not resolvable in GTEx).
+- **Descriptive (no companion).**
+  - The person signal factor correlates with the mean glucocorticoid-target score of the person's other tissues (median
+    over tissues r 0.77) and much less with their immediate-early score (0.19).
+  - The same factor explains the core-loop (11-gene) departure at least as well (median R^2 0.034).
+  - A factor built from the core genes' residuals explains little (0.011 on the 14-gene departure, 0.010 on the
+    core-loop departure).
+- **Reading (registered: H357.2 PASS with H357.1 unscored; see power note).**
+  - A person-level state, carried by the residuals of PER1, PER2 and NR1D1 across a person's tissues, explains part of
+    each tissue's departure from the body's clock state beyond matched genes. Descriptively, this state is the person's
+    glucocorticoid-target state.
+  - It also reaches the core-loop departure, so it is not only these three genes entering the projector.
+  - The part is small: about 3 % of the departure (median), up to about 20 % in skeletal muscle. Most of the departure
+    remains unexplained.
+  - This fits the user's reading at a small scale: one systemic signal, read unequally by tissues, displaces their clock
+    states differently (internal desynchrony at the signal layer). In deaths, a daily cortisol history and an agonal
+    cortisol surge are not separated.
+  - With A329 (the tissue's own glucocorticoid score does not explain its departure): the person-level estimate, averaged
+    over many tissues, is the less noisy measure of the signal state; this reconciliation is post hoc.
+- Code: `exploratory/A357_signal_departure/scripts/score_a357.py --stage score`.
+<!-- src: paper/exploratory/A357_signal_departure/output/{score_tests,score_tissues}.csv (per-tissue aggregates) -->
