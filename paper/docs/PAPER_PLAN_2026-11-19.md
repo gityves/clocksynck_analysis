@@ -513,3 +513,12 @@ true desynchrony in human tissue is rare and local, and most reported "disruptio
    needs the PI (Q44).
 
 Prompts: `prompts/audit_followups_2026-11-23.md` (gaps) and `prompts/mechanisms_2026-11-23.md` (items 1-2).
+
+**Note (2026-11-23, after the mechanism runs; proposed, not applied).**
+- Item 1 (A351): calibration failed (V351: per-tumour rewiring against damping AUC 0.80 / 0.89, bar 0.90): "intact but
+  quieter" cannot be told from rewiring that differs between tumours at gene level in bulk; no condition was scored.
+  Shared rewiring is separable (AUC >= 0.975): a narrower screen ("shared rewiring against uniform scaling") would be
+  calibrated and needs its own registration (user decision).
+- Item 2 (A352): not powered (primary MDE 1.19 h against 0.75 h); closed at the power stage. The mechanism of the
+  psoriatic delay stays open; A345 (pre-mRNA delay, clock-specific narrowly) remains the only mechanistic step.
+- Wording: keep "loudness, not time" as a pattern; do not state "intact but quieter" as shown.

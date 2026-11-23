@@ -7951,3 +7951,14 @@ frozen, 500 bootstraps; A293 Part 3 code unchanged.
   five classes, not mural cells)".
 - Code: `exploratory/A350_class_gain_core/scripts/a350.py`.
 <!-- src: paper/exploratory/A350_class_gain_core/output/{compare,gates_core,a17_healthy_fits_core}.csv, output/part3/{atlases,families}.csv -->
+
+## A352 power note (2026-11-23; no offset computed): the cytokine dose-response of the skin delay is not powered; A352 closed at the power stage
+
+Signature tertiles within series (IL-17 / TNF, Th2; no series lost to platform coverage). The registered primary
+(psoriasis, IL-17 / TNF, core loop, 465 patients) has an MDE of 1.19 h for the T3 - T1 difference in delay, against
+0.75 h required; atopic dermatitis 0.95-1.58 h; only the pooled Th2 core trend (0.73 h) would be decidable, and it is
+not a registered primary. Tertiles split patients three ways, so each stratum's pooled offset carries about the noise of
+a third of the cohort (swap-null SD 0.15-0.59 h). Reading: not a negative result; the delay's dependence on IL-17 / TNF
+activity cannot be read with tertile strata on these series. The score stage's null was not verified (smoke p 0.005 on
+swapped labels). Code: `exploratory/A352_cytokine_delay/scripts/a352.py`.
+<!-- src: paper/exploratory/A352_cytokine_delay/output/power/{power,coverage}.csv -->

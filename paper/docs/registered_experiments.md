@@ -10578,3 +10578,12 @@ a core value 0.10 below the 14-gene value: matched 0.034 / 0.015, broad 0.014 / 
 registration it is reported descriptively. The pairing, matched and broad conditions are decidable; the single scoring
 run proceeds and reads them as registered (pairing + matched + broad = "beyond matched and calibrated broad responsive
 genes"; the narrow-family wording stays post hoc).
+
+### A352 power note (2026-11-23; `a352.py --stage power`, `output/power/{power,coverage}.csv`; signature tertiles assigned, no offset or trend on real labels)
+Coverage: no series dropped (lowest: 6 of 10 Th2 genes in GSE133385, GSE133477); psoriasis 9 series / 465 patients (158
+per tertile), AD 8 / 298 (101), both 17 / 763 (259). MDE of T3 - T1 (2.49 x swap-null SD): psoriasis IL-17 / TNF 1.34 h
+(14 genes), **1.19 h (core; H352.1)**; AD IL-17 / TNF 1.31 / 1.58 h, Th2 1.02 / 0.95 h; both diseases IL-17 / TNF 0.96 /
+0.92 h, Th2 0.85 / 0.73 h. Only "both diseases, Th2, core" is decidable (<= 0.75 h). **H352.1 and H352.2 are not
+decidable; H352.3 (IL-17 / TNF) is not decidable. A352 is closed at the power stage (as A305): no scoring run.** Also
+noted: the score stage returned p 0.005 for the pooled IL-17 / TNF trend on randomly swapped smoke labels (signatures
+recomputed after the swap), so its null is not verified; a rerun would first need a label-independent null check.
