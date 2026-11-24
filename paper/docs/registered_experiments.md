@@ -11081,3 +11081,22 @@ from a shared person or processing scale. Clearly below the GTEx expectation wit
 deaths, or does not reach skin sites alike.
 **Limits.** One tissue at two sites (a weaker statement than two organs); 20 volunteers; 4 time points (first harmonic
 only); A342's projector and waveform. Aggregates only.
+
+## A365 (2026-11-24, on the user's instruction "register the power stage on del Olmo", after A364 was not decidable; staged: power (noise per layer, simulation, companions; no clock correlation), then one scoring run if powered; **NOT BLIND**: Saint-Antoine & Anafi 2025 (preprint) report on these data a subject global amplitude shared by epidermis and dermis, R^2 0.649 (all rhythmic genes, not the clock plane, no companions); archive A37 on the same data (group-level layer offset and amplitude ratio, no per-subject amplitude); del Olmo 2022 (amplitudes vary more across subjects than layers); A364 power note; **BLIND**: every per-subject clock-plane amplitude and their correlation across layers (none computed; grep 2026-11-24)): do living persons differ in a clock amplitude shared by epidermis and dermis, beyond matched genes? **GSE205155 (del Olmo et al. 2022; archive A37 download `skin_paired/GSE205155`): 11 subjects (6 men, 5 women, 20-30 y) x epidermis / dermis x 7 times (08:00 to 08:00 next day, every 4 h), Agilent arrays, submitters' normalised log2 values**
+
+**Statistic (`exploratory/A364_living_volume/scripts/a365_delolmo_volume.py`).** As A364 with arrays: one projector per
+gene set over the 154 arrays (GTEx not-sun-exposed skin waveform; log2 x ln 2; `counts=False`); states centred within
+subject x layer; per subject and layer the first-harmonic amplitude |beta| by least squares of z_t = c + beta
+exp(i 2 pi t / 24) over the 7 times; r = Pearson correlation over the 11 subjects of log |beta| in the two layers. Core
+loop primary, 14 genes reported. Null: subjects permuted (10,000, seed [365, 4]). Companions: 200 expression-matched and
+200 responsive pseudo-clock waveforms (mean log expression over arrays; seeds [365, 1] / [365, 2]). Gene drops: r for
+the 364 three-gene drops, the trio drop's percentile reported (CLAUDE.md rule).
+**H365.1.** Core: r above the matched q95 and permutation p < 0.05.
+**Power (stage `power`).** Per layer, the per-sample noise variance from the least-squares residual (n - 2 complex
+degrees of freedom) and the clock radius m from E|beta|^2 = m^2 + noise x [(X^H X)^-1]_22; simulation (2,000, seed
+[365, 3]) of 11 persons with a shared person amplitude of log SD 0.352 (GTEx) and 0.176, uniform phases, the observed
+times; threshold = max(matched q95, simulated null q95). Scored if power >= 0.8 at 0.352.
+**Readings.** As A364. PASS: a person's clock amplitude is shared by two skin layers in living people, beyond matched
+genes, measured from a timed day. Within the matched range: not separable from a shared person or biopsy scale (both
+layers come from one punch, so a shared handling scale is likely and the companions decide).
+**Limits.** 11 subjects; two layers of one biopsy; arrays; first harmonic only. Aggregates only.
