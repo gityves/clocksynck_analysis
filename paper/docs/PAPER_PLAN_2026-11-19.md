@@ -131,6 +131,22 @@ untimed samples (relative amplitude |z| and offset arg z against the host). For 
   - Before birth, the clock layer is below the sizes the negatives exclude, while the signal layer is present.
   - After birth, the clock is present.
 
+- **Where coupling to the body's time comes from (revised 2026-11-24; `COUPLING_SOURCES_2026-11-24.md`).**
+  - Coupling c_o = S_o / (S_o + D_o) has two sources: the transfer G_o of the body's time to the organ, and the
+    departure D_o added after it. D_o is nearly constant, so coupling ranks organs by G_o; the question is what sets
+    G_o (and phi_o).
+  - Set by the brain: the arrangement, not the amplitude. Order kept without the external day (A293 Part 1), changed
+    after brain death (A317 / A318), while amplitude equals that of equally ventilated living-brain donors (A315).
+  - Set by the body's state: intensive care costs amplitude (A315 / A335, falls with ventilation time); each person has
+    a volume that scales every organ (A312); a person-level glucocorticoid-like state is read unequally by organs and
+    explains a small part of the departure (A357).
+  - Drives, quantified in mouse: removing a drive keeps amplitude (A297, 0.724); conflicting drives cost it, most where
+    an organ's weights are balanced, less than a pure mix (A322, A324); a behavioural shift moves the human muscle clock
+    and costs amplitude (A257, A335).
+  - Not set by cells or post-mortem attenuation (A323, A356). What sets G_o is open; tests registered 2026-11-24:
+    drive coherence across species (descriptive), reception of the systemic glucocorticoid signal, the person volume
+    against systemic state; the in-house jet lag as the out-of-sample test of organ drive weights (data needed).
+
 ### 2.2 One visual grammar for every figure
 
 Polar plot: angle = time relative to the person's internal time; radius = loudness.
@@ -232,6 +248,17 @@ Polar plot: angle = time relative to the person's internal time; radius = loudne
 2. **Coupling measures loudness.** The departure varies 4.6-fold where loudness varies 85-fold (derived), so synchrony
    metrics rank mostly loudness (A291, A294b, A311). This is an empirical warning the field can apply to its tumour,
    ageing and disease "desynchrony" claims.
+   - Coupling to the body is the transfer of the body's time to the organ (gain) over a departure of fixed size added
+     after it: louder organs stay closer to the body's time in hours (3.0 h to 1.1 h implied, matching A259).
+2b. **Where coupling comes from, in human (revised 2026-11-24; `COUPLING_SOURCES_2026-11-24.md`).**
+   - The brain sets the organ arrangement but not the amplitude (A293, A315, A317); the body's state sets amplitude
+     (intensive care, A315 / A335; the person volume, A312).
+   - Removing a drive and conflicting drives act differently on amplitude, quantified (A297, A322, A324): the
+     literature states it verbally (manella2021liverclock).
+   - A person-level glucocorticoid-like state, read unequally by organs, is a small source of person-specific internal
+     desynchrony (A357): the human counterpart of balsalobre2000resetting.
+   - The organ gain is an organ property beyond cells (A323, A356); the literature ranks amplitudes
+     (talamanca2023sexdimorphic) without decomposing them.
 3. **Human perturbations move loudness, rarely time.**
    - The first sorting of human perturbations on both axes, with the same companions:
      - intensive care against brain death, in one cohort;
@@ -286,7 +313,10 @@ Polar plot: angle = time relative to the person's internal time; radius = loudne
 
 **Credited to mouse and other animals.**
 - Two or three layers: kornmann2007system, koronowski2019defining, greenwell2019rhythmic.
-- Drives set peripheral phases: damiola2000restricted, saini2013realtime.
+- Drives set peripheral phases: damiola2000restricted, stokkan2001entrainment, balsalobre2000resetting,
+  brown2002rhythms, buhr2010temperature, saini2013realtime; organ-specific weights: manella2021liverclock,
+  izumo2014differential; the SCN holds organs together, not cells within an organ: yoo2004periodluciferase,
+  sinturel2021circadian, husse2014lightdark; jet lag: yamazaki2000resetting, kiessling2010adrenal.
 - Bulk damping as cell dephasing: welsh2004bioluminescence, nagoshi2004circadian.
 - Maternally driven fetal rhythms: fetal_clocks_animal.
 

@@ -526,11 +526,7 @@ phase-dominated, the outcome shown); A329 erratum post hoc; panel A and the impl
   fall without the coherent part changing. Split per tissue: coherent departure median 1.42 (0.62 to 3.69, positive in
   27 of 27), clock genes' gene-level part 0.47 against 0.71 for matched genes. Agrees with the A336 gene-drop null
   (the trio's drop at the 32nd percentile of similar three-gene drops).
-- A357: the person-level factor (PER1, PER2, NR1D1 residuals of the other tissues) tracks the glucocorticoid-target
-  state of those tissues (r 0.77, descriptive, no companion); it explains up to 0.195 in skeletal muscle, 0.088 in
-  liver, about 0.05 in skin. Reading: one systemic signal read unequally by tissues displaces their clock states a
-  little (internal desynchrony at the signal layer); daily cortisol history and an agonal surge are not separated.
-  Whether the signal-gene residuals are shared across tissues (H357.1) is not resolvable in GTEx.
+- The glucocorticoid-like person state read unequally by organs (A357) is a drive: shown in section 4, not here.
 - The departure in hours (A259): SD across donors 1.0 h (thyroid) to 3.2 h (lung); an upper bound, not above the
   companion sets on that statistic.
 - The stress-responsive calibration of "stronger clocks are more coupled" (A290) is registered but not scored (only
@@ -540,11 +536,10 @@ phase-dominated, the outcome shown); A329 erratum post hoc; panel A and the impl
   shared state", never "the brain's clock is the exception".
 
 **Source:** `exploratory/A294_floor/output/{tissues,tests}.csv`; `exploratory/A329_core_departure/output/coherent_split.csv`;
-`exploratory/A357_signal_departure/output/{score_tests,score_tissues}.csv`;
 `presentation/output/organs_departure/{tissues,summary}.csv` (from A294b, A311 `sets.csv`, A259 `score/targets.csv`);
 `exploratory/A291_attenuation/output/tissues.csv`; `results/figure_2/output/organs/r2_couplings.csv`;
 `results/figure_1/output/species/a36_tissues.csv`; `presentation/results.md` R2.1; `docs/results_preliminary.md` A289,
-A259, A291, A294b, A302, A311, A329 erratum, A357.
+A259, A291, A294b, A302, A311, A329 erratum.
 
 ## 3.last The organ arrangement is internal: it holds when the body's clock no longer reads the hour of death
 
@@ -572,3 +567,18 @@ descriptive; panel B post hoc readout (A27).
 **Source:** `exploratory/A293_organisation_levels/output/part1/groups.csv`;
 `results/figure_3/output/cues_lost/walltime_hosts.csv`; `exploratory/A109_coupling_nulls/output/a109c_walltime.csv`;
 `docs/results_preliminary.md` A109c, A293.
+
+---
+
+# 4. Drives: where coupling to the body's time comes from (to build; revised 2026-11-24)
+
+Section 3 describes the organisation and explains coupling without drives (transfer over a fixed departure, 3.4a-b).
+Section 4 asks what sets the transfer and the organ's place in time. Source: `docs/COUPLING_SOURCES_2026-11-24.md`.
+
+| slide | content | entries |
+|---|---|---|
+| 4.1 What the brain sets and what the body's state sets | arrangement changed after brain death, amplitude kept; intensive care costs amplitude; ventilated rows of `holds_organisation` | A293, A315, A317, A318, A335 |
+| 4.2 Removing a drive keeps amplitude, conflicting drives cost it | mouse liver without a feeding rhythm; daytime feeding across organs, weights and amplitude kept | A297, A322, A324 |
+| 4.3 A behavioural shift moves the human clock | night shift, muscle core loop +4 h, amplitude cost | A257, A335 |
+| 4.4 A systemic signal read unequally by organs | glucocorticoid-like person state explains a small part of each organ's departure | A357 |
+| 4.5 What sets an organ's gain | drive coherence (descriptive), reception, person volume; jet lag (in-house, to come) | registered 2026-11-24 |
