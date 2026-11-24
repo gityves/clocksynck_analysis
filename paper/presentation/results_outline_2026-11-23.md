@@ -313,7 +313,8 @@ maternal or ACTH signal remains open. No sampling times: these are shared states
 | 3.3 Organs differ in loudness: not their cells, not post-mortem attenuation | **new** (below; composition figure to backup) | `figures/organ_gain/` |
 | 3.4a Louder organs are more coupled (human, baboon) | **revised** from `results.md` R2.1 (below) | `figures/organs_health/` |
 | 3.4b Because each organ's departure has a fixed size, not a fixed angle | **new** (below) | `figures/organs_departure/` |
-| 3.5+ Loudness (person loudness, blood) | to build | |
+| 3.5 Each person has a clock volume that every organ follows | **new** (below) | `figures/person_loudness/` |
+| 3.6 Blood as the exception | to build | |
 | 3.last The organ arrangement holds when the body no longer reads the hour (bridge to section 4) | **revised** from `results.md` R3.1 (below) | `figures/organ_arrangement/` |
 
 CHIRAL concordance (A123) is slide 1.1. The ventilated and brain-dead rows of `results.md` R3.1 go to sections 4 and 7
@@ -540,6 +541,48 @@ phase-dominated, the outcome shown); A329 erratum post hoc; panel A and the impl
 `exploratory/A291_attenuation/output/tissues.csv`; `results/figure_2/output/organs/r2_couplings.csv`;
 `results/figure_1/output/species/a36_tissues.csv`; `presentation/results.md` R2.1; `docs/results_preliminary.md` A289,
 A259, A291, A294b, A302, A311, A329 erratum.
+
+## 3.5 Each person has a clock volume that every organ follows
+
+**Bullets**
+1. How loudly a person's tissues express the shared clock is a person property: in GTEx deaths the loudness of a
+   person's tissues correlates at r 0.765 (14 genes; core loop 0.714), above expression-matched (q95 0.621) and
+   stress-responsive gene sets (q95 0.725) (A336 part 2, registered).
+2. In living women, fat and skin from one biopsy share it at r 0.177, above matched genes (q95 0.117; 98.5th
+   percentile), at the line with stress-responsive genes (q95 0.179; 93.5th) (A331, registered, H331.1 pass), the size
+   the deaths predict.
+3. Every organ follows the person's volume nearly in proportion: elasticity median 1.19 (0.83 to 1.77); quieter organs
+   follow slightly more steeply (rho -0.34, A312, registered).
+4. The volume is lower in persons with a higher glucocorticoid-target state (standardised effect -0.235, 90 % -0.35 to
+   -0.11), not explained by RIN, ischaemic time or time of death (A360, registered, blind; systemic block partial
+   R^2 0.06). Most of the volume stays unexplained.
+
+**Figure:** `figures/person_loudness/person_loudness.png` (`scripts/person_loudness.py`; wide). A. loudness shared
+across a person's tissues, GTEx deaths and living women: clock genes (blue) against 200 matched (light grey) and 200
+stress-responsive (dark grey) gene sets. B. each tissue's elasticity to the person's volume with 90 % interval against
+organ gain; dashed: proportional. C. standardised effects on the person's volume (log host radius) with 90 %
+intervals; black: interval excludes 0.
+
+**Tags:** A336 part 2 registered (core loop blind); A331 registered, blind for the clock statistic; A312 registered;
+A360 registered, blind.
+
+**Caveats (speaker notes)**
+- Leverage: correlation of the clock-plane radii of a person's tissues (GTEx: tissue halves of the host; MuTHER: fat
+  and skin), after the phase harmonics are removed (`clocksync.elasticity.radius_covariance`).
+- In deaths, random gene sets share a lot too (stress-responsive median 0.557, matched 0.222): a donor-level scale is
+  large in deaths; the clock is above it. RIN and ischaemic time do not explain the clock volume (A360 H360.2 FAIL;
+  A336 strata 0.69-0.74 in every tertile of age, ischaemic time and RIN).
+- Living women: one punch biopsy and one array batch for both tissues; monozygotic twins 0.195, dizygotic 0.152
+  (descriptive). On the core loop the living leverage is at the line (0.107 against matched q95 0.130; A335).
+- A360: in deaths an acute (agonal) glucocorticoid surge and a chronic state are not separated; not checked on the core
+  loop. The glucocorticoid link is also part of section 4 (drives).
+- Panel B: whole blood's interval is wide (lowest gain); the slope with gain is small (low-gain median 1.19, high-gain
+  1.07; ratio 1.11).
+
+**Source:** `exploratory/A336_two_readouts/output/{person_gtex,person_gtex_companions}.csv`;
+`exploratory/P1_person_loudness/output/{tests,companions}.csv`; `exploratory/A312_elasticity/output/{tissues,tests}.csv`;
+`exploratory/A358_A360_gain_sources/output/{a360_coefficients,a360_tests}.csv`; `docs/results_preliminary.md` A312,
+A331, A335, A336, A360.
 
 ## 3.last The organ arrangement is internal: it holds when the body's clock no longer reads the hour of death
 
