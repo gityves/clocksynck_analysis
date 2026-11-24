@@ -8363,3 +8363,15 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
 - Consequence for A363 part 1: the core test fails as registered (H363.1 FAIL), and the core value is a typical
   11-gene value, so the inflammatory correlate is neither shown on the clock nor shown to be a trio effect.
 <!-- src: paper/exploratory/A361_A363_volume_mechanism/output/{drops_tests,drops_coefs}.csv -->
+
+## A364 power note (2026-11-24; noise, simulation and companions only, no per-volunteer amplitude correlation computed): not decidable at this design (power 0.54 at the GTEx person spread, registered 0.8): not scored
+
+- GSE326530, 20 volunteers x 2 skin sites x 4 times; one run (10 s).
+- Core loop: per-sample noise variance 2.57 (P) and 1.38 (E) against a clock radius of 1.48 and 1.17 (noise SD above
+  the clock radius at both sites). Expected r at the GTEx spread 0.419; threshold max(matched q95 0.401, simulated null
+  q95 0.386); power 0.539 at log SD 0.352, 0.150 at half. 14 genes: expected 0.405, power 0.544.
+- Companions: matched median 0.011 (q95 0.401), responsive median 0.120 (q95 0.416) on the core.
+- **Reading (registered).** With 20 persons and four noisy samples per site, a GTEx-sized person volume would be seen
+  about half the time: the living timed test is not decidable here; the living link stays open (and rests on del Olmo
+  2022 and the Saint-Antoine & Anafi preprint).
+<!-- src: paper/exploratory/A364_living_volume/output/{power,companions,sim}.csv -->
