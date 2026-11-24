@@ -67,3 +67,19 @@ few); exposures with a useful count in GTEx (long-term steroids 5 of 244 fast de
 
 A364 (registered 2026-11-24): living timed skin, GSE326530: is the person's clock amplitude shared by two skin sites,
 measured per volunteer from a full timed day (no biopsy-timing confound)?
+
+## 7. Living link and data (added 2026-11-24, after A364)
+
+- A364 (GSE326530) is not decidable: power 0.54 at the GTEx spread (20 persons, 4 noisy samples per site).
+- Literature, carded (`manuscript/literature/notes/`): `delolmo2022interlayer` (11 adults, epidermis and dermis every 4 h:
+  amplitude varies more across subjects than layers) and `saintantoine2025defining` (preprint: a subject's global
+  amplitude is shared by epidermis and dermis, R^2 0.649 in del Olmo's data and 0.345 in Wu 2020; not strongly tied to
+  core-clock amplitude). Wording: "a person-level rhythm amplitude shared by skin layers has been reported in timed
+  living skin (del Olmo 2022; Saint-Antoine and Anafi 2025, preprint)".
+- Data: del Olmo GSE205155 is public (raw Agilent TXT, 154 samples, 7 times per person and layer; not downloaded). A
+  registered clock-plane test with companions on it would not be blind for the global amplitude (the preprint's R^2) but
+  would be for the core-clock, companion-controlled version.
+- Mouse GSE201207 (Wolff et al., Cell Rep 2023, DOI 10.1016/j.celrep.2022.111982): six tissues (hypothalamus, lung,
+  heart, kidney, muscle, adrenal) x three ages (6, 18, 27 months) x 12 circadian times (every 4 h for 48 h), male, counts
+  public. GEO design: "Two samples per age were collected and pooled for RNAseq analysis": each sample pools two mice,
+  one pool per age and time; per-pool tissue identity is not stated in GEO (paper methods not read).
