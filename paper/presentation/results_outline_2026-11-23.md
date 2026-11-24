@@ -571,8 +571,9 @@ A259, A291, A294b, A302, A311, A329 erratum.
 **Figure:** `figures/person_loudness/person_loudness.png` (`scripts/person_loudness.py`; wide). A. how reliably the
 loudness is shared across a person's tissues (core loop), all fast deaths and violent deaths: clock genes (blue)
 against 200 matched (light grey) and 200 stress-responsive (dark grey) gene sets. B. how large the shared loudness is
-(cv2), same sets, all fast deaths. C. each tissue's elasticity to the person's scale with 90 % interval against organ
-gain. D. standardised effects on the person's scale (log host radius, 14 genes, A360) with 90 % intervals; black:
+(cv2), same sets, all fast deaths. E (third panel). the clock's pairwise leverage under controls for batch, collection
+centre, cell-type markers and the main expression axes, against the matched sets' 95th percentile under the same
+control (A375). C. each tissue's elasticity to the person's scale with 90 % interval against organ gain. D. standardised effects on the person's scale (log host radius, 14 genes, A360) with 90 % intervals; black:
 interval excludes 0.
 
 **Tags:** A336 part 2 registered (core loop blind); A367 registered (blind; H367.1 at power 0.775 by the user's

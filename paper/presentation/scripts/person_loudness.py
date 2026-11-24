@@ -12,12 +12,17 @@ B. How large the shared loudness is (cv2: shared squared coefficient of variatio
 C. Elasticity of each tissue's amplitude to the person's shared amplitude, relative to the other tissues' composite
    (A312, registered), with 90 % interval, against the tissue's gain sqrt(S). Grey band: 10-90 % of the estimates
    when every organ scales exactly in proportion (post hoc calibration, `A312_elasticity/scripts/calib_level.py`).
+E. Controls for batch, collection centre and body-wide composition (A375, registered, blind): median pairwise leverage
+   of the clock (core loop; blue) under each control, with the 95th percentile of 50 expression-matched sets under the
+   same control (light grey); pairwise leverage is noisier than panel A's half-host value, so rows compare with each
+   other only.
 D. What tracks the person's scale (A360, registered; H360.1 pass, H360.2 fail): standardised coefficients of the log
    host radius (14 genes) with donor-bootstrap 90 % intervals, 237 fast-death donors.
 
 Data: exploratory/A336_two_readouts/output/{person_gtex,person_gtex_companions}.csv;
 exploratory/A367_hardy_agonal/output/{tests,companions}.csv; exploratory/A312_elasticity/output/{tissues,calib_level}.csv;
-exploratory/A358_A360_gain_sources/output/a360_coefficients.csv. GTEx aggregates only.
+exploratory/A358_A360_gain_sources/output/a360_coefficients.csv; exploratory/A375_scale_confounds/output/tests.csv.
+GTEx aggregates only.
 Output: presentation/figures/person_loudness/person_loudness.{svg,png} (wide).
 
     python scripts/person_loudness.py
@@ -66,12 +71,12 @@ def shared(ax):
         ax.plot([v] * 2, [i - 0.32, i + 0.32], color=CS, lw=3, zorder=3)
     _rows(ax, ["fast deaths\n(244)", "  of which violent,\n  < 10 min (34)"])
     ax.set_xlim(-0.05, 1)
+    ax.set_xticks([0, 0.5, 1], ["0", "0.5", "1"])
     ax.set_xlabel("how reliably loudness is shared\nacross a person's tissues [r]")
     hd = [Line2D([], [], color=CS, lw=3, label="clock genes"),
           Line2D([], [], ls="", marker="o", ms=4, color=MATCHED, label="matched genes"),
           Line2D([], [], ls="", marker="o", ms=4, color=RESPONSIVE, label="stress-responsive genes")]
-    ax.legend(handles=hd, loc="lower left", frameon=False, fontsize=8, handletextpad=0.5, handlelength=1.2)
-    return g, h
+    return g, h, hd
 
 
 def size(ax):
@@ -96,8 +101,7 @@ def elasticity(ax):
     ax.axhline(1, color=MUTED, lw=0.8, ls="--", zorder=0)
     cal = pd.read_csv(EXP / "A312_elasticity/output/calib_level.csv").elasticity
     ax.axhspan(cal.quantile(0.1), cal.quantile(0.9), color=MUTED, alpha=0.12, lw=0, zorder=0)
-    ax.text(1.0, 0.56, "every organ in proportion\n(simulated, as estimated)", ha="center", va="top",
-            fontsize=8, color=MUTED)
+    ax.text(1.2, 0.56, "all organs in\nproportion\n(simulated)", ha="center", va="top", fontsize=8, color=MUTED)
     ax.set_xscale("log")
     ax.set_xticks([0.5, 1, 2, 3], ["0.5", "1", "2", "3"])
     ax.minorticks_off()
@@ -118,22 +122,44 @@ def tracks(ax):
     ax.tick_params(axis="y", length=0)
     ax.set_ylim(len(co) - 0.5, -0.5)
     ax.set_xlim(-0.45, 0.35)
+    ax.set_xticks([-0.3, 0, 0.3], ["-0.3", "0", "0.3"])
     ax.set_xlabel("effect on the person's\nscale [SD per SD]")
     return co
+
+
+CONTROLS = {"none": "no control", "batch": "different batches", "centre": "collection centre",
+            "markers": "cell-type markers", "genome_pcs": "main expression axes", "all": "all together"}
+
+
+def controls(ax):
+    t = pd.read_csv(EXP / "A375_scale_confounds/output/tests.csv").query("gene_set == 'core'").set_index("variant")
+    y = np.arange(len(CONTROLS))
+    for i, k in enumerate(CONTROLS):
+        ax.plot([0, t.loc[k, "L"]], [i, i], color=CS, lw=5, solid_capstyle="butt")
+        ax.plot([t.loc[k, "matched_q95"]] * 2, [i - 0.3, i + 0.3], color=MATCHED, lw=2.2)
+    ax.set_yticks(y, list(CONTROLS.values()))
+    ax.tick_params(axis="y", length=0)
+    ax.set_ylim(len(CONTROLS) - 0.5, -0.5)
+    ax.set_xlim(0, 0.32)
+    ax.set_xlabel("shared loudness under\ncontrols, pairwise [r]")
+    return t
 
 
 def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
-    lay = pf.Layout.slide("ABCD", kind="wide", col_ratios=[1.1, 0.7, 1, 1])
-    g, h = shared(lay.axes["A"])
+    lay = pf.Layout.slide("ABECD", kind="wide", col_ratios=[1.0, 0.65, 0.95, 0.95, 1.05])
+    g, h, hd = shared(lay.axes["A"])
     gs, gcs = size(lay.axes["B"])
+    lay.axes["B"].legend(handles=hd, loc="lower left", frameon=False, fontsize=8, handletextpad=0.5, handlelength=1.2)
+    ctl = controls(lay.axes["E"])
     t = elasticity(lay.axes["C"])
     co = tracks(lay.axes["D"])
     fig = lay.finalize()
     print("GTEx core", round(g.leverage, 3), "matched q95", round(g.matched_q95, 3), "responsive q95", round(g.responsive_q95, 3))
     print("Hardy 1 core", round(h.lev_h1, 3), "matched q95", round(h.matched_q95_h1, 3), "responsive q95", round(h.responsive_q95_h1, 3))
     print("cv2 core", round(gs.cv2, 3), gcs.groupby("kind").cv2.median().round(3).to_dict())
+    print(ctl[["L", "matched_q95", "ratio_to_none"]].round(3).to_string())
     print("elasticity median", round(t.elasticity.median(), 3), "range", round(t.elasticity.min(), 2), round(t.elasticity.max(), 2))
     print(co.round(3).to_string())
     print(pf.collisions(fig))
