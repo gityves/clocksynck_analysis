@@ -8334,14 +8334,15 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
 
 - **H363.1 FAIL (core).** Inflammatory state partial R^2 0.0046, p 0.30; coefficient -0.074 (90 % -0.243 to +0.083),
   3rd percentile of matched sets. GC coefficient in this model -0.160.
-- 14 genes (reported): partial R^2 0.020, p 0.034, coefficient -0.156 (-0.282 to -0.045), below every matched set: an
-  inflammatory correlate appears only when PER1, PER2 and NR1D1 are in the volume.
+- 14 genes (reported): partial R^2 0.020, p 0.034, coefficient -0.156 (-0.282 to -0.045), below every matched set.
+  The core interval (-0.243 to +0.083) contains the 14-gene value: whether PER1, PER2 and NR1D1 carry the correlate
+  or the core estimate is only less precise is not decided (no paired difference or gene-drop null for part 1).
 - **H363.2: uniform scaling (core).** T = e_supp - e_comp = -0.006 (recalibrated null -0.087 to 0.092); e_supp 0.659
   (PER3, DBP, TEF), e_comp 0.665 (ARNTL, NPAS2, CLOCK). 14 genes (reported) T 0.084. Per-gene elasticities
   (descriptive, core): 0.59-0.81 for nine genes, CRY2 1.16, RORA 1.60.
 - **Reading (registered).** A cytokine-like damping that makes the suppressed genes follow the volume 1.5 times as
   steeply is excluded (power 1.00); a weaker distortion is not (0.65 at 1.25 times). The volume scales the core clock
-  genes alike, as dephasing, composition or a uniform damping would. The 14-gene inflammatory correlate is carried by
-  the trio, which TNF-alpha and glucocorticoids both act on directly.
+  genes alike, as dephasing, composition or a uniform damping would. The 14-gene inflammatory correlate is not shown on
+  the core; that the trio carries it (TNF-alpha and glucocorticoids act on it directly) is not shown either.
 - Code: `exploratory/A361_A363_volume_mechanism/scripts/a361_a363_systemic.py`, `a363_gene_classes.py --stage score`.
 <!-- src: paper/exploratory/A361_A363_volume_mechanism/output/{systemic_tests,a363_tests,a363_power_recal}.csv -->
