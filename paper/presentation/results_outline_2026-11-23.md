@@ -621,7 +621,9 @@ decision); A361, A362, A363 registered; A366, A368 registered (living); A312, A3
 
 **Figure:** `figures/organ_arrangement/organ_arrangement.png` (`scripts/organ_arrangement.py`; half). Rows: fast (reference,
 dashed), slow, intermediate deaths. A. arrangement shared with fast deaths, clock genes (blue bar) with matched (light
-grey) and stress-responsive (dark grey) q95 lines. B. alignment R of the body clock to the hour of death.
+grey) and stress-responsive (dark grey) q95 lines. B. alignment R of the body clock to the hour of death. C. how far
+the organs can have moved: 90 % compatibility interval of the organ scatter (14 genes; A374), dashed: the size of the
+arrangement (median organ-pair offset in fast deaths, 1.02 h).
 
 **Tags:** A293 part 1 registered, NOT BLIND (clock rho known from A109 / A132; companions new); intermediate deaths
 descriptive; panel B post hoc readout (A27); A374 registered (intervals blind, correlations not).
