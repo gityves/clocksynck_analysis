@@ -8293,3 +8293,14 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   threshold should be recalibrated (gene noise set to the GTEx gene residual variance, or a data-based null) in a dated
   addendum before the scoring run.
 <!-- src: paper/exploratory/A361_A363_volume_mechanism/output/{a363_power,a363_sims}.csv -->
+
+## A363 part 2 recalibrated power note (2026-11-24, addendum; GTEx noise calibration and simulation only, no gene-class elasticity computed): decidable at a_p^0.5 (power 1.00), not at a_p^0.25 (0.65); the null band is about six times wider than the registered one
+
+- Calibration (core waveform, A360 rows): within-sample noise SD 0.29-0.47 per gene (median over tissues; DBP highest),
+  person offset shared by a person's tissues SD 0.18-0.37 (DBP 0.37), against the registered simulator's independent
+  SD 0.1. One run (363 s).
+- Null T: median -0.006, q05 -0.087, q95 0.092 (registered simulator: -0.012 to 0.018). Alternatives: median T 0.279 at
+  0.5 (power 1.00), 0.124 at 0.25 (power 0.65). Gate passed (power >= 0.8 at 0.5).
+- Reading for scoring: only a strong cytokine-like distortion (the suppressed genes following the volume about 1.5 times
+  as steeply) is reliably detectable; "uniform scaling" excludes that size, not a weaker one.
+<!-- src: paper/exploratory/A361_A363_volume_mechanism/output/{a363_power_recal,a363_sims_recal,a363_noise_summary}.csv -->
