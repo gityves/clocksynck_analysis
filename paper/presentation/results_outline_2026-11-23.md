@@ -581,8 +581,10 @@ decision); A361, A362, A363 registered; A366, A368 registered (living); A312, A3
 **Caveats (speaker notes)**
 - Leverage: correlation of the clock-plane radii of two halves of a person's tissues after the phase harmonics are
   removed (`clocksync.elasticity.radius_covariance`); cv2: their shared squared coefficient of variation.
-- Deaths only. Processes acting within minutes of death or after it are not excluded; RIN, ischaemic time and time of
-  death do not explain it (A360 H360.2 FAIL).
+- Deaths only. Processes acting within minutes of death or after it are not excluded. Not explained by RIN, ischaemic
+  time, time of death, age, sex or BMI (A360), nor by batch, collection centre or body-wide composition (blood, immune,
+  endothelial, fibroblast and smooth-muscle markers; top genome PCs): with all of these controlled the clock keeps 81 %
+  of its pairwise leverage, at the 98th percentile of matched sets (A375).
 - The GC contrast between violent and other fast deaths rests on 34 donors (power 0.24) and Hardy 1 differs in age,
   sex and cause of death.
 - Living (removed from the bullets 2026-11-24): a clock-specific excess is not shown in living people. At matched

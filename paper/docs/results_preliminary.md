@@ -8688,3 +8688,24 @@ n fast deaths drawn against the other fast deaths (200 draws, 66 pairs), Fisher-
   donors carry a stronger shared signal than the groups, so these expectations are, if anything, optimistic.
 - Code: `exploratory/A374_order_interval/scripts/posthoc_noise_reference.py`.
 <!-- src: paper/exploratory/A374_order_interval/output/noise_reference.csv -->
+
+## A375 (scored 2026-11-24; BLIND for every leverage; one run, 44 s): the person's shared clock amplitude is not a batch, collection-centre or body-wide composition effect (no variant explains it)
+
+Pairwise leverage (median over 268 tissue pairs with >= 40 donors; 234 with the batch restriction), core loop, against
+50 expression-matched sets of the same variant:
+
+| variant | L (core) | ratio to none | matched median / q95 | clock percentile | 14 genes |
+|---|---|---|---|---|---|
+| none | 0.258 | 1.00 | 0.053 / 0.240 | 98 | 0.299 |
+| different isolation and expression batch only | 0.248 | 0.96 | 0.057 / 0.230 | 98 | 0.294 |
+| collection centre | 0.259 | 1.00 | 0.053 / 0.243 | 98 | 0.298 |
+| composition markers (blood, immune, endothelial, fibroblast, smooth muscle) | 0.239 | 0.93 | 0.039 / 0.204 | 98 | 0.255 |
+| genome PCs (top 5 within tissue) | 0.241 | 0.93 | 0.034 / 0.169 | 98 | 0.265 |
+| all of the above | 0.208 | 0.81 | 0.028 / 0.154 | 98 | 0.237 |
+
+- **H375 (registered rule):** no variant falls below half of the reference or to the matched q95: batch, collection
+  centre, body-wide composition (markers) and the genome's main axes are ruled out as the explanation. With all
+  controls together the clock keeps 81 % of its leverage while the matched sets fall more (median 0.053 -> 0.028).
+- Pairwise leverages are lower than A336's half-host value (single tissues, more noise); only variants are compared.
+- Code: `exploratory/A375_scale_confounds/scripts/a375_confounds.py`.
+<!-- src: paper/exploratory/A375_scale_confounds/output/{tests,pairs}.csv -->
