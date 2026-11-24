@@ -11266,3 +11266,35 @@ model for the null; two tissues only.
   reported as underpowered descriptions, no pass / fail.
 - Reported beside H367.1 (registered descriptive): the Hardy 1 leverage's percentile among responsive sets (their
   q95 0.714 in Hardy 1 equals the whole-cohort clock leverage).
+## A371 (2026-11-24, on the user's instruction "register A371 and run its power stage"; staged: power (GTEx fast-death pair phases, simulated living estimates, companions; no living clock phase), then one scoring run if powered; **NOT BLIND**: the GTEx organ arrangement (A104 / A109 / A293), the STAGE and AAGMEx gates, pairings and clock fractions (A369 / A370 power stages: pairing moduli only); **BLIND**: every living pair phase (arg of the cross-tissue clock covariance) in STAGE and AAGMEx (none computed; grep 2026-11-24)): do living organs keep the post-mortem organ arrangement? **STAGE (liver, skeletal muscle, visceral fat, aortic wall), AAGMEx (subcutaneous fat, muscle)**
+
+**Why.** The organ arrangement (relative clock phases between organs) is shown in GTEx deaths only (Figures 4 and 6;
+the post-mortem objection). A pair phase is the phase of the clock state two organs share within persons: a time of
+day shared by both biopsies cancels, so the hospital-hours arc that undid the volume tests does not bias it.
+**Data.** STAGE prep (A369) and AAGMEx prep (A370); GTEx fast deaths, A336 rows (27 peripheral tissues). Mapping:
+liver = Liver; muscle = Muscle - Skeletal; STAGE visceral (mediastinal) fat = Adipose - Visceral (Omentum); aortic wall
+= Artery - Aorta; AAGMEx subcutaneous fat = Adipose - Subcutaneous. STAGE internal mammary artery has no GTEx match:
+descriptive only (against Artery - Coronary and Artery - Tibial).
+**Statistic (`exploratory/A371_living_order/scripts/a371_living_order.py`).**
+- States: living, A255 `Cohort` (arrays, unweighted projector, centred within tissue); GTEx, `clocksync.paired`
+  projector and states on counts per tissue, centred within tissue. Same waveform (STAGE 14 genes; AAGMEx 13).
+- Pair phase phi_ab = arg sum_p z_a(p) conj z_b(p) over the persons with both (GTEx: donors with both).
+- Agreement A = mean over the six STAGE primary pairs (4 tissues) of cos(phi_STAGE - phi_GTEx).
+- Null 1 (labels): A over all 24 assignments of the four STAGE tissue labels; p = rank of the true assignment (ties
+  count against). Null 2 (companions): 200 expression-matched and 200 responsive pseudo-clock sets drawn from STAGE's
+  mean log expression (`Cohort.pseudo`, tags 5 / 6), the same genes and phases applied in GTEx; A per set.
+**H371.1 (primary).** A above the matched q95 and label p <= 1 / 24 (the true assignment ranks first).
+**H371.2 (secondary, AAGMEx).** The fat-muscle pair phase within 3 h of GTEx's subcutaneous fat-muscle pair phase, its
+90 % person-bootstrap interval (2,000, seed [371, 3]) excluding the opposite phase (12 h), and |cos| beyond the matched
+companions' q95 of the same quantity (cos(phi_AAGMEx - phi_GTEx)).
+**Power (no living phase read).** Simulated living cohorts with the GTEx pair phases as truth: persons on a ring with
+the A369 / A370 phase spread, tissue gains so that the shared-state fractions equal the measured ones (STAGE: A369
+triad; aortic wall from its pairings with the triad; AAGMEx: A370), 500 draws, seed [371, 1]; power = share of draws
+with A above the matched q95 and the true assignment first among the 24. Also reported: the spread of the GTEx phases
+over the four tissues (the label test has no power if the organs share one phase). H371.2 power: share of draws
+within 3 h with an interval excluding 12 h. Each hypothesis scored only if its power >= 0.8.
+**Readings.** PASS: living organs (liver, muscle, fat, aorta) keep the arrangement seen in deaths: the arrangement is
+not a post-mortem artefact. FAIL with power: the living arrangement differs; the post-mortem arrangement may be shaped
+by death (or by disease: coronary patients). Pair phases are reported with intervals in both cases.
+**Limits.** 66 STAGE patients (coronary disease, mostly men); different fat depots between STAGE and GTEx; arrays vs
+RNA-seq (same projector convention); the label null is coarse (24 assignments).
