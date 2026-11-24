@@ -560,8 +560,9 @@ A259, A291, A294b, A302, A311, A329 erratum.
 2. In living women, fat and skin from one biopsy share it at r 0.177, above matched genes (q95 0.117; 98.5th
    percentile), at the line with stress-responsive genes (q95 0.179; 93.5th) (A331, registered, H331.1 pass), the size
    the deaths predict.
-3. Every organ follows the person's volume nearly in proportion: elasticity median 1.19 (0.83 to 1.77); quieter organs
-   follow slightly more steeply (rho -0.34, A312, registered).
+3. Every organ follows the person's volume nearly alike: no organ ignores it, and the profile with gain is flat within
+   what an estimator gives when every organ scales exactly in proportion (A312, registered; level calibrated post hoc):
+   a body-wide volume, not organs at different distances from their threshold.
 4. The volume is lower in persons with a higher glucocorticoid-target state (standardised effect -0.235, 90 % -0.35 to
    -0.11), not explained by RIN, ischaemic time or time of death (A360, registered, blind; systemic block partial
    R^2 0.06). Most of the volume stays unexplained.
@@ -585,12 +586,23 @@ A360 registered, blind.
   (descriptive). On the core loop the living leverage is at the line (0.107 against matched q95 0.130; A335).
 - A360: in deaths an acute (agonal) glucocorticoid surge and a chronic state are not separated; not checked on the core
   loop. The glucocorticoid link is also part of section 4 (drives).
-- Panel B: whole blood's interval is wide (lowest gain); the slope with gain is small (low-gain median 1.19, high-gain
-  1.07; ratio 1.11).
+- Panel B, elasticity: slope of a tissue's amplitude on the person's volume, relative to the other tissues' composite
+  (two halves of the other tissues; one half instruments the other). Its level is not anchored at 1: in a simulation
+  where every organ scales exactly in proportion, the estimator reads median 1.11 (per tissue 0.97 to 1.36; leverage
+  0.75, as observed), grey band (post hoc calibration, `exploratory/A312_elasticity/scripts/calib_level.py`). Observed
+  median 1.19 (0.83 to 1.77). The registered gradient (H312.1 PASS, rho -0.34; low-gain median 1.19, high-gain 1.07)
+  has the size the same simulation produces with no true gradient (quiet tissues 1.35, loud 1.06-1.15, 6 tissues x 3
+  draws): not shown beyond the estimator until a full null calibration is run.
+- Expected without a shared volume: leverage near 0 and elasticity undefined (both covariances near 0). Expected under
+  one systemic amplitude: a flat profile. Under organs at different distances from their threshold (Hopf): a steep
+  gradient (ratio 2 to 3.4). Under a subset of organs reading the source: some organs near 0. Observed: flat, no organ
+  near 0.
+- Whole blood's interval is wide (lowest gain).
 
 **Source:** `exploratory/A336_two_readouts/output/{person_gtex,person_gtex_companions}.csv`;
 `exploratory/P1_person_loudness/output/{tests,companions}.csv`; `exploratory/A312_elasticity/output/{tissues,tests}.csv`;
-`exploratory/A358_A360_gain_sources/output/{a360_coefficients,a360_tests}.csv`; `docs/results_preliminary.md` A312,
+`exploratory/A358_A360_gain_sources/output/{a360_coefficients,a360_tests}.csv`; `exploratory/A312_elasticity/output/calib_level.csv`;
+`docs/results_preliminary.md` A312 (and its calibration note),
 A331, A335, A336, A360.
 
 ## 3.last The organ arrangement is internal: it holds when the body's clock no longer reads the hour of death

@@ -5,14 +5,17 @@ A. Loudness shared across a person's tissues (leverage: correlation of the clock
    genes; registered) and living women (A331, MuTHER fat and skin from one biopsy, 680 women; registered, H331.1 pass).
    Blue: clock genes; dots: 200 (GTEx) or 200 (MuTHER) expression-matched (light grey) and stress-responsive (dark
    grey) gene sets on the same persons.
-B. Elasticity of each tissue's radius to the person's shared amplitude (A312, registered, H312.1 pass), with 90 %
-   interval, against the tissue's gain sqrt(S); 1: the tissue follows the person in proportion.
+B. Elasticity of each tissue's amplitude to the person's shared amplitude, relative to the other tissues' composite
+   (A312, registered), with 90 % interval, against the tissue's gain sqrt(S). Grey band: 10-90 % of the estimates
+   when every organ scales exactly in proportion (post hoc calibration, `A312_elasticity/scripts/calib_level.py`):
+   the estimator reads about 1.1 for a true 1.
 C. What tracks the person volume (A360, registered; H360.1 pass, H360.2 fail): standardised coefficients of the log
    host radius with donor-bootstrap 90 % intervals, 237 fast-death donors.
 
 Data: exploratory/A336_two_readouts/output/{person_gtex,person_gtex_companions}.csv;
 exploratory/P1_person_loudness/output/{tests,companions}.csv; exploratory/A312_elasticity/output/tissues.csv;
-exploratory/A358_A360_gain_sources/output/a360_coefficients.csv. GTEx aggregates only.
+exploratory/A358_A360_gain_sources/output/a360_coefficients.csv; exploratory/A312_elasticity/output/calib_level.csv. GTEx
+aggregates only.
 Output: presentation/figures/person_loudness/person_loudness.{svg,png} (wide).
 
     python scripts/person_loudness.py
@@ -69,11 +72,15 @@ def elasticity(ax):
                 elinewidth=0.7, zorder=1)
     ax.scatter(x, t.elasticity, s=24, c=c, edgecolor="white", lw=0.4, zorder=2)
     ax.axhline(1, color=MUTED, lw=0.8, ls="--", zorder=0)
+    cal = pd.read_csv(EXP / "A312_elasticity/output/calib_level.csv").elasticity
+    ax.axhspan(cal.quantile(0.1), cal.quantile(0.9), color=MUTED, alpha=0.12, lw=0, zorder=0)
+    ax.text(1.0, 0.56, "every organ in proportion\n(simulated, as estimated)", ha="center", va="top",
+            fontsize=8, color=MUTED)
     ax.set_xscale("log")
     ax.set_xticks([0.5, 1, 2, 3], ["0.5", "1", "2", "3"])
     ax.minorticks_off()
     ax.set_xlabel("organ gain, √S")
-    ax.set_ylabel("follows the person's\nvolume [elasticity]")
+    ax.set_ylabel("follows the person's volume\n[elasticity, relative]")
     return t
 
 

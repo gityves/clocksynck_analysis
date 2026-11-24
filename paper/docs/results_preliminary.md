@@ -8240,3 +8240,19 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   PER2, NR1D1 and can change the host radius directly).
 - Code: `exploratory/A358_A360_gain_sources/scripts/a360.py`.
 <!-- src: paper/exploratory/A358_A360_gain_sources/output/{a360_coefficients,a360_tests}.csv (coefficients only) -->
+
+
+## A312 calibration note (2026-11-24; post hoc, on the user's question why nearly every tissue's elasticity is above 1): the elasticity level is not anchored at 1, and a gradient of the observed size appears with no true gradient
+
+- Simulation at the GTEx design (`exploratory/A312_elasticity/scripts/calib_level.py`): 27 tissues with the A294b S and
+  D, 250 persons with a volume of SD 0.352 in log (A331's GTEx spread), every tissue scaling exactly in proportion
+  (true elasticity 1), Poisson counts; six target tissues, 10 splits, 3 draws.
+- Estimated elasticity median 1.11 (per tissue and draw 0.97 to 1.36; quiet tissues testis 1.35 and sun-exposed skin
+  1.36, loud tissues 0.97 to 1.17); leverage median 0.75 (observed 0.78).
+- **Reading (post hoc).** The estimator reads about 1.1 for proportional scaling (the yardstick is a host radius; my
+  reading of the cause is the upward bias of a noisy radius, not shown), so the observed median 1.19 does not mean
+  "more than in proportion". The H312.1 gradient (rho -0.34; low-gain 1.19, high-gain 1.07) has the size the
+  simulation gives with no gradient: it is not shown beyond the estimator. A full null (all tissues, about 20 draws,
+  the H312.1 rho under true elasticity 1) would decide whether H312.1 stands; it needs its own registration. What
+  stands: persons differ in a volume shared by their organs (leverage), and no organ ignores it.
+<!-- src: paper/exploratory/A312_elasticity/output/calib_level.csv -->
