@@ -8201,6 +8201,8 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   Amplitude kept under conflict against gain (reported): +0.2 (p 0.39).
 - **Reading.** The cross-species panel is not worth showing: the balance spans a narrow range (0.17-0.25) and the ranking
   does not follow it. Drive coherence is not excluded as a source of organ gain; this design cannot test it.
+- **Use (user decision 2026-11-24, after scoring).** Mentioned as a suggestive pattern in section 4 (one line, with
+  rho, n and the missed criterion), because it fits "conflicting drives cost gain"; never as evidence.
 - Code: `exploratory/A358_A360_gain_sources/scripts/a358.py`.
 <!-- src: paper/exploratory/A358_A360_gain_sources/output/{a358_organs,a358_tests}.csv -->
 

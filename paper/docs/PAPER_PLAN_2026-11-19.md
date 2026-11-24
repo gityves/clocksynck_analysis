@@ -144,7 +144,8 @@ untimed samples (relative amplitude |z| and offset arg z against the host). For 
     an organ's weights are balanced, less than a pure mix (A322, A324); a behavioural shift moves the human muscle clock
     and costs amplitude (A257, A335).
   - Not set by cells or post-mortem attenuation (A323, A356). What sets G_o is open: drive coherence across species
-    not seen (A358, descriptive, 5 organs); reception of the systemic glucocorticoid state does not track gain (A359
+    is a suggestive pattern only (A358, descriptive: organs that weigh one drive in mouse are the loud ones in human,
+    adipose the exception; rho -0.6, 5 organs, p 0.175, below the registered -0.7: mention, not a claim); reception of the systemic glucocorticoid state does not track gain (A359
     FAIL; the immediate-early reception slope does, rho 0.44, a lead only); the in-house jet lag remains the
     out-of-sample test of organ drive weights (data needed).
   - The person volume A_p falls with the person's glucocorticoid-target state (A360 PASS, partial R^2 0.06) and is not

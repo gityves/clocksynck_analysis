@@ -578,7 +578,7 @@ Section 4 asks what sets the transfer and the organ's place in time. Source: `do
 | slide | content | entries |
 |---|---|---|
 | 4.1 What the brain sets and what the body's state sets | arrangement changed after brain death, amplitude kept; intensive care costs amplitude; ventilated rows of `holds_organisation` | A293, A315, A317, A318, A335 |
-| 4.2 Removing a drive keeps amplitude, conflicting drives cost it | mouse liver without a feeding rhythm; daytime feeding across organs, weights and amplitude kept | A297, A322, A324 |
+| 4.2 Removing a drive keeps amplitude, conflicting drives cost it | mouse liver without a feeding rhythm; daytime feeding across organs, weights and amplitude kept; one-line suggestive mention: organs that weigh one drive in mouse (liver, heart) are the loudest in human, the balanced lung the quietest, adipose the exception (A358, descriptive, rho -0.6, 5 organs, below its criterion) | A297, A322, A324, A358 |
 | 4.3 A behavioural shift moves the human clock | night shift, muscle core loop +4 h, amplitude cost | A257, A335 |
 | 4.4 A systemic signal read unequally by organs | glucocorticoid-like person state explains a small part of each organ's departure | A357 |
 | 4.5 What sets an organ's gain | drive coherence (descriptive), reception, person volume; jet lag (in-house, to come) | registered 2026-11-24 |
