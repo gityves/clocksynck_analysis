@@ -8387,3 +8387,15 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   the shared biopsy scale about half the time: not decidable. The preprint's R^2 0.649 on these data has no such
   companion; our power stage shows that expression-matched genes reach r 0.67 in one punch one time in twenty.
 <!-- src: paper/exploratory/A364_living_volume/output/{a365_power,a365_companions,a365_sim}.csv -->
+
+## A366 power note (2026-11-24; geometry, timing-only simulation and companions only, no clock radius statistic computed): MuTHER's clock states lie on an arc (combined elongation 3.4; phase spread about 1.9 h); decidable (power 1.00 at the GTEx spread, 0.92 at half)
+
+- Geometry: elongation fat 3.78, skin 1.72, combined 3.39 (a ring gives about 1): the biopsies sit in a window of the
+  day, as expected. Matched by a phase SD of 0.50 rad (1.9 h) in the ring model.
+- Timing only (no loudness differences between women), at this geometry: the raw A331 statistic reads median 0.279
+  (q95 0.338); the circle-centred statistic median 0.151 (q95 0.209). A331's observed raw 0.177 is below what shared
+  timing alone produces in this model (not a test; the ring model's noise and phase distribution are assumptions).
+- Companions (circle-centred): matched median 0.029 (q95 0.100), responsive median 0.086 (q95 0.132).
+- Threshold max(0.100, 0.209) = 0.209; expected circle-centred leverage with a GTEx-size volume 0.314; power 0.998,
+  0.918 at half. Gate passed. One run (10 s).
+<!-- src: paper/exploratory/A366_muther_timing/output/{power,geometry,companions,sim}.csv -->
