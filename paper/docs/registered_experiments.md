@@ -11198,3 +11198,35 @@ FAIL with power: no shared amplitude at matched phase at GTEx size; the half-siz
 excluded. Responsive-gene percentile reported (a glucocorticoid-compatible state is not excluded by companions alone).
 **Limits.** Ring model (sinusoidal clock, isotropic noise) for the null; the quadratic absorbs curvature only on a
 narrow arc (the 1.25 x null guards it); one biopsy, one array batch per woman. Aggregates only.
+## A369 (2026-11-24, on the user's instruction "STAGE looks good" and approval of the raw-array normalisation; staged: power (gates, pairings, clock fractions, geometry, timing-only and volume simulations, companions; no clock Q), then one scoring run if powered; **NOT BLIND**: A366 / A368 (MuTHER: no shared amplitude at matched phase beyond matched genes; matched genes reach Q 0.25 there), the A336 GTEx leverage, the prep checks of STAGE (markers, sex identity; no clock value); **BLIND**: every clock value in STAGE (none computed; grep 2026-11-24)): do living patients share a clock amplitude across liver, muscle and visceral fat at matched phase? **STAGE (GSE40231, RMA from CEL), 66 bypass patients**
+
+**Why.** MuTHER has two tissues; GTEx has many, and its volume sits in the same organs as STAGE (liver, muscle, fat,
+arteries). STAGE's tissues come from one operation (under 3 h), so the biopsy-time arc is present and the A368
+matched-phase statistic is used.
+**Data.** `A369_stage_volume/output/prep/` (prep_stage.py): RMA log2 x ln 2, best-median probe per gene. Primary
+tissues: liver, skeletal muscle, visceral fat (66 patients each). Arteries (aortic wall, internal mammary artery; 40
+patients) secondary. GTEx 14-gene waveform, unweighted projector per tissue, states centred within tissue (A255 `Cohort`).
+**Statistics (`exploratory/A369_stage_volume/scripts/a369_stage.py`).**
+- Gate per tissue (A255 `reference_gate`, 200 permutations); a primary tissue failing it (p >= 0.05) leaves the test.
+  Pairing r per tissue pair (A255 `r_pair`).
+- Q per pair = A368 `Q` (common frame from the pair, y regressed on a quadratic of both arc positions). Primary
+  statistic Q3 = mean of the three primary pairwise Q. Secondary: mean over all ten pairs on the 40 patients with five
+  tissues (reported, scored only if its own power >= 0.8).
+- Clock fraction of tissue a (shared state over state variance): f_a = r_ab r_ac / r_bc over the primary triad (A331
+  used fixed fractions; here they are measured).
+- Timing-only null and power: A368 `sim` generalised to three tissues with fractions f, 66 persons, 500 draws each.
+  Phase SD fitted (A366 rule) to the elongation of the combined three-tissue cloud (each tissue rotated onto liver by
+  its pairing angle, scaled by its mean radius). Nulls at 0.75, 1, 1.25 x the fitted SD (normal) and uniform phases at
+  1 x. Alternatives: log SD 0.352 and 0.176. Seed [369, 1].
+- Companions: 200 expression-matched and 200 responsive pseudo-clock sets (A255 `Cohort.pseudo`, tags 3 / 4), Q3.
+- Reported: Q3 on the core loop (11 genes) and its percentile among the 364 three-gene drops (CLAUDE.md gene-drop
+  rule; descriptive); the radius-based leverage per pair (A331 statistic, raw) beside Q.
+**H369.1.** Q3 above max(matched q95, the largest q95 of the four timing-only nulls) and persons-permuted p < 0.05
+(each tissue's persons permuted independently, 2,000, seed [369, 2]).
+**Power.** Share of GTEx-size simulations above the threshold; scored if >= 0.8, otherwise not decidable.
+**Readings.** PASS: living patients share a clock amplitude across liver, muscle and fat at matched phase, beyond
+biopsy time and random genes: the person volume is shown in living people (in men with coronary disease, mostly). FAIL
+with power: absent at GTEx size in living liver, muscle and fat, as in MuTHER; the half-size power says how much
+smaller a volume is excluded.
+**Limits.** 66 patients, all with coronary artery disease, mostly men; one operation (time not recorded); ring model
+for the null; RMA on arrays (one batch per tissue unknown).
