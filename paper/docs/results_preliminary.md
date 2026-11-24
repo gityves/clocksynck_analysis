@@ -8184,3 +8184,57 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   comparison.
 - Code: `exploratory/A329_core_departure/scripts/coherent_split.py` (from `tissues.csv`).
 <!-- src: paper/exploratory/A329_core_departure/output/{coherent_split,coherent_summary}.csv -->
+
+## A358 (scored 2026-11-24; DESCRIPTIVE; one run): no sign that human organ gain follows how evenly the organ weighs the drives in mouse (rho -0.6 against the -0.7 criterion, 5 organs): "not seen"
+
+- Mouse weights b (mean of A322 / A324 where two exist) against the GTEx log gain log sqrt(S), 5 organs:
+
+  | organ | b | b(1 - b) | amplitude kept under conflict | GTEx log gain |
+  |---|---|---|---|---|
+  | liver | 0.781 | 0.171 | 0.575 | 0.891 |
+  | adipose | 0.549 | 0.248 | 0.215 | 0.785 |
+  | lung | 0.371 | 0.233 | 0.495 | 0.566 |
+  | heart | 0.233 | 0.179 | 0.589 | 0.971 |
+  | kidney | 0.278 | 0.201 | 0.648 | 0.655 |
+
+- Balance against gain: Spearman -0.6, exact one-sided p 0.175: below the registered criterion (<= -0.7), "not seen".
+  Amplitude kept under conflict against gain (reported): +0.2 (p 0.39).
+- **Reading.** The cross-species panel is not worth showing: the balance spans a narrow range (0.17-0.25) and the ranking
+  does not follow it. Drive coherence is not excluded as a source of organ gain; this design cannot test it.
+- Code: `exploratory/A358_A360_gain_sources/scripts/a358.py`.
+<!-- src: paper/exploratory/A358_A360_gain_sources/output/{a358_organs,a358_tests}.csv -->
+
+## A359 (scored 2026-11-24; BLIND for every reception slope; one run): louder organs do not read the person's systemic glucocorticoid state more strongly (H359.1 FAIL, rho 0.20, p 0.16); the immediate-early reception slope does track gain (rho 0.44, p 0.016; companion, not a registered hypothesis)
+
+- GTEx fast deaths, 25 tissues; GC genes TSC22D3, KLF9, KLF15, ZBTB16, FKBP5, PDK4, TXNIP, SGK1, DDIT4 (NFIL3 and BHLHE40
+  excluded as registered); 17 IEG genes; tissue score and person factor residualised on the leave-one-out host.
+- The systemic GC state is strongly shared: the tissue's GC score correlates with the person factor of its other
+  tissues at r 0.73-0.94 in every tissue except the adrenal (0.25).
+- **H359.1 FAIL.** Spearman rho(log gain, GC reception slope) 0.199, one-sided permutation p 0.164.
+- **H359.2 (companion).** IEG reception slope against gain: rho 0.435, p 0.016; difference GC - IEG -0.236 (90 % -0.735
+  to +0.315).
+- **Descriptive.** Adult NR3C1 level against gain: rho -0.07. GC reception against the departure D: -0.15; IEG: +0.03.
+- **Reading (registered: FAIL).** Reception of the acute systemic glucocorticoid state does not track organ gain. The
+  immediate-early result is a lead, not a finding: louder organs respond more to the person's acute
+  stress / immediate-early state (in deaths, partly agonal); it was the specificity companion, chosen before scoring
+  but not as a hypothesis. A registered re-test would need an independent design.
+- Code: `exploratory/A358_A360_gain_sources/scripts/a359.py`.
+<!-- src: paper/exploratory/A358_A360_gain_sources/output/{a359_tissues,a359_tests}.csv (per-tissue aggregates) -->
+
+## A360 (scored 2026-11-24; BLIND for every person-covariate relation; one run): the person's clock volume falls with the person's glucocorticoid-target state (H360.1 PASS, partial R^2 0.061, p 0.0006) and is not a technical scale (H360.2 FAIL, 0.005, p 0.53)
+
+- GTEx fast deaths, 237 donors with >= 5 of 25 tissues and complete covariates; log host radius from all tissues.
+- **H360.1 PASS.** The systemic block (person GC and IEG states) explains a partial R^2 of 0.061 beyond the number of
+  tissues, time of death, RIN and ischaemic time (permutation p 0.0006). Standardised coefficients: GC state -0.235 (90 %
+  -0.352 to -0.109), IEG state +0.047 (-0.054 to +0.150).
+- **H360.2 FAIL.** Technical block (median RIN, ischaemic time) partial R^2 0.005, p 0.53: no technical scale detected.
+- Descriptive: age, sex and BMI add 0.007 (p 0.65). Full model R^2 0.081. Time of death: cos -0.042, sin +0.028 (both
+  intervals include 0). Number of tissues +0.107 (-0.005 to +0.219).
+- **Reading (registered: H360.1 PASS, H360.2 FAIL).** The person volume follows the body's systemic state: persons with
+  a higher glucocorticoid-target state have quieter shared clocks across their organs. It is a small part (6 %) of the
+  person volume, most of which stays unexplained; RIN and ischaemic time do not explain it, which answers A312's
+  technical-scale caveat for these two measures. In deaths an acute (agonal) glucocorticoid surge and a chronic state
+  are not separated. Not checked: whether the effect holds on the core loop (an acute glucocorticoid push moves PER1,
+  PER2, NR1D1 and can change the host radius directly).
+- Code: `exploratory/A358_A360_gain_sources/scripts/a360.py`.
+<!-- src: paper/exploratory/A358_A360_gain_sources/output/{a360_coefficients,a360_tests}.csv (coefficients only) -->
