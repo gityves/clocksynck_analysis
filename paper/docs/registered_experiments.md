@@ -11100,3 +11100,34 @@ times; threshold = max(matched q95, simulated null q95). Scored if power >= 0.8 
 genes, measured from a timed day. Within the matched range: not separable from a shared person or biopsy scale (both
 layers come from one punch, so a shared handling scale is likely and the companions decide).
 **Limits.** 11 subjects; two layers of one biopsy; arrays; first harmonic only. Aggregates only.
+
+## A366 (2026-11-24, on the user's instruction "You can register it ... we can check if the internal phase correlates with the amplitude"; staged: power (geometry, timing-only simulation at the observed geometry, companions; no clock radius statistic), then one scoring run if powered; **NOT BLIND**: A331 (fat-skin leverage 0.177; matched q95 0.117; responsive q95 0.179; core 0.107), A255 (pairing 0.533), the synthetic timing check of the assessment (timing alone gives a leverage of 0.18-0.29 on daytime arcs); **BLIND**: the geometry of the MuTHER clock-state clouds, the circle-centred leverage of the clock and of the companions, the radius-phase relation (none computed; grep 2026-11-24)): is A331's living fat-skin loudness a person volume or the shared biopsy time? **MuTHER, 680 women with fat and skin (A255 states)**
+
+**Why.** Shared biopsy time puts a woman's fat and skin at the same clock phase. If biopsies fall in a daytime window,
+the states lie on an arc; centred on the cohort mean, a state's radius then grows with its distance from the mean
+phase, and fat and skin share that radius with no loudness difference between women. Measuring radius and phase from
+the centre of the ring the states lie on removes this (synthetic check at registration, no MuTHER value: timing-only
+leverage 0.12 / 0.05 for phase SD 2.3 / 3.8 h, against 0.33 / 0.27 with a GTEx-size volume; not separable on a very
+narrow arc, SD 1.1 h: 0.23 against 0.29). A first correction (radii residualised on the other tissue's position along
+the major axis) was dropped before registration: on synthetic data it removed a true volume.
+**Statistic (`exploratory/A366_muther_timing/scripts/a366_muther_timing.py`).**
+- Geometry (descriptive, decides nothing alone): elongation = major / minor eigenvalue of the 2 x 2 state covariance,
+  per tissue and for the combined state (A331 power-stage combination).
+- Circle-centred leverage: each tissue's states recentred on its algebraic (Kasa) circle fit, then
+  `clocksync.elasticity.radius_covariance` (radii residualised on two harmonics of both angles).
+- Timing-only null and power: persons on a ring with phases N(0, sd), sd chosen on a grid so that the simulated combined
+  elongation matches the observed one (20 draws per grid point), noise at A331's clock fractions, 680 persons, 500
+  draws each with no person amplitude (null), log SD 0.352 (GTEx) and 0.176 (seed [366, 1]).
+- Companions: A331's 200 matched and 200 responsive sets (tags 3 / 4), same statistic.
+- Reported at scoring: the raw A331 leverage beside the corrected one; Spearman of each tissue's centred radius with the
+  other tissue's |position on the major axis| (the user's phase-amplitude question: a U-shaped dependence is the timing
+  signature); the circle centres' distance from the cohort mean (relative to the mean radius).
+**H366.1.** Circle-centred clock leverage above max(matched q95, timing-only null q95) and persons-permuted p < 0.05
+(2,000, seed [366, 2]).
+**Power.** Share of GTEx-size simulations above that threshold; scored if >= 0.8, otherwise "not decidable: on this
+arc a shared biopsy time and a person volume cannot be separated".
+**Readings.** PASS: living fat and skin share a loudness beyond the shared biopsy time and beyond random genes (A331
+stands as living evidence; its relation to the responsive genes, a glucocorticoid-compatible state, is reported).
+FAIL with power: A331's leverage is the shared biopsy time; A331 is withdrawn as person-volume evidence.
+**Limits.** The ring model (sinusoidal, isotropic noise) for the null; a circle fit on a partial arc is noisy (its
+spread is in the null); one biopsy, one array batch. Aggregates only.
