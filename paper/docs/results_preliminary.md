@@ -8494,3 +8494,16 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
 - Reading (post hoc): persons differ in a body-wide expression scale, in life and in death; in deaths the clock follows
   it more reliably than random genes. Whether that excess exists in life is not decided.
 <!-- src: paper/exploratory/A336_two_readouts/output/{person_gtex,person_gtex_companions}.csv -->
+
+## A370 power note (2026-11-24; no clock Q computed; 4 s): not decidable (power 0.48 at GTEx size, 0.04 at half): AAGMEx's muscle clock is weak and the arc's width is uncertain enough that biopsy time alone can reach what a volume gives
+
+- Prep: markers separate the tissues (MYH2 13.5 muscle vs 6.4 fat; LEP 11.9 fat vs 7.4); all 251 persons get one sex
+  call in both tissues; 13 clock genes (CIART absent from HT-12 v4).
+- Gates pass, the muscle one narrowly: adipose share 0.417 (p 0.020), muscle 0.129 (p 0.035). Pairing 0.403; clock
+  fractions adipose 0.72, muscle 0.22.
+- Geometry: combined elongation 2.53, phase SD 0.70 rad (2.7 h).
+- Timing-only Q medians / q95: 0.151 / 0.249 at the fitted spread; 0.079 / 0.184 at 0.75 x; 0.219 / 0.316 at 1.25 x;
+  uniform 0.087 / 0.180; equal fractions 0.166 / 0.275. Companions: matched median 0.067, q95 0.252; responsive q95 0.167.
+- Volume medians: GTEx size 0.315, half 0.214. Threshold 0.316 (the 1.25 x null): power 0.484 / 0.042. Not scored.
+- Code: `exploratory/A370_aagmex_volume/scripts/{prep_aagmex.py, a370_aagmex.py --stage power}`.
+<!-- src: paper/exploratory/A370_aagmex_volume/output/{power,gates,sim,companions}.csv, output/prep/{prep_summary,markers}.csv -->

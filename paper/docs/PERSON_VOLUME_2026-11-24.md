@@ -152,3 +152,9 @@ patients, up to seven tissues) would decide it.
   (A368); the A331 living result withdrawn (A366).
 - Caveats: deaths only; agonal confound open (A367); STAGE too small (A369).
 - Figure 4f: remove the living MuTHER panel; add the cv2-vs-companions comparison beside the leverage.
+
+## 13. AAGMEx (added 2026-11-24, A370)
+
+A370 not decidable (power 0.48): 251 adults with fat and muscle (GEO scout's best hit), but a weak muscle clock (gate
+share 0.13) and an uncertain arc width. With A364, A365, A369 and A370 not decidable and A366 / A368 failing, no public
+living cohort found decides a clock-specific person volume. Remaining: STARNET, TwinsUK with visit times, FUSION.
