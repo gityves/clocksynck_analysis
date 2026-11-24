@@ -8346,3 +8346,20 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   the core; that the trio carries it (TNF-alpha and glucocorticoids act on it directly) is not shown either.
 - Code: `exploratory/A361_A363_volume_mechanism/scripts/a361_a363_systemic.py`, `a363_gene_classes.py --stage score`.
 <!-- src: paper/exploratory/A361_A363_volume_mechanism/output/{systemic_tests,a363_tests,a363_power_recal}.csv -->
+
+## A361 / A363 gene-drop addendum (scored 2026-11-24; BLIND for the 364 drops and A363's paired difference; one run, 81 s): the trio drop is an ordinary three-gene drop for both coefficients: neither the smaller A361 nor the smaller A363 core coefficient is carried by PER1, PER2 and NR1D1 (not decided: precision or the removed genes)
+
+| term | 14 genes | core (trio drop) | 364 drops: median (q10 to q90) | trio percentile, all / similar (77) | predicted by reliability loss |
+|---|---|---|---|---|---|
+| A361 GC | -0.235 | -0.184 | -0.221 (-0.244 to -0.175) | 85.2 / 51.9 | -0.231 |
+| A363 inflammatory | -0.156 | -0.074 | -0.156 (-0.199 to -0.032) | 82.4 / 26.0 | -0.153 |
+
+- A363 paired 14-minus-core difference -0.082 (90 % -0.187 to +0.036; 237 persons).
+- **Reading (registered).** Removing any three genes moves both coefficients as much as removing the trio; the trio
+  drop sits inside the random drops (below the 90th percentile, mid-range among drops of similar singular values).
+- The reliability loss (factor 0.98) predicts far less movement than the drops show: which genes are left, not only how
+  precise the projection is, moves a coefficient of this size. The yardstick for a core readout is the drop null, not
+  the reliability factor (post hoc observation).
+- Consequence for A363 part 1: the core test fails as registered (H363.1 FAIL), and the core value is a typical
+  11-gene value, so the inflammatory correlate is neither shown on the clock nor shown to be a trio effect.
+<!-- src: paper/exploratory/A361_A363_volume_mechanism/output/{drops_tests,drops_coefs}.csv -->
