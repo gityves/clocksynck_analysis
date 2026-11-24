@@ -96,6 +96,9 @@ figure, then apply it to the figure at hand.
   (user, 2026-11-16), not "untimed / timed offset".
 - Short, lower-case axis labels; a line break rather than a smaller font when a label is long.
 - Legends: one row under the panels, or direct labels next to the lines when there are at most four series.
+- No internal identifiers on a figure (user, 2026-11-24): never amendment numbers (A259), hypothesis codes or script
+  names in labels, legends or titles. Name the thing ("measured across donors", "core loop"); the amendment goes in the
+  caption, the docstring or the speaker notes.
 
 ## Marks
 
