@@ -124,34 +124,42 @@ A369 not decidable (power 0.04): 66 bypass patients, liver / muscle / fat from o
 noisy muscle and fat clocks. Synthetic check: no statistic decides at 66; about 600 persons would (STARNET). The public
 living designs are exhausted for this question; STARNET (dbGaP, user application) is the remaining living test.
 
-## 12. Proposed rewording after A366-A369 and the size note (2026-11-24; proposal, nothing applied)
+## 12. Proposed rewording after A366-A371 and the size note (2026-11-24, revised after A367; proposal, nothing applied)
 
 **What changed.** The volume's size in GTEx deaths (cv2 0.12) is what random genes also share (matched median 0.107,
 responsive 0.218); only its reliability across organs is clock-specific (leverage 0.714, 98.5th percentile of matched
-sets). Living tests exclude a clock volume of that size (A368) but cannot see a smaller clock-specific excess (A364,
-A365, A369 not decidable). "A clock volume" overstates what is shown.
+sets). It is present at full size in instantaneous deaths (A367: Hardy 1 core 0.726, 99th percentile of matched sets),
+so it does not need a terminal phase. Its glucocorticoid link does: it appears only in Hardy 2 deaths (descriptive,
+A367). Living tests exclude a clock volume of GTEx size (A368) but cannot see a smaller clock-specific excess (A364,
+A365, A369, A370 not decidable). "A clock volume" overstates what is shown.
 
 **Paper (results), replacing section 4's wording:**
 > Persons differ in a body-wide scale of gene expression. In post-mortem donors, the clock follows this scale more
-> reliably across organs than expression-matched genes do, scaling all core clock genes alike, and the clock's share
-> is lower when the glucocorticoid-target state is higher, beyond companion genes. Its organ pattern is not the one
-> conflicting cues produce in mouse. In living people a body-wide expression scale is present, but a clock-specific
-> excess above it is not detected at the sizes public cohorts can resolve.
+> reliably across organs than expression-matched genes do, scaling all core clock genes alike, and it does so in
+> instantaneous deaths as much as in deaths with a terminal phase. Its organ pattern is not the one conflicting cues
+> produce in mouse. In deaths with a terminal phase, the scale falls with the glucocorticoid-target state. In living
+> people a body-wide expression scale is present, but a clock-specific excess above it is not detected at the sizes
+> public cohorts can resolve.
 
-**Discussion:** the clock-specific excess may arise in the dying process (an agonal glucocorticoid surge acts within
-the hour; A367 tests instantaneous deaths) or exist in life below the public cohorts' resolution; STARNET (about 600
-patients, up to seven tissues) would decide it.
+**Discussion:** the glucocorticoid relation is probably acquired while dying (absent, with the opposite sign, in 34
+violent deaths with a lower glucocorticoid-target state; descriptive). The clock-specific excess itself is not made by
+the terminal phase; whether it exists in life below the public cohorts' resolution or arises within minutes of death or
+after it is open. STARNET (about 600 patients, up to seven tissues) would decide it in life.
 
 **Slide 3.5 (replaces the section 4 proposals):**
 - Title: "Persons differ in a body-wide expression scale; in deaths the clock follows it most reliably".
 - Bullet 1: GTEx person leverage 0.714 on the core loop, above 98.5 % of matched gene sets (A336), with the size note
   (cv2 not above random genes).
-- Bullet 2: GC-target state, core coefficient -0.18 (90 % -0.30 to -0.06), beyond all 400 companions (A361).
+- Bullet 2: present at full size in violent, instantaneous deaths (Hardy 1 core 0.726, 34 donors; A367).
 - Bullet 3: uniform across core clock genes (A363); not the mouse cue-conflict organ pattern (A362).
-- Bullet 4 (living): MuTHER at matched phase: no clock excess beyond random genes; a GTEx-size clock volume excluded
+- Bullet 4: in deaths with a terminal phase it falls with the glucocorticoid-target state (A361 core -0.18, 90 % -0.30
+  to -0.06, beyond all 400 companions); not in instantaneous deaths (A367, descriptive): an agonal relation.
+- Bullet 5 (living): MuTHER at matched phase: no clock excess beyond random genes; a GTEx-size clock volume excluded
   (A368); the A331 living result withdrawn (A366).
-- Caveats: deaths only; agonal confound open (A367); STAGE too small (A369).
-- Figure 4f: remove the living MuTHER panel; add the cv2-vs-companions comparison beside the leverage.
+- Caveats: deaths only; processes within minutes of death or after it not excluded; STAGE and AAGMEx too small or too
+  noisy (A369, A370); A367's GC contrast rests on 34 donors.
+- Figure 4f: remove the living MuTHER panel; add the cv2-vs-companions comparison beside the leverage, and the Hardy 1
+  leverage beside the whole-cohort one.
 
 ## 13. AAGMEx (added 2026-11-24, A370)
 
