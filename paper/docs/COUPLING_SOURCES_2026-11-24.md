@@ -79,3 +79,12 @@ linking the healthy organ map to the conflict results; (b) would make it a prope
    circularity check); (a) descriptive only.
 5. Literature to card: Wehrens 2017 (human meal timing shifts adipose PER2 about 1 h), cited by the human part of claim
    5 if used.
+
+## 6. Outcomes (2026-11-24)
+
+- (a) A358, descriptive: not seen (rho -0.6 between mouse balance b(1 - b) and GTEx gain, 5 organs; criterion -0.7).
+- (b) A359: H359.1 FAIL (GC reception slope against gain rho 0.20, p 0.16); the IEG reception slope tracks gain
+  (rho 0.44, p 0.016; companion, a lead only).
+- (e) A360: H360.1 PASS (person volume falls with the person GC-target state, coefficient -0.235, partial R^2 0.061,
+  p 0.0006); H360.2 FAIL (no technical scale from RIN or ischaemic time).
+- What sets the organ gain stays open; the person volume has a first systemic correlate.
