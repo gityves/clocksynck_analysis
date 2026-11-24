@@ -76,15 +76,13 @@ def models(ax, t, s):
     ax.scatter(t.S, t.D, s=24, c=[COLOR[gtex_system(k)] for k in t.index], edgecolor="white", lw=0.4, zorder=3)
     s0, d0 = s.geomean_S, s.median_D
     xs = np.geomspace(0.1, 13, 50)
-    for k, ls, lab in ((0, "-", "fixed size"), (1, "--", "fixed angle"), (2, ":", "own clock\nperiods")):
-        ys = d0 * (xs / s0) ** k
-        ax.plot(xs, ys, color=MUTED, lw=1.1, ls=ls, zorder=1)
-        i = np.searchsorted(ys, 40) - 1 if k else len(xs) - 1
-        xl = xs[min(i, len(xs) - 1)] if k else 13
-        ax.text(xl, min(ys[min(i, len(xs) - 1)], 35) * (1.08 if k else 0.78), lab, fontsize=8, color=MUTED,
-                ha="right" if k else "right", va="bottom" if k else "top")
-    ax.text(0.97, 0.03, f"observed slope {s.slope:.2f}", transform=ax.transAxes, ha="right", va="bottom", fontsize=8.5,
-            color=INK)
+    h = []
+    for k, ls, lab in ((0, "-", "fixed size"), (1, "--", "fixed angle"), (2, ":", "own clock periods")):
+        ax.plot(xs, d0 * (xs / s0) ** k, color=MUTED, lw=1.1, ls=ls, zorder=1)
+        h.append(Line2D([], [], color=MUTED, lw=1.1, ls=ls, label=lab))
+    leg = ax.legend(handles=h, loc="lower right", frameon=False, fontsize=8, title=f"observed slope {s.slope:.2f}",
+                    title_fontsize=8, handlelength=1.4, handletextpad=0.4, borderaxespad=0.2)
+    ax.add_artist(leg)  # kept when the organ-system legend is added
     ax.set_xlim(0.1, 13)
     ax.set_ylim(0.1, 40)
     log_ticks(ax, [0.1, 0.3, 1, 3, 10], "x")
@@ -98,8 +96,6 @@ def hours(ax, t, s):
     xs = np.geomspace(0.9, 3.5, 50)
     ax.plot(xs, np.sqrt(s.median_D / 2) / xs * H, color=MUTED, lw=1.1, zorder=1)
     ax.axhline(b.phase_h.median(), color=MUTED, lw=1.1, ls="--", zorder=1)
-    ax.text(3.45, b.phase_h.median() + 0.08, "fixed angle", ha="right", va="bottom", fontsize=8, color=MUTED)
-    ax.text(1.0, np.sqrt(s.median_D / 2) / 1.0 * H, "fixed size", ha="left", va="bottom", fontsize=8, color=MUTED)
     ax.scatter(b.amp, b.phase_h, s=24, c=[COLOR[gtex_system(k)] for k in b.index], edgecolor="white", lw=0.4, zorder=3)
     a = b.dropna(subset=["a259_hours"])
     ax.errorbar(a.amp * 1.03, a.a259_hours, yerr=[a.a259_hours - a.a259_hours_lo, a.a259_hours_hi - a.a259_hours],
@@ -110,7 +106,9 @@ def hours(ax, t, s):
     ax.set_xlabel("amplitude shared\nwith the body, √S")
     ax.set_ylabel("phase SD [h]")
     h = [Line2D([], [], ls="", marker="o", ms=5, color=MUTED, label="implied by D"),
-         Line2D([], [], ls="", marker="D", ms=5, mfc="white", mec=INK, label="measured (A259)")]
+         Line2D([], [], ls="", marker="D", ms=5, mfc="white", mec=INK, label="measured (A259)"),
+         Line2D([], [], color=MUTED, lw=1.1, label="fixed size"),
+         Line2D([], [], color=MUTED, lw=1.1, ls="--", label="fixed angle")]
     ax.legend(handles=h, loc="upper right", frameon=False, fontsize=8, handletextpad=0.1)
 
 

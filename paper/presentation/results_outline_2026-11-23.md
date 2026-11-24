@@ -458,10 +458,10 @@ post hoc display (same-class rows chosen post hoc).
    perfectly locked tissue would read 0.97 at every tissue's real design (A291).
 2. The same holds in the baboon, where each animal's time is known, brain included: coupling rises with each tissue's
    rhythm amplitude (Spearman 0.82 over 57 tissues; periphery 0.77, brain 0.74), and weakly rhythmic brain regions fall
-   on the peripheral line (A289: median residual -0.001). Human brain couples at 0.406 against 0.679 in the periphery.
+   near the peripheral curve (A289: median residual -0.001 on its line). Human brain couples at 0.406 against 0.679 in the periphery.
 
 **Figure:** `figures/organs_health/organs_health.png` (`scripts/organs_health.py`; half). A. human: coupling against the
-shared amplitude sqrt(S), one dot per tissue; grey: S / (S + D) at the median D (1.9), the definition of coupling at a
+shared amplitude a = sqrt(S), one dot per tissue; grey: a^2 / (a^2 + D) = S / (S + D) at the median D (1.9), the definition of coupling at a
 constant departure, not a fit (explained in 3.4b). B. baboon: amplitude against known time (A36 timed gain, estimated
 without the host) against coupling, 35 peripheral tissues and 22 brain regions; grey: the same curve, a^2 / (a^2 + D),
 D fitted on the peripheral tissues (2.30; one parameter; amplitude units differ from A). Right axes: the phase SD a coupling implies,
@@ -487,7 +487,7 @@ panel B display post hoc (the fitted curve replaces A289's peripheral line; on i
    erratum).
 4. Coupling, the share of an organ's person-to-person clock variation that follows the body's clock state, rises with
    the organ's gain, the transfer of the body's time to the organ. The organ's own departure is added after that
-   transfer and is about the same size in every organ, so louder organs are more strongly driven by the body's time and
+   transfer and is about the same size in every organ, so louder organs receive more of the body's time and
    stay closer to it in hours (1.1 h against 3.0 h): gain and coupling rank organs alike. What sets an organ's gain is
    open: not its cell composition (A323), not post-mortem attenuation (A356).
 
@@ -497,7 +497,7 @@ thyroid (loud) on circles of radius sqrt(S), departure disc of 1 SD (sqrt(D / 2)
 B. D against S per tissue; grey lines through the geometric-mean S and median D: fixed size (0), fixed angle (1), own
 clock periods (2). C. implied phase SD sqrt(D / (2 S)) in hours against amplitude (dots), A259 measured SD with 90 %
 interval (diamonds); grey: fixed-size prediction and fixed-angle line. Whole blood and testis omitted. D. fraction of
-the departure along the phase direction, clock genes and matched genes (A311).
+the departure along the phase direction, clock genes and matched genes (A311). Reference lines are named in legends.
 
 **Tags:** A294b registered (H294b.1 pass; slope descriptive); A259 registered; A311 registered (H311.1 FAIL: not
 phase-dominated, the outcome shown); A329 erratum post hoc; panel A and the implied phase SD (C) post hoc displays.

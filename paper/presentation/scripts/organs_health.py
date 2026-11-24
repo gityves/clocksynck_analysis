@@ -87,7 +87,8 @@ def coupling_curve(ax, t):
     xs = np.geomspace(0.3, 4, 80)
     d = t.own.median()
     ax.plot(xs, xs**2 / (xs**2 + d), color=MUTED, lw=1.2, zorder=1)
-    ax.text(2.2, 0.12, f"S / (S + {d:.1f})", ha="center", fontsize=8.5, color=MUTED)
+    ax.text(0.97, 0.03, f"a\u00b2 / (a\u00b2 + {d:.1f})", transform=ax.transAxes, ha="right", va="bottom", fontsize=8.5,
+            color=MUTED)
     ax.set_xscale("log")
     ax.set_xlim(0.3, 4)
     ax.set_xticks([0.5, 1, 2, 4], ["0.5", "1", "2", "4"])
