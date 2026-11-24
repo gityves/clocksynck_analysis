@@ -9,13 +9,8 @@ A. How reliably loudness is shared across a person's tissues (leverage: correlat
    stress-responsive (dark grey) gene sets on the same donors.
 B. How large the shared loudness is (cv2: shared squared coefficient of variation of the radii), same sets, all fast
    deaths, core loop (post hoc size note): the clock is not above random genes.
-C. Elasticity of each tissue's amplitude to the person's shared amplitude, relative to the other tissues' composite
-   (A312, registered), with 90 % interval, against the tissue's gain sqrt(S). Grey band: 10-90 % of the estimates
-   when every organ scales exactly in proportion (post hoc calibration, `A312_elasticity/scripts/calib_level.py`).
-E. Controls for batch, collection centre and body-wide composition (A375, registered, blind): median pairwise leverage
-   of the clock (core loop; blue) under each control, with the 95th percentile of 50 expression-matched sets under the
-   same control (light grey); pairwise leverage is noisier than panel A's half-host value, so rows compare with each
-   other only.
+(Elasticity panel removed 2026-11-24 (user): every organ follows the scale nearly in proportion, A312, is stated in
+   the speaker notes; `elasticity()` kept for a backup slide.)
 D. What tracks the person's scale (A360, registered; H360.1 pass, H360.2 fail): standardised coefficients of the log
    host radius (14 genes) with donor-bootstrap 90 % intervals, 237 fast-death donors.
 
@@ -148,19 +143,17 @@ def controls(ax):
 def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
-    lay = pf.Layout.slide("ABECD", kind="wide", col_ratios=[1.0, 0.65, 0.95, 0.95, 1.05])
+    lay = pf.Layout.slide("ABED", kind="wide", col_ratios=[1.1, 0.7, 1, 1.05])
     g, h, hd = shared(lay.axes["A"])
     gs, gcs = size(lay.axes["B"])
     lay.axes["B"].legend(handles=hd, loc="lower left", frameon=False, fontsize=8, handletextpad=0.5, handlelength=1.2)
     ctl = controls(lay.axes["E"])
-    t = elasticity(lay.axes["C"])
     co = tracks(lay.axes["D"])
     fig = lay.finalize()
     print("GTEx core", round(g.leverage, 3), "matched q95", round(g.matched_q95, 3), "responsive q95", round(g.responsive_q95, 3))
     print("Hardy 1 core", round(h.lev_h1, 3), "matched q95", round(h.matched_q95_h1, 3), "responsive q95", round(h.responsive_q95_h1, 3))
     print("cv2 core", round(gs.cv2, 3), gcs.groupby("kind").cv2.median().round(3).to_dict())
     print(ctl[["L", "matched_q95", "ratio_to_none"]].round(3).to_string())
-    print("elasticity median", round(t.elasticity.median(), 3), "range", round(t.elasticity.min(), 2), round(t.elasticity.max(), 2))
     print(co.round(3).to_string())
     print(pf.collisions(fig))
     pf.save(fig, OUT / "person_loudness")

@@ -573,7 +573,7 @@ loudness is shared across a person's tissues (core loop), all fast deaths and vi
 against 200 matched (light grey) and 200 stress-responsive (dark grey) gene sets. B. how large the shared loudness is
 (cv2), same sets, all fast deaths. E (third panel). the clock's pairwise leverage under controls for batch, collection
 centre, cell-type markers and the main expression axes, against the matched sets' 95th percentile under the same
-control (A375). C. each tissue's elasticity to the person's scale with 90 % interval against organ gain. D. standardised effects on the person's scale (log host radius, 14 genes, A360) with 90 % intervals; black:
+control (A375). D (fourth panel). standardised effects on the person's scale (log host radius, 14 genes, A360) with 90 % intervals; black:
 interval excludes 0.
 
 **Tags:** A336 part 2 registered (core loop blind); A367 registered (blind; H367.1 at power 0.775 by the user's
@@ -598,7 +598,7 @@ decision); A361, A362, A363 registered; A366, A368 registered (living); A312, A3
   reach r 0.70 (q95 0.72): mostly a shared scale of one biopsy. Between two separate skin sites (GSE326530) no
   amplitude is shared (their statistic r 0.13; our core clock r -0.04, 41st percentile of matched sets). Cite the
   preprint with this caveat.
-- Panel C, elasticity: level not anchored at 1 (simulated proportional scaling reads median 1.11; grey band); the
+- Elasticity (panel removed 2026-11-24, backup slide; every organ follows the scale nearly in proportion, A312): level not anchored at 1 (simulated proportional scaling reads median 1.11; grey band); the
   registered gradient has the size the same simulation gives with no true gradient (A312 calibration note).
 - What the scale physically is (uniform damping of cell clocks, cells dephasing, body-wide composition) is not
   separable in bulk.
