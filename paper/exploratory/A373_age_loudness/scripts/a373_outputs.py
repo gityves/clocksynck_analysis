@@ -61,8 +61,12 @@ class Tissue:
         return pd.DataFrame(self.x[:, k], columns=list(gl)).assign(depth=self.depth)
 
     def zv(self, w):
-        g = [x for x in w.genes if x in self.col]
-        idx = [i for i, x in enumerate(w.genes) if x in self.col]
+        seen, idx = set(), []
+        for i, x in enumerate(w.genes):     # a gene drawn twice in a companion set is used once
+            if x in self.col and x not in seen:
+                seen.add(x)
+                idx.append(i)
+        g = [w.genes[i] for i in idx]
         ww = Waveform(tuple(g), np.asarray(w.amp)[idx], np.asarray(w.psi)[idx], None, None, w.name)
         f = self.frame(g)
         L = projector(f[g], ww)
