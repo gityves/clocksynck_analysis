@@ -4,18 +4,20 @@ its own gain over a departure of nearly constant size; coupling follows, the bra
 Notation (A104 table, GTEx fast deaths, peripheral tissues read leave-one-out on the peripheral host): S = z2 V_h, the
 clock-plane variance a tissue shares with the body's clock state (gain squared times host spread); D = 2 psi, its clock-plane variance
 at a fixed body state, net of counting noise (own departure in amplitude and phase); coupling c = S / (S + D).
-A. Shared against own clock variation, one dot per tissue (log axes, same range), coloured by organ system; grey: Theil-Sen
-   line of log D on log S (A294b descriptive slope). Post hoc display (A291 post hoc table).
-B. Coupling against the shared amplitude sqrt(S); grey: c = S / (S + D) at the median D over tissues. The curve is the
-   definition of c drawn at a constant D, not a fit: the finding is that D is nearly constant (A).
-C. Is the own variation specific to the clock genes? Own variance of the clock genes against the median of 100
-   expression-matched gene sets in the same tissue (A294b, registered, H294b.1 pass); dashed: identity; dotted: median
-   ratio. The core-loop values (A329) are not shown: the 11-gene projector has 3.1 times the noise gain, so its ratio is
-   not comparable (A329 erratum).
-D. Baboon (Mure 2018, 12 animals): rhythm amplitude against known time (A36 timed gain |g|, estimated without the host)
+Order: the observation (A, B: louder clocks are more coupled, in human and baboon), then why (C: the departure is
+nearly constant), then the departure's specificity (D).
+A. Coupling against the shared amplitude sqrt(S), one dot per tissue, coloured by organ system; grey: c = S / (S + D)
+   at the median D over tissues (the definition of c drawn at a constant D, not a fit; explained by C).
+B. Baboon (Mure 2018, 12 animals): rhythm amplitude against known time (A36 timed gain |g|, estimated without the host)
    against coupling (A42 readout 2), 35 peripheral tissues and 22 brain regions; grey: the peripheral least-squares line.
    Post hoc panel (A289 H289.3 registered the untimed amplitude: brain on the line). Pineal, pituitary and ocular tissues
    not shown.
+C. Shared against own clock variation (log axes, same range); grey: Theil-Sen line of log D on log S (A294b descriptive
+   slope). Post hoc display (A291 post hoc table).
+D. Is the own variation specific to the clock genes? Own variance of the clock genes against the median of 100
+   expression-matched gene sets in the same tissue (A294b, registered, H294b.1 pass); dashed: identity; dotted: median
+   ratio. The core-loop values (A329) are not shown: the 11-gene projector has 3.1 times the noise gain, so its ratio is
+   not comparable (A329 erratum).
 
 Data: exploratory/A294_floor/output/{tissues,tests}.csv; results/figure_2/output/organs/r2_couplings.csv;
 results/figure_1/output/species/a36_tissues.csv. GTEx aggregates only (one value per tissue).
@@ -121,21 +123,21 @@ def main():
     slope = pd.read_csv(EXP / "A294_floor/output/tests.csv").set_index("test").loc[
         "descriptive", "slope_log_own_clock_on_log_S"]
     bab = pd.read_csv(PAPER / "results/figure_2/output/organs/r2_couplings.csv").query("species == 'baboon'")
-    lay = pf.Layout.slide("ABCD", kind="wide", col_ratios=[1, 1, 0.85, 1])
-    shared_own(lay.axes["A"], t, slope)
+    lay = pf.Layout.slide("ABCD", kind="wide", col_ratios=[1, 1, 1, 0.85])
+    coupling_curve(lay.axes["A"], t)
     legend_in(lay.axes["A"], fontsize=7.5, loc="upper left")
-    coupling_curve(lay.axes["B"], t)
-    tests = pd.read_csv(EXP / "A294_floor/output/tests.csv").set_index("test")
-    specific(lay.axes["C"], t, float(np.exp(tests.loc["H294.1", "median_log_ratio"])))
-    print("S fold", round(t.S.max() / t.S.min(), 1), "gain fold", round(np.sqrt(t.S.max() / t.S.min()), 2),
-          "D fold", round(t.own.max() / t.own.min(), 2), "median D", round(t.own.median(), 2))
-    for k in "ABC":
-        lay.axes[k].set_title("human", fontsize=13, color=INK)
     timed = pd.read_csv(PAPER / "results/figure_1/output/species/a36_tissues.csv", index_col="tissue").g_abs
     bab = bab.set_index("compartment").assign(timed_amp=timed)
-    scatter(lay.axes["D"], bab, baboon_system, "baboon", x="timed_amp", xlabel="rhythm amplitude\nagainst known time")
-    lay.axes["D"].set_ylabel("coupling")
-    lay.axes["D"].set_xlabel("amplitude against\nknown time")
+    scatter(lay.axes["B"], bab, baboon_system, "baboon", x="timed_amp", xlabel="rhythm amplitude\nagainst known time")
+    lay.axes["B"].set_ylabel("coupling")
+    lay.axes["B"].set_xlabel("amplitude against\nknown time")
+    shared_own(lay.axes["C"], t, slope)
+    tests = pd.read_csv(EXP / "A294_floor/output/tests.csv").set_index("test")
+    specific(lay.axes["D"], t, float(np.exp(tests.loc["H294.1", "median_log_ratio"])))
+    print("S fold", round(t.S.max() / t.S.min(), 1), "gain fold", round(np.sqrt(t.S.max() / t.S.min()), 2),
+          "D fold", round(t.own.max() / t.own.min(), 2), "median D", round(t.own.median(), 2))
+    for k in "ACD":
+        lay.axes[k].set_title("human", fontsize=13, color=INK)
     fig = lay.finalize()
     print(pf.collisions(fig))
     pf.save(fig, OUT / "organs_health")

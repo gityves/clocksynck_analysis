@@ -451,26 +451,29 @@ post hoc display (same-class rows chosen post hoc).
 ## 3.4 Coupling mostly reads loudness: organs share the body's time at 9.2-fold different gains over a departure of nearly constant size
 
 **Bullets**
-1. Across 27 GTEx peripheral tissues, the clock variation shared with the body (S) spans 85-fold (0.12, whole blood, to
-   10.3), i.e. a 9.2-fold range of gain; each tissue's own departure from the body's clock state (D) spans 4.6-fold
-   (0.90 to 4.14) and barely grows with S (slope of log D on log S 0.07).
-2. Coupling = S / (S + D), so it follows loudness: louder organs read as more coupled (Spearman rho +0.734 with
-   amplitude). Not measurement: a perfectly locked tissue would read 0.97 at every tissue's real design (A291).
-3. The departure is clock-specific: 2.6 times that of expression-matched genes (90 % 2.4 to 2.9, all 27 tissues;
+1. Louder organs read as more coupled to the body's clock state: across 27 GTEx peripheral tissues, coupling rises with
+   the amplitude a tissue shares with the body (Spearman rho +0.734). Not measurement: a perfectly locked tissue would
+   read 0.97 at every tissue's real design (A291).
+2. The same holds in the baboon, where each animal's time is known, brain included: coupling rises with each tissue's
+   rhythm amplitude (Spearman 0.82 over 57 tissues; periphery 0.77, brain 0.74), and weakly rhythmic brain regions fall
+   on the peripheral line (A289: median residual -0.001). Human brain couples at 0.406 against 0.679 in the periphery.
+3. Why: the clock variation shared with the body (S) spans 85-fold (0.12, whole blood, to 10.3; a 9.2-fold range of
+   gain), each tissue's own departure from the body's clock state (D) only 4.6-fold (0.90 to 4.14), barely growing with
+   S (slope of log D on log S 0.07). Coupling = S / (S + D), so with a near-constant departure it ranks organs by
+   loudness.
+4. The departure is clock-specific: 2.6 times that of expression-matched genes (90 % 2.4 to 2.9, all 27 tissues;
    A294b). It is a coherent shift of the tissue's whole clock state, about 2.0 times matched gene-level variation and
    present in every tissue, not carried by PER1, PER2 and NR1D1 (A329 erratum, post hoc). A person-level
    glucocorticoid-like state, read from the person's other tissues, explains a small part of it (median R^2 0.027
    against 0.008 for matched genes; A357, registered, blind).
-4. The brain follows the rule. In the baboon, where each animal's time is known, coupling rises with each tissue's
-   rhythm amplitude (Spearman 0.82 over 57 tissues; periphery 0.77, brain 0.74), and weakly rhythmic brain regions fall
-   on the peripheral line (A289: median residual -0.001). Human brain couples at 0.406 against 0.679 in the periphery.
 
-**Figure:** `figures/organs_health/organs_health.png` (`scripts/organs_health.py`; wide). A. S against D per tissue
-(log axes, same range), Theil-Sen line. B. coupling against the shared amplitude sqrt(S); grey: S / (S + D) at the
-median D (1.9), the definition of coupling at a constant departure, not a fit. C. own departure of the clock genes
-against that of expression-matched genes (median of 100 sets); dashed 1:1, dotted the median ratio 2.6. D. baboon: amplitude against
-known time (A36 timed gain, estimated without the host) against coupling, 35 peripheral tissues and 22 brain regions;
-grey: peripheral line.
+**Figure:** `figures/organs_health/organs_health.png` (`scripts/organs_health.py`; wide). Order: observation (A, B),
+then why (C), then specificity (D). A. human: coupling against the shared amplitude sqrt(S), one dot per tissue; grey:
+S / (S + D) at the median D (1.9), the definition of coupling at a constant departure, not a fit. B. baboon: amplitude
+against known time (A36 timed gain, estimated without the host) against coupling, 35 peripheral tissues and 22 brain
+regions; grey: peripheral line. C. human: S against D per tissue (log axes, same range), Theil-Sen line. D. human: own
+departure of the clock genes against that of expression-matched genes (median of 100 sets); dashed 1:1, dotted the
+median ratio 2.6.
 
 **Tags:** A104 registered (H104.1, rho < 0, not supported; the positive relation is post hoc, made registered by A144
 and A271 Part B). A291 registered (H291.1 pass); the S / D table is A291 post hoc. A294b registered (H294b.1 pass).
@@ -481,8 +484,8 @@ line, the outcome shown); panel D display post hoc.
 - S = z2 V_h (gain squared times host spread; invariant to the host's scale); D = 2 psi (scatter around the state the
   body predicts, in amplitude and phase, net of counting noise). Both in clock-plane log-expression units squared.
   Definitions as in `results.md` R2.1 speaker notes.
-- Panel B is not a test: the curve is the definition of c. The finding is panel A (D nearly constant while S spans
-  85-fold).
+- The curve in panel A is not a test: it is the definition of c. The finding is panel C (D nearly constant while S
+  spans 85-fold).
 - Slope reading (post hoc): a departure independent of amplitude (slope 0) means person-specific cue timing or
   additive noise; individual intrinsic periods would give slope 2. Observed 0.07 (0.22 for the excess over matched
   genes) excludes intrinsic periods as the main source. Feeding cue history not supported (A302, H302.1 fail).
