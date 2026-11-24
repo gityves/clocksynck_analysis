@@ -8442,3 +8442,21 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
 - Volume simulations: GTEx size median 0.458 (power 1.00), half size median 0.292 (power 0.87).
 - Code: `exploratory/A368_muther_radial/scripts/a368_muther_radial.py --stage power`.
 <!-- src: paper/exploratory/A368_muther_radial/output/{power,sim,companions}.csv -->
+
+## A368 (scored 2026-11-24; BLIND for Q; one run, 3 s; powered, 1.00 / 0.87): at matched arc position, living fat and skin share amplitude beyond biopsy time, but not beyond expression-matched random genes (H368.1 FAIL)
+
+- **H368.1 FAIL.** Q 0.228, persons-permuted p 0.0005, below the threshold 0.253 (matched q95): 93rd percentile of
+  matched and 87th of responsive sets.
+- **Against timing.** Q is above all 500 timing-only simulations at the fitted spread (q95 0.163). It is below the
+  timing-only q95 at 1.25 x the spread (0.239).
+- **Against a volume.** Q sits at the 4th percentile of the half-GTEx-size simulations (median 0.292) and below all
+  GTEx-size ones (median 0.458).
+- **Reading (registered).** No shared clock amplitude at matched phase beyond random genes. A GTEx-size volume is
+  excluded, and a half-size one nearly so. Post hoc: what fat and skin share at matched arc position is mostly a
+  within-woman scale that random genes share too (array batch, biopsy day, composition). A clock-specific part smaller
+  than half the GTEx size is not excluded.
+- **Status of the living volume.** Not shown in MuTHER by either statistic (A366, A368). In deaths, the volume sits far
+  above its companions (A336 core 0.714 against matched q95 0.621). Its absence at this size in living women is now an
+  observation, not only a power limit; A367 asks whether the agonal phase makes it.
+- Code: `exploratory/A368_muther_radial/scripts/a368_muther_radial.py --stage score`.
+<!-- src: paper/exploratory/A368_muther_radial/output/{tests,sim,power,companions}.csv -->

@@ -109,3 +109,11 @@ ring's centre, the fat-skin leverage is 0.165, inside what shared biopsy time al
 (Spearman 0.21 / 0.19). A331 is withdrawn as living evidence; slide 3.5 bullet 2 and Figure 4f's living panel should go
 (proposal, not applied). The person volume is shown in deaths; in living people it is reported only by others, without
 a matched-gene control.
+
+## 10. Matched-phase test (added 2026-11-24, A368)
+
+A368 FAIL (powered 1.00 at GTEx size, 0.87 at half): at matched arc position, fat-skin amplitude correlation Q 0.228 is
+above everything biopsy timing produces (q95 0.163) but below expression-matched random genes (q95 0.253), and at the
+4th percentile of a half-GTEx-size volume. A GTEx-size person volume is not present in living MuTHER women. Either the
+volume in deaths is larger than in life (agonal or post-mortem amplification: A367), or living and dead cohorts differ
+in what they measure (one biopsy of two tissues vs 14 tissues per donor). The claim stays "in deaths".
