@@ -11395,3 +11395,10 @@ within each arm (a rhythmic-gene count, CHIRAL's readout), old minus young.
 dampening is death type. Neither: the interval is reported.
 **Limits.** Programme selected on fast deaths (time of death needed); ventilated donors read with the fast-death
 programme; age 21-70; T2D imbalanced; regression to the mean of selected genes is shared by both arms.
+### A373 part 3, dated change before any value (2026-11-24, on the user's correction "CHIRAL used their DIP and not the time of death")
+- The time axis is CHIRAL's donor internal phase (DIP, `paper/data/chiral_DIP.csv`, controlled; 241 / 244 fast and 376 /
+  381 ventilated donors), not the time of death. Programme selection: per tissue on all donors of both cohorts with a DIP,
+  all ages (still blind to age). D373.3t (cosinor amplitude ratio and rhythmic share, old minus young) is computed on the
+  DIP in both cohorts, matched pairs and pooled arms.
+- The power run with the time of death was stopped before it wrote any statistic (programme counts only, overwritten).
+- Companion sets for a 100-gene programme can repeat a gene (responsive pool); a repeated gene is used once.
