@@ -11405,3 +11405,24 @@ programme; age 21-70; T2D imbalanced; regression to the mean of selected genes i
 ### A373 part 3, dated change before scoring (2026-11-24, the user's decision after the power note: "score it without whole blood")
 - Whole Blood is removed from the part 3 tissues (programme kept on file, not used). The label null and the companions
   are recomputed without it (one power rerun) before the one scoring run.
+## A374 (2026-11-24, on the user's instruction "register the interval", after the discussion of what "order kept" means at a detection limit larger than the arrangement itself; one run (simulation on observed states; no new test statistic); **NOT BLIND**: the arrangement correlations with fast deaths (A293: Hardy 4 0.784, ventilated post-mortem 0.690, Hardy 3 0.624, organ donors 0.161; A317 D_rho 0.621), the A349 detection limits, the fast-death pair-offset scale (median folded distance 1.02 h, A109); **BLIND**: the compatibility intervals (not computed)): how far can the organs have moved, given the observed arrangement correlation? **GTEx, A109 tissues (12 body tissues, 66 pairs)**
+
+**Why.** A detection limit ("a scatter of SD 2.25 h would have been seen") does not say how much the organs moved, and it
+exceeds the arrangement itself (pair offsets about 1 h). The interval of organ scatter compatible with each group's
+observed correlation does.
+**Model (`exploratory/A374_order_interval/scripts/a374_interval.py`).** Truth approximated by the full fast-death map
+theta_f (pair phases, A109 `_H_of`, `pair_phase`; pairs with >= 20 donors in fast deaths and in the group). A group
+with organ scatter x has pair phases theta_f + (e_a - e_b) + eps_g, e_o ~ N(0, x^2) per organ; the fast map is observed
+as theta_f + eps_f. eps_g and eps_f are the sampling deviations of the pair phases from donor bootstraps of the group
+and of fast deaths (500 each, joint over pairs, seed [374, 1]). rho_sim(x) = Fisher-Lee(theta_f + eps_f, theta_f + e
+differences + eps_g); x on a 0-6 h grid (0.1 h), 500 draws per x.
+**Readout.** Per group, the 90 % compatibility set {x : q05(rho_sim(x)) <= rho_obs <= q95(rho_sim(x))}; reported as
+[lower, upper] h. Groups: Hardy 4 (slow deaths, all), ventilated post-mortem with a living brain (all), brain-dead organ
+donors (all), Hardy 3 (descriptive). 14 genes primary, core loop reported (A349 core states).
+**Readings (fixed now).** Upper bound for the groups with a recognisable arrangement: "the organs moved by at most
+<upper> h (SD of organ scatter)", to be compared with the arrangement scale (about 1 h). Lower bound for brain death:
+"the organs moved by at least <lower> h". Overlapping intervals of ventilated and brain-dead donors are reported as
+such (the registered contrast is A317).
+**Limits.** The truth is the estimated fast map (its noise counted twice, small at 244 donors); a systematic distortion
+(the ventilated pull toward 0 / 12 h, A109) is absorbed as scatter, so upper bounds are conservative (overstate
+movement); organ scatter is modelled as independent per organ.
