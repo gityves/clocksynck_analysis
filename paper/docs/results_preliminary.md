@@ -8653,3 +8653,27 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   arms); 18 tissues with a programme (most brain regions have none).
 - Code: `exploratory/A373_age_loudness/scripts/a373_outputs.py --stage power | score`.
 <!-- src: paper/exploratory/A373_age_loudness/output/{out_tests,out_tissues,out_power,out_companions,out_null,out_programmes}.csv -->
+
+## A374 (run 2026-11-24; simulation on observed states, NOT BLIND for the correlations, BLIND for the intervals; one run, 45 s, after a 10-draw code check whose rough intervals were seen): slow deaths kept the organ arrangement within an organ scatter of at most 0.9 h, ventilated donors with a living brain within at most 1.8 h; brain-dead donors moved by at least 1.6 h
+
+90 % compatibility sets of the organ scatter (SD, h) given the observed Fisher-Lee rho with the full fast-death map
+(66 pairs; fast-death arrangement scale: median pair offset 1.02 h on 14 genes, 1.06 h on the core loop):
+
+| group | donors | rho (14 genes) | scatter, 14 genes | rho (core) | scatter, core |
+|---|---|---|---|---|---|
+| slow deaths (Hardy 4) | 103 | 0.784 | 0 to 0.9 h | 0.831 | 0 to 0.6 h |
+| ventilated, living brain | 79 | 0.690 | 0 to 1.8 h | 0.700 | 0 to 1.5 h |
+| brain-dead organ donors (all) | 298 | 0.093 | 1.6 to >= 6 h (grid edge) | 0.345 | 1.2 to 3.8 h |
+| Hardy 3 (descriptive) | 50 (48 pairs) | 0.624 | 0 to 1.8 h | 0.721 | 0 to 1.3 h |
+
+- **Reading (registered).** Slow deaths: the organs moved by at most 0.9 h (core 0.6 h), below the size of the
+  arrangement itself: the order is kept, at the arrangement's scale. Ventilated donors with a living brain: at most
+  1.8 h (core 1.5 h), about the arrangement's scale: the order remains recognisable, and a scatter of up to its own
+  size is not excluded. Brain-dead donors: at least 1.6 h (core 1.2 h): the arrangement moved by more than its own
+  size. The ventilated and brain-dead sets touch (1.6-1.8 h on 14 genes, 1.2-1.5 h on the core); the registered
+  contrast is A317.
+- Brain-dead rho here uses all 298 donors (A317's 0.161 is the median over equal-n draws of 79).
+- **Limits.** Truth = estimated fast map; the ventilated pull toward 0 / 12 h is absorbed as scatter (upper bounds
+  conservative); independent scatter per organ.
+- Code: `exploratory/A374_order_interval/scripts/a374_interval.py`.
+<!-- src: paper/exploratory/A374_order_interval/output/{intervals,sim}.csv -->
