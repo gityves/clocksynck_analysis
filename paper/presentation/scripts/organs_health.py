@@ -12,6 +12,9 @@ B. Baboon (Mure 2018, 12 animals): rhythm amplitude against known time (A36 time
    from A, so D is not comparable). Post hoc panel (A289 H289.3 registered the untimed amplitude: brain on the line). Pineal, pituitary and ocular
    tissues not shown.
 
+Right axes: the phase scatter a coupling implies, (24 / 2 pi) sqrt((1 - c) / (2 c)) hours, for a departure of equal
+amplitude and phase parts and small angles (as slide 3.4b, panel C); approximate beyond about 3 h.
+
 Data: exploratory/A294_floor/output/tissues.csv; results/figure_2/output/organs/r2_couplings.csv;
 results/figure_1/output/species/a36_tissues.csv. GTEx aggregates only (one value per tissue).
 Output: presentation/figures/organs_health/organs_health.{svg,png} (half).
@@ -34,6 +37,21 @@ PAPER = Path(__file__).resolve().parents[2]
 EXP = PAPER / "exploratory"
 OUT = PAPER / "presentation" / "figures" / "organs_health"
 INK, MUTED = "#222222", pf.GREY
+
+
+H = 24 / (2 * np.pi)
+
+
+def hours_axis(ax, label=True):
+    """Right axis: the phase scatter a coupling implies, SD = H sqrt((1 - c) / (2 c)) (isotropic departure, small
+    angle; as slide 3.4b)."""
+    fwd = lambda c: H * np.sqrt((1 - np.clip(c, 1e-3, 1)) / (2 * np.clip(c, 1e-3, 1)))  # noqa: E731
+    inv = lambda h: 1 / (1 + 2 * (np.asarray(h) / H) ** 2)  # noqa: E731
+    sec = ax.secondary_yaxis("right", functions=(fwd, inv))
+    sec.set_yticks([1, 1.5, 2, 3, 4, 6], ["1", "1.5", "2", "3", "4", "6"])
+    if label:
+        sec.set_ylabel("phase scatter [h]")
+    return sec
 
 
 def scatter(ax, t, system, title, x="own_amplitude", xlabel="clock-gene variation"):
@@ -88,12 +106,14 @@ def main():
     coupling_curve(lay.axes["A"], t)
     legend_in(lay.axes["A"], fontsize=7.5, loc="upper left")
     lay.axes["A"].set_title("human", fontsize=13, color=INK)
+    hours_axis(lay.axes["A"], label=False)
     timed = pd.read_csv(PAPER / "results/figure_1/output/species/a36_tissues.csv", index_col="tissue").g_abs
     bab = bab.set_index("compartment").assign(timed_amp=timed)
     d, r_per, r_brain = scatter(lay.axes["B"], bab, baboon_system, "baboon", x="timed_amp",
                                 xlabel="amplitude against\nknown time")
     print(f"baboon fitted D {d:.3f}; median residual periphery {r_per:.3f}, brain {r_brain:.3f}")
     lay.axes["B"].set_ylabel("coupling")
+    hours_axis(lay.axes["B"])
     fig = lay.finalize()
     print(pf.collisions(fig))
     pf.save(fig, OUT / "organs_health")

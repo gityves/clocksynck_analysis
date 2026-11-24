@@ -464,7 +464,9 @@ post hoc display (same-class rows chosen post hoc).
 shared amplitude sqrt(S), one dot per tissue; grey: S / (S + D) at the median D (1.9), the definition of coupling at a
 constant departure, not a fit (explained in 3.4b). B. baboon: amplitude against known time (A36 timed gain, estimated
 without the host) against coupling, 35 peripheral tissues and 22 brain regions; grey: the same curve, a^2 / (a^2 + D),
-D fitted on the peripheral tissues (2.30; one parameter; amplitude units differ from A).
+D fitted on the peripheral tissues (2.30; one parameter; amplitude units differ from A). Right axes: the phase scatter a coupling implies,
+(24 / 2 pi) sqrt((1 - c) / (2 c)) hours (isotropic departure, small angle, as 3.4b panel C; approximate beyond about
+3 h): coupling 0.8 is about 1.3 h, 0.5 about 2.7 h.
 
 **Tags:** A104 registered (H104.1, rho < 0, not supported; the positive relation is post hoc, made registered by A144
 and A271 Part B). A291 registered (H291.1 pass). A289 H289.3 registered (fail: brain on the line, the outcome shown);
