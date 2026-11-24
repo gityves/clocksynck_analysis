@@ -614,14 +614,21 @@ decision); A361, A362, A363 registered; A366, A368 registered (living); A312, A3
 2. Slow deaths keep the fast-death organ arrangement: Fisher-Lee rho 0.78 (103 donors, 12 body tissues), above the 95th
    percentile of 200 expression-matched (0.13) and 200 stress-responsive gene sets (0.44) (A293 H293.1, pass).
    Intermediate deaths 0.62 (50 donors; responsive q95 0.57; descriptive).
-3. The arrangement is a property of the body, not imposed by the day at death.
+3. Kept at its own scale: given that similarity, the organs of slow deaths moved by at most 0.9 h (organ scatter SD;
+   core loop 0.6 h), against fast-death organ offsets of about 1 h (median 1.02 h); intermediate deaths at most 1.8 h
+   (A374, compatibility interval, 90 %).
+4. The arrangement is a property of the body, not imposed by the day at death.
 
 **Figure:** `figures/organ_arrangement/organ_arrangement.png` (`scripts/organ_arrangement.py`; half). Rows: fast (reference,
 dashed), slow, intermediate deaths. A. arrangement shared with fast deaths, clock genes (blue bar) with matched (light
 grey) and stress-responsive (dark grey) q95 lines. B. alignment R of the body clock to the hour of death.
 
 **Tags:** A293 part 1 registered, NOT BLIND (clock rho known from A109 / A132; companions new); intermediate deaths
-descriptive; panel B post hoc readout (A27).
+descriptive; panel B post hoc readout (A27); A374 registered (intervals blind, correlations not).
+
+**A374 note (speaker notes):** a detection limit ("a scatter of SD 2.25 h would be seen", A349) exceeds the
+arrangement itself; the compatibility interval says how far the organs can have moved. Upper bounds absorb any
+systematic distortion as scatter (conservative).
 
 **Caveats (speaker notes)**
 - Slow deaths are not aligned to the hour (A109c H109c.1: R 0.097 against a null median 0.101, p 0.56), but alignment
@@ -631,7 +638,7 @@ descriptive; panel B post hoc readout (A27).
 
 **Source:** `exploratory/A293_organisation_levels/output/part1/groups.csv`;
 `results/figure_3/output/cues_lost/walltime_hosts.csv`; `exploratory/A109_coupling_nulls/output/a109c_walltime.csv`;
-`docs/results_preliminary.md` A109c, A293.
+`exploratory/A374_order_interval/output/intervals.csv`; `docs/results_preliminary.md` A109c, A293, A374.
 
 ---
 
@@ -642,7 +649,7 @@ Section 4 asks what sets the transfer and the organ's place in time. Source: `do
 
 | slide | content | entries |
 |---|---|---|
-| 4.1 What the brain sets and what the body's state sets | arrangement changed after brain death, amplitude kept; intensive care costs amplitude; ventilated rows of `holds_organisation` | A293, A315, A317, A318, A335 |
+| 4.1 What the brain sets and what the body's state sets | arrangement changed after brain death (organs moved by at least 1.6 h, core 1.2 h), amplitude kept; with a living brain the ventilated arrangement remains recognisable (organ scatter at most 1.8 h, core 1.5 h; intervals touch at 1.6-1.8 h, the contrast is A317); intensive care costs amplitude; ventilated rows of `holds_organisation` | A293, A315, A317, A318, A335, A374 |
 | 4.2 Removing a drive keeps amplitude, conflicting drives cost it | mouse liver without a feeding rhythm; daytime feeding across organs, weights and amplitude kept; one-line suggestive mention: organs that weigh one drive in mouse (liver, heart) are the loudest in human, the balanced lung the quietest, adipose the exception (A358, descriptive, rho -0.6, 5 organs, below its criterion) | A297, A322, A324, A358 |
 | 4.3 A behavioural shift moves the human clock | night shift, muscle core loop +4 h, amplitude cost | A257, A335 |
 | 4.4 A systemic signal read unequally by organs | glucocorticoid-like person state explains a small part of each organ's departure | A357 |
