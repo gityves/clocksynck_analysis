@@ -8460,3 +8460,22 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   observation, not only a power limit; A367 asks whether the agonal phase makes it.
 - Code: `exploratory/A368_muther_radial/scripts/a368_muther_radial.py --stage score`.
 <!-- src: paper/exploratory/A368_muther_radial/output/{tests,sim,power,companions}.csv -->
+
+## A369 power note (2026-11-24; no clock Q computed; 6 s): not decidable (power 0.04): STAGE's operations spread over about 4.4 h and its muscle and fat clocks are noisy, so biopsy time alone produces what a volume would
+
+- Prep: the deposited GEO matrix carries wrong probe identities (ALB not higher in liver, ACTA2 highest in "liver", Y
+  genes flat); STAGE was renormalised from the CEL files (RMA). Markers then separate the tissues (`prep/markers.csv`)
+  and all 66 patients get one sex call across their tissues (90 % male).
+- Gates pass in all five tissues (shares 0.51-0.63, p 0.005). Pairings: liver-muscle 0.466, liver-fat 0.404,
+  muscle-fat 0.294; clock fractions liver 0.64, muscle 0.34, fat 0.26.
+- Geometry: combined elongation 1.58, phase SD 1.15 rad (4.4 h): a wide arc.
+- Q3 timing-only medians / q95: 0.299 / 0.422 at the fitted spread (0.213 / 0.347 at 0.75 x, 0.333 / 0.435 at 1.25 x,
+  uniform 0.226 / 0.355). Volume medians: GTEx size 0.315, half 0.305. Companions: matched q95 0.272, responsive 0.176.
+- Threshold 0.435; power 0.04 (GTEx size), 0.03 (half). Not scored.
+- Post hoc, synthetic only (printed, not saved): radius-based statistics are not decidable either at 66 patients (power
+  0.27-0.46 for the pairwise A331 leverage, 0.28-0.40 for one tissue against the other two). At this geometry the
+  one-against-two statistic reaches 0.61 at 200 and 0.97 at 600 persons (timing null only, before companions):
+  STARNET's size (about 600, up to seven tissues) would decide it.
+- Code: `exploratory/A369_stage_volume/scripts/{rma_stage.R, prep_stage.py, a369_stage.py --stage power,
+  a369_posthoc_statistics.py}`.
+<!-- src: paper/exploratory/A369_stage_volume/output/{power,gates,sim,companions}.csv, output/prep/{prep_summary,markers}.csv -->

@@ -117,3 +117,9 @@ above everything biopsy timing produces (q95 0.163) but below expression-matched
 4th percentile of a half-GTEx-size volume. A GTEx-size person volume is not present in living MuTHER women. Either the
 volume in deaths is larger than in life (agonal or post-mortem amplification: A367), or living and dead cohorts differ
 in what they measure (one biopsy of two tissues vs 14 tissues per donor). The claim stays "in deaths".
+
+## 11. STAGE (added 2026-11-24, A369)
+
+A369 not decidable (power 0.04): 66 bypass patients, liver / muscle / fat from one operation, phase SD about 4.4 h,
+noisy muscle and fat clocks. Synthetic check: no statistic decides at 66; about 600 persons would (STARNET). The public
+living designs are exhausted for this question; STARNET (dbGaP, user application) is the remaining living test.
