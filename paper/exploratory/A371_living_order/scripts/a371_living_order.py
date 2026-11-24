@@ -29,6 +29,7 @@ import a369_stage as S  # noqa: E402
 import a370_aagmex as AG  # noqa: E402
 from clocksync.config import limit_threads  # noqa: E402
 from clocksync.paired import projector, states  # noqa: E402
+from clocksync.waveform import Waveform  # noqa: E402
 
 OUT = HERE.parents[1] / "output"
 STAGE4 = ["liver", "muscle", "visceral_fat", "aortic_wall"]
@@ -75,8 +76,9 @@ class GTExStates:
         out = {}
         for t in tissues:
             x = self.pb[self.pb.compartment == GTEX[t]]
-            g = [c for c in w.genes if c in x.columns]
-            ww = w.subset(g) if len(g) < len(w.genes) else w
+            k = [i for i, c in enumerate(w.genes) if c in x.columns]
+            ww = w if len(k) == len(w.genes) else Waveform(tuple(w.genes[i] for i in k), np.asarray(w.amp)[k],
+                                                           np.asarray(w.psi)[k], None, None, w.name)
             L = projector(x[list(ww.genes)], ww)
             b, _ = states(x, L, ww, x.depth.to_numpy(float))
             z = pd.Series(b[:, 0] + 1j * b[:, 1], index=x.donor.astype(str).to_numpy())
@@ -98,8 +100,9 @@ def sim_live(n, sd, f, phi, rng):
             for t in f}
 
 
-def live_phases(Z, idx, tissues=STAGE4):
-    return {(a, b): pair_phase(Z[a][idx], Z[b][idx]) for a, b in itertools.combinations(tissues, 2)}
+def live_phases(Z, idx=None, tissues=STAGE4):
+    """pair phases over the persons with both tissues of each pair (idx unused; kept for call symmetry)."""
+    return {(a, b): pair_phase(Z[a], Z[b]) for a, b in itertools.combinations(tissues, 2)}
 
 
 def boot_phase(za, zb, rng, nb):
@@ -154,6 +157,8 @@ def main():
         fa = {"adipose": float(p370["fraction_adipose"]), "muscle": float(p370["fraction_muscle"])}
         rng = np.random.default_rng([371, 1])
         ns, na = int(idx_s.sum()), int(idx_a.sum())
+        tri = np.all([np.isfinite(Zs[t]) for t in ("liver", "muscle", "visceral_fat")], axis=0)
+        n66, has_aorta = int(tri.sum()), np.isfinite(Zs["aortic_wall"])[tri]
         # companions (blind: no clock)
         crow = []
         for kind, tag in (("matched", 5), ("responsive", 6)):
@@ -172,7 +177,8 @@ def main():
         mq = comp[comp.kind == "matched"].groupby("cohort").A.quantile(0.95)
         sims = []
         for _ in range(N_SIM):
-            Zsim = sim_live(ns, float(p369["phase_sd_rad"]), f, phi, rng)
+            Zsim = sim_live(n66, float(p369["phase_sd_rad"]), f, phi, rng)
+            Zsim["aortic_wall"][~has_aorta] = np.nan
             A_, rank = label_rank(live_phases(Zsim, np.ones(ns, bool)), ref)
             Zsa = sim_live(na, float(p370["phase_sd_rad"]), fa, {"adipose": 0.0, "muscle": -ref_a}, rng)
             ph = pair_phase(Zsa["adipose"], Zsa["muscle"])
@@ -204,7 +210,8 @@ def main():
     rng = np.random.default_rng([371, 3])
     prow = []
     for x, y in PAIRS:
-        bt = boot_phase(Zs[x][idx_s], Zs[y][idx_s], rng, N_BOOT)
+        m2 = np.isfinite(Zs[x]) & np.isfinite(Zs[y])
+        bt = boot_phase(Zs[x][m2], Zs[y][m2], rng, N_BOOT)
         d = np.angle(np.exp(1j * (bt - pl[(x, y)])))
         prow.append(dict(cohort="STAGE", pair=f"{x}-{y}", living_h=pl[(x, y)] * H, gtex_h=ref[(x, y)] * H,
                          diff_h=cdist(pl[(x, y)], ref[(x, y)]) * H, lo90_h=(pl[(x, y)] + np.quantile(d, .05)) * H,
