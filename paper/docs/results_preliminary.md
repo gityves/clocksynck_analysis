@@ -8557,3 +8557,27 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   phases differ by hours.
 - Code: `exploratory/A371_living_order/scripts/a371_living_order.py --stage power`.
 <!-- src: paper/exploratory/A371_living_order/output/{gtex_pairs,power,sim,companions}.csv -->
+
+## Skin shared amplitude against random genes (2026-11-24; post hoc, descriptive, underpowered; plan written before computing; one run, 24 s): the published layer-shared amplitude is mostly a shared non-rhythmic scale of one biopsy; between two separate skin sites no shared amplitude is seen
+
+- **Our clock statistic (not tests; A364 / A365 stay not decidable).**
+  - del Olmo, epidermis and dermis (11 subjects): core r 0.449 (78th percentile of matched sets, 72.5th of
+    responsive); 14 genes 0.539 (86.5th / 86.5th). Not beyond random genes.
+  - GSE326530, sun-protected and sun-exposed sites (20 volunteers, two biopsies): core r -0.040 (41.5th / 27th); 14
+    genes -0.024. No shared clock amplitude between separate sites (a GTEx-size volume would give a median of about 0.42;
+    power 0.54).
+- **Saint-Antoine & Anafi's global amplitude (re-implemented).**
+  - del Olmo: 2,607 / 2,669 rhythmic genes (epidermis / dermis, of 5,769 expressed); layer r 0.780 (R^2 0.608;
+    published 0.649, our expression filter differs). Random non-rhythmic, expression-matched gene sets of the same size:
+    r median 0.699 (range 0.664-0.735, q95 0.720). The observed value is above all 200, but about 90 % of the
+    layer-sharing (0.70 of 0.78) is carried by genes without a rhythm: a shared scale of the punch (RNA handling,
+    array, noise level of the person's samples) read through the amplitude / mesor ratio.
+  - GSE326530 (sites P / E; counts per million): r 0.129 (R^2 0.017). Random sets give r -0.280 (range -0.302 to
+    -0.253), a consistent artefact of the statistic on these counts (not interpreted); the observed value is above all
+    of them, but no positive sharing between sites is seen.
+- **Reading (post hoc).** In timed living skin, two layers of one biopsy share a person-level rhythm amplitude mostly
+  because they share a non-rhythmic scale: random genes reach r 0.70 against 0.78. Two separate biopsies of the same
+  person share no rhythm amplitude by either statistic. The published "global amplitude" is not evidence of a living,
+  clock-specific person volume; it leaves a small rhythmic excess within one biopsy.
+- Code: `exploratory/A364_living_volume/scripts/posthoc_skin_shared.py`.
+<!-- src: paper/exploratory/A364_living_volume/output/{posthoc_clock,posthoc_global,posthoc_global_random}.csv -->

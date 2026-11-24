@@ -21,3 +21,9 @@ Collective cosinor (F-test, BH q <= 0.05) selects rhythmic genes; per-subject co
 
 ## Limits
 Small cohorts; young, healthy; low sampling density in some sets; mechanism not identified [summary of the discussion, not verbatim].
+
+## Our re-analysis (2026-11-24, post hoc; `results_preliminary.md`, "Skin shared amplitude against random genes")
+Their statistic re-implemented from the repository: del Olmo layer R^2 0.608 (published 0.649). Random non-rhythmic,
+expression-matched gene sets of the same size give r 0.699 (q95 0.720) against 0.780: most of the layer-sharing is a
+non-rhythmic scale of the shared biopsy. Between two separate skin sites (GSE326530, not in their paper) the global
+amplitude is not shared (r 0.13). Cite with this caveat.

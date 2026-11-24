@@ -176,3 +176,11 @@ Hardy 2; difference interval excludes 0) and the GC-target state is lower there:
 reading: persons differ in a body-wide clock-reliable scale that is present without an agonal phase; its relation to
 the glucocorticoid state is probably acquired while dying. The section 12 wording should drop the GC sentence from the
 headline and add it as "in deaths with a terminal phase, the scale falls with the glucocorticoid-target state".
+
+## 15. Timed living skin against random genes (added 2026-11-24, post hoc)
+
+Saint-Antoine & Anafi's layer-shared global amplitude reproduces in del Olmo (R^2 0.61 vs published 0.649), but random
+non-rhythmic genes reach r 0.70 against 0.78: mostly a shared scale of one biopsy. Our clock statistic is within its
+random genes there (core 0.449, 78th percentile), and between two separate skin sites (GSE326530) neither statistic
+shows a shared amplitude (core r -0.04; global r 0.13). The literature support for a living person volume weakens: cite
+the preprint with this caveat. The living question stays open for STARNET.
