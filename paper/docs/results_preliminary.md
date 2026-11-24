@@ -8432,3 +8432,13 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   for narrow windows.
 - Code: `exploratory/A366_muther_timing/scripts/a366_kasa_check.py`.
 <!-- src: paper/exploratory/A366_muther_timing/output/kasa_check.csv -->
+
+## A368 power note (2026-11-24; no clock Q computed; 6 s): decidable (power 1.00 at GTEx size, 0.87 at half size); the threshold is set by the matched genes, not by timing
+
+- Timing-only Q at A366's spread (phase SD 0.5 rad, 680 women): median 0.102, q95 0.163; at 0.75 x / 1.25 x the spread
+  q95 0.116 / 0.239; uniform phases q95 0.125.
+- Companions: matched median 0.085, q95 0.253; responsive median 0.149, q95 0.263. Threshold max(matched q95, largest
+  timing-only q95) = 0.253 (matched).
+- Volume simulations: GTEx size median 0.458 (power 1.00), half size median 0.292 (power 0.87).
+- Code: `exploratory/A368_muther_radial/scripts/a368_muther_radial.py --stage power`.
+<!-- src: paper/exploratory/A368_muther_radial/output/{power,sim,companions}.csv -->
