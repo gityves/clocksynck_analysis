@@ -567,9 +567,6 @@ A259, A291, A294b, A302, A311, A329 erratum.
 4. In deaths with a terminal phase it falls with the glucocorticoid-target state (core loop -0.18, 90 % -0.30 to
    -0.06, beyond all 400 companion sets; A361); in instantaneous deaths it does not (+0.22; A367, descriptive): an
    agonal relation, most likely.
-5. In living people a clock-specific excess is not shown: at matched phase, fat and skin of living women share no more
-   than random genes and a GTEx-size clock volume is excluded (A368); the earlier living result was the shared biopsy
-   time (A366, A331 withdrawn).
 
 **Figure:** `figures/person_loudness/person_loudness.png` (`scripts/person_loudness.py`; wide). A. how reliably the
 loudness is shared across a person's tissues (core loop), all fast deaths and violent deaths: clock genes (blue)
@@ -588,6 +585,9 @@ decision); A361, A362, A363 registered; A366, A368 registered (living); A312, A3
   death do not explain it (A360 H360.2 FAIL).
 - The GC contrast between violent and other fast deaths rests on 34 donors (power 0.24) and Hardy 1 differs in age,
   sex and cause of death.
+- Living (removed from the bullets 2026-11-24): a clock-specific excess is not shown in living people. At matched
+  phase, fat and skin of living women (MuTHER) share no more than random genes and a GTEx-size clock volume is excluded
+  (A368); the earlier living leverage was the shared biopsy time (A366, A331 withdrawn).
 - Living: STAGE (66 bypass patients) and AAGMEx (251 adults) are not decidable (A369, A370: arc width, noisy muscle
   clock). STARNET (about 600 patients, up to seven tissues) would decide it.
 - Timed living skin (post hoc, descriptive): the published person-level amplitude shared by epidermis and dermis
