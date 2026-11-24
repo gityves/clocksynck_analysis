@@ -219,7 +219,7 @@ Polar plot: angle = time relative to the person's internal time; radius = loudne
 | psoriasis lesion (own skin) | 14 genes -1.45 h, q 0.016 (A308 rule, adopted after A183's rule failed); core loop -1.00 h, q 0.049, at the line (5.5th percentile of matched sets, as on 14 genes; A335): suggestive | higher, not clock-specific (r +0.50, loudness 1.28; 94th / 90.5th percentile of matched / responsive; A115 lesional vs uninvolved pooled +0.30, 56th / 70th) | - | A183, A308, A332 D1, A335 | not blind; core loop blind (A335) |
 | psoriasis, uninvolved vs healthy skin | later (descriptive) | - | - | A115 | trait component |
 | T2D, obesity, hypertension, smoking | offsets and coupling equal (equivalence +-0.15 for T2D and obesity; A233 and A235 hold on the core loop, A336) | equal (powered) | equal (powered) | A164, A233, A235, A306 | - |
-| age, sex | equal | CHIRAL's rhythmic-gene excess in the young shrinks with death-type matching (WP0 item 5, timed, not registered) | - | A208, A231 | - |
+| age, sex | equal | equal: clock 1.038 (0.995-1.083), outputs 1.030 (0.965-1.078), old / young after death-type matching (A373, equivalence) | - | A208, A231, A373 | - |
 
 **Reading.**
 - Loudness moves often: intensive care, tumours, chronic lesions, conflicting drives.
@@ -307,10 +307,13 @@ Polar plot: angle = time relative to the person's internal time; radius = loudne
      size while the negatives exclude 0.75 to 1 (A240), and only heart is powered at half (A243).
 6. **Corrections of published claims.**
    - COFE's tumour uncoupling (A265, A267).
-   - CHIRAL's age dampening: its rhythmic-gene count shrinks with death-type matching (WP0 item 5, timed, not
-     registered; TMM p 0.092; A208 and A231 test coupling and offsets, not amplitude). Keep only after a registered
-     rescore (audit addition 3; PI) or drop; rescore with companions before
-     submission).
+   - CHIRAL's age dampening (revised 2026-11-24, A373, registered, blind; PI to see before the text): between 21-49
+     and 60-70 years, once death type is balanced, neither the peripheral clock (absolute amplitude ratio old / young
+     1.038, 90 % 0.995-1.083) nor the rhythmic output genes on CHIRAL's own DIP (1.030, 0.965-1.078; Whole Blood
+     excluded) lose amplitude; equivalence within +-10 % passes for both. CHIRAL's analogue (per-gene cosinor on the
+     DIP) gives 0.995 matched and 0.978 unmatched. The published dampening is most likely a count effect of death type
+     and noise (its genome-wide rhythmic-gene count shrinks under matching, WP0 item 5, unregistered). Timed mouse data
+     show a modest fall at 27 months that is not clock-specific (A372, descriptive).
    - Published clock prognostic signatures add nothing beyond proliferation or random gene sets (A192-A194, A220).
    - Human T2D and obesity "disruption" from cultured cells, against powered in vivo nulls (A164, A306).
 
