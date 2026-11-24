@@ -463,11 +463,13 @@ post hoc display (same-class rows chosen post hoc).
 **Figure:** `figures/organs_health/organs_health.png` (`scripts/organs_health.py`; half). A. human: coupling against the
 shared amplitude sqrt(S), one dot per tissue; grey: S / (S + D) at the median D (1.9), the definition of coupling at a
 constant departure, not a fit (explained in 3.4b). B. baboon: amplitude against known time (A36 timed gain, estimated
-without the host) against coupling, 35 peripheral tissues and 22 brain regions; grey: peripheral line.
+without the host) against coupling, 35 peripheral tissues and 22 brain regions; grey: the same curve, a^2 / (a^2 + D),
+D fitted on the peripheral tissues (2.30; one parameter; amplitude units differ from A).
 
 **Tags:** A104 registered (H104.1, rho < 0, not supported; the positive relation is post hoc, made registered by A144
 and A271 Part B). A291 registered (H291.1 pass). A289 H289.3 registered (fail: brain on the line, the outcome shown);
-panel B display post hoc.
+panel B display post hoc (the fitted curve replaces A289's peripheral line; on it the brain's median residual is
++0.08, periphery +0.04, descriptive; A289's registered residual, -0.001, is on its linear line).
 
 ## 3.4b Why: each organ's departure from the body's clock state has a fixed size, not a fixed angle, so a louder organ stays closer to the body's time
 
