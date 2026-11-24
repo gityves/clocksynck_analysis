@@ -11040,3 +11040,15 @@ pattern is from fibroblasts and mouse liver. Aggregates only.
   - Null and power (stage `power2`): 40 null, 20 at a_p^0.5 and 20 at a_p^0.25 extra, seeds [363, 10 + kind, draw].
     H363.2's thresholds are the recalibrated null q05 / q95; scored if power >= 0.8 at 0.5. The first power stage
     (`a363_power.csv`) is kept and no longer used.
+
+### A361 / A363 gene-drop addendum (2026-11-24, after scoring, on the user's instruction "register and run it for both A361 and A363"; the new `CLAUDE.md` gene-drop rule; **NOT BLIND** for the 14-gene and core coefficients (A361 -0.235 / -0.184, A363 part 1 -0.156 / -0.074) and for A361's paired difference (-0.052, -0.116 to +0.016); **BLIND** for every other three-gene drop and for A363's paired difference (none computed)): is the smaller core coefficient carried by PER1, PER2 and NR1D1?
+
+- **Statistic.** For each of the 364 three-gene drops of the 14 genes, the person volume on the remaining 11 genes (A360
+  rows) and the coefficient of the registered model (A361: GC in A360's model; A363 part 1: inflammatory state in
+  A363's model). The trio drop is the core loop. Percentile of the trio drop's coefficient among all drops, and among
+  drops whose singular values are within 20 % of the core's (A336 rule; reported if >= 20 drops).
+- **Reading.** The effects are negative: the trio carries an effect if the trio drop's coefficient is higher (closer to
+  0) than 90 % of the drops; otherwise "not decided: precision or the removed genes". Reported: A363's paired
+  14-minus-core difference on 2,000 shared donor bootstraps (seed [363, 4]), and the core coefficient predicted by the
+  reliability loss alone (A336 part 2 leverages 0.765 / 0.714, Spearman-Brown).
+- **Code.** `exploratory/A361_A363_volume_mechanism/scripts/a361_a363_drops.py`. One run.
