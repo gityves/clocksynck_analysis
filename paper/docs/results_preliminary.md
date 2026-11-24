@@ -8375,3 +8375,15 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   about half the time: the living timed test is not decidable here; the living link stays open (and rests on del Olmo
   2022 and the Saint-Antoine & Anafi preprint).
 <!-- src: paper/exploratory/A364_living_volume/output/{power,companions,sim}.csv -->
+
+## A365 power note (2026-11-24; noise, simulation and companions only, no per-subject amplitude correlation computed): not decidable at this design (power 0.51 at the GTEx person spread): not scored
+
+- GSE205155 (A37 download), 154 arrays, 11 subjects, 7 times; one run (15 s).
+- Core loop: per-sample noise variance 0.50 (epidermis), 0.31 (dermis) against clock radii 0.78 and 0.70 (signal above
+  noise, unlike A364). Expected r at the GTEx spread 0.674, but the matched sets share radius between the two layers
+  of one punch (median 0.206, q95 0.668; responsive q95 0.679): threshold 0.668, power 0.512 (0.131 at half). 14 genes:
+  expected 0.685, matched q95 0.626, power 0.611.
+- **Reading (registered).** With 11 subjects and two layers of one biopsy, a GTEx-sized volume would be separated from
+  the shared biopsy scale about half the time: not decidable. The preprint's R^2 0.649 on these data has no such
+  companion; our power stage shows that expression-matched genes reach r 0.67 in one punch one time in twenty.
+<!-- src: paper/exploratory/A364_living_volume/output/{a365_power,a365_companions,a365_sim}.csv -->

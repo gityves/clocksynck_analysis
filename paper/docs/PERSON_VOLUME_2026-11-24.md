@@ -83,3 +83,20 @@ measured per volunteer from a full timed day (no biopsy-timing confound)?
   heart, kidney, muscle, adrenal) x three ages (6, 18, 27 months) x 12 circadian times (every 4 h for 48 h), male, counts
   public. GEO design: "Two samples per age were collected and pooled for RNAseq analysis": each sample pools two mice,
   one pool per age and time; per-pool tissue identity is not stated in GEO (paper methods not read).
+
+## 8. Living tests and the mouse ageing atlas (added 2026-11-24, after A365)
+
+- A365 (del Olmo GSE205155, already on disk from archive A37) is not decidable either: power 0.51. The clock signal is
+  above the noise, but 11 subjects and two layers of one punch (matched genes reach r 0.67 at q95) leave a GTEx-sized
+  volume indistinguishable from the shared biopsy scale. Both public timed living designs are too small: the living link
+  rests on the literature (section 7), with the caveat that it has no matched-gene control.
+- Mouse GSE201207 (Wolff et al., Cell Rep 2023; methods read, PMC9929559): C57BL/6 Nia males of 6, 18 and 27 months,
+  n = 24 per age, "2 animals for each age were collected at each time point", every 4 h for 48 h from CT18 in constant
+  darkness (time in darkness before harvest not stated); poly-A RNA-seq, 2 x 100 bp, >= 40 M reads. GEO lists one
+  sample per tissue x age x time with "Two samples per age were collected and pooled": the two animals of a time point
+  are pooled, and whether one pool supplies all six tissues is not stated. Aged adrenal lacks the first 24 h. No
+  amplitude results by age in the paper (rhythmicity counts only; Per1 / Per2 "dampened from Aged to Old across all
+  peripheral tissues").
+- What GSE201207 can test: not a person (animal) volume shared by organs (pools, identity across tissues unknown), but
+  whether the clock amplitude of all peripheral organs falls together with age, in timed data (organ-shared amplitude
+  as an age state). Group-level, 5 peripheral tissues x 3 ages x 12 times.
