@@ -8520,3 +8520,23 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   14-gene value. Not decidable.
 - Code: `exploratory/A367_hardy_agonal/scripts/a367_hardy.py --stage power`.
 <!-- src: paper/exploratory/A367_hardy_agonal/output/{power,companions}.csv -->
+
+## A367 (scored 2026-11-24; BLIND for every Hardy-class value; one run, 206 s; H367.1 scored at power 0.775 by the user's decision, addendum): the person volume is present in instantaneous deaths at full size (H367.1 PASS); the glucocorticoid link is not: it appears only in deaths with a terminal phase of up to an hour (descriptive, underpowered)
+
+- **H367.1 PASS.** Hardy 1 core leverage 0.726 (34 donors), persons-permuted p 0.001, above the Hardy 1 matched q95
+  0.618 (99th percentile) and at the 96th percentile of responsive sets (q95 0.714). 14 genes: 0.677.
+- **Hardy 2 beside it (reported).** Core 0.719 on all 210 donors, 0.740 at 34 (median of 200 subsets), 0.792
+  age-matched; difference Hardy 2 minus Hardy 1 -0.007 (90 % -0.112 to 0.159). 14 genes: 0.784, difference 0.108
+  (-0.028 to 0.238).
+- **GC link (H367.2 not decidable; descriptive).** Core GC coefficient +0.225 in Hardy 1 (34 donors, permutation p for
+  a negative coefficient 0.89) against -0.225 in Hardy 2; difference Hardy 2 minus Hardy 1 -0.450 (90 % -0.704 to
+  -0.208). 14 genes: +0.096 vs -0.271 (difference -0.368, -0.634 to -0.131). Mean GC-target state -0.37 in Hardy 1
+  against +0.06 in Hardy 2 (SD 0.73 / 0.87).
+- **Reading (H367.1, registered).** The person volume does not need a terminal phase of tens of minutes: it is present
+  at full size in violent deaths. Processes acting within minutes or after death are not excluded.
+- **Reading (GC, descriptive, labelled).** The GC link of A360 / A361 is carried by the Hardy 2 deaths, where the
+  terminal phase lasts up to an hour and the GC-target state is higher: it fits an agonal glucocorticoid surge damping
+  the clock, not a chronic trait. With 34 Hardy 1 donors and a registered power of 0.24, this is a description, not a
+  test; Hardy 1 also differs in age, sex and cause of death.
+- Code: `exploratory/A367_hardy_agonal/scripts/a367_hardy.py --stage score`.
+<!-- src: paper/exploratory/A367_hardy_agonal/output/{tests,gc,power,companions}.csv -->

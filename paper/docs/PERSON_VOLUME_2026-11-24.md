@@ -158,3 +158,13 @@ patients, up to seven tissues) would decide it.
 A370 not decidable (power 0.48): 251 adults with fat and muscle (GEO scout's best hit), but a weak muscle clock (gate
 share 0.13) and an uncertain arc width. With A364, A365, A369 and A370 not decidable and A366 / A368 failing, no public
 living cohort found decides a clock-specific person volume. Remaining: STARNET, TwinsUK with visit times, FUSION.
+
+## 14. Instantaneous deaths (added 2026-11-24, A367)
+
+H367.1 PASS (at power 0.775, gate relaxed by the user): the core-loop person leverage in violent deaths (Hardy 1, 34
+donors) is 0.726, as large as in Hardy 2 (0.719) and above 99 % of matched and 96 % of responsive sets. The volume is
+not made by a terminal phase of tens of minutes. Descriptive: the GC link reverses in Hardy 1 (+0.22 vs -0.22 in
+Hardy 2; difference interval excludes 0) and the GC-target state is lower there: the GC link looks agonal. Revised
+reading: persons differ in a body-wide clock-reliable scale that is present without an agonal phase; its relation to
+the glucocorticoid state is probably acquired while dying. The section 12 wording should drop the GC sentence from the
+headline and add it as "in deaths with a terminal phase, the scale falls with the glucocorticoid-target state".
