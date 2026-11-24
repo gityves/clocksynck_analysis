@@ -10857,3 +10857,76 @@ leaves the machine.
 **Stop rule.** Power stage once; scoring run once per powered hypothesis. **Code:**
 `paper/exploratory/A357_signal_departure/scripts/score_a357.py --stage power|score` (long runs through
 `paper/common/run.sh`), output `paper/exploratory/A357_signal_departure/output/` (aggregates only).
+
+## A358 (2026-11-24, on the user's instruction "go ahead with a, b, e", candidate (a) of `COUPLING_SOURCES_2026-11-24.md` section 4; **DESCRIPTIVE, no verdict beyond the stated sign criterion**; one run; **NOT BLIND**: the mouse drive weights b (A322 Manella: liver 0.844, WAT 0.652, lung 0.371; A324 Xin: liver 0.718, heart 0.233, kidney 0.278, VAT 0.447), the amplitude kept under conflict (A322, A324) and the GTEx organ gains (A294b table); in this session the author has seen both inputs side by side and noted that the balance b(1 - b) spans a narrow range (about 0.17 to 0.25); **NOT COMPUTED**: any correlation between a mouse drive quantity and a GTEx gain): is a human organ's gain lower where, in mouse, the organ weighs the drives more evenly? **Mouse A322 / A324 weights; GTEx fast deaths A294b**
+
+**Why.** If an organ's clock amplitude in daily life is the coherence of the drives it weighs, |b exp(i Phi_f) + (1 - b)
+exp(i Phi_c)|, it falls with the balance b(1 - b) whenever the feeding and central drives are not exactly in phase,
+whatever their phase difference. Organs with balanced weights would be quieter.
+
+**Mapping (fixed now, 5 organs).** liver: mean b of Manella and Xin, GTEx Liver. adipose: mean b of Manella WAT and Xin
+VAT, GTEx mean log gain of Adipose - Subcutaneous and Adipose - Visceral (Omentum) (mouse depots do not map one to one).
+lung: Manella, GTEx Lung. heart: Xin, GTEx mean of Heart - Left Ventricle and Heart - Atrial Appendage. kidney: Xin,
+GTEx Kidney - Cortex. GTEx log gain = log sqrt(S) (A294b table).
+**Statistics.** Spearman rho between b(1 - b) and the GTEx log gain (prediction: negative), exact one-sided p over the
+120 orderings. Reported: the same for the mouse amplitude kept under conflict (mean of the datasets where two exist)
+against the GTEx log gain (prediction: positive, organs that keep amplitude under conflict are the loud ones).
+**Criterion (descriptive).** "Consistent with drive coherence" if rho <= -0.7 (at most one pair out of order); otherwise
+"not seen". With 5 organs and a narrow balance range this cannot support a claim; it decides only whether the
+cross-species panel is worth showing.
+**Limits.** Different species, ages, protocols; mouse weights from feeding inversion only (other drives ignored); the
+GTEx gain includes the post-mortem and person factors. **Code:** `exploratory/A358_A360_gain_sources/scripts/a358.py`.
+
+## A359 (2026-11-24, on the user's instruction "go ahead with a, b, e", candidate (b) of `COUPLING_SOURCES_2026-11-24.md`; one scoring run, analytic power; **NOT BLIND**: the GTEx organ gains (A294b), A357 (the person glucocorticoid-like factor of PER1, PER2, NR1D1 residuals tracks the glucocorticoid-target score of the other tissues, median r 0.77; per-tissue R^2 of the departure), the fetal NR3C1 levels (A190 post hoc) and the adult adrenal NR3C1 (4.77 log CPM); **BLIND**: every per-tissue glucocorticoid or immediate-early reception slope and its relation to organ gain, the adult NR3C1 level of every other tissue (none computed; grep 2026-11-24)): are louder organs the ones that read the body's systemic glucocorticoid state more strongly? **GTEx v10 fast deaths, A104 periphery rows without Whole Blood and Testis (25 tissues, as A357)**
+
+**Why.** If an organ's gain is how strongly systemic signals reach its clock, organs that respond more to a systemic
+signal shared by the person's tissues should be louder. Glucocorticoids reset peripheral clocks (balsalobre2000resetting)
+and are read by every organ.
+
+**Reception slope (fixed).** Scores per sample: mean over genes of log((count + 0.5) / depth), centred within the
+tissue's intercept groups. GC genes: `GC_TARGETS` of `clocksync._core.controls` without NFIL3 and BHLHE40 (clock
+components or direct clock outputs); IEG genes: `IMMEDIATE_EARLY`; the 14 clock genes excluded. For tissue t:
+- y = the tissue's GC score, residualised on the leave-one-out host (two columns, `Dataset.host` without t, A357 fit);
+- x = the person GC factor: mean over the donor's other tissues l of their GC score standardised within l, donors with
+  >= 3 other tissues, residualised on the same host;
+- beta_t = least-squares slope of y on x (log-expression units per unit of the person factor).
+The host residualisation removes covariation through the body's time (GC targets cycle with the clock), so beta_t is
+reception of the person's acute systemic state, not the clock itself.
+
+**H359.1.** Spearman rho(log G_t, beta_t^GC) > 0 over the 25 tissues, one-sided permutation p < 0.05 (10,000
+permutations of tissue labels, seed 359); G_t = sqrt(S) from the A294b table.
+**H359.2 (specificity, decides the reading).** The same rho for the IEG reception slope (IEG score and IEG person
+factor). PASS of H359.1 is read as glucocorticoid-specific only if rho_GC - rho_IEG > 0 with a tissue-bootstrap 90 %
+interval (2,000 draws) above 0; otherwise "general responsiveness to systemic state".
+**Reported (descriptive).** beta_t per tissue (GC, IEG); the adult NR3C1 level per tissue (median log CPM over donors)
+against log G_t (Spearman); rho with the A294b departure D_t in place of G_t.
+**Power (analytic).** 25 tissues: one-sided Spearman power 0.80 at rho about 0.48.
+**Readings.** H359.1 PASS (with H359.2): louder organs read the systemic glucocorticoid state more strongly: reception
+is a candidate source of organ gain. FAIL: reception of the acute systemic state does not track organ gain. In deaths
+the systemic state is partly agonal.
+**Limits.** The acute state at death, not the daily cortisol rhythm; the slope also scales with the tissue's own noise
+in the score (reported via D_t); 25 tissues. Aggregates only (per-tissue slopes).
+**Code:** `exploratory/A358_A360_gain_sources/scripts/a359.py`.
+
+## A360 (2026-11-24, on the user's instruction "go ahead with a, b, e", candidate (e) of `COUPLING_SOURCES_2026-11-24.md`; one scoring run; **NOT BLIND**: A312 (persons differ strongly in shared amplitude; half-host radii correlate 0.75-0.86; elasticities), A331, A336 part 2 (the person factor on the core loop), A315 / A335 (intensive care lowers clock amplitude at group level), A357 (person glucocorticoid-like factor), A208 / A231 (age and sex leave coupling and offsets equal); **BLIND**: every relation of the person's shared amplitude with a person covariate within fast deaths (none computed; grep 2026-11-24)): is the person's clock volume set by the body's systemic state, or by a technical scale? **GTEx v10 fast deaths, A357 rows (25 peripheral tissues)**
+
+**Person volume (fixed).** log r_p, with r_p = |h_p| the posterior-mean host radius of person p from all 25 tissues
+(`Dataset.host`, every tissue an anchor, A357 fit), donors with >= 5 tissues.
+**Covariates (person level).**
+- base: number of tissues (posterior shrinkage), cos and sin of the time of death (the clock plane is not uniform over
+  the day; GTEx tod, controlled access, aggregates only);
+- technical: median RIN over the person's samples, ischaemic time (donor);
+- systemic: the person GC state and IEG state (mean over the person's tissues of the within-tissue standardised GC and
+  IEG scores of A359);
+- demographic (descriptive): age bracket, sex, BMI (protected phenotypes).
+**H360.1 (systemic state).** Partial R^2 of the systemic block in the regression of log r_p on base + technical +
+systemic, against 10,000 permutations of the systemic block across persons (seed 360): p < 0.05. Reported: standardised
+coefficients with donor-bootstrap 90 % intervals (2,000).
+**H360.2 (technical scale, A312's caveat).** Partial R^2 of the technical block given base + systemic, same permutation
+test. PASS means part of the person volume is a technical scale.
+**Readings.** H360.1 PASS, H360.2 FAIL: the person volume follows the body's systemic state (sign reported). H360.2 PASS:
+part of A312's person factor is technical in deaths; the size is reported. Both FAIL: the person volume is not
+explained by these covariates.
+**Limits.** Deaths (acute and agonal state); no companion gene set is possible for the person radius (A312); the GC
+state is a score of a few genes. Aggregates only: regression coefficients, partial R^2, no per-donor value written.
+**Code:** `exploratory/A358_A360_gain_sources/scripts/a360.py`.
