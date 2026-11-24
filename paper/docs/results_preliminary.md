@@ -8607,3 +8607,21 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   Pooled (unmatched) arms: matched-gene median 0.022, responsive -0.018.
 - Code: `exploratory/A373_age_loudness/scripts/a373_age_loudness.py --stage power`.
 <!-- src: paper/exploratory/A373_age_loudness/output/{power,null,companions,balance}.csv -->
+
+## A373 (scored 2026-11-24; BLIND for every age contrast of loudness; one run, 48 s; powered for H373.2): old donors' clocks are not quieter: matched amplitude ratio old / young 1.038 (90 % 0.995-1.083); an age fall larger than 0.5 % is excluded at 90 % (H373.2 PASS, equivalence within +-10 %; H373.1 FAIL)
+
+- **Matched (A231 pairs, 54 tissues), 14 genes:** Q (median log variance ratio old / young) +0.075, 90 % -0.010 to
+  0.159; amplitude ratio 1.038 (0.995 to 1.083). Label p for a fall 0.95; 91.5th percentile of matched and 95th of
+  responsive companions (Q* = +0.092).
+- **Core loop:** amplitude ratio 1.051 (0.991 to 1.089).
+- **By cohort (medians, descriptive):** fast deaths Q -0.061 (amplitude about 0.97); ventilated +0.184.
+- **Pooled (unmatched) arms:** Q +0.075 (amplitude 1.038); fast -0.080, ventilated +0.290. The death-type imbalance does
+  not create an age fall of clock loudness here; matching changes the ventilated value, not the overall one.
+- **Reading (registered).** Between 21-49 and 60-70 years, absolute clock amplitude does not fall once death type is
+  balanced: the 90 % interval excludes any fall beyond 0.5 % and any change beyond about 8 %. CHIRAL's dampening is
+  not seen in clock loudness, matched or pooled. The pooled-vs-matched shrinkage of WP0 item 5 concerned the
+  genome-wide rhythmic-gene count, a different readout (outputs, timed); this result concerns the clock itself.
+- **Limits.** Age range 21-70; T2D imbalanced after matching; companion median treated as fixed; per-cohort values are
+  descriptive (fast deaths alone lean slightly negative).
+- Code: `exploratory/A373_age_loudness/scripts/a373_age_loudness.py --stage score`.
+<!-- src: paper/exploratory/A373_age_loudness/output/{tests,tissues,power,companions,null}.csv -->
