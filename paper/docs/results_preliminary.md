@@ -8256,3 +8256,40 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   the H312.1 rho under true elasticity 1) would decide whether H312.1 stands; it needs its own registration. What
   stands: persons differ in a volume shared by their organs (leverage), and no organ ignores it.
 <!-- src: paper/exploratory/A312_elasticity/output/calib_level.csv -->
+
+## A361 / A363 part 1 power note (2026-11-24; companions and analytic power only, no core-loop clock value computed): A361 is decidable at the A360 size (power 0.89), not at half of it (0.36); A363 part 1 is not powered at the registered size (0.76 < 0.8): not scored
+
+- A360 reproduced exactly first (14 genes, registered model; 237 persons). One power run (1,442 s, peak 3.5 GB).
+- Companions (200 matched, 200 responsive pseudo-clock hosts, same persons and covariates): GC coefficient on the core
+  positions, median +0.081 matched (q05 -0.041) and +0.087 responsive (q05 -0.035); 14 positions +0.104 (q05 -0.039)
+  and +0.089 (q05 -0.055). A generic donor scale does not fall with the GC state: it tends to rise.
+- A361: SE 0.074 (A360's bootstrap); threshold -0.144 (the -1.96 SE bound, below the matched q05); power 0.891 at
+  -0.235 (A360's size), 0.358 at half. Gate passed.
+- A363 part 1: inflammatory score 176 genes (Hallmark TNF-alpha via NF-kB minus immediate-early, GC-target and clock
+  genes); its R^2 on the A360 covariates 0.250 (collinear with the GC / IEG states); analytic SE 0.072; threshold -0.141;
+  power 0.760 at partial R^2 0.03 (coefficient -0.192), 0.470 at 0.015. **Below the registered 0.8: not scored.**
+  Companion inflammatory coefficients: median +0.123 (core matched, q05 -0.056), +0.164 (core responsive, q05 +0.001).
+<!-- src: paper/exploratory/A361_A363_volume_mechanism/output/{systemic_power,systemic_companions}.csv -->
+
+## A362 power note (2026-11-24; simulation only, no GTEx elasticity computed): decidable (power 1.00 for the pure and the half conflict pattern)
+
+- 40 null cohorts (every tissue in proportion), 20 pure, 20 half conflict pattern; core waveform; one run (1,081 s).
+- Null slope c: median 0.035, SD 0.236, q95 0.266. Pure pattern: median c 1.657, power 1.00; half: 0.865, power 1.00.
+- Null bias of the mapped tissues' elasticity (true 1): 1.12 (liver) to 1.25 (kidney): the A312 calibration level
+  (about 1.1) again; kidney reads highest under no gradient.
+- Limit: the simulator's tissue noise reproduces the GTEx leverage (A312 calibration note: 0.75 against 0.78), so the
+  null spread of c should be realistic.
+<!-- src: paper/exploratory/A361_A363_volume_mechanism/output/{a362_power,a362_sims}.csv -->
+
+## A363 part 2 power note (2026-11-24; simulation only, no GTEx gene-class elasticity computed): decidable on the simulator (power 1.00 at 0.5 and 0.25), but the null is probably too narrow for GTEx
+
+- 40 null cohorts (uniform scaling), 20 with the suppressed class at a_p^0.5 extra, 20 at a_p^0.25; core classes
+  (PER3, DBP, TEF against ARNTL, NPAS2, CLOCK); one run (338 s; a first run failed in the summary step, a column-access
+  bug, after identical seeded simulations; fixed and rerun).
+- Null T: median -0.001, q05 -0.012, q95 0.018. Alternatives: median T 0.304 (0.5), 0.144 (0.25); power 1.00 for both.
+- **Caveat before scoring.** The simulator's per-gene noise (SD 0.1 on log scale, deep Poisson) was calibrated only at
+  the level of the tissue state (leverage), not gene by gene; GTEx gene-level residuals are larger and gene-specific, so
+  the real null spread of T is likely wider than 0.03. As registered, H363.2 would read T > 0.018 as cytokine-like; this
+  threshold should be recalibrated (gene noise set to the GTEx gene residual variance, or a data-based null) in a dated
+  addendum before the scoring run.
+<!-- src: paper/exploratory/A361_A363_volume_mechanism/output/{a363_power,a363_sims}.csv -->

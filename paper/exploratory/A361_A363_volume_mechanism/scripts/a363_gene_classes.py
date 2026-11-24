@@ -130,10 +130,10 @@ def main():
                 print(f"{len(rows)}/{len(jobs)} simulated cohorts ({time.time() - t0:.0f}s)", flush=True)
         s = pd.DataFrame(rows).sort_values(["kind", "draw"])
         s.to_csv(V.OUT / "a363_sims.csv", index=False)
-        nl = s[s.kind == "null"].T
+        nl = s[s.kind == "null"]["T"]
         res = dict(T_null_median=float(nl.median()), T_null_q05=float(nl.quantile(0.05)), T_null_q95=float(nl.quantile(0.95)))
         for k in ("x0.5", "x0.25"):
-            v = s[s.kind == k].T
+            v = s[s.kind == k]["T"]
             res[f"T_{k}_median"] = float(v.median())
             res[f"power_{k}"] = float(np.mean(v > res["T_null_q95"]))
         res["gate"] = bool(res["power_x0.5"] >= 0.8)
