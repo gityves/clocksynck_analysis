@@ -590,6 +590,11 @@ decision); A361, A362, A363 registered; A366, A368 registered (living); A312, A3
   sex and cause of death.
 - Living: STAGE (66 bypass patients) and AAGMEx (251 adults) are not decidable (A369, A370: arc width, noisy muscle
   clock). STARNET (about 600 patients, up to seven tissues) would decide it.
+- Timed living skin (post hoc, descriptive): the published person-level amplitude shared by epidermis and dermis
+  (Saint-Antoine & Anafi 2025, preprint; del Olmo data) reproduces (r 0.78, R^2 0.61) but random non-rhythmic genes
+  reach r 0.70 (q95 0.72): mostly a shared scale of one biopsy. Between two separate skin sites (GSE326530) no
+  amplitude is shared (their statistic r 0.13; our core clock r -0.04, 41st percentile of matched sets). Cite the
+  preprint with this caveat.
 - Panel C, elasticity: level not anchored at 1 (simulated proportional scaling reads median 1.11; grey band); the
   registered gradient has the size the same simulation gives with no true gradient (A312 calibration note).
 - What the scale physically is (uniform damping of cell clocks, cells dephasing, body-wide composition) is not
@@ -598,7 +603,8 @@ decision); A361, A362, A363 registered; A366, A368 registered (living); A312, A3
 **Source:** `exploratory/A336_two_readouts/output/{person_gtex,person_gtex_companions}.csv`;
 `exploratory/A367_hardy_agonal/output/{tests,companions,gc}.csv`; `exploratory/A312_elasticity/output/{tissues,calib_level}.csv`;
 `exploratory/A358_A360_gain_sources/output/a360_coefficients.csv`; `exploratory/A368_muther_radial/output/tests.csv`;
-`docs/results_preliminary.md` A312, A336, A360-A363, A366-A370 and the size note.
+`exploratory/A364_living_volume/output/{posthoc_clock,posthoc_global}.csv`;
+`docs/results_preliminary.md` A312, A336, A360-A363, A366-A370, the size note and the post hoc skin entry.
 
 ## 3.last The organ arrangement is internal: it holds when the body's clock no longer reads the hour of death
 
