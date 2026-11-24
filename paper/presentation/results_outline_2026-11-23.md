@@ -637,6 +637,10 @@ systematic distortion as scatter (conservative).
   as strong as in ventilated donors is not excluded (80 %-power R 0.208).
 - The arrangement survives removing the wall-time component (rho 0.750, A109c).
 - Donor counts differ between A (12 body tissues, A293) and B (all donors of the group, A27): 103 against 106.
+- Intermediate deaths look less similar than slow deaths (rho 0.624 against 0.784; core 0.721 against 0.831), but they
+  have half the donors (50, 48 pairs, against 103, 66 pairs) and noise alone lowers rho at small n (79 fast deaths
+  against the rest: median 0.778, A349). Both compatibility intervals include no movement and overlap (0-1.8 h against
+  0-0.9 h; A374); the groups were not compared (Hardy 3 descriptive in A293). Not a difference.
 
 **Source:** `exploratory/A293_organisation_levels/output/part1/groups.csv`;
 `results/figure_3/output/cues_lost/walltime_hosts.csv`; `exploratory/A109_coupling_nulls/output/a109c_walltime.csv`;
