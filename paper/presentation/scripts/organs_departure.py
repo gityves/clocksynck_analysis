@@ -105,11 +105,12 @@ def hours(ax, t, s):
     ax.set_ylim(0, 4.2)
     ax.set_xlabel("amplitude shared\nwith the body, √S")
     ax.set_ylabel("phase SD [h]")
-    h = [Line2D([], [], ls="", marker="o", ms=5, color=MUTED, label="implied by D"),
-         Line2D([], [], ls="", marker="D", ms=5, mfc="white", mec=INK, label="measured across donors"),
+    h = [Line2D([], [], ls="", marker="o", ms=5, color=MUTED, label="model estimate (D, S)"),
+         Line2D([], [], ls="", marker="D", ms=5, mfc="white", mec=INK, label="gene-split estimate"),
          Line2D([], [], color=MUTED, lw=1.1, label="fixed size"),
          Line2D([], [], color=MUTED, lw=1.1, ls="--", label="fixed angle")]
-    ax.legend(handles=h, loc="upper right", frameon=False, fontsize=8, handletextpad=0.1)
+    ax.legend(handles=h, loc="lower left", frameon=False, fontsize=7.5, handletextpad=0.3, handlelength=1.3,
+              borderaxespad=0.1)
 
 
 def direction(ax, t):

@@ -495,8 +495,8 @@ panel B display post hoc (the fitted curve replaces A289's peripheral line; on i
 `scripts/organs_departure_compute.py`; wide). A. schematic to scale with real values: sun-exposed skin (quiet) and
 thyroid (loud) on circles of radius sqrt(S), departure disc of 1 SD (sqrt(D / 2)), wedge the implied phase SD.
 B. D against S per tissue; grey lines through the geometric-mean S and median D: fixed size (0), fixed angle (1), own
-clock periods (2). C. implied phase SD sqrt(D / (2 S)) in hours against amplitude (dots), A259 measured SD with 90 %
-interval (diamonds); grey: fixed-size prediction and fixed-angle line. Whole blood and testis omitted. D. fraction of
+clock periods (2). C. phase SD in hours against amplitude: model estimate sqrt(D / (2 S)) (dots) and the gene-split estimate (A259)
+with 90 % interval (diamonds); grey: fixed-size prediction and fixed-angle line. Whole blood and testis omitted. D. fraction of
 the departure along the phase direction, clock genes and matched genes (A311). Reference lines are named in legends.
 
 **Tags:** A294b registered (H294b.1 pass; slope descriptive); A259 registered; A311 registered (H311.1 FAIL: not
@@ -508,8 +508,13 @@ phase-dominated, the outcome shown); A329 erratum post hoc; panel A and the impl
   Definitions as in `results.md` R2.1 speaker notes.
 - 3.4a: the curve in panel A is not a test: it is the definition of c. The finding is 3.4b panel B (D nearly
   constant while S spans 85-fold).
-- 3.4b panel C: small-angle approximation (sqrt(D / 2) is the tangential SD, sqrt S the RMS radius of the shared state);
-  A259 runs on the same donors, so the agreement is between estimators, not datasets. Whole blood (10 h implied) and
+- 3.4b panel C: small-angle approximation (sqrt(D / 2) is the tangential SD, sqrt S the RMS radius of the shared state).
+  Dots, "model estimate": from the host factor model (A294b), Poisson noise modelled, half of D counted as phase.
+  Diamonds, "gene-split estimate" (A259): the 14 genes and the host tissues split in halves, noise cancels in the
+  cross-moments, the whole deviation counted as phase (registered as an upper bound); 11 body tissues, each against the
+  other ten. Same GTEx donors, so the agreement (Spearman 0.945) is between estimators, not datasets. In A259 the
+  deviation was not above expression-matched genes in any tissue (matched genes alone reach 30-74 % of the clock's
+  value): the hour values include sample-level variation, not only clock. Whole blood (10 h implied) and
   testis (5.2 h) are omitted: no shown clock, and the small-angle approximation fails.
 - 3.4b panel D: matched genes lean towards amplitude (a sample-level scale component, A311); relative to them the clock
   departure is more tangential, but not significantly (90th percentile of matched sets).
