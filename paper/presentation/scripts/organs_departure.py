@@ -5,7 +5,7 @@ GTEx fast deaths, 27 peripheral tissues (A104 / A294b table). S: clock-plane var
 (sqrt S, the shared amplitude); D = 2 psi: the tissue's departure at a fixed body state, net of counting noise.
 A. Schematic drawn to scale with real values: the shared state of a quiet tissue (sun-exposed skin) and of a loud one
    (thyroid) on circles of radius sqrt S, each with its departure (disc of 1 SD per axis, sqrt(D / 2)); the wedge is the
-   phase scatter it implies (+- 1 SD). Post hoc display.
+   phase SD it implies (+- 1 SD). Post hoc display.
 B. D against S per tissue (log axes); grey lines through the geometric-mean S and median D: fixed size (slope 0), fixed
    angle (slope 1, a phase jitter of constant size), individual clock periods (slope 2). Observed slope 0.07 (Theil-Sen,
    A294b descriptive).
@@ -58,7 +58,7 @@ def schematic(ax, t):
                 fontsize=9, color=c)
     ax.scatter([0], [0], s=14, color=INK, zorder=3)
     ax.text(0, -0.15, "body's\nclock state", ha="center", va="top", fontsize=8, color=INK)
-    ax.text(2.4, -0.6, "disc: departure (1 SD)\nwedge: phase scatter", ha="center", va="center", fontsize=8,
+    ax.text(2.4, -0.6, "disc: departure (1 SD)\nwedge: phase SD", ha="center", va="center", fontsize=8,
             color=MUTED)
     ax.set_xlim(-3.6, 3.6)
     ax.set_ylim(-1.8, 4.9)
@@ -108,7 +108,7 @@ def hours(ax, t, s):
     ax.set_xlim(0.9, 3.5)
     ax.set_ylim(0, 4.2)
     ax.set_xlabel("amplitude shared\nwith the body, √S")
-    ax.set_ylabel("phase scatter [h]")
+    ax.set_ylabel("phase SD [h]")
     h = [Line2D([], [], ls="", marker="o", ms=5, color=MUTED, label="implied by D"),
          Line2D([], [], ls="", marker="D", ms=5, mfc="white", mec=INK, label="measured (A259)")]
     ax.legend(handles=h, loc="upper right", frameon=False, fontsize=8, handletextpad=0.1)

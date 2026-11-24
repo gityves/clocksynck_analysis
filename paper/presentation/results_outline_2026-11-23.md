@@ -464,7 +464,7 @@ post hoc display (same-class rows chosen post hoc).
 shared amplitude sqrt(S), one dot per tissue; grey: S / (S + D) at the median D (1.9), the definition of coupling at a
 constant departure, not a fit (explained in 3.4b). B. baboon: amplitude against known time (A36 timed gain, estimated
 without the host) against coupling, 35 peripheral tissues and 22 brain regions; grey: the same curve, a^2 / (a^2 + D),
-D fitted on the peripheral tissues (2.30; one parameter; amplitude units differ from A). Right axes: the phase scatter a coupling implies,
+D fitted on the peripheral tissues (2.30; one parameter; amplitude units differ from A). Right axes: the phase SD a coupling implies,
 (24 / 2 pi) sqrt((1 - c) / (2 c)) hours (isotropic departure, small angle, as 3.4b panel C; approximate beyond about
 3 h): coupling 0.8 is about 1.3 h, 0.5 about 2.7 h.
 
@@ -479,7 +479,7 @@ panel B display post hoc (the fitted curve replaces A289's peripheral line; on i
 1. A tissue's own departure from the body's clock state (D) barely grows with its shared variation S (slope of log D on
    log S 0.07; D spans 4.6-fold, 0.90 to 4.14, while S spans 85-fold). A phase jitter of fixed angle would give slope 1,
    individual clock periods slope 2.
-2. So the same displacement turns a loud clock by a small angle and a quiet one by a large angle: the phase scatter it
+2. So the same displacement turns a loud clock by a small angle and a quiet one by a large angle: the phase SD it
    implies falls with amplitude, from 3.0 h (sun-exposed skin) to 1.1 h (oesophagus muscularis), and matches the
    departure measured in hours by a different estimator (A259; Spearman 0.945 over 11 tissues, 1.0 to 3.2 h).
 3. The departure is as much amplitude as phase (fraction along phase 0.49; matched genes 0.38; A311): not a phase
@@ -493,14 +493,14 @@ panel B display post hoc (the fitted curve replaces A289's peripheral line; on i
 
 **Figure:** `figures/organs_departure/organs_departure.png` (`scripts/organs_departure.py`, from
 `scripts/organs_departure_compute.py`; wide). A. schematic to scale with real values: sun-exposed skin (quiet) and
-thyroid (loud) on circles of radius sqrt(S), departure disc of 1 SD (sqrt(D / 2)), wedge the implied phase scatter.
+thyroid (loud) on circles of radius sqrt(S), departure disc of 1 SD (sqrt(D / 2)), wedge the implied phase SD.
 B. D against S per tissue; grey lines through the geometric-mean S and median D: fixed size (0), fixed angle (1), own
-clock periods (2). C. implied phase scatter sqrt(D / (2 S)) in hours against amplitude (dots), A259 measured SD with 90 %
+clock periods (2). C. implied phase SD sqrt(D / (2 S)) in hours against amplitude (dots), A259 measured SD with 90 %
 interval (diamonds); grey: fixed-size prediction and fixed-angle line. Whole blood and testis omitted. D. fraction of
 the departure along the phase direction, clock genes and matched genes (A311).
 
 **Tags:** A294b registered (H294b.1 pass; slope descriptive); A259 registered; A311 registered (H311.1 FAIL: not
-phase-dominated, the outcome shown); A329 erratum post hoc; panel A and the implied phase scatter (C) post hoc displays.
+phase-dominated, the outcome shown); A329 erratum post hoc; panel A and the implied phase SD (C) post hoc displays.
 
 **Caveats (speaker notes)**
 - S = z2 V_h (gain squared times host spread; invariant to the host's scale); D = 2 psi (scatter around the state the

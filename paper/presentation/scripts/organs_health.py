@@ -12,7 +12,7 @@ B. Baboon (Mure 2018, 12 animals): rhythm amplitude against known time (A36 time
    from A, so D is not comparable). Post hoc panel (A289 H289.3 registered the untimed amplitude: brain on the line). Pineal, pituitary and ocular
    tissues not shown.
 
-Right axes: the phase scatter a coupling implies, (24 / 2 pi) sqrt((1 - c) / (2 c)) hours, for a departure of equal
+Right axes: the phase SD a coupling implies, (24 / 2 pi) sqrt((1 - c) / (2 c)) hours, for a departure of equal
 amplitude and phase parts and small angles (as slide 3.4b, panel C); approximate beyond about 3 h.
 
 Data: exploratory/A294_floor/output/tissues.csv; results/figure_2/output/organs/r2_couplings.csv;
@@ -43,14 +43,14 @@ H = 24 / (2 * np.pi)
 
 
 def hours_axis(ax, label=True):
-    """Right axis: the phase scatter a coupling implies, SD = H sqrt((1 - c) / (2 c)) (isotropic departure, small
+    """Right axis: the phase SD a coupling implies, SD = H sqrt((1 - c) / (2 c)) (isotropic departure, small
     angle; as slide 3.4b)."""
     fwd = lambda c: H * np.sqrt((1 - np.clip(c, 1e-3, 1)) / (2 * np.clip(c, 1e-3, 1)))  # noqa: E731
     inv = lambda h: 1 / (1 + 2 * (np.asarray(h) / H) ** 2)  # noqa: E731
     sec = ax.secondary_yaxis("right", functions=(fwd, inv))
     sec.set_yticks([1, 1.5, 2, 3, 4, 6], ["1", "1.5", "2", "3", "4", "6"])
     if label:
-        sec.set_ylabel("SD [h]")
+        sec.set_ylabel("phase SD [h]")
     return sec
 
 

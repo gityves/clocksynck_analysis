@@ -1,9 +1,9 @@
 """Aggregates for slide 3.4b (why louder organs are more coupled): per GTEx peripheral tissue, the shared clock
-variance S, the departure D, the phase scatter D implies, its split into amplitude and phase directions, and the
+variance S, the departure D, the phase SD D implies, its split into amplitude and phase directions, and the
 independent hour-scale departure of A259.
 
 - S, D (= 2 psi), coupling: A294b table (`A294_floor/output/tissues.csv`).
-- Implied phase scatter [h] = sqrt(D / (2 S)) x 24 / (2 pi): the tangential SD of the departure (D / 2 per axis)
+- Implied phase SD [h] = sqrt(D / (2 S)) x 24 / (2 pi): the tangential SD of the departure (D / 2 per axis)
   over the RMS radius of the shared state (sqrt S); small-angle approximation, descriptive (post hoc display).
 - Phase fraction = tan / (rad + tan) of the departure (A311, registered): clock, and the median over its 100
   expression-matched sets per tissue.
