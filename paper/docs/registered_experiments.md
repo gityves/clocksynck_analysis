@@ -11258,3 +11258,11 @@ and random genes: a clock-specific person volume in life. FAIL with power: no cl
 fat and muscle (as in MuTHER); the half-size power says how much smaller an excess is excluded.
 **Limits.** Biopsy time unknown (the arc's width is fitted); African American non-diabetic adults; one visit; ring
 model for the null; two tissues only.
+## A367 addendum (2026-11-24, the user's decision after the power note: "accept 0.77 and score H367.1")
+
+- H367.1 is scored at power 0.775 (Fisher z approximation, registered gate 0.8): the gate is relaxed by the user, as
+  for A363 part 1. Everything else as registered, one scoring run.
+- H367.2 stays not decidable (power 0.24): its Hardy 1 coefficient, the Hardy 2 coefficient and the differences are
+  reported as underpowered descriptions, no pass / fail.
+- Reported beside H367.1 (registered descriptive): the Hardy 1 leverage's percentile among responsive sets (their
+  q95 0.714 in Hardy 1 equals the whole-cohort clock leverage).

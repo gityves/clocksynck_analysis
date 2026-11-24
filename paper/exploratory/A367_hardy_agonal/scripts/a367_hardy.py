@@ -36,6 +36,8 @@ OUT = HERE.parents[1] / "output"
 LEV_WHOLE, LEV_MATCHED_Q95 = 0.714, 0.621          # A336 part 2 core (registered inputs, not blind)
 GC_ALT = {"A361 core": -0.184, "A360 14 genes": -0.235}
 N_PERM, N_SUB, N_BOOT, N_PERM_GC = 1000, 200, 2000, 10_000
+# A367 addendum (2026-11-24): the user accepted H367.1 at power 0.775 (registered gate 0.8) after the power stage
+H367_1_ACCEPTED = True
 
 
 def leverage_rows():
@@ -180,7 +182,7 @@ def main():
             mt, rp = comp[comp.kind == "matched"].leverage_h1, comp[comp.kind == "responsive"].leverage_h1
             r.update(matched_q95_h1=float(mt.quantile(.95)), pct_matched_h1=float((mt < L1).mean() * 100),
                      responsive_q95_h1=float(rp.quantile(.95)), pct_responsive_h1=float((rp < L1).mean() * 100),
-                     powered=str(pw["gate_H367.1"]) == "True")
+                     powered=str(pw["gate_H367.1"]) == "True" or H367_1_ACCEPTED)
             r["passes"] = bool(L1 > r["matched_q95_h1"] and r["p_perm_h1"] < 0.05) if r["powered"] else None
         rows.append(r)
     t = pd.DataFrame(rows)
