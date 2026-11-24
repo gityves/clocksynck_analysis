@@ -11343,3 +11343,32 @@ dampening survives the control). FAIL with power: the age fall is not clock-spec
 moves too. Per-tissue log ratios reported.
 **Limits.** One pool per age and CT (two mice, pooled); tissue identity across pools not stated by the authors; aged
 adrenal lacks the first 24 h; constant darkness.
+## A373 (2026-11-24, on the user's instruction "yes add a number" after the A372 discussion; the CHIRAL age rescore draft (`prompts/chiral_age_rescore_DRAFT_2026-11-23.md`) narrowed to its loudness readout; staged: power (matching, balance, label-swap null, companions; no clock age contrast), then one scoring run; **NOT BLIND**: CHIRAL's published dampening; WP0 item 5 (rhythmic-gene count old minus young, pooled -0.73 vs Hardy-matched -0.13); A231 (matched d*, offsets, host-referenced z2 per arm); A19 / A94b / A180 (archive: amplitude kept to 70); A372 (mouse, descriptive); **BLIND**: the debiased clock-plane variance by age in GTEx, pooled or matched, clock or companions (none computed; grep 2026-11-24)): how large an age fall of absolute clock amplitude is excluded once death type is balanced? **GTEx, A231 matched old (60-70) vs young (21-49)**
+
+**Why.** CHIRAL reported dampened rhythms in old donors; our unregistered check found the effect shrinking under
+death-type matching. A host-referenced ratio cancels a fall shared by all organs, so the readout is the absolute
+loudness of each tissue (A315 statistic), with companions.
+**Data and matching.** A231 exactly (`A231_age_coupling/scripts/compute_a231.py` DESIGN, `matched_label.build`): within
+cohort (fast deaths Hardy 1-2; ventilated Hardy 0), 1:1 pairs exact on sex and Hardy class, nearest ischaemic time;
+eligible tissues as A231. Unmatched (pooled) arms reported beside: every donor of the age arms with data in the tissue.
+**Statistic (`exploratory/A373_age_loudness/scripts/a373_age_loudness.py`).**
+- Per cohort and tissue, clock-plane states on counts (`clocksync.paired` projector per tissue over all its rows,
+  `states` with depth, Poisson variance trace); per arm W = mean |z - mean z|^2 - mean Poisson variance (A315);
+  L_t = log(W_old / W_young) (log variance ratio; amplitude ratio = exp(L / 2)).
+- Q = median of L_t over the eligible tissues of both cohorts. Q* = Q minus the median Q of the 200 expression-matched
+  companion sets (`pseudo_waveforms` from each cohort's mean log CPM, seeds [373, 1] / [373, 2] for matched /
+  responsive). 14 genes primary (as CHIRAL), core loop reported.
+- Interval: matched-set bootstrap (pairs resampled within tissue, 2,000, seed [373, 3]), 90 % percentile interval of
+  Q (clock); the companion median is taken as fixed.
+- Label null: old / young swapped within pairs (1,000, seed [373, 4]).
+**H373.1 (effect).** Matched Q below the matched-companion q05 and the label-null q05, with the 90 % interval below 0:
+an age fall of clock loudness survives death-type matching (CHIRAL stands for loudness).
+**H373.2 (the number; equivalence).** Report the 90 % interval of the matched amplitude ratio exp(Q / 2): its lower
+bound is the largest fall excluded. Equivalence passes if the interval lies within 0.90-1.11 (amplitude +-10 %, Q within
++-0.21); decidable if the power stage's expected half-width (1.645 x label-null SD of Q) is below 0.21.
+**Descriptive.** Pooled (unmatched) Q beside the matched one (the death-type imbalance effect); per cohort; per tissue.
+**Readings.** H373.1 PASS: CHIRAL's dampening holds for loudness after matching. H373.2 PASS: no age fall larger than
+10 % in amplitude between 21-49 and 60-70 y once death type is balanced; the correction stands with a number. Neither:
+the interval is the number, reported as such.
+**Limits.** Age 21-70 only; matched designs lose donors; T2D stays imbalanced (A231 balance); the companion median is
+treated as fixed in the interval. Aggregates only (controlled access).
