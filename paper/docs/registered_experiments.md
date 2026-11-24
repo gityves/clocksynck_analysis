@@ -11426,3 +11426,24 @@ such (the registered contrast is A317).
 **Limits.** The truth is the estimated fast map (its noise counted twice, small at 244 donors); a systematic distortion
 (the ventilated pull toward 0 / 12 h, A109) is absorbed as scatter, so upper bounds are conservative (overstate
 movement); organ scatter is modelled as independent per organ.
+## A375 (2026-11-24, on the user's instruction "check the batch and composition gaps"; one run, descriptive tests with companions; **NOT BLIND**: the person leverage in fast deaths (A336 core 0.714), A360 covariates; batch sharing counted before registration (aggregates: of 22,147 within-donor tissue pairs, 16.9 % share the RNA-isolation batch SMNABTCH, 11.2 % the expression batch SMGEBTCH; two collection centres, donor-level); **BLIND**: every leverage below (none computed)): is the person's shared clock amplitude a batch, collection-centre or body-wide composition effect? **GTEx fast deaths, A336 rows (27 peripheral tissues)**
+
+**Estimator (`exploratory/A375_scale_confounds/scripts/a375_confounds.py`).** Per tissue, clock-plane states on counts
+(`clocksync.paired` projector and states per tissue), centred within tissue. Per tissue pair (a, b) with >= 40 donors:
+radii |z_a|, |z_b| residualised on the first two harmonics of both angles (as `radius_covariance`) plus the variant's
+covariates; leverage = their correlation. L = median over pairs. Core loop primary (as panel A), 14 genes reported.
+**Variants.** (0) none (reference); (1) batch: only donors whose two samples differ in both SMNABTCH and SMGEBTCH;
+(2) centre: collection centre (SMCENTER) added as a covariate; (3) composition, markers: each sample's within-tissue
+z-scored mean log CPM of five marker sets (blood HBB HBA1 HBA2; immune PTPRC LAPTM5 CD53; endothelial PECAM1 VWF CDH5;
+fibroblast COL1A1 COL1A2 DCN; smooth muscle ACTA2 MYH11 CNN1), own sample's scores as covariates of its radius;
+(4) composition, genome: the sample's top 5 within-tissue principal components of log CPM (2,000 most variable genes,
+clock-like and responsive genes excluded); (5) all of (1)-(4).
+**Companions.** 50 expression-matched pseudo-clock sets (A336 seeds [336, 2, 1], core positions for the core readout),
+every variant.
+**H375 (per variant k = 1-5).** "Explains the factor" if L_k < 0.5 x L_0, or L_k falls to or below the matched q95 of
+the same variant. Otherwise: the variant's confound is ruled out as the explanation of the shared clock amplitude.
+**Readings.** None explains it: the slide may say "not batch, collection centre or body-wide composition (markers,
+genome PCs)". One explains it: named on the slide as a candidate source of the person scale.
+**Limits.** Pairwise leverage (single tissues) is noisier than the half-host leverage of A336 (values lower; only the
+variants are compared); genome PCs may absorb part of a genuine body-wide scale (conservative for the clock); batch
+restriction lowers donors per pair. Aggregates only.
