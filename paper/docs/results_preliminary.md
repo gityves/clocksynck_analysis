@@ -8677,3 +8677,14 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   conservative); independent scatter per organ.
 - Code: `exploratory/A374_order_interval/scripts/a374_interval.py`.
 <!-- src: paper/exploratory/A374_order_interval/output/{intervals,sim}.csv -->
+
+## A374 post hoc note (2026-11-24; descriptive, for the slide 3.last figure): arrangement similarity expected from sampling noise alone
+
+n fast deaths drawn against the other fast deaths (200 draws, 66 pairs), Fisher-Lee rho median (5-95 %):
+- 14 genes: n 103 (slow deaths' count) 0.796 (0.637-0.901); n 50 (Hardy 3) 0.751 (0.491-0.871); n 79 (ventilated)
+  0.785 (0.519-0.879).
+- Core: n 103 0.820 (0.702-0.898); n 50 0.776 (0.563-0.890); n 79 0.807 (0.683-0.892).
+- Observed (A293): slow 0.784, Hardy 3 0.624, ventilated 0.690 (14 genes): all inside the noise-only ranges. Fast
+  donors carry a stronger shared signal than the groups, so these expectations are, if anything, optimistic.
+- Code: `exploratory/A374_order_interval/scripts/posthoc_noise_reference.py`.
+<!-- src: paper/exploratory/A374_order_interval/output/noise_reference.csv -->

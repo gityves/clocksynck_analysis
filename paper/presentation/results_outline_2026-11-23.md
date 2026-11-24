@@ -621,7 +621,8 @@ decision); A361, A362, A363 registered; A366, A368 registered (living); A312, A3
 
 **Figure:** `figures/organ_arrangement/organ_arrangement.png` (`scripts/organ_arrangement.py`; half). Rows: fast (reference,
 dashed), slow, intermediate deaths. A. arrangement shared with fast deaths, clock genes (blue bar) with matched (light
-grey) and stress-responsive (dark grey) q95 lines. B. alignment R of the body clock to the hour of death. C. how far
+grey) and stress-responsive (dark grey) q95 lines; open diamond and line: median and 5-95 % expected from sampling
+noise alone (fast deaths at the group's donor count, post hoc). B. alignment R of the body clock to the hour of death. C. how far
 the organs can have moved: 90 % compatibility interval of the organ scatter (14 genes; A374), dashed: the size of the
 arrangement (median organ-pair offset in fast deaths, 1.02 h).
 
@@ -640,7 +641,9 @@ systematic distortion as scatter (conservative).
 - Intermediate deaths look less similar than slow deaths (rho 0.624 against 0.784; core 0.721 against 0.831), but they
   have half the donors (50, 48 pairs, against 103, 66 pairs) and noise alone lowers rho at small n (79 fast deaths
   against the rest: median 0.778, A349). Both compatibility intervals include no movement and overlap (0-1.8 h against
-  0-0.9 h; A374); the groups were not compared (Hardy 3 descriptive in A293). Not a difference.
+  0-0.9 h; A374); the groups were not compared (Hardy 3 descriptive in A293). Not a difference. Expected from noise
+  alone (fast deaths at the same n, post hoc): 0.796 (5-95 % 0.637-0.901) at 103 donors, 0.751 (0.491-0.871) at 50;
+  both observed values lie inside (panel A, diamonds).
 
 **Source:** `exploratory/A293_organisation_levels/output/part1/groups.csv`;
 `results/figure_3/output/cues_lost/walltime_hosts.csv`; `exploratory/A109_coupling_nulls/output/a109c_walltime.csv`;
