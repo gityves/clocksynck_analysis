@@ -100,3 +100,12 @@ measured per volunteer from a full timed day (no biopsy-timing confound)?
 - What GSE201207 can test: not a person (animal) volume shared by organs (pools, identity across tissues unknown), but
   whether the clock amplitude of all peripheral organs falls together with age, in timed data (organ-shared amplitude
   as an age state). Group-level, 5 peripheral tissues x 3 ages x 12 times.
+
+## 9. MuTHER resolved (added 2026-11-24, A366)
+
+A366 FAIL (powered): MuTHER's states lie on a daytime arc (elongation 3.4, phase SD about 1.9 h); measured from the
+ring's centre, the fat-skin leverage is 0.165, inside what shared biopsy time alone gives (timing-only q95 0.209, median
+0.151), far below a GTEx-size (0.314) or half-size (0.262) volume; radii rise with the distance from the mean phase
+(Spearman 0.21 / 0.19). A331 is withdrawn as living evidence; slide 3.5 bullet 2 and Figure 4f's living panel should go
+(proposal, not applied). The person volume is shown in deaths; in living people it is reported only by others, without
+a matched-gene control.

@@ -8399,3 +8399,20 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
 - Threshold max(0.100, 0.209) = 0.209; expected circle-centred leverage with a GTEx-size volume 0.314; power 0.998,
   0.918 at half. Gate passed. One run (10 s).
 <!-- src: paper/exploratory/A366_muther_timing/output/{power,geometry,companions,sim}.csv -->
+
+## A366 (scored 2026-11-24; BLIND for the circle-centred leverage and the phase-radius relation; one run, 10 s; powered, 1.00): A331's living fat-skin loudness is not separated from the shared biopsy time (H366.1 FAIL); in the ring model the observed value is what timing alone produces, and well below a GTEx-size or half-size volume
+
+- **H366.1 FAIL.** Circle-centred leverage 0.165 (raw A331 0.177), persons-permuted p 0.0005, above 99.0 % of matched
+  and 99.5 % of responsive sets, but below the timing-only q95 0.209. It sits at the 64th percentile of the timing-only
+  simulations (median 0.151) and below 99 % of the half-GTEx-size simulations (median 0.262; GTEx size 0.314).
+- **Phase and amplitude (the user's question).** A tissue's centred radius rises with the other tissue's distance from
+  the cohort's mean phase: Spearman 0.214 (fat radius vs skin position), 0.186 (skin radius vs fat position): the
+  timing signature. Circle centres sit 0.19 (fat) and 0.08 (skin) of the mean radius away from the cohort mean.
+- **Reading (registered).** A331's leverage is explained by shared biopsy time in this model: A331 is withdrawn as
+  person-volume evidence. Its pass over random genes reflects that clock (and cortisol-driven) genes move with the time
+  of day, not a shared loudness. The living person volume is not shown in public data (A364, A365 not decidable; A366
+  fails); the living link rests on del Olmo 2022 and Saint-Antoine & Anafi 2025 (no matched-gene control).
+- **Limits.** The null assumes a sinusoidal ring, normal phase spread and isotropic noise at A331's clock fractions; a
+  volume below half the GTEx size is not excluded.
+- Code: `exploratory/A366_muther_timing/scripts/a366_muther_timing.py --stage score`.
+<!-- src: paper/exploratory/A366_muther_timing/output/{tests,sim,power,companions}.csv -->
