@@ -35,6 +35,7 @@ from common import gtex  # noqa: E402
 OUT = P.OUT
 EXCLUDE = set(CLOCK_LIKE) | set(RESPONSIVE_GENES) | set(RESPONSIVE_BROAD)
 N_PROG, MIN_PROG, N_SETS, N_PERM, N_BOOT = 100, 20, 200, 1000, 2000
+DROP_TISSUES = {"Whole Blood"}   # user decision before scoring (2026-11-24)
 W24 = 2 * np.pi / 24
 META = ["donor", "compartment", "depth"]
 
@@ -137,7 +138,7 @@ def main():
             progs[t] = w
     pd.DataFrame(prow).to_csv(OUT / "out_programmes.csv", index=False)
     P.say("programmes:", len(progs), "tissues")
-    keys = [(c, t) for c in plans for t in plans[c] if t in progs and t in data[c]]
+    keys = [(c, t) for c in plans for t in plans[c] if t in progs and t in data[c] and t not in DROP_TISSUES]
     pairs, pooled = {}, {}
     for c, t in keys:
         T, q = data[c][t], cohorts[c][1]

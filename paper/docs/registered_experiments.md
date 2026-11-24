@@ -11402,3 +11402,6 @@ programme; age 21-70; T2D imbalanced; regression to the mean of selected genes i
   DIP in both cohorts, matched pairs and pooled arms.
 - The power run with the time of death was stopped before it wrote any statistic (programme counts only, overwritten).
 - Companion sets for a 100-gene programme can repeat a gene (responsive pool); a repeated gene is used once.
+### A373 part 3, dated change before scoring (2026-11-24, the user's decision after the power note: "score it without whole blood")
+- Whole Blood is removed from the part 3 tissues (programme kept on file, not used). The label null and the companions
+  are recomputed without it (one power rerun) before the one scoring run.
