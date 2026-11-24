@@ -8507,3 +8507,16 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
 - Volume medians: GTEx size 0.315, half 0.214. Threshold 0.316 (the 1.25 x null): power 0.484 / 0.042. Not scored.
 - Code: `exploratory/A370_aagmex_volume/scripts/{prep_aagmex.py, a370_aagmex.py --stage power}`.
 <!-- src: paper/exploratory/A370_aagmex_volume/output/{power,gates,sim,companions}.csv, output/prep/{prep_summary,markers}.csv -->
+
+## A367 power note (2026-11-24; no clock value in any Hardy class; 112 min): H367.1 just below its gate (power 0.77 at the whole-cohort leverage), H367.2 not decidable (power 0.24); not scored
+
+- Leverage rows (A336, 27 tissues): 34 Hardy 1 and 210 Hardy 2 donors. GC rows (A360): 34 Hardy 1 donors.
+- Companions in Hardy 1 (core, 20 halvings): matched median 0.128, q95 0.618; responsive median 0.463, q95 0.714.
+  Threshold 0.618 (matched q95; the permutation approximation 1.645 / sqrt(22) is lower).
+- H367.1 power (Fisher z, n_eff 22): 0.775 if Hardy 1 carries the whole-cohort core leverage 0.714; 0.064 at half of
+  it. Registered gate 0.8: not met. The approximation is conservative (the median over halvings varies less than one
+  correlation), but no simulation was registered to replace it.
+- H367.2: SE of the GC coefficient in Hardy 1 0.191 (VIF 1.03): power 0.24 at the A361 core value, 0.33 at the A360
+  14-gene value. Not decidable.
+- Code: `exploratory/A367_hardy_agonal/scripts/a367_hardy.py --stage power`.
+<!-- src: paper/exploratory/A367_hardy_agonal/output/{power,companions}.csv -->
