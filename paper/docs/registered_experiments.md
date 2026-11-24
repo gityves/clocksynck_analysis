@@ -11131,3 +11131,44 @@ stands as living evidence; its relation to the responsive genes, a glucocorticoi
 FAIL with power: A331's leverage is the shared biopsy time; A331 is withdrawn as person-volume evidence.
 **Limits.** The ring model (sinusoidal, isotropic noise) for the null; a circle fit on a partial arc is noisy (its
 spread is in the null); one biopsy, one array batch. Aggregates only.
+## A367 (2026-11-24, on the user's instruction "register the Hardy test", after A366: the person volume is shown only in deaths; staged: power (Hardy counts, companions and covariates in Hardy 1 donors; no clock value in any Hardy class), then one scoring run if powered; **NOT BLIND**: the whole-cohort values (A336 core leverage 0.714 on 244 fast deaths, matched q95 0.621; A360 GC coefficient -0.235 on 14 genes; A361 core -0.184; A336 age / ischaemic / RIN tertiles); **BLIND**: every clock value within a Hardy class (leverage, GC coefficient), the GC-state level by Hardy class (none computed; grep 2026-11-24): is the person volume a product of the agonal phase? **GTEx fast deaths split by Hardy class**
+
+**Why.** A factor that scales every organ's clock alike in one donor is what a body-wide dying process would produce,
+and the volume's glucocorticoid link fits an agonal cortisol surge as well as a chronic state. Fast deaths mix Hardy 1
+(violent and fast: accident, trauma, suicide; terminal phase < 10 min) and Hardy 2 (sudden natural death; terminal
+phase < 1 h). Glucocorticoid-target transcription needs tens of minutes, so in Hardy 1 an agonal surge has little time
+to act. If the volume and its GC link exist in Hardy 1 at the whole-cohort size, the agonal phase is not needed for
+them. Counts (aggregate, at drafting): the A360 donor set has 34 Hardy 1 and 203 Hardy 2 donors.
+**Statistics (`exploratory/A367_hardy_agonal/scripts/a367_hardy.py`).**
+- Leverage: A336 part 2 core-loop leverage (A336 rows: 27 peripheral tissues, 20 halvings `split_hosts(..., seed=[331, 1])`,
+  median over halvings; `radius_covariance`) restricted to the Hardy 1 donors (`lev(..., keep=)`). Companions: A336's
+  core matched and responsive sets (same seeds [336, 2, 1] / [336, 2, 2], core positions), restricted to the same donors.
+  Persons-permuted null 1,000 (seed [367, 1]).
+- GC slope: A361's model (A360 terms; standardised coefficients, `vm_common.coefs`) on the core-loop volume, fitted
+  within Hardy 1 (standardised within the class). Permutation p of the GC term (one-sided, negative; GC state permuted
+  within Hardy 1, 10,000, seed [367, 2]).
+- Hardy 2 values, reported: leverage on all Hardy 2 donors and at the Hardy 1 count (median of 200 random subsets, seed
+  [367, 3]); GC coefficient within Hardy 2; Hardy 2 minus Hardy 1 differences with 90 % intervals from 2,000 donor
+  bootstraps within class (seed [367, 4]); the same leverage comparison against Hardy 2 subsets matched to the Hardy 1
+  age-bracket distribution (CLAUDE.md covariate rule; age differs between the classes). Mean GC state and its SD per class
+  (agonal surge predicts a higher mean in Hardy 2). 14-gene values reported beside the core ones.
+**H367.1 (volume without an agonal phase).** Hardy 1 core leverage above the Hardy 1 matched q95 and permuted p < 0.05.
+**H367.2 (GC link without an agonal phase).** Hardy 1 core GC coefficient < 0 with one-sided permutation p < 0.05.
+**Power (no clock value read).**
+- H367.1: threshold max(matched q95, permuted-null q95 approximated by 1.645 / sqrt(n_eff)) in Hardy 1; alternative =
+  the whole-cohort core leverage 0.714; sampling by Fisher z with n_eff = n1 - 9 - 3 (nine harmonic columns removed,
+  conservative: the median over halvings is less variable). Also at half the leverage (0.357).
+- H367.2: noncentral t with the coefficient's SE from the Hardy 1 covariates (VIF of GC given the other terms, residual
+  variance at the A360 full-model R^2), alternative -0.184 (A361 core) and -0.235 (A360, 14 genes).
+- Each hypothesis is scored only if its power at the whole-cohort size is >= 0.8; otherwise "not decidable in Hardy 1"
+  and only the descriptive values are reported (labelled underpowered).
+**Readings.**
+- H367.1 PASS: the person volume is present in instantaneous deaths; it does not need a terminal phase of tens of minutes.
+  It cannot exclude processes acting within ten minutes or after death (ischaemia, already a covariate in A360).
+- H367.1 FAIL with power: the volume is not shown in instantaneous deaths; with the Hardy 2 value at the same count
+  above it (difference interval excluding 0), the agonal phase is a candidate source; the "in deaths" claim is downgraded.
+- H367.2 PASS: the GC link is not an agonal surge (it reflects the state before death: diurnal, chronic or stress before
+  the event). FAIL with power: the GC link is not shown without an agonal phase; the acute reading stays open.
+**Limits.** Hardy 1 is small and differs from Hardy 2 in age, sex and causes (trauma, suicide; possible intoxication);
+Hardy classes are assigned from records; ischaemic time and RIN distributions may differ (reported per class). Aggregates
+only (groups >= 5): no per-donor Hardy, time of death or phenotype is printed or committed.

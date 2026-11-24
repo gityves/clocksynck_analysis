@@ -8416,3 +8416,19 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   volume below half the GTEx size is not excluded.
 - Code: `exploratory/A366_muther_timing/scripts/a366_muther_timing.py --stage score`.
 <!-- src: paper/exploratory/A366_muther_timing/output/{tests,sim,power,companions}.csv -->
+
+## A366 note (2026-11-24; post hoc, synthetic, on the user's remark that a circle centre is hard to find on a narrow arc): the circle fit did not find the ring's centre at MuTHER's noise; the A366 conclusion stands, its label overstates
+
+- At MuTHER's spread (phase SD 1.9 h) the true ring centre lies 1.37 mean radii from the cohort mean. Without noise the
+  algebraic fit finds it exactly. With A331's noise it removes only a small part of the distance (remaining error 0.87 of
+  it; 0.71 at 3.8 h, 0.66 at 5.7 h). This matches the observed centre shifts (0.19 fat, 0.08 skin).
+- The A366 statistic was therefore close to A331's own: radii centred on the cohort mean, residualised on two harmonics
+  of both tissues' angles. What A366 decided is whether the observed shared radius exceeds what phase position alone
+  produces at the observed geometry. The timing-only and volume simulations went through the same estimator, so
+  H366.1 FAIL (powered) stands. "Circle-centred" should read "timing-referenced": no true phases or amplitudes were
+  recovered.
+- General: absolute phase and amplitude from a hospital-hours arc need a wide spread or low noise; around the clock
+  (phase SD 9.5 h) the cohort mean is already the centre (0.04 mean radii away). Relative quantities stay the readout
+  for narrow windows.
+- Code: `exploratory/A366_muther_timing/scripts/a366_kasa_check.py`.
+<!-- src: paper/exploratory/A366_muther_timing/output/kasa_check.csv -->
