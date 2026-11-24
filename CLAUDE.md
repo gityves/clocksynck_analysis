@@ -36,6 +36,12 @@
 - **Statistics.** A failed gate is uninformative, never "decoupled". Coupling scales with host spread: compare across
   groups only at a common spread (d*) or on z2/psi. Every disease contrast needs a specificity companion on the same
   permutations; check the target class's baseline coupling (and power) before choosing it.
+- **Gene drops (14 genes vs core loop, or any gene subset)** (user, 2026-11-24): fewer genes make a noisier projection,
+  and noise alone shrinks an effect. Never say the removed genes "carry" an effect because it shrinks or loses
+  significance once they are dropped. Attribute it to them only when the trio drop sits in the low tail of the null of
+  random drops of the same size (A336 rule) or the paired 14-minus-core difference (shared bootstraps) excludes 0; and
+  compare with the shrinkage the reliability loss predicts (half-host leverages, Spearman-Brown). Otherwise write
+  "not decided: precision or the removed genes". Register the gene-drop null with the test when a core readout is planned.
 - **Covariates in group contrasts** (user, 2026-11-18, after CHIRAL's age/sex result shrank under death-type matching):
   regressing a covariate out of expression, or giving it a stratum intercept (our `strata`), removes only its effect on
   the mean, not on rhythm amplitude, coupling, z2, psi or host spread. When a covariate can change rhythm strength
