@@ -11372,3 +11372,26 @@ bound is the largest fall excluded. Equivalence passes if the interval lies with
 the interval is the number, reported as such.
 **Limits.** Age 21-70 only; matched designs lose donors; T2D stays imbalanced (A231 balance); the companion median is
 treated as fixed in the interval. Aggregates only (controlled access).
+## A373 part 3 (2026-11-24, on the user's instruction "add a A373.3 about the other cycling genes", after A373 parts 1-2 were scored: CHIRAL's dampening concerns rhythmic output genes, not the core clock; staged: power, then one scoring run; **NOT BLIND**: A373 parts 1-2 (clock loudness old / young 1.038, 90 % 0.995-1.083), CHIRAL, WP0 item 5 (rhythmic-gene count shrinking under matching), A372 (mouse responsive genes fall more, descriptive); **BLIND**: every age contrast of output-gene amplitude (none computed))
+
+**Output programme (selected blind to age).** Per tissue, in fast deaths (Hardy 1-2) with a time of death, all donors of
+the tissue whatever their age: genes with median CPM >= 5, excluding `CLOCK_LIKE`, `RESPONSIVE_GENES` and
+`RESPONSIVE_BROAD`; cosinor of log(CPM + 0.5) on time of death ([1, cos, sin]); F-test, BH q; the programme = the 100
+genes with the largest F among q <= 0.05 (tissues with < 20 such genes are dropped). Its waveform: each gene's cosinor
+amplitude and acrophase. The same tissue programme is used in the ventilated cohort.
+**H373.3 (untimed, both cohorts; primary).** A373's loudness statistic on the output waveform: per tissue and arm the
+debiased variance W of the programme's plane states (projector per tissue, counts), L_t = log(W_old / W_young) on the
+A231 matched pairs, Q_out = median over tissues. Companions: 200 expression-matched and 200 responsive pseudo sets
+carrying the programme's amplitudes and phases (`pseudo_waveforms` on the output waveform, seeds [373, 5] / [373, 6]).
+Effect: Q_out below the matched-companion q05 and the label-null q05 (1,000 swaps within pairs, seed [373, 7]), with
+the 90 % matched-set bootstrap interval (2,000, seed [373, 8]) below 0. Equivalence: interval within +-0.21 (as part 2).
+Decidable for the equivalence if the expected half-width (1.645 x label-null SD) < 0.21.
+**D373.3t (timed, fast deaths; descriptive, the CHIRAL analogue).** On the same matched fast-death pairs, per tissue
+and arm, cosinor amplitude of each programme gene on time of death; per tissue the median over genes of log(amp_old /
+amp_young); median over tissues; pooled (unmatched) arms beside it. Also the share of programme genes with q <= 0.05
+within each arm (a rhythmic-gene count, CHIRAL's readout), old minus young.
+**Readings.** H373.3 effect: output rhythms of old donors are quieter after death-type matching while the clock is not
+(A373 part 2): CHIRAL's dampening stands for outputs. Equivalence: outputs keep their amplitude too; the published
+dampening is death type. Neither: the interval is reported.
+**Limits.** Programme selected on fast deaths (time of death needed); ventilated donors read with the fast-death
+programme; age 21-70; T2D imbalanced; regression to the mean of selected genes is shared by both arms.
