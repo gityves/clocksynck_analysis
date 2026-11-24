@@ -11316,3 +11316,30 @@ Written before any value below is computed. Nothing here is scored; A364 and A36
 - Reading fixed now: an observed r inside the random sets' range means the published layer-shared amplitude is not
   shown beyond a shared non-rhythmic scale in these data; above their q95, it is (descriptively).
 - Code: `exploratory/A364_living_volume/scripts/posthoc_skin_shared.py`.
+## A372 (2026-11-24, on the user's instruction "register A372 and run its power stage"; staged: power (permutation null, companions, MDE), then one scoring run if powered; **NOT BLIND for the clock**: A48's timed clock gains per tissue and age (`results/figure_4/output/resilience/a48_timed_age.csv`, `g_abs`, computed in the archive and read 2026-11-24 before this registration: every peripheral tissue lower at 27 than at 6 months, young / old adrenal 3.19 / 2.86, heart 3.39 / 2.80, kidney 3.92 / 3.54, lung 3.78 / 3.16, muscle 2.33 / 1.76; aged adrenal R^2 0.04); **BLIND**: the same statistic on random gene sets (none computed), the permutation null): does the clock amplitude of all peripheral organs fall together with age beyond random genes? **Wolff 2023 (GSE201207), mouse, constant darkness, 12 circadian times per age**
+
+**Why.** Wolff et al. report dampened Per1 / Per2 rhythms in old mice across peripheral tissues (rhythmicity counts, no
+gene-matched control). A body-wide fall of clock amplitude with age is the group-level counterpart of the person
+volume, in timed data without a biopsy-time confound. A48 showed that synchrony is kept with age; amplitude was not
+tested.
+**Data.** `common/datasets/mouse_ageing_wolff` (216 libraries = pools of 2 mice; 6 tissues x young 6 / aged 18 / old 27
+months x 12 CT); peripheral tissues adrenal, heart, kidney, lung, muscle (hypothalamus reported, not in the statistic).
+**Statistic (`exploratory/A372_mouse_age_amplitude/scripts/a372_age_amplitude.py`).**
+- Timed gain per tissue and age: A48 `timed_gain` (cosinor of log(CPM + 0.5) on CT folded to 24 h, complex gain on the
+  waveform over the clock genes with median CPM >= 5), generalised to any waveform.
+- D = mean over the five peripheral tissues of log(|gain old| / |gain young|); aged minus young reported.
+- Null 1 (labels): young / old labels swapped within CT, per CT independently and the same swap for all tissues of a
+  pool (2^12 = 4,096 assignments, exact); one-sided p (D more negative).
+- Null 2 (companions): 200 expression-matched and 200 responsive pseudo-clock sets (`pseudo_waveforms` from the mouse
+  libraries' mean log CPM, seeds [372, 2, 1] / [372, 2, 2]), same D. Their gains are fits of non-rhythmic genes: a
+  scale shared by all genes (depth, composition, noise level changing with age) moves them as it moves the clock.
+- Core loop (waveform minus PER1, PER2, NR1D1) reported, with the 364 three-gene drops (descriptive, CLAUDE.md rule).
+**H372.1.** D below the matched q05 and label p < 0.05.
+**Power.** MDE of D from the label null (2.49 x its SD) and from the matched spread; power at a uniform 20 % fall
+(log 0.8 = -0.223) = share of the label null shifted by -0.223 below the threshold (normal approximation). Scored if
+>= 0.8.
+**Readings.** PASS: clock amplitude falls with age in all peripheral organs together, beyond random genes (Wolff's
+dampening survives the control). FAIL with power: the age fall is not clock-specific: a scale that random genes share
+moves too. Per-tissue log ratios reported.
+**Limits.** One pool per age and CT (two mice, pooled); tissue identity across pools not stated by the authors; aged
+adrenal lacks the first 24 h; constant darkness.
