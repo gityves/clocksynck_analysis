@@ -112,9 +112,11 @@ untimed samples (relative amplitude |z| and offset arg z against the host). For 
     state (r 0.77, descriptive). Daily cortisol history and an agonal surge are not separated (revised 2026-11-23).
   - Across the 27 peripheral tissues 2 psi spans 4.6-fold, against 85-fold for S (A104 table, derived).
   - It is not phase-dominated (A311) and hardly shared between organs (A302, A313).
-  - Coupling c = S / (S + 2 psi) therefore ranks compartments mostly by loudness (A291). A quiet organ's time departs
-    further from the body's in hours (implied 3.0 h against 1.1 h from A294b, matching A259), because the same clock-specific departure
-    turns a quieter clock more; organs are not shown to differ in coupling strength (revised 2026-11-24).
+  - Coupling c = S / (S + 2 psi) therefore ranks compartments mostly by loudness (A291). Gain is the transfer of the
+    body's time to an organ; the departure is added at the organ, after the transfer (slope 0.07, not 1), so coupling
+    rises with gain and louder organs stay closer to the body's time in hours (implied 3.0 h against 1.1 h from
+    A294b, matching A259): gain and coupling are one organ property seen two ways. What sets the gain is open (not
+    composition, A323; not post-mortem attenuation, A356) (revised 2026-11-24).
 - **The plane is the slow clock layer.**
   - The fast signal layer (glucocorticoid, feeding and immediate-early states) is read by every cell, lymphocytes and
     fetal cells included (A275, A279, A243-A269).

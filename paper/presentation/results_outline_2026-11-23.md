@@ -480,10 +480,11 @@ panel B display post hoc.
 3. The departure is as much amplitude as phase (fraction along phase 0.49; matched genes 0.38; A311): not a phase
    jitter. It is clock-specific (2.6 times matched genes, A294b) and a coherent shift of the whole clock state (A329
    erratum).
-4. Coupling, the share of an organ's person-to-person clock variation that follows the body's clock state, therefore
-   ranks organs by loudness: every organ departs from the body's time by a similar-sized, clock-specific amount, which
-   turns a loud clock less. Louder organs stay closer to the body's time in hours (1.1 h against 3.0 h); they are not
-   shown to be held by a stronger coupling.
+4. Coupling, the share of an organ's person-to-person clock variation that follows the body's clock state, rises with
+   the organ's gain, the transfer of the body's time to the organ. The organ's own departure is added after that
+   transfer and is about the same size in every organ, so louder organs are more strongly driven by the body's time and
+   stay closer to it in hours (1.1 h against 3.0 h): gain and coupling rank organs alike. What sets an organ's gain is
+   open: not its cell composition (A323), not post-mortem attenuation (A356).
 
 **Figure:** `figures/organs_departure/organs_departure.png` (`scripts/organs_departure.py`, from
 `scripts/organs_departure_compute.py`; wide). A. schematic to scale with real values: sun-exposed skin (quiet) and
@@ -509,6 +510,12 @@ phase-dominated, the outcome shown); A329 erratum post hoc; panel A and the impl
   departure is more tangential, but not significantly (90th percentile of matched sets).
 - Specificity (former panel): own departure of the clock genes 2.6 times that of expression-matched genes (90 % 2.4 to
   2.9, all 27 tissues; A294b, registered).
+- Why gain is a transfer (post hoc reading): a departure that arose before the gain (e.g. the body's signal reaching
+  each organ differently in each person) would be amplified with it (D proportional to S, slope 1, equal coupling in
+  every organ). Slope 0.07 places the departure after the transfer. With A311 (departure not phase-dominated: a clock
+  driven below its self-sustained regime), G is the transfer of the body's clock state to the organ. "Added after the
+  transfer" covers both a real fluctuation of the organ's own and variation in the sample's state at death; GTEx cannot
+  separate them.
 - Slope reading (post hoc): 0.22 for the excess over matched genes (A294b H294b.2). A kicked limit cycle would also
   give a departure of fixed size, but mostly along the phase (A311 fails that), so the departure is variation added to
   the state: person-specific cue state (the A357 glucocorticoid part is small), sample-level variation or the state at
