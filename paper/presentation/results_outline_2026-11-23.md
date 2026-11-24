@@ -512,10 +512,11 @@ phase-dominated, the outcome shown); A329 erratum post hoc; panel A and the impl
   2.9, all 27 tissues; A294b, registered).
 - Why gain is a transfer (post hoc reading): a departure that arose before the gain (e.g. the body's signal reaching
   each organ differently in each person) would be amplified with it (D proportional to S, slope 1, equal coupling in
-  every organ). Slope 0.07 places the departure after the transfer. With A311 (departure not phase-dominated: a clock
-  driven below its self-sustained regime), G is the transfer of the body's clock state to the organ. "Added after the
-  transfer" covers both a real fluctuation of the organ's own and variation in the sample's state at death; GTEx cannot
-  separate them.
+  every organ). Slope 0.07 places the departure after the transfer, whatever the clocks' dynamical regime. "Added after
+  the transfer" covers both a real fluctuation of the organ's own and variation in the sample's state at death; GTEx
+  cannot separate them. Do not read A311 as "tissues are driven below their self-sustained regime": A311's own reading
+  is that the departure is variation added to the state, not a dynamical perturbation of the cycle (a share near 0 would
+  contradict the self-sustained liver, A297; matched genes read radial, so the absolute share is biased).
 - Slope reading (post hoc): 0.22 for the excess over matched genes (A294b H294b.2). A kicked limit cycle would also
   give a departure of fixed size, but mostly along the phase (A311 fails that), so the departure is variation added to
   the state: person-specific cue state (the A357 glucocorticoid part is small), sample-level variation or the state at
