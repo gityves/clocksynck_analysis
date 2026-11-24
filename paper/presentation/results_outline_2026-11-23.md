@@ -468,7 +468,7 @@ without the host) against coupling, 35 peripheral tissues and 22 brain regions; 
 and A271 Part B). A291 registered (H291.1 pass). A289 H289.3 registered (fail: brain on the line, the outcome shown);
 panel B display post hoc.
 
-## 3.4b Why: each organ's departure from the body's clock state has a fixed size, not a fixed angle, so a louder organ's time carries a smaller phase error
+## 3.4b Why: each organ's departure from the body's clock state has a fixed size, not a fixed angle, so a louder organ stays closer to the body's time
 
 **Bullets**
 1. A tissue's own departure from the body's clock state (D) barely grows with its shared variation S (slope of log D on
@@ -480,8 +480,10 @@ panel B display post hoc.
 3. The departure is as much amplitude as phase (fraction along phase 0.49; matched genes 0.38; A311): not a phase
    jitter. It is clock-specific (2.6 times matched genes, A294b) and a coherent shift of the whole clock state (A329
    erratum).
-4. Coupling = S / (S + D) therefore ranks organs by loudness: it measures how precisely an organ's time can be read,
-   not how tightly it is held.
+4. Coupling, the share of an organ's person-to-person clock variation that follows the body's clock state, therefore
+   ranks organs by loudness: every organ departs from the body's time by a similar-sized, clock-specific amount, which
+   turns a loud clock less. Louder organs stay closer to the body's time in hours (1.1 h against 3.0 h); they are not
+   shown to be held by a stronger coupling.
 
 **Figure:** `figures/organs_departure/organs_departure.png` (`scripts/organs_departure.py`, from
 `scripts/organs_departure_compute.py`; wide). A. schematic to scale with real values: sun-exposed skin (quiet) and

@@ -112,8 +112,9 @@ untimed samples (relative amplitude |z| and offset arg z against the host). For 
     state (r 0.77, descriptive). Daily cortisol history and an agonal surge are not separated (revised 2026-11-23).
   - Across the 27 peripheral tissues 2 psi spans 4.6-fold, against 85-fold for S (A104 table, derived).
   - It is not phase-dominated (A311) and hardly shared between organs (A302, A313).
-  - Coupling c = S / (S + 2 psi) therefore ranks compartments mostly by loudness (A291). A quiet organ's time is read
-    less precisely; it is not kept less well.
+  - Coupling c = S / (S + 2 psi) therefore ranks compartments mostly by loudness (A291). A quiet organ's time departs
+    further from the body's in hours (3.0 h against 1.1 h, A259 / A294b), because the same clock-specific departure
+    turns a quieter clock more; organs are not shown to differ in coupling strength (revised 2026-11-24).
 - **The plane is the slow clock layer.**
   - The fast signal layer (glucocorticoid, feeding and immediate-early states) is read by every cell, lymphocytes and
     fetal cells included (A275, A279, A243-A269).
