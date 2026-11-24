@@ -73,13 +73,14 @@ class Tissue:
 def load(c, tissues):
     h = P.ML.COH[c]
     pb, don = gtex.load(tissues=tissues, hardy=h, genes="all", depth="library_size", require_tod=(c == "fast"))
-    genes = [g for g in pb.columns if g not in META]
+    cols = pd.Index([g for g in pb.columns if g not in META])
+    genes = list(cols[~cols.duplicated(keep=False)])     # symbols that occur once only (no ambiguous duplicates)
     out = {}
     for t in tissues:
         r = pb[pb.compartment == t]
         if len(r) == 0:
             continue
-        out[t] = Tissue(r[genes].to_numpy(np.float32), genes, list(r.donor.astype(str)), r.depth.to_numpy(float))
+        out[t] = Tissue(r.loc[:, genes].to_numpy(np.float32), genes, list(r.donor.astype(str)), r.depth.to_numpy(float))
     cpm_mean = pd.Series(np.concatenate([v.x for v in out.values()]).mean(0), index=genes)
     del pb
     return out, don, cpm_mean
