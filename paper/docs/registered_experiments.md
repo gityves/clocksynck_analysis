@@ -11230,3 +11230,31 @@ with power: absent at GTEx size in living liver, muscle and fat, as in MuTHER; t
 smaller a volume is excluded.
 **Limits.** 66 patients, all with coronary artery disease, mostly men; one operation (time not recorded); ring model
 for the null; RMA on arrays (one batch per tissue unknown).
+## A370 (2026-11-24, on the user's instruction "register A370 and run its power stage", after the GEO scout; staged: power (gates, pairing, clock fractions, geometry, timing-only and volume simulations, companions; no clock Q), then one scoring run if powered; **NOT BLIND**: A366-A369 (MuTHER: no clock excess at matched phase beyond matched genes; STAGE not decidable), the A336 size note, the prep checks of AAGMEx (markers, sex identity; no clock value); **BLIND**: every clock value in AAGMEx (none computed; grep 2026-11-24)): do living adults share a clock amplitude between subcutaneous fat and skeletal muscle at matched phase? **AAGMEx (GSE95674 / GSE95675), 251 persons with both tissues**
+
+**Why.** The largest public living cohort found with two clock-bearing organs per person and a person key (GEO scout
+2026-11-24). Both biopsies come from one visit (time of day not in GEO; insulin-sensitivity protocols usually biopsy
+in the morning after an overnight fast), so the biopsy-time arc is assumed and A368's matched-phase statistic is used.
+**Data.** `A370_aagmex_volume/output/prep/` (prep_aagmex.py): HT-12 v4 quantile-normalised values, log2 x ln 2; GTEx
+waveform on the 13 clock genes present (CIART absent), unweighted projector per tissue, states centred within tissue
+(A255 `Cohort`).
+**Statistics (`exploratory/A370_aagmex_volume/scripts/a370_aagmex.py`).**
+- Gate per tissue (A255 `reference_gate`, 200 permutations); a failed gate (p >= 0.05) ends the test (not decidable).
+  Pairing r (A255 `r_pair`).
+- Q = A368 `Q` on the persons with both tissues.
+- Clock fractions (A331 rule): f_fat f_muscle = r^2, f_fat / f_muscle = gate share ratio (each capped at 0.99).
+- Timing-only null and power: A368 `sim` with these fractions, 251 persons, 500 draws each; phase SD fitted to the
+  combined elongation (A366 rule). Nulls at 0.75, 1, 1.25 x the fitted SD (normal), uniform phases at 1 x, and equal
+  fractions (both r) at 1 x. Alternatives: log SD 0.352 and 0.176. Seed [370, 1].
+- Companions: 200 expression-matched and 200 responsive sets (A255 `Cohort.pseudo`, tags 3 / 4), same Q.
+- Reported: Q on the core loop (13 genes minus PER1, PER2, NR1D1) with its percentile among all three-gene drops
+  (descriptive, CLAUDE.md gene-drop rule); the raw A331 leverage beside Q.
+**H370.1.** Q above max(matched q95, the largest q95 of the five timing-only nulls) and persons-permuted p < 0.05
+(2,000, seed [370, 2]).
+**Power.** Share of GTEx-size simulations above the threshold; scored if >= 0.8, otherwise not decidable. The size
+note applies: "GTEx size" is the size of a person scale that random genes in deaths share as much (A336 size note).
+**Readings.** PASS: living adults share a clock amplitude between fat and muscle at matched phase beyond biopsy time
+and random genes: a clock-specific person volume in life. FAIL with power: no clock excess of that size between living
+fat and muscle (as in MuTHER); the half-size power says how much smaller an excess is excluded.
+**Limits.** Biopsy time unknown (the arc's width is fitted); African American non-diabetic adults; one visit; ring
+model for the null; two tissues only.
