@@ -8304,3 +8304,44 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
 - Reading for scoring: only a strong cytokine-like distortion (the suppressed genes following the volume about 1.5 times
   as steeply) is reliably detectable; "uniform scaling" excludes that size, not a weaker one.
 <!-- src: paper/exploratory/A361_A363_volume_mechanism/output/{a363_power_recal,a363_sims_recal,a363_noise_summary}.csv -->
+
+## A361 (scored 2026-11-24; BLIND for every core-loop relation and companion coefficient; one run, 45 s): the person's clock volume falls with the glucocorticoid-target state in the core loop too, beyond every expression-matched and responsive set (H361.1 PASS)
+
+- A360 reproduced exactly first (14 genes, 237 persons).
+- **H361.1 PASS (core loop).** Systemic block partial R^2 0.057, permutation p 0.0014. GC coefficient -0.184 (90 %
+  -0.297 to -0.063), below all 200 matched sets (q05 -0.041) and all 200 responsive sets (q05 -0.035); IEG +0.124.
+- 14 genes -0.235; 14 minus core -0.052 (90 % -0.116 to +0.016): PER1, PER2 and NR1D1 add a little, not significantly.
+- **Reading (registered).** The A360 link does not come from the glucocorticoid-target clock genes, and a generic donor
+  scale does not show it (the companions' coefficients are centred on about +0.08). In deaths, acute (agonal) and
+  chronic glucocorticoid states are still not separated.
+- Code: `exploratory/A361_A363_volume_mechanism/scripts/a361_a363_systemic.py --stage score`.
+<!-- src: paper/exploratory/A361_A363_volume_mechanism/output/{systemic_tests,systemic_companions}.csv -->
+
+## A362 (scored 2026-11-24; BLIND for the core-loop tissue elasticities, NOT BLIND and post hoc in origin for the 14 genes; one scoring run, 121 s, after a first run failed in its summary step (the label "null" parsed as missing; nothing written or read); powered, 1.00): organs that lose most amplitude under conflicting drives in mouse do not follow the person's volume more steeply (H362.1 FAIL)
+
+- A312 reproduced exactly first (14 genes, mapped tissues).
+- **H362.1 FAIL (core).** Slope of the bias-corrected organ elasticity on the mouse sensitivity k_o: c -0.088 (simulated
+  null q95 0.266; p 0.73); intercept 1.19; conflict share -0.06; Spearman -0.3. Corrected organ elasticities: liver
+  1.08, adipose 1.19, lung 0.65, heart 0.95, kidney 1.75 (k 0.55, 1.54, 0.70, 0.53, 0.43). Muscle (raw) 1.32.
+- 14 genes (reported, not blind): c 0.139 (p 0.29), conflict share 0.11; Spearman -0.4.
+- **Reading (registered).** At this power (a pure conflict pattern gives c about 1.7, half of it 0.86) the organ pattern
+  of cue conflict is not seen: the person volume is a factor common to the organs. Kidney (41 donors) follows it most
+  and lung least, an order the mouse conflict data do not predict.
+- Code: `exploratory/A361_A363_volume_mechanism/scripts/a362_organ_conflict.py --stage score`.
+<!-- src: paper/exploratory/A361_A363_volume_mechanism/output/{a362_tests,a362_sims,a362_power}.csv -->
+
+## A363 (scored 2026-11-24; BLIND for every inflammatory relation and gene-class elasticity; one run, 56 s; part 1 at power 0.76 (user, addendum), part 2 against the recalibrated null): no inflammatory correlate of the core-loop volume (H363.1 FAIL) and uniform scaling of the clock genes (H363.2): a low volume is not a cytokine-like damping at the detectable size
+
+- **H363.1 FAIL (core).** Inflammatory state partial R^2 0.0046, p 0.30; coefficient -0.074 (90 % -0.243 to +0.083),
+  3rd percentile of matched sets. GC coefficient in this model -0.160.
+- 14 genes (reported): partial R^2 0.020, p 0.034, coefficient -0.156 (-0.282 to -0.045), below every matched set: an
+  inflammatory correlate appears only when PER1, PER2 and NR1D1 are in the volume.
+- **H363.2: uniform scaling (core).** T = e_supp - e_comp = -0.006 (recalibrated null -0.087 to 0.092); e_supp 0.659
+  (PER3, DBP, TEF), e_comp 0.665 (ARNTL, NPAS2, CLOCK). 14 genes (reported) T 0.084. Per-gene elasticities
+  (descriptive, core): 0.59-0.81 for nine genes, CRY2 1.16, RORA 1.60.
+- **Reading (registered).** A cytokine-like damping that makes the suppressed genes follow the volume 1.5 times as
+  steeply is excluded (power 1.00); a weaker distortion is not (0.65 at 1.25 times). The volume scales the core clock
+  genes alike, as dephasing, composition or a uniform damping would. The 14-gene inflammatory correlate is carried by
+  the trio, which TNF-alpha and glucocorticoids both act on directly.
+- Code: `exploratory/A361_A363_volume_mechanism/scripts/a361_a363_systemic.py`, `a363_gene_classes.py --stage score`.
+<!-- src: paper/exploratory/A361_A363_volume_mechanism/output/{systemic_tests,a363_tests,a363_power_recal}.csv -->

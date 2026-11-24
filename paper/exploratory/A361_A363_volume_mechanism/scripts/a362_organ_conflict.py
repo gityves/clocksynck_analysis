@@ -113,7 +113,7 @@ def main():
     import compute_oscillator_gtex as A104
     from common import gtex
     pw = pd.read_csv(V.OUT / "a362_power.csv", index_col=0)["value"]
-    sims = pd.read_csv(V.OUT / "a362_sims.csv")
+    sims = pd.read_csv(V.OUT / "a362_sims.csv", keep_default_na=False)  # "null" is a label, not NaN
     null = sims[sims.kind == "null"]
     bias = null[TARGETS].mean()
     pb, _ = gtex.load(min_donors=A104.MIN_DONORS)
