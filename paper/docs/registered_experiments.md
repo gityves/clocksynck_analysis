@@ -11172,3 +11172,29 @@ them. Counts (aggregate, at drafting): the A360 donor set has 34 Hardy 1 and 203
 **Limits.** Hardy 1 is small and differs from Hardy 2 in age, sex and causes (trauma, suicide; possible intoxication);
 Hardy classes are assigned from records; ischaemic time and RIN distributions may differ (reported per class). Aggregates
 only (groups >= 5): no per-donor Hardy, time of death or phenotype is printed or committed.
+## A368 (2026-11-24, on the user's instruction "register A368 and run its power stage", after the A366 FAIL and the A366 note; staged: power (timing-only and volume simulations at the observed geometry, companions; no clock value of the new statistic), then one scoring run if powered; **NOT BLIND**: A366 (FAIL; timing-referenced leverage 0.165; elongation 3.39; phase SD 1.9 h; radius-phase Spearman 0.21 / 0.19), A331, A255; the synthetic design check of 2026-11-24 (scratchpad, no MuTHER value: timing-only median 0.10, q95 0.17; half-GTEx 0.29; GTEx 0.45 at 1.9 h; at 3.8 h the null rises to 0.36); **BLIND**: the short-axis statistic on MuTHER clock genes and on companions (none computed; grep 2026-11-24)): at matched phase, do living women with high fat clock amplitude also have high skin clock amplitude? **MuTHER, 680 women with fat and skin (A255 states)**
+
+**Why.** On a daytime arc, position along the arc mostly reads phase and the perpendicular (radial) direction mostly
+reads amplitude: a louder woman sits further from the ring's centre. A366 matched on angles taken from the cohort mean,
+which mix phase and amplitude; this test compares women at matched arc position (the user's "at matched phase, low vs
+high amplitude"). Measurement noise is independent between fat and skin, so it does not enter the cross-tissue
+correlation. Second look at MuTHER after the A366 FAIL: whatever the outcome, A366 stays reported.
+**Statistic (`exploratory/A368_muther_radial/scripts/a368_muther_radial.py`).**
+- Common frame: skin rotated onto fat (A331 combination: angle of sum z_fat conj(z_skin)); the major axis of the
+  combined cloud (A366 `combined`, `axes`) defines x (along the arc) and y (perpendicular) for both tissues; y oriented
+  so that the combined cloud's y has a negative coefficient on x^2 (y points away from the ring centre).
+- Q = Pearson correlation of y_fat and y_skin after each is regressed on [1, x_fat, x_skin, x_fat^2, x_skin^2,
+  x_fat x_skin] (signed; a wrong orientation lowers Q, it cannot raise it).
+- Timing-only null (A366 `sim_pair`, no person amplitude, A331 noise fractions, 680 persons, 500 draws each): phases
+  N(0, s) for s = 0.75, 1, 1.25 x A366's fitted spread, and uniform phases with the same SD at 1 x (spread and shape
+  of the phase distribution are not known exactly). Alternatives at 1 x: log SD 0.352 (GTEx) and 0.176. Seed [368, 1].
+- Companions: A331's 200 matched and 200 responsive sets (tags 3 / 4), same statistic.
+**H368.1.** Q above max(matched q95, the largest q95 of the four timing-only nulls) and persons-permuted p < 0.05
+(2,000, seed [368, 2]).
+**Power.** Share of GTEx-size simulations above that threshold; scored if >= 0.8, otherwise not decidable.
+**Readings.** PASS: living fat and skin share a clock amplitude at matched phase, beyond the shared biopsy time and
+random genes: the person volume is shown in living people (A331 restored as supporting evidence, with this statistic).
+FAIL with power: no shared amplitude at matched phase at GTEx size; the half-size power says how small a volume is
+excluded. Responsive-gene percentile reported (a glucocorticoid-compatible state is not excluded by companions alone).
+**Limits.** Ring model (sinusoidal clock, isotropic noise) for the null; the quadratic absorbs curvature only on a
+narrow arc (the 1.25 x null guards it); one biopsy, one array batch per woman. Aggregates only.
