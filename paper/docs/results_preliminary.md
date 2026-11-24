@@ -8540,3 +8540,20 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   test; Hardy 1 also differs in age, sex and cause of death.
 - Code: `exploratory/A367_hardy_agonal/scripts/a367_hardy.py --stage score`.
 <!-- src: paper/exploratory/A367_hardy_agonal/output/{tests,gc,power,companions}.csv -->
+
+## A371 power note (2026-11-24; no living pair phase computed; 43 s): not decidable (power 0.13 and 0.32): in GTEx the four STAGE organs share one phase (spread 0.16 h), so neither the label test nor the companions can separate an arrangement
+
+- GTEx fast-death pair phases (h; donors): liver-muscle -0.16 (111), liver-visceral fat -0.19 (86), liver-aorta 0.20
+  (64), muscle-visceral fat -0.18 (144), muscle-aorta 0.47 (98), visceral fat-aorta 0.46 (71); subcutaneous fat-muscle
+  -0.96 (178, AAGMEx genes). Spread of the four organs' phases 0.16 h.
+- STAGE: 40 patients with all four tissues (aortic wall), 66 for the liver / muscle / fat pairs; aortic-wall clock
+  fraction 0.65 (from pairing moduli).
+- Companions: random gene sets also give pair phases close to GTEx's (A: matched q95 0.892 STAGE, 0.999 AAGMEx;
+  responsive 0.914 / 0.997): a shared within-person structure at phase about 0 that any gene set carries.
+- Simulated living cohorts with the GTEx phases: A median 0.981, but the true labelling ranks first in 13 % of draws
+  (the organs are interchangeable at a common phase): power H371.1 0.134; H371.2 0.32. Not scored.
+- Reading: for liver, muscle, fat and aorta the post-mortem "arrangement" is a common phase within half an hour; its
+  living counterpart cannot be told from a non-clock structure shared by all genes. A test needs organs whose GTEx
+  phases differ by hours.
+- Code: `exploratory/A371_living_order/scripts/a371_living_order.py --stage power`.
+<!-- src: paper/exploratory/A371_living_order/output/{gtex_pairs,power,sim,companions}.csv -->
