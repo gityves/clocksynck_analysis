@@ -10930,3 +10930,91 @@ explained by these covariates.
 **Limits.** Deaths (acute and agonal state); no companion gene set is possible for the person radius (A312); the GC
 state is a score of a few genes. Aggregates only: regression coefficients, partial R^2, no per-donor value written.
 **Code:** `exploratory/A358_A360_gain_sources/scripts/a360.py`.
+
+## A361 (2026-11-24, on the user's instruction "register 1, 2 and 3 and run the power stages", experiment 1 of the assessment of `prompts/person_volume_desynchrony_2026-11-24.md` (that prompt's T1 and T2 are not registered; the numbers A361-A362 it proposed are reused here); staged: power (companions and analytic power, no core clock value), then one scoring run if powered; **NOT BLIND**: A360 (14 genes: GC coefficient -0.235, 90 % -0.352 to -0.109, partial R^2 0.061), A336 part 2 (person leverage on the core loop 0.714), A357 (the GC-like person factor of PER1, PER2, NR1D1); **BLIND**: every relation of the core-loop person volume with a covariate, every companion coefficient (none computed; grep 2026-11-24)): does the person's clock volume fall with the glucocorticoid-target state in the core loop, beyond a generic donor scale? **GTEx v10 fast deaths, A360 rows and covariates**
+
+**Why.** PER1, PER2 and NR1D1 are direct glucocorticoid-receptor targets: an acute glucocorticoid push can change the
+14-gene host radius without any change in clock amplitude (A360's own caveat). The volume-systemic link is used by the
+person-volume chain only if it holds without them, and only if a generic donor scale (A336: matched-set person
+leverage median 0.119, q95 0.621) does not show it.
+**Statistic.** A360 exactly (`a360.py` model and covariates; 237 persons), with the person volume read on the core loop
+(`cs.gtex().drop(PER1, PER2, NR1D1)`). A360 is reproduced first on the 14 genes (stop if not). Companions: 200
+expression-matched and 200 responsive pseudo-clock waveforms (`pseudo_waveforms`, seeds [361, 1] / [361, 2], lm of the
+A360 rows), each read on its core positions (A336 rule), same persons and covariates: their GC coefficient is the
+coefficient a generic donor scale has.
+**H361.1.** Core: systemic-block partial R^2 permutation p < 0.05 (10,000, seed 361) AND GC coefficient < 0 AND below
+the matched sets' 5th percentile. Reported: coefficients with donor-bootstrap 90 % intervals, percentiles among matched
+and responsive sets, 14-gene minus core GC coefficient on shared bootstraps (2,000, seed [361, 3]).
+**Power (analytic, stage `power`).** SE of the core GC coefficient taken as A360's (bootstrap 90 % width / 3.29);
+threshold = min(matched q05, -1.96 SE); power at the A360 size (-0.235) and at half of it. Scored if power >= 0.8 at the
+A360 size.
+**Readings.** PASS: the volume falls with the systemic glucocorticoid state in the core clock, beyond a generic donor
+scale (the systemic link stands). Systemic p < 0.05 but within matched sets: a donor-level state that every gene set
+carries, not shown to be clock. FAIL with the 14-gene effect outside the core interval: the A360 link was carried by the
+glucocorticoid-target clock genes.
+**Limits.** Deaths: acute and agonal state; the companions' volumes are host radii of pseudo-clock genes (no clock);
+the SE of the power stage is borrowed from the 14 genes. Aggregates only.
+**Code.** `exploratory/A361_A363_volume_mechanism/scripts/a361_a363_systemic.py --stage power | score` (shared with
+A363 part 1); `vm_common.py`.
+
+## A362 (2026-11-24, same instruction, experiment 2; staged: simulation power (null and alternatives), then one scoring run if powered; **NOT BLIND, and post hoc in origin**: the A312 14-gene elasticities of the mapped tissues were read side by side with the mouse amplitude kept under conflict in this session (assessment of 2026-11-24: adipose 1.27 / 1.22, lung 0.92, liver 0.89, heart 1.04 / 1.07, kidney 1.39; on the 14 genes kidney ranks highest, so the 14-gene organ Spearman is negative by inspection), and the hypothesis was proposed after that reading; the mouse inputs (A322, A324, A358 table) and A312 calibration note are known; **BLIND**: every core-loop per-tissue elasticity (A336 wrote only the core rho, not the tissue values; grep 2026-11-24) and every simulated slope): do organs that lose most amplitude under conflicting drives in mouse follow the person's volume more steeply? **GTEx v10 fast deaths, A312 rows (27 peripheral tissues)**
+
+**Why.** If persons differ in how much their daily cues conflict, the organ amplitude loss per unit conflict follows the
+organ's drive balance: organs that lose most amplitude under feeding inversion in mouse (adipose) should follow the
+person volume more steeply than organs dominated by one drive (lung, heart, liver, kidney). A systemic damping of cell
+clocks, composition or a technical scale predict no such ordering.
+**Inputs (fixed).** Mouse sensitivity k_o = -log(amplitude kept), A358 organ table: liver 0.554, adipose 1.538, lung
+0.703, heart 0.529, kidney 0.434. Mapping as A358: adipose = Adipose - Subcutaneous and - Visceral (Omentum); heart =
+Atrial Appendage and Left Ventricle; liver, lung, Kidney - Cortex. Muscle - Skeletal reported only (Manella 2021:
+rhythm lost under daytime feeding, no ratio).
+**Statistic.** Per tissue, A312's elasticity (`clocksync.elasticity.amplitude_elasticity`, 20 halvings, seed [312,
+tissue index]) on the core loop (primary) and on the 14 genes (reported; A312 values reproduced first, stop if not),
+minus its mean under the calibration null + 1; organ value = mean of its tissues; c = least-squares slope of the organ
+values on k_o; conflict share = c k_mean / (a + c k_mean) (a the intercept; 1 = pure conflict, 0 = common factor).
+**Null and power (stage `power`, simulation only).** `vm_common.simulate` (A312 calib_level design, core waveform, 244
+persons, per-tissue presence from A312 n, person volume SD 0.352): 40 null cohorts (every tissue in proportion), 20 with
+a pure conflict pattern (e_t = k_o / k_mean for mapped tissues, 1 elsewhere) and 20 with half of it (e_t = 0.5 + 0.5 k_o
+/ k_mean), seed [362, kind, draw]. Power = share of alternative slopes above the null q95. Scored if power >= 0.8 for the
+pure pattern; power at half reported.
+**H362.1.** c above the simulated null q95 (core loop).
+**Readings.** PASS: part of the person volume follows the organ pattern of cue conflict (with its conflict share).
+FAIL: the volume is a factor common to the organs at this power; cue conflict is not seen as its source.
+**Limits.** Five organs; mouse sensitivity from one 12 h inversion protocol per dataset; elasticities are relative to
+the host composite; the simulation ignores conflict-driven phase moves. Aggregates only.
+**Code.** `exploratory/A361_A363_volume_mechanism/scripts/a362_organ_conflict.py --stage power | score`.
+
+## A363 (2026-11-24, same instruction, experiment 3; staged: power (part 1 analytic with companions, part 2 by simulation), then one scoring run per powered part; **NOT BLIND**: A360 (IEG state +0.047), A359 (GC and IEG states), A261 (the Hallmark TNF-alpha via NF-kB program passes a rhythm gate in night-shift blood); **BLIND**: every relation of an inflammatory state with the person volume, every gene-class elasticity (none computed; grep 2026-11-24: TNF signatures were used only for skin delays, A352)): is a low person volume a cytokine-like damping of cell clocks? **GTEx v10 fast deaths, A360 rows**
+
+**Why.** TNF-alpha and IL-1beta suppress PER1-3, DBP, TEF and HLF by interfering with CLOCK-BMAL1 E-box activation,
+reversibly, while CLOCK and Rev-Erbalpha are unaffected (Cavadini et al., PNAS 2007, 104:12843). A body-wide cytokine
+state would lower the volume and distort its gene pattern; dephasing, composition and uniform damping scale every clock
+gene alike.
+**Part 1, inflammatory state.** Score genes: Hallmark TNFA_SIGNALING_VIA_NFKB (MSigDB 2024.1.Hs, `$SCCC_DATA/
+msigdb_hallmark/`) minus `IMMEDIATE_EARLY`, `GC_TARGETS` and clock genes; person state = mean over the person's tissues
+of the within-tissue standardised score (A359 rule). Model: A360's registered model plus the inflammatory state; volume
+on the core loop (primary) and 14 genes (reported). Companions as A361 (same 400 waveforms).
+- **H363.1.** Partial R^2 of the inflammatory state given A360's model, permutation p < 0.05 (10,000, seed 363), its
+  coefficient < 0 and below the matched sets' 5th percentile.
+- **Power (analytic).** SE from the covariate design (residual variance 1 - 0.081, the A360 full R^2; collinearity of the
+  state with the A360 covariates, no clock value); power at partial R^2 0.03 (half of A360's systemic block) and 0.015,
+  against min(matched q05, -1.96 SE). Scored if power >= 0.8 at 0.03.
+**Part 2, gene pattern.** Classes fixed from Cavadini 2007: suppressed = PER3, DBP, TEF; comparison = ARNTL, NPAS2, CLOCK
+(core loop, primary: excludes the glucocorticoid targets PER1, PER2, NR1D1); 14 genes reported (suppressed + PER1, PER2;
+comparison + NR1D1). Estimator (`a363_gene_classes.py`): per halving of the 25 tissues (20, seed [363, 1]) and role, the
+instrument is the log host radius of one half (residualised on two harmonics of its phase), each tissue of the other half
+gets its complex gain on that host's direction, giving each gene's predicted clock deviation P; per class, pooled least
+squares of the gene's centred log expression on P and P x instrument gives the class elasticity e = b2 / b1; T = mean
+over halvings and roles of e_supp - e_comp.
+- **H363.2.** T above the null q95 (cytokine-like); below the null q05 reported as the opposite pattern; inside: uniform
+  scaling.
+- **Null and power (simulation).** `vm_common.simulate` (core waveform, 25 tissues): 40 null cohorts (uniform scaling),
+  20 with the suppressed genes' clock term scaled by a_p^0.5 extra and 20 with a_p^0.25 (seed [363, kind, draw]).
+  Scored if power >= 0.8 at 0.5.
+**Readings.** H363.1 PASS and H363.2 cytokine-like: a low volume is, at least in part, a cytokine-like damping of cell
+clocks (a systemic state, not desynchrony). H363.2 uniform with power: the volume scales every clock gene alike; cytokine
+damping is not its main source (dephasing, composition and uniform damping stay open). H363.1 PASS with uniform scaling:
+an inflammatory correlate without the cytokine gene pattern (reported as such).
+**Limits.** TNF/NF-kB genes also respond to ischaemia and agonal stress in deaths; three genes per class; Cavadini's
+pattern is from fibroblasts and mouse liver. Aggregates only.
+**Code.** `exploratory/A361_A363_volume_mechanism/scripts/a361_a363_systemic.py` (part 1), `a363_gene_classes.py`
+(part 2).
