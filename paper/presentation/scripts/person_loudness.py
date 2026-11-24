@@ -2,9 +2,10 @@
 follows it most reliably (revised 2026-11-24 after A361-A371; living panel removed, A331 withdrawn by A366).
 
 A. How reliably loudness is shared across a person's tissues (leverage: correlation of the clock-plane radii of two
-   halves of a person's tissues after the phase harmonics are removed), core loop: all GTEx fast deaths (A336 part 2,
-   244 donors, 27 tissues; registered) and violent, instantaneous deaths (Hardy 1, A367, 34 donors; registered, scored
-   at power 0.775 by the user's decision). Blue: clock genes; dots: 200 expression-matched (light grey) and 200
+   halves of a person's tissues after the phase harmonics are removed), core loop: GTEx fast deaths (Hardy 1-2; A336
+   part 2, 244 donors, 27 tissues; registered) and, nested in them, the violent deaths with a terminal phase under 10 min
+   (Hardy 1, A367, 34 donors; registered, scored at power 0.775 by the user's decision). The person scale was tested in
+   fast deaths only (not in slow, intermediate or ventilated deaths). Blue: clock genes; dots: 200 expression-matched (light grey) and 200
    stress-responsive (dark grey) gene sets on the same donors.
 B. How large the shared loudness is (cv2: shared squared coefficient of variation of the radii), same sets, all fast
    deaths, core loop (post hoc size note): the clock is not above random genes.
@@ -63,7 +64,7 @@ def shared(ax):
     _dots(ax, 1, hc, "leverage_h1")
     for i, v in enumerate((g.leverage, h.lev_h1)):
         ax.plot([v] * 2, [i - 0.32, i + 0.32], color=CS, lw=3, zorder=3)
-    _rows(ax, ["all fast deaths", "violent deaths"])
+    _rows(ax, ["fast deaths\n(244)", "  of which violent,\n  < 10 min (34)"])
     ax.set_xlim(-0.05, 1)
     ax.set_xlabel("how reliably loudness is shared\nacross a person's tissues [r]")
     hd = [Line2D([], [], color=CS, lw=3, label="clock genes"),
@@ -78,7 +79,7 @@ def size(ax):
     gc = pd.read_csv(EXP / "A336_two_readouts/output/person_gtex_companions.csv").query("gene_set == 'core'")
     _dots(ax, 0, gc, "cv2")
     ax.plot([g.cv2] * 2, [-0.32, 0.32], color=CS, lw=3, zorder=3)
-    _rows(ax, [""])
+    _rows(ax, ["", ""])          # aligned with panel A's rows; cv2 computed for all fast deaths only
     ax.set_yticks([])
     ax.spines["left"].set_visible(False)
     ax.set_xlabel("how large the shared\nloudness is [cv²]")
