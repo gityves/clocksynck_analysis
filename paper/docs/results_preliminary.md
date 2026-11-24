@@ -8247,7 +8247,7 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
 - Simulation at the GTEx design (`exploratory/A312_elasticity/scripts/calib_level.py`): 27 tissues with the A294b S and
   D, 250 persons with a volume of SD 0.352 in log (A331's GTEx spread), every tissue scaling exactly in proportion
   (true elasticity 1), Poisson counts; six target tissues, 10 splits, 3 draws.
-- Estimated elasticity median 1.11 (per tissue and draw 0.97 to 1.36; quiet tissues testis 1.35 and sun-exposed skin
+- Estimated elasticity median 1.11 (tissue means over draws 0.97 to 1.36; quiet tissues testis 1.35 and sun-exposed skin
   1.36, loud tissues 0.97 to 1.17); leverage median 0.75 (observed 0.78).
 - **Reading (post hoc).** The estimator reads about 1.1 for proportional scaling (the yardstick is a host radius; my
   reading of the cause is the upward bias of a noisy radius, not shown), so the observed median 1.19 does not mean

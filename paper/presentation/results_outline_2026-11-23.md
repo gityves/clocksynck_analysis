@@ -588,7 +588,7 @@ A360 registered, blind.
   loop. The glucocorticoid link is also part of section 4 (drives).
 - Panel B, elasticity: slope of a tissue's amplitude on the person's volume, relative to the other tissues' composite
   (two halves of the other tissues; one half instruments the other). Its level is not anchored at 1: in a simulation
-  where every organ scales exactly in proportion, the estimator reads median 1.11 (per tissue 0.97 to 1.36; leverage
+  where every organ scales exactly in proportion, the estimator reads median 1.11 (tissue means 0.97 to 1.36; leverage
   0.75, as observed), grey band (post hoc calibration, `exploratory/A312_elasticity/scripts/calib_level.py`). Observed
   median 1.19 (0.83 to 1.77). The registered gradient (H312.1 PASS, rho -0.34; low-gain median 1.19, high-gain 1.07)
   has the size the same simulation produces with no true gradient (quiet tissues 1.35, loud 1.06-1.15, 6 tissues x 3
