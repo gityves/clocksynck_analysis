@@ -42,6 +42,10 @@
   random drops of the same size (A336 rule) or the paired 14-minus-core difference (shared bootstraps) excludes 0; and
   compare with the shrinkage the reliability loss predicts (half-host leverages, Spearman-Brown). Otherwise write
   "not decided: precision or the removed genes". Register the gene-drop null with the test when a core readout is planned.
+- **Pair-phase (organ order) tests** (user, 2026-11-24, after A371): random gene sets also give cross-tissue pair phases
+  near 0 (a same-person structure every gene set carries), so organs that share one phase cannot show an order beyond
+  companions, and a label-permutation test has no power. Before registering, check the reference phase spread of the
+  organs involved (organs hours apart) and the companions' agreement; same for living-vs-reference comparisons.
 - **Covariates in group contrasts** (user, 2026-11-18, after CHIRAL's age/sex result shrank under death-type matching):
   regressing a covariate out of expression, or giving it a stratum intercept (our `strata`), removes only its effect on
   the mean, not on rhythm amplitude, coupling, z2, psi or host spread. When a covariate can change rhythm strength

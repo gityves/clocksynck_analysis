@@ -31,8 +31,9 @@ mechanism additions. The abstract is revised in `ABSTRACT_DRAFT_2026-11-22.md`.
 At the resolution of tissues and cell classes, human tissues keep one time at many volumes. The clock-carrying classes
 of an organ share its time within about an hour; in mouse, that time is set for the whole organ by the drives it
 receives from the brain and from behaviour. How loudly a sample expresses that time is set separately, by the organ and
-the cell class; a person factor is shown in GTEx deaths (A312) but, in living tissue, not on the core loop (A331,
-A335). The tissue clock is slower than the signal layer: it carries the person's time through the acute states of
+the cell class; persons differ in a body-wide expression scale that the clock follows more reliably than random
+genes in GTEx deaths, instantaneous deaths included (A336, A367), not shown as a clock property in living tissue
+(A366, A368; revised 2026-11-24). The tissue clock is slower than the signal layer: it carries the person's time through the acute states of
 surgery and dying that reset the fast signal layer every cell reads, which is why single untimed hospital samples can
 be read. Before birth (revised 2026-11-23), the adrenal already carries a clock-like organisation: its core loop
 covaries between fetuses on its own, replicated blind (A328 part a), and its states turn in two dimensions (A340).
@@ -81,13 +82,15 @@ untimed samples (relative amplitude |z| and offset arg z against the host). For 
   - In mouse it is set by the organ's mix of drives (A297, A319, A322, A324); in human only the order is shown (A293
     Part 1).
 - **Loudness: organ and class factors, approximately separable; the person factor is shown in deaths.**
-  - Person A_p: persons differ strongly, and every tissue follows the person's loudness nearly in proportion (A312,
-    elasticities 0.83 to 1.77). In living women, fat and skin share it at the size the deaths predict (A331: leverage
-    0.177, beyond matched genes, not beyond stress-responsive genes). On the core loop the living leverage falls to
-    0.107, below the matched q95 of 0.130 (A335): at the line, with the trio drop at the 13th percentile of the
-    gene-drop null (A336), so not attributable to PER1, PER2 and NR1D1. In GTEx deaths the person factor holds on the
-    core loop: half-host leverage 0.714 against matched q95 0.621 and responsive q95 0.692 (A336 part 2): a clock
-    property in deaths, not shown in living tissue.
+  - Person A_p (revised 2026-11-24, `docs/PERSON_VOLUME_2026-11-24.md` section 12): persons differ in a body-wide
+    expression scale; in GTEx deaths the clock follows it more reliably than random genes (core half-host leverage
+    0.714 against matched q95 0.621 and responsive q95 0.692; A336 part 2), but its size is what random genes share
+    (cv2 0.120 against a matched median of 0.071; A336 size note). It is present at full size in violent,
+    instantaneous deaths (core 0.726, 34 donors; A367), scales every core clock gene alike (A363) and every tissue
+    nearly in proportion (A312), and does not follow the mouse cue-conflict organ pattern (A362). In living people a
+    clock-specific excess is not shown: the A331 fat-skin leverage is the shared biopsy time (A366), and at matched
+    phase fat and skin share no more than random genes (A368; a GTEx-size clock volume excluded); STAGE and AAGMEx
+    are not decidable (A369, A370).
   - Cell class a_k: conserved relative to endothelium across organs within a factor of about 1.4 (A293 H293.4; on the core loop in four
     of five classes, mural cells not, A350);
     lymphocytes do not share the tissue's clock state (A272-A288); an own clock is not excluded below about 0.7 of the
@@ -137,8 +140,8 @@ untimed samples (relative amplitude |z| and offset arg z against the host). For 
     G_o (and phi_o).
   - Set by the brain: the arrangement, not the amplitude. Order kept without the external day (A293 Part 1), changed
     after brain death (A317 / A318), while amplitude equals that of equally ventilated living-brain donors (A315).
-  - Set by the body's state: intensive care costs amplitude (A315 / A335, falls with ventilation time); each person has
-    a volume that scales every organ (A312); a person-level glucocorticoid-like state is read unequally by organs and
+  - Set by the body's state: intensive care costs amplitude (A315 / A335, falls with ventilation time); persons differ
+    in a body-wide scale that every organ follows, shown in deaths (A312, A336, A367); a person-level glucocorticoid-like state is read unequally by organs and
     explains a small part of the departure (A357).
   - Drives, quantified in mouse: removing a drive keeps amplitude (A297, 0.724); conflicting drives cost it, most where
     an organ's weights are balanced, less than a pure mix (A322, A324); a behavioural shift moves the human muscle clock
@@ -148,8 +151,10 @@ untimed samples (relative amplitude |z| and offset arg z against the host). For 
     adipose the exception; rho -0.6, 5 organs, p 0.175, below the registered -0.7: mention, not a claim); reception of the systemic glucocorticoid state does not track gain (A359
     FAIL; the immediate-early reception slope does, rho 0.44, a lead only); the in-house jet lag remains the
     out-of-sample test of organ drive weights (data needed).
-  - The person volume A_p falls with the person's glucocorticoid-target state (A360 PASS, partial R^2 0.06) and is not
-    a technical scale of RIN or ischaemic time (A360 H360.2 FAIL).
+  - In deaths with a terminal phase the person scale falls with the glucocorticoid-target state (A360 PASS, partial
+    R^2 0.06; core loop -0.184 beyond all 400 companions, A361); not in instantaneous deaths, where the coefficient is
+    +0.22 and the GC-target state lower (A367, descriptive, 34 donors): probably an agonal relation. Not a technical
+    scale of RIN or ischaemic time (A360 H360.2 FAIL).
 
 ### 2.2 One visual grammar for every figure
 
@@ -418,7 +423,7 @@ The frozen claim set: every entry cited in sections 2, 3 and 5 is scored.
 | G1b living pairs | A355 | scored 2026-11-23: living gain ratios do not follow GTEx as a set (H355.1 FAIL); omental / subcutaneous fat 1.38 vs GTEx 1.59, not decidable; cardia / squamous opposite (anatomy mismatch); swap-null power optimistic | Figure 4g: living reproduction not shown |
 | G2 post-mortem attenuation | A356 | scored 2026-11-23: no effect of ischaemic time or RIN on gain within tissues (H356.1-2 FAIL, decidable); at most about 4 % of the organ spread | Figure 4g: "not post-mortem attenuation" |
 | N2b departure as a systemic signal read unequally | A357 | scored 2026-11-23: person-level signal-gene state explains a small, clock-specific part of each tissue's departure (H357.2 PASS, median R^2 0.027 vs 0.008); tracks the GC-target state (r 0.77, descriptive); sharing across tissues not resolvable (H357.1 not powered) | model part 6: departure mostly a coherent clock-state shift of unknown cause; a small GC-like component read unequally |
-| P1 person loudness, living | A331, A335 1c | PASS on 14 genes (leverage 0.177); falls on the core loop (0.107 < matched q95 0.130; A335): carried by PER1, PER2, NR1D1 | Figure 4f: person loudness in living tissue not shown as a clock property; GTEx (A312) only |
+| P1 person loudness, living | A331, A335 1c; A364-A370 | A331 withdrawn: its leverage is the shared biopsy time (A366); at matched phase no clock excess beyond random genes (A368); A364, A365, A369, A370 not decidable | Figure 4f: deaths only (all fast deaths and instantaneous deaths, leverage and size against companions); no living panel |
 | N2 departure on the core loop | A329 (+ erratum 2026-11-23) | the core-loop fall (2.64 -> 1.28 times matched) and coupling fall are the 11-gene projector's noise gain (3.1-fold), not leakage: the departure is a coherent clock-state shift, 2.0 times matched gene-level variation, in 27 of 27 tissues; not the sample's GC / IEG state (H329.3 FAIL) | model part 6: departure carried mainly through signal-inducible clock genes, cause open |
 | N1 output retention | A333 | not decidable at this design: median MDE log Phi 0.726 (only a loss to 0.48 detectable; gate 0.357); archive A91 (pooled, not blind) the only indication | Figures 1 and 7: N1 stays an open question |
 | D1 skin loudness | A332 | descriptive: psoriasis variance up, not beyond companions | 3, Figure 6d: loudness change not clock-specific |

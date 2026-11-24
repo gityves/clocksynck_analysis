@@ -313,7 +313,7 @@ maternal or ACTH signal remains open. No sampling times: these are shared states
 | 3.3 Organs differ in loudness: not their cells, not post-mortem attenuation | **new** (below; composition figure to backup) | `figures/organ_gain/` |
 | 3.4a Louder organs are more coupled (human, baboon) | **revised** from `results.md` R2.1 (below) | `figures/organs_health/` |
 | 3.4b Because each organ's departure has a fixed size, not a fixed angle | **new** (below) | `figures/organs_departure/` |
-| 3.5 Each person has a clock volume that every organ follows | **new** (below) | `figures/person_loudness/` |
+| 3.5 Persons differ in a body-wide expression scale; in deaths the clock follows it most reliably | **revised 2026-11-24** (below) | `figures/person_loudness/` |
 | 3.6 Blood as the exception | to build | |
 | 3.last The organ arrangement holds when the body no longer reads the hour (bridge to section 4) | **revised** from `results.md` R3.1 (below) | `figures/organ_arrangement/` |
 
@@ -551,59 +551,54 @@ phase-dominated, the outcome shown); A329 erratum post hoc; panel A and the impl
 `results/figure_1/output/species/a36_tissues.csv`; `presentation/results.md` R2.1; `docs/results_preliminary.md` A289,
 A259, A291, A294b, A302, A311, A329 erratum.
 
-## 3.5 Each person has a clock volume that every organ follows
+## 3.5 Persons differ in a body-wide expression scale; in deaths the clock follows it most reliably
+
+(Revised 2026-11-24 after A361-A371; wording from `docs/PERSON_VOLUME_2026-11-24.md` section 12.)
 
 **Bullets**
-1. How loudly a person's tissues express the shared clock is a person property: in GTEx deaths the loudness of a
-   person's tissues correlates at r 0.765 (14 genes; core loop 0.714), above expression-matched (q95 0.621) and
-   stress-responsive gene sets (q95 0.725) (A336 part 2, registered).
-2. In living women, fat and skin from one biopsy share it at r 0.177, above matched genes (q95 0.117; 98.5th
-   percentile), at the line with stress-responsive genes (q95 0.179; 93.5th) (A331, registered, H331.1 pass), the size
-   the deaths predict.
-3. Every organ follows the person's volume nearly alike: no organ ignores it, and the profile with gain is flat within
-   what an estimator gives when every organ scales exactly in proportion (A312, registered; level calibrated post hoc):
-   a body-wide volume, not organs at different distances from their threshold.
-4. The volume is lower in persons with a higher glucocorticoid-target state (standardised effect -0.235, 90 % -0.35 to
-   -0.11), not explained by RIN, ischaemic time or time of death (A360, registered, blind; systemic block partial
-   R^2 0.06). Most of the volume stays unexplained.
+1. Persons differ in a body-wide scale of expression, and in GTEx deaths the clock follows it across a person's tissues
+   more reliably than random genes: core-loop leverage 0.714, above 98.5 % of expression-matched gene sets (q95 0.621)
+   and 96 % of stress-responsive ones (q95 0.692) (A336 part 2, registered). Its size is what random genes share too
+   (cv2 0.120; matched median 0.071, responsive 0.262; post hoc size note).
+2. It does not need a slow death: in violent, instantaneous deaths it is as large (core 0.726, 34 donors; 99th
+   percentile of matched sets; A367, registered, gate relaxed by the user).
+3. It is a plain scale: every core clock gene follows it alike (A363) and every organ nearly in proportion (A312); its
+   organ pattern is not the one conflicting cues produce in mouse (A362).
+4. In deaths with a terminal phase it falls with the glucocorticoid-target state (core loop -0.18, 90 % -0.30 to
+   -0.06, beyond all 400 companion sets; A361); in instantaneous deaths it does not (+0.22; A367, descriptive): an
+   agonal relation, most likely.
+5. In living people a clock-specific excess is not shown: at matched phase, fat and skin of living women share no more
+   than random genes and a GTEx-size clock volume is excluded (A368); the earlier living result was the shared biopsy
+   time (A366, A331 withdrawn).
 
-**Figure:** `figures/person_loudness/person_loudness.png` (`scripts/person_loudness.py`; wide). A. loudness shared
-across a person's tissues, GTEx deaths and living women: clock genes (blue) against 200 matched (light grey) and 200
-stress-responsive (dark grey) gene sets. B. each tissue's elasticity to the person's volume with 90 % interval against
-organ gain; dashed: proportional. C. standardised effects on the person's volume (log host radius) with 90 %
-intervals; black: interval excludes 0.
+**Figure:** `figures/person_loudness/person_loudness.png` (`scripts/person_loudness.py`; wide). A. how reliably the
+loudness is shared across a person's tissues (core loop), all fast deaths and violent deaths: clock genes (blue)
+against 200 matched (light grey) and 200 stress-responsive (dark grey) gene sets. B. how large the shared loudness is
+(cv2), same sets, all fast deaths. C. each tissue's elasticity to the person's scale with 90 % interval against organ
+gain. D. standardised effects on the person's scale (log host radius, 14 genes, A360) with 90 % intervals; black:
+interval excludes 0.
 
-**Tags:** A336 part 2 registered (core loop blind); A331 registered, blind for the clock statistic; A312 registered;
-A360 registered, blind.
+**Tags:** A336 part 2 registered (core loop blind); A367 registered (blind; H367.1 at power 0.775 by the user's
+decision); A361, A362, A363 registered; A366, A368 registered (living); A312, A360 registered; cv2 comparison post hoc.
 
 **Caveats (speaker notes)**
-- Leverage: correlation of the clock-plane radii of a person's tissues (GTEx: tissue halves of the host; MuTHER: fat
-  and skin), after the phase harmonics are removed (`clocksync.elasticity.radius_covariance`).
-- In deaths, random gene sets share a lot too (stress-responsive median 0.557, matched 0.222): a donor-level scale is
-  large in deaths; the clock is above it. RIN and ischaemic time do not explain the clock volume (A360 H360.2 FAIL;
-  A336 strata 0.69-0.74 in every tertile of age, ischaemic time and RIN).
-- Living women: one punch biopsy and one array batch for both tissues; monozygotic twins 0.195, dizygotic 0.152
-  (descriptive). On the core loop the living leverage is at the line (0.107 against matched q95 0.130; A335).
-- A360: in deaths an acute (agonal) glucocorticoid surge and a chronic state are not separated; not checked on the core
-  loop. The glucocorticoid link is also part of section 4 (drives).
-- Panel B, elasticity: slope of a tissue's amplitude on the person's volume, relative to the other tissues' composite
-  (two halves of the other tissues; one half instruments the other). Its level is not anchored at 1: in a simulation
-  where every organ scales exactly in proportion, the estimator reads median 1.11 (tissue means 0.97 to 1.36; leverage
-  0.75, as observed), grey band (post hoc calibration, `exploratory/A312_elasticity/scripts/calib_level.py`). Observed
-  median 1.19 (0.83 to 1.77). The registered gradient (H312.1 PASS, rho -0.34; low-gain median 1.19, high-gain 1.07)
-  has the size the same simulation produces with no true gradient (quiet tissues 1.35, loud 1.06-1.15, 6 tissues x 3
-  draws): not shown beyond the estimator until a full null calibration is run.
-- Expected without a shared volume: leverage near 0 and elasticity undefined (both covariances near 0). Expected under
-  one systemic amplitude: a flat profile. Under organs at different distances from their threshold (Hopf): a steep
-  gradient (ratio 2 to 3.4). Under a subset of organs reading the source: some organs near 0. Observed: flat, no organ
-  near 0.
-- Whole blood's interval is wide (lowest gain).
+- Leverage: correlation of the clock-plane radii of two halves of a person's tissues after the phase harmonics are
+  removed (`clocksync.elasticity.radius_covariance`); cv2: their shared squared coefficient of variation.
+- Deaths only. Processes acting within minutes of death or after it are not excluded; RIN, ischaemic time and time of
+  death do not explain it (A360 H360.2 FAIL).
+- The GC contrast between violent and other fast deaths rests on 34 donors (power 0.24) and Hardy 1 differs in age,
+  sex and cause of death.
+- Living: STAGE (66 bypass patients) and AAGMEx (251 adults) are not decidable (A369, A370: arc width, noisy muscle
+  clock). STARNET (about 600 patients, up to seven tissues) would decide it.
+- Panel C, elasticity: level not anchored at 1 (simulated proportional scaling reads median 1.11; grey band); the
+  registered gradient has the size the same simulation gives with no true gradient (A312 calibration note).
+- What the scale physically is (uniform damping of cell clocks, cells dephasing, body-wide composition) is not
+  separable in bulk.
 
 **Source:** `exploratory/A336_two_readouts/output/{person_gtex,person_gtex_companions}.csv`;
-`exploratory/P1_person_loudness/output/{tests,companions}.csv`; `exploratory/A312_elasticity/output/{tissues,tests}.csv`;
-`exploratory/A358_A360_gain_sources/output/{a360_coefficients,a360_tests}.csv`; `exploratory/A312_elasticity/output/calib_level.csv`;
-`docs/results_preliminary.md` A312 (and its calibration note),
-A331, A335, A336, A360.
+`exploratory/A367_hardy_agonal/output/{tests,companions,gc}.csv`; `exploratory/A312_elasticity/output/{tissues,calib_level}.csv`;
+`exploratory/A358_A360_gain_sources/output/a360_coefficients.csv`; `exploratory/A368_muther_radial/output/tests.csv`;
+`docs/results_preliminary.md` A312, A336, A360-A363, A366-A370 and the size note.
 
 ## 3.last The organ arrangement is internal: it holds when the body's clock no longer reads the hour of death
 
