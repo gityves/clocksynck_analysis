@@ -44,7 +44,7 @@ def load():
     meta = []
     for s in c.columns:
         ct, age, tis = s.split("-")
-        meta.append(dict(lib=s, ct=int(ct[2:]) % 24, age=age, tissue=tis))
+        meta.append(dict(lib=s, ct=int(ct[2:]) % 24, ct_raw=int(ct[2:]), age=age, tissue=tis))
     meta = pd.DataFrame(meta).set_index("lib")
     cpm = c / c.sum(0) * 1e6
     return cpm.T, meta          # libraries x genes, meta
@@ -77,7 +77,7 @@ def D_of(cpm, meta, w, swap=None, tissues=PERIPH, ages=("young", "old")):
             m = meta[(meta.tissue == t) & meta.age.isin(ages)]
             lab = m.age.copy()
             if swap is not None:
-                flip = m.ct.map(swap).to_numpy(bool)
+                flip = m.ct_raw.map(swap).to_numpy(bool)
                 lab[flip] = np.where(lab[flip] == ages[0], ages[1], ages[0])
             sel = lab.index[lab == a]
             gs.append(gain(cpm.loc[sel], meta.loc[sel, "ct"], w))
@@ -86,7 +86,7 @@ def D_of(cpm, meta, w, swap=None, tissues=PERIPH, ages=("young", "old")):
 
 
 def all_swaps(meta):
-    cts = sorted(meta.ct.unique())
+    cts = sorted(meta.ct_raw.unique())   # the 12 sampling times (registered: 2^12)
     for bits in itertools.product([False, True], repeat=len(cts)):
         yield dict(zip(cts, bits))
 
@@ -106,8 +106,8 @@ def main():
     swaps = list(all_swaps(meta))
 
     if a.stage == "power":
-        # label null of the clock D (the identity assignment, i.e. the observed D, is excluded from the summary)
-        ident = {k: False for k in swaps[0]}
+        # label null of the clock D over the 4,096 assignments minus the identity and the full swap (both give the
+        # observed D up to sign); the observed D itself is not summarised
         null = np.array([D_of(cpm, meta, WF, s)[0] for s in swaps if any(s.values()) and not all(s.values())])
         pd.DataFrame(dict(D=null)).to_csv(OUT / "null.csv", index=False)
         rows = []
@@ -129,7 +129,6 @@ def main():
                    responsive_q05=float(comp[comp.kind == "responsive"].D.quantile(0.05)), threshold=thr,
                    power_20pct=float(norm.cdf((thr - ALT) / sd)))
         res["gate"] = bool(res["power_20pct"] >= 0.8)
-        del ident
         pd.Series(res).to_csv(OUT / "power.csv", header=["value"])
         print(pd.Series(res).round(4).to_string(), f"\ndone {time.time() - t0:.0f}s", flush=True)
         return
