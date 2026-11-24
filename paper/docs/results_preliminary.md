@@ -8635,3 +8635,21 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   (q05 -0.167).
 - Code: `exploratory/A373_age_loudness/scripts/a373_outputs.py --stage power`.
 <!-- src: paper/exploratory/A373_age_loudness/output/{out_programmes,out_power,out_null,out_companions}.csv -->
+
+## A373 part 3 (scored 2026-11-24; BLIND for every age contrast of output genes; one run, 65 s; Whole Blood removed before scoring by the user's decision, power rerun without it: label-null SD 0.063, matched q05 -0.119, half-width 0.103): rhythmic output genes of old donors are not quieter either: amplitude ratio old / young 1.030 (90 % 0.965-1.078); equivalence within +-10 % PASS; on CHIRAL's DIP the timed amplitude ratio is 0.995 matched and 0.978 pooled
+
+- **H373.3 (untimed loudness of the output programme, 18 tissues, 33 tissue x cohort cells, matched pairs).** Q_out
+  +0.058 (90 % -0.072 to 0.150), amplitude ratio 1.030 (0.965 to 1.078); label p for a fall 0.81; 77th percentile of
+  matched and 95.5th of responsive companions. No effect; equivalence within +-10 % passes (a fall beyond 3.5 % is
+  excluded at 90 %). By cohort: fast +0.103, ventilated +0.043. Pooled (unmatched) arms: amplitude ratio 1.049.
+- **D373.3t (the CHIRAL analogue, cosinor on the DIP, descriptive).** Median over tissues of the median per-gene log
+  amplitude ratio old / young: -0.005 matched (ratio 0.995), -0.022 pooled (0.978). Share of programme genes rhythmic
+  (q <= 0.05) within each arm, old minus young: 0.00 matched, +0.01 pooled.
+- **Reading (registered).** After death-type matching, neither the clock (part 2, 1.038) nor its rhythmic outputs (1.030)
+  are quieter in 60-70 than in 21-49-year-old donors; CHIRAL's dampening is not reproduced on outputs with their own
+  phase (DIP), even without matching (0.978 at most, about 2 %). Differences from CHIRAL's readout: our programme is the
+  100 most rhythmic genes per tissue selected with ages pooled; their count was genome-wide, per age group.
+- **Limits.** Age 21-70; T2D imbalanced; programme selection on the same donors (regression to the mean shared by both
+  arms); 18 tissues with a programme (most brain regions have none).
+- Code: `exploratory/A373_age_loudness/scripts/a373_outputs.py --stage power | score`.
+<!-- src: paper/exploratory/A373_age_loudness/output/{out_tests,out_tissues,out_power,out_companions,out_null,out_programmes}.csv -->
