@@ -11052,3 +11052,32 @@ pattern is from fibroblasts and mouse liver. Aggregates only.
   14-minus-core difference on 2,000 shared donor bootstraps (seed [363, 4]), and the core coefficient predicted by the
   reliability loss alone (A336 part 2 leverages 0.765 / 0.714, Spearman-Brown).
 - **Code.** `exploratory/A361_A363_volume_mechanism/scripts/a361_a363_drops.py`. One run.
+
+## A364 (2026-11-24, on the user's instruction "do 3 then register the living-skin check", next step of `PERSON_VOLUME_2026-11-24.md`; staged: power (noise per site, simulation, companions; no clock correlation), then one scoring run if powered; **NOT BLIND**: A342 on the same data (both sites rhythmic; group-level timed log amplitude ratio E/P +0.087; E-P offset), A331 (MuTHER 0.177; core 0.107), A336 part 2 (GTEx core 0.714), del Olmo 2022 and Saint-Antoine & Anafi 2025 (preprint: person-level amplitude shared by skin layers); **BLIND**: every per-volunteer amplitude and their correlation across sites (A342 computed group-level amplitudes only; grep 2026-11-24)): do living persons differ in a clock amplitude shared by two skin sites, measured from a timed day? **GSE326530 (A342 delivery): 20 volunteers x photoprotected (P) / photoexposed (E) skin x 4 times (0, 6, 12, 18 h)**
+
+**Why.** The person volume is established in deaths only. MuTHER (A331) is at the line on the core loop and, with
+unknown daytime biopsies, its centred radius can read the shared biopsy time (assessment, synthetic leverage 0.18-0.29
+with no amplitude variation). A timed day per person measures amplitude directly: the first harmonic of four samples
+does not depend on the person's phase or the biopsy time, and centring within person removes person offsets.
+**Statistic (`exploratory/A364_living_volume/scripts/a364_skin_volume.py`).** One projector on all 160 samples (GTEx
+not-sun-exposed skin waveform, as A342; spliced counts, exon depth); states centred within volunteer x site; per
+volunteer and site a = |sum_t z_t exp(-i 2 pi t / 24)|; r = Pearson correlation over the 20 volunteers of log a_P and
+log a_E. Core loop primary (CLAUDE.md core readout), 14 genes reported.
+- Null: volunteers permuted (10,000, seed [364, 4]).
+- Companions: 200 expression-matched and 200 responsive pseudo-clock waveforms (seeds [364, 1] / [364, 2]; log mean of
+  the genome, genes with mean count >= 5), same statistic, core and 14 positions. Shared processing of a volunteer's
+  samples is carried by them.
+- Gene drops (core readout, CLAUDE.md rule): r for the 364 three-gene drops of the 14 genes; the trio drop's percentile
+  reported.
+**H364.1.** Core: r above the matched q95 and permutation p < 0.05.
+**Power (stage `power`).** Per site, the per-sample noise variance from the residual after the first harmonic
+(2 x mean squared residual) and the per-sample clock radius m from E|a|^2 = 16 m^2 + 4 noise; simulation (2,000,
+seed [364, 3]) of 20 persons with a person amplitude of log SD 0.352 (the GTEx spread) and 0.176, shared by the sites,
+uniform phases, the site noise; threshold = max(matched q95, simulated null q95). Scored if power >= 0.8 at 0.352;
+otherwise "not decidable at this design".
+**Readings.** PASS: living persons differ in a clock amplitude shared by two skin sites, beyond matched genes,
+measured without a timing confound (the person volume is not specific to deaths). Within the matched range: not separable
+from a shared person or processing scale. Clearly below the GTEx expectation with power: the GTEx volume is specific to
+deaths, or does not reach skin sites alike.
+**Limits.** One tissue at two sites (a weaker statement than two organs); 20 volunteers; 4 time points (first harmonic
+only); A342's projector and waveform. Aggregates only.

@@ -1,0 +1,69 @@
+# The person's clock volume: what it is, what it is not (2026-11-24)
+
+Planning note for `prompts/person_volume_desynchrony_2026-11-24.md` (task T3), after the assessment of that prompt and
+the amendments A361-A363 and their gene-drop addendum. Numbers from `results_preliminary.md` entries cited. Proposed
+wording only: the paper plan and the slides are not changed.
+
+## 1. Question
+
+Persons differ in how loudly all their organs express the shared clock time (the person volume). The prompt read a
+quiet person as a candidate for body-wide desynchrony below the resolution (cells or conflicting cues), and proposed
+heritability (MuTHER twins, T1) and exposures (GTEx, T2). The assessment found that T1 and T2 cannot separate that
+reading from systemic damping of cell clocks, composition or the death process, that T1 is not decidable at MuTHER's
+design (101 MZ and 154 DZ pairs; h^2 90 % range -1.3 to 2.3 at a true 0.5) and that MuTHER's centred radius can read
+the shared biopsy time rather than loudness (synthetic leverage 0.18-0.29 with no amplitude variation at all). T1 and T2
+were not registered; three discriminating tests were run instead.
+
+## 2. Chain, with outcomes
+
+| link | evidence | status |
+|---|---|---|
+| persons differ in a volume shared by their organs (deaths) | A312 leverage 0.75-0.86; A336 part 2 core 0.714 above matched q95 0.621 and responsive q95 0.692 | have (deaths) |
+| every organ follows it nearly in proportion | A312, level calibrated post hoc (estimator reads about 1.1 under proportional scaling) | have |
+| it scales the core clock genes alike | A363 part 2: E-box / PAR-bZip targets vs positive limb T -0.006 (recalibrated null -0.087 to 0.092) | have; a 1.5-fold cytokine-like distortion excluded, a 1.25-fold one not (power 0.65) |
+| it falls with the glucocorticoid-target state | A360 (14 genes -0.235); A361 core -0.184 (90 % -0.297 to -0.063), beyond all 400 companions; gene-drop: the trio drop is ordinary (85th percentile) | have |
+| inflammatory state | A363 part 1: core FAIL (p 0.30, power 0.76); 14 genes p 0.034; core value a typical 11-gene value (82nd percentile) | not decided |
+| organ pattern of cue conflict | A362 FAIL (power 1.00): slope -0.09 against null q95 0.27; kidney follows most, lung least | not seen |
+| living persons | A331 0.177 at the line on the core loop (0.107 < matched q95 0.130) and possibly biopsy timing; del Olmo 2022 and Saint-Antoine & Anafi 2025 (preprint) report person-level amplitude in timed skin | open: A364 registered |
+| acute vs chronic glucocorticoid state | deaths only | open |
+| genetic basis | not testable with public data at useful power | out of reach |
+| cells desynchronised rather than damped | A334: public 10x cannot decide | out of reach |
+
+## 3. Reading
+
+The volume is a systemic, body-wide amplitude factor that every organ and every core clock gene follows, tied to the
+glucocorticoid-target state. Its organ pattern is not the one cue conflict produces in mouse, and its gene pattern is
+not a strong cytokine damping. What it physically is (uniform damping of cell clocks, cells dephasing, body-wide
+composition) is not separable in bulk. In deaths, an agonal glucocorticoid surge and a chronic state are confounded.
+
+## 4. Proposed wording
+
+**Paper (results, figure 4 or 5 panel):**
+> Each person has a clock volume that every organ follows and that scales the core clock genes alike. It is lower when
+> the body's glucocorticoid-target state is higher, beyond any generic donor scale, and its organ pattern is not the one
+> conflicting cues produce in mouse.
+
+**Discussion:** one sentence that a lower volume could reflect damping or dephasing of cell clocks body-wide, which
+bulk data cannot separate; "desynchrony" only as one of these possibilities. Remove "as conflicting cues produce".
+
+**Slide 3.5 (proposed edits, not applied):**
+- Bullet 2 (living women): move to the caveats until A364 is scored; MuTHER is at the line on the core loop and its
+  radius may read the shared biopsy time. If A364 passes, replace it with the timed living result.
+- Bullet 4: "The volume is lower in persons with a higher glucocorticoid-target state, in the core clock as well
+  (standardised effect -0.18, 90 % -0.30 to -0.06; beyond all 400 companion gene sets), not explained by RIN, ischaemic
+  time or time of death (A360, A361, registered, blind)."
+- New bullet 5: "It is a body-wide scale, not a pattern: all core clock genes follow it alike (A363), and organs do
+  not follow it by how much conflicting cues cost them in mouse (A362)."
+- Panel C: add the core-loop GC coefficient beside the 14-gene one.
+- Caveats: the gene-drop result (the smaller core coefficient is an ordinary three-gene drop); A363 part 1 at power 0.76.
+
+## 5. Out of reach
+
+Cells (single-cell clocks in deep data); a within-person repeat design (the same person sampled when quiet and loud);
+heritability (MuTHER underpowered and timing-confounded; GTEx genotypes would need an access request and are far too
+few); exposures with a useful count in GTEx (long-term steroids 5 of 244 fast deaths, depression 14).
+
+## 6. Next
+
+A364 (registered 2026-11-24): living timed skin, GSE326530: is the person's clock amplitude shared by two skin sites,
+measured per volunteer from a full timed day (no biopsy-timing confound)?
