@@ -50,7 +50,7 @@ def hours_axis(ax, label=True):
     sec = ax.secondary_yaxis("right", functions=(fwd, inv))
     sec.set_yticks([1, 1.5, 2, 3, 4, 6], ["1", "1.5", "2", "3", "4", "6"])
     if label:
-        sec.set_ylabel("phase scatter [h]")
+        sec.set_ylabel("SD [h]")
     return sec
 
 
@@ -102,11 +102,11 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     t = pd.read_csv(EXP / "A294_floor/output/tissues.csv", index_col="tissue")
     bab = pd.read_csv(PAPER / "results/figure_2/output/organs/r2_couplings.csv").query("species == 'baboon'")
-    lay = pf.Layout.slide("AB", kind="half", col_ratios=[1, 1])
+    lay = pf.Layout.slide("AxB", kind="half", col_ratios=[1, 0.13, 1], blank=("x",))
     coupling_curve(lay.axes["A"], t)
     legend_in(lay.axes["A"], fontsize=7.5, loc="upper left")
     lay.axes["A"].set_title("human", fontsize=13, color=INK)
-    hours_axis(lay.axes["A"], label=False)
+    hours_axis(lay.axes["A"])
     timed = pd.read_csv(PAPER / "results/figure_1/output/species/a36_tissues.csv", index_col="tissue").g_abs
     bab = bab.set_index("compartment").assign(timed_amp=timed)
     d, r_per, r_brain = scatter(lay.axes["B"], bab, baboon_system, "baboon", x="timed_amp",
