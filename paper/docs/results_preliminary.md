@@ -8479,3 +8479,18 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
 - Code: `exploratory/A369_stage_volume/scripts/{rma_stage.R, prep_stage.py, a369_stage.py --stage power,
   a369_posthoc_statistics.py}`.
 <!-- src: paper/exploratory/A369_stage_volume/output/{power,gates,sim,companions}.csv, output/prep/{prep_summary,markers}.csv -->
+
+## A336 / A331 size note (2026-11-24; post hoc, from saved A336 outputs, on the user's question whether the person volume is a death issue): in GTEx deaths the clock's shared amplitude is reliable beyond random genes but not larger than theirs
+
+- Shared squared CV of the person amplitude (cv2, `radius_covariance`), GTEx fast deaths, A336 part 2: clock 0.124 (14
+  genes) / 0.120 (core). Expression-matched sets: median 0.107 / 0.071, q95 0.365 / 0.399; the clock sits at their 57th /
+  64th percentile. Responsive sets: median 0.218 / 0.262; the clock sits at their 11th / 27th percentile.
+- Leverage (the reliability of the sharing) is where the clock stands out: 0.765 / 0.714, at the 99.5th / 98.5th
+  percentile of matched and 98th / 96th of responsive sets (A336, registered).
+- Consequence for the living tests: the "GTEx size" alternative (log SD 0.352, from the clock cv2; A331, A364-A369) is
+  the size of a person scale that random genes in deaths share as much. A366 / A368 exclude a living clock volume of
+  that size; they do not exclude a smaller clock-specific excess above a body-wide expression scale, which MuTHER also
+  shows (A368: matched genes reach Q 0.25, clock 0.228).
+- Reading (post hoc): persons differ in a body-wide expression scale, in life and in death; in deaths the clock follows
+  it more reliably than random genes. Whether that excess exists in life is not decided.
+<!-- src: paper/exploratory/A336_two_readouts/output/{person_gtex,person_gtex_companions}.csv -->
