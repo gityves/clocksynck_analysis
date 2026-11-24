@@ -8597,3 +8597,13 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   specific to the clock, larger in stress-responsive genes, fits the data but is not tested.
 - Code: `exploratory/A372_mouse_age_amplitude/scripts/a372_age_amplitude.py --stage power`.
 <!-- src: paper/exploratory/A372_mouse_age_amplitude/output/{power,null,companions}.csv; paper/results/figure_4/output/resilience/a48_timed_age.csv -->
+
+## A373 power note (2026-11-24; no clock age contrast computed; 105 s): decidable for the number (H373.2): expected 90 % half-width 0.077 on the log-variance scale (amplitude +-4 %), below the +-0.21 margin
+
+- Matching as A231 (reproduced): 54 tissues (fast 29, ventilated 25), median 28.5 pairs per tissue; balance after
+  matching as A231 (sex exact; ischaemic time median |SMD| 0.05 / 0.09; T2D stays imbalanced, 0.46 / 0.79).
+- Label-swap null of Q (14 genes, 1,000 swaps within pairs): SD 0.047, q05 -0.080.
+- Companions, matched pairs: expression-matched median Q -0.018 (q05 -0.134); responsive -0.057 (q05 -0.167).
+  Pooled (unmatched) arms: matched-gene median 0.022, responsive -0.018.
+- Code: `exploratory/A373_age_loudness/scripts/a373_age_loudness.py --stage power`.
+<!-- src: paper/exploratory/A373_age_loudness/output/{power,null,companions,balance}.csv -->
