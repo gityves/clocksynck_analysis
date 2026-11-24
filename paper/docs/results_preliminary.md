@@ -8581,3 +8581,19 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   clock-specific person volume; it leaves a small rhythmic excess within one biopsy.
 - Code: `exploratory/A364_living_volume/scripts/posthoc_skin_shared.py`.
 <!-- src: paper/exploratory/A364_living_volume/output/{posthoc_clock,posthoc_global,posthoc_global_random}.csv -->
+
+## A372 power note (2026-11-24; label null and companions; 121 s): not decidable (power 0.00 at a 20 % fall): random genes' fitted amplitudes vary too much between ages for the matched control to resolve any plausible clock fall
+
+- Label null (young / old swapped within each of the 12 sampling times, 4,094 assignments): SD of D 0.075, q05
+  -0.122, MDE 0.186 (a fall to 0.83).
+- Companions (D = mean log old / young amplitude over five peripheral tissues): expression-matched median +0.107, q05
+  -0.567, SD 0.389; responsive median -0.371, q05 -0.811.
+- Threshold min(matched q05, label q05) = -0.567 (a fall to 0.57): power 0.00 at a uniform 20 % fall. Not scored.
+- First power run used the CT folded to 24 h (64 assignments); corrected to the registered 12 sampling times before
+  this note (commit after the registration).
+- Descriptive, not a test: the clock's timed gains (A48 table, seen at registration) are lower at 27 than at 6 months
+  in all five peripheral tissues; the responsive companions (rhythmic in mouse through the corticosterone rhythm) fall
+  more on average (median D -0.371), the matched ones do not (+0.107). A fall of rhythm amplitude with age that is not
+  specific to the clock, larger in stress-responsive genes, fits the data but is not tested.
+- Code: `exploratory/A372_mouse_age_amplitude/scripts/a372_age_amplitude.py --stage power`.
+<!-- src: paper/exploratory/A372_mouse_age_amplitude/output/{power,null,companions}.csv; paper/results/figure_4/output/resilience/a48_timed_age.csv -->
