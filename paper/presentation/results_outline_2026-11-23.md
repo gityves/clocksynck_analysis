@@ -461,7 +461,7 @@ post hoc display (same-class rows chosen post hoc).
    near the peripheral curve (A289: median residual -0.001 on its line). Human brain couples at 0.406 against 0.679 in the periphery.
 
 **Figure:** `figures/organs_health/organs_health.png` (`scripts/organs_health.py`; half). A. human: coupling against the
-shared amplitude a = sqrt(S), one dot per tissue; grey: a^2 / (a^2 + D) = S / (S + D) at the median D (1.9), the definition of coupling at a
+shared amplitude a = sqrt(S), one dot per tissue; grey: a^2 / (a^2 + D) = S / (S + D) at the median D (1.89), the definition of coupling at a
 constant departure, not a fit (explained in 3.4b). B. baboon: amplitude against known time (A36 timed gain, estimated
 without the host) against coupling, 35 peripheral tissues and 22 brain regions; grey: the same curve, a^2 / (a^2 + D),
 D fitted on the peripheral tissues (2.30; one parameter; amplitude units differ from A). Right axes: the phase SD a coupling implies,
