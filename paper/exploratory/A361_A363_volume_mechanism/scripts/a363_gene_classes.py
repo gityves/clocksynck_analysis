@@ -9,8 +9,11 @@ centred log expression y on P and P l: e_C = b2 / b1 (elasticity of the class's 
 T = mean over halvings and roles of e_supp - e_comp. Null (uniform scaling) and power by simulation at the GTEx design.
 
     python a363_gene_classes.py --stage power [--jobs 4]   # simulations only (no GTEx expression)
-    python a363_gene_classes.py --stage score               # GTEx, registered test
-Outputs (`../output/`): a363_sims.csv, a363_power.csv | a363_tests.csv. Aggregates only.
+    python a363_gene_classes.py --stage calibrate           # addendum: GTEx gene-level noise (no class elasticity)
+    python a363_gene_classes.py --stage power2 [--jobs 4]  # addendum: null and power with the calibrated noise
+    python a363_gene_classes.py --stage score               # GTEx, registered test (thresholds from power2)
+Outputs (`../output/`): a363_sims.csv, a363_power.csv | a363_noise.npz, a363_noise_summary.csv |
+a363_sims_recal.csv, a363_power_recal.csv | a363_tests.csv. Aggregates only.
 """
 import argparse
 import time
@@ -96,8 +99,36 @@ def class_T(pb, ds, w, supp, comp, n_splits, seed):
     return float(np.mean(T)), float(np.mean(es)), float(np.mean(ec)), {g: float(np.median(v)) for g, v in per_gene.items()}
 
 
+def noise_calibration(pb, comps, w):
+    """Addendum (2026-11-24): GTEx gene-level noise of the waveform genes, per tissue. Residual = centred log expression
+    minus the clock-plane part X . beta of the sample's own state (beta centred within group). Person offset variance of
+    gene g = mean over tissue pairs of the covariance of the residuals of the same donors (>= 30); within-sample
+    covariance = residual covariance minus that diagonal (eigenvalues clipped at 0). Aggregates only."""
+    ds = cs.Dataset(pb[V.META + list(w.genes)], anchors=comps, waveform=w, name="a363_noise")
+    d = ds.data
+    Y = residuals(pb, d, list(w.genes))
+    grp = (pd.Series(d.compartment.astype(str)) + "|" + pd.Series(d.group.astype(str))).to_numpy()
+    beta = d.beta - pd.DataFrame(d.beta).groupby(grp).transform("mean").to_numpy()
+    R = Y - beta @ np.asarray(w.X).T
+    comp_of, res = np.asarray(d.compartment), np.asarray(d.resection).astype(str)
+    pvar = []
+    for g in range(len(w.genes)):
+        M = pd.DataFrame(dict(donor=res, t=comp_of, r=R[:, g])).pivot_table(index="donor", columns="t", values="r")
+        C = M.cov(min_periods=30).to_numpy()
+        off = C[~np.eye(len(C), dtype=bool)]
+        pvar.append(max(float(np.nanmean(off)), 0.0))
+    pvar = np.array(pvar)
+    cov = {}
+    for t in comps:
+        S = np.cov(R[comp_of == t].T) - np.diag(pvar)
+        ev, U = np.linalg.eigh(S)
+        cov[t] = (U * np.clip(ev, 0, None)) @ U.T
+    return cov, np.sqrt(pvar)
+
+
 def sim_one(args):
-    kind, draw = args
+    kind, draw = args[:2]
+    noise = args[2] if len(args) > 2 else None
     V.quiet()
     limit_threads(1)
     w, supp, comp = CLASSES["core"]
@@ -105,8 +136,12 @@ def sim_one(args):
     table = V.tissue_table(t.index)
     presence = (t.n / 244).clip(upper=1.0)
     extra = {"null": 0.0, "x0.5": 0.5, "x0.25": 0.25}[kind]
-    rng = np.random.default_rng([363, {"null": 0, "x0.5": 1, "x0.25": 2}[kind], draw])
-    pb = V.simulate(table, presence, w, rng, gene_extra={g: extra for g in supp})
+    rng = np.random.default_rng([363, {"null": 0, "x0.5": 1, "x0.25": 2}[kind] + (10 if noise else 0), draw])
+    if noise is None:
+        pb = V.simulate(table, presence, w, rng, gene_extra={g: extra for g in supp})
+    else:
+        cov, psd = noise
+        pb = V.simulate(table, presence, w, rng, gene_extra={g: extra for g in supp}, noise=cov, person_sd=psd)
     comps = sorted(pb.compartment.unique())
     ds = cs.Dataset(pb, anchors=comps, waveform=w, name=f"a363{kind}{draw}")
     T, e_s, e_c, _ = class_T(pb, ds, w, supp, comp, N_SPLITS, [363, 1])
@@ -116,11 +151,44 @@ def sim_one(args):
 def main():
     V.quiet()
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--stage", choices=["power", "score"], required=True)
+    ap.add_argument("--stage", choices=["power", "calibrate", "power2", "score"], required=True)
     ap.add_argument("--jobs", type=int, default=4)
     a = ap.parse_args()
     t0 = time.time()
     V.OUT.mkdir(parents=True, exist_ok=True)
+    if a.stage == "calibrate":
+        pb, _, _, _ = V.a359.load()
+        comps = sorted(pb.compartment.unique())
+        w = CLASSES["core"][0]
+        cov, psd = noise_calibration(pb, comps, w)
+        np.savez(V.OUT / "a363_noise.npz", genes=np.array(w.genes), tissues=np.array(comps),
+                 cov=np.stack([cov[t] for t in comps]), person_sd=psd)
+        summ = pd.DataFrame(dict(gene=w.genes, person_sd=psd,
+                                 within_sd_median=np.median([np.sqrt(np.diag(cov[t])) for t in comps], 0)))
+        summ.to_csv(V.OUT / "a363_noise_summary.csv", index=False)
+        print(summ.round(3).to_string(index=False), f"\nTAU of the registered simulator {V.TAU}; done {time.time() - t0:.0f}s", flush=True)
+        return
+    if a.stage == "power2":
+        z = np.load(V.OUT / "a363_noise.npz")
+        noise = ({t: c for t, c in zip(z["tissues"], z["cov"])}, z["person_sd"])
+        jobs = [("null", d, noise) for d in range(N_NULL)] + [(k, d, noise) for k in ("x0.5", "x0.25") for d in range(N_ALT)]
+        rows = []
+        with Pool(a.jobs) as pool:
+            for r in pool.imap_unordered(sim_one, jobs):
+                rows.append(r)
+                print(f"{len(rows)}/{len(jobs)} simulated cohorts ({time.time() - t0:.0f}s)", flush=True)
+        s_ = pd.DataFrame(rows).sort_values(["kind", "draw"])
+        s_.to_csv(V.OUT / "a363_sims_recal.csv", index=False)
+        nl = s_[s_.kind == "null"]["T"]
+        res = dict(T_null_median=float(nl.median()), T_null_q05=float(nl.quantile(0.05)), T_null_q95=float(nl.quantile(0.95)))
+        for k in ("x0.5", "x0.25"):
+            v = s_[s_.kind == k]["T"]
+            res[f"T_{k}_median"] = float(v.median())
+            res[f"power_{k}"] = float(np.mean(v > res["T_null_q95"]))
+        res["gate"] = bool(res["power_x0.5"] >= 0.8)
+        pd.Series(res).to_csv(V.OUT / "a363_power_recal.csv", header=["value"])
+        print(pd.Series(res).round(4).to_string(), f"\ndone {time.time() - t0:.0f}s", flush=True)
+        return
     if a.stage == "power":
         jobs = [("null", d) for d in range(N_NULL)] + [(k, d) for k in ("x0.5", "x0.25") for d in range(N_ALT)]
         rows = []
@@ -142,7 +210,7 @@ def main():
         return
 
     # ---- score ---------------------------------------------------------------------------------------------------------
-    pw = pd.read_csv(V.OUT / "a363_power.csv", index_col=0)["value"]
+    pw = pd.read_csv(V.OUT / "a363_power_recal.csv", index_col=0)["value"]   # addendum: recalibrated null
     if str(pw["gate"]) != "True":
         raise SystemExit("A363 part 2 not powered: not decidable at this design; not scored")
     pb, _, _, _ = V.a359.load()

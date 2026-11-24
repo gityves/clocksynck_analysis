@@ -23,6 +23,8 @@ from clocksync.paired import pseudo_waveforms
 N_SETS, N_PERM, N_BOOT = 200, 10_000, 2000
 A360_MODEL = V.BASE + V.TECH + V.SYS
 A363_MODEL = A360_MODEL + ["inf"]
+# A363 addendum (2026-11-24): the user accepted part 1 at power 0.76 (registered gate 0.8) after the power stage
+A363_1_ACCEPTED = True
 
 
 def partial(per, log_r, block, given, seed):
@@ -136,7 +138,7 @@ def main():
         row["reading"] = ("core: systemic and beyond a generic donor scale" if row["passes"] else
                           "core: not beyond matched genes" if p < 0.05 and c.gc < 0 else "core: not detected")
         rows.append(row)
-    if str(pw["A363_1_gate"]) == "True":
+    if str(pw["A363_1_gate"]) == "True" or A363_1_ACCEPTED:
         for gs, v in (("core", vc), ("14 genes", v14)):
             r2, p = partial(per, v, ["inf"], A360_MODEL, 363)
             c = V.coefs(per, v, A363_MODEL)

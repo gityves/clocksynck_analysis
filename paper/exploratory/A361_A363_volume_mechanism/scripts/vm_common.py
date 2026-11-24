@@ -120,12 +120,15 @@ def tissue_table(tissues) -> pd.DataFrame:
 
 
 def simulate(table: pd.DataFrame, presence: pd.Series, wf, rng, n: int = 244, expo: dict | None = None,
-             gene_extra: dict | None = None) -> pd.DataFrame:
+             gene_extra: dict | None = None, noise: dict | None = None, person_sd=None) -> pd.DataFrame:
     """Pseudobulk counts (donor, compartment, depth, genes) of a cohort at the GTEx design.
     expo: tissue -> elasticity exponent e_t (clock amplitude of tissue t in person p proportional to a_p ** e_t, scaled
     to unit mean square); gene_extra: gene -> extra exponent x_g (that gene's clock term further multiplied by
-    a_p ** x_g / mean); default 1 and 0 (every tissue and gene in proportion)."""
+    a_p ** x_g / mean); default 1 and 0 (every tissue and gene in proportion).
+    noise: tissue -> gene x gene covariance of the per-sample log-expression noise (replaces the default independent
+    SD `TAU`); person_sd: per-gene SD of a person offset shared by all of the person's tissues (A363 addendum)."""
     expo, gene_extra = expo or {}, gene_extra or {}
+    po = None if person_sd is None else rng.normal(0, 1, (n, len(wf.genes))) * np.asarray(person_sd, float)[None, :]
     a = np.exp(rng.normal(0, SIGMA_A, n))
     theta = rng.uniform(0, 2 * np.pi, n)
     base = np.full(len(wf.genes), -10.0) if wf.mesor is None else np.asarray(wf.mesor, float)
@@ -143,7 +146,9 @@ def simulate(table: pd.DataFrame, presence: pd.Series, wf, rng, n: int = 244, ex
         for p in np.flatnonzero(keep):
             c = ak[p] * z * np.exp(1j * theta[p])
             beta = np.array([c.real, c.imag]) + rng.normal(0, np.sqrt(r.own / 2), 2)
-            lr = base + off + (wf.X @ beta) * gfac[p] + rng.normal(0, TAU, len(wf.genes))
+            eps = rng.normal(0, TAU, len(wf.genes)) if noise is None else rng.multivariate_normal(
+                np.zeros(len(wf.genes)), noise[k], method="eigh")
+            lr = base + off + (wf.X @ beta) * gfac[p] + eps + (0.0 if po is None else po[p])
             rows.append([f"p{p:03d}", k, DEPTH, *rng.poisson(DEPTH * np.exp(lr))])
     return pd.DataFrame(rows, columns=["donor", "compartment", "depth", *wf.genes])
 

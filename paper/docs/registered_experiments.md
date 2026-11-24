@@ -11018,3 +11018,25 @@ an inflammatory correlate without the cytokine gene pattern (reported as such).
 pattern is from fibroblasts and mouse liver. Aggregates only.
 **Code.** `exploratory/A361_A363_volume_mechanism/scripts/a361_a363_systemic.py` (part 1), `a363_gene_classes.py`
 (part 2).
+
+### A363 addendum (2026-11-24, after the power stage, before any scoring; on the user's instruction "For A363 part 1 a power of 0.76 is good enough I think. Write the recalibration of part 2")
+
+- **Part 1, gate relaxed by the user after the power stage (labelled).** Power 0.760 at partial R^2 0.03 against the
+  registered 0.8: part 1 is scored as registered otherwise (statistic, threshold, readings unchanged). A FAIL is read
+  with this power: an inflammatory effect of partial R^2 0.03 would be missed about one time in four.
+- **Part 2, null recalibrated.** The registered simulator gave a null T within -0.012 to 0.018 with independent gene
+  noise of SD 0.1, calibrated only at the level of the tissue state; GTEx gene noise is larger, gene-specific, correlated
+  between genes and partly shared by a person's tissues (cis-eQTL-like offsets), all of which can move the class
+  elasticities. Change, fixed now:
+  - Calibration (stage `calibrate`, GTEx A360 rows, core waveform; no class or gene elasticity computed): per sample,
+    the residual of the centred log expression after the sample's own clock-plane part (X . beta); person offset
+    variance of gene g = mean over tissue pairs of the covariance of g's residuals across shared donors (>= 30, clipped
+    at 0); within-sample covariance per tissue = residual covariance minus that diagonal (eigenvalues clipped at 0).
+    Written as aggregates (`a363_noise.npz`, `a363_noise_summary.csv`).
+  - Simulator: the per-sample noise is drawn from the tissue's within-sample covariance and each person carries a
+    per-gene offset (SD from the calibration) shared by all their tissues (`vm_common.simulate(noise=, person_sd=)`);
+    everything else as registered. The in-plane residual is already in the tissue departure (A294b own), so the noise
+    is if anything over-counted (conservative).
+  - Null and power (stage `power2`): 40 null, 20 at a_p^0.5 and 20 at a_p^0.25 extra, seeds [363, 10 + kind, draw].
+    H363.2's thresholds are the recalibrated null q05 / q95; scored if power >= 0.8 at 0.5. The first power stage
+    (`a363_power.csv`) is kept and no longer used.
