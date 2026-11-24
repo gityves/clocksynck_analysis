@@ -8625,3 +8625,13 @@ GTEx fast deaths, 25 peripheral tissues (Whole Blood and Testis excluded), 14-ge
   descriptive (fast deaths alone lean slightly negative).
 - Code: `exploratory/A373_age_loudness/scripts/a373_age_loudness.py --stage score`.
 <!-- src: paper/exploratory/A373_age_loudness/output/{tests,tissues,power,companions,null}.csv -->
+
+## A373 part 3 power note (2026-11-24; programmes and label null only, no age contrast; 101 s): decidable for the equivalence (expected half-width 0.103 < 0.21)
+
+- Programmes on the CHIRAL DIP (both cohorts pooled, all ages): 19 tissues with >= 20 rhythmic output genes at q <= 0.05
+  (peripheral tissues 561-7,468 rhythmic genes; brain regions 0-3 except cerebellum 236 and cerebellar hemisphere 24),
+  35 tissue x cohort cells with matched pairs.
+- Label-swap null of Q_out: SD 0.063, q05 -0.106. Companions: matched median +0.010 (q05 -0.116), responsive -0.039
+  (q05 -0.167).
+- Code: `exploratory/A373_age_loudness/scripts/a373_outputs.py --stage power`.
+<!-- src: paper/exploratory/A373_age_loudness/output/{out_programmes,out_power,out_null,out_companions}.csv -->
