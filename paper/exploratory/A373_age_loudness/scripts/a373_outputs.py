@@ -1,10 +1,11 @@
 """A373 part 3 (registered): are the rhythmic output genes of old donors quieter once death type is balanced?
 
-Output programme per tissue (blind to age): in fast deaths with a time of death, all ages, genes with median CPM >= 5
-outside the clock-like and responsive lists, cosinor of log(CPM + 0.5) on time of death, BH q <= 0.05, top 100 by F;
+Output programme per tissue (blind to age): all donors of both cohorts with a CHIRAL donor internal phase (DIP), all ages,
+genes with median CPM >= 5 outside the clock-like and responsive lists, cosinor of log(CPM + 0.5) on the DIP, BH q <= 0.05,
+top 100 by F (time axis changed from the time of death to the DIP before any value, user correction);
 waveform = their cosinor amplitudes and acrophases. H373.3: A373's loudness statistic (debiased plane variance W, old /
-young on the A231 matched pairs, median over tissues of both cohorts) on the programme. D373.3t (fast deaths, timed):
-per-gene cosinor amplitude ratio old / young and the rhythmic share per arm.
+young on the A231 matched pairs, median over tissues of both cohorts) on the programme. D373.3t (both cohorts, on the
+DIP, the CHIRAL analogue): per-gene cosinor amplitude ratio old / young and the rhythmic share per arm.
 
     python a373_outputs.py --stage power   # programmes, label null of Q_out, companions; no observed age contrast
     python a373_outputs.py --stage score
@@ -90,15 +91,17 @@ def load(c, tissues):
     return out, don, cpm_mean
 
 
-def programme(T, tod):
-    cpm = T.x / T.depth[:, None] * 1e6
+def programme(Ts, dip):
+    """Ts: the tissue's data in each cohort (same gene order); pooled over cohorts, ages and donors with a DIP."""
+    genes = Ts[0].genes
+    cpm = np.concatenate([T.x / T.depth[:, None] * 1e6 for T in Ts])
+    h = np.concatenate([dip.reindex(T.donors).to_numpy(float) for T in Ts])
     ok = np.median(cpm, 0) >= 5
-    ok &= np.array([g not in EXCLUDE for g in T.genes])
-    h = tod.reindex(T.donors).to_numpy(float)
+    ok &= np.array([g not in EXCLUDE for g in genes])
     m = np.isfinite(h)
     F, p, amp, psi = cosinor(np.log(cpm[m][:, ok] + 0.5), h[m])
     q = stats.false_discovery_control(p, method="bh")
-    g = np.array(T.genes)[ok]
+    g = np.array(genes)[ok]
     sel = np.flatnonzero(q <= 0.05)
     if len(sel) < MIN_PROG:
         return None, len(sel)
@@ -115,8 +118,9 @@ def main():
     t0 = time.time()
     cohorts = P.ML.load_cohorts()
     plans, _, _, _, M, Bal = P.ML.build(P.C.DESIGN, cohorts)
-    tod = cohorts["fast"][2].tod.copy()
-    tod.index = tod.index.astype(str)
+    sys.path.insert(0, str(P.EXP.parent / "results" / "figure_3" / "scripts" / "gtex_cues"))
+    import compute_dip_arm as DA
+    dip = DA.read_dip()
     data = {}
     for c in ("fast", "vent"):
         data[c], _, cm = load(c, list(plans[c]))
@@ -126,7 +130,8 @@ def main():
         P.say(c, "loaded", f"({time.time() - t0:.0f}s)")
     progs, prow = {}, []
     for t, T in data["fast"].items():
-        w, nq = programme(T, tod)
+        Ts = [T] + ([data["vent"][t]] if t in data["vent"] and data["vent"][t].genes == T.genes else [])
+        w, nq = programme(Ts, dip)
         prow.append(dict(tissue=t, rhythmic_q05=nq, programme=0 if w is None else len(w.genes)))
         if w is not None:
             progs[t] = w
@@ -206,13 +211,12 @@ def main():
     # D373.3t: timed, fast deaths, matched pairs and pooled arms
     trow = []
     for (c, t), p in pairs.items():
-        if c != "fast":
-            continue
         T, w = data[c][t], progs[t]
         cpm = T.frame(list(w.genes))[list(w.genes)].to_numpy(float) / T.depth[:, None] * 1e6
-        h = tod.reindex(T.donors).to_numpy(float)
+        h = dip.reindex(T.donors).to_numpy(float)
         res_t = {}
         for lab, (o, y) in (("matched", (p[:, 0], p[:, 1])), ("pooled", pooled[(c, t)])):
+            o, y = o[np.isfinite(h[o])], y[np.isfinite(h[y])]
             if len(o) < 10 or len(y) < 10:
                 continue
             _, po, ao, _ = cosinor(np.log(cpm[o] + 0.5), h[o])
@@ -220,15 +224,14 @@ def main():
             res_t[f"log_amp_ratio_{lab}"] = float(np.median(np.log(ao / ay)))
             res_t[f"rhythmic_share_diff_{lab}"] = float(np.mean(stats.false_discovery_control(po, method="bh") <= 0.05)
                                                          - np.mean(stats.false_discovery_control(py, method="bh") <= 0.05))
-        trow.append(dict(tissue=t, pairs=len(p), L_matched=L[(c, t)], **res_t))
+        trow.append(dict(cohort=c, tissue=t, pairs=len(p), L_matched=L[(c, t)], **res_t))
     tt = pd.DataFrame(trow)
     for col in [x for x in tt.columns if x.startswith(("log_amp", "rhythmic"))]:
         r[f"D373.3t_{col}_median"] = float(tt[col].median())
     r["D373.3t_amp_ratio_matched"] = float(np.exp(r["D373.3t_log_amp_ratio_matched_median"]))
     r["D373.3t_amp_ratio_pooled"] = float(np.exp(r["D373.3t_log_amp_ratio_pooled_median"]))
     pd.DataFrame([r]).to_csv(OUT / "out_tests.csv", index=False)
-    pd.concat([tt.assign(cohort="fast"), pd.DataFrame([dict(cohort=k[0], tissue=k[1], L_matched=v) for k, v in L.items()
-                                                        if k[0] == "vent"])]).to_csv(OUT / "out_tissues.csv", index=False)
+    tt.to_csv(OUT / "out_tissues.csv", index=False)
     print(pd.Series(r).to_string(), f"\ndone {time.time() - t0:.0f}s", flush=True)
 
 
