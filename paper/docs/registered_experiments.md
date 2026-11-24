@@ -11298,3 +11298,21 @@ not a post-mortem artefact. FAIL with power: the living arrangement differs; the
 by death (or by disease: coronary patients). Pair phases are reported with intervals in both cases.
 **Limits.** 66 STAGE patients (coronary disease, mostly men); different fat depots between STAGE and GTEx; arrays vs
 RNA-seq (same projector convention); the label null is coarse (24 assignments).
+## Post hoc note before computing (2026-11-24, on the user's instruction "do both"): skin shared amplitude against random genes (descriptive, underpowered; not a test)
+
+Written before any value below is computed. Nothing here is scored; A364 and A365 stay "not decidable".
+- **Part 1, our clock statistic.** A364 (GSE326530, two sites) and A365 (del Olmo, two layers) r of log first-harmonic
+  amplitude between the person's two samples, core loop and 14 genes, as in their scripts, placed against the
+  companions already computed in their power stages (percentiles). Labelled underpowered (power 0.54 / 0.51).
+- **Part 2, Saint-Antoine & Anafi's statistic** (re-implemented from github.com/ranafi/Subject-Global-Amplitude
+  `cosinor_pipeline.R` and `fig3.R`, read as text, not run). Per layer (site): genes expressed (top half by mean;
+  their filter is not in the repository, our choice); collective cosinor with subject intercepts, F-test against
+  subject intercepts only, BH q <= 0.05 = rhythmic set; per subject and gene, cosinor amplitude / mesor on the linear
+  scale; percentile across subjects per gene; subject global amplitude = mean percentile over the layer's rhythmic
+  genes; statistic r (and R^2) between the two layers' global amplitudes. Reproduction target: R^2 0.649 in del Olmo
+  (approximate, given the filter). Control: 200 random gene sets per layer of the rhythmic set's size, drawn from
+  that layer's non-rhythmic genes (q > 0.5), matched to the rhythmic set's mean-expression deciles (seed [372, 1]);
+  same statistic. Also applied to GSE326530 (sites P / E, 4 times; linear = counts per million).
+- Reading fixed now: an observed r inside the random sets' range means the published layer-shared amplitude is not
+  shown beyond a shared non-rhythmic scale in these data; above their q95, it is (descriptively).
+- Code: `exploratory/A364_living_volume/scripts/posthoc_skin_shared.py`.
