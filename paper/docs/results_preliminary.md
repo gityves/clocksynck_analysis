@@ -6646,6 +6646,24 @@ Two Sonnet subagents (GEO / ENA / BioStudies / ENCODE / cellxgene metadata); key
 - Code: `exploratory/A317_braindeath_confirm/scripts/score_a317.py --stage score`.
 <!-- src: paper/exploratory/A317_braindeath_confirm/output/{power,tests,sensitivity,sets}.csv -->
 
+### A317 post hoc note (2026-11-25; descriptive, not registered): H317.1 does not rest on one tissue
+
+Prompted by the slide 4.2c scatter (per-tissue offsets against fast deaths, `presentation/scripts/organs_groups.py`):
+there, the agreement of ventilated donors with fast deaths rests on the lung (18 shared peripheral tissues: slope 0.73,
+Pearson 0.68; without lung 0.22 and 0.25; brain death 0.19 and 0.34, without lung 0.00 and 0.00). Leave-one-tissue-out
+of D_rho (pairs involving the tissue removed; same draws; 1000 label permutations; 200 matched and 200 responsive sets):
+- Full mask reproduces A317 exactly: D_rho 0.621 (65 pairs).
+- Over the 12 drops D_rho ranges from 0.504 (whole blood dropped) to 0.719 (oesophagus mucosa); lung dropped 0.691
+  (ventilated rho 0.466, organ donors -0.225). Every drop has label p <= 0.008 and lies above the matched (q95 <= 0.119)
+  and responsive (q95 <= 0.194) 95th percentiles.
+- Reading: the brain-death change of arrangement is not carried by one tissue. The lung carries much of the ventilated
+  donors' agreement with fast deaths (rho 0.678 -> 0.466 without it), so "the arrangement holds" in ventilated donors
+  leans on the lung more than "brain death moves it" does. The per-tissue scatter is too noisy (median interval 1.6 h
+  in ventilated donors, against a 1 h arrangement) to show the order of the remaining tissues; the pair phases are the
+  readout.
+- Code: `exploratory/A317_braindeath_confirm/scripts/posthoc_loto.py`.
+<!-- src: paper/exploratory/A317_braindeath_confirm/output/posthoc_loto.csv; presentation/output/organs/couplings_{fast,ventilated,brain_death}.csv -->
+
 ## A318 (scored 2026-11-18; NOT BLIND for A317): the brain-death arrangement change survives adjustment for ischaemic time and RNA quality (H318.1 PASS, D_rho 0.584); within organ donors, those with longer ischaemic times keep more of the arrangement (H318.2, +0.410, p 0.040, descriptive): ischaemic time is not a sufficient explanation, but not excluded as a contributor
 
 - Design as registered; power stage (65 pairs kept, MDE 0.582), then one scoring run (46 s). Ischaemic time medians

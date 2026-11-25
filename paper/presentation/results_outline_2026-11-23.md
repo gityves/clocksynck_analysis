@@ -843,3 +843,28 @@ descriptive; amplitude display exp(Q* / 2) post hoc.
 **Source:** `exploratory/A335_review_batch/output/{a315_core,matched,equivalence}.csv`;
 `exploratory/A315_braindeath_gain/output/descriptive.csv`; `exploratory/A349_icu_limits/output/part2_tissues.csv`;
 `presentation/output/organs/couplings.csv` (gain); `docs/results_preliminary.md` A315, A335, A349.
+
+## 4.2c (backup) Each group's organ map
+
+Backup for "what does each group's map look like?". Post hoc, descriptive displays (user, 2026-11-25); the registered
+contrast stays the pair-phase rho on slide 4.2.
+
+**Figures**
+- `figures/organs_groups/organs_groups.png` (`scripts/organs_groups.py`; wide): the reference map of slide 3.1 fitted
+  separately in fast deaths (244 donors), slow deaths (107), ventilated with a living brain (80) and brain death (301);
+  each face relative to its own group's body clock. On a 24 h face the 1 h arrangement is +-15 degrees: every group
+  looks like a cluster, so the faces do not show the ventilated / brain-death contrast.
+- `figures/organs_groups/offsets.png` (same script; half): peak time per tissue in ventilated donors and in brain death
+  against fast deaths, 18 shared peripheral tissues (whole blood omitted). Ventilated: slope 0.73, Pearson 0.68; brain
+  death: slope 0.19, Pearson 0.34, spread of peak times 0.75 -> 0.42 h (ventilated 0.80 h).
+
+**Speaker notes**
+- The ventilated agreement on the scatter is mostly the lung (without it: slope 0.22, Pearson 0.25; brain death 0.00).
+  Per-tissue intervals (median 1.6 h, 80 donors) are wider than the arrangement.
+- The registered contrast does not rest on one tissue: leaving out each of the 12 body tissues, D_rho stays 0.50 to
+  0.72 (0.621 with all), every drop above matched and responsive gene sets, label p <= 0.008; without the lung 0.69
+  (A317 post hoc note). The lung carries part of the ventilated donors' agreement (rho 0.68 -> 0.47 without it).
+- Adrenal: fewer than 30 donors in slow and ventilated groups; no brain regions there either.
+
+**Source:** `presentation/output/organs/couplings_{fast,slow,ventilated,brain_death}.csv`;
+`exploratory/A317_braindeath_confirm/output/posthoc_loto.csv`; `docs/results_preliminary.md` A317 post hoc note.
