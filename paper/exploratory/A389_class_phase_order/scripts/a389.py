@@ -139,6 +139,10 @@ ATLASES = [
     ("islets", "islet", "pancreas", {"endothelial": ["islet:endothelial"], "fibroblast": ["islet:stellate"]}),
 ]
 BLIND_ATLASES = {"endometrium", "skin_ad_control", "lung_natri_control", "islets"}
+GENOME = {"organ_optic_nerve": "organ_optic_nerve_genome", "organ_eye_anterior": "organ_eye_anterior_genome",
+          "kidney_sc": "kidney_sc_genome", "islets": "islets_genome", "kong_ileum": "kong_ileum_genome",
+          "kong_colon": "kong_colon_genome", "lung_natri_control": "lung_natri_control_genome"}  # as A274
+# endometrium and skin_ad_control have no genome-wide builder (`common/datasets/`): no companions, not used.
 
 
 def atlas_unit(atlas, site, organ, classes):
@@ -158,6 +162,7 @@ def atlas_unit(atlas, site, organ, classes):
         sys.path.pop(0)
         if other is not None:
             sys.modules["_shared"] = other
+    A150.ATLASES.update(GENOME)                       # the A274 genome builders of the other body atlases
     key = f"{atlas}|{site}"
     try:
         pb = A150.load_atlas(atlas, None, 0)["pb"]
