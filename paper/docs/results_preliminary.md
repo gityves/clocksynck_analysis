@@ -8934,3 +8934,37 @@ R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsiv
   differences) except in depression (-0.04), which has the fewest cells (38, mostly ventilated).
 - Code: `exploratory/A382_disease_loudness/scripts/a382.py --stage power`.
 <!-- src: paper/exploratory/A382_disease_loudness/output/{power,null,companions,matching}.csv -->
+
+## A382 (scored 2026-11-25; BLIND for every case-against-control loudness; one scoring run, 116 s): no chronic condition quiets the clock detectably (H382.1 FAIL x7); a loss beyond 10 % is excluded in five conditions (H382.2 PASS: T2D, obesity, hypertension, ischaemic heart disease, smoking) but not in COPD and depression, which lean quieter (about 4-6 %)
+
+| condition | cells | amplitude ratio (90 %) | Q* | label p (Holm) | matched pct | core loop | fast / vent Q | GC score case - control |
+|---|---|---|---|---|---|---|---|---|
+| T2D | 67 | 0.979 (0.943-1.011) | -0.075 | 0.295 (1.0) | 11 | 0.942 | -0.154 / +0.315 | +0.031 |
+| obesity | 65 | 0.975 (0.965-1.039) | -0.065 | 0.117 (0.70) | 15 | 0.998 | -0.088 / +0.168 | -0.003 |
+| hypertension | 69 | 1.007 (0.981-1.039) | -0.076 | 0.676 (1.0) | 8.5 | 1.024 | -0.069 / +0.130 | -0.022 |
+| ischaemic heart disease | 61 | 0.968 (0.922-0.991) | -0.104 | 0.25 (1.0) | 8 | 0.947 | -0.193 / +0.120 | +0.131 |
+| COPD | 64 | 0.958 (0.892-0.964) | -0.122 | 0.122 (0.70) | 4.5 | 0.981 | -0.236 / +0.006 | -0.116 |
+| depression | 38 | 0.936 (0.875-0.969) | -0.095 | 0.053 (0.37) | 13 | 1.019 | -0.167 / -0.128 | -0.021 |
+| smoking | 70 | 0.999 (0.958-1.019) | -0.034 | 0.588 (1.0) | 25.5 | 0.962 | -0.038 / +0.020 | -0.017 |
+
+- **H382.1 FAIL x7.** No condition is below both the label-null q05 and the matched q05 with a Holm-adjusted label p
+  below 0.05. Depression is nearest (p 0.053, at the label q05, Holm 0.37) and was the registered first candidate.
+- **H382.2.** Equivalence within +-10 % passes for T2D, obesity, hypertension, ischaemic heart disease and smoking; it
+  fails for COPD (lower bound 0.892) and depression (0.875): a loss up to 11-13 % is not excluded there.
+- **Two readouts disagree in width.** The matched-set bootstrap interval excludes 0 for ischaemic heart disease, COPD
+  and depression, while the label null does not: the bootstrap holds the matched pairing fixed and is the narrower of
+  the two; the registered test is the label null. Not read as losses.
+- **Core loop (descriptive).** Depression and COPD do not lean on the core loop (1.019, 0.981); T2D and ischaemic heart
+  disease lean more (0.942, 0.947). No condition is consistent across readouts.
+- **Cohorts (descriptive).** In fast deaths every condition leans quieter (Q -0.04 to -0.24); in ventilated deaths
+  most lean louder (+0.01 to +0.32). The pooled Q hides this split; it is the same direction for all conditions, so it
+  looks like a property of the matched fast-death arms (cases with a chronic disease dying fast differ from their
+  controls in ways matching on Hardy class does not capture), not of a disease. Not tested.
+- **Glucocorticoid check (descriptive).** No consistent case-minus-control difference (-0.12 to +0.13).
+- **Reading (registered).** Chronic disease does not quiet the clock at the size conflicting drives produce (mouse
+  inverted feeding 0.50-0.65, human night shift 0.38-0.56): a 10 % loss is excluded in five conditions and the two
+  leaning conditions stay within 13 %. With A306 (no organ-specific loss) and A379 / A380 (arrangement kept), chronic
+  disease leaves both the time and the loudness of the body's clocks in place at these limits. The fast / ventilated
+  split is a lead about the matched designs, not about disease.
+- Code: `exploratory/A382_disease_loudness/scripts/a382.py --stage score`.
+<!-- src: paper/exploratory/A382_disease_loudness/output/{tests,power,null,companions,matching}.csv -->
