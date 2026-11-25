@@ -660,7 +660,7 @@ Section 4 asks what sets the transfer and the organ's place in time. Source: `do
 | slide | content | entries |
 |---|---|---|
 | 4.1 When the body no longer reads the hour, the organ arrangement holds; only brain death moves it (former 3.last) | **new** (below) | A27, A293, A314, A317, A374 |
-| 4.1b Intensive care quiets the clocks; brain death keeps their amplitude | to build (below) | A315, A335, A349 |
+| 4.1b Intensive care quiets the clocks; brain death keeps their amplitude | **new** (below) | A315, A335, A349 |
 | 4.2 Removing a drive keeps amplitude, conflicting drives cost it | mouse liver without a feeding rhythm; daytime feeding across organs, weights and amplitude kept; one-line suggestive mention: organs that weigh one drive in mouse (liver, heart) are the loudest in human, the balanced lung the quietest, adipose the exception (A358, descriptive, rho -0.6, 5 organs, below its criterion) | A297, A322, A324, A358 |
 | 4.3 A behavioural shift moves the human clock | night shift, muscle core loop +4 h, amplitude cost | A257, A335 |
 | 4.4 A systemic signal read unequally by organs | glucocorticoid-like person state explains a small part of each organ's departure | A357 |
@@ -722,9 +722,9 @@ systematic distortion as scatter (conservative).
 `results/figure_3/output/cues_lost/walltime_hosts.csv`; `exploratory/A109_coupling_nulls/output/a109c_walltime.csv`;
 `exploratory/A374_order_interval/output/intervals.csv`; `docs/results_preliminary.md` A109c, A293, A374. A314, A317, A349.
 
-## 4.1b Intensive care quiets the tissue clocks, most where they were loudest; brain death keeps their amplitude (to build)
+## 4.1b Intensive care quiets the tissue clocks, most where they were loudest; brain death keeps their amplitude
 
-**Bullets (draft)**
+**Bullets**
 1. Ventilated donors' clocks are quieter: clock-specific amplitude 0.82 of fast deaths (Q* +0.404, above all 200
    matched sets), core 0.80; unchanged by age / sex matching (Q* +0.389, core +0.459) (A315 descriptive, A335).
 2. The loss rises with the organ's clock strength (Spearman 0.82, 12 tissues; thyroid, oesophagus mucosa, heart lose
@@ -734,7 +734,15 @@ systematic distortion as scatter (conservative).
 4. Amplitude falls with time on the ventilator among organ donors (longest vs shortest tertile Q* -0.236, 1st
    percentile of matched sets; A315, descriptive).
 
-**Figure:** `scripts/icu_amplitude.py` (to redesign with the user).
+**Figure:** `figures/icu_amplitude/icu_amplitude.png` (`scripts/icu_amplitude.py`; wide). A. clock-specific clock
+amplitude, one row per comparison: ventilated vs fast deaths (0.82; matched and responsive 95th percentiles 0.93 and
+0.90), brain death vs ventilated (1.02, 90 % 0.94-1.10; shaded: equivalence margin 0.84-1.20), longest vs shortest
+ventilation tertile among organ donors (0.89; companion percentiles not stored for this contrast). exp(Q* / 2) from the
+clock-plane variance ratio. B. per tissue, host-referenced loudness lost in intensive care (log z2, fast over
+ventilated, at a common spread, 90 % interval) against fast-death clock strength (z2). 14 genes.
+
+**Tags:** A315 descriptive contrasts (registered) and H315.1 FAIL (powered); A335 registered (core loop blind); A349
+descriptive; amplitude display exp(Q* / 2) post hoc.
 
 **Caveats (speaker notes)**
 - The ventilated host spread is about half that of fast deaths (A349); per-tissue losses are compared at a common
