@@ -11659,3 +11659,31 @@ in hours. Stop rule: none (reported as decidable or not at the size of the A379 
 any slide). Fail: not detected; the hour interval bounds it.
 **Limits.** Post hoc motivation; T2D and obesity overlap; deaths.
 **Code (both).** `exploratory/A380_disease_hours/scripts/a380_a381.py --stage power | score`. GTEx aggregates only.
+
+## A382 (2026-11-25, on the user's instruction "draft A382 and run the power stage", after the question whether the chronic-disease loudness nulls (A306) reflect the test or the biology: A306 is host-referenced and relative to companion organs, so a body-wide loss cancels; staged: power (matching, label null, companions; no case-against-control loudness), then one scoring run; **NOT BLIND**: A306 (module-minus-companion gain: T2D -0.03, hypertension +0.21, smoking -0.51 not powered), A235 descriptive module log z2 ratios (obesity -0.10 / -0.13, T2D -0.003 / -0.047), A164, A233, A379-A381, A373 (method and the age result); **BLIND**: every absolute clock-plane variance by disease arm, clock or companions (none computed; grep 2026-11-25)): do chronic diseases quiet the clocks of the body in absolute terms? **GTEx fast and ventilated deaths; T2D, obesity, hypertension, ischaemic heart disease, COPD, depression, smoking**
+
+**Why.** The federation reading predicts amplitude loss where drives conflict (mouse inverted feeding: organs keep
+0.50-0.65; human night shift: 0.38-0.56). A306 cannot see a loss shared by the organs of a person. The A373 statistic
+(absolute debiased clock-plane variance, matched arms, companions) can, at about +-4 % for age.
+**Design.** Per condition and cohort (ventilated Hardy 0; fast Hardy 1-2), per tissue: A164 / A233 matching
+(`matched_label.make_plan`: exact sex and Hardy class, age caliper 5 y, nearest age then ischaemic time; up to 3
+controls, obesity 1:1; tissues with >= 10 matched cases). Labels as A379.
+- Per tissue: clock-plane states on counts (projector per tissue over all its rows, A373 `Cohort.zv`); per arm the
+  debiased variance W (A315); L_t = log(W_case / W_control), the control arm being all matched controls.
+- Q = median of L_t over the eligible tissues of both cohorts; amplitude ratio exp(Q / 2); Q* = Q minus the median Q
+  of 200 expression-matched sets (same arms); responsive sets reported (A373 seeds re-used per cohort).
+- Interval: matched-set bootstrap within tissue (2000), 90 %; label null: the case swapped with a random member of its
+  set (1000).
+**H382.1 (loss, per condition; Holm over the seven on the label p).** Q below the matched-companion q05 and the
+label-null q05, Holm-adjusted label p < 0.05, and the 90 % interval below 0.
+**H382.2 (equivalence, per condition).** The 90 % interval of the amplitude ratio within 0.90-1.11 (Q within +-0.21,
+A373 margin); decidable if the power stage's expected half-width (1.645 x label-null SD) is below 0.21.
+**Predictions (stated now).** No loss and equivalence for most conditions; if any loss, depression (disturbed rest and
+activity) first, then obesity. A loss in conditions without a plausible drive conflict would point to the disease state
+(or its agonal course) rather than to conflicting drives.
+**Descriptive.** Core loop; per cohort; pooled (unmatched) arms; per tissue. A glucocorticoid-like check: per arm, the
+mean over tissues of the glucocorticoid-target score (`controls.GC_TARGETS`, z-scored log CPM per tissue), reported as
+the case-minus-control difference (A360: the GC-target state goes with a quieter clock).
+**Limits.** Deaths; comorbidity; Hardy matching balances death type but not the agonal course within a class; companion
+median treated as fixed. Aggregates only.
+**Code.** `exploratory/A382_disease_loudness/scripts/a382.py --stage power | score`.
