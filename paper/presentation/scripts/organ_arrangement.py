@@ -41,14 +41,17 @@ MATCHED, RESPONSIVE = "#BBBBBB", "#6E6E6E"
 EDGE = [patheffects.Stroke(linewidth=3.6, foreground="white"), patheffects.Normal()]
 ROWS = {"fast": "fast\ndeaths", "slow_hardy4": "slow\ndeaths", "hardy3": "intermediate\ndeaths"}
 WALL = {"fast": "fast", "slow_hardy4": "hardy4", "hardy3": "hardy3"}
-IVL = {"slow_hardy4": "slow deaths (Hardy 4)", "hardy3": "Hardy 3 (descriptive)"}
+# group -> row of the A374 interval table; noise reference: the row of the same donor count
+IVL = {"slow_hardy4": "slow deaths (Hardy 4)", "hardy3": "Hardy 3 (descriptive)",
+       "ventilated_postmortem": "ventilated, living brain", "organ_donor": "brain-dead organ donors"}
+NOISE = {**IVL, "organ_donor": "ventilated, living brain"}  # brain-dead rho is read at 79 donors (A293)
 H = 0.55
 
 
-def rows(ax):
-    ax.set_yticks(range(len(ROWS)), list(ROWS.values()))
+def rows(ax, R=ROWS):
+    ax.set_yticks(range(len(R)), list(R.values()))
     ax.tick_params(axis="y", length=0)
-    ax.set_ylim(len(ROWS) - 0.5, -0.5)
+    ax.set_ylim(len(R) - 0.5, -0.5)
 
 
 def qline(ax, y, x, col):
@@ -56,13 +59,13 @@ def qline(ax, y, x, col):
             path_effects=EDGE if col == RESPONSIVE else None)
 
 
-def arrangement(ax, g, nz):
+def arrangement(ax, g, nz, R=ROWS):
     g = g.set_index("group")
     nz = nz[nz.gene_set == "14 genes"].set_index("group")
     ax.barh(0, 1, height=H, facecolor="white", edgecolor=CS, lw=1.4, ls="--")
     ax.text(0.5, 0, "reference", ha="center", va="center", fontsize=10, color=CS)
     out = []
-    for i, k in enumerate(ROWS):
+    for i, k in enumerate(R):
         if k == "fast":
             continue
         r = g.loc[k]
@@ -70,45 +73,48 @@ def arrangement(ax, g, nz):
         ax.barh(i, r.rho_clock, height=H, color=CS if ok else "white", edgecolor=CS, lw=1.4, zorder=2)
         qline(ax, i, r.matched_q95, MATCHED)
         qline(ax, i, r.responsive_q95, RESPONSIVE)
-        e = nz.loc[IVL[k]]
+        e = nz.loc[NOISE[k]]
         ax.plot([e.rho_q05, e.rho_q95], [i + H / 2 + 0.12] * 2, color=CS, lw=1.2, zorder=4)
         ax.plot(e.rho_median, i + H / 2 + 0.12, ls="", marker="D", ms=6, mfc="white", mec=CS, mew=1.4, zorder=5)
         out.append(dict(group=k, n=r.n, rho=r.rho_clock, matched_q95=r.matched_q95, responsive_q95=r.responsive_q95,
                         noise_median=e.rho_median, noise_q05=e.rho_q05, noise_q95=e.rho_q95, test=r.test))
     ax.set_xlim(0, 1.05)
-    rows(ax)
+    rows(ax, R)
     ax.set_xlabel("organ arrangement\nshared with fast deaths")
     return pd.DataFrame(out)
 
 
-def external(ax, w):
+def external(ax, w, R=ROWS, wall=WALL):
     w = w.set_index("cohort")
     out = []
-    for i, k in enumerate(ROWS):
-        r = w.loc[WALL[k]]
+    for i, k in enumerate(R):
+        r = w.loc[wall[k]]
         ax.barh(i, r.R, height=H, color=CS)
         out.append(dict(group=k, donors=r.donors, R=r.R, p_R=r.p_R))
     ax.set_xlim(0, 1.05)
-    rows(ax)
+    rows(ax, R)
     ax.set_yticklabels([])
     ax.set_xlabel("body clock aligned to\nthe hour of death, R")
     return pd.DataFrame(out)
 
 
-def interval(ax, iv):
+def interval(ax, iv, R=ROWS, xmax=2.5):
     iv = iv[iv.gene_set == "14 genes"].set_index("group")
     scale = float(iv.median_abs_pair_offset_fast_h.iloc[0])
     ax.axvline(scale, color=pf.GREY, lw=1, ls="--", zorder=0)
     ax.text(scale, -0.42, " size of the\n arrangement", ha="left", va="top", fontsize=9, color=pf.GREY)
     out = []
-    for i, k in enumerate(ROWS):
+    for i, k in enumerate(R):
         if k == "fast":
             continue
         r = iv.loc[IVL[k]]
         ax.plot([r.lower_h, r.upper_h], [i, i], color=CS, lw=4, solid_capstyle="butt")
+        if r.upper_at_grid_edge:  # upper bound not reached on the simulated grid
+            ax.annotate("", (r.upper_h + 0.5, i), xytext=(r.upper_h - 0.05, i),
+                        arrowprops=dict(arrowstyle="-|>", color=CS, lw=1.5, mutation_scale=12))
         out.append(dict(group=k, lower_h=r.lower_h, upper_h=r.upper_h, scale_h=scale))
-    ax.set_xlim(0, 2.5)
-    rows(ax)
+    ax.set_xlim(0, xmax)
+    rows(ax, R)
     ax.set_yticklabels([])
     ax.set_xlabel("how far the organs\ncan have moved [h]")
     return pd.DataFrame(out)

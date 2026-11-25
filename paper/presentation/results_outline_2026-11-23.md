@@ -726,14 +726,14 @@ Section 4 asks what sets the transfer and the organ's place in time. Source: `do
    registered equivalence margin 0.84-1.20; A315 H315.1 FAIL, A335 part 3).
 4. Reading: the body's state in intensive care sets loudness; the living brain holds the order.
 
-**Figure:** `figures/intensive_care/intensive_care.png` (`scripts/intensive_care.py`; wide). Rows: fast deaths
-(reference), ventilated with a living brain, brain death. A. organ arrangement shared with fast deaths (clock genes;
-matched and responsive 95th percentiles; diamond: expected from sampling noise at 79 donors). B. clock-specific clock
-amplitude against the comparison group (ventilated vs fast deaths; brain death vs ventilated), exp(Q* / 2) from the
-clock-plane variance ratio; shaded: equivalence margin. C. 90 % compatibility interval of the organ scatter (arrow:
-upper bound at the grid edge); dashed: the size of the arrangement. D. per tissue, host-referenced loudness lost in
-intensive care (log z2, fast over ventilated, at a common spread, 90 % interval) against fast-death clock strength.
-All 14 genes; core loop in the notes.
+**Figure:** `figures/intensive_care/intensive_care.png` (`scripts/intensive_care.py`; half; the panels of slide 3.last
+with two rows added, user 2026-11-25). Rows: fast deaths (reference), slow, intermediate, ventilated with a living
+brain, brain death. A. organ arrangement shared with fast deaths (clock genes; matched and responsive 95th percentiles;
+diamond: expected from sampling noise at the group's donor count, brain death at 79). B. body clock aligned to the hour
+of death, R (A27; ventilated R 0.158, p 0.14; brain death 0.174, 301 donors; A314, descriptive). C. 90 % compatibility
+interval of the organ scatter (arrow: upper bound beyond the simulated grid); dashed: the size of the arrangement.
+Amplitude (bullet 2, brain-death amplitude in bullet 3) goes to a second figure: `scripts/icu_amplitude.py` (to
+redesign).
 
 **Tags:** A293 H293.2 registered (not blind for the clock rho, companions new); brain-dead rho descriptive; A315
 descriptive contrasts (registered) and H315.1 FAIL (powered); A335 registered (core loop blind); A374 registered
