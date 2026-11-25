@@ -9,14 +9,19 @@ A. Clock-specific clock amplitude, one row per comparison: ventilated post-morte
    tertile contrast). Brain-death row: 90 % donor-bootstrap interval and the registered equivalence margin (+-0.357 in
    Q*, shaded; A335 part 3).
 B. Per tissue, loudness lost in intensive care (host-referenced log z2, fast over ventilated, at a common host spread;
-   90 % donor-bootstrap interval, 500 draws) against the tissue's clock strength in fast deaths (z2; A349 D349.2-3,
-   descriptive). Organ-system colours. Whole blood omitted (no readable clock, slide 3.1b; post hoc display choice,
-   user 2026-11-25).
+   90 % donor-bootstrap interval, 500 draws; A349 D349.2, descriptive) against the tissue's loudness in fast deaths, its
+   gain on the reference map of slide 3.1 (`organs_compute.py`). Organ-system colours. Post hoc display choices (user,
+   2026-11-25): whole blood omitted (no readable clock, slide 3.1b); x = reference gain rather than the fast-death z2 of
+   A349 D349.3, because z2 is read in each host's own scale and an anchor's leave-one-out host can differ (muscle: host
+   spread 0.18 against about 3.5 for the other tissues, z2 inflated to 19.5); Spearman recomputed on the gain.
+C. Per tissue, coupling to the body's clock lost in intensive care at a common host spread (d* = coupling fast minus
+   ventilated at V0; 90 % donor-bootstrap interval; A349 D349.2), same x axis. Raw couplings are not compared: the host
+   spread itself falls under ventilation.
 
 Status: A315 descriptive contrasts (registered) and H315.1 FAIL (powered); A335 registered; A349 descriptive; the
 amplitude display exp(Q* / 2) is post hoc. 14 genes (core loop in the speaker notes). GTEx aggregates only.
 Data: exploratory/A335_review_batch/output/{a315_core,equivalence}.csv; exploratory/A315_braindeath_gain/output/
-descriptive.csv; exploratory/A349_icu_limits/output/part2_tissues.csv.
+descriptive.csv; exploratory/A349_icu_limits/output/part2_tissues.csv; presentation/output/organs/couplings.csv.
 Output: presentation/figures/icu_amplitude/icu_amplitude.{svg,png} (wide).
 
     python scripts/icu_amplitude.py
@@ -45,7 +50,9 @@ ROWS = ["ventilated\nvs fast deaths", "brain death\nvs ventilated", "long vs sho
 SHORT = {"Thyroid": "thyroid", "Esophagus - Mucosa": "oes. mucosa",
          "Heart - Atrial Appendage": "heart", "Muscle - Skeletal": "muscle",
          "Skin - Not Sun Exposed (Suprapubic)": "skin"}
-LEADER = ("Esophagus - Mucosa", "Heart - Atrial Appendage")
+# label offsets [pt] and alignment, placed clear of the neighbouring error bars
+PLACE = {"Esophagus - Mucosa": ((16, -16), "left"), "Heart - Atrial Appendage": ((-7, 0), "right"),
+         "Skin - Not Sun Exposed (Suprapubic)": ((-6, 0), "right")}
 H = 0.55
 
 
@@ -90,35 +97,41 @@ def amplitude(ax, core, eq, desc):
                               pct_matched=t.percentile_vs_matched)])
 
 
-def per_tissue(ax, t):
+def tissues(t, gain):
     t = t[(t.gene_set == "14 genes") & (t.design == "pooled") & (t.tissue != "Whole Blood")]  # no readable clock (3.1b)
+    return t.assign(gain=t.tissue.map(gain.rel_amplitude))
+
+
+def per_tissue(ax, t, y, lo, hi, labels=SHORT):
+    """One dot per tissue: y with its 90 % interval against the reference gain."""
     for _, r in t.iterrows():
         c = COLOR[gtex_system(r.tissue)]
-        ax.plot([r.z2_fast] * 2, [r.lz2_lo90, r.lz2_hi90], color=c, lw=1, alpha=0.6, zorder=2)
-        ax.scatter([r.z2_fast], [r.log_z2_ratio], s=30, color=c, zorder=3)
-        if r.tissue in SHORT:
-            left = r.tissue.startswith("Skin")
-            far = r.tissue in LEADER  # labels moved past the neighbouring error bars
-            ax.annotate(SHORT[r.tissue], (r.z2_fast, r.log_z2_ratio), xytext=(-6 if left else 28 if far else 7, 0),
-                        textcoords="offset points", ha="right" if left else "left", va="center", fontsize=9, color=c,
-                        arrowprops=dict(arrowstyle="-", color=c, lw=0.6, shrinkA=0, shrinkB=4) if far else None)
+        ax.plot([r.gain] * 2, [r[lo], r[hi]], color=c, lw=1, alpha=0.6, zorder=2)
+        ax.scatter([r.gain], [r[y]], s=30, color=c, zorder=3)
+        if r.tissue in labels:
+            off, ha = PLACE.get(r.tissue, ((7, 0), "left"))
+            ax.annotate(SHORT[r.tissue], (r.gain, r[y]), xytext=off, textcoords="offset points", ha=ha, va="center",
+                        fontsize=9, color=c, arrowprops=dict(arrowstyle="-", color=c, lw=0.6, shrinkA=0, shrinkB=4)
+                        if abs(off[1]) > 0 else None)
     ax.axhline(0, color=MUTED, lw=0.8, ls="--", zorder=0)
-    ax.set_xscale("log")
-    ax.set_xticks([0.3, 1, 3, 10], ["0.3", "1", "3", "10"])
-    ax.minorticks_off()
-    ax.set_xlabel("clock strength in fast deaths [z2]")
-    ax.set_ylabel("loudness lost in intensive care\n[log, fast / ventilated]")
-    return t[["tissue", "z2_fast", "log_z2_ratio", "lz2_lo90", "lz2_hi90"]], spearmanr(t.z2_fast, t.log_z2_ratio).statistic
+    ax.set_xlabel("loudness in fast deaths\n[gain, reference map]")
+    return spearmanr(t.gain, t[y]).statistic
 
 
 def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
-    lay = pf.Layout.slide("AxB", kind="wide", col_ratios=[1, 0.12, 1.1], blank=("x",))
+    lay = pf.Layout.slide("AxByC", kind="wide", col_ratios=[1, 0.12, 0.9, 0.12, 0.9], blank=("x", "y"))
     a = amplitude(lay.axes["A"], pd.read_csv(EXP / "A335_review_batch/output/a315_core.csv"),
                   pd.read_csv(EXP / "A335_review_batch/output/equivalence.csv"),
                   pd.read_csv(EXP / "A315_braindeath_gain/output/descriptive.csv"))
-    d, rho = per_tissue(lay.axes["B"], pd.read_csv(EXP / "A349_icu_limits/output/part2_tissues.csv"))
+    d = tissues(pd.read_csv(EXP / "A349_icu_limits/output/part2_tissues.csv"),
+                pd.read_csv(PAPER / "presentation/output/organs/couplings.csv", index_col="tissue"))
+    rho = per_tissue(lay.axes["B"], d, "log_z2_ratio", "lz2_lo90", "lz2_hi90")
+    lay.axes["B"].set_ylabel("loudness lost in intensive care\n[log, fast / ventilated]")
+    rho_c = per_tissue(lay.axes["C"], d, "d_star", "dstar_lo90", "dstar_hi90",
+                       labels=("Muscle - Skeletal", "Thyroid"))
+    lay.axes["C"].set_ylabel("coupling lost in intensive care\n[fast minus ventilated]")
     h = [Patch(facecolor=CS, edgecolor=CS, label="clock genes"),
          Line2D([], [], color=MATCHED, lw=2.2, label="matched genes, 95th pct"),
          Line2D([], [], color=RESPONSIVE, lw=2.2, path_effects=EDGE, label="stress-responsive genes, 95th pct"),
@@ -129,8 +142,10 @@ def main():
     fig = lay.finalize()
     pd.set_option("display.width", 200)
     print(a.round(3).to_string(index=False))
-    print(d.round(3).to_string(index=False))
-    print("Spearman loss vs fast z2:", round(rho, 3))
+    print(d[["tissue", "gain", "log_z2_ratio", "lz2_lo90", "lz2_hi90", "d_star", "dstar_lo90", "dstar_hi90"]]
+          .round(3).to_string(index=False))
+    print("Spearman loudness loss vs gain:", round(rho, 3), " coupling loss vs gain:", round(rho_c, 3),
+          " median d*:", round(d.d_star.median(), 3))
     print(pf.collisions(fig))
     pf.save(fig, OUT / "icu_amplitude")
 

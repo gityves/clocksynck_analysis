@@ -727,11 +727,14 @@ systematic distortion as scatter (conservative).
 **Bullets**
 1. Ventilated donors' clocks are quieter: clock-specific amplitude 0.82 of fast deaths (Q* +0.404, above all 200
    matched sets), core 0.80; unchanged by age / sex matching (Q* +0.389, core +0.459) (A315 descriptive, A335).
-2. The loss rises with the organ's clock strength (Spearman 0.76 over 11 tissues without blood, post hoc; 0.82 with
-   it, A349, descriptive): thyroid, oesophagus mucosa and heart lose most.
-3. Brain death keeps the amplitude of ventilated donors (1.02, 90 % 0.94-1.10, inside the registered equivalence margin
+2. The loss rises with the organ's loudness on the reference map (Spearman 0.77 over 11 tissues, gain of slide 3.1,
+   post hoc; A349 registered z2: 0.82 with blood, descriptive): thyroid, oesophagus mucosa and heart lose most.
+3. Coupling to the body's clock falls too, compared at a common host spread: median d* 0.08 over the 11 tissues, clear
+   in thyroid (0.28, 90 % 0.18-0.38) and visceral fat (0.20, 0.06-0.32), and larger in louder organs (Spearman 0.79,
+   post hoc; A349, descriptive).
+4. Brain death keeps the amplitude of ventilated donors (1.02, 90 % 0.94-1.10, inside the registered equivalence margin
    0.84-1.20; A315 H315.1 FAIL, A335 part 3).
-4. Amplitude falls with time on the ventilator among organ donors (longest vs shortest tertile Q* -0.236, 1st
+5. Amplitude falls with time on the ventilator among organ donors (longest vs shortest tertile Q* -0.236, 1st
    percentile of matched sets; A315, descriptive).
 
 **Figure:** `figures/icu_amplitude/icu_amplitude.png` (`scripts/icu_amplitude.py`; wide). A. clock-specific clock
@@ -739,8 +742,9 @@ amplitude, one row per comparison: ventilated vs fast deaths (0.82; matched and 
 0.90), brain death vs ventilated (1.02, 90 % 0.94-1.10; shaded: equivalence margin 0.84-1.20), longest vs shortest
 ventilation tertile among organ donors (0.89; companion percentiles not stored for this contrast). exp(Q* / 2) from the
 clock-plane variance ratio. B. per tissue, host-referenced loudness lost in intensive care (log z2, fast over
-ventilated, at a common spread, 90 % interval) against fast-death clock strength (z2); whole blood omitted (no
-readable clock, slide 3.1b; user 2026-11-25). 14 genes.
+ventilated, at a common spread, 90 % interval) against the tissue's gain on the reference map (slide 3.1); C. per
+tissue, coupling lost (d*, fast minus ventilated at a common spread, 90 % interval), same x. Whole blood omitted (no
+readable clock, slide 3.1b); x = reference gain rather than z2 (user, 2026-11-25; post hoc). 14 genes.
 
 **Tags:** A315 descriptive contrasts (registered) and H315.1 FAIL (powered); A335 registered (core loop blind); A349
 descriptive; amplitude display exp(Q* / 2) post hoc.
@@ -748,7 +752,14 @@ descriptive; amplitude display exp(Q* / 2) post hoc.
 **Caveats (speaker notes)**
 - The ventilated host spread is about half that of fast deaths (A349); per-tissue losses are compared at a common
   spread.
-- Whole blood, omitted from panel B, "gains" (-1.95; A349): it has no readable clock (slide 3.1b). The registered Q* of
+- Why not z2 on the x axis (as registered in A349): z2 is read in each tissue's host scale, and an anchor's
+  leave-one-out host can differ. Muscle's host spread is 0.18 against about 3.5 for the other tissues, which inflates its
+  z2 to 19.5 and made it look like the loudest organ losing little. On the gauge-free reference gain (1.34) it sits with
+  lung and loses as much (0.24 vs 0.23). On the core loop muscle loses 0.41 and its coupling falls more clearly (d* 0.21,
+  0.03-0.40).
+- Raw couplings are not compared between groups (e.g. muscle 0.59 to 0.38): the host spread itself falls under
+  ventilation, and coupling falls with spread alone; d* compares them at the pooled spread.
+- Whole blood, omitted from panels B and C, "gains" (-1.95; A349): it has no readable clock (slide 3.1b). The registered Q* of
   panel A is a median over the 12 tissues including blood (a median, so one tissue moves it little).
 - Raw clock-plane variance is lower in organ donors, as is the matched sets' (core Q -0.186): the brain-death
   equivalence is clock-specific, relative to random genes; also equivalent after age matching (A335).
@@ -756,4 +767,4 @@ descriptive; amplitude display exp(Q* / 2) post hoc.
 
 **Source:** `exploratory/A335_review_batch/output/{a315_core,matched,equivalence}.csv`;
 `exploratory/A315_braindeath_gain/output/descriptive.csv`; `exploratory/A349_icu_limits/output/part2_tissues.csv`;
-`docs/results_preliminary.md` A315, A335, A349.
+`presentation/output/organs/couplings.csv` (gain); `docs/results_preliminary.md` A315, A335, A349.
