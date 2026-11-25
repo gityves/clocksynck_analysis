@@ -801,7 +801,7 @@ H324.2 FAIL (BLIND for heart, kidney, visceral fat); A358 descriptive, below its
   visceral fat 19 below.
 - Different laboratories, strains and protocols; amplitudes are read in each dataset's own projector; Manella's
   reference is ad libitum, Xin's night-restricted feeding. Xin visceral fat and Manella white fat are different depots.
-- Removal and inversion are mouse liver only for the removal arm; the cross-organ panel is inversion only.
+- Removal is tested in the mouse liver only; the cross-organ panel is inversion only.
 - A358 is one line, never evidence: the balance b(1 - b) spans only 0.17-0.25 over the 5 organs.
 - Human muscle under 12 h-shifted behaviour (the former panel B) is slide 4.3.
 
