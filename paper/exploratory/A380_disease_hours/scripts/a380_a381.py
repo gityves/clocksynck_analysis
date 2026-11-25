@@ -9,10 +9,13 @@ Stages:
   power  A380: per condition, the upper bound of the 90 % compatibility set when rho_obs equals the median of
          rho_sim(0) (the detection limit in hours); A381: the same for the pooled metabolic arms, plus the SD and 5th
          percentile of r under 2000 within-set relabellings. No observed case-against-control value.
-  score  (written after the power note)
+  score  (written after the power note, before any case-against-control value) the same arms, pairs, seeds and
+         simulations as the power stage; rho_obs = Fisher-Lee(control map, case map); its 90 % compatibility interval;
+         A381: one-sided relabelling p (r lower than the null, the power-stage null recomputed with the same seed) and
+         r on 200 matched and 200 responsive sets (H381.1: p < 0.05 and r below both companion q05).
 
-    RUN_CAP_GB=20 paper/common/run.sh paper/exploratory/A380_disease_hours/scripts/a380_a381.py --stage power
-Outputs (`../output/`): power.csv. Controlled access: labels and matched sets stay in memory; aggregates only.
+    RUN_CAP_GB=20 paper/common/run.sh paper/exploratory/A380_disease_hours/scripts/a380_a381.py --stage power | score
+Outputs (`../output/`): power.csv | intervals.csv, sim.csv, a381_companions.csv. Controlled access: labels and matched sets stay in memory; aggregates only.
 """
 import argparse
 import sys
@@ -119,12 +122,66 @@ def power():
     print(out.round(3).to_string(index=False))
 
 
+def score():
+    limit_threads(4)
+    t0 = time.time()
+    T = H.Tissues(200, 0)
+    T.build_states(np.random.default_rng(1), 0, real=True)
+    D.A.RS.add_sets(T, 200, 0)
+    Z, M = raw(T, "clock", 0, T.R)
+    q = D.covariates(T)
+    print(f"states, sets and covariates ({time.time() - t0:.0f}s)", flush=True)
+    designs = {c: D.matched_sets(q, T, c) for c in D.CONDITIONS}
+    designs["metabolic (A381)"] = metabolic_sets(q, T)
+    rows, srows, comp = [], [], []
+    for k, (name, sets) in enumerate(designs.items()):
+        rng = np.random.default_rng([SEED, k])  # as the power stage
+        cases, ctl = arms(sets)
+        mask = B.pair_mask(M, cases, ctl)
+        tc = phases(Z, M, ctl, mask)
+        sq = simulate(tc, boot_eps(Z, M, ctl, mask, rng), boot_eps(Z, M, cases, mask, rng), mask, rng)
+        rho_obs = float(ST.fisher_lee(tc, phases(Z, M, cases, mask)))
+        lo, hi = compat(sq, rho_obs)
+        srows += [dict(design=name, x_h=x, rho_q05=a, rho_median=b, rho_q95=c) for x, (a, b, c) in zip(GRID, sq)]
+        row = dict(design=name, cases=len(cases), controls=len(ctl), pairs=int(mask.sum()), rho_obs=rho_obs,
+                   lower_h=lo, upper_h=hi, upper_at_grid_edge=bool(hi >= GRID[-1]) if hi == hi else False)
+        if name.startswith("metabolic"):
+            null = []
+            for _ in range(N_PERM):
+                a, b = [], []
+                for s_ in sets:
+                    p = rng.permutation(s_)
+                    a.append(p[0])
+                    b += list(p[1:])
+                null.append(float(ST.fisher_lee(phases(Z, M, np.array(b), mask), phases(Z, M, np.array(a), mask))))
+            null = np.array(null)
+            cq = {}
+            for kind in ("pseudo", "resp"):
+                v = []
+                for j in range(200):
+                    Zk, Mk = raw(T, kind, j, T.R)
+                    v.append(float(ST.fisher_lee(phases(Zk, Mk, ctl, mask), phases(Zk, Mk, cases, mask))))
+                    comp.append(dict(family=kind, set=j, r=v[-1]))
+                cq[kind] = float(np.nanquantile(v, 0.05))
+            p_ = float((1 + np.sum(null <= rho_obs)) / (1 + N_PERM))
+            row.update(p=p_, null_median=float(np.median(null)), matched_q05=cq["pseudo"], responsive_q05=cq["resp"],
+                       H381_1=bool(p_ < 0.05 and rho_obs < cq["pseudo"] and rho_obs < cq["resp"]))
+        rows.append(row)
+        print(name, f"done ({time.time() - t0:.0f}s)", flush=True)
+    out = pd.DataFrame(rows)
+    out.to_csv(OUT / "intervals.csv", index=False)
+    pd.DataFrame(srows).to_csv(OUT / "sim.csv", index=False)
+    pd.DataFrame(comp).to_csv(OUT / "a381_companions.csv", index=False)
+    pd.set_option("display.width", 220)
+    print(out.round(3).to_string(index=False))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--stage", choices=["power"], required=True)
-    ap.parse_args()
+    ap.add_argument("--stage", choices=["power", "score"], required=True)
+    stage = ap.parse_args().stage
     OUT.mkdir(parents=True, exist_ok=True)
-    power()
+    power() if stage == "power" else score()
 
 
 if __name__ == "__main__":
