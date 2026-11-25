@@ -12157,3 +12157,6 @@ atlases); **H389.1b (blind subset)**: the same rule on the A387 normal samples a
 beside it; H389.4 (A293 atlases added) is absorbed into H389.1. H389.2-3, C1-C3 and D389 unchanged; C2 adds nothing (the
 lung subtypes are those of A272). Decidability as registered (pooled MDE <= 0.5 h at R 0.5), for H389.1 and H389.1b
 separately; the power stage is rerun on the extended arm and noted before scoring.
+**Addendum (2026-11-25, user: "make it partially not blind, ... the idea is just to increase the power as much as we
+can").** H389.1b is not a hypothesis: H389.1 on the extended normal arm (partly not blind, labelled so) is the test; the
+blind subset is listed descriptively in the scoring output only.
