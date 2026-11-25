@@ -8968,3 +8968,28 @@ R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsiv
   split is a lead about the matched designs, not about disease.
 - Code: `exploratory/A382_disease_loudness/scripts/a382.py --stage score`.
 <!-- src: paper/exploratory/A382_disease_loudness/output/{tests,power,null,companions,matching}.csv -->
+
+## A378 power note (2026-11-25; standard errors only, no gain ratio computed or read; one run, 49 min, the sheep fit written to `sheep_fit_unread.csv` and not read): every species is decidable for part 1 (species-mean MDE 0.11-0.28 on the log gain ratio, against the log 1.5 = 0.405 stop rule)
+
+| part | species | contrast | SE | MDE (log ratio) |
+|---|---|---|---|---|
+| 1 | human | aorta and coronary / tibial artery | 0.048 | 0.119 |
+| 1 | human | suprapubic / lower-leg skin | 0.077 | 0.193 |
+| 1 | baboon | abdominal / calf muscle | 0.099 | 0.247 |
+| 1 | baboon | four trunk fats / subcutaneous fat | 0.112 | 0.279 |
+| 1 | sheep | perirenal and caul / subcutaneous, tail, intermuscular fat | 0.113 | 0.280 |
+| 1 | sheep | perirenal and caul / tail fat (reported) | 0.156 | 0.389 |
+| 1 | species means | human / baboon / sheep | 0.045 / 0.075 / 0.113 | 0.113 / 0.186 / 0.280 |
+| 2 | human | oesophagus mucosa / lower-leg skin | 0.070 | 0.174 |
+| 2 | baboon | oesophagus / skin | 0.082 | 0.205 |
+| 2 | sheep | rumen, reticulum, omasum / skin | 0.108 | 0.269 |
+| 2 | human | visceral / subcutaneous fat | 0.050 | 0.123 |
+| 2 | baboon | omental / subcutaneous fat | 0.100 | 0.250 |
+| 2 | sheep | caul / subcutaneous fat | 0.179 | 0.447 |
+
+- Choices fixed in the script before scoring: per-tissue SEs combined as independent (clocksync stores bootstrap
+  replicates of couplings only); a side with several tissues is the mean of their log gains; a species' part-1 value
+  is the mean of its pair contrasts. Baboon pericardial fat has a large SE (0.256).
+- No stop rule fires: H378.1 and H378.2 can be scored. The A378 GTEx gains are read from the reference map (200 boots).
+- Code: `exploratory/A378_core_shell_gain/scripts/a378.py --stage power`.
+<!-- src: paper/exploratory/A378_core_shell_gain/output/{power_tissues,power_contrasts}.csv -->
