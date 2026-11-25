@@ -7839,6 +7839,14 @@ once (part 2: 166 s, peak 1.9 GB). Aggregates only.
 - **D349.3, relative gain under the loss:** per-tissue ratio minus the median spans -2.10 (blood) to +0.92 (thyroid);
   the loss rises with the tissue's fast-death z2 (Spearman 0.818 pooled, 0.839 matched; core 0.797, 0.755): the organs
   with the strongest clocks lose most, blood and skin least.
+- **Erratum to D349.3 (2026-11-25, post hoc):** the fast-death z2 is in the scale of each tissue's host, and skeletal
+  muscle, the host's reference anchor (most donors), is read on a leave-one-out host of another reference: its host
+  spread is 0.185 (0.221 matched; core 0.337 / 0.392) against about 3.5 for every other tissue, which inflates its z2
+  to 19.5. z2 is not comparable across tissues. On the scale-free shared variance S = z2 V (fast deaths) the Spearman
+  of the loss is 0.825 pooled (p 0.001) and 0.895 matched; core 0.804 and 0.727 (12 tissues; without whole blood
+  0.773, 0.864, 0.745, 0.645): the reading stands. Within-tissue values (log z2 ratio, d*) are not affected (one host
+  per tissue). clocksync now reports S (fit) and S0_<g> = z2_<g> V0 (contrast) and documents the scale (commit of
+  2026-11-25). Slide 4.1b uses the reference-map gain (Spearman 0.773 without blood).
 - **D349.4, compression after removing the non-temporal axis.** Reproduction: 0.585 (stored 0.585, 34 pairs). Host
   component along the A109 axis (3.90 h, eigenvalue share 0.66) removed per group: ratio 0.767 (30 pairs), same pole
   0.909, order Spearman 0.219. The removal overshoots (share along the axis -0.10 fast, -0.34 post mortem), so 0.767 is
