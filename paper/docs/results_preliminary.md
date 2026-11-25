@@ -9041,3 +9041,61 @@ R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsiv
 - The baboon fit (200 animal bootstraps) is in `baboon_fit.csv`; read at this stage for SEs and counts only.
 - Code: `exploratory/A383_species_organisation/scripts/a383_a384.py --stage power`.
 <!-- src: paper/exploratory/A383_species_organisation/output/{power_a383,power_a384,organs_a384}.csv -->
+
+## A387 (scored 2026-11-25; BLIND for every value below except the A346 mean of moduli; one scoring run, rerun once after a memory kill before any Part 2 output, same seeds): tumour fibroblasts are coupled to the patient's normal stroma on the full model (c 0.40 core, beyond matched genes), within 0.8 h of it and about 30 % quieter; tumour endothelium is coupled on 14 genes but not beyond matched genes on the core loop; cancer cells are barely coupled
+
+Single-cell tumour / adjacent-normal cohorts of A346. Part 1: complex-pooled pairing R_C (moduli taken after pooling the
+cross-moments over cohorts). Part 2: one Dataset over 34 cohorts, host anchored on the normal sample's fibroblasts,
+endothelium and mural cells, cohort x chemistry strata. Peak time: + = tumour later. Intervals 90 %.
+
+| | Part 1 R_C 14 / core | matched q95 14 / core | Part 2 coupling c 14 / core (90 %) | matched q95 14 / core | tumour minus normal peak, core (90 %) | loudness ratio tumour / normal, core (90 %) |
+|---|---|---|---|---|---|---|
+| fibroblasts (93 / 116 patients) | 0.730 / 0.676 | 0.404 / 0.415 | 0.439 (0.335-0.587) / 0.403 (0.266-0.604) | 0.265 / 0.315 | -0.07 h (-0.77 to 0.63) | 0.69 (0.51-0.86) |
+| endothelium (101 / 135) | 0.655 / 0.407 | 0.438 / 0.469 | 0.564 (0.473-0.676) / 0.481 (0.366-0.638) | 0.406 / 0.515 | +0.24 h (-0.42 to 0.82), H387.4 not read | 0.82 (0.65-1.03) |
+| cancer cells (190 / 96) | 0.178 / 0.112 | 0.339 / 0.356 | 0.100 (0.034-0.229) / 0.032 (0-0.146) | no companions | +0.79 h (-2.41 to 3.45) | 0.32 (0.16-0.63) |
+
+- **G387 PASS** (anchors, 220 patients): p_pairing 0.001 and p_acrophase 0.001 on both readouts.
+- **H387.1 PASS** for both compartments on both readouts: pairing Holm p 0.0002; matched p_cal (Holm) fibroblasts
+  0.007 / 0.015, endothelium 0.004 / 0.048 (core at the line). Narrow responsive p_cal (Holm) fibroblasts 0.028 / 0.021,
+  endothelium 0.027 / 0.876; broad 0.016 / 0.017 and 0.003 / 0.040. The A346 mean of moduli on the same units
+  reproduces (fibroblasts 0.686 / 0.683, endothelium 0.677 / 0.510); R_C null means 0.12 / 0.10 instead of 0.41 / 0.36.
+  Placebo rate of the matched q95 rule above the band for fibroblasts on 14 genes (0.0995): read by p_cal, as registered.
+- **H387.2:** fibroblasts PASS (pooled peak +0.00 h, -0.61 to 0.56 on 14 genes; +0.05 h, -0.65 to 0.68 core);
+  endothelium PASS on 14 genes (+0.02 h, -0.59 to 0.67), core straddles the bound (-0.62 h, -1.80 to 0.60): "offset not
+  resolved" on the core loop.
+- **H387.3:** fibroblasts PASS on both readouts (coupling Holm p 0.002; c above the matched q95 and the narrow
+  responsive q95, 0.317 / 0.312; no matched set reaches c on 14 genes, 2 % on the core loop). Endothelium PASS on 14
+  genes (0.564 > 0.406), **FAIL on the core loop** (0.481 < matched q95 0.515; 6 % of matched sets reach it), so the
+  core-loop wording does not hold for endothelium.
+- **H387.4:** fibroblasts PASS on both readouts (14 genes +0.01 h, -0.68 to 0.61; core -0.07 h, -0.77 to 0.63).
+  Endothelium: conditional on H387.3, read on 14 genes only (+0.32 h, -0.35 to 0.88, inside the bound).
+- **D387.1 (descriptive).** Loudness ratio fibroblasts 0.80 (0.63-0.98) on 14 genes, 0.69 core: tumour fibroblasts
+  express the patient's time about 20-30 % more quietly than normal fibroblasts (cf. A304 bulk gain). Endothelium 1.02
+  (0.86-1.20) / 0.82 (0.65-1.03). Cancer cells: coupling 0.10 / 0.03 and loudness 0.64 / 0.32; Part 1 R_C 0.178 (pairing
+  p 0.0078, below the matched q95) and 0.112 (p 0.16). Normal counterparts' couplings: fibroblasts 0.686 / 0.766,
+  endothelium 0.627 / 0.654, epithelium 0.379 / 0.546. On the patients having both (95 % intervals): fibroblasts minus
+  endothelium -0.151 (-0.291 to -0.031) / -0.122 (-0.220 to 0.021); fibroblasts minus cancer cells +0.350 / +0.402;
+  endothelium minus cancer cells +0.505 / +0.494. Per cancer (>= 15 patients with all anchors): fibroblasts colorectal
+  0.519 / 0.480 (51), lung 0.479 / 0.444 (42); endothelium colorectal 0.490 / 0.516 (34), lung 0.623 / 0.486 (52); no
+  cancer departs (gastric, liver, prostate lack an anchor compartment and were not fitted). Part 1 per cohort and per
+  cancer in `part1_per_cohort.csv`, `part1_per_cancer.csv`.
+- **S387 (host without the normal counterpart, two anchors).** Fibroblasts 0.343 (0.236-0.533) / 0.340 (77 patients);
+  endothelium 0.486 (0.367-0.630) / 0.474 (100): the coupling does not come from the counterpart compartment alone.
+- **D387.2 (gene drop).** Part 2 coupling 14 minus core: fibroblasts +0.036 (-0.093 to 0.137; trio drop at the 35th
+  percentile of the 364 three-gene drops), endothelium +0.083 (-0.021 to 0.159; 33rd percentile): not attributable to
+  PER1, PER2 and NR1D1; host reliability 0.80 -> 0.77. Part 1 R_C: fibroblasts +0.054 (-0.029 to 0.137; 20th
+  percentile; reliability-predicted core 0.598, observed 0.676): not attributable. Endothelium +0.247 (0.127 to 0.371;
+  trio drop at the 5.0th percentile; predicted core from reliability 0.556, observed 0.407): the paired difference
+  excludes 0 and the drop exceeds the reliability prediction, so by the registered rule the endothelial pairing leans on
+  the trio in Part 1; the full-model coupling difference does not reach that rule.
+- **Deviation.** Cancer cells have no Part 2 companions (`genome_pair` applies no copy-number labels); they were
+  descriptive. The first scoring run was killed for memory (42.6 GB) while building genome tables, after Part 1, the gate
+  and the main fits; nothing was read; the rerun (3 genome workers) recomputed every value with the same seeds.
+- **Reading (registered).** Tumour fibroblasts keep their patient's normal-tissue time: coupled to the normal stroma
+  (c 0.40 on the core loop, 0.44 on 14 genes, beyond matched and stress-responsive genes), within 0.8 h of it, at a
+  loudness ratio of about 0.7. This replaces the A346 pairing statement on slide 6.1. Tumour endothelium is coupled on 14
+  genes and keeps the time there, but not beyond matched genes on the core loop; whether this is precision or the trio is
+  not decided for the coupling (Part 2), while its pairing leans on the trio (Part 1). Cancer cells are barely coupled to
+  their patient's normal stroma (c 0.10 / 0.03), consistent with H138.1.
+- Code: `exploratory/A387_tumour_full_model/scripts/a387_score.py`.
+<!-- src: paper/exploratory/A387_tumour_full_model/output/score/{part1_tests,part1_per_cohort,part1_per_cancer,part2_tests,part2_companions,part2_pairs,part2_sensitivity,part2_per_cancer,trio,drops}.csv -->
