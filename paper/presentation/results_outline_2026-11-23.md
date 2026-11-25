@@ -703,8 +703,59 @@ Section 4 asks what sets the transfer and the organ's place in time. Source: `do
 
 | slide | content | entries |
 |---|---|---|
-| 4.1 What the brain sets and what the body's state sets | arrangement changed after brain death (organs moved by at least 1.6 h, core 1.2 h), amplitude kept; with a living brain the ventilated arrangement remains recognisable (organ scatter at most 1.8 h, core 1.5 h; intervals touch at 1.6-1.8 h, the contrast is A317); intensive care costs amplitude; ventilated rows of `holds_organisation` | A293, A315, A317, A318, A335, A374 |
+| 4.1 Intensive care quiets the clocks and keeps the order; brain death moves the order and keeps the amplitude | **new** (below) | A293, A315, A317, A335, A349, A374 |
 | 4.2 Removing a drive keeps amplitude, conflicting drives cost it | mouse liver without a feeding rhythm; daytime feeding across organs, weights and amplitude kept; one-line suggestive mention: organs that weigh one drive in mouse (liver, heart) are the loudest in human, the balanced lung the quietest, adipose the exception (A358, descriptive, rho -0.6, 5 organs, below its criterion) | A297, A322, A324, A358 |
 | 4.3 A behavioural shift moves the human clock | night shift, muscle core loop +4 h, amplitude cost | A257, A335 |
 | 4.4 A systemic signal read unequally by organs | glucocorticoid-like person state explains a small part of each organ's departure | A357 |
 | 4.5 What sets an organ's gain | drive coherence (descriptive), reception, person volume; jet lag (in-house, to come) | registered 2026-11-24 |
+
+## 4.1 Intensive care quiets the tissue clocks, most where they were loudest, and keeps the organ order; brain death moves the order and keeps the amplitude
+
+(User, 2026-11-25: brain death is shown here, with intensive care, rather than at the end of the life-course order.)
+
+**Bullets**
+1. Ventilated donors with a living brain keep the fast-death organ arrangement: rho 0.690 (79 donors, 12 body
+   tissues), above the matched (0.108) and stress-responsive (0.318) 95th percentiles (A293 H293.2, pass), and within
+   sampling noise (expected 0.785, 5-95 % 0.519-0.879). Organs moved by at most 1.8 h (core 1.5 h), about the size of
+   the arrangement (1.02 h) (A374).
+2. Their clocks are quieter: clock-specific amplitude 0.82 of fast deaths (Q* +0.404, above all 200 matched sets), core
+   0.80; unchanged by age / sex matching (Q* +0.389, core +0.459) (A315 descriptive, A335). The loss rises with the
+   organ's clock strength (Spearman 0.82, 12 tissues; thyroid, oesophagus mucosa, heart lose most; A349, descriptive).
+3. Brain death moves the arrangement (rho 0.161 at 79 donors, below the responsive 95th percentile; organs moved by at
+   least 1.6 h, core 1.2 h; A317, A374) and keeps the amplitude of ventilated donors (1.02, 90 % 0.94-1.10, inside the
+   registered equivalence margin 0.84-1.20; A315 H315.1 FAIL, A335 part 3).
+4. Reading: the body's state in intensive care sets loudness; the living brain holds the order.
+
+**Figure:** `figures/intensive_care/intensive_care.png` (`scripts/intensive_care.py`; wide). Rows: fast deaths
+(reference), ventilated with a living brain, brain death. A. organ arrangement shared with fast deaths (clock genes;
+matched and responsive 95th percentiles; diamond: expected from sampling noise at 79 donors). B. clock-specific clock
+amplitude against the comparison group (ventilated vs fast deaths; brain death vs ventilated), exp(Q* / 2) from the
+clock-plane variance ratio; shaded: equivalence margin. C. 90 % compatibility interval of the organ scatter (arrow:
+upper bound at the grid edge); dashed: the size of the arrangement. D. per tissue, host-referenced loudness lost in
+intensive care (log z2, fast over ventilated, at a common spread, 90 % interval) against fast-death clock strength.
+All 14 genes; core loop in the notes.
+
+**Tags:** A293 H293.2 registered (not blind for the clock rho, companions new); brain-dead rho descriptive; A315
+descriptive contrasts (registered) and H315.1 FAIL (powered); A335 registered (core loop blind); A374 registered
+(intervals blind); A349 descriptive; amplitude display exp(Q* / 2) post hoc.
+
+**Caveats (speaker notes)**
+- Detection limit at this design: one organ must move about 6-7 h (6.75 h, 14 genes; core 5.6 h), or all organs with
+  an SD of 2.25 h, to be seen (A349). "Order kept" means no large disruption, not unchanged.
+- Offsets in ventilated donors are compressed toward 0 / 12 h by a shared non-temporal axis (A109, A132b); removing
+  it relaxes the compression from 0.58 to about 0.77 (A349 D349.4, approximate).
+- The ventilated host spread is about half that of fast deaths (A349); panel D compares at a common spread. Blood
+  "gains" (-1.95): it has no readable clock (slide 3.1b).
+- Amplitude falls with time on the ventilator among organ donors (longest vs shortest tertile Q* -0.236, 1st
+  percentile of matched sets; A315, descriptive).
+- Brain death: descriptive, inseparable from procurement in GTEx (A318 H318.2, A325, A327). Organ donors differ in RIN
+  and ischaemic time (not balanceable); the brain-death amplitude is also equivalent after age matching (A335).
+- Raw clock-plane variance is lower in organ donors, as is the matched sets' (core Q -0.186): the equivalence is
+  clock-specific, relative to random genes.
+- Deaths only; the drives are not measured (intensive care withdraws light-dark, meals and activity cycles together).
+
+**Source:** `exploratory/A293_organisation_levels/output/part1/groups.csv`;
+`exploratory/A374_order_interval/output/{intervals,noise_reference}.csv`;
+`exploratory/A335_review_batch/output/{a315_core,matched,equivalence}.csv`; `exploratory/A315_braindeath_gain/output/descriptive.csv`;
+`exploratory/A349_icu_limits/output/{part1_limits,part2_tissues,d4_compression}.csv`; `docs/results_preliminary.md`
+A293, A315, A317, A335, A349, A374.
