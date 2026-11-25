@@ -8763,3 +8763,21 @@ R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsiv
 - Limits: small responsive pool, so the sets overlap (q05 equals the median in blood); low R^2 in blood.
 - Code: `exploratory/A376_blood_layers/scripts/a376_blood_layers.py`.
 <!-- src: paper/exploratory/A376_blood_layers/output/{tissues,tests}.csv -->
+
+## A377 gate and power note (2026-11-25; simulation and relabelling null only, no group-split axial value computed; 27 s): V377.1 PASS; H377.1 decidable for a full tissue-specific displacement at the ventilated size (f 0.44), not for a small one (f 0.2)
+
+- **V377.1 PASS** (A133 simulator, n 79, 200 replicates per cell). Axis alignment A, median (5-95 %):
+
+  | f | one common direction | tissue-specific directions | AUC |
+  |---|---|---|---|
+  | 0.20 | 0.810 (0.527-0.933) | 0.503 (0.123-0.786) | 0.894 |
+  | 0.44 | 0.925 (0.777-0.969) | 0.342 (0.075-0.653) | 0.999 |
+
+  Registered criteria at f 0.44 met (common >= 0.8, tissue-specific <= 0.5, AUC >= 0.9). Simulated circularity ratio:
+  0.49 (common) and 0.59 (tissue-specific) at f 0.44.
+- **Power.** 65 pairs, 79 vs 79. Under 2000 relabellings of Hardy 0 donors: SD of D_A 0.142, MDE 0.354 (q95 0.225);
+  SD of the circularity-ratio difference 0.132, MDE 0.329. The expected D_A between a common and a tissue-specific
+  displacement is about 0.58 at f 0.44 (decidable) and about 0.31 at f 0.2 (below the MDE).
+- No stop rule fires; H377.1 and H377.2 can be scored.
+- Code: `exploratory/A377_axial_directions/scripts/a377.py --stage power`.
+<!-- src: paper/exploratory/A377_axial_directions/output/{gate,gate_reps,power}.csv -->
