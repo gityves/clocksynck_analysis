@@ -1069,3 +1069,52 @@ A381 (H381.1 fail; post hoc in motivation, speaker notes only); display post hoc
 `exploratory/A379_disease_arrangement/output/tests.csv`; `exploratory/A380_disease_hours/output/intervals.csv`;
 `exploratory/A374_order_interval/output/intervals.csv`; `docs/results_preliminary.md` A164, A233, A235, A258, A306,
 A336, A374, A379-A381.
+
+---
+
+# 6. Local disease: quieter, rarely shifted (built from 2026-11-25)
+
+| slide | status | figure |
+|---|---|---|
+| 6.1 Tumours keep their patient's time, carried by their fibroblasts, and express less of it as they proliferate | **new** (below) | `figures/tumours/` |
+| 6.2 Corrections of published tumour-clock claims | kept for this presentation (user, 2026-11-25); to build | - |
+| 6.3 Chronic lesions keep time and lose a little loudness | to build | - |
+| 6.4 Psoriasis, the one local phase shift | to build | - |
+
+## 6.1 Tumours keep their patient's time, carried by their fibroblasts, and express less of it as they proliferate
+
+**Bullets**
+1. A tumour's clock state follows its own patient's normal tissue: pooled pairing 0.365 against a pairing null of 0.122
+   (q95 0.157) and expression-matched gene sets (q95 0.261), 517 pairs, p < 0.01 in 7 of 10 cancers (A138 H138.4).
+   On the core loop 0.252, below the matched q95 0.275: at the line (A336).
+2. The fibroblasts carry it: tumour fibroblasts follow the patient's normal fibroblasts at 0.686 (core loop 0.683),
+   beyond every companion family; endothelium keeps the pairing on 14 genes (0.677) but falls below matched genes on
+   the core loop (0.510); cancer cells are not resolved (0.433, matched q95 0.451) (A346).
+3. As tumours proliferate they express less of their patient's time without drifting from it: gain log ratio -0.462
+   (ratio 0.63, p 0.0055, below the matched q05), departure -0.190 (p 0.94; a doubling would have been seen, power 1.0)
+   (A304).
+
+**Figure:** `figures/tumours/tumours.png` (`scripts/tumours.py`; wide). A. pairing per cancer and pooled (14 genes,
+core loop with 90 % interval), pairing-null means and q95, matched q95; B. pairing by compartment, 14 genes and core
+loop, matched q95; C. high / low proliferation, gain and departure, with the matched 5-95 % range.
+
+**Tags:** A138 H138.4 registered (pass; core at the line, A336); A346 H346.3 pass (14 genes), H346.1 descriptive
+(core); A304 H304.1 registered (gain pass, departure fail, powered).
+
+**Caveats (speaker notes)**
+- Core-loop pairing at the line: the 14-minus-core difference is +0.112 (90 % 0.073 to 0.159); the trio drop lies below
+  the 10th percentile of all random three-gene drops (6.9) but not of similar-weight drops (29th percentile): not
+  decided whether precision or PER1, PER2 and NR1D1 (CLAUDE gene-drop rule).
+- Endothelium's 14-gene pairing loses about 0.17 on the core loop (trio contribution +0.167, 90 % +0.058 to +0.208, a
+  paired difference excluding 0): by the gene-drop rule it can be attributed to the signal-inducible genes only if the
+  gene-drop null agrees (A336 framework); stated as "the endothelial pairing leans on PER1, PER2 and NR1D1" only with
+  that check.
+- Malignant cells' coupling to the stromal host is below about 0.2 (A138 H138.1 fail); most of their clock variance is
+  patient-specific.
+- Purity: high-proliferation tumours have more stroma (lower purity), which would raise gain (A295), not lower it;
+  stratified by purity Q_G -0.266 (p 0.037).
+- CoFE's "no fixed timing relationship with healthy tissue" is not supported at bulk level (6.2).
+
+**Source:** `exploratory/A138_cancer_estimability/output/score/{tests,per_unit}.csv`;
+`exploratory/A336_two_readouts/output/part1/a138.csv`; `exploratory/A346_tumour_stroma_core/output/score/{tests,trio}.csv`;
+`exploratory/A304_cancer_gain_departure/output/score/tests.csv`; `docs/results_preliminary.md` A138, A304, A336, A346.
