@@ -12105,3 +12105,18 @@ pooled MDE <= 0.5 h (between the human A293 estimate and the mouse size); otherw
 all organs (the same subtype mix everywhere); C2 addresses this only where subtypes are labelled.
 
 **Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A389_class_phase_order/scripts/`.
+
+### A388 note 1 (2026-11-25, on the user's instruction "yes, add it to A388", before the power note and before any malignant statistic; after the question whether the weak single-cell malignant coupling (A387, colorectal-dominated) contradicts the bulk tumour-normal pairing (A138) or is cancer-type specific)
+**D388.5 (descriptive, added).** Per cancer type present both in TCGA (A138 H138.4 per-cancer pairing, known: BLCA 0.52,
+LIHC 0.49, LUAD 0.49, PRAD 0.43, KIRC 0.43, BRCA 0.32, THCA 0.30, KIRP 0.29, COAD 0.21, UCEC 0.08) and in A388 with >= 8
+qualifying patients (D388.1 relabelled targets): the A388 malignant coupling c (core loop and 14 genes, 90 % interval)
+beside the bulk pairing. Mapping: colorectal -> COAD, lung -> LUAD (lung adenocarcinoma cohorts only; mixed or squamous
+lung cohorts reported separately), liver -> LIHC, prostate -> PRAD, bladder -> BLCA, breast -> BRCA, thyroid -> THCA,
+kidney -> KIRC / KIRP by histology where known. Reported: the pairs of values, Spearman rank correlation over the
+matched cancers with an exact permutation p (descriptive with fewer than 6 cancers), and whether colorectal (bulk at
+null) has the lowest malignant coupling among the matched cancers. Prediction (stated now): rank agreement, colorectal
+low, lung / liver / prostate higher. Reading: agreement supports "the weak pooled single-cell coupling reflects the
+cancer mix (colorectal at null in bulk too)"; disagreement with power (cancers with tight intervals that invert the bulk
+order) means the bulk pairing of those cancers is carried by non-malignant cells or by a patient-level factor shared by
+the two samples (A138 H138.8 reading). The A387 per-cancer malignant values (lung 0.275, colorectal 0.085, liver 0.000 on
+the normal-stroma host; seen) are listed beside them, not used in the rank test.
