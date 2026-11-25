@@ -1,4 +1,4 @@
-"""Slide figure (results, drives, 4.4): a systemic glucocorticoid-like state displaces some organs' clocks from the body's
+"""Slide figure (results, drives, backup 4.4): a systemic glucocorticoid-like state displaces some organs' clocks from the body's
 time.
 
 GTEx fast deaths; aggregates only. One panel (B below; half slide). `volume` (A) is drawn on slide 3.5, panel D

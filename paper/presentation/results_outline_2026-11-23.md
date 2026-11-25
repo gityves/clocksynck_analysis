@@ -645,6 +645,9 @@ decision); A361, A362, A363 registered; A366, A368 registered (living); A312, A3
   registered gradient has the size the same simulation gives with no true gradient (A312 calibration note).
 - What the scale physically is (uniform damping of cell clocks, cells dephasing, body-wide composition) is not
   separable in bulk.
+- The same glucocorticoid-like person state also explains a small, clock-specific part of each organ's departure from
+  the body's clock: median R^2 0.027 against 0.008 for matched genes, most in skeletal muscle (0.195) (A357 H357.2;
+  organ differences descriptive; Hardy 1 and 2 pooled, so possibly agonal too). Backup slide 4.4.
 
 **Source:** `exploratory/A336_two_readouts/output/{person_gtex,person_gtex_companions}.csv`;
 `exploratory/A367_hardy_agonal/output/{tests,companions,gc}.csv`; `exploratory/A312_elasticity/output/{tissues,calib_level}.csv`;
@@ -667,7 +670,7 @@ Section 4 asks what sets the transfer and the organ's place in time. Source: `do
 | 4.2 The human muscle clock has inertia: 3.5 days into a 12 h shift it has moved 4 h, its outputs already follow | **new** (below): core loop 4 h earlier, excursion 0.38; outputs 11.6 h | A257, A261, A335 |
 | 4.3 When the body no longer reads the hour, the organ arrangement holds; only brain death moves it (former 3.last) | **new** (below) | A27, A293, A314, A317, A374 |
 | 4.3b Intensive care quiets the clocks; brain death keeps their amplitude | **new** (below) | A315, A335, A349 |
-| 4.4 A systemic glucocorticoid-like state displaces some organs' clocks from the body's time | **new** (below; half slide) | A357, A359 |
+| 4.4 (backup) A systemic glucocorticoid-like state displaces some organs' clocks from the body's time | backup (user, 2026-11-25: small, possibly agonal, heterogeneity untested) | A357, A359 |
 | 4.5 What sets an organ's gain | drive coherence (descriptive), reception, person volume; jet lag (in-house, to come) | registered 2026-11-24 |
 
 ## 4.1 Organ clocks run on their own; drives keep them in phase: removing a drive costs little, conflicting drives cost amplitude
@@ -933,10 +936,11 @@ contrast stays the pair-phase rho on slide 4.3.
 **Source:** `presentation/output/organs/couplings_{fast,slow,ventilated,brain_death}.csv`;
 `presentation/output/pair_phases/pairs.csv`; `exploratory/A317_braindeath_confirm/output/posthoc_loto.csv`; `docs/results_preliminary.md` A317 post hoc note.
 
-## 4.4 A systemic glucocorticoid-like state displaces some organs' clocks from the body's time
+## 4.4 (backup) A systemic glucocorticoid-like state displaces some organs' clocks from the body's time
 
-(User, 2026-11-25: the clock-volume panel moved to slide 3.5 D, where its agonal caveat (A367) already stands; 4.4 keeps
-the organ panel, half slide.)
+(User, 2026-11-25: the clock-volume panel moved to slide 3.5 D, where its agonal caveat (A367) already stands; 4.4 kept
+the organ panel, half slide, then moved to backup the same day: about 3 % of a departure, the organ differences untested
+(H357.1), probably agonal; one line in the 3.5 notes instead.)
 
 **Bullets**
 1. The person's glucocorticoid-like state, read from the person's other organs, explains a small, clock-specific part
