@@ -8917,3 +8917,20 @@ R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsiv
   brain-death-sized change) and A233 (no reordering), the chronic-disease null now has a bound in hours.
 - Code: `exploratory/A380_disease_hours/scripts/a380_a381.py --stage score`.
 <!-- src: paper/exploratory/A380_disease_hours/output/{intervals,sim,a381_companions}.csv -->
+
+## A382 power note (2026-11-25; matching, label null and companions only, no case-against-control loudness; 172 s): every condition is decidable for equivalence (expected half-width 0.050-0.087 on Q, amplitude about +-2.5 to +-4.5 %, against the +-0.21 margin)
+
+| condition | tissue x cohort cells (vent) | median matched cases per cell | label-null SD | expected half-width | matched median / q05 | responsive median / q05 |
+|---|---|---|---|---|---|---|
+| T2D | 67 (30) | 35 | 0.033 | 0.054 | 0.033 / -0.060 | 0.017 / -0.063 |
+| obesity | 65 (30) | 33 | 0.041 | 0.067 | 0.015 / -0.091 | 0.040 / -0.050 |
+| hypertension | 69 (30) | 50 | 0.031 | 0.050 | 0.089 / -0.008 | 0.059 / -0.004 |
+| ischaemic heart disease | 61 (26) | 28 | 0.040 | 0.065 | 0.039 / -0.077 | 0.032 / -0.047 |
+| COPD | 64 (29) | 23.5 | 0.038 | 0.063 | 0.037 / -0.071 | 0.071 / -0.028 |
+| depression | 38 (29) | 26 | 0.053 | 0.087 | -0.038 / -0.184 | -0.034 / -0.148 |
+| smoking | 70 (30) | 48 | 0.032 | 0.053 | 0.032 / -0.043 | 0.008 / -0.061 |
+
+- Gate H382.2 passes for all seven. The companions centre slightly above 0 (generic case-control expression scale
+  differences) except in depression (-0.04), where brain regions dominate the cells (fewer fast-death cases).
+- Code: `exploratory/A382_disease_loudness/scripts/a382.py --stage power`.
+<!-- src: paper/exploratory/A382_disease_loudness/output/{power,null,companions,matching}.csv -->
