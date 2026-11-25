@@ -314,7 +314,7 @@ maternal or ACTH signal remains open. No sampling times: these are shared states
 | 3.4a Louder organs are more coupled (human, baboon) | **revised** from `results.md` R2.1 (below) | `figures/organs_health/` |
 | 3.4b Because each organ's departure has a fixed size, not a fixed angle | **new** (below) | `figures/organs_departure/` |
 | 3.5 Persons differ in a body-wide expression scale; in deaths the clock follows it most reliably | **revised 2026-11-24** (below) | `figures/person_loudness/` |
-| 3.6 Blood as the exception | to build | |
+| 3.6 Whole blood is the exception: its core clock genes keep no better time than random genes | **new** (below) | `figures/blood_exception/` |
 | 3.last The organ arrangement holds when the body no longer reads the hour (bridge to section 4) | **revised** from `results.md` R3.1 (below) | `figures/organ_arrangement/` |
 
 CHIRAL concordance (A123) is slide 1.1. The ventilated and brain-dead rows of `results.md` R3.1 go to sections 4 and 7
@@ -608,6 +608,40 @@ decision); A361, A362, A363 registered; A366, A368 registered (living); A312, A3
 `exploratory/A358_A360_gain_sources/output/a360_coefficients.csv`; `exploratory/A368_muther_radial/output/tests.csv`;
 `exploratory/A364_living_volume/output/{posthoc_clock,posthoc_global}.csv`;
 `docs/results_preliminary.md` A312, A336, A360-A363, A366-A370, the size note and the post hoc skin entry.
+
+## 3.6 Whole blood is the exception: its core clock genes keep no better time than random genes
+
+**Bullets**
+1. In GTEx fast deaths, the 14 core clock genes of whole blood (212 donors) follow the hour of death no better than a
+   typical gene: median cosinor R^2 0.0096, 52nd percentile of all expressed genes; in five solid tissues (179-220
+   donors) they sit at the 99.5th to 99.96th percentile.
+2. Their phases agree with the body waveform at 0.43 (solid tissues 0.85 to 0.94). Removing cell composition changes
+   neither (0.0088; 0.48).
+3. Consistent with blood's lowest organ gain (0.26, slide 3.1) and with lymphocytes not sharing the organ's time
+   (slide 3.2): an expected exception, not a failure of the readout.
+
+**Figure:** `figures/blood_exception/blood_exception.png` (`scripts/blood_exception.py`; half). A. median cosinor R^2
+of the core clock genes against the hour of death, as a percentile of all expressed genes of the tissue (dashed: a
+typical gene). B. phase agreement of the clock genes with the GTEx waveform, as measured (filled) and after regressing
+out composition scores (open; neutrophil, T, B, NK, monocyte, eosinophil, erythroid markers). Organ-system colours.
+
+**Tags:** post hoc, descriptive (user observation stated before running, 2026-11-03).
+
+**Caveats (speaker notes)**
+- Shown in post-mortem bulk blood only.
+- Timing signatures built from living blood (TimeSignature, BodyTime) rest on glucocorticoid-responsive genes, i.e.
+  the fast signal layer every cell reads (A275, A279, A343), not the core loop (user, 2026-11-25; gene lists to be
+  checked against the papers before the talk).
+- Blood carries little time-of-death signal at all: the top 100 time genes (chosen in one donor half) reach held-out
+  R^2 0.021 vs 0.014 for random genes, and composition removes 6 % of it. That its time signal is diurnal composition
+  is therefore only weakly supported here: there is little signal to explain.
+- Living forced desynchrony (A262, backup): the blood program damps to about a third and is displaced about 4 h; the
+  night-shift PBMC design does not pass the gate.
+- Possible test (not registered): whether blood's weak time-of-death signal sits in glucocorticoid targets rather than
+  in the core loop.
+
+**Source:** `exploratory/blood_composition_posthoc/output/blood_composition.csv`; `docs/results_preliminary.md`, post hoc
+entry "GTEx Whole Blood has no core-clock time signal" (2026-11-03); `presentation/output/organs/couplings.csv` (gain).
 
 ## 3.last The organ arrangement is internal: it holds when the body's clock no longer reads the hour of death
 
