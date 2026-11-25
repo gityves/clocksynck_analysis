@@ -629,9 +629,13 @@ out composition scores (open; neutrophil, T, B, NK, monocyte, eosinophil, erythr
 
 **Caveats (speaker notes)**
 - Shown in post-mortem bulk blood only.
-- Timing signatures built from living blood (TimeSignature, BodyTime) rest on glucocorticoid-responsive genes, i.e.
-  the fast signal layer every cell reads (A275, A279, A343), not the core loop (user, 2026-11-25; gene lists to be
-  checked against the papers before the talk).
+- Timing signatures built from living blood are not a readout of a blood core clock (user's reading, 2026-11-25; gene
+  lists checked, not tested). Their selectors, trained on timed samples, never pick the loudest core-clock outputs
+  (ARNTL / BMAL1, DBP). They pick glucocorticoid targets (TimeSignature, whole blood: DDIT4 and PER1 selected in every
+  run; BodyTime, monocytes: FKBP4, KLF9, PER1), the fast signal layer every cell reads (A275, A279, A343), and
+  cell-type markers (TimeSignature: IL1B, CD38, GZMB, CD1C, CLEC10A). NR1D1 / NR1D2 (both) and PER2, PER3, CRY1
+  (BodyTime) also appear. This is the same picture as GTEx blood. Braun 2018 PNAS Table 1 (41 genes); Wittenbrink 2018
+  JCI (2-gene predictor NR1D2 + PER2; 12- and 13-gene predictors).
 - Blood carries little time-of-death signal at all: the top 100 time genes (chosen in one donor half) reach held-out
   R^2 0.021 vs 0.014 for random genes, and composition removes 6 % of it. That its time signal is diurnal composition
   is therefore only weakly supported here: there is little signal to explain.
