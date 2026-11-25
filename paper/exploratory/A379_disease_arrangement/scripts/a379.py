@@ -178,7 +178,7 @@ def score():
                          responsive_q95=float(np.nanquantile(cd["resp"], 0.95)),
                          noise_n=n, noise_median=float(np.median(noise)), noise_q05=float(np.quantile(noise, 0.05)),
                          noise_q95=float(np.quantile(noise, 0.95))))
-        print(pd.Series(rows[-1]).round(3).to_dict(), f"({time.time() - t0:.0f}s)", flush=True)
+        print(c, f"done ({time.time() - t0:.0f}s)", flush=True)  # values printed only in the final table
     t = pd.DataFrame(rows)
     t["p_holm"] = holm(t.p)
     t["H379_1"] = (t.D_rho > 0) & (t.p_holm < 0.05) & (t.D_rho > t.matched_q95) & (t.D_rho > t.responsive_q95)
