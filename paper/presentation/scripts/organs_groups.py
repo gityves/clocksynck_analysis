@@ -12,12 +12,19 @@ Status: descriptive, post hoc display (user, 2026-11-25); readout as slide 3.1 (
 Data: presentation/output/organs/couplings_{fast,slow,ventilated,brain_death}.csv (`organs_groups_compute.py`).
 Output: presentation/figures/organs_groups/organs_groups.{svg,png} (wide).
 
+Second figure (offsets.{svg,png}, half): the same offsets as scatters, peak time in the group against peak time in fast
+deaths, ventilated donors with a living brain (left) and brain death (right), on the peripheral tissues with >= 30
+donors in all three groups (adrenal: too few ventilated donors; whole blood omitted, no readable clock). 95 % donor-bootstrap intervals in both directions;
+dashed: identity (arrangement kept). Slope, Pearson and Spearman printed (post hoc, descriptive; the registered
+contrast is the pair-phase rho of A293 / A317 on slide 4.2).
+
     python scripts/organs_groups.py
 """
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from scipy.stats import pearsonr, spearmanr
 
 from matplotlib import patheffects
 from matplotlib.lines import Line2D
@@ -55,6 +62,42 @@ def draw(ax, d, rmax, labels=tuple(LABEL)):
                         path_effects=[patheffects.withStroke(linewidth=2.5, foreground="white")])
 
 
+def offsets(d):
+    """Peak time in ventilated donors and in brain death against fast deaths, shared peripheral tissues."""
+    per = [set(d[g].tissue[d[g].group == "periphery"]) for g in ("fast", "ventilated", "brain_death")]
+    shared = sorted(set.intersection(*per) - {"Whole Blood"})  # no readable clock (slide 3.1b)
+    f = d["fast"].set_index("tissue").loc[shared]
+    lay = pf.Layout.slide("AB", kind="half")
+    lim = (-3.2, 1.7)
+    rows = []
+    for g, k in (("ventilated", "A"), ("brain_death", "B")):
+        ax, y = lay.axes[k], d[g].set_index("tissue").loc[shared]
+        ax.plot(lim, lim, color=pf.GREY, lw=0.8, ls="--", zorder=0)
+        ax.axhline(0, color="#e6e6e6", lw=0.6, zorder=0)
+        ax.axvline(0, color="#e6e6e6", lw=0.6, zorder=0)
+        for t in shared:  # clocksync offsets negated: + = peaks later
+            c = COLOR[gtex_system(t)]
+            ax.plot([-f.offset_h[t]] * 2, [-y.offset_lo[t], -y.offset_hi[t]], color=c, lw=0.8, alpha=0.5, zorder=1)
+            ax.plot([-f.offset_lo[t], -f.offset_hi[t]], [-y.offset_h[t]] * 2, color=c, lw=0.8, alpha=0.5, zorder=1)
+        ax.scatter(-f.offset_h, -y.offset_h, s=28, c=[COLOR[gtex_system(t)] for t in shared], edgecolor="white",
+                   lw=0.5, zorder=3)
+        ax.set(xlim=lim, ylim=lim, aspect="equal", title=GROUPS[g].replace("\n", " "))
+        ax.set_xlabel("peak time, fast deaths [h]")
+        x1, y1 = -f.offset_h, -y.offset_h
+        rows.append(dict(group=g, tissues=len(shared), slope=np.polyfit(x1, y1, 1)[0], pearson=pearsonr(x1, y1)[0],
+                         spearman=spearmanr(x1, y1)[0], sd_fast=x1.std(), sd_group=y1.std()))
+    lay.axes["A"].set_ylabel("peak time in the group [h]")
+    lay.axes["B"].tick_params(labelleft=False)
+    present = {gtex_system(t) for t in shared}
+    h = [Line2D([], [], ls="", marker="o", ms=7, color=c, label=s) for s, c in COLOR.items() if s in present]
+    lay.shared_legend("AB", h, [x.get_label() for x in h], side="bottom", ncol=3, fontsize=10, handletextpad=0.2,
+                      columnspacing=1.0)
+    fig = lay.finalize()
+    print(pd.DataFrame(rows).round(2).to_string(index=False))
+    print(pf.collisions(fig))
+    pf.save(fig, OUT / "offsets")
+
+
 def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
@@ -76,6 +119,7 @@ def main():
     print(f"rmax {rmax:.2f}")
     print(pf.collisions(fig))
     pf.save(fig, OUT / "organs_groups")
+    offsets(d)
 
 
 if __name__ == "__main__":
