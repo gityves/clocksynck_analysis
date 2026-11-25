@@ -11583,3 +11583,41 @@ fat is well known; muscle fibre type differs between abdominal and calf muscle);
 sites are not stated in GEO; sheep are untimed (host-relative gain) and baboons timed (absolute gain): only ratios within
 a dataset are compared, never levels across datasets; the GTEx skin pair is confounded by sun exposure.
 **Code.** `exploratory/A378_core_shell_gain/scripts/a378.py --stage power | score`. GTEx aggregates only.
+
+## A379 (2026-11-25, on the user's instruction "draft A379 and run the power stage", after the slide 5.1 figure showed chronic-disease nulls on per-organ readouts while brain death is read on the organ arrangement; staged: power (matching, pair counts, relabelling null of D_rho; no observed arrangement value for any arm), then one scoring run; **NOT BLIND**: A233 (no reordering by the Q statistic, five conditions), A164 / A235 / A306, the brain-death values of A317 (D_rho 0.621; post-mortem 0.678, organ donors 0.057) and A293 (companion medians on the 12 body tissues: matched 0.011-0.038, responsive 0.100-0.327), A374 noise reference; **BLIND**: every pair-phase correlation of a case or control arm of any condition (none computed: A233 used tissue offsets, not pair phases)): does a chronic disease move the organ arrangement, on the scale on which brain death moves it? **GTEx fast and ventilated deaths; T2D, obesity, hypertension, ischaemic heart disease, COPD, depression, smoking; the 12 A109 body tissues**
+
+**Why.** Slide 5.1 reads each condition on its own organs (coupling, offset, loudness); brain death is read on the
+arrangement of all organ pairs (A293, A317). The same estimator on the chronic conditions puts both on one scale.
+Pair-phase rule (2026-11-24): on these 12 tissues the reference spread is 1.31 h (SD of fast-death pair phases) and the
+companions sit far below the clock (A293 matched medians 0.01-0.04), so the label test has the power it had for brain
+death.
+
+**Design.** A109 `Tissues(200, seed 0)` states, 200 matched and 200 responsive sets (`compute_h109_responsive`), as A317.
+- Labels: A233 / A164 definitions (T2D; obesity BMI >= 30 against 18.5-25; MHHTN, MHHRTDIS, MHCOPD, MHDPRSSN,
+  MHSMKSTS yes / no); unknown excluded.
+- Matching per donor, within cohort (ventilated Hardy 0, fast Hardy 1-2), blind to clock data: A164 rule (exact sex and
+  Hardy class, age caliper 5 y, nearest age then ischaemic time; up to 3 controls, obesity 1:1), among the donors of the
+  A109 tissue set.
+- Arms: cases with at least one control; control arm = one control per case, 20 draws (seed 379); equal n.
+- Reference: fast deaths not in either arm (no donor in both reference and comparison).
+- Pairs: >= 20 shared donors in the reference, the case arm and the first control draw (A317 rule).
+- Statistic: D_rho = median over draws of rho(control draw, reference) - rho(cases, reference), Fisher-Lee on pair
+  phases (A293 / A317 estimator).
+- Null: the case label swapped with a random member of its matched set, then a control draw (2000 relabellings).
+
+**H379.1 (change, per condition; Holm over the seven).** D_rho > 0 with one-sided relabelling p (Holm) < 0.05 and above
+the 95th percentile of the same difference for the matched and for the responsive sets: the condition moves the
+arrangement clock-specifically.
+**H379.2 (no brain-death-sized change, per condition).** D_rho + 1.645 SD(null) < 0.621 (the A317 brain-death value):
+a change of the brain-death size is excluded. Reported for every condition with its MDE.
+**Descriptive.** rho of each arm; expected rho from noise alone at the case count (fast deaths subsampled, A374 rule);
+pairs used.
+**Power stage (committed before scoring).** Per condition: matched cases and controls per cohort, pairs passing, SD of
+D_rho under the relabelling null, MDE = 2.49 SD. Stop rule: a condition with fewer than 30 pairs or MDE > 0.621 is not
+decidable for H379.2 and reported as such (H379.1 still scored).
+**Readings (stated now).** H379.1 fails and H379.2 passes for a condition: it does not move the arrangement at the
+brain-death size; slide 5.1 gains the brain-death scale ("brain death 0.62; chronic disease below x"). H379.1 passes:
+the condition rearranges the organs (unexpected; checked for comorbidity: hypertension with T2D, smoking with COPD).
+**Limits.** Deaths; comorbidity; mixed death types within arms (balanced by exact Hardy matching); vent arms carry the
+shared push toward 0 / 12 h (A109, A377), equally in cases and controls.
+**Code.** `exploratory/A379_disease_arrangement/scripts/a379.py --stage power | score`. GTEx aggregates only.
