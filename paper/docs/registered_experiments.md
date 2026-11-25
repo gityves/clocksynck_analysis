@@ -11470,3 +11470,53 @@ as the clock genes in many tissues, and blood is not singular in that respect (w
 spread understates the uncertainty of a fixed pool; time of death in fast deaths partly reflects agonal stress, which
 also moves these genes; blood R^2 values are low (top-100 time genes 0.021), so percentiles near the top are coarse.
 Aggregates only.
+
+## A377 (2026-11-25, on the user's instruction "yes, draft the amendment", after the question whether the linear (axial) factor seen in ventilated and brain-dead donors explains the brain-death arrangement change; staged: simulation gate and power (relabelling null, no group-split axial value), then one scoring run; **NOT BLIND**: A317 (D_rho 0.621; organ donors rho 0.057 median over draws, ventilated post-mortem 0.678) and its post hoc leave-one-tissue-out (0.50-0.72); the slide 4.2c pair-phase panel (brain death Pearson 0.09, without lung pairs -0.33); A109 on all Hardy 0 donors pooled (pseudo-covariance ratio 0.456, share along the non-temporal axis 0.70, host axial R 0.26); A132 folded distances per group (0.77 h post-mortem, 0.75 h organ donors); the A133 grid (common-direction displacement keeps rho 0.55-0.95 at n 298; tissue-specific directions lower raw rho to 0.36 at f 0.44, n 79) and the failed V133.1 gate; A147; A136; **BLIND**: every pseudo-covariance, axial direction, axial alignment or circularity ratio split by organ donors vs ventilated post-mortem donors (none computed: grep of exploratory/ for circ_ratio, fit_axial, circular_part, pseudo_cov outside A109 / A133 / A147, 2026-11-25)): is the brain-death loss of the organ arrangement a displacement along tissue-specific axes rather than a change of the relations between organ clocks? **GTEx Hardy 0, organ donors vs ventilated post-mortem donors; A317 data, draws (79 vs 79, 20 draws, seed 317), 65 pairs and 12 body tissues**
+
+**Why.** A shared donor-level displacement s_d w_a (s real, w_a complex per tissue) adds Var(s) w_a conj(w_b) to the
+cross-covariance C_ab = E[z_a conj z_b] and Var(s) w_a w_b to the pseudo-covariance P_ab = E[z_a z_b]. With one common
+direction (all arg w_a equal mod pi) it pulls pair phases toward 0 / 12 h and keeps their order (A133: the ventilated
+post-mortem readout); with tissue-specific directions it scrambles them (A133 grid). A133 excluded the common-direction
+case as the source of the brain-death loss, not the tissue-specific one. The axis directions are readable from P without
+separating the circular part (the step that failed V133.1).
+
+**Statistics (per group; organ donors: median over the 20 draws).** States, centring and pair mask as A317
+(`score_a317.raw`, `_H_of` centring; pairs with >= 20 shared donors). P and C from `_helpers.cross_moments`.
+- Axial factor: rank-1 Takagi fit of P on the observed off-diagonal pairs (`A133 axial.fit_axial`), w = (w_a), 12
+  tissues; off-diagonal only, so tissue-own non-circular noise does not enter.
+- **Axis alignment** A = |sum_a w_a^2| / sum_a |w_a|^2 (doubled angles, weighted by axial strength): 1 = one common
+  direction, about 1 / sqrt(12) for random directions of equal strength.
+- **Axial size**: pseudo-covariance ratio (`_helpers.circ_ratio`, A109 estimator) over the 65 pairs.
+- Reported: per-tissue arg(w_a) / 2 in hours (mod 12) and |w_a|; host Rayleigh and axial R per group (A109 `nontemporal`
+  readouts; concentrated host phases also make P non-zero, a named confounder).
+
+**V377.1 (gate; A133 simulator `simulate`, ventilated design, fast-death offsets, n 79, 200 replicates per cell).**
+A separates a common direction from tissue-specific directions (u uniform on [0, pi) per tissue) at f 0.44: median A
+>= 0.8 (common) and <= 0.5 (tissue-specific), AUC >= 0.9; at f 0.2 reported. Fails: A377 stops, "not decidable at n 79"
+(H377.2 is still run, it does not use A).
+**Power stage (committed before scoring).** SD of D_A = A(post-mortem) - A(organ donors) and of the circularity-ratio
+difference under the A317 relabelling scheme (2000 relabellings of Hardy 0 donors into 79 and 79); MDE = 2.49 SD.
+No group-split observed value computed.
+- **H377.1 (tissue-specific axes in brain death).** Passes if D_A > 0 with relabelling p < 0.05 and A(organ donors)
+  below the 95th percentile of A in the V377.1 tissue-specific cell. Companions (descriptive): A and the circularity
+  ratio on the 200 matched and 200 responsive sets per group, same draws.
+- **H377.2 (sufficiency; run whatever H377.1 gives).** Simulate fast-death relations (A133 `design`) plus the organ
+  donors' fitted axial factor (their w, scaled so that the simulated circularity ratio matches theirs) at n 79, 200
+  replicates; reference an independent draw with f 0 at n 244 (A147 post hoc option); Fisher-Lee rho of pair phases
+  with the reference. Sufficient if the observed organ-donor rho (0.057, A317) lies inside the 5-95 % simulated range;
+  insufficient if below the 5th percentile. The same simulation with the post-mortem fit, against its observed 0.678,
+  checks the model (reported; if 0.678 lies outside its own 5-95 % range the model is off and H377.2 is not read).
+
+**Readings (stated now).**
+- H377.1 fails with A(organ donors) high (common axis as in post-mortem donors) and H377.2 insufficient: the axial
+  factor does not explain the brain-death change; "relations between organ clocks rearranged" (A317) stands.
+- H377.1 passes and H377.2 sufficient: brain death adds a displacement that each organ reads along its own axis; the
+  arrangement change can be this signal, read unequally, rather than changed clock relations. Slide 4.2 says so.
+- H377.1 passes, H377.2 insufficient: tissue-specific axes exist in brain death but do not account for the loss; both
+  contribute (sizes reported).
+- H377.1 fails, H377.2 sufficient: inconsistent (the sufficiency rests on directions not shown to differ); reported
+  as not decided.
+**Limits.** Not blind for the arrangement; the generative model (one shared real s, Gaussian, A133) is a simplification;
+concentrated host phases contribute to P; arg w_a is noisy in tissues with a weak axial factor (weighting by |w_a|^2
+limits this); one cohort.
+**Code.** `exploratory/A377_axial_directions/scripts/a377.py --stage power | score`. Aggregates only.
