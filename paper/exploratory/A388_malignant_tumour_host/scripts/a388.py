@@ -481,6 +481,490 @@ def stage_companions(G, table, donors, args, out):
     return s
 
 
+# ---- score stage ---------------------------------------------------------------------------------------------------------
+
+import itertools  # noqa: E402
+
+from clocksync._core import host as A  # noqa: E402
+from clocksync import stats as ST_  # noqa: E402
+
+N_BOOT, N_PERM_FIT, N_PERM_H2, N_BOOT_H2, MIN_CANCER_N = 500, 1000, 2000, 500, 8
+CLASS_KEEP = ("breast", "lung", "liver", "prostate", "thyroid")
+CLASS_NULL = ("colorectal", "ovarian", "bladder")
+FIB = "tumour:fibroblast"
+LUAD_COHORTS = ("GSE164789", "GSE229253", "GSE308103")  # lung adenocarcinoma cohorts (PROVENANCE); ERP156718 (adeno + squamous) and GSE310916 (NSCLC) are mixed
+BULK = {"colorectal": "COAD", "lung|LUAD": "LUAD", "liver": "LIHC", "prostate": "PRAD", "bladder": "BLCA", "breast": "BRCA",
+        "thyroid": "THCA"}
+
+
+def holm(p):
+    p = np.asarray(p, float)
+    o = np.argsort(p)
+    adj = np.empty_like(p)
+    run = 0.0
+    for r, j in enumerate(o):
+        run = max(run, (len(p) - r) * p[j])
+        adj[j] = min(run, 1.0)
+    return adj
+
+
+def prepare(args):
+    """Deduplicated pooled table, patient labels and genome table exactly as the power stage (same code path and caches)."""
+    studies, inv = study_list(args.smoke)
+    h138 = set(inv.index[inv.in_H138_1.astype(bool)])
+    res = Parallel(n_jobs=args.genome_jobs)(delayed(cohort_table)(s) for s in studies)
+    tabs = {s: r[0] for s, r in zip(studies, res) if not isinstance(r, str) and len(r[0])}
+    allp = {s: r[1] for s, r in zip(studies, res) if not isinstance(r, str)}
+    mal = {s: r[2] for s, r in zip(studies, res) if not isinstance(r, str)}
+    removed, drec, h138_dup = dedup(tabs, allp, inv, h138)
+    for s in tabs:
+        tabs[s] = tabs[s][[(s, d) not in removed for d in tabs[s].donor]]
+    tabs = {s: t for s, t in tabs.items() if len(t)}
+    keeps = {s: set(zip(t.donor, t.compartment)) for s, t in tabs.items()}
+    gres = Parallel(n_jobs=args.genome_jobs)(
+        delayed(genome_cohort)(s, mal[s], sorted(t.donor.unique()), keeps[s]) for s, t in tabs.items())
+    Gs = {s: g for s, g, e in gres if g is not None}
+    bad = [s for s, g, e in gres if g is None]
+    assert not bad, f"genome tables not built: {bad}"
+    T = []
+    for s, t in tabs.items():
+        t = t.copy()
+        t["donor"] = s + "|" + t.donor
+        t["stratum"] = s + "|" + t.stratum
+        T.append(t)
+    table = pd.concat(T, ignore_index=True)
+    dl = [dict(donor=f"{s}|{d}", cohort=s, patient=d, cancer=inv.cancer[s], a83=a83(inv.cancer[s]),
+               cohort_in_H138_1=s in h138, dup_of_H138_1=(s, d) in h138_dup) for s, t in tabs.items() for d in t.donor.unique()]
+    donors = pd.DataFrame(dl)
+    donors["new"] = ~(donors.cohort_in_H138_1 | donors.dup_of_H138_1)
+    donors["lung_hist"] = np.where(donors.cancer != "lung", "", np.where(donors.cohort.isin(LUAD_COHORTS), "LUAD", "mixed"))
+    G = pd.concat([Gs[s].assign(donor=s + "|" + Gs[s].donor.astype(str)) for s in tabs], ignore_index=True)
+    G = G.drop(columns=[c for c in ("stratum", "n_cells") if c in G]).merge(
+        table[["donor", "compartment", "stratum", "n_cells"]], on=["donor", "compartment"])
+    if args.smoke or args.scramble:  # code check: malignant rows' donor labels permuted within stratum (no real pairing is read)
+        rng = np.random.default_rng(1)
+        for X in (table, G):
+            for st, g in X[X.compartment == MALT].groupby("stratum"):
+                X.loc[g.index, "donor"] = g.donor.to_numpy()[rng.permutation(len(g))]
+    return table, donors, G, drec
+
+
+def pseudo_sets(G, n_set):
+    """The power stage's companion waveforms (same genes, same seeds [388, 0] / [388, 1])."""
+    from clocksync.paired import pseudo_waveforms
+    genes = [c for c in G.columns if c not in META and c != "median_umi"]
+    genes = [g for g in genes if G[g].notna().all()]
+    ref = G[G.compartment.isin(ANCHORS)]
+    frac = ref[genes].div(ref.depth, axis=0)
+    lm = np.log(frac.mean() + 1e-12)[(ref[genes].mean() >= 1) | frac.columns.isin(list(BASE.genes))]
+    sets = [(f, w) for code, f in enumerate(("matched", "responsive"))
+            for w in pseudo_waveforms(lm, n_set, np.random.default_rng([SEED, code]), BASE, f)]
+    used = sorted({g for _, w in sets for g in w.genes} | set(BASE.genes))
+    return sets, G[META + used]
+
+
+def relabel(table, key):
+    """Malignant rows renamed `tumour:malignant|<key[donor]>`."""
+    t = table.copy()
+    m = t.compartment == MALT
+    t.loc[m, "compartment"] = MALT + "|" + t.loc[m, "donor"].map(key).astype(str)
+    return t
+
+
+def fit_task(table, rd, tag, targets, ref, n_boot, n_perm, wf=None):
+    limit_threads(1)
+    warnings.filterwarnings("ignore")
+    f = dataset(table, wf if wf is not None else READOUTS[rd]).fit(
+        n_boot=n_boot, seed=SEED, n_perm=n_perm, gate=False, reference=ref, attenuation="df", level=0.90,
+        anchor_readout="loo", targets=targets)
+    return tag, rd, ref, f.table, f.replicates
+
+
+def drop_task(table, drops):
+    limit_threads(1)
+    warnings.filterwarnings("ignore")
+    out = []
+    for d in drops:
+        t = dataset(table, BASE.drop(list(d))).fit(n_boot=0, gate=False, targets=[MALT]).table
+        out.append(dict(drop="+".join(d), coupling=float(t.loc[MALT, "coupling"])))
+    return out
+
+
+def comp_cancer_task(G, ws, rd, targets, name):
+    limit_threads(1)
+    warnings.filterwarnings("ignore")
+    out = []
+    for i, w in ws:
+        try:
+            t = dataset(G, w).fit(n_boot=0, gate=False, targets=targets).table
+            out += [dict(scheme=name, readout=rd, set=i, target=k, coupling=float(t.loc[k, "coupling"])) for k in targets]
+        except Exception as e:  # noqa: BLE001
+            out.append(dict(scheme=name, readout=rd, set=i, error=f"{type(e).__name__}: {e}"[:200]))
+    return out
+
+
+class Engine:
+    """d* (the coupling at the common spread, as `Dataset.contrast`) of one target for any two-group labelling of the donors,
+    on a host fitted once on the donors of the two arms, with the per-arm prior (host_prior='arm') and V0 the pooled one:
+    the same quantities as `contrast`, without its bootstrap, for the permutation draws."""
+
+    def __init__(self, ds, donors_in, target, min_donors=5):
+        d = ds.data
+        d = d.take(np.flatnonzero(np.isin(d.resection, donors_in)))
+        self.d, self.k, self.min = d, target, min_donors
+        H = A._hosts(d, [a for a in ds.anchors if a in set(d.compartment)], [target])
+        self.h = H[target]
+        self.idx = np.intersect1d(d.donors(target), self.h.resections)
+        self.V0 = A.on_host(d, target, self.h, self.idx)["V"]
+
+    def arm(self, dn):
+        if len(dn) < self.min:
+            return np.nan, np.nan, False
+        e = A.on_host(self.d, self.k, self.h, dn, prior="arm")
+        s = e["z2"] * self.V0
+        return e["coupling"], (s / (s + 2 * e["psi"]) if np.isfinite(s) else np.nan), e["boundary"]
+
+    def dstar(self, lab):
+        """lab: array of 0 (reference) / 1 (case) / -1 over self.idx. Returns case minus reference of c and of d*'s cs."""
+        r0, r1 = self.arm(self.idx[lab == 0]), self.arm(self.idx[lab == 1])
+        if r0[2] and r1[2]:
+            return np.nan, np.nan
+        return r1[0] - r0[0], r1[1] - r0[1]
+
+
+def h2_task(G, cohort_of, perms, base_codes, rd, ws, donors_in):
+    """Observed d* (keeping minus at null) and the cohort-permutation null for one or more waveforms."""
+    limit_threads(1)
+    warnings.filterwarnings("ignore")
+    out = []
+    for i, w in ws:
+        ds = dataset(G, w)
+        e = Engine(ds, donors_in, MALT)
+        ci = pd.Series(cohort_of).reindex(e.idx).to_numpy()  # cohort index per donor of the target
+        obs = e.dstar(np.asarray(base_codes)[ci])
+        null = np.array([e.dstar(np.asarray(base_codes)[p][ci])[1] for p in perms])
+        out.append(dict(readout=rd, set=i, obs_c=obs[0], obs_dstar=obs[1], null=null))
+    return out
+
+
+def stage_score(args):
+    out = OUT / ("score_smoke" if args.smoke else "score")
+    out.mkdir(parents=True, exist_ok=True)
+    pow_dir = OUT / ("power_smoke" if args.smoke else "power")
+    n_boot, n_perm, n_h2, n_boot_h2 = (20, 50, 20, 20) if args.smoke else (N_BOOT, N_PERM_FIT, N_PERM_H2, N_BOOT_H2)
+    n_set = 6 if args.smoke else N_SET
+    t0 = time.time()
+    table, donors, G, _ = prepare(args)
+    if args.time_only:
+        kd = list(donors[donors.cancer.isin(CLASS_KEEP + CLASS_NULL)].donor)
+        tk = table[table.donor.isin(kd)]
+        e = Engine(dataset(tk, BASE), kd, MALT)
+        lab = np.random.default_rng(0).integers(0, 2, len(e.idx))
+        t1 = time.time()
+        for _ in range(20):
+            e.dstar(lab)
+        log(f"engine: {(time.time() - t1) / 20 * 1000:.1f} ms per d* difference; {len(e.idx)} donors")
+        return
+    log(f"pooled: {table.donor.nunique()} patients in {donors.cohort.nunique()} cohorts, genome rows {len(G)}")
+    new_d = set(donors[donors.new].donor)
+    tab_new = table[table.donor.isin(new_d)]
+    sets, Gu = pseudo_sets(G, n_set)
+    # --- gates (G388, rerun) ---
+    gates = []
+    for rd, wf in READOUTS.items():
+        ds = dataset(table, wf)
+        for label, dd in (("pooled", None), ("new", sorted(new_d)), ("keeping", list(donors[donors.cancer.isin(CLASS_KEEP)].donor)),
+                          ("at_null", list(donors[donors.cancer.isin(CLASS_NULL)].donor))):
+            gates.append(gate_row(ds, label, rd, 100 if args.smoke else N_PERM, dd))
+    gates = pd.DataFrame(gates)
+    gates.to_csv(out / "gates.csv", index=False)
+    log("gates\n" + gates.round(4).to_string(index=False))
+    # --- H388.1 / H388.1b main fits (reference default and tumour fibroblast), per-cancer fits, ER, drops, D388.4 prep ---
+    cancer_of = donors.set_index("donor").cancer
+    cnt = donors.groupby("cancer").size()
+    big = sorted(cnt[cnt >= MIN_CANCER_N].index)
+    keyA = cancer_of.to_dict()
+    keyB = {d: (c if c != "lung" else "lung|" + h) for d, c, h in zip(donors.donor, donors.cancer, donors.lung_hist)}
+    tA, tB = relabel(table, keyA), relabel(table, keyB)
+    cntB = pd.Series(keyB).value_counts()
+    targA = [f"{MALT}|{c}" for c in big]
+    targB = [f"{MALT}|{c}" for c in sorted(cntB[cntB >= MIN_CANCER_N].index) if c.startswith("lung|")]
+    jobs = []
+    for rd in READOUTS:
+        for tag, tb in (("new", tab_new), ("all", table)):
+            jobs.append((tb, rd, f"main_{tag}", [MALT], None, n_boot, n_perm))
+            jobs.append((tb, rd, f"fibref_{tag}", [MALT, FIB], FIB, n_boot, 0))
+        jobs.append((tA, rd, "cancerA", targA, None, n_boot, 0))
+        jobs.append((tA, rd, "cancerA_fib", targA + [FIB], FIB, n_boot, 0))
+        jobs.append((tB, rd, "cancerB", targB, None, n_boot, 0))
+        jobs.append((tB, rd, "cancerB_fib", targB + [FIB], FIB, n_boot, 0))
+    jobs = [j for j in jobs if len([k for k in j[3] if k != FIB])]
+    res = Parallel(n_jobs=args.jobs, return_as="generator")(delayed(fit_task)(*j) for j in jobs)
+    fits = {}
+    for tag, rd, ref, t, rep in res:
+        fits[(tag, rd)] = (t, rep)
+        log(f"fit {tag} {rd} done")
+    # --- companions (reuse the stored comparators of the power stage) ---
+    comp = pd.read_csv(pow_dir / "companions.csv")
+    comp = comp.dropna(subset=["coupling"])
+    # --- H388.1 / H388.1b table ---
+    rows = []
+    for tag, hyp in (("new", "H388.1"), ("all", "H388.1b")):
+        for rd in READOUTS:
+            t, _ = fits[(f"main_{tag}", rd)]
+            tf, _ = fits[(f"fibref_{tag}", rd)]
+            r = t.loc[MALT]
+            g = gates[(gates.set == ("new" if tag == "new" else "pooled")) & (gates.readout == rd)].iloc[0]
+            row = dict(hypothesis=hyp, readout=rd, n=int(r.n), gate_passes=bool(g.passes), coupling=r.coupling,
+                       coupling_lo90=r.coupling_lo, coupling_hi90=r.coupling_hi, p_coupling=r.p_coupling,
+                       boundary_type=r.boundary_type, host_reliability=r.host_reliability,
+                       coupling_corrected=r.coupling_corrected, n_boot_failed=int(r.n_boot_failed),
+                       offset_h=tf.loc[MALT, "offset_h"], offset_lo90=tf.loc[MALT, "offset_lo"], offset_hi90=tf.loc[MALT, "offset_hi"],
+                       log_amp_ratio=tf.loc[MALT, "log_amp_rel"], log_amp_lo90=tf.loc[MALT, "log_amp_lo"],
+                       log_amp_hi90=tf.loc[MALT, "log_amp_hi"], fibroblast_coupling=tf.loc[FIB, "coupling"])
+            for f in ("matched", "responsive"):
+                c = comp[(comp.cohort_set == tag) & (comp.readout == rd) & (comp.family == f)].coupling
+                row.update({f"{f}_q95": float(np.nanquantile(c, .95)), f"{f}_median": float(np.nanmedian(c)),
+                            f"{f}_share_ge": float(np.nanmean(c >= row["coupling"])), f"{f}_n_ok": int(c.notna().sum())})
+            rows.append(row)
+    H1 = pd.DataFrame(rows)
+    H1.to_csv(out / "h388_1_raw.csv", index=False)
+    # --- H388.2 ---
+    kept = donors[donors.cancer.isin(CLASS_KEEP + CLASS_NULL)].copy()
+    kept["cls"] = np.where(kept.cancer.isin(CLASS_KEEP), "keeping", "at_null")
+    cohorts = sorted(kept.cohort.unique())
+    cohort_ix = {c: i for i, c in enumerate(cohorts)}
+    base_codes = np.array([1 if kept[kept.cohort == c].cls.iloc[0] == "keeping" else 0 for c in cohorts])
+    rng = np.random.default_rng([SEED, 2])
+    perms = [rng.permutation(len(cohorts)) for _ in range(n_h2)]
+    lab = kept.set_index("donor").cls
+    kd = list(lab.index)
+    Gk = Gu[Gu.donor.isin(kd)]
+    tk = table[table.donor.isin(kd)]
+    cohort_of = {d: cohort_ix[d.split("|")[0]] for d in kd}
+    h2 = []
+    contr = {}
+    for rd, wf in READOUTS.items():
+        ds = dataset(tk, wf)
+        c = ds.contrast(lab, levels=("at_null", "keeping"), targets=[MALT], n_perm=0, n_boot=n_boot_h2, seed=SEED,
+                        host_prior="arm")
+        g = ds.contrast(lab, levels=("at_null", "keeping"), targets=[MALT], n_perm=0, n_boot=0, seed=SEED, host_prior="arm",
+                        require_host_gate_each_arm=True, n_gate=100 if args.smoke else N_PERM)
+        contr[rd] = c.table.loc[MALT].copy()
+        contr[rd]["gate_status"] = "ok" if g.table.loc[MALT].get("status") == "ok" else g.table.loc[MALT].get("status")
+        log(f"H388.2 contrast {rd}: gate status {contr[rd]['gate_status']}")
+    # clock (set -1) on the real table, companions on the genome table: separate task lists
+    clock_tasks = [("14", [(-1, BASE)]), ("core", [(-1, CORE)])]
+    comp_tasks = []
+    for rd in READOUTS:
+        ws = [(i, w if rd == "14" else C.restrict(w, BASE, CORE)) for i, (f, w) in enumerate(sets) if f == "matched"]
+        for k in range(args.jobs * 3):
+            if ws[k::args.jobs * 3]:
+                comp_tasks.append((rd, ws[k::args.jobs * 3]))
+    allt = [(tk, rd, ws) for rd, ws in clock_tasks] + [(Gk, rd, ws) for rd, ws in comp_tasks]
+    res = Parallel(n_jobs=args.jobs, return_as="generator")(
+        delayed(h2_task)(Gx, cohort_of, perms, base_codes, rd, ws, kd) for Gx, rd, ws in allt)
+    n = 0
+    for r in res:
+        h2 += r
+        n += 1
+        log(f"H388.2 permutation chunks {n}/{len(allt)}")
+    H2 = []
+    nulls = {(r["readout"], r["set"]): r["null"] for r in h2}
+    obs = {(r["readout"], r["set"]): r["obs_dstar"] for r in h2}
+    for rd in READOUTS:
+        o, nl = obs[(rd, -1)], nulls[(rd, -1)]
+        ok = np.isfinite(nl)
+        p = (1 + np.sum(nl[ok] >= o)) / (1 + ok.sum())
+        cd = contr[rd]
+        msets = [i for (r_, i) in obs if r_ == rd and i >= 0]
+        mo = np.array([obs[(rd, i)] for i in msets])
+        mp = np.array([(1 + np.sum(nulls[(rd, i)][np.isfinite(nulls[(rd, i)])] >= obs[(rd, i)])) / (1 + np.isfinite(nulls[(rd, i)]).sum()) for i in msets])
+        # specificity on the same permutations: clock difference minus each matched set's, per permutation
+        spec = np.array([(1 + np.sum((nl - nulls[(rd, i)]) >= (o - obs[(rd, i)]))) / (1 + np.isfinite(nl - nulls[(rd, i)]).sum()) for i in msets])
+        H2.append(dict(hypothesis="H388.2", readout=rd, gate_each_arm_status=cd.get("gate_status"),
+                       n_keeping=int(cd.get("donors_keeping", np.nan)), n_at_null=int(cd.get("donors_at_null", np.nan)),
+                       cohorts_keeping=int(base_codes.sum()), cohorts_at_null=int((1 - base_codes).sum()),
+                       c_keeping=cd.get("c_keeping"), c_at_null=cd.get("c_at_null"), d=cd.get("d"), d_lo=cd.get("lo"), d_hi=cd.get("hi"),
+                       d_star_contrast=cd.get("d_star"), d_star_engine=o, d_star_engine_matches=bool(np.isclose(o, cd.get("d_star"), atol=1e-6)),
+                       se_d_star=cd.get("se_d_star"), p_cohort_perm=p, n_perm=int(ok.sum()), null_mean=float(np.nanmean(nl)),
+                       null_q95=float(np.nanquantile(nl, .95)), matched_q95_d_star=float(np.nanquantile(mo, .95)),
+                       matched_median_d_star=float(np.nanmedian(mo)), matched_share_ge=float(np.mean(mo >= o)),
+                       matched_n=len(mo), matched_share_p_lt_05=float(np.mean(mp < .05)),
+                       specificity_share_p_lt_05=float(np.mean(spec < .05)), specificity_median_p=float(np.median(spec))))
+    H2 = pd.DataFrame(H2)
+    pd.DataFrame([dict(readout=r["readout"], set=r["set"], family="clock" if r["set"] < 0 else "matched", obs_c=r["obs_c"],
+                       obs_dstar=r["obs_dstar"]) for r in h2]).to_csv(out / "h388_2_companion_observed.csv", index=False)
+    np.savez_compressed(out / "h388_2_null.npz", **{f"{rd}_{i}": v for (rd, i), v in nulls.items()})
+    # --- verdict table with Holm over H388.1 and H388.2 within readout ---
+    V = []
+    for rd in READOUTS:
+        a = H1[(H1.hypothesis == "H388.1") & (H1.readout == rd)].iloc[0]
+        b = H2[H2.readout == rd].iloc[0]
+        ph = holm([a.p_coupling, b.p_cohort_perm])
+        h1 = H1[(H1.hypothesis == "H388.1") & (H1.readout == rd)].index[0]
+        H1.loc[h1, "p_holm"] = ph[0]
+        H1.loc[h1, "pass"] = bool(a.gate_passes and ph[0] < .05 and a.coupling > a.matched_q95)
+        H2.loc[H2.readout == rd, "p_holm"] = ph[1]
+        gate_ok = str(b.gate_each_arm_status) == "ok"
+        H2.loc[H2.readout == rd, "pass"] = bool(gate_ok and ph[1] < .05 and b.d_star_engine > b.matched_q95_d_star and b.d_star_engine > 0)
+    H1.to_csv(out / "h388_1.csv", index=False)
+    H2.to_csv(out / "h388_2.csv", index=False)
+    log("H388.1/1b\n" + H1.round(4).T.to_string())
+    log("H388.2\n" + H2.round(4).T.to_string())
+    # --- D388.1: per cancer, with companions on the same relabelling ---
+    cw = [(i, w) for i, (f, w) in enumerate(sets) if f == "matched"]
+    ctasks = []
+    for rd in READOUTS:
+        ws = [(i, w if rd == "14" else C.restrict(w, BASE, CORE)) for i, w in cw]
+        for scheme, tr_, targ in (("A", keyA, targA), ("B", keyB, targB)):
+            if not targ:
+                continue
+            Gr = relabel(Gu, tr_)
+            for k in range(args.jobs * 2):
+                if ws[k::args.jobs * 2]:
+                    ctasks.append((Gr, ws[k::args.jobs * 2], rd, targ, scheme))
+    cc = pd.DataFrame([r for x in Parallel(n_jobs=args.jobs)(delayed(comp_cancer_task)(*t) for t in ctasks) for r in x])
+    cc.to_csv(out / "d388_1_companions.csv", index=False)
+    D1 = []
+    for scheme, tg in (("A", targA), ("B", targB)):
+        for rd in READOUTS:
+            if not tg:
+                continue
+            t, _ = fits[(f"cancer{scheme}", rd)]
+            tf, _ = fits[(f"cancer{scheme}_fib", rd)]
+            for k in tg:
+                c = cc[(cc.scheme == scheme) & (cc.readout == rd) & (cc.target == k)].coupling
+                r = t.loc[k]
+                D1.append(dict(scheme=scheme, readout=rd, cancer=k.split("|", 1)[1] if scheme == "A" else k.split("|", 1)[1],
+                               n=int(r.n), coupling=r.coupling, lo90=r.coupling_lo, hi90=r.coupling_hi, boundary_type=r.boundary_type,
+                               host_reliability=r.host_reliability, n_boot_failed=int(r.n_boot_failed),
+                               matched_q95=float(np.nanquantile(c, .95)), matched_median=float(np.nanmedian(c)),
+                               matched_share_ge=float(np.nanmean(c >= r.coupling)), matched_n_ok=int(c.notna().sum()),
+                               offset_h=tf.loc[k, "offset_h"], offset_lo90=tf.loc[k, "offset_lo"], offset_hi90=tf.loc[k, "offset_hi"],
+                               log_amp_ratio=tf.loc[k, "log_amp_rel"], log_amp_lo90=tf.loc[k, "log_amp_lo"],
+                               log_amp_hi90=tf.loc[k, "log_amp_hi"]))
+    D1 = pd.DataFrame(D1)
+    D1.to_csv(out / "d388_1.csv", index=False)
+    log("D388.1\n" + D1.round(3).to_string(index=False))
+    # --- D388.2: breast ER+ vs ER-, descriptive ---
+    b = pd.read_csv(OUT / "feasibility" / "breast_patients_private_ids.csv")
+    er = {f"{ {'Wu': 'GSE176078', 'Pal': 'GSE161529'}[c] }|{p}": e for c, p, e in zip(b.cohort, b.patient, b.er)}
+    br = {d: er[d] for d in donors.donor if d in er}
+    rows = []
+    for rd, wf in READOUTS.items():
+        try:
+            c = dataset(table, wf).contrast(pd.Series(br), levels=("ER-", "ER+"), targets=[MALT], n_perm=0, n_boot=n_boot_h2,
+                                            seed=SEED, host_prior="arm")
+            r = c.table.loc[MALT]
+            rows.append(dict(readout=rd, n_ERplus=r.get("donors_ER+"), n_ERminus=r.get("donors_ER-"), c_ERminus=r.get("c_ER-"),
+                             c_ERplus=r.get("c_ER+"), d_star=r.get("d_star"), se_d_star=r.get("se_d_star"), d=r.get("d"),
+                             d_lo=r.get("lo"), d_hi=r.get("hi"), status=r.get("status")))
+        except Exception as e:  # noqa: BLE001
+            rows.append(dict(readout=rd, status=f"{type(e).__name__}: {e}"[:200]))
+    pd.DataFrame(rows).to_csv(out / "d388_2_breast_er.csv", index=False)
+    log("D388.2\n" + pd.DataFrame(rows).round(3).to_string(index=False))
+    # --- D388.3: gene drop ---
+    trio_drop = tuple(g for g in BASE.genes if g in C.TRIO)
+    drops = list(itertools.combinations(BASE.genes, 3))
+    if args.smoke:
+        drops = drops[:6] + [trio_drop]
+    dres = Parallel(n_jobs=args.jobs)(delayed(drop_task)(table, drops[k::args.jobs * 2]) for k in range(args.jobs * 2) if drops[k::args.jobs * 2])
+    Dr = pd.DataFrame([r for x in dres for r in x])
+    Dr.to_csv(out / "d388_3_drops.csv", index=False)
+    rows = []
+    for tag in ("new", "all"):
+        (t14, r14), (tc, rc) = fits[(f"main_{tag}", "14")], fits[(f"main_{tag}", "core")]
+        a, bb = t14.loc[MALT], tc.loc[MALT]
+        aligned = len(r14) == len(rc) and a.n_boot_failed == 0 and bb.n_boot_failed == 0
+        dd = (r14[MALT] - rc[MALT]).to_numpy() if aligned else np.full(1, np.nan)
+        v = Dr.coupling.to_numpy()
+        tr = Dr[Dr["drop"] == "+".join(trio_drop)].coupling.iloc[0] if tag == "all" else np.nan
+        rows.append(dict(cohort_set=tag, value_14=a.coupling, value_core=bb.coupling, diff=a.coupling - bb.coupling,
+                         diff_lo90=float(np.nanquantile(dd, .05)), diff_hi90=float(np.nanquantile(dd, .95)), replicates_aligned=aligned,
+                         n_replicates=len(r14), host_reliability_14=a.host_reliability, host_reliability_core=bb.host_reliability,
+                         reliability_predicted_core=a.coupling * bb.host_reliability / a.host_reliability,
+                         trio_drop_value=tr, trio_drop_percentile=float(np.mean(v <= tr)) if tag == "all" else np.nan,
+                         trio_drop_rank_from_low=int(1 + np.sum(v < tr)) if tag == "all" else np.nan,
+                         n_drops=len(v), drops_median=float(np.median(v)), drops_q05=float(np.quantile(v, .05)),
+                         drops_q95=float(np.quantile(v, .95))))
+    D3 = pd.DataFrame(rows)
+    D3.to_csv(out / "d388_3.csv", index=False)
+    log("D388.3\n" + D3.round(4).T.to_string())
+    # --- D388.4: tumour-stroma host vs normal-stroma host (A387) on shared patients ---
+    D4 = d388_4(args, table, donors, drec_alias(out, pow_dir), out, n_boot)
+    # --- D388.5 ---
+    D5 = d388_5(D1, out)
+    log(f"score done {(time.time() - t0) / 60:.1f} min")
+
+
+def drec_alias(out, pow_dir):
+    """A388 donor -> A387 donor id for patients kept from the GEO copy of a deduplicated pair (same patient label)."""
+    d = pd.read_csv(pow_dir / "dedup.csv")
+    d = d[d.status == "removed scBaseCount copy"]
+    return {f"{k}|{p}": f"{r}|{p}" for k, r, p in zip(d.kept, d.removed, d.patient)}
+
+
+def d388_4(args, table, donors, alias, out, n_boot):
+    sys.path.insert(0, str(EXP / "A387_tumour_full_model/scripts"))
+    import a387 as R7
+    t7 = pd.concat([t for t in (R7.cohort_table(c) for c in M.cohort_list(args.smoke)) if t is not None and len(t)], ignore_index=True)
+    a7 = set(t7[t7.compartment.isin(R7.ANCHORS)].donor)
+    m7 = set(t7[t7.compartment == "tumour:malignant"].donor)
+    ok7 = a7 & m7
+    t8 = table.copy()
+    t8["id7"] = t8.donor.map(lambda d: alias.get(d, d))
+    shared = sorted(set(t8[t8.compartment == MALT].id7) & ok7)
+    rows = []
+    if len(shared) < 5:
+        pd.DataFrame([dict(note=f"{len(shared)} shared patients")]).to_csv(out / "d388_4.csv", index=False)
+        return None
+    s7 = t7[t7.donor.isin(shared)]
+    m8 = t8[t8.id7.isin(shared)].drop(columns="id7")
+    for rd, wf in READOUTS.items():
+        f7 = cs.Dataset(s7, anchors=R7.ANCHORS, waveform=wf, mixed_strata=True).fit(
+            n_boot=n_boot, seed=SEED, gate=False, targets=["tumour:malignant"], attenuation="df", level=0.90).table.loc["tumour:malignant"]
+        f8 = dataset(m8, wf).fit(n_boot=n_boot, seed=SEED, gate=False, targets=[MALT], attenuation="df", level=0.90).table.loc[MALT]
+        rows.append(dict(readout=rd, shared_patients=len(shared), n_normal_host=int(f7.n), c_normal_host=f7.coupling,
+                         lo90_normal_host=f7.coupling_lo, hi90_normal_host=f7.coupling_hi,
+                         n_tumour_host=int(f8.n), c_tumour_host=f8.coupling, lo90_tumour_host=f8.coupling_lo,
+                         hi90_tumour_host=f8.coupling_hi))
+    D4 = pd.DataFrame(rows)
+    D4.to_csv(out / "d388_4.csv", index=False)
+    log("D388.4\n" + D4.round(3).to_string(index=False))
+    return D4
+
+
+def d388_5(D1, out):
+    from scipy.stats import spearmanr
+    bulk = pd.read_csv(EXP / "A138_cancer_estimability/output/score/per_unit.csv").query("hypothesis == 'H138.4'").set_index("unit").statistic
+    rows = []
+    for rd in READOUTS:
+        d = D1[(D1.readout == rd) & D1.cancer.isin(BULK)].drop_duplicates("cancer")
+        # lung rows: only the adenocarcinoma split (scheme B) is a TCGA LUAD match
+        d = pd.concat([D1[(D1.readout == rd) & (D1.scheme == "A") & D1.cancer.isin([c for c in BULK if "|" not in c])],
+                       D1[(D1.readout == rd) & (D1.scheme == "B") & (D1.cancer == "lung|LUAD")]])
+        d = d.assign(tcga=d.cancer.map(BULK), bulk=lambda x: x.tcga.map(bulk))
+        d.to_csv(out / f"d388_5_pairs_{rd}.csv", index=False)
+        n = len(d)
+        rho = spearmanr(d.coupling, d.bulk)[0] if n >= 3 else np.nan
+        cnt_ge = cnt_abs = tot = 0
+        for p in itertools.permutations(range(n)):
+            r = spearmanr(d.coupling.to_numpy()[list(p)], d.bulk.to_numpy())[0]
+            tot += 1
+            cnt_ge += r >= rho - 1e-12
+            cnt_abs += abs(r) >= abs(rho) - 1e-12
+        lowest = d.loc[d.coupling.idxmin(), "cancer"]
+        rows.append(dict(readout=rd, n_cancers=n, cancers="+".join(d.cancer), rho=rho, p_exact_one_sided=cnt_ge / tot,
+                         p_exact_two_sided=cnt_abs / tot if n >= 3 else np.nan, lowest_c=lowest, colorectal_lowest=lowest == "colorectal",
+                         colorectal_rank_from_low=int(1 + (d.coupling < d.set_index("cancer").coupling["colorectal"]).sum())
+                         if "colorectal" in set(d.cancer) else np.nan))
+    D5 = pd.DataFrame(rows)
+    D5.to_csv(out / "d388_5.csv", index=False)
+    log("D388.5\n" + D5.round(3).to_string(index=False))
+    return D5
+
+
 # ---- main ---------------------------------------------------------------------------------------------------------------
 
 def stage_power(args):
@@ -571,10 +1055,12 @@ def stage_power(args):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--stage", choices=("power", "breast"), required=True)
+    ap.add_argument("--stage", choices=("power", "breast", "score"), required=True)
     ap.add_argument("--jobs", type=int, default=4)
     ap.add_argument("--genome-jobs", type=int, default=2)
     ap.add_argument("--smoke", action="store_true")
+    ap.add_argument("--scramble", action="store_true", help="timing check at full size: malignant donor labels permuted within stratum")
+    ap.add_argument("--time-only", action="store_true", help="with --scramble: time the d* engine and stop")
     args = ap.parse_args()
     limit_threads(1)
     t0 = time.time()
@@ -582,6 +1068,8 @@ def main():
         for s in BREAST:
             breast_genome(s)
             log("built", s)
+    elif args.stage == "score":
+        stage_score(args)
     else:
         stage_power(args)
     log(f"done {(time.time() - t0) / 60:.1f} min")

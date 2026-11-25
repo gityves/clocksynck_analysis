@@ -9197,3 +9197,45 @@ q95 +3.19), a same-person dispersion, not a bias.
   are upper bounds; with the random-effects SE the endothelium-fibroblast z is about -2.5 (14 genes).
 - Code: `exploratory/A389_class_phase_order/scripts/a389_note2.py`.
 <!-- src: paper/exploratory/A389_class_phase_order/output/score/note2_standardised.csv -->
+
+## A388 (scored 2026-11-26; H388.1 BLIND on 127 new patients; H388.1b and the per-cohort values not blind on the 15 H138.1 cohorts; one scoring run, 45 min): cancer cells are weakly coupled to their own tumour's stroma (c 0.13-0.15) but not beyond matched genes (H388.1 FAIL); the A83 class difference leans as predicted, not clock-specifically (H388.2 FAIL); lung adenocarcinoma cancer cells are the exception (c 0.66, beyond matched genes, descriptive)
+
+Tumour samples only; host = the tumour's own fibroblasts, endothelium and mural cells; 288 patients after deduplication
+(35 cohorts, 127 new to H138.1); gates pass in every set (p_pairing 0.001; clock share 0.83 pooled, 0.60 at null on 14
+genes). 90 % intervals.
+- **H388.1 FAIL (new cohorts, 127 patients):** c 0.146 (0.063-0.247) on 14 genes, 0.126 (0.073-0.211) core; coupling p
+  0.001 (Holm 0.002), but below the matched q95 (0.242 / 0.237; 23 % / 37 % of matched sets reach c; narrow responsive
+  q95 0.300 / 0.303). Registered reading: cancer cells are not detectably coupled to their tumour's stroma beyond matched
+  genes; the patient's time inside tumours is carried by the stroma (A387).
+- **H388.1b (all 288, not Holm-tested):** 0.103 / 0.097, p 0.001, below the matched q95 (0.198 / 0.210).
+- Cancer cells against the tumour fibroblasts (new cohorts): loudness exp(-0.776) = 0.46 (14 genes), exp(-0.447) = 0.64
+  (core); offset +0.02 h (-1.08 to 1.06) / +0.87 h (-0.23 to 1.78), shown as clocksync offset.
+- **H388.2 FAIL (keeping 99 patients / 16 cohorts vs at null 73 / 9):** c 0.120 vs 0.010 (14 genes), 0.129 vs 0.000 (core);
+  d* +0.104 (cohort-permutation p 0.118) and +0.122 (p 0.040, Holm 0.040); below the matched sets' q95 of the same
+  difference (0.230 / 0.269; 31 % / 32 % of sets reach it). Coupling difference d +0.110 (-0.018 to 0.257) / +0.129 (0.020
+  to 0.238). The direction predicted by A83 (keeping cancers coupled, at-null cancers at 0) holds; specificity does not.
+- **D388.1 (per cancer, pooled host):** lung adenocarcinoma cohorts (GSE164789, GSE229253, GSE308103; 20 patients) c 0.657
+  (0.521-0.795) / 0.653 (0.488-0.837), above the matched q95 (0.572 / 0.641; 4 % of sets reach it): the one cancer whose
+  cancer cells are coupled clock-specifically (descriptive). Lung, all cohorts 0.424 / 0.362 (mixed / NSCLC cohorts 0.151
+  / 0.205, 8 patients). Oesophageal 0.174 / 0.214 (60, below q95 0.257 / 0.254). Breast 0.000 / 0.049 (40), colorectal
+  0.000 / 0.000 (30), ovarian 0.000 / 0.000 (38), gastric 0.034 / 0.000 (22); liver 0.183 / 0.307 (16), prostate 0.525 /
+  0.169 (9), wide intervals.
+- **D388.2 (breast ER+ 12 vs ER- 7):** d* 0.067 (se 0.315) / 0.035 (0.492): uninformative.
+- **D388.3 (gene drop, all cohorts):** 14 minus core +0.005 (-0.042 to 0.052); the trio drop at the 41st percentile of the
+  364 three-gene drops (0.097 vs median 0.102): not decided, and no sign that PER1, PER2, NR1D1 matter.
+- **D388.4 (57 patients with both hosts):** c on the tumour-stroma host 0.137 (0.033-0.435) / 0.157 (0.037-0.343) against
+  0.040 (0-0.179) / 0.011 (0-0.136) on the normal-stroma host (A387): the tumour host gives the higher value, as a
+  within-sample shared component (registered limit 1: ambient RNA, dissociation, or local coupling) would.
+- **D388.5 (per-cancer cancer-cell c against the A138 bulk pairing, 5 matched cancers):** Spearman rho 0.900 on the core
+  loop (exact p 0.042 one-sided), colorectal lowest; 0.667 (p 0.133) on 14 genes, colorectal tied at 0 with breast.
+  Descriptive (5 cancers); the prediction (rank agreement, colorectal low, lung / liver / prostate higher) holds on the
+  core loop.
+- **Reading.** Cancer cells as a class are not coupled to the patient's time beyond what matched genes show, in cohorts
+  never read before. The A83 split leans as predicted and the cancer ranks follow the bulk pairing (core loop), so the
+  bulk tumour-normal pairing of a cancer type tracks how much its cancer cells keep the patient's time; lung
+  adenocarcinoma is the clear case of coupled cancer cells. Abstract: "cancer cells are barely coupled, except in lung
+  adenocarcinoma" is supported only as descriptive; the registered statement is "not detectably coupled beyond matched
+  genes".
+- Code: `exploratory/A388_malignant_tumour_host/scripts/a388.py --stage score` (whole-cohort permutation engine reproduces
+  `Dataset.contrast` d* exactly on the real data).
+<!-- src: paper/exploratory/A388_malignant_tumour_host/output/score/{gates,h388_1,h388_2,d388_1,d388_2_breast_er,d388_3,d388_3_drops,d388_4,d388_5,d388_5_pairs_14,d388_5_pairs_core}.csv -->
