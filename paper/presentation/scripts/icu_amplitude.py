@@ -10,7 +10,8 @@ A. Clock-specific clock amplitude, one row per comparison: ventilated post-morte
    Q*, shaded; A335 part 3).
 B. Per tissue, loudness lost in intensive care (host-referenced log z2, fast over ventilated, at a common host spread;
    90 % donor-bootstrap interval, 500 draws) against the tissue's clock strength in fast deaths (z2; A349 D349.2-3,
-   descriptive). Organ-system colours.
+   descriptive). Organ-system colours. Whole blood omitted (no readable clock, slide 3.1b; post hoc display choice,
+   user 2026-11-25).
 
 Status: A315 descriptive contrasts (registered) and H315.1 FAIL (powered); A335 registered; A349 descriptive; the
 amplitude display exp(Q* / 2) is post hoc. 14 genes (core loop in the speaker notes). GTEx aggregates only.
@@ -41,7 +42,7 @@ MUTED = pf.GREY
 MATCHED, RESPONSIVE = "#BBBBBB", "#6E6E6E"
 EDGE = [patheffects.Stroke(linewidth=3.6, foreground="white"), patheffects.Normal()]
 ROWS = ["ventilated\nvs fast deaths", "brain death\nvs ventilated", "long vs short\nventilation"]
-SHORT = {"Thyroid": "thyroid", "Whole Blood": "blood", "Esophagus - Mucosa": "oes. mucosa",
+SHORT = {"Thyroid": "thyroid", "Esophagus - Mucosa": "oes. mucosa",
          "Heart - Atrial Appendage": "heart", "Muscle - Skeletal": "muscle",
          "Skin - Not Sun Exposed (Suprapubic)": "skin"}
 LEADER = ("Esophagus - Mucosa", "Heart - Atrial Appendage")
@@ -90,7 +91,7 @@ def amplitude(ax, core, eq, desc):
 
 
 def per_tissue(ax, t):
-    t = t[(t.gene_set == "14 genes") & (t.design == "pooled")]
+    t = t[(t.gene_set == "14 genes") & (t.design == "pooled") & (t.tissue != "Whole Blood")]  # no readable clock (3.1b)
     for _, r in t.iterrows():
         c = COLOR[gtex_system(r.tissue)]
         ax.plot([r.z2_fast] * 2, [r.lz2_lo90, r.lz2_hi90], color=c, lw=1, alpha=0.6, zorder=2)
@@ -103,7 +104,7 @@ def per_tissue(ax, t):
                         arrowprops=dict(arrowstyle="-", color=c, lw=0.6, shrinkA=0, shrinkB=4) if far else None)
     ax.axhline(0, color=MUTED, lw=0.8, ls="--", zorder=0)
     ax.set_xscale("log")
-    ax.set_xticks([0.03, 0.1, 0.3, 1, 3, 10], ["0.03", "0.1", "0.3", "1", "3", "10"])
+    ax.set_xticks([0.3, 1, 3, 10], ["0.3", "1", "3", "10"])
     ax.minorticks_off()
     ax.set_xlabel("clock strength in fast deaths [z2]")
     ax.set_ylabel("loudness lost in intensive care\n[log, fast / ventilated]")

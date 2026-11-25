@@ -727,8 +727,8 @@ systematic distortion as scatter (conservative).
 **Bullets**
 1. Ventilated donors' clocks are quieter: clock-specific amplitude 0.82 of fast deaths (Q* +0.404, above all 200
    matched sets), core 0.80; unchanged by age / sex matching (Q* +0.389, core +0.459) (A315 descriptive, A335).
-2. The loss rises with the organ's clock strength (Spearman 0.82, 12 tissues; thyroid, oesophagus mucosa, heart lose
-   most; A349, descriptive). Blood "gains" (-1.95): no readable clock (slide 3.1b).
+2. The loss rises with the organ's clock strength (Spearman 0.76 over 11 tissues without blood, post hoc; 0.82 with
+   it, A349, descriptive): thyroid, oesophagus mucosa and heart lose most.
 3. Brain death keeps the amplitude of ventilated donors (1.02, 90 % 0.94-1.10, inside the registered equivalence margin
    0.84-1.20; A315 H315.1 FAIL, A335 part 3).
 4. Amplitude falls with time on the ventilator among organ donors (longest vs shortest tertile Q* -0.236, 1st
@@ -739,7 +739,8 @@ amplitude, one row per comparison: ventilated vs fast deaths (0.82; matched and 
 0.90), brain death vs ventilated (1.02, 90 % 0.94-1.10; shaded: equivalence margin 0.84-1.20), longest vs shortest
 ventilation tertile among organ donors (0.89; companion percentiles not stored for this contrast). exp(Q* / 2) from the
 clock-plane variance ratio. B. per tissue, host-referenced loudness lost in intensive care (log z2, fast over
-ventilated, at a common spread, 90 % interval) against fast-death clock strength (z2). 14 genes.
+ventilated, at a common spread, 90 % interval) against fast-death clock strength (z2); whole blood omitted (no
+readable clock, slide 3.1b; user 2026-11-25). 14 genes.
 
 **Tags:** A315 descriptive contrasts (registered) and H315.1 FAIL (powered); A335 registered (core loop blind); A349
 descriptive; amplitude display exp(Q* / 2) post hoc.
@@ -747,6 +748,8 @@ descriptive; amplitude display exp(Q* / 2) post hoc.
 **Caveats (speaker notes)**
 - The ventilated host spread is about half that of fast deaths (A349); per-tissue losses are compared at a common
   spread.
+- Whole blood, omitted from panel B, "gains" (-1.95; A349): it has no readable clock (slide 3.1b). The registered Q* of
+  panel A is a median over the 12 tissues including blood (a median, so one tissue moves it little).
 - Raw clock-plane variance is lower in organ donors, as is the matched sets' (core Q -0.186): the brain-death
   equivalence is clock-specific, relative to random genes; also equivalent after age matching (A335).
 - Deaths only; intensive care withdraws light-dark, meal and activity cycles together.
