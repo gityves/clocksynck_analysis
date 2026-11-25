@@ -8868,3 +8868,25 @@ R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsiv
   T2D and COPD leans are not findings.
 - Code: `exploratory/A379_disease_arrangement/scripts/a379.py --stage score`.
 <!-- src: paper/exploratory/A379_disease_arrangement/output/{tests,companions}.csv -->
+
+## A380 / A381 power note (2026-11-25; bootstrap noise and relabelling null only, no case-against-control value; 71 s): organ movement relative to matched controls is resolvable at 0.4-0.7 h (depression 1.6 h); the pooled metabolic design does not gain power
+
+| design | matched sets | cases / controls | pairs | rho_sim(0) median | detection limit (upper bound under no change) |
+|---|---|---|---|---|---|
+| T2D | 123 | 123 / 307 | 66 | 0.918 | 0.4 h |
+| obesity | 139 | 139 / 139 | 66 | 0.870 | 0.6 h |
+| hypertension | 191 | 191 / 234 | 66 | 0.920 | 0.4 h |
+| ischaemic heart disease | 90 | 90 / 257 | 66 | 0.879 | 0.5 h |
+| COPD | 88 | 88 / 252 | 66 | 0.846 | 0.7 h |
+| depression | 62 | 62 / 186 | 64 | 0.590 | 1.6 h |
+| smoking | 199 | 199 / 202 | 66 | 0.914 | 0.4 h |
+| metabolic pooled (A381) | 129 | 129 / 148 | 66 | 0.844 | 0.7 h |
+
+- A380: against the fast-death arrangement scale (median pair offset about 1 h), every condition except depression
+  resolves an organ scatter of half that size or less.
+- A381: relabelling null of r: median 0.845, SD 0.043, q05 0.763. The pooled design matches fewer cases (129) than T2D
+  alone (123 with 307 controls) or obesity alone (139), because controls must be both non-diabetic and of normal BMI
+  (148 available): it is less sensitive (0.7 h) than T2D alone (0.4 h). Registered as is; no stop rule; scored as
+  registered, with this noted.
+- Code: `exploratory/A380_disease_hours/scripts/a380_a381.py --stage power`.
+<!-- src: paper/exploratory/A380_disease_hours/output/power.csv -->
