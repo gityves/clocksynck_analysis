@@ -676,8 +676,10 @@ shift).
 1. Removing a drive costs little: mouse liver without a feeding rhythm (Greenwell, 1/8 of the food every 3 h) keeps 0.72
    of its amplitude (90 % 0.66-0.79) and moves +1.6 h, far above the 0.15-0.29 additive cues predict (A297, H297.1 FAIL,
    above the interval). Peripheral clocks are self-sustained (Yoo 2004; Welsh 2004).
-2. Losing the central drive scrambles the organs, not their rhythm: without the SCN, organs keep oscillating but drift
-   out of phase with one another (Yoo 2004; Sinturel 2021; cited, no panel).
+2. Losing the central drive scrambles the organs: in mice without an SCN clock kept in constant darkness, the spread of
+   the six organ peak times within a mouse rises from a median 2.0 h to 3.7 h (up to 7.8 h; authors' Mann-Whitney on
+   circular variance p 0.0008); in light-dark it barely changes (2.4 vs 2.6 h, p 0.063): light keeps the order by other
+   routes (Izumo 2014; also Yoo 2004, Sinturel 2021).
 3. Conflicting drives split the organs: under inverted feeding, liver and white fat follow (10.6-11.7 h), lung, heart and
    kidney resist (1.6-2.5 h) and keep 0.50-0.65 of their amplitude at that intermediate phase, which a pure mix of two
    drives 12 h apart cannot produce (H322.1 rejected; H324.1 PASS): self-sustained oscillators pulled between drives.
@@ -692,7 +694,9 @@ bootstrap intervals. A. mouse liver: night-restricted (control), feeding inverte
 (Greenwell), and the removal expected if cues add (open diamonds). B. mouse organs under inverted feeding: Manella
 day-fed vs ad libitum (circles: liver, white fat, lung) and Xin day- vs night-restricted (squares: liver, heart, kidney,
 visceral fat); dashed: the pure mix of the two drives, a straight chord from the reference to the fully shifted state
-(Delta 11.28 and 11.42 h). Organ-system colours.
+(Delta 11.28 and 11.42 h). Organ-system colours. C. central clock lost (Izumo 2014, forebrain Bmal1 knockout,
+published per-mouse values): spread (circular SD) of six peripheral organ peak times within each mouse [h], controls
+(grey) and knockouts (ink) in light-dark (14 + 14) and constant darkness (15 + 15); bars: medians.
 
 **Tags:** A297 H297.1 FAIL (registered, NOT BLIND for the shifts); A322 H322.1 rejected (NOT BLIND); A324 H324.1 PASS,
 H324.2 FAIL (BLIND for heart, kidney, visceral fat); A358 descriptive, below its criterion.
@@ -706,6 +710,12 @@ H324.2 FAIL (BLIND for heart, kidney, visceral fat); A358 descriptive, below its
 - Removal is tested in the mouse liver only; the cross-organ panel is inversion only.
 - A358 is one line, never evidence: the balance b(1 - b) spans only 0.17-0.25 over the 5 organs.
 - Human muscle under 12 h-shifted behaviour (the former panel B) is slide 4.3.
+- Panel C: the spread is not 0 in controls because organs peak at different times (the normal arrangement). Peak phases
+  are ex vivo (explants), one harvest per mouse. Restricted feeding in constant darkness does not restore the order in
+  knockouts (median 4.4 h, 3.0-6.6, against 1.6 h in controls; 11 + 11). The authors also report damped peripheral
+  rhythms in knockouts in constant darkness (amplitudes in figure images only, not shown); in humans brain death keeps
+  the amplitude of ventilated donors (4.2b, 1.02): the parallel holds for the arrangement, only partly for amplitude.
+  Brain-dead donors lack both the pacemaker and its light pathway, closest to constant darkness.
 - What is known (literature check 2026-11-25, web search; `docs/literature/conflicting_zeitgebers_2026-11-18.md`):
   single fibroblasts and tissue explants oscillate for weeks, population damping is desynchronisation (Welsh 2004 Curr
   Biol; Nagoshi 2004 Cell; Yoo 2004 PNAS); without the SCN, organs keep oscillating but lose synchrony with each other
@@ -723,8 +733,8 @@ H324.2 FAIL (BLIND for heart, kidney, visceral fat); A358 descriptive, below its
 
 **Source:** `exploratory/A297_feeding_model/output/{tests,arms}.csv`;
 `exploratory/A322_conflicting_drives/output/{ratios,fit,tests}.csv` and `xin/{ratios,fit,tests}.csv`;
-`exploratory/A358_A360_gain_sources/output/{a358_organs,a358_tests}.csv`; `docs/results_preliminary.md` A297, A322,
-A324, A358.
+`exploratory/A358_A360_gain_sources/output/{a358_organs,a358_tests}.csv`; `$SCCC_DATA/izumo2014/per_mouse_spread.csv`
+(Izumo 2014 source data, PROVENANCE.md); `docs/results_preliminary.md` A297, A322, A324, A358.
 
 
 ## 4.2 When the body's clock no longer reads the hour, the organ arrangement holds; only brain death moves it

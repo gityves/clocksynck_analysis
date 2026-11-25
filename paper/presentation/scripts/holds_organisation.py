@@ -22,6 +22,11 @@ B. Mouse organs under inverted feeding (slide 4.1, introduction of section 4): M
    amplitude ratio (radius, 90 % library-bootstrap interval) and shift (angle) of each organ's clock-gene state.
    Dashed: the pure mix of the two drives, (1 - b) + b exp(i Delta), a straight chord from the reference to the fully
    shifted state (Delta fitted per dataset, 11.28 and 11.42 h); a pure mix puts every organ on it. Organ-system colours.
+C. Mouse organs without a central clock (Izumo et al. 2014 eLife, forebrain Bmal1 knockout x PER2::LUC; published
+   per-mouse values, Figure 5 source data b, c): per mouse, the circular SD of the ex vivo peak phases of six peripheral
+   organs (pituitary, liver, kidney, heart, lung, spleen), in h (15 degrees = 1 h), controls (grey) and knockouts (ink),
+   in light-dark (14 + 14 mice) and constant darkness (15 + 15); bars: medians. Display of published values, post hoc
+   (user, 2026-11-25); data $SCCC_DATA/izumo2014/per_mouse_spread.csv (`common/datasets/izumo2014/build.py`).
 (`muscle`, human muscle under 12 h-shifted behaviour, A257 / A261, is kept for slide 4.3.)
 
 Data: exploratory/A293_organisation_levels/output/part1/{groups,sets}.csv; results/figure_3/output/cues_lost/walltime_hosts.csv;
@@ -223,6 +228,31 @@ def organs(ax, tabs):
               handletextpad=0.3, labelspacing=0.8)
 
 
+IZUMO = Path("/mnt/max8tb/data/CoPhaser_data/cancer_circadian/izumo2014/per_mouse_spread.csv")
+GENO = {"control": ("control", REF), "knockout": ("no SCN clock", INK)}
+
+
+def central_loss(ax, t):
+    """Izumo 2014: per mouse, circular SD of the six peripheral organ peak phases (h), control vs forebrain Bmal1
+    knockout, in light-dark and constant darkness (published per-mouse values)."""
+    rng = np.random.default_rng(0)
+    for i, cond in enumerate(("LD", "DD")):
+        for j, (g, (lab, col)) in enumerate(GENO.items()):
+            y = t[(t.condition == cond) & (t.genotype == g)].circular_sd_deg.to_numpy() / 15
+            x = i + (j - 0.5) * 0.36
+            ax.scatter(x + rng.uniform(-0.07, 0.07, len(y)), y, s=16, color=col, alpha=0.8, lw=0, zorder=2)
+            ax.plot([x - 0.13, x + 0.13], [np.median(y)] * 2, color=col, lw=2.2, zorder=3)
+    ax.set_xticks([0, 1], ["light-\ndark", "constant\ndark"])
+    ax.tick_params(axis="x", length=0)
+    ax.set_xlim(-0.6, 1.6)
+    ax.set_ylim(0, 8.2)
+    ax.set_ylabel("spread of organ peak times\nwithin a mouse [h]")
+    ax.set_title("central clock lost", fontsize=16, color=INK)
+    h = [Line2D([], [], ls="", marker="o", ms=6, color=col, label=lab) for lab, col in GENO.values()]
+    ax.legend(handles=h, loc="lower left", frameon=False, fontsize=11, handletextpad=0.2, labelspacing=0.3,
+              borderaxespad=0.1)
+
+
 def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
@@ -235,8 +265,12 @@ def main():
     print(pf.collisions(fig))
     pf.save(fig, OUT / "holds_organisation")
 
-    lay = pf.Layout.slide("AB", kind="wide", col_ratios=[1, 1])
+    lay = pf.Layout.slide("ABxC", kind="wide", col_ratios=[1, 1, 0.08, 0.5], blank=("x",))
     liver(lay.axes["A"], pd.read_csv(EXP / "A297_feeding_model/output/tests.csv"))
+    iz = pd.read_csv(IZUMO)
+    central_loss(lay.axes["C"], iz)
+    print((iz.assign(h=iz.circular_sd_deg / 15).groupby(["condition", "genotype"]).h
+           .agg(["count", "median", "min", "max"]).round(2)).to_string())
     a322 = EXP / "A322_conflicting_drives/output"
     tabs = {"manella": (pd.read_csv(a322 / "ratios.csv"), pd.read_csv(a322 / "fit.csv")),
             "xin": (pd.read_csv(a322 / "xin/ratios.csv"), pd.read_csv(a322 / "xin/fit.csv"))}
