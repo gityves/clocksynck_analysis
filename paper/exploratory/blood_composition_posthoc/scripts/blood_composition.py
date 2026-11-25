@@ -11,7 +11,12 @@ log2-normalised counts of expressed genes (mean log2 >= 3):
   |sum_g w_g exp(i(phase_g - psi_g))| / sum_g w_g, w = cosinor amplitude (1: genes keep their expected relative phases).
 Controlled access: only per-tissue aggregates are written; no donor time or value leaves memory.
 
-    python blood_composition.py      # a few minutes
+Extension (post hoc, 2026-11-25, user request for slide 3.6): the same readouts on the other low-gain tissues, testis and the
+13 brain regions (`--low-gain`, written to `blood_composition_low_gain.csv`; the six tissues above are not rerun). The
+composition scores stay the blood-cell markers (blood content of the tissue).
+
+    python blood_composition.py              # a few minutes
+    python blood_composition.py --low-gain
 """
 import sys
 from pathlib import Path
@@ -36,6 +41,10 @@ MARKERS = {"neutrophil": ["FCGR3B", "CSF3R", "CXCR2", "FPR1", "MNDA", "S100A12",
            "monocyte": ["CD14", "FCN1", "VCAN", "CSF1R", "LYZ"],
            "eosinophil": ["CLC", "IL5RA", "CCR3", "SIGLEC8"],
            "erythroid": ["HBB", "HBA1", "HBA2", "ALAS2", "CA1"]}
+LOW_GAIN = ("Testis", "Brain - Amygdala", "Brain - Anterior cingulate cortex (BA24)", "Brain - Caudate (basal ganglia)",
+            "Brain - Cerebellar Hemisphere", "Brain - Cerebellum", "Brain - Cortex", "Brain - Frontal Cortex (BA9)",
+            "Brain - Hippocampus", "Brain - Hypothalamus", "Brain - Nucleus accumbens (basal ganglia)",
+            "Brain - Putamen (basal ganglia)", "Brain - Spinal cord (cervical c-1)", "Brain - Substantia nigra")
 WF = P.gtex()
 CLOCK = list(WF.genes)
 N_TOP, SEED = 100, 20261103
@@ -119,9 +128,11 @@ def main():
     limit_threads()
     OUT.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(SEED)
-    data = load(list(TISSUES))
-    res = pd.DataFrame([tissue(t, *data[t], rng) for t in TISSUES if t in data])
-    res.to_csv(OUT / "blood_composition.csv", index=False)
+    low = "--low-gain" in sys.argv
+    tissues, name = (LOW_GAIN, "blood_composition_low_gain.csv") if low else (TISSUES, "blood_composition.csv")
+    data = load(list(tissues))
+    res = pd.DataFrame([tissue(t, *data[t], rng) for t in tissues if t in data])
+    res.to_csv(OUT / name, index=False)
     pd.set_option("display.width", 250)
     print(res.T.to_string())
 

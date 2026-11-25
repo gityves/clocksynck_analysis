@@ -3200,7 +3200,11 @@ GTEx v10 fast deaths with recorded time of death; Whole Blood (212 donors) vs fi
   composition removes little, because there is little time signal to remove. Post-mortem blood may also differ from
   timed blood in living people.
 - Code `paper/exploratory/blood_composition_posthoc/scripts/blood_composition.py` (seconds).
-<!-- src: paper/exploratory/blood_composition_posthoc/output/blood_composition.csv -->
+- **Addendum (post hoc, 2026-11-25, user request for the slide): other low-gain tissues keep time.** Same readouts on
+  testis (135 donors; gain 0.38) and the 13 brain regions (98-169 donors; gains 0.40-0.57). Clock genes: testis 92nd
+  percentile of all genes, brain median 99.85th (90.8 to 99.96); phase concordance testis 0.916, brain median 0.843
+  (0.787 to 0.904), similar after composition. Blood's failure is not explained by a low gain alone. `--low-gain` (9 s).
+<!-- src: paper/exploratory/blood_composition_posthoc/output/blood_composition.csv, blood_composition_low_gain.csv -->
 
 ## A197 dedifferentiation, scored 2026-11-03: no coherence loss with the ES-like index beyond proliferation and subtype (H197.1-2 fail)
 
