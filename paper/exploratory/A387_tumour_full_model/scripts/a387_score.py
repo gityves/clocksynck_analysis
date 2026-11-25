@@ -31,7 +31,8 @@ Part 2  (one Dataset over all A227 cohorts; anchors = normal fibroblasts, endoth
   --smoke  3 cohorts and the pairing scrambled (tumour rows permuted within stratum): a code check that never reads a
            real target value.
 
-    python a387_score.py [--jobs 12] [--smoke]     (paper/common/run.sh, RUN_CAP_GB 40)
+    python a387_score.py [--jobs 12] [--genome-jobs 3] [--smoke]     (paper/common/run.sh, RUN_CAP_GB 40; the first run
+    with 12 genome workers was killed for memory at 42.6 GB, before any Part 2 output)
 """
 from __future__ import annotations
 
@@ -315,7 +316,7 @@ def part2(args, out):
     # companions
     keep = set(zip(table.donor, table.compartment))
     studies = sorted({d.split("|", 1)[0] for d in table.donor})
-    Gs = Parallel(n_jobs=args.jobs)(delayed(genome_cohort)(s, {x for x in keep if x[0].startswith(s + "|")}) for s in studies)
+    Gs = Parallel(n_jobs=args.genome_jobs)(delayed(genome_cohort)(s, {x for x in keep if x[0].startswith(s + "|")}) for s in studies)
     G = pd.concat([g for g in Gs if g is not None and len(g)], ignore_index=True)
     G = G.drop(columns=["stratum"]).merge(table[["donor", "compartment", "stratum"]], on=["donor", "compartment"])
     G = scramble(G, args.smoke)
@@ -444,6 +445,7 @@ def part2(args, out):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--jobs", type=int, default=12)
+    ap.add_argument("--genome-jobs", type=int, default=3, help="workers for the genome-wide pseudobulks (memory-bound)")
     ap.add_argument("--smoke", action="store_true")
     args = ap.parse_args()
     limit_threads(1)
