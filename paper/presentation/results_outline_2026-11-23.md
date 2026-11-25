@@ -620,10 +620,10 @@ decision); A361, A362, A363 registered; A366, A368 registered (living); A312, A3
 3. Consistent with blood's lowest organ gain (0.26, slide 3.1) and with lymphocytes not sharing the organ's time
    (slide 3.2): an expected exception, not a failure of the readout.
 
-**Figure:** `figures/blood_exception/blood_exception.png` (`scripts/blood_exception.py`; half). A. median cosinor R^2
-of the core clock genes against the hour of death, as a percentile of all expressed genes of the tissue (dashed: a
-typical gene). B. phase agreement of the clock genes with the GTEx waveform, as measured (filled) and after regressing
-out composition scores (open; neutrophil, T, B, NK, monocyte, eosinophil, erythroid markers). Organ-system colours.
+**Figure:** `figures/blood_exception/blood_exception.png` (`scripts/blood_exception.py`; wide, bar plots). A. median
+cosinor R^2 of the core clock genes against the hour of death, as a percentile of all expressed genes of the tissue
+(dashed: a typical gene). B. phase agreement of the clock genes with the GTEx waveform, as measured (filled bars) and
+after regressing out composition scores (open bars; neutrophil, T, B, NK, monocyte, eosinophil, erythroid markers). Organ-system colours.
 
 **Tags:** post hoc, descriptive (user observation stated before running, 2026-11-03).
 
