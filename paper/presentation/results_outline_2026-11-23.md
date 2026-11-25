@@ -399,8 +399,12 @@ entry "GTEx Whole Blood has no core-clock time signal" (2026-11-03); `presentati
 1. Each cell class has its own gain relative to endothelium of the same atlas, the same across organs: fibroblast 1.26
    (95 % 1.07 to 1.48), mural 0.92, parenchyma 0.88, epithelial 0.80, myeloid 0.67 (0.53 to 0.84) (A293 H293.4, pass).
    On the core loop (A350, blind) conserved in four of five classes; mural cells not (tau 0.10 -> 0.39, H350.1 fail).
-2. Classes run at the organ's time: stromal-vascular classes peak within about 1 h of each other; endothelium peaks
-   0.46 h before fibroblasts (90 % 0.09 to 0.90), the mouse direction, but the order is not shown (H293.3 fail).
+2. Classes run at the organ's time, with a small lead of the endothelium: within organs it peaks about 0.5 h before
+   fibroblasts (10 organs, 608 donors; 90 % 0.16 to 0.82 h; core loop 0.51 h, 0.05 to 0.97), the mouse direction at a
+   third to half its size. The lead differs between organs (about 1 h in lung, kidney and optic nerve, about 0 in
+   breast, heart and anterior eye; Q p 0.025). Mural cells lean later than fibroblasts (0.54 h, interval including 0),
+   not between them as in mouse. Not shown clock-specific by the registered rule (A389 H389.1 fail); on standardised
+   offsets beyond 93.5-98 % of matched gene sets (A389 note 2, post hoc).
 3. Lymphocytes do not share the tissue's clock state (pairwise, beyond matched and stress-responsive genes, A272-A288;
    coupling median 0.13 in the atlas fits). Whether they keep a clock of their own is open: the own-clock test would
    only see one about as loud as the fibroblasts'.
@@ -408,15 +412,24 @@ entry "GTEx Whole Blood has no core-clock time signal" (2026-11-03); `presentati
 **Figure:** `figures/celltypes_health/celltypes_health.png` (`scripts/celltypes_health.py`; wide, two panels). A. gain
 relative to endothelium per class: atlases (dots), pooled 14 genes (black, 95 %), pooled core loop (open blue; mural
 "not conserved"); lymphocytes at the label "not coupled to the tissue's clock", no position on the gain scale. B. lead of the first class between
-stromal-vascular classes [h]: human atlases, circular mean with 90 % atlas bootstrap, mouse against known time
-(diamonds). Lymphocyte panels removed (user, 2026-11-23): too much weight on a negative.
+stromal-vascular classes [h] within organs (A389, normal tissue: healthy atlases and tumour-adjacent normal samples):
+organs (dots, 14 genes), random-effects pooled with 90 % interval (14 genes black, core loop open blue), mouse against
+known time (diamonds). Lymphocyte panels removed (user, 2026-11-23): too much weight on a negative.
 
-**Tags:** A293 parts 2-3 registered, NOT BLIND (per-family gains and mouse offsets seen earlier); A350 blind on the core
-loop; A281 registered; A321 blind for the atlases; A326 registered, not blind for the human results.
+**Tags:** A293 part 3 registered, NOT BLIND (per-family gains seen earlier); A389 registered, partly not blind (9 of 10
+atlas organs' pair offsets computed in A272 / A274), H389.1 FAIL on the companion condition, note 2 post hoc; A350 blind
+on the core loop; A281 registered; A321 blind for the atlases; A326 registered, not blind for the human results.
 
 **Caveats (speaker notes)**
 - Why this slide before composition: classes differ in loudness and lymphocytes have none, so composition could move an
   organ's gain; classes sit within about 1 h of each other, so it can barely move its phase (3.3 tests both).
+- Class lead (A389): the registered companion condition compared the clock with the scatter of rhythm-less matched
+  sets (central 90 % -1.71 to +1.23 h, centred on 0); standardised (A389 note 2), z -3.6 / -3.4, beyond 93.5 % / 98 %
+  of matched sets (fixed-effect SE; about z -2.5 with the random-effects SE). Gene level: 9 of 11 core genes share the
+  sign, no gene moves the pooled lead by more than 0.08 h; amplitude ratio endothelium / fibroblast 0.80 (the class gain,
+  no sign of a mixture of shifted subpopulations); PER1, PER2 and NR1D1 do not carry it (the core loop shows it more).
+  Tumour stroma (descriptive): endothelium leads by 0.87 h on the core loop (0.42 to 1.32). The organ dependence fits
+  classes receiving synchronising cues at different places (relay; A390, blind atlases, in preparation).
 - "Lead of the first class" is in words: positive = the first class peaks earlier (unaffected by the sign convention).
 - Heart lymphocytes (0.50) sit just below matched genes (0.58); breast CD4 T (0.38) above (0.30) is a hormonal pulse:
   without PER1, PER2, NR1D1 not significant (A294).
@@ -442,10 +455,11 @@ loop; A281 registered; A321 blind for the atlases; A326 registered, not blind fo
     species or residency difference.
 - Skin T cells (A321) cohere but their thinned fibroblasts never pass: uninformative, an exception to check.
 
-**Source:** `exploratory/A293_organisation_levels/output/part3/families.csv`, `part2/tests.csv`;
+**Source:** `exploratory/A293_organisation_levels/output/part3/families.csv`, `part2/tests.csv` (mouse);
+`exploratory/A389_class_phase_order/output/score/{organs,pooled,note2_standardised,c1_genes,c3_amplitude}.csv`;
 `exploratory/A350_class_gain_core/output/compare.csv`; `exploratory/A281_lymphocyte_clock/output/pairs.csv`;
 `exploratory/A294_lymphocyte_hormonal/output/pairs.csv`; `exploratory/L1_lymphocyte_power/output/design_power.csv`,
-`scout/output/ratios_vs_fibroblast.csv`; `docs/results_preliminary.md` A293, A321, A326, A350.
+`scout/output/ratios_vs_fibroblast.csv`; `docs/results_preliminary.md` A293, A321, A326, A350, A389, A389 note 2.
 
 ## 3.3 Organs differ in loudness, and the difference is neither their cells nor post-mortem attenuation
 
