@@ -7847,6 +7847,13 @@ once (part 2: 166 s, peak 1.9 GB). Aggregates only.
   0.773, 0.864, 0.745, 0.645): the reading stands. Within-tissue values (log z2 ratio, d*) are not affected (one host
   per tissue). clocksync now reports S (fit) and S0_<g> = z2_<g> V0 (contrast) and documents the scale (commit of
   2026-11-25). Slide 4.1b uses the reference-map gain (Spearman 0.773 without blood).
+  Same scale issue in the A25 internal-time estimator (`results/figure_1/scripts/windows/_internal_time.py`, anchor
+  weights z2_k / psi_k; reference anchor muscle, or whole blood in 4 GTEx windows): rerun with the reference's z2 put on
+  the other anchors' scale (z2 V_ref / median V of the others; point estimates, registered weights reproduce
+  `internal_time_gtex.csv` exactly). GTEx 33 windows: |change in r| median 0.001, max 0.007; in width w max 0.15 h;
+  axis and curvature errors unchanged; V25.2 still passes (18 -> 17 windows with r < 0.6, the 9 h +- 9 window moving
+  from 0.597 to 0.601; median |axis error| 1.25 -> 1.38 h, flip correct 0.78 -> 0.77). Mouse colon 9 windows: |change
+  in r| max 0.003. Negligible; the estimator is left as registered (check script in the session scratchpad, not kept).
 - **D349.4, compression after removing the non-temporal axis.** Reproduction: 0.585 (stored 0.585, 34 pairs). Host
   component along the A109 axis (3.90 h, eigenvalue share 0.66) removed per group: ratio 0.767 (30 pairs), same pole
   0.909, order Spearman 0.219. The removal overshoots (share along the axis -0.10 fast, -0.34 post mortem), so 0.767 is
