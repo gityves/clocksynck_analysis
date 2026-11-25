@@ -1,7 +1,7 @@
 """Slide figure (results, drives, 4.3): a 12 h shift of behaviour moves the human muscle clock by only about 4 h and
 costs amplitude, while its rhythmic outputs follow behaviour.
 
-Human vastus lateralis after three days of 12 h-shifted sleep, light, activity and meals (Wefers 2018, GSE106800; 11
+Human vastus lateralis after 3.5 days of 12 h-shifted sleep, light, activity and meals (Wefers 2018, GSE106800; 11
 men; biopsies at 07:00 and 19:00 in the aligned and the misaligned condition). Clock faces: angle = peak time of the
 misaligned 07:00-to-19:00 change against the aligned one (+ = later, clockwise; the A257 shift negated: the clock state
 is further along its cycle, so it peaks earlier), radius = its amplitude relative to the aligned change.

@@ -884,7 +884,7 @@ contrast stays the pair-phase rho on slide 4.2.
 ## 4.3 A behavioural shift barely moves the human muscle clock; it costs amplitude, and the outputs follow behaviour
 
 **Bullets**
-1. After three days of 12 h-shifted sleep, light, activity and meals, the muscle core clock peaks only about 4 h
+1. After 3.5 days of 12 h-shifted sleep, light, activity and meals, the muscle core clock peaks only about 4 h
    earlier than when aligned (core loop 4.06 h, 90 % 2.65-5.72; 14 clock genes 2.68 h, 1.83-3.56), not 12 h (A257
    H257.2, A335 part 1a).
 2. It keeps about 0.4 of its 07:00-to-19:00 excursion (core loop 0.38, 90 % 0.32-0.47; 14 genes 0.56, 0.49-0.66);
