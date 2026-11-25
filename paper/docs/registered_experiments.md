@@ -11621,3 +11621,41 @@ the condition rearranges the organs (unexpected; checked for comorbidity: hypert
 **Limits.** Deaths; comorbidity; mixed death types within arms (balanced by exact Hardy matching); vent arms carry the
 shared push toward 0 / 12 h (A109, A377), equally in cases and controls.
 **Code.** `exploratory/A379_disease_arrangement/scripts/a379.py --stage power | score`. GTEx aggregates only.
+
+## A380 (2026-11-25, on the user's instruction "register both and run the power stages", after A379: obesity, T2D and COPD lean towards a changed arrangement, not significant, detection limits 0.33-0.52 in D_rho; staged: power (simulation on bootstrap noise only), then one scoring run; **NOT BLIND**: A379 (every arm's rho and D_rho), A233, A374 (method and the brain-death and intensive-care intervals); **BLIND**: every case-against-control pair-phase correlation and every interval below (A379 compared each arm with a fast-death reference, never cases with their own controls)): by how many hours can each chronic condition have moved its organs relative to matched controls? **A379 conditions, matching and tissues**
+
+**Why.** A379 bounds the change on the D_rho scale, which is hard to read and not on the brain-death scale (mixed arms,
+reduced references). The A374 compatibility interval says it in hours of organ scatter, as on slide 4.3.
+**Model (A374 adapted).** Per condition: cases and all their matched controls (A379 sets, up to 3 controls; obesity 1:1).
+Truth = the control map (pair phases of all matched controls); pairs with >= 20 donors in both arms. Cases have pair
+phases theta_c + (e_a - e_b) + eps_case, e_o ~ N(0, x^2) per organ; the control map is observed as theta_c + eps_ctl;
+eps from donor bootstraps of each arm (500, joint over pairs). rho_sim(x) = Fisher-Lee(control map, simulated cases);
+x on 0-6 h (0.1 h), 500 draws per x. Observed: rho_obs = Fisher-Lee(control map, case map).
+**Readout.** The 90 % compatibility set {x : q05 <= rho_obs <= q95}, reported as [lower, upper] h: "the organs of
+<condition> moved by at most <upper> h (SD of organ scatter) relative to matched controls"; a lower bound above 0 says
+they moved. Reported beside the fast-death pair-offset scale (about 1 h) and the A374 intervals (ventilated 0-1.8 h,
+brain death at least 1.6 h).
+**Power stage.** Per condition, the upper bound the method returns when rho_obs equals the median of rho_sim(0) (the
+interval expected under no change): the detection limit in hours. No observed value.
+**Limits.** As A374: the control map stands for the truth (its noise in eps_ctl), a systematic distortion is absorbed as
+scatter (upper bounds conservative), independent organ scatter; deaths; comorbidity.
+
+## A381 (2026-11-25, same instruction; POST HOC IN MOTIVATION: chosen after A379 showed obesity (D_rho 0.218) and T2D (0.160) leaning the same way; staged: power, then one scoring run; **NOT BLIND**: A379, A164, A235, A306 for these conditions; **BLIND**: every pair-phase value of the pooled metabolic arms): do metabolic conditions, pooled, change the organ arrangement relative to matched controls? **GTEx fast and ventilated deaths, the 12 A109 body tissues**
+
+**Design.** Cases: T2D or BMI >= 30; controls: no T2D and BMI 18.5-25 (A164 definitions, unknown excluded). Matching per
+donor within cohort, blind to clock data: exact sex and Hardy class, age caliper 5 y, nearest age then ischaemic time,
+up to 3 controls (A164 rule). All matched controls are used.
+- Statistic: r = Fisher-Lee(case map, control map) over pairs with >= 20 donors in both arms (no external reference;
+  all fast deaths stay available).
+- Test: one-sided (r lower than under the null), case label swapped with a random member of its matched set (2000
+  relabellings); companions: the same r for 200 matched and 200 responsive sets (A109 sets), clock-specific if r lies
+  below the 5th percentile of both.
+- Interval: the A380 compatibility interval in hours.
+**H381.1.** p < 0.05 and r below the 5th percentile of both companion families: metabolic disease changes the organ
+arrangement, clock-specifically. Otherwise not detected, reported with the interval in hours.
+**Power stage.** Matched sets, pairs, SD and 5th percentile of r under the relabelling null; the A380 detection limit
+in hours. Stop rule: none (reported as decidable or not at the size of the A379 leans, about a third of brain death).
+**Readings.** Pass: a metabolic rearrangement exists at a size below brain death (post hoc in motivation, labelled so on
+any slide). Fail: not detected; the hour interval bounds it.
+**Limits.** Post hoc motivation; T2D and obesity overlap; deaths.
+**Code (both).** `exploratory/A380_disease_hours/scripts/a380_a381.py --stage power | score`. GTEx aggregates only.
