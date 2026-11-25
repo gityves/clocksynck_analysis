@@ -662,7 +662,7 @@ Section 4 asks what sets the transfer and the organ's place in time. Source: `do
 | 4.1 Organ clocks run on their own; removing a drive costs little, conflicting drives cost amplitude (introduction, mouse) | **new** (below): mouse liver without a feeding rhythm; daytime feeding across organs, weights and amplitude kept; one-line suggestive mention: organs that weigh one drive in mouse (liver, heart) are the loudest in human, the balanced lung the quietest, adipose the exception (A358, descriptive, rho -0.6, 5 organs, below its criterion) | A297, A322, A324, A358 |
 | 4.2 When the body no longer reads the hour, the organ arrangement holds; only brain death moves it (former 3.last) | **new** (below) | A27, A293, A314, A317, A374 |
 | 4.2b Intensive care quiets the clocks; brain death keeps their amplitude | **new** (below) | A315, A335, A349 |
-| 4.3 A behavioural shift moves the human clock | night shift, muscle core loop +4 h, amplitude cost | A257, A335 |
+| 4.3 A behavioural shift barely moves the human muscle clock; it costs amplitude, the outputs follow behaviour | **new** (below): core loop 4 h earlier, excursion 0.38; outputs 11.6 h | A257, A261, A335 |
 | 4.4 A systemic signal read unequally by organs | glucocorticoid-like person state explains a small part of each organ's departure | A357 |
 | 4.5 What sets an organ's gain | drive coherence (descriptive), reception, person volume; jet lag (in-house, to come) | registered 2026-11-24 |
 
@@ -880,3 +880,40 @@ contrast stays the pair-phase rho on slide 4.2.
 
 **Source:** `presentation/output/organs/couplings_{fast,slow,ventilated,brain_death}.csv`;
 `presentation/output/pair_phases/pairs.csv`; `exploratory/A317_braindeath_confirm/output/posthoc_loto.csv`; `docs/results_preliminary.md` A317 post hoc note.
+
+## 4.3 A behavioural shift barely moves the human muscle clock; it costs amplitude, and the outputs follow behaviour
+
+**Bullets**
+1. After three days of 12 h-shifted sleep, light, activity and meals, the muscle core clock peaks only about 4 h
+   earlier than when aligned (core loop 4.06 h, 90 % 2.65-5.72; 14 clock genes 2.68 h, 1.83-3.56), not 12 h (A257
+   H257.2, A335 part 1a).
+2. It keeps about 0.4 of its 07:00-to-19:00 excursion (core loop 0.38, 90 % 0.32-0.47; 14 genes 0.56, 0.49-0.66);
+   the loss is clock-specific (A257 H257.3, A335: above matched and responsive gene sets).
+3. All 11 men shift the same way on the core loop (0.7 to 9.3 h earlier).
+4. The rhythmic outputs follow behaviour: 11.6 h (10.5-12.8), amplitude 0.85 (0.50-1.47) (A261 H261.3). Clock and
+   outputs come apart: the peripheral clock has inertia, its outputs track the drives.
+
+**Figure:** `figures/nightshift/nightshift.png` (`scripts/nightshift.py`, data `nightshift_compute.py`; wide). A. clock
+face against the aligned condition: core loop (filled), 14 clock genes (open), rhythmic outputs (orange); 90 % subject
+bootstrap. B. core loop per subject (11 men), group value in blue.
+
+**Tags:** A257 registered (not blind), A335 part 1a registered (core loop blind), A261 registered. The excursion ratio
+is a post hoc display quantity (A257 erratum, 2026-11-25).
+
+**Caveats (speaker notes)**
+- Two biopsy times per condition: a reversed 07:00-to-19:00 change of the outputs could also be an acute fed / active
+  against fasted / rested response rather than a 12 h shift (A261 masking limit). The clock-gene shift does not have
+  this problem in the same way, but rests on the same two times.
+- "Earlier" is a 4 h rotation against a 12 h behavioural shift, which has no direction of its own: whether the clock
+  moved towards behaviour cannot be read from the sign.
+- 14 genes against core loop (2.7 vs 4.1 h; 0.56 vs 0.38): not attributed to PER1, PER2 and NR1D1 (no gene-drop null;
+  precision or the removed genes).
+- The group amplitude (0.38) is below the median subject (0.47): subjects shift by different angles, and averaging
+  vectors with different directions shrinks them.
+- Erratum: the earlier "about a third" (14 genes) and "about half" (core) came from R / cos s, which assumed the aligned
+  change lies on the expected chord; measured directly the ratios are 0.56 and 0.38 (results_preliminary, A257).
+- 11 men, day 3 of the protocol; one tissue; not blind (A124 scored the same data).
+
+**Source:** `presentation/output/nightshift/{summary,per_subject}.csv`;
+`exploratory/A261_nightshift_programs/output/programs.csv`; `exploratory/A335_review_batch/output/a335_1a_*.csv`;
+`docs/results_preliminary.md` A257 (with the 2026-11-25 erratum), A261, A335.

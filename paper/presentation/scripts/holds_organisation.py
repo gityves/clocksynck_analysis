@@ -108,14 +108,15 @@ def external(ax, w, v):
     ax.set_title("external time", fontsize=13, color=INK)
 
 
-def clockface(ax, rmax, rings, title, names=None):
+def clockface(ax, rmax, rings, title, names=None, ring_label=-0.6):
     """Polar frame on a cartesian axis: angle = phase shift (0 h at the top, clockwise, 24 h a turn), radius =
-    amplitude relative to the reference; grey rings at `rings`, spokes every 6 h."""
+    amplitude relative to the reference; grey rings at `rings` (labelled at angle `ring_label`, rad), spokes every 6 h."""
     th = np.linspace(0, 2 * np.pi, 200)
     for r in rings:
         ax.plot(r * np.sin(th), r * np.cos(th), color=MUTED, lw=0.6 if r != 1 else 0.9, ls="-" if r == 1 else ":",
                 zorder=0)
-        ax.text(r * np.sin(-0.6), r * np.cos(-0.6), f"{r:g}", fontsize=10, color=MUTED, ha="right", va="bottom")
+        ax.text(r * np.sin(ring_label), r * np.cos(ring_label), f"{r:g}", fontsize=10, color=MUTED,
+                ha="right" if ring_label < 0 else "left", va="bottom")
     for h in (0, 6, 12, 18):
         t = 2 * np.pi * h / 24
         ax.plot([0, rmax * np.sin(t)], [0, rmax * np.cos(t)], color=MUTED, lw=0.5, zorder=0)
