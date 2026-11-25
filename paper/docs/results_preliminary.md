@@ -8781,3 +8781,31 @@ R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsiv
 - No stop rule fires; H377.1 and H377.2 can be scored.
 - Code: `exploratory/A377_axial_directions/scripts/a377.py --stage power`.
 <!-- src: paper/exploratory/A377_axial_directions/output/{gate,gate_reps,power}.csv -->
+
+## A377 (scored 2026-11-25; BLIND for every group-split axial value; one scoring run, 133 s, after the gate and power stage): the axial (linear) factor of brain-dead donors points along one common axis, more aligned than in ventilated donors with a living brain (H377.1 FAIL), and at its fitted size it cannot produce the brain-death loss of the organ arrangement (H377.2 insufficient): the A317 change of the relations between organ clocks stands
+
+- **H377.1 FAIL.** Axis alignment A: ventilated post-mortem 0.756, organ donors 0.896 (median over the 20 draws; all
+  298 organ donors 0.939); D_A -0.140, relabelling p 0.88 (MDE 0.354). The organ-donor value lies far above the
+  tissue-specific simulation range (q95 0.653). Circularity ratio 0.393 vs 0.497 (D -0.105, two-sided p 0.46).
+- **Axis directions (descriptive, arg(w_a) / 2, mod 12 h).** Organ donors (all): 10 of 12 tissues between 4.2 and 6.3 h
+  (muscle 7.2 h, weak); ventilated post-mortem: 0.4 to 5.6 h. The brain-death axis lies between the A109 non-temporal
+  axis (3.9 h) and the glucocorticoid direction (5.7 h, mod 12).
+- **H377.2 insufficient.** Fast-death relations plus the organ donors' fitted axial factor (f 0.45, simulated
+  circularity ratio 0.506 against the observed 0.497): rho with the reference 0.602 (5-95 % 0.371-0.755); observed
+  0.057, below the 5th percentile. Model check: with the post-mortem fit (f 0.30) the simulation gives 0.619
+  (0.424-0.772) and the observed 0.678 lies inside.
+- **Companions (descriptive).** Matched sets: A median 0.665 / 0.696 (post-mortem / organ donors), q95 0.955 / 0.882;
+  circularity ratio about 1.0 (their shared covariance is purely axial). Responsive sets: A 0.613 / 0.633, q95 0.835 /
+  0.829. The clock genes' axial factor is not clock-specific in its alignment (organ donors at the matched q95); their
+  circularity ratio (0.39-0.50 against about 1.0) shows the circular, clock part that the companions lack.
+- **Host phases (named confounder).** Rayleigh R 0.148 (post-mortem) and 0.037 (organ donors, all); axial R 0.364 and
+  0.236: concentration is larger in ventilated post-mortem donors and cannot create the organ-donor alignment.
+- **Reading (registered: H377.1 fails with A high, H377.2 insufficient).** The axial factor does not explain the
+  brain-death change. Both ventilated groups carry a linear displacement of similar size; in brain death it points
+  along one common axis (more so than with a living brain), which only pulls pair phases toward 0 / 12 h and keeps
+  their order. At its fitted size it would leave rho near 0.6. The organ clocks' relations themselves are rearranged
+  in brain death (A317).
+- **Limits.** Generative model as A133 (one shared real displacement, Gaussian); ventilated amplitudes and Poisson
+  variances used for both groups; the fitted factor of all 298 organ donors used for the 79-donor simulation.
+- Code: `exploratory/A377_axial_directions/scripts/a377.py --stage score`.
+<!-- src: paper/exploratory/A377_axial_directions/output/{tests,groups,axes,companions,sufficiency,sufficiency_reps}.csv -->
