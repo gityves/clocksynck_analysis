@@ -9051,7 +9051,7 @@ endothelium and mural cells, cohort x chemistry strata. Peak time: + = tumour la
 | | Part 1 R_C 14 / core | matched q95 14 / core | Part 2 coupling c 14 / core (90 %) | matched q95 14 / core | tumour minus normal peak, core (90 %) | loudness ratio tumour / normal, core (90 %) |
 |---|---|---|---|---|---|---|
 | fibroblasts (93 / 116 patients) | 0.730 / 0.676 | 0.404 / 0.415 | 0.439 (0.335-0.587) / 0.403 (0.266-0.604) | 0.265 / 0.315 | -0.07 h (-0.77 to 0.63) | 0.69 (0.51-0.86) |
-| endothelium (101 / 135) | 0.655 / 0.407 | 0.438 / 0.469 | 0.564 (0.473-0.676) / 0.481 (0.366-0.638) | 0.406 / 0.515 | +0.24 h (-0.42 to 0.82), H387.4 not read | 0.82 (0.65-1.03) |
+| endothelium (101 / 135) | 0.655 / 0.407 | 0.438 / 0.469 | 0.564 (0.473-0.676) / 0.481 (0.366-0.638) | 0.406 / 0.515 | -0.24 h (-0.82 to 0.42), H387.4 not read | 0.82 (0.65-1.03) |
 | cancer cells (190 / 96) | 0.178 / 0.112 | 0.339 / 0.356 | 0.100 (0.034-0.229) / 0.032 (0-0.146) | no companions | +0.79 h (-2.41 to 3.45) | 0.32 (0.16-0.63) |
 
 - **G387 PASS** (anchors, 220 patients): p_pairing 0.001 and p_acrophase 0.001 on both readouts.
