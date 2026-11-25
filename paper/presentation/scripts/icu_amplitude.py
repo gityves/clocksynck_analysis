@@ -1,4 +1,4 @@
-"""Slide figure (results, drives, 4.1b): intensive care quiets the tissue clocks, most where they were loudest; brain
+"""Slide figure (results, drives, 4.2b): intensive care quiets the tissue clocks, most where they were loudest; brain
 death keeps their amplitude.
 
 A. Clock-specific clock amplitude, one row per comparison: ventilated post-mortem donors (living brain) against fast

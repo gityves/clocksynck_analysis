@@ -17,7 +17,7 @@ arc.
 A. Mouse liver core clock (A297, registered, H297.1 fail above the interval) against ad libitum: feeding rhythm removed
    (Greenwell arrhythmic) and the night-restricted control (open), feeding inverted (Manella day feeding, Xin day- vs
    night-restricted; the calibration), and the state expected for removal if cues add, (1 + rho) / 2 (open diamonds, colour of removal). Colours are conditions (reference grey).
-B. Mouse organs under inverted feeding (slide 4.2): Manella 2021 day-fed against ad libitum (liver, white fat, lung;
+B. Mouse organs under inverted feeding (slide 4.1, introduction of section 4): Manella 2021 day-fed against ad libitum (liver, white fat, lung;
    A322, circles) and Xin 2021 day- against night-restricted (liver, heart, kidney, visceral fat; A324, squares):
    amplitude ratio (radius, 90 % library-bootstrap interval) and shift (angle) of each organ's clock-gene state.
    Dashed: the pure mix of the two drives, (1 - b) + b exp(i Delta), a straight chord from the reference to the fully
