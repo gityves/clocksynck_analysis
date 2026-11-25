@@ -4793,6 +4793,16 @@ sets, 200 matched gene sets; null mean of S 0.120.
   0.2335 / cos(2.677 h x 15 deg/h = 40.2 deg) = 0.31 (derived from `score_tests.csv`: R 0.2335, s 2.677 h). "Flatten its
   excursion to about a quarter" should read "to about a third"; a 2.7 h rotation alone would leave 0.77.
 <!-- src: paper/exploratory/A257_nightshift_muscle/output/{score_tests,score_descriptive}.csv -->
+- **Erratum to the correction (2026-11-25; post hoc, descriptive; for slide 4.3).** The derivation "excursion ratio =
+  R / cos s" assumed that the aligned 07:00-to-19:00 change lies on the expected chord on which R is projected. It does
+  not (mean |dc| 3.2 against |chord| 2.0, 14 genes), so 0.31 (14 genes) and the A335 0.49 (core loop) are not the
+  excursion ratio. Measured directly, the complex ratio r = sum dm conj(dc) / sum |dc|^2 (argument = s exactly) gives
+  |r| 0.561 (90 % subject bootstrap 0.486-0.661) with 14 genes and 0.376 (0.321-0.465) on the core loop; the ratio of
+  mean changes |mean dm| / |mean dc| agrees (0.587 and 0.365). The misaligned muscle clock keeps about 0.56 (14 genes)
+  or 0.38 (core loop) of its 07:00-to-19:00 excursion. The difference between the two gene sets is not attributed to
+  PER1, PER2 and NR1D1 (no gene-drop null; precision or the removed genes). The registered H257.3 test (R < 1, swap p,
+  companions) is unaffected.
+  <!-- src: paper/presentation/output/nightshift/summary.csv (`presentation/scripts/nightshift_compute.py`) -->
 
 ## A244 (scored 2026-11-13): the clock-shaped covariation of the fetal adrenal is carried by the cortex (H244.1 cortex PASS, also after foreign-RNA correction); the medulla shows none at full adult power (H244.1 medulla FAIL); the shared state of the two classes is not estimable (H244.2)
 
@@ -6791,7 +6801,9 @@ baboon's: **B1 is uninformative and stopped** (orientation not chosen; the scout
 - Note (2026-11-20, independent review section 9).
   - R = rho_mis / rho_ctl projects the misaligned chord on the expected one, so it contains the rotation. Shift-corrected,
     the core R is 0.239 / cos 60.9 deg = 0.49 (derived), matching the per-subject median |dm| / |dc| of 0.47: the
-    misaligned muscle clock keeps about half its amplitude.
+    misaligned muscle clock keeps about half its amplitude. **Superseded (2026-11-25):** the R / cos s derivation does
+    not hold (the aligned change is not on the chord); measured directly the core-loop excursion ratio is 0.376
+    (90 % 0.321-0.465), 14 genes 0.561 (A257 erratum to the correction).
   - The swap p is 1/2048. The CSV's 0 is a floating-point tie at the unswapped labelling, which an exact swap test
     counts.
 
