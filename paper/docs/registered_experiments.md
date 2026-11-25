@@ -11945,3 +11945,15 @@ here), so the H387.3 power against companions is not known in advance. Expected 
 0.46-0.62 h (14 genes), 0.53-0.71 h (core): **H387.4 decidable**. The simulated null threshold stands in for the
 registered coupling permutation p in this note only; scoring uses the registered permutation p.
 **Decision.** All hypotheses decidable; the single scoring run proceeds as registered.
+
+### A387 note 1 (2026-11-25, after scoring; POST HOC implementation of D387.1, on the user's instruction "do 1 now": per-cancer values on the pooled host; **NOT BLIND**: the scored per-cancer fits (colorectal and lung fibroblasts, endothelium and cancer cells, `part2_per_cancer.csv`); **BLIND**: every other per-cancer full-model value (liver, prostate; never computed: their per-cancer fits failed for a missing anchor) and every per-cancer companion threshold)
+The scored D387.1 refitted the host on each cancer's patients and required all three anchor types, so cancers lacking one
+failed (gastric, liver, prostate). Corrected implementation: one host on all patients (the A387 Part 2 table and
+anchors); each tumour compartment relabelled by cancer (`tumour:<kind>|<cancer>`) for cancers with >= 8 patients of that
+compartment with a host, the rest pooled as `tumour:<kind>|other`; one fit per readout (n_boot 500, 90 % intervals,
+n_perm 1000, anchor_readout "loo", reference = the pooled normal counterpart for offsets and loudness). Companions for
+the fibroblast and endothelial targets: the A387 matched and narrow responsive sets on the same relabelled genome table
+(no bootstrap); cancer cells without companions, as A387. Reading (descriptive): per cancer, c with its interval, c
+against the cancer's matched q95, peak and loudness ratio against the normal counterpart; heterogeneity is described, not
+tested; a cancer below its matched q95 is "not resolved at n patients", never "uncoupled". Code:
+`paper/exploratory/A387_tumour_full_model/scripts/a387_per_cancer.py`.
