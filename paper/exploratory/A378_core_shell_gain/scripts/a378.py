@@ -13,10 +13,15 @@ Stages:
          positively correlated tissue errors make this conservative); the scoring interval uses the same rule;
          (ii) a side with several tissues is the mean of their log gains; (iii) a species' part-1 value is the mean of
          its pair contrasts (GTEx: arteries and skin; baboon: muscle and fat; sheep: fat), and its MDE is computed on it.
-  score  (written after the power note)
+  score  (written after the power note, before any gain ratio) per tissue log gain and SE: GTEx log relative amplitude
+         (`couplings.csv`), baboon log |g| (A330 cosinor estimator, the power stage's residual-bootstrap SE recomputed
+         with the same seed), sheep log relative amplitude (`sheep_fit_unread.csv`, read now); contrasts and 90 %
+         intervals (+-1.645 SE); H378.1 (core louder in >= 2 species, none opposite), H378.2 per class (GTEx sign
+         replicated with the interval excluding 0 in each other species); the wool reading (sheep against the others).
 
     RUN_CAP_GB=20 paper/common/run.sh paper/exploratory/A378_core_shell_gain/scripts/a378.py --stage power
-Outputs (`../output/`): power_tissues.csv, power_contrasts.csv, sheep_fit_unread.csv. Aggregates only.
+Outputs (`../output/`): power_tissues.csv, power_contrasts.csv, sheep_fit_unread.csv | contrasts.csv, tests.csv,
+tissues.csv. Aggregates only.
 """
 import argparse
 import sys
@@ -127,12 +132,84 @@ def power():
     print(con.round(3).to_string(index=False), f"\n({time.time() - t0:.0f}s)")
 
 
+def baboon_gain(codes, wf, rng, n=500):
+    """log |g| (A330 cosinor on ZT regressed on the waveform) and its residual-bootstrap SD, per organ."""
+    pb, donors = data.load("baboon")
+    zt = donors.zt.astype(float)
+    out = {}
+    for k in codes:
+        sub = pb[pb.compartment == k]
+        z = zt.reindex(sub.donor).to_numpy(float)
+        g = list(wf.genes)
+        cpm = sub[g].to_numpy(float) / sub.depth.to_numpy(float)[:, None] * 1e6
+        ex = np.median(cpm, 0) >= 5
+        y = np.log(cpm[:, ex] + 0.5)
+        x = (wf.amp * np.exp(1j * wf.psi))[ex]
+        X = np.column_stack([np.ones_like(z), np.cos(W * z), np.sin(W * z)])
+        b = np.linalg.lstsq(X, y, rcond=None)[0]
+
+        def g_of(bb):
+            c = np.abs(bb[1] - 1j * bb[2]) * np.exp(1j * np.arctan2(bb[2], bb[1]))
+            return abs(complex(np.conj(x) @ c / (np.conj(x) @ x)))
+
+        fit, res = X @ b, y - X @ b
+        boot = [g_of(np.linalg.lstsq(X, fit + res[rng.integers(0, len(z), len(z))], rcond=None)[0]) for _ in range(n)]
+        out[k] = dict(log_gain=float(np.log(g_of(b))), se=float(np.std(np.log(boot), ddof=1)), n=len(z))
+    return out
+
+
+def score():
+    limit_threads(4)
+    wf = cs.gtex()
+    g = pd.read_csv(GTEX, index_col="tissue")
+    tis = {"human": {t: dict(log_gain=float(g.log_amp_rel[t]), se=float((g.log_amp_hi[t] - g.log_amp_lo[t]) / 3.92))
+                     for t in g.index}}
+    codes = sorted({t for _, sp, _, a, b in CONTRASTS if sp == "baboon" for t in a + b})
+    tis["baboon"] = baboon_gain(codes, wf, np.random.default_rng(SEED))
+    sh = pd.read_csv(OUT / "sheep_fit_unread.csv", index_col="tissue")
+    tis["sheep"] = {t: dict(log_gain=float(sh.log_amp_rel[t]), se=float((sh.log_amp_hi[t] - sh.log_amp_lo[t]) / 3.92))
+                    for t in sh.index}
+    rows = []
+    for part, sp, name, a, b in CONTRASTS:
+        est = np.mean([tis[sp][t]["log_gain"] for t in a]) - np.mean([tis[sp][t]["log_gain"] for t in b])
+        se = np.sqrt(sum(tis[sp][t]["se"] ** 2 for t in a) / len(a) ** 2
+                     + sum(tis[sp][t]["se"] ** 2 for t in b) / len(b) ** 2)
+        rows.append(dict(part=part, species=sp, contrast=name, log_ratio=est, se=se, lo90=est - 1.645 * se,
+                         hi90=est + 1.645 * se, ratio=float(np.exp(est))))
+    con = pd.DataFrame(rows)
+    sp_rows = []
+    for sp, names in SPECIES_PART1.items():
+        c = con[(con.part == "1") & (con.species == sp) & con.contrast.isin(names)]
+        est, se = float(c.log_ratio.mean()), float(np.sqrt((c.se ** 2).sum()) / len(c))
+        sp_rows.append(dict(part="1", species=sp, contrast="species mean", log_ratio=est, se=se, lo90=est - 1.645 * se,
+                            hi90=est + 1.645 * se, ratio=float(np.exp(est))))
+    con = pd.concat([con, pd.DataFrame(sp_rows)], ignore_index=True)
+    m = con[con.contrast == "species mean"]
+    core_louder, shell_louder = int((m.lo90 > 0).sum()), int((m.hi90 < 0).sum())
+    tests = [dict(test="H378.1", core_louder_species=core_louder, shell_louder_species=shell_louder,
+                  passes=bool(core_louder >= 2 and shell_louder == 0))]
+    for cls in ("squamous", "fat"):
+        c = con[(con.part == "2") & (con.contrast == cls)].set_index("species")
+        sign = np.sign(c.log_ratio["human"])
+        rep = [bool(np.sign(c.log_ratio[s]) == sign and (c.lo90[s] > 0 if sign > 0 else c.hi90[s] < 0))
+               for s in ("baboon", "sheep")]
+        tests.append(dict(test=f"H378.2 {cls}", human_log_ratio=float(c.log_ratio["human"]), baboon_replicates=rep[0],
+                          sheep_replicates=rep[1], passes=bool(all(rep))))
+    con.to_csv(OUT / "contrasts.csv", index=False)
+    pd.DataFrame(tests).to_csv(OUT / "tests.csv", index=False)
+    pd.DataFrame([dict(species=sp, tissue=t, **v) for sp, d in tis.items() for t, v in d.items()
+                  if any(t in a + b for _, s2, _, a, b in CONTRASTS if s2 == sp)]).to_csv(OUT / "tissues.csv", index=False)
+    pd.set_option("display.width", 220)
+    print(con.round(3).to_string(index=False))
+    print(pd.DataFrame(tests).to_string(index=False))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--stage", choices=["power"], required=True)
-    ap.parse_args()
+    ap.add_argument("--stage", choices=["power", "score"], required=True)
+    stage = ap.parse_args().stage
     OUT.mkdir(parents=True, exist_ok=True)
-    power()
+    power() if stage == "power" else score()
 
 
 if __name__ == "__main__":
