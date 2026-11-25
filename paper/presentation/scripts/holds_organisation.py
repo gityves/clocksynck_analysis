@@ -254,7 +254,7 @@ def main():
     print(pf.collisions(fig))
     pf.save(fig, OUT / "holds_organisation")
 
-    lay = pf.Layout.slide("ABxC", kind="wide", col_ratios=[1, 1, 0.08, 0.5], blank=("x",))
+    lay = pf.Layout.slide("AB..;AB.C;AB..", kind="wide", col_ratios=[1, 1, 0.08, 0.5], row_heights=[14, 62, 12])  # C at the height of the faces
     liver(lay.axes["A"], pd.read_csv(EXP / "A297_feeding_model/output/tests.csv"))
     iz = pd.read_csv(IZUMO)
     central_loss(lay.axes["C"], iz)
