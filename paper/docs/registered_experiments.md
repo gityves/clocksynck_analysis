@@ -11957,3 +11957,80 @@ the fibroblast and endothelial targets: the A387 matched and narrow responsive s
 against the cancer's matched q95, peak and loudness ratio against the normal counterpart; heterogeneity is described, not
 tested; a cancer below its matched q95 is "not resolved at n patients", never "uncoupled". Code:
 `paper/exploratory/A387_tumour_full_model/scripts/a387_per_cancer.py`.
+
+## A388 (2026-11-25, on the user's instruction "register 2", after A387 (tumour fibroblasts and endothelium carry the patient's normal-tissue time; cancer cells barely coupled to the normal stroma, pooled over a colorectal-dominated set) and the user's aim to widen the cancer types; staged: feasibility (counts only, done: `exploratory/A388_malignant_tumour_host/output/feasibility/`), power, then one scoring run; **NOT BLIND**: A138 H138.1 (malignant cells on the tumour-sample stromal host, 17 cohorts / 225 patients: pooled 0.076, 0.014 to 0.139; per-cohort values in `A138_cancer_estimability/output/score/tests.csv`) and D138.1 shares, so every value on the 15 H138.1 cohorts (161 qualifying patients); A387 malignant cells on the normal-stroma host (pooled 0.100 / 0.032; colorectal 0.073, lung 0.261 on 14 genes); A170 (breast ER− malignant coherence lower, not clock-specific); the A83 classes; **BLIND**: every value on the 20 cohorts new relative to H138.1 (151 patients), the class contrast and its companions, every per-cancer value outside H138.1's cohorts, the breast ER contrast as a coupling (never computed)): are cancer cells coupled to the clock state of their own tumour's stroma, and does this depend on whether the cancer type keeps a clock-shaped structure across tumours (A83)? **Single-cell tumour samples of the A149 / A226 / A227 cohort lists plus the Wu (GSE176078) and Pal (GSE161529) breast atlases; no adjacent-normal sample needed**
+
+**Why.** A387 shows the tumour's fibroblasts and endothelium keep their patient's normal-tissue time (c 0.40 / 0.48 on the
+core loop against the normal stroma, offset within 0.8 h). Their clock state therefore stands for the patient's time
+inside the tumour, and a host built from them reads malignant cells against it in every tumour sample, also where no
+normal tissue was sequenced: about 312 patients in 14 cancer types (feasibility) instead of 96 in 3. A83 found a
+clock-shaped structure across tumours in kidney, liver, lung, thyroid, prostate and (marginally) breast, at null in
+colorectal, bladder, endometrium and ovary; malignant coupling to the patient's time is the cell-level version of that
+split. H138.1 pooled 17 cohorts without the class distinction.
+
+**Data and units.** Tables, rules and malignant labels of the feasibility inventory (`feasibility.py`, `breast_atlas.py`:
+A149 rules, >= 50 cells, sample median UMI >= 1,500, presence rule; malignant = copy-number call where >= 5 patients are
+called, otherwise tumour epithelium; Wu and Pal author labels, Pal stroma by the `cancer_common` marker rule). Unit =
+patient with a malignant (or tumour-epithelium) pseudobulk and >= 2 of the tumour sample's fibroblast / endothelial /
+mural pseudobulks. Before any statistic: patients shared between cohorts (scBaseCount SRP / ERP accessions against GEO
+accessions of the same study, SRP273482 against Wu / Pal) are identified by cohort metadata and kept once (the GEO /
+author copy). One Dataset over all cohorts: donors and strata prefixed by cohort, strata = cohort x chemistry,
+`mixed_strata`, anchors = `tumour:{fibroblast, endothelial, mural}`, target = the malignant compartment. Readouts 14
+genes and core loop (`a336_common.core`).
+
+**Companions.** Genome-wide pseudobulks of the anchors and the malignant compartment with the same labels (copy-number
+calls as `a149_lib.genome_epithelium`; author labels for Wu and Pal); 200 expression-matched and 200 narrow responsive
+sets (`clocksync.paired.pseudo_waveforms`, seeds [388, 0] and [388, 1], on the pooled anchors' expression), restricted to
+the core positions for the core readout; each set goes through the same fit or contrast. If the malignant genome tables
+cannot be built for a cohort, the cohort is dropped from every test (clock and companions alike) and listed.
+
+**Hypotheses** (core loop decides wording; each also on 14 genes).
+- **G388:** the tumour-stroma anchors pass the gate (pooled; p < 0.05). For H388.2 the host-only gate must pass in each
+  class (`require_host_gate_each_arm`); a failed gate is uninformative.
+- **H388.1 (primary, blind replication on the 20 new cohorts):** malignant coupling c (`fit`, n_perm 1,000, n_boot 500,
+  90 % intervals) with coupling p < 0.05 and c above the matched q95.
+- **H388.2 (primary, class contrast, all cohorts):** keeping (breast, lung, liver, prostate, thyroid; kidney has no
+  qualifying patient) minus at-null (colorectal, ovarian, bladder) malignant coupling at the common spread (`contrast`
+  d*, host_prior "arm"), > 0, with p < 0.05 from 2,000 permutations of the class label between whole cohorts (cohorts
+  keep their class size; each permutation reruns the contrast), and the clock's difference above the 95th percentile of
+  the matched sets' differences on the same permutations (specificity companion). Holm over H388.1 and H388.2 within
+  readout. Other cancer types are not in the contrast.
+- **H388.1b (secondary, all cohorts, not blind on the H138.1 cohorts):** the H388.1 rule on all 312 patients.
+- **D388.1 (descriptive):** per cancer with >= 8 qualifying patients (target relabelled by cancer on the pooled host,
+  as A387 note 1): c, 90 % interval, matched q95; offset and loudness of malignant cells against the tumour fibroblasts.
+- **D388.2 (breast, descriptive):** ER+ against ER− (12 / 7 patients with >= 2 anchors, Wu + Pal): d* and its interval;
+  not tested (too few patients; stated now).
+- **D388.3 (gene drop, CLAUDE.md rule):** for every core-loop quantity, the 14-minus-core difference on shared bootstraps,
+  its position among the 364 three-gene drops, and the shrinkage that the reliability loss predicts (host reliability,
+  Spearman-Brown); attribution to the trio only by the rule.
+- **D388.4 (descriptive):** malignant coupling on the tumour-stroma host against the normal-stroma host (A387) for the
+  patients having both.
+
+**Power stage (dated note before scoring; no malignant statistic on the real data).** Deduplicated counts per cohort,
+cancer and class; G388 and the per-class host gates (anchors only); H388.1 and H388.1b power by the blind simulator
+(`simulate.like(..., loading=z)`, |z| 0.5 and 1, c grid, null threshold from c 0.02), MDE of c; H388.2 power by
+simulating each class at its real design with c_keep in {0.2, 0.3, 0.4} and c_null 0 (relabelled targets on the pooled
+host), the cohort-permutation null of the difference at c 0 in both, MDE of the difference; companion thresholds on the
+real data (the companion fits are comparators, not the target). A hypothesis with MDE above 0.25 is declared
+undecidable now and reported descriptively; if H388.2 is undecidable, the class difference is shown descriptively with
+its interval.
+
+**Readings (fixed now).**
+- H388.1 pass: "cancer cells are coupled to the clock state of their own tumour's stroma, which keeps the patient's time
+  (A387)" (c on the core loop; replicated in cohorts never read for this).
+- H388.1 fail with power: "cancer cells are not detectably coupled to their tumour's stroma (c below MDE)", consistent
+  with H138.1 and A387; the patient's time inside tumours is carried by the stroma.
+- H388.2 pass: "cancer cells keep their patient's time in cancer types whose tumours keep a clock-shaped structure, not
+  in the others" (cell-level account of A83).
+- H388.2 fail with power: the class split of A83 is not a malignant-coupling split at this size.
+- Per cancer (D388.1): described; a cancer below its matched q95 is "not resolved at n patients", never "uncoupled".
+
+**Limits.** (1) The host is the tumour's own stroma: shared sample-level artefacts (dissociation, ambient RNA from stroma
+into malignant pseudobulks) can raise c; the matched and responsive companions measure this share, and D388.4 compares
+with the normal-stroma host where possible. (2) Malignant labels differ between cohorts (copy-number calls, tumour
+epithelium, author labels). (3) Cancer types are confounded with cohorts and technologies; the class contrast permutes
+whole cohorts. (4) A83 classes come from bulk TCGA and are not defined for esophageal, gastric, cervical, head and neck,
+pancreatic (descriptive only).
+
+**Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A388_malignant_tumour_host/scripts/`
+(`feasibility.py`, `breast_atlas.py`, `a388.py --stage power|score`; `paper/common/run.sh`, at most 8 workers).
