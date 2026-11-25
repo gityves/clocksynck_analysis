@@ -11520,3 +11520,59 @@ No group-split observed value computed.
 concentrated host phases contribute to P; arg w_a is noisy in tissues with a weak axial factor (weighting by |w_a|^2
 limits this); one cohort.
 **Code.** `exploratory/A377_axial_directions/scripts/a377.py --stage power | score`. Aggregates only.
+
+## A378 (2026-11-25, on the user's instruction "check the baboon organs and draft 1 and 2" (the sheep atlas added by the user), after A323 left the organ factor of gain as an inference by elimination and A358 / A359 found no drive source; staged: power (standard errors of each contrast, no gain ratio computed for any new pair), then one scoring run; **NOT BLIND**: every GTEx tissue gain (reference map, slide 3.1, `presentation/output/organs/couplings.csv`) and the same-class GTEx ratios of slide 3.3 (oesophagus mucosa / sun-exposed skin 2.6-fold, visceral / subcutaneous fat 1.6-fold, oesophagus muscularis / sigmoid colon 1.2-fold), which motivated part 1; the baboon timed gains of the 18 A330 organs (`G1_organ_gain_species/output/organs.csv`, printed 2026-11-25 while listing organs: omental fat 3.34, subcutaneous fat 3.38, gastrocnemius 2.56, skin 2.65, oesophagus 3.68, descending colon 1.79, aorta 3.44); **BLIND**: baboon abdominal muscle, mesenteric, pericardial and perirenal fat (never fitted in this project: grep of exploratory/ for MUA, WAM, WAP, WAR, 2026-11-25), every sheep tissue gain (no sheep gain table read; earlier sheep fits A34 / A42 / A263 used couplings and brain contrasts, not these depots), and every GTEx contrast of part 1 as a ratio (aorta / tibial artery, coronary / tibial artery, suprapubic / lower-leg skin: the gains are on the map, the ratios were not computed or discussed)): does an organ's gain depend on its place in the body (core against shell), and are the large same-class gain ratios of GTEx conserved in a timed primate and in sheep? **GTEx v10 fast deaths (reference map); baboon (Mure 2018, GSE98965, 12 animals, ZT every 2 h); sheep (SheepGTEx v0, 343 animals, untimed)**
+
+**Why.** Composition explains about a third of the organ gain range (A323); drive coherence and glucocorticoid
+reception do not explain the rest (A358, A359). Body temperature is a systemic drive of peripheral clocks, and its daily
+rhythm differs between the body core and the shell (limbs, subcutis); the same-class GTEx pairs lean this way (visceral
+over subcutaneous fat; oesophagus mucosa over skin), which is why part 1 is asked and why those pairs are not its test.
+A gain ratio seen in a timed primate and in another species would make the organ factor a conserved property of the
+organ, not of death or of GTEx sampling.
+
+**Gain per dataset (each ratio within one dataset and one estimator).**
+- GTEx: relative amplitude on the reference map (`rel_amplitude`, gauge-free; 200 donor bootstraps, `couplings.csv`).
+- Baboon: timed gain |g| on the GTEx waveform, ZT harmonic fit per organ (A330 / A36 estimator); SE from the A330
+  residual bootstrap.
+- Sheep: relative amplitude from one clocksync fit of all 45 compartments (A34 inclusion rules, per-row strata as A42;
+  peripheral tissues as anchors read leave-one-out; 200 animal bootstraps).
+- Contrast: log gain ratio, core minus shell; for several depots on one side, the mean of their log gains. Interval:
+  90 % bootstrap over donors / animals (GTEx, sheep: paired resampling of animals; baboon: residual bootstrap per organ,
+  independent).
+
+**Part 1, core against shell (H378.1).** Pre-specified pairs (same tissue class, trunk or visceral against limb or
+subcutaneous):
+- GTEx: aorta and coronary artery (mean) / tibial artery; suprapubic skin / lower-leg skin (sun exposure confounds:
+  reported, counted).
+- Baboon: abdominal muscle / gastrocnemius; omental, mesenteric, pericardial and perirenal fat (mean) / subcutaneous fat.
+- Sheep: perirenal and caul fat (mean) / subcutaneous, tail and intermuscular fat (mean).
+H378.1 passes if the core side is louder (log ratio > 0 with the 90 % interval excluding 0) in at least two of the three
+species, and in no species is the shell side louder with an interval excluding 0. Reported: every pair.
+
+**Part 2, conservation of the GTEx same-class ratios (H378.2).** The GTEx ratios (not blind) against the same class in
+the other species:
+- Squamous epithelium: oesophagus mucosa / skin (GTEx, sun-exposed); baboon oesophagus (whole wall) / skin; sheep
+  rumen, reticulum and omasum (mean; keratinised squamous forestomach) / skin.
+- Adipocytes: visceral / subcutaneous fat (GTEx); baboon omental / subcutaneous (both values seen: 3.34 / 3.38);
+  sheep caul / subcutaneous.
+H378.2 passes for a class if, in each other species, the ratio has the GTEx sign with its 90 % interval excluding 0.
+Reported: the ratios side by side.
+
+**Power stage (committed before scoring).** Standard error of each contrast from the bootstraps (the sheep fit is run
+with its point estimates written to a file that is not read, only the bootstrap SDs of the contrasts); MDE = 2.49 SE.
+Stop rule: a species whose part-1 MDE exceeds log 1.5 (0.405) is not decidable there and does not count towards
+H378.1 (it then needs both remaining species).
+
+**Readings (stated now).**
+- H378.1 passes: organs of the body core carry more of the body's time than the same tissue in the shell, in several
+  species; body temperature (or another core-shell difference: perfusion, innervation, depot biology) becomes the lead
+  for the organ factor. Which of these is not separated by this design.
+- H378.1 fails with decidable species: place in the body does not set gain at the size tested; the organ factor stays
+  open.
+- H378.2 passes for a class: the GTEx ratio is a conserved organ property, not an effect of death or sampling.
+  Fails (with the baboon fat pair already near 1): the GTEx fat ratio is human-, death- or GTEx-specific.
+**Limits.** Few pairs; core and shell differ in more than temperature (depot biology of subcutaneous against visceral
+fat is well known; muscle fibre type differs between abdominal and calf muscle); the baboon skin and subcutaneous fat
+sites are not stated in GEO; sheep are untimed (host-relative gain) and baboons timed (absolute gain): only ratios within
+a dataset are compared, never levels across datasets; the GTEx skin pair is confounded by sun exposure.
+**Code.** `exploratory/A378_core_shell_gain/scripts/a378.py --stage power | score`. GTEx aggregates only.
