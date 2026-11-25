@@ -1,4 +1,4 @@
-"""Slide data (results, drives, 4.3): human muscle after three days of 12 h-shifted behaviour (Wefers 2018, GSE106800).
+"""Slide data (results, drives, 4.2): human muscle after 3.5 days of 12 h-shifted behaviour (Wefers 2018, GSE106800).
 
 Per subject, delta = z(19:00) - z(07:00) in the aligned (dc) and misaligned (dm) condition, as A257 / A335 part 1a
 (same loading, projector and genes; 14 clock genes and the core loop). Summary: the complex ratio

@@ -1,4 +1,4 @@
-"""Slide data (results, drives, 4.2): organ-pair phases in fast deaths, ventilated donors with a living brain and brain
+"""Slide data (results, drives, 4.3): organ-pair phases in fast deaths, ventilated donors with a living brain and brain
 death, the quantity behind the arrangement rho of A293 / A317.
 
 A317 inputs as registered (`score_a317.py`): A109 `Tissues(200, seed 0)` states (one clock-plane projection per tissue,

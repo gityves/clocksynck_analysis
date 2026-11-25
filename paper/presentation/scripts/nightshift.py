@@ -1,4 +1,4 @@
-"""Slide figure (results, drives, 4.3): a 12 h shift of behaviour moves the human muscle clock by only about 4 h and
+"""Slide figure (results, drives, 4.2): a 12 h shift of behaviour moves the human muscle clock by only about 4 h and
 costs amplitude, while its rhythmic outputs follow behaviour.
 
 Human vastus lateralis after 3.5 days of 12 h-shifted sleep, light, activity and meals (Wefers 2018, GSE106800; 11

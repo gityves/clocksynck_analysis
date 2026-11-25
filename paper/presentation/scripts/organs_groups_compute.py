@@ -1,4 +1,4 @@
-"""Slide data (results, drives, 4.2c): the reference map of slide 3.1 for fast deaths, slow deaths, ventilated donors and
+"""Slide data (results, drives, 4.3c): the reference map of slide 3.1 for fast deaths, slow deaths, ventilated donors and
 brain death.
 
 GTEx v10 donors with a recorded time of death in four groups (as A293 part 1, brain death with all its donors): fast deaths (Hardy 1-2), slow deaths
@@ -7,7 +7,7 @@ GTEx v10 donors with a recorded time of death in four groups (as A293 part 1, br
 its own (`Dataset.fit(gate=False)`, 14 clock genes, peripheral tissues as anchors read leave-one-out, brain regions as
 targets; A263 R2 readout as `organs_compute.py`), tissues with >= 30 donors in the group, donor bootstrap for per-tissue
 intervals. Offsets and gains are relative to each group's own host: the faces compare arrangements, not loudness
-between groups (that is slide 4.2b). Descriptive, post hoc display. Aggregates only (one row per group and tissue).
+between groups (that is slide 4.3b). Descriptive, post hoc display. Aggregates only (one row per group and tissue).
 
     RUN_CAP_GB=30 paper/common/run.sh paper/presentation/scripts/organs_groups_compute.py [--n-boot 200] [--groups ...]
 Output: paper/presentation/output/organs/couplings_<group>.csv (one file per group)

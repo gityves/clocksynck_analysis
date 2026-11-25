@@ -1,4 +1,4 @@
-"""Slide figure (results, drives, 4.2): organ pairs keep their phase differences in ventilated donors with a living
+"""Slide figure (results, drives, 4.3): organ pairs keep their phase differences in ventilated donors with a living
 brain, not in brain death.
 
 One dot per pair of the 12 body tissues (65 pairs, A317): phase difference between the two organs' clocks in the group

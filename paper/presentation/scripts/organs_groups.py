@@ -1,11 +1,11 @@
-"""Slide figure (results, drives, 4.2c): the reference map of slide 3.1 for fast deaths, slow deaths, ventilated donors
+"""Slide figure (results, drives, 4.3c): the reference map of slide 3.1 for fast deaths, slow deaths, ventilated donors
 with a living brain and brain death.
 
 One clock face per group, as slide 3.1: angle = peak time of the tissue's clock genes relative to the group's body time
 (0 h; host from the peripheral tissues, read leave-one-out; later peaks clockwise, clocksync offset negated), radius =
 relative amplitude (gain on the group's own body time). Bars: 95 % donor-bootstrap intervals (200 draws). Tissues with
 >= 30 donors in the group; organ-system colours; same radius scale on every face. Each face is relative to its own
-group's body clock: it shows arrangement and relative loudness, not the body-wide loss of loudness (slide 4.2b).
+group's body clock: it shows arrangement and relative loudness, not the body-wide loss of loudness (slide 4.3b).
 
 Status: descriptive, post hoc display (user, 2026-11-25); readout as slide 3.1 (A263 R2 fit). GTEx aggregates only
 (one row per group and tissue).
@@ -16,7 +16,7 @@ Second figure (offsets.{svg,png}, half): the same offsets as scatters, peak time
 deaths, ventilated donors with a living brain (left) and brain death (right), on the peripheral tissues with >= 30
 donors in all three groups (adrenal: too few ventilated donors; whole blood omitted, no readable clock). 95 % donor-bootstrap intervals in both directions;
 dashed: identity (arrangement kept). Slope, Pearson and Spearman printed (post hoc, descriptive; the registered
-contrast is the pair-phase rho of A293 / A317 on slide 4.2).
+contrast is the pair-phase rho of A293 / A317 on slide 4.3).
 
     python scripts/organs_groups.py
 """

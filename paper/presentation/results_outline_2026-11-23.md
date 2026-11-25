@@ -346,7 +346,7 @@ tissues chosen for the deck).
 - Whole blood has no readable core clock (post hoc entry 2026-11-03): its phase interval spans 1.09 to 3.72 h.
 - The brain is read on a host built from peripheral tissues: its offset is relative to the periphery, and its low gain
   partly reflects that reference (R2.1, A289).
-- Fast deaths are the reference because their body clock reads the hour of death (R 0.63, slide 4.2).
+- Fast deaths are the reference because their body clock reads the hour of death (R 0.63, slide 4.3).
 
 **Source:** `presentation/output/organs/couplings.csv` (A263 R2 fit with donor bootstrap, `scripts/organs_compute.py`).
 
@@ -660,16 +660,16 @@ Section 4 asks what sets the transfer and the organ's place in time. Source: `do
 | slide | content | entries |
 |---|---|---|
 | 4.1 Organ clocks run on their own; removing a drive costs little, conflicting drives cost amplitude (introduction, mouse) | **new** (below): mouse liver without a feeding rhythm; daytime feeding across organs, weights and amplitude kept; one-line suggestive mention: organs that weigh one drive in mouse (liver, heart) are the loudest in human, the balanced lung the quietest, adipose the exception (A358, descriptive, rho -0.6, 5 organs, below its criterion) | A297, A322, A324, A358 |
-| 4.2 When the body no longer reads the hour, the organ arrangement holds; only brain death moves it (former 3.last) | **new** (below) | A27, A293, A314, A317, A374 |
-| 4.2b Intensive care quiets the clocks; brain death keeps their amplitude | **new** (below) | A315, A335, A349 |
-| 4.3 The human muscle clock has inertia: 3.5 days into a 12 h shift it has moved 4 h, its outputs already follow | **new** (below): core loop 4 h earlier, excursion 0.38; outputs 11.6 h | A257, A261, A335 |
+| 4.2 The human muscle clock has inertia: 3.5 days into a 12 h shift it has moved 4 h, its outputs already follow | **new** (below): core loop 4 h earlier, excursion 0.38; outputs 11.6 h | A257, A261, A335 |
+| 4.3 When the body no longer reads the hour, the organ arrangement holds; only brain death moves it (former 3.last) | **new** (below) | A27, A293, A314, A317, A374 |
+| 4.3b Intensive care quiets the clocks; brain death keeps their amplitude | **new** (below) | A315, A335, A349 |
 | 4.4 A systemic signal read unequally by organs | glucocorticoid-like person state explains a small part of each organ's departure | A357 |
 | 4.5 What sets an organ's gain | drive coherence (descriptive), reception, person volume; jet lag (in-house, to come) | registered 2026-11-24 |
 
 ## 4.1 Organ clocks run on their own; drives keep them in phase: removing a drive costs little, conflicting drives cost amplitude
 
 Introduction to section 4 (user, 2026-11-25): known in mouse, formalised here; it sets the expectations the human slides
-are read against (removal -> 4.2 intensive care; loss of the central drive -> 4.2 brain death; conflict -> 4.3 night
+are read against (removal -> 4.3 intensive care; loss of the central drive -> 4.3 brain death; conflict -> 4.2 night
 shift).
 
 **Bullets**
@@ -680,8 +680,8 @@ shift).
    the six organ peak times within a mouse rises from a median 2.0 h to 3.7 h (up to 7.8 h; authors' Mann-Whitney on
    circular variance p 0.0008); in light-dark it barely changes (2.4 vs 2.6 h, p 0.063): light keeps the order by other
    routes (Izumo 2014; also Yoo 2004, Sinturel 2021).
-3. Conflicting drives split the organs: under inverted feeding, liver and white fat follow (10.6-11.7 h), lung, heart and
-   kidney resist (1.6-2.5 h) and keep 0.50-0.65 of their amplitude at that intermediate phase, which a pure mix of two
+3. Conflicting drives split the organs: under inverted feeding, liver and white fat follow (peaks 10.6-11.7 h earlier, nearly
+   inverted), lung, heart and kidney resist (1.6-2.5 h earlier) and keep 0.50-0.65 of their amplitude at that intermediate phase, which a pure mix of two
    drives 12 h apart cannot produce (H322.1 rejected; H324.1 PASS): self-sustained oscillators pulled between drives.
 4. Suggestive only: the organs that weigh one drive in mouse (liver, heart) are the loudest in human, the balanced lung
    the quietest, adipose the exception (Spearman -0.6, 5 organs, below the registered -0.7; A358, "not seen").
@@ -709,12 +709,15 @@ H324.2 FAIL (BLIND for heart, kidney, visceral fat); A358 descriptive, below its
   reference is ad libitum, Xin's night-restricted feeding. Xin visceral fat and Manella white fat are different depots.
 - Removal is tested in the mouse liver only; the cross-organ panel is inversion only.
 - A358 is one line, never evidence: the balance b(1 - b) spans only 0.17-0.25 over the 5 organs.
-- Human muscle under 12 h-shifted behaviour (the former panel B) is slide 4.3.
+- Human muscle under 12 h-shifted behaviour (the former panel B) is slide 4.2.
+- Direction (fixed 2026-11-25): the faces drew the scored shifts (> 0 = earlier) clockwise, i.e. as later; now
+  negated. The resisting organs peak earlier, as the human muscle clock on 4.2 (a 12 h conflict has no direction of
+  its own: which way a partial shift goes is a property of the clocks, not of the protocol).
 - Panel C: the spread is not 0 in controls because organs peak at different times (the normal arrangement). Peak phases
   are ex vivo (explants), one harvest per mouse. Restricted feeding in constant darkness does not restore the order in
   knockouts (median 4.4 h, 3.0-6.6, against 1.6 h in controls; 11 + 11). The authors also report damped peripheral
   rhythms in knockouts in constant darkness (amplitudes in figure images only, not shown); in humans brain death keeps
-  the amplitude of ventilated donors (4.2b, 1.02): the parallel holds for the arrangement, only partly for amplitude.
+  the amplitude of ventilated donors (4.3b, 1.02): the parallel holds for the arrangement, only partly for amplitude.
   Brain-dead donors lack both the pacemaker and its light pathway, closest to constant darkness.
 - What is known (literature check 2026-11-25, web search; `docs/literature/conflicting_zeitgebers_2026-11-18.md`):
   single fibroblasts and tissue explants oscillate for weeks, population damping is desynchronisation (Welsh 2004 Curr
@@ -737,10 +740,55 @@ H324.2 FAIL (BLIND for heart, kidney, visceral fat); A358 descriptive, below its
 (Izumo 2014 source data, PROVENANCE.md); `docs/results_preliminary.md` A297, A322, A324, A358.
 
 
-## 4.2 When the body's clock no longer reads the hour, the organ arrangement holds; only brain death moves it
+## 4.2 The human muscle clock has inertia: 3.5 days into a 12 h shift it has moved 4 h, its outputs already follow
+
+**Bullets**
+1. After 3.5 days of 12 h-shifted sleep, light, activity and meals, the muscle core clock peaks only about 4 h
+   earlier than when aligned (core loop 4.06 h, 90 % 2.65-5.72; 14 clock genes 2.68 h, 1.83-3.56), not 12 h (A257
+   H257.2, A335 part 1a).
+2. It keeps about 0.4 of its 07:00-to-19:00 excursion (core loop 0.38, 90 % 0.32-0.47; 14 genes 0.56, 0.49-0.66);
+   the loss is clock-specific (A257 H257.3, A335: above matched and responsive gene sets).
+3. All 11 men shift the same way on the core loop (0.7 to 9.3 h earlier).
+4. The rhythmic outputs have already followed behaviour: 11.6 h (10.5-12.8), amplitude 0.85 (0.50-1.47) (A261
+   H261.3). After 3.5 days the clock lags far behind behaviour while its outputs track the drives: inertia, not
+   refusal (where the clock would settle is not measured).
+
+**Figure:** `figures/nightshift/nightshift.png` (`scripts/nightshift.py`, data `nightshift_compute.py`; wide). A. clock
+face against the aligned condition: core loop (filled), 14 clock genes (open), rhythmic outputs (orange); 90 % subject
+bootstrap. B. core loop per subject (11 men), group value in blue.
+
+**Tags:** A257 registered (not blind), A335 part 1a registered (core loop blind), A261 registered. The excursion ratio
+is a post hoc display quantity (A257 erratum, 2026-11-25).
+
+**Caveats (speaker notes)**
+- Two biopsy times per condition: a reversed 07:00-to-19:00 change of the outputs could also be an acute fed / active
+  against fasted / rested response rather than a 12 h shift (A261 masking limit). The clock-gene shift does not have
+  this problem in the same way, but rests on the same two times.
+- One snapshot at day 3.5: the clock may still be moving (as the one-week mouse data on 4.1). The slide claims
+  inertia, not that the muscle clock ignores behaviour.
+- "Earlier" is a 4 h rotation against a 12 h behavioural shift, which has no direction of its own: whether the clock
+  moved towards behaviour cannot be read from the sign.
+- 14 genes against core loop (2.7 vs 4.1 h; 0.56 vs 0.38): not attributed to PER1, PER2 and NR1D1 (no gene-drop null;
+  precision or the removed genes).
+- Panel B spread (post hoc, descriptive, 2026-11-25): per-subject shifts 0.7-9.3 h (SD 2.5 h). If every man had the
+  same true shift, with the observed between-subject scatter of the changes taken as noise, the SD would be 3.3 h
+  (5-95 % 1.9-4.8): the spread is what measurement noise gives, individual differences are not resolved. The
+  misaligned change is small (median |dm| 1.9 against a scatter of about 1.1 per component), so its angle is noisy.
+  Read B for direction (all 11 earlier), not for individual sizes.
+- The group amplitude (0.38) is below the median subject (0.47): subjects shift by different angles, and averaging
+  vectors with different directions shrinks them.
+- Erratum: the earlier "about a third" (14 genes) and "about half" (core) came from R / cos s, which assumed the aligned
+  change lies on the expected chord; measured directly the ratios are 0.56 and 0.38 (results_preliminary, A257).
+- 11 men, day 3 of the protocol; one tissue; not blind (A124 scored the same data).
+
+**Source:** `presentation/output/nightshift/{summary,per_subject}.csv`;
+`exploratory/A261_nightshift_programs/output/programs.csv`; `exploratory/A335_review_batch/output/a335_1a_*.csv`;
+`docs/results_preliminary.md` A257 (with the 2026-11-25 erratum), A261, A335.
+
+## 4.3 When the body's clock no longer reads the hour, the organ arrangement holds; only brain death moves it
 
 (User, 2026-11-25: slide 3.last moved to the drives section, after the mouse introduction 4.1: dying and intensive care
-are not physiological; brain death shown here rather than at the end of the life-course order. Amplitude: slide 4.2b.)
+are not physiological; brain death shown here rather than at the end of the life-course order. Amplitude: slide 4.3b.)
 
 **Bullets**
 1. The body's clock reads the hour of death in fast deaths (R 0.63, 244 donors), barely in slow (0.16, 106),
@@ -773,7 +821,7 @@ systematic distortion as scatter (conservative).
 **Caveats (speaker notes)**
 - Read against 4.1: brain death is the human counterpart of losing the central pacemaker. In SCN-lesioned mice organs keep
   oscillating but lose phase with one another (Yoo 2004 PNAS; Sinturel 2021 Genes Dev); here brain death moves the organ
-  arrangement (rho 0.16) and keeps the amplitude (4.2b, 1.02). Ventilated donors with a living brain lose behavioural
+  arrangement (rho 0.16) and keeps the amplitude (4.3b, 1.02). Ventilated donors with a living brain lose behavioural
   cues, not the pacemaker: arrangement kept, amplitude 0.82.
 - Slow deaths are not aligned to the hour (A109c H109c.1: R 0.097 against a null median 0.101, p 0.56), but alignment
   as strong as in ventilated donors is not excluded (80 %-power R 0.208).
@@ -802,7 +850,7 @@ systematic distortion as scatter (conservative).
 `results/figure_3/output/cues_lost/walltime_hosts.csv`; `exploratory/A109_coupling_nulls/output/a109c_walltime.csv`;
 `exploratory/A374_order_interval/output/intervals.csv`; `docs/results_preliminary.md` A109c, A293, A374. A314, A317, A349.
 
-## 4.2b Intensive care quiets the tissue clocks, most where they were loudest; brain death keeps their amplitude
+## 4.3b Intensive care quiets the tissue clocks, most where they were loudest; brain death keeps their amplitude
 
 **Bullets**
 1. Ventilated donors' clocks are quieter: clock-specific amplitude 0.82 of fast deaths (Q* +0.404, above all 200
@@ -849,10 +897,10 @@ descriptive; amplitude display exp(Q* / 2) post hoc.
 `exploratory/A315_braindeath_gain/output/descriptive.csv`; `exploratory/A349_icu_limits/output/part2_tissues.csv`;
 `presentation/output/organs/couplings.csv` (gain); `docs/results_preliminary.md` A315, A335, A349.
 
-## 4.2c (backup) Each group's organ map
+## 4.3c (backup) Each group's organ map
 
 Backup for "what does each group's map look like?". Post hoc, descriptive displays (user, 2026-11-25); the registered
-contrast stays the pair-phase rho on slide 4.2.
+contrast stays the pair-phase rho on slide 4.3.
 
 **Figures**
 - `figures/organs_groups/organs_groups.png` (`scripts/organs_groups.py`; wide): the reference map of slide 3.1 fitted
@@ -880,48 +928,3 @@ contrast stays the pair-phase rho on slide 4.2.
 
 **Source:** `presentation/output/organs/couplings_{fast,slow,ventilated,brain_death}.csv`;
 `presentation/output/pair_phases/pairs.csv`; `exploratory/A317_braindeath_confirm/output/posthoc_loto.csv`; `docs/results_preliminary.md` A317 post hoc note.
-
-## 4.3 The human muscle clock has inertia: 3.5 days into a 12 h shift it has moved 4 h, its outputs already follow
-
-**Bullets**
-1. After 3.5 days of 12 h-shifted sleep, light, activity and meals, the muscle core clock peaks only about 4 h
-   earlier than when aligned (core loop 4.06 h, 90 % 2.65-5.72; 14 clock genes 2.68 h, 1.83-3.56), not 12 h (A257
-   H257.2, A335 part 1a).
-2. It keeps about 0.4 of its 07:00-to-19:00 excursion (core loop 0.38, 90 % 0.32-0.47; 14 genes 0.56, 0.49-0.66);
-   the loss is clock-specific (A257 H257.3, A335: above matched and responsive gene sets).
-3. All 11 men shift the same way on the core loop (0.7 to 9.3 h earlier).
-4. The rhythmic outputs have already followed behaviour: 11.6 h (10.5-12.8), amplitude 0.85 (0.50-1.47) (A261
-   H261.3). After 3.5 days the clock lags far behind behaviour while its outputs track the drives: inertia, not
-   refusal (where the clock would settle is not measured).
-
-**Figure:** `figures/nightshift/nightshift.png` (`scripts/nightshift.py`, data `nightshift_compute.py`; wide). A. clock
-face against the aligned condition: core loop (filled), 14 clock genes (open), rhythmic outputs (orange); 90 % subject
-bootstrap. B. core loop per subject (11 men), group value in blue.
-
-**Tags:** A257 registered (not blind), A335 part 1a registered (core loop blind), A261 registered. The excursion ratio
-is a post hoc display quantity (A257 erratum, 2026-11-25).
-
-**Caveats (speaker notes)**
-- Two biopsy times per condition: a reversed 07:00-to-19:00 change of the outputs could also be an acute fed / active
-  against fasted / rested response rather than a 12 h shift (A261 masking limit). The clock-gene shift does not have
-  this problem in the same way, but rests on the same two times.
-- One snapshot at day 3.5: the clock may still be moving (as the one-week mouse data on 4.1). The slide claims
-  inertia, not that the muscle clock ignores behaviour.
-- "Earlier" is a 4 h rotation against a 12 h behavioural shift, which has no direction of its own: whether the clock
-  moved towards behaviour cannot be read from the sign.
-- 14 genes against core loop (2.7 vs 4.1 h; 0.56 vs 0.38): not attributed to PER1, PER2 and NR1D1 (no gene-drop null;
-  precision or the removed genes).
-- Panel B spread (post hoc, descriptive, 2026-11-25): per-subject shifts 0.7-9.3 h (SD 2.5 h). If every man had the
-  same true shift, with the observed between-subject scatter of the changes taken as noise, the SD would be 3.3 h
-  (5-95 % 1.9-4.8): the spread is what measurement noise gives, individual differences are not resolved. The
-  misaligned change is small (median |dm| 1.9 against a scatter of about 1.1 per component), so its angle is noisy.
-  Read B for direction (all 11 earlier), not for individual sizes.
-- The group amplitude (0.38) is below the median subject (0.47): subjects shift by different angles, and averaging
-  vectors with different directions shrinks them.
-- Erratum: the earlier "about a third" (14 genes) and "about half" (core) came from R / cos s, which assumed the aligned
-  change lies on the expected chord; measured directly the ratios are 0.56 and 0.38 (results_preliminary, A257).
-- 11 men, day 3 of the protocol; one tissue; not blind (A124 scored the same data).
-
-**Source:** `presentation/output/nightshift/{summary,per_subject}.csv`;
-`exploratory/A261_nightshift_programs/output/programs.csv`; `exploratory/A335_review_batch/output/a335_1a_*.csv`;
-`docs/results_preliminary.md` A257 (with the 2026-11-25 erratum), A261, A335.

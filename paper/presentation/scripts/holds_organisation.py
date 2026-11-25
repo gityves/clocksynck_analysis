@@ -12,7 +12,7 @@ B. Does the body's clock still read the external day? Alignment of the host phas
    its permutation p (times shuffled over donors, 10,000): fast, slow and intermediate deaths from A27 (post hoc
    readout), ventilated donors with a living brain and brain-dead organ donors from A314 (descriptive, post hoc split).
 R3.2 (`cue_removal`), designed removal or shift of a cue in one organ, as clock faces: angle = phase shift against
-the reference (0 h at the top, clockwise), radius = amplitude relative to it; 90 % intervals as a radial segment and an
+the reference (0 h at the top, later peaks clockwise; the scored shifts, > 0 = earlier, are negated), radius = amplitude relative to it; 90 % intervals as a radial segment and an
 arc.
 A. Mouse liver core clock (A297, registered, H297.1 fail above the interval) against ad libitum: feeding rhythm removed
    (Greenwell arrhythmic) and the night-restricted control (open), feeding inverted (Manella day feeding, Xin day- vs
@@ -27,7 +27,6 @@ C. Mouse organs without a central clock (Izumo et al. 2014 eLife, forebrain Bmal
    organs (pituitary, liver, kidney, heart, lung, spleen), in h (15 degrees = 1 h), controls (grey) and knockouts (ink),
    in light-dark (14 + 14 mice) and constant darkness (15 + 15); bars: medians. Display of published values, post hoc
    (user, 2026-11-25); data $SCCC_DATA/izumo2014/per_mouse_spread.csv (`common/datasets/izumo2014/build.py`).
-(`muscle`, human muscle under 12 h-shifted behaviour, A257 / A261, is kept for slide 4.3.)
 
 Data: exploratory/A293_organisation_levels/output/part1/{groups,sets}.csv; results/figure_3/output/cues_lost/walltime_hosts.csv;
 exploratory/A314_vent_walltime/output/groups.csv;
@@ -157,35 +156,24 @@ def legend_side(ax, entries):
 
 def liver(ax, t):
     """Mouse liver clock state relative to ad libitum feeding (A297): amplitude ratio and phase shift."""
-    clockface(ax, 1.2, (0.5, 1), "mouse liver")
+    clockface(ax, 1.2, (0.5, 1), "mouse liver", ring_label=0.6)
     r = lambda key: t[t.contrast.str.startswith(key)].iloc[0]
     vector(ax, 1, 0, REF)
     for key in ("Manella DF", "Xin DRF"):
         x = r(key)
-        vector(ax, x.amp_ratio, x.shift_h, FEED["inverted"], None, (x.amp_lo90, x.amp_hi90),
-               (x.shift_lo90, x.shift_hi90), size=30)
+        vector(ax, x.amp_ratio, -x.shift_h, FEED["inverted"], None, (x.amp_lo90, x.amp_hi90),
+               (-x.shift_hi90, -x.shift_lo90), size=30)
     for key in ("prediction from Manella", "prediction from Xin"):
         x = r(key)
-        vector(ax, x.amp_ratio, x.shift_h, FEED["removed"], open_=True, size=32, marker="D")
+        vector(ax, x.amp_ratio, -x.shift_h, FEED["removed"], open_=True, size=32, marker="D")
     x = r("control Greenwell night")
-    vector(ax, x.amp_ratio, x.shift_h, FEED["night"], None, (x.amp_lo90, x.amp_hi90), (x.shift_lo90, x.shift_hi90))
+    vector(ax, x.amp_ratio, -x.shift_h, FEED["night"], None, (x.amp_lo90, x.amp_hi90), (-x.shift_hi90, -x.shift_lo90))
     x = r("observed Greenwell arrhythmic")
-    vector(ax, x.amp_ratio, x.shift_h, FEED["removed"], None, (x.amp_lo90, x.amp_hi90), (x.shift_lo90, x.shift_hi90))
+    vector(ax, x.amp_ratio, -x.shift_h, FEED["removed"], None, (x.amp_lo90, x.amp_hi90), (-x.shift_hi90, -x.shift_lo90))
     legend_side(ax, [("ad libitum (reference)", REF, "o", False), ("night-restricted", FEED["night"], "o", False),
                       ("feeding inverted", FEED["inverted"], "o", False),
                       ("feeding rhythm removed", FEED["removed"], "o", False),
                       ("removed: expected\nif cues add", FEED["removed"], "D", True)])
-
-
-def muscle(ax, core, outputs):
-    """Human muscle, misaligned against aligned (A257, A261): size and phase of the 07:00-to-19:00 change."""
-    clockface(ax, 1.5, (0.5, 1, 1.5), "human muscle", {0: "central time", 12: "behaviour"})
-    vector(ax, 1, 0, REF)
-    vector(ax, core.R, core.s, CS, None, (core.R_lo, core.R_hi), (core.lo90, core.hi90))
-    vector(ax, outputs.ratio, outputs.shift_h, OUTPUTS, None, (outputs.ratio_lo, outputs.ratio_hi),
-           (outputs.shift_lo, outputs.shift_hi))
-    legend_side(ax, [("aligned (reference)", REF, "o", False), ("core clock", CS, "o", False),
-                      ("rhythmic outputs", OUTPUTS, "o", False)])
 
 
 ORGAN = {"Liver": ("liver", "Liver"), "WAT": ("white fat", "Adipose"), "Lung": ("lung", "Lung"),
@@ -193,10 +181,10 @@ ORGAN = {"Liver": ("liver", "Liver"), "WAT": ("white fat", "Adipose"), "Lung": (
          "VAT": ("visceral fat", "Adipose")}  # tissue -> (label, GTEx-style name for the system colour)
 DATASET = {"manella": ("o", "day-fed vs ad libitum"), "xin": ("s", "day- vs night-restricted")}
 # label offsets [pt] and alignment per (dataset, tissue), clear of the neighbouring points and intervals
-PLACE = {("manella", "Liver"): ((-9, 0), "right"), ("xin", "liver"): ((-9, 0), "right"),
-         ("manella", "WAT"): ((9, 0), "left"), ("xin", "VAT"): ((-9, 0), "right"),
-         ("manella", "Lung"): ((6, -12), "left"), ("xin", "heart"): ((0, 11), "center"),
-         ("xin", "kidney"): ((9, 0), "left")}
+PLACE = {("manella", "Liver"): ((9, 0), "left"), ("xin", "liver"): ((9, 0), "left"),
+         ("manella", "WAT"): ((-9, 0), "right"), ("xin", "VAT"): ((9, 0), "left"),
+         ("manella", "Lung"): ((-6, -12), "right"), ("xin", "heart"): ((0, 11), "center"),
+         ("xin", "kidney"): ((-9, 0), "right")}
 
 
 def chord(ax, delta_h):
@@ -208,17 +196,17 @@ def chord(ax, delta_h):
 def organs(ax, tabs):
     """Mouse organs under inverted feeding (A322 Manella, A324 Xin): amplitude ratio and shift against the reference
     arm, with the pure-mix chord of each dataset (an organ's expected state is the chord point at its weight)."""
-    clockface(ax, 1.2, (0.5, 1), "mouse organs")
+    clockface(ax, 1.2, (0.5, 1), "mouse organs", ring_label=0.6)
     vector(ax, 1, 0, REF)
     for name, (t, fit) in tabs.items():
-        chord(ax, float(fit.delta_h.iloc[0]))
+        chord(ax, -float(fit.delta_h.iloc[0]))
         mk = DATASET[name][0]
         for r in t.itertuples():
             lab, g = ORGAN[r.tissue]
             c = COLOR[gtex_system(g)]
-            vector(ax, r.amp_ratio, r.shift_h, c, None, (r.amp_lo90, r.amp_hi90), None, marker=mk, size=40)
+            vector(ax, r.amp_ratio, -r.shift_h, c, None, (r.amp_lo90, r.amp_hi90), None, marker=mk, size=40)
             off, ha = PLACE[(name, r.tissue)]
-            th = 2 * np.pi * r.shift_h / 24
+            th = -2 * np.pi * r.shift_h / 24
             ax.annotate(lab, (r.amp_ratio * np.sin(th), r.amp_ratio * np.cos(th)), xytext=off,
                         textcoords="offset points", ha=ha, va="center", fontsize=10, color=c,
                         path_effects=[patheffects.withStroke(linewidth=3, foreground="white")])

@@ -1,4 +1,4 @@
-"""Slide figure (results, drives, 4.2): the organ arrangement across death types, with intensive care and brain death;
+"""Slide figure (results, drives, 4.3): the organ arrangement across death types, with intensive care and brain death;
 same panels as slide 3.last (`organ_arrangement.py`), two rows added.
 
 Rows: GTEx fast deaths (Hardy 1-2; reference), slow deaths (Hardy 4), intermediate deaths (Hardy 3), ventilated
