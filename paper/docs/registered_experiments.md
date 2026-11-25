@@ -11571,6 +11571,13 @@ H378.1 (it then needs both remaining species).
   open.
 - H378.2 passes for a class: the GTEx ratio is a conserved organ property, not an effect of death or sampling.
   Fails (with the baboon fat pair already near 1): the GTEx fat ratio is human-, death- or GTEx-specific.
+**Addendum before the power stage (2026-11-25, user: "it would be funny if the sheep's wool acts as a strong enough
+insulator"; nothing computed yet).** Stated prediction, not a separate test: if body temperature carries the
+core-shell difference, the fleece keeps the sheep shell (skin, subcutaneous fat) closer to core temperature, so the
+sheep core-shell fat contrast should be smaller than the baboon's and the human's. A sheep contrast near 0 with
+baboon and human contrasts above 0 is then read as consistent with temperature (not as a failed replication); a sheep
+contrast as large as the others argues against temperature as the carrier. Tail fat (insulation breed-dependent) is
+reported separately as well as in the shell mean.
 **Limits.** Few pairs; core and shell differ in more than temperature (depot biology of subcutaneous against visceral
 fat is well known; muscle fibre type differs between abdominal and calf muscle); the baboon skin and subcutaneous fat
 sites are not stated in GEO; sheep are untimed (host-relative gain) and baboons timed (absolute gain): only ratios within
