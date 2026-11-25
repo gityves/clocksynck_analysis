@@ -9099,3 +9099,37 @@ endothelium and mural cells, cohort x chemistry strata. Peak time: + = tumour la
   their patient's normal stroma (c 0.10 / 0.03), consistent with H138.1.
 - Code: `exploratory/A387_tumour_full_model/scripts/a387_score.py`.
 <!-- src: paper/exploratory/A387_tumour_full_model/output/score/{part1_tests,part1_per_cohort,part1_per_cancer,part2_tests,part2_companions,part2_pairs,part2_sensitivity,part2_per_cancer,trio,drops}.csv -->
+
+## A387 note 1 (scored 2026-11-25; POST HOC implementation of D387.1, descriptive; NOT BLIND for colorectal and lung, BLIND for liver, prostate and every per-cancer companion threshold): per cancer on the pooled host, tumour fibroblasts and endothelium are coupled in every cancer resolved (c 0.37-0.76), beyond matched genes on 14 genes in 3 of 6 cancer x compartment cells and in none on the core loop; lung cancer cells are coupled on 14 genes (0.275), colorectal and liver ones are not
+
+One host on all A387 patients; tumour compartments relabelled by cancer (>= 8 patients with a host). Coupling c (90 %),
+matched-set q95 of the same cancer x compartment (200 sets); 14 genes / core loop.
+
+| compartment, cancer (n) | c 14 genes | matched q95 | c core | matched q95 | peak vs normal counterpart, core | loudness ratio, core |
+|---|---|---|---|---|---|---|
+| fibroblasts, colorectal (51) | 0.531 (0.347-0.706) | 0.464 | 0.516 (0.362-0.670) | 0.565 | +0.20 h (-1.06 to 1.24) | 0.75 (0.52-1.00) |
+| fibroblasts, lung (42) | 0.497 (0.333-0.741) | 0.439 | 0.439 (0.191-0.769) | 0.551 | -0.11 h (-0.89 to 0.95) | 0.70 (0.47-0.98) |
+| fibroblasts, other (23) | 0.160 (0.023-0.471) | 0.317 | 0.132 (0.008-0.578) | 0.425 | | |
+| endothelium, colorectal (34) | 0.482 (0.286-0.726) | 0.493 | 0.561 (0.301-0.766) | 0.576 | -0.17 h (-1.19 to 1.13) | 0.80 (0.51-0.99) |
+| endothelium, liver (18) | 0.596 (0.485-0.828) | 0.700 | 0.367 (0.181-0.678) | 0.803 | -0.96 h (-2.59 to 1.69) | 0.88 (0.56-1.34) |
+| endothelium, lung (52) | 0.617 (0.475-0.815) | 0.568 | 0.481 (0.296-0.758) | 0.621 | -0.53 h (-1.16 to 0.25) | 0.81 (0.59-1.15) |
+| endothelium, prostate (12) | 0.760 (0.036-0.885, boundary) | 0.851 | 0.504 (0-0.837) | 0.868 | -0.76 h (-4.84 to 0.96) | 0.96 (0.58-2.37) |
+| endothelium, other (19) | 0.491 (0.121-0.855) | 0.449 | 0.542 (0.238-0.834) | 0.534 | | |
+| cancer cells, colorectal (38) | 0.085 (0.003-0.317) | - | 0.009 (0-0.311) | - | | 0.32 (0.09-0.79) |
+| cancer cells, liver (15) | 0.000 (0-0.384) | - | 0.034 (0-0.490) | - | | |
+| cancer cells, lung (26) | 0.275 (0.110-0.515), p 0.003 | - | 0.119 (0.012-0.398), p 0.051 | - | | 0.54 (0.32-1.01) |
+
+- Coupling permutation p <= 0.005 for every fibroblast and endothelial cell except fibroblasts "other" (0.041 / 0.085) and
+  core-loop prostate endothelium (0.074).
+- Against the cancer's own matched q95: above on 14 genes for colorectal and lung fibroblasts and lung endothelium; on
+  the core loop none of the resolved cancers is above (colorectal endothelium 0.561 vs 0.576 and fibroblasts 0.516 vs
+  0.565 closest): per cancer the companion spread is wider (fewer patients), so these are "not resolved at n
+  patients", not uncoupled; pooled, fibroblasts pass on both readouts (A387 H387.3).
+- The pooled fibroblast coupling (0.44 / 0.40) is pulled down by the small-cohort "other" group (0.16 / 0.13); colorectal
+  and lung fibroblasts are at 0.50-0.53 on 14 genes.
+- Loudness: tumour fibroblasts and endothelium are quieter than their normal counterparts in every resolved cancer on
+  the core loop (ratios 0.70-0.96).
+- Cancer cells: lung 0.275 on 14 genes (core 0.119, at the line), colorectal and liver near 0, in line with A83 (lung
+  keeps a clock-shaped structure across tumours, colorectal does not); descriptive, n 15-38.
+- Code: `exploratory/A387_tumour_full_model/scripts/a387_per_cancer.py`.
+<!-- src: paper/exploratory/A387_tumour_full_model/output/score/{per_cancer_tests,per_cancer_companions}.csv -->
