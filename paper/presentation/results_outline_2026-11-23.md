@@ -858,6 +858,13 @@ contrast stays the pair-phase rho on slide 4.2.
   against fast deaths, 18 shared peripheral tissues (whole blood omitted). Ventilated: slope 0.73, Pearson 0.68; brain
   death: slope 0.19, Pearson 0.34, spread of peak times 0.75 -> 0.42 h (ventilated 0.80 h).
 
+- `figures/pair_phases/pair_phases.png` (`scripts/pair_phases.py`, data `pair_phases_compute.py`; half; user
+  2026-11-25: backup): phase difference of each organ pair (65 pairs, 12 body tissues, A317 pairs and draws) in the
+  group against fast deaths. Ventilated: Pearson 0.68, slope 0.69 (without lung pairs 0.47); brain death: 0.09, 0.06
+  (without lung pairs -0.33); spread 1.31 h (fast) -> 1.33 h (ventilated), 0.98 h (brain death). Per-pair 95 %
+  intervals about +-1.5 h in the groups (+-0.5 h in fast deaths): the pattern is in the cloud, not in single pairs;
+  pairs share organs (not independent). Same Pearson with all 298 organ donors (0.09).
+
 **Speaker notes**
 - The ventilated agreement on the scatter is mostly the lung (without it: slope 0.22, Pearson 0.25; brain death 0.00).
   Per-tissue intervals (median 1.6 h, 80 donors) are wider than the arrangement.
@@ -867,4 +874,4 @@ contrast stays the pair-phase rho on slide 4.2.
 - Adrenal: fewer than 30 donors in slow and ventilated groups; no brain regions there either.
 
 **Source:** `presentation/output/organs/couplings_{fast,slow,ventilated,brain_death}.csv`;
-`exploratory/A317_braindeath_confirm/output/posthoc_loto.csv`; `docs/results_preliminary.md` A317 post hoc note.
+`presentation/output/pair_phases/pairs.csv`; `exploratory/A317_braindeath_confirm/output/posthoc_loto.csv`; `docs/results_preliminary.md` A317 post hoc note.
