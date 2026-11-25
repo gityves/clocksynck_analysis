@@ -8931,6 +8931,6 @@ R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsiv
 | smoking | 70 (30) | 48 | 0.032 | 0.053 | 0.032 / -0.043 | 0.008 / -0.061 |
 
 - Gate H382.2 passes for all seven. The companions centre slightly above 0 (generic case-control expression scale
-  differences) except in depression (-0.04), where brain regions dominate the cells (fewer fast-death cases).
+  differences) except in depression (-0.04), which has the fewest cells (38, mostly ventilated).
 - Code: `exploratory/A382_disease_loudness/scripts/a382.py --stage power`.
 <!-- src: paper/exploratory/A382_disease_loudness/output/{power,null,companions,matching}.csv -->
