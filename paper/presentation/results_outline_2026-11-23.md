@@ -786,6 +786,11 @@ systematic distortion as scatter (conservative).
   alone (fast deaths at the same n, post hoc): 0.796 (5-95 % 0.637-0.901) at 103 donors, 0.751 (0.491-0.871) at 50;
   both observed values lie inside (panel A, diamonds).
 
+- Linear push toward 0 / 12 h (both ventilated groups): in brain death it points along one common axis (alignment
+  0.90 vs 0.76 with a living brain; H377.1 fail) and, at its fitted size, would leave the arrangement rho near 0.60
+  (5-95 % 0.37-0.76) against the observed 0.057 (H377.2 insufficient; model check passes for ventilated donors, 0.678
+  inside 0.42-0.77). The push compresses the order, it cannot scramble it: the organ clocks' relations change (A377).
+- Not carried by one tissue: leaving out each body tissue, D_rho 0.50-0.72, all above companions (A317 post hoc note).
 - Detection limit in intensive care: one organ must move about 6-7 h (6.75 h, 14 genes; core 5.6 h), or all organs
   with an SD of 2.25 h, to be seen (A349). "Kept" means no large disruption, not unchanged.
 - Offsets in ventilated donors are compressed toward 0 / 12 h by a shared non-temporal axis (A109, A132b); removing it
