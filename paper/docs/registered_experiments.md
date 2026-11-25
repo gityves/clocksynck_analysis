@@ -11687,3 +11687,78 @@ the case-minus-control difference (A360: the GC-target state goes with a quieter
 **Limits.** Deaths; comorbidity; Hardy matching balances death type but not the agonal course within a class; companion
 median treated as fixed. Aggregates only.
 **Code.** `exploratory/A382_disease_loudness/scripts/a382.py --stage power | score`.
+
+## A383 (2026-11-25, on the user's instruction "draft both and run the power stages", after the three-species summary of what is conserved in organ organisation; staged: power (tissue counts, analytic power, standard errors, timing; no statistic of any companion set and no slope value), then one scoring run; **NOT BLIND**: the GTEx reference map (`presentation/output/organs/couplings.csv`: every coupling and relative amplitude on slides 3.1-3.3; z2, psi and V columns not discussed), A104 / A271 on GTEx (rho 0.734 on the every-tissue-anchor setup, clock-specific; core loop 0.501, at the line against the responsive q95 0.553, A336), the A271 post hoc decomposition (GTEx periphery: shared term 0.12-10.3, own term 0.90-4.14), the archive A104 replications (sheep +0.62, baboon timed gain +0.77), A289 (per-tissue coupling and own amplitude of baboon and sheep; peripheral line slopes 0.350 and 0.344 per log own amplitude, so the clock relation is known to be positive in both), the A378 sheep fit (relative amplitudes of the fat depots, skin, forestomach read); **BLIND**: every companion-set statistic in baboon and sheep, every human companion statistic on the reference-map setup, and the slope of own on shared term in any species): is "stronger clocks are more coupled" clock-specific in a living primate and in sheep, and does the organ's own (unshared) term grow with its gain?
+
+**Why.** The one organising rule seen in all three species is that peripheral organs with a stronger clock are more
+coupled to the body's clock state (A104, A289); its companion control exists for GTEx only (H271.2). Coupling is
+c = S / (S + 2 psi), with S = z2 V the shared term and 2 psi the organ's own term. User's point (2026-11-25): if an organ
+only amplified everything it receives (its own phase jitter included), its own term would grow with its gain (2 psi
+proportional to S) and coupling would not change with gain; a rising coupling with a near-constant own term means the
+unshared part enters after the gain. Part 2 measures this directly.
+**Data and fits (one estimator in all three species).** `Dataset.fit(n_boot=0, gate=False)`, peripheral tissues as
+anchors read leave-one-out, groups as A263 / A42 (`compute_brain_periphery_species.groups`; human: "Brain -" regions
+apart, pituitary excluded): GTEx v10 fast deaths, tissues with >= 40 donors (the reference-map setup); baboon (Mure 2018,
+12 animals, 35 peripheral tissues, untimed use); SheepGTEx (343 animals, 35 peripheral tissues, mixed strata). Clock: the
+14 genes on the GTEx waveform. Companions: 200 expression-matched and 200 responsive sets per species
+(`clocksync.paired.pseudo_waveforms`, matching on the species' mean log fraction, the A263 sets: same seeds).
+**Part 1 (H383.1, per species: baboon, sheep; human as a registered replication on this setup).** rho = Spearman(own
+amplitude, coupling) over the peripheral tissues with both defined. Passes if rho > 0 with one-sided tissue-permutation
+p < 0.05 (10,000) and rho above the 95th percentile of both companion families.
+**Part 2 (H383.2, per species).** b = OLS slope of log(2 psi) on log S over the peripheral tissues with S > 0 and not at
+the noise boundary; 90 % interval from 2000 tissue bootstraps. Passes in a species if the interval excludes 1: the own
+term grows less than in proportion to the gain (not an amplified own jitter). Reported: b, whether the interval excludes
+0, and the count of tissues used.
+**Descriptive.** b and rho of each companion family (medians, 5-95 %); per tissue, log(2 psi of the clock / median
+2 psi of the matched sets) over the periphery (is the own term generic gene variability?); the core loop (11 genes) for
+part 2.
+**Power stage (committed before scoring).** Peripheral tissues per species; analytic power of part 1 for a true rho of
+0.6 against planning thresholds (GTEx companion median + 1.645 / sqrt(n - 1); Spearman SE sqrt(1.06 / (n - 3)) on the
+Fisher scale); tissue-bootstrap SE of b (no b printed) and the MDE of 1 - b (2.49 SE); one companion fit timed per
+species. Stop rule: part 1 of a species with power < 0.8 against the responsive planning threshold is reported as not
+decidable at that size (still scored); part 2 of a species with 2.49 SE(b) > 1 is not decidable.
+**Readings (stated now).** H383.1 passes in baboon and sheep: the amplitude-coupling rule is a clock property in three
+species, an organising rule of the body clock. Fails against the responsive family: the rule is shared with the
+stress-responsive genes (a shared-state rule, not the clock's). H383.2 passes: the unshared part of an organ's clock
+state does not scale with its gain; coupling rising with gain then follows from a gain applied before a roughly
+constant own term (local noise or local cues), and the open question is what sets the gain (the organ factor). b near 1
+would mean organs amplify their own jitter with their clock, and the rule would need another source.
+**Limits.** S and psi are estimated from the same states: an error moving variance between them biases b towards
+negative values (b is a lower bound in that direction); the own term includes non-circadian variability of the clock
+genes and residual technical noise; GTEx are deaths; sheep and baboon untimed here (host-relative); tissue numbers
+(26-35) bound the precision.
+**Code.** `exploratory/A383_species_organisation/scripts/a383_a384.py --stage power | score`. GTEx aggregates only.
+
+## A384 (2026-11-25, same instruction; staged: power (organ maps, SEs, simulated power; no cross-species statistic), then one scoring run only if the gate passes; **NOT BLIND**: all GTEx organ gains (reference map), the baboon timed gains of the 18 A330 organs (A378 registration: omental fat 3.34, subcutaneous fat 3.38, gastrocnemius 2.56, skin 2.65, oesophagus 3.68, descending colon 1.79, aorta 3.44), the A378 sheep relative amplitudes of caul, perirenal, subcutaneous, tail and intermuscular fat, skin and forestomach, the archive A34 exploratory sheep-human amplitude rank agreement (0.56, an older fit and tissue set), A330 (baboon-human not decidable at 17 organs, power 0.60); **BLIND**: every untimed baboon relative amplitude, every other sheep relative amplitude, every cross-species correlation of gains): is an organ's gain (how much of the body's time it expresses) a conserved property of the organ?
+
+**Why.** A378 showed that specific gain ratios are not conserved; A330 could not decide the whole ranking with the
+baboon alone. Three species together, including a pair of living animals (baboon, sheep) free of death effects, give
+more organ pairs and more power.
+**Gains.** Relative amplitude (`rel_amplitude`, log) from the A383 fits with 200 donor / animal bootstraps (same
+estimator in all three species; ranks within a species are gauge-free).
+**Organ map (fixed now).** GTEx / baboon / sheep: Stomach / STF / Abomasum; Adipose - Visceral (Omentum) / OMF / Caul
+adipose; Adipose - Subcutaneous / WAS / Subcutaneous adipose; Adrenal Gland / ADC / Adrenal; Artery - Aorta / AOR /
+Artery; Colon - Transverse / ASC / Colon; Heart - Left Ventricle / HEA / Heart; Kidney - Cortex / KIC / Kidney; Liver /
+LIV / Liver; Lung / LUN / Lung; Muscle - Skeletal / MUG / Muscle; Skin - Not Sun Exposed (Suprapubic) / SKI / Skin;
+Thyroid / THR / Thyroid. Pair-only organs: human-baboon Esophagus - Muscularis / OES, Colon - Sigmoid / DEC, Prostate /
+PRO, Testis / TES; baboon-sheep WAR / Perirenal adipose, DUO / Duodenum, ILE / Ileum, CEC / Cecum, SPL / Spleen, BOM /
+Bone marrow, MEL / Lymph node.
+**H384.1 (primary).** T = mean of the three pairwise Spearman correlations of log gain, each over the organs the pair
+shares. Null: each species' gains permuted over its own mapped organs, independently (10,000). Passes if T > 0 with
+p < 0.05 and T above the 95th percentile of the same statistic for 200 expression-matched gene sets fitted identically in
+all three species (genes present in all three tables, matched on human GTEx expression, same genes in each species;
+`pseudo_waveforms`, seed 384).
+**H384.2 (living animals).** The baboon-sheep Spearman alone, its own permutation p < 0.05 and above the matched q95.
+**Reported.** Each pairwise rho with its p; the organs and their gain ranks per species.
+**Power stage and gate (committed before scoring).** Simulation: a latent organ factor shared between every pair at
+latent correlation 0.6, true log-gain SD set to the GTEx SD over the mapped organs, each species' bootstrap SE added,
+2000 simulations, the permutation test as registered. Gate: power >= 0.8 for H384.1 at 0.6; otherwise not decidable and
+not scored (as A330). H384.2 reported with its own power and scored only if >= 0.8.
+**Readings (stated now).** Pass: organs keep their gain rank across species, including between living animals: the
+organ factor is a conserved organ property, to be explained by organ biology (it is not death or GTEx sampling). Fail
+with power: organ gain ranks are species-specific at the size tested; with A378, gain is set by something that
+differs between species (husbandry, diet, physiology), and the organ factor is not an intrinsic organ constant.
+**Limits.** Organ matching across species is approximate (sheep artery and colon segment unstated; baboon adrenal is the
+cortex; ruminant abomasum for stomach); untimed host-relative gains depend on which organs are anchors (all peripheral
+in each species); sheep are mixed breeds and ages.
+**Code.** As A383. Aggregates only.
