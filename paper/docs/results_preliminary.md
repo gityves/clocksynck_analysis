@@ -9172,3 +9172,28 @@ time, + = endothelium later; 90 % intervals from 2,000 half-samples (organs) and
   reading, with the qualification that the lean is consistent in sign and gene-uniform.
 - Code: `exploratory/A389_class_phase_order/scripts/{a389,a389_score}.py`.
 <!-- src: paper/exploratory/A389_class_phase_order/output/score/{organs,pooled,companion_pooled,c1_genes,c3_amplitude,d389_gene_drop}.csv; output/power_extended/power.csv -->
+
+## A389 note 2 (POST HOC, 2026-11-25): on standardised offsets the clock's class order lies beyond the matched sets (normal endothelium minus fibroblast z -3.6 / -3.4, 6.5 % / 2.0 % of sets as extreme); mural cells peak after fibroblasts, not between endothelium and fibroblasts
+Per organ offset and analytic SE (sqrt((1 - R^2) / (2 n R^2))), inverse-variance pooled (fixed effect; heterogeneity not
+included, so z is optimistic where Q is significant), clock against the 200 matched sets. Companion centres are at 0
+(medians -0.05 to +0.04 h); their z spread is wider than N(0, 1) (normal endothelium minus fibroblast, 14 genes: q05 -2.85,
+q95 +3.19), a same-person dispersion, not a bias.
+
+| arm, pair | readout | clock peak (SE) | z clock | matched sets with abs z >= clock |
+|---|---|---|---|---|
+| normal, endothelium minus fibroblast | 14 / core | -0.36 h (0.10) / -0.45 h (0.13) | -3.59 / -3.35 | 0.065 / 0.020 |
+| normal, endothelium minus mural | 14 / core | -0.82 h (0.14) / -1.42 h (0.22) | -5.73 / -6.59 | 0.010 / 0.005 |
+| normal, mural minus fibroblast | 14 / core | +0.93 h (0.14) / +0.61 h (0.17) | +6.74 / +3.62 | 0.010 / 0.010 |
+| tumour, endothelium minus fibroblast | 14 / core | -0.36 h (0.15) / -0.60 h (0.22) | -2.39 / -2.76 | 0.060 / 0.015 |
+| tumour, endothelium minus mural | 14 / core | -0.53 h (0.20) / -0.64 h (0.28) | -2.72 / -2.28 | 0.110 / 0.105 |
+| tumour, mural minus fibroblast | 14 / core | +0.22 h (0.25) / +0.76 h (0.46) | +0.87 / +1.63 | 0.520 / 0.070 |
+
+- **Reading (post hoc).** The registered companion condition (A389 H389.1, failed) compared the clock with the scatter
+  of rhythm-less sets; standardised, the normal-tissue order is beyond 93.5-98 % of matched sets (core loop 98 %), with
+  the random-effects interval of A389 excluding 0. Order in normal tissue: endothelium first, fibroblasts about 0.4 h
+  later, mural cells last (about 0.6-0.9 h after fibroblasts); in tumours endothelium first, mural and fibroblasts not
+  separated. The mouse order (endothelium, smooth muscle, fibroblasts; A273, A279) holds for endothelium first but not
+  for the place of mural cells. Fixed-effect SEs ignore the organ heterogeneity (A389: tau 0.43 / 0.66 h), so the z values
+  are upper bounds; with the random-effects SE the endothelium-fibroblast z is about -2.5 (14 genes).
+- Code: `exploratory/A389_class_phase_order/scripts/a389_note2.py`.
+<!-- src: paper/exploratory/A389_class_phase_order/output/score/note2_standardised.csv -->
