@@ -1176,8 +1176,11 @@ companions); per-cancer dots: A387 note 1, post hoc implementation, descriptive.
   0.48-0.76 on 14 genes; per cancer the core-loop values sit just below each cancer's wider matched q95 ("not resolved
   at n patients").
 - Cancer cells: pooled value dominated by colorectal (at null in TCGA, A83); lung cancer cells 0.275 on 14 genes (p
-  0.003; core 0.119, at the line), colorectal and liver near 0 (dots). A388 (registered) tests the A83 split across
-  about 14 cancer types on the tumour's own stroma. H138.1: coupling to the tumour's own stroma below about 0.2.
+  0.003; core 0.119, at the line), colorectal and liver near 0 (dots). A388 (registered; 288 patients, 14 cancer types,
+  on the tumour's own stroma): c 0.146 / 0.126 in 127 new patients (blind), p 0.001 but below matched genes (H388.1
+  fail); keeping minus at-null cancers +0.10 / +0.12 (core p 0.040), not beyond matched genes (H388.2 fail); lung
+  adenocarcinoma cancer cells 0.66 / 0.65, beyond matched genes (descriptive); the cancer ranks follow the bulk pairing
+  of 6.1a (Spearman 0.90 on the core loop, 5 cancers, colorectal lowest).
 
 **Source:** `exploratory/A387_tumour_full_model/output/score/{part1_tests,part2_tests,part2_sensitivity,trio,per_cancer_tests}.csv`;
-`docs/results_preliminary.md` A387, A387 note 1.
+`docs/results_preliminary.md` A387, A387 note 1, A388.
