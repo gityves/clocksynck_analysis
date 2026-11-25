@@ -12160,3 +12160,27 @@ separately; the power stage is rerun on the extended arm and noted before scorin
 **Addendum (2026-11-25, user: "make it partially not blind, ... the idea is just to increase the power as much as we
 can").** H389.1b is not a hypothesis: H389.1 on the extended normal arm (partly not blind, labelled so) is the test; the
 blind subset is listed descriptively in the scoring output only.
+
+### A388 power note (2026-11-25; `a388.py --stage power`, 632 s, peak 24.8 GB; `output/power/{counts,dedup,gates,power_h1,power_h2,companions,companion_summary,dropped,decidability}.csv`; no malignant statistic computed on the real data)
+**Units after deduplication.** 288 patients in 35 cohorts (none dropped; all genome tables built). Duplicates: SRP327758 is
+GSE160269 (56 shared patient labels): 23 SRP copies removed; 6 patients qualify only in the SRP copy and are kept from it;
+the kept GEO copy labels malignant cells as tumour epithelium where the removed SRP copy had copy-number calls.
+SRP416180 / GSE222315: one patient removed. SRP273482 (GSE155109) and the other scBaseCount cohorts have no second copy in
+the pool; ERP130387, ERP149257, ERP156718 have no GEO series (overlap checked by patient label only). New-vs-H138.1 status
+is assigned per patient, so GSE160269 patients duplicated in H138.1 count as old: **127 new patients (20 cohorts)**, not the
+151 of the feasibility count; 161 old. Classes: keeping 99 patients / 16 cohorts (breast 40, lung 28, liver 16, prostate 9,
+thyroid 6), at null 73 / 9 (ovarian 38, colorectal 30, bladder 5), other 116 / 10.
+**Gates (anchors only).** Pass in every set and readout: pooled, new, keeping, at null; p_pairing 0.001 throughout;
+clock share 0.83 (pooled, 14 genes) against a null of 0.12, at null 0.60 against 0.11.
+**Simulated power (blind simulator, 200 data sets per point).** H388.1 (127 patients): MDE of c 0.1 (14 genes; core at |z|
+1), 0.2 (core at |z| 0.5). H388.1b (288): 0.1 throughout. H388.2: power 0.945-0.985 at c_keep 0.2 against c_null 0.02,
+MDE of the difference 0.18 on every readout. **All decidable by the registered rule (MDE <= 0.25).** The MDEs sit at the
+lowest grid point.
+**Companions on the real data (comparators).** Matched q95 of the malignant coupling 0.242 / 0.237 (new cohorts, 14 / core),
+0.198 / 0.210 (all); narrow responsive q95 0.300 / 0.303 (new), 0.232 / 0.230 (all); medians 0.08-0.17. The H388.1 rule
+also needs c above the matched q95, so its effective threshold is about 0.24 (new) / 0.21 (all), not the simulated MDE:
+a malignant coupling below about 0.25 will read as "not beyond matched genes" even when its permutation p is small.
+Stated now, before scoring.
+**Deviations.** The H388.2 null uses c 0.02 (c 0 has no finite noise in the simulator) and the coupling difference as the
+power proxy for d*; decidability holds for both |z| and both readouts.
+**Decision.** One scoring run as registered, with D388.5 (A388 note 1).
