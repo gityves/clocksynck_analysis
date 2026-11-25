@@ -12139,3 +12139,21 @@ the normal-stroma host; seen) are listed beside them, not used in the rank test.
   with fibroblasts; A272 pairs, offsets computed there, NOT BLIND); the tumour / normal tables carry coarse classes.
 - **Decision.** As registered: the scoring run reports every offset descriptively (normal and tumour, per organ and
   pooled, 14 genes and core loop, with companions, C1 and C3), and no hypothesis is scored as a test.
+
+### A389 note 1 (2026-11-25, on the user's instruction "look for more organs with both classes in healthy atlases to be added to the same amendment", after the power note (not decidable) and before any clock offset; **NOT BLIND**: the endothelial-fibroblast (and mural) pair offsets of heart, lung_hlca, organ_breast, organ_colon (A272), kidney_sc, kong_colon, kong_ileum, organ_eye_anterior, organ_optic_nerve (A274), six of which entered A293 H293.3 (+0.46 h pooled); **BLIND**: endometrium, skin_ad_control, lung_natri_control and islets (no pair table), every pooled offset of the extended normal arm)
+**Added data.** The healthy A17 atlases with endothelial and fibroblast (or stromal / stellate / interstitial) compartments
+in >= 8 shared donors, loaded with their genome-wide twins (`compute_a150.load_atlas`; A17 strata): heart, lung_hlca,
+organ_breast, organ_colon, kong_colon, kong_ileum, kidney_sc, organ_eye_anterior (ciliary and trabecular sites as two
+units), organ_optic_nerve (head and nerve sites as two units), endometrium, skin_ad_control, lung_natri_control, islets.
+Class mapping: endothelial = the atlas's endothelial compartment(s) of the same site; lung_hlca: arterial, capillary and
+venous EC summed per donor (lymphatic excluded), the subtypes kept for C2; lung_natri_control: venous EC (the only one);
+fibroblast = fibroblast / fibroblast_stromal / stromal (endometrium) / stellate (islets) / interstitial (kidney); mural =
+mural / smooth muscle / pericyte. Tabula Sapiens (5 donors per organ) and atlases without one of the two classes (organ
+muscle, brain vascular-only atlases) are not used. Units, estimator, companions (200 matched sets per atlas x site x pair,
+seeds [389, 2, pair, atlas]) and organ pooling as the registration; an atlas and a tumour / normal cohort of the same
+organ pool into one organ.
+**Hypotheses, revised before scoring.** H389.1 (primary) is read on the extended normal arm (A387 normal samples + the
+atlases); **H389.1b (blind subset)**: the same rule on the A387 normal samples and the four blind atlases only, reported
+beside it; H389.4 (A293 atlases added) is absorbed into H389.1. H389.2-3, C1-C3 and D389 unchanged; C2 adds nothing (the
+lung subtypes are those of A272). Decidability as registered (pooled MDE <= 0.5 h at R 0.5), for H389.1 and H389.1b
+separately; the power stage is rerun on the extended arm and noted before scoring.
