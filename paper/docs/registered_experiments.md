@@ -12120,3 +12120,22 @@ cancer mix (colorectal at null in bulk too)"; disagreement with power (cancers w
 order) means the bulk pairing of those cancers is carried by non-malignant cells or by a patient-level factor shared by
 the two samples (A138 H138.8 reading). The A387 per-cancer malignant values (lung 0.275, colorectal 0.085, liver 0.000 on
 the normal-stroma host; seen) are listed beside them, not used in the rank test.
+
+### A389 power note (2026-11-25; `a389.py --stage power`, 26 min, `output/power/{counts_cohort,counts_organ,power,companions,c2_subtypes,errors}.csv`; no clock offset computed)
+67 cohorts built (the A388 inventory without Wu and Pal). Organs with >= 8 donors having both classes:
+- **Normal samples:** endothelial-fibroblast 4 organs / 91 donors (lung 39, colon 22, breast 16, head and neck 14);
+  endothelial-mural 5 / 50; mural-fibroblast 3 / 34. Few normal samples carry both classes.
+- **Tumour samples:** endothelial-fibroblast 9 organs / 319 donors (oesophagus 103, lung 48, colon 39, ovary 38, cancer
+  unspecified 25, stomach 24, breast 21, cervix 12, head and neck 9); endothelial-mural 10 / 189; mural-fibroblast 8 / 159.
+- **Pooled MDE at R 0.5** (registered rule: decidable if <= 0.5 h): normal endothelial-fibroblast 1.22 h, endothelial-mural
+  1.65 h, mural-fibroblast 2.00 h; tumour 0.65, 0.85, 0.92 h. **H389.1 (normal) is not decidable; H389.3 (tumour) is
+  not decidable.** By the registration both are reported descriptively, with their intervals; H389.2 (conditional on
+  H389.1) is not read. Per-organ 90 % half-widths at R 0.5: 1.2-2.1 h (normal endothelial-fibroblast), 0.8-2.6 h (tumour).
+- **Companions** (matched sets, pooled per organ): pair phases centred on 0 (normal endothelial-fibroblast medians -0.12 to
+  +0.27 h; tumour -0.21 to +0.23 h), as the pair-phase rule states, with wide spread: the central 90 % of the pooled
+  matched offsets is -2.37 to +2.37 h (normal, 14 genes), -1.06 to +1.04 h (tumour, 14 genes). A clock offset of the
+  A293 size (+0.46 h) would lie inside both bands.
+- **C2 (subtypes):** only the HLCA lung atlas labels endothelial subtypes (arterial 22, capillary 43, venous 26 donors
+  with fibroblasts; A272 pairs, offsets computed there, NOT BLIND); the tumour / normal tables carry coarse classes.
+- **Decision.** As registered: the scoring run reports every offset descriptively (normal and tumour, per organ and
+  pooled, 14 genes and core loop, with companions, C1 and C3), and no hypothesis is scored as a test.
