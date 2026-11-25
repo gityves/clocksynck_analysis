@@ -7,10 +7,14 @@ arm, equal-n control draws (one control per case, 20 draws).
 Stages:
   power  matching counts, pairs passing, SD of D_rho under 2000 within-set relabellings, MDE = 2.49 SD; no observed
          arrangement value of any arm.
-  score  (written after the power note)
+  score  (written after the power note, before any arm value) per condition: the same matched sets and the same first
+         control draw (hence the same pairs) as the power stage, 20 control draws; D_rho, one-sided relabelling p
+         (2000), Holm over the seven; the same D_rho for 200 matched and 200 responsive sets (same arms and draws);
+         H379.1 and H379.2; descriptive: each arm's rho and the noise-only expectation (A374 rule within the reduced
+         reference: n = min(cases, half the reference) fast deaths drawn against the rest of the reference, 200 draws).
 
-    RUN_CAP_GB=20 paper/common/run.sh paper/exploratory/A379_disease_arrangement/scripts/a379.py --stage power
-Outputs (`../output/`): power.csv. Controlled access: labels, ages and matched sets stay in memory; aggregates only.
+    RUN_CAP_GB=20 paper/common/run.sh paper/exploratory/A379_disease_arrangement/scripts/a379.py --stage power | score
+Outputs (`../output/`): power.csv | tests.csv, companions.csv. Controlled access: labels, ages and matched sets stay in memory; aggregates only.
 """
 import argparse
 import sys
@@ -112,12 +116,85 @@ def power():
     print(out.round(3).to_string(index=False))
 
 
+def holm(p):
+    p = np.asarray(p, float)
+    o = np.argsort(p)
+    adj = np.minimum(1, np.maximum.accumulate((len(p) - np.arange(len(p))) * p[o]))
+    out = np.empty_like(adj)
+    out[o] = adj
+    return out
+
+
+def d_of(Z, M, ref, cases, draws, mask):
+    return float(np.median([rho(Z, M, ref, d, mask) for d in draws])) - rho(Z, M, ref, cases, mask)
+
+
+def score():
+    limit_threads(4)
+    t0 = time.time()
+    T = H.Tissues(200, 0)
+    T.build_states(np.random.default_rng(1), 0, real=True)
+    A.RS.add_sets(T, 200, 0)
+    Z, M = raw(T, "clock", 0, T.R)
+    sets_kz = {(kind, k): raw(T, kind, k, T.R) for kind in ("pseudo", "resp") for k in range(200)}
+    q = covariates(T)
+    fast = T.group_donors("fast")
+    print(f"states, sets and covariates ({time.time() - t0:.0f}s)", flush=True)
+    rows, comp = [], []
+    for c in CONDITIONS:
+        i = CONDITIONS.index(c)
+        rng = np.random.default_rng([SEED, i])  # as the power stage: cases, first draw, pairs
+        sets = matched_sets(q, T, c)
+        used = {j for s in sets for j in s}
+        ref = np.array([j for j in fast if j not in used])
+        cases, ctl0 = arms(sets, rng)
+        mask = B.pair_mask(M, ref, cases, ctl0)
+        draws = [ctl0] + [arms(sets, rng)[1] for _ in range(N_DRAWS - 1)]
+        D = d_of(Z, M, ref, cases, draws, mask)
+        rng2 = np.random.default_rng([SEED, i, 2])
+        null = []
+        for _ in range(N_PERM):
+            a, b = relabel(sets, rng2)
+            null.append(rho(Z, M, ref, b, mask) - rho(Z, M, ref, a, mask))
+        null = np.array(null)
+        sd = float(np.nanstd(null, ddof=1))
+        cd = {}
+        for (kind, k), (Zk, Mk) in sets_kz.items():
+            v = d_of(Zk, Mk, ref, cases, draws, mask)
+            comp.append(dict(condition=c, family=kind, set=k, D_rho=v))
+            cd.setdefault(kind, []).append(v)
+        rng3 = np.random.default_rng([SEED, i, 3])
+        n = min(len(cases), len(ref) // 2)
+        noise = []
+        for _ in range(200):
+            p = rng3.permutation(ref)
+            noise.append(rho(Z, M, p[n:], p[:n], mask))
+        rows.append(dict(condition=c, cases=len(cases), reference=len(ref), pairs=int(mask.sum()),
+                         rho_cases=rho(Z, M, ref, cases, mask),
+                         rho_controls=float(np.median([rho(Z, M, ref, d, mask) for d in draws])), D_rho=D,
+                         p=float((1 + np.sum(null >= D)) / (1 + N_PERM)), null_sd=sd,
+                         upper_90=D + 1.645 * sd,
+                         matched_q95=float(np.nanquantile(cd["pseudo"], 0.95)),
+                         responsive_q95=float(np.nanquantile(cd["resp"], 0.95)),
+                         noise_n=n, noise_median=float(np.median(noise)), noise_q05=float(np.quantile(noise, 0.05)),
+                         noise_q95=float(np.quantile(noise, 0.95))))
+        print(pd.Series(rows[-1]).round(3).to_dict(), f"({time.time() - t0:.0f}s)", flush=True)
+    t = pd.DataFrame(rows)
+    t["p_holm"] = holm(t.p)
+    t["H379_1"] = (t.D_rho > 0) & (t.p_holm < 0.05) & (t.D_rho > t.matched_q95) & (t.D_rho > t.responsive_q95)
+    t["H379_2"] = t.upper_90 < BRAIN_DEATH
+    t.to_csv(OUT / "tests.csv", index=False)
+    pd.DataFrame(comp).to_csv(OUT / "companions.csv", index=False)
+    pd.set_option("display.width", 250)
+    print(t.round(3).to_string(index=False), f"\n({time.time() - t0:.0f}s)")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--stage", choices=["power"], required=True)
-    ap.parse_args()
+    ap.add_argument("--stage", choices=["power", "score"], required=True)
+    stage = ap.parse_args().stage
     OUT.mkdir(parents=True, exist_ok=True)
-    power()
+    power() if stage == "power" else score()
 
 
 if __name__ == "__main__":
