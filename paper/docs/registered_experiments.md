@@ -12184,3 +12184,16 @@ Stated now, before scoring.
 **Deviations.** The H388.2 null uses c 0.02 (c 0 has no finite noise in the simulator) and the coupling difference as the
 power proxy for d*; decidability holds for both |z| and both readouts.
 **Decision.** One scoring run as registered, with D388.5 (A388 note 1).
+
+### A389 power note 2 (2026-11-25; extended normal arm, note 1; `a389.py --stage power_atlas`, `output/power_extended/*.csv`; no clock offset computed)
+Atlas sites loaded: heart, lung_hlca, organ_breast, organ_colon, kong_colon, kong_ileum, kidney_sc, organ_eye_anterior
+(two sites), organ_optic_nerve (two sites), islets. Not loaded (no genome-wide builder): endometrium, skin_ad_control,
+lung_natri_control (the `lung_natri_control_genome` builder is missing; A274's list named it); these three were blind,
+so the extended normal arm keeps one blind atlas (islets).
+**Normal endothelial-fibroblast: 10 organs, 608 donors** (breast 142, lung 101, optic nerve 101, anterior eye 81, colon
+56, heart 45, ileum 24, kidney 24, pancreas 20, head and neck 14); pooled MDE at R 0.5 **0.47 h: H389.1 decidable**.
+Endothelial-mural 8 organs / 383 donors, MDE 0.60 h; mural-fibroblast 6 / 368, 0.61 h (secondary pairs, descriptive).
+Tumour arm unchanged (0.65 h, not decidable: H389.3 descriptive). Companions (matched sets, n-weighted over organs): the
+central 90 % of the pooled normal endothelial-fibroblast offsets is -0.81 to +0.80 h (14 genes), -0.74 to +0.74 h (core
+loop), median -0.06 / +0.04 h. **Decision:** one scoring run; H389.1 and, if it passes, H389.2 scored as registered; the
+rest descriptive.
