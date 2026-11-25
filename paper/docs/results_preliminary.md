@@ -8821,3 +8821,23 @@ R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsiv
   variances used for both groups; the fitted factor of all 298 organ donors used for the 79-donor simulation.
 - Code: `exploratory/A377_axial_directions/scripts/a377.py --stage score`.
 <!-- src: paper/exploratory/A377_axial_directions/output/{tests,groups,axes,companions,sufficiency,sufficiency_reps}.csv -->
+
+## A379 power note (2026-11-25; matching and relabelling null only, no arrangement value of any arm; 47 s): every condition is decidable for H379.2 (MDE 0.25-0.52 against the brain-death 0.621); the T2D reference is small
+
+| condition | matched sets (vent / fast cases) | controls | reference (fast deaths in neither arm) | pairs | null SD | MDE | null q95 |
+|---|---|---|---|---|---|---|---|
+| T2D | 123 (66 / 57) | 307 | 49 | 57 | 0.164 | 0.408 | 0.264 |
+| obesity | 139 (93 / 46) | 139 | 152 | 66 | 0.132 | 0.328 | 0.210 |
+| hypertension | 191 (116 / 75) | 234 | 89 | 66 | 0.143 | 0.356 | 0.229 |
+| ischaemic heart disease | 90 (51 / 39) | 257 | 90 | 66 | 0.173 | 0.431 | 0.295 |
+| COPD | 88 (49 / 39) | 252 | 100 | 66 | 0.210 | 0.522 | 0.342 |
+| depression | 62 (48 / 14) | 186 | 188 | 64 | 0.209 | 0.521 | 0.343 |
+| smoking | 199 (125 / 74) | 202 | 93 | 66 | 0.101 | 0.252 | 0.162 |
+
+- No stop rule fires (pairs >= 57, MDE <= 0.522 < 0.621): H379.1 and H379.2 can be scored for all seven.
+- Caveat for reading against the brain-death value: excluding every compared donor from the reference leaves 49 to
+  188 fast deaths (A317 used 244). A smaller reference makes both arms' rho noisier and lower, which can shrink D_rho
+  (T2D most). The H379.2 margin (0.621) was measured with the full reference; the noise-only expectation per condition
+  (A374 rule, at the case count and against the same reduced reference) is reported at scoring for this reason.
+- Code: `exploratory/A379_disease_arrangement/scripts/a379.py --stage power`.
+<!-- src: paper/exploratory/A379_disease_arrangement/output/power.csv -->
