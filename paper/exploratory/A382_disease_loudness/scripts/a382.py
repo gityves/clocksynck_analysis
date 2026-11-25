@@ -7,10 +7,14 @@ with a random member of its matched set.
 
 Stages:
   power  matching, label null of Q (1000), companion Q; no clock Q for any condition.
-  score  (written after the power note)
+  score  (written after the power note, before any case-against-control loudness) per condition: Q (14 genes, primary),
+         core loop, pooled (unmatched) arms, per cohort; 90 % matched-set bootstrap (2000, sets resampled within each
+         tissue cell); label p from the power-stage null; Q* against the power-stage companions; H382.1 (Holm over the
+         seven) and H382.2; glucocorticoid-target check: per cell, case-minus-control mean of the per-sample GC score
+         (mean z-scored log CPM of `controls.GC_TARGETS` present), median over cells.
 
-    RUN_CAP_GB=40 paper/common/run.sh paper/exploratory/A382_disease_loudness/scripts/a382.py --stage power
-Outputs (`../output/`): power.csv, null.csv, companions.csv, matching.csv. Controlled access: labels, ages and matched
+    RUN_CAP_GB=40 paper/common/run.sh paper/exploratory/A382_disease_loudness/scripts/a382.py --stage power | score
+Outputs (`../output/`): power.csv, null.csv, companions.csv, matching.csv | tests.csv. Controlled access: labels, ages and matched
 sets stay in memory; aggregates only.
 """
 import argparse
@@ -30,6 +34,7 @@ import pandas as pd  # noqa: E402
 import a373_age_loudness as L3  # noqa: E402
 import compute_a233 as C233  # noqa: E402
 from a373_age_loudness import ML, WF, Cohort  # noqa: E402
+from clocksync._core.controls import GC_TARGETS  # noqa: E402
 from clocksync.config import limit_threads  # noqa: E402
 from clocksync.paired import pseudo_waveforms  # noqa: E402
 from common import gtex  # noqa: E402
@@ -105,7 +110,8 @@ def setup():
         del x
         sets[coh] = {kind: pseudo_waveforms(lm, N_SETS, np.random.default_rng([373, tag]), WF, kind=kind)
                      for kind, tag in (("matched", 1), ("responsive", 2))}
-        keep = sorted({g for ws in sets[coh].values() for w in ws for g in w.genes} | set(WF.genes))
+        keep = sorted({g for ws in sets[coh].values() for w in ws for g in w.genes} | set(WF.genes)
+                      | {g for g in GC_TARGETS if g in pb.columns})
         co[coh] = Cohort(pb[["donor", "compartment", "depth"] + keep].reset_index(drop=True))
         del pb
         L3.say(coh, "genome loaded")
@@ -168,11 +174,97 @@ def power():
     print(out.round(3).to_string(index=False), f"\ndone {time.time() - t0:.0f}s", flush=True)
 
 
+def holm(p):
+    p = np.asarray(p, float)
+    o = np.argsort(p)
+    adj = np.minimum(1, np.maximum.accumulate((len(p) - np.arange(len(p))) * p[o]))
+    out = np.empty_like(adj)
+    out[o] = adj
+    return out
+
+
+def gc_score(cohort, t):
+    """Per-sample glucocorticoid-target score of a tissue: mean z-scored log CPM of the GC targets present."""
+    x = cohort.pb.loc[cohort.rows[t]]
+    g = [c for c in GC_TARGETS if c in x.columns]
+    y = np.log(x[g].to_numpy(float) / x.depth.to_numpy(float)[:, None] * 1e6 + 1)
+    return ((y - y.mean(0)) / np.where(y.std(0) > 0, y.std(0), 1)).mean(1)
+
+
+def pooled_arms(cohorts, c, co):
+    """Every donor of the case and control pools with data in the tissue (unmatched), per eligible cell."""
+    d = design(c)
+    out = {}
+    for coh, (pb, q, _) in cohorts.items():
+        for t, pos in co[coh].pos.items():
+            ids = [x for x in pos if x in q.index]
+            cas, con = d.pools(q.loc[ids])
+            a = np.array([pos[x] for x in np.array(ids)[cas.to_numpy(bool)]])
+            b = np.array([pos[x] for x in np.array(ids)[con.to_numpy(bool)]])
+            out[(coh, t)] = (a, b)
+    return out
+
+
+def score():
+    limit_threads(4)
+    t0 = time.time()
+    co, sets, designs, M = setup()
+    cohorts = ML.load_cohorts()
+    pw = pd.read_csv(OUT / "power.csv").set_index("condition")
+    comp = pd.read_csv(OUT / "companions.csv")
+    null = pd.read_csv(OUT / "null.csv")
+    keys = sorted({k for a in designs.values() for k in a})
+    st = {gs: {k: co[k[0]].zv(w, k[1]) for k in keys} for gs, w in (("14 genes", WF), ("core", L3.CORE))}
+    gc = {k: gc_score(co[k[0]], k[1]) for k in keys}
+    L3.say("states", f"({time.time() - t0:.0f}s)")
+    rows, crows = [], []
+    for i, (c, arms) in enumerate(designs.items()):
+        base = {k: s.arms() for k, s in arms.items()}
+        q14, qc = Q_of(st["14 genes"], base), Q_of(st["core"], base)
+        rng = np.random.default_rng([SEED, i, 3])
+        bt = []
+        for _ in range(2000):
+            ab = {}
+            for k, s in arms.items():
+                j = rng.integers(0, len(s.n), len(s.n))
+                S = s.S[j]
+                ab[k] = (S[:, 0], S[:, 1:][S[:, 1:] >= 0])
+            bt.append(Q_of(st["14 genes"], ab))
+        lo, hi = np.nanquantile(bt, [0.05, 0.95])
+        nl = null[null.condition == c].Q.to_numpy()
+        mt = comp[(comp.condition == c) & (comp.kind == "matched")].Q
+        rs = comp[(comp.condition == c) & (comp.kind == "responsive")].Q
+        pa = pooled_arms(cohorts, c, co)
+        pa = {k: v for k, v in pa.items() if k in st["14 genes"]}
+        dgc = [float(np.mean(gc[k][a]) - np.mean(gc[k][b])) for k, (a, b) in base.items()]
+        r = dict(condition=c, cells=len(arms), Q=q14, amp_ratio=float(np.exp(q14 / 2)), lo90=float(lo), hi90=float(hi),
+                 amp_lo90=float(np.exp(lo / 2)), amp_hi90=float(np.exp(hi / 2)),
+                 Q_star=q14 - float(mt.median()), pct_matched=float((mt < q14).mean() * 100),
+                 pct_responsive=float((rs < q14).mean() * 100),
+                 p_label=float((1 + np.sum(nl <= q14)) / (1 + len(nl))),
+                 matched_q05=float(mt.quantile(0.05)), label_q05=float(np.quantile(nl, 0.05)),
+                 Q_core=qc, amp_ratio_core=float(np.exp(qc / 2)),
+                 Q_pooled=Q_of(st["14 genes"], pa), Q_vent=Q_of(st["14 genes"], {k: v for k, v in base.items() if k[0] == "vent"}),
+                 Q_fast=Q_of(st["14 genes"], {k: v for k, v in base.items() if k[0] == "fast"}),
+                 gc_case_minus_control_median=float(np.nanmedian(dgc)),
+                 decidable_H382_2=bool(pw.loc[c, "gate_H382_2"]))
+        rows.append(r)
+        L3.say(c, "done", f"({time.time() - t0:.0f}s)")
+    t = pd.DataFrame(rows)
+    t["p_holm"] = holm(t.p_label)
+    t["H382_1"] = (t.Q < t.matched_q05) & (t.Q < t.label_q05) & (t.p_holm < 0.05) & (t.hi90 < 0)
+    t["H382_2"] = t.decidable_H382_2 & (t.lo90 > -MARGIN) & (t.hi90 < MARGIN)
+    t.to_csv(OUT / "tests.csv", index=False)
+    pd.set_option("display.width", 250)
+    print(t.round(3).T.to_string(), f"\ndone {time.time() - t0:.0f}s", flush=True)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--stage", choices=["power"], required=True)
-    ap.parse_args()
-    power()
+    ap.add_argument("--stage", choices=["power", "score"], required=True)
+    stage = ap.parse_args().stage
+    OUT.mkdir(parents=True, exist_ok=True)
+    power() if stage == "power" else score()
 
 
 if __name__ == "__main__":
