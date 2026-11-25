@@ -301,7 +301,8 @@ def main():
         base = P[(P["sample"] == st) & (P.pair == PRIMARY) & (P.readout == "14")]
         if base.empty:
             continue
-        mu0 = float(base.pooled_peak_h.iloc[0])
+        T0 = organ_table(units, st, PRIMARY, "14")       # baseline pooled like the leave-one-gene-out values (n-weighted)
+        mu0 = float(np.angle(np.sum(T0.n * np.exp(1j * T0.peak_h / HOURS))) * HOURS)
         for g in BASE.genes:
             rows = {}
             for u in units:
