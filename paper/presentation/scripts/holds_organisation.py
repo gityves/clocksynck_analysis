@@ -236,7 +236,7 @@ def central_loss(ax, t):
     ax.set_xlim(-0.6, 1.6)
     ax.set_ylim(0, 8.2)
     ax.set_ylabel("spread of organ peak times\nwithin a mouse [h]")
-    ax.set_title("central clock lost", fontsize=16, color=INK)
+    ax.set_title("central clock lost", fontsize=16, color=INK, pad=14)
     h = [Line2D([], [], ls="", marker="o", ms=6, color=col, label=lab) for lab, col in GENO.values()]
     ax.legend(handles=h, loc="lower left", frameon=False, fontsize=11, handletextpad=0.2, labelspacing=0.3,
               borderaxespad=0.1)
