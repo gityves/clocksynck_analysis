@@ -11924,3 +11924,24 @@ stage).
 
 **Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A387_tumour_full_model/scripts/a387.py`
 (`--stage power|score`; via `paper/common/run.sh`, RUN_CAP_GB 30, at most 4 workers).
+
+### A387 power note (2026-11-25; `a387.py --stage power`, `output/power/{part1_power,part2_counts,part2_gate,part2_design,part2_power,part2_power_curve}.csv`; no clock target statistic computed)
+**Part 1 (complex-pooled pairing; A346 states).** Fibroblasts 93 patients / 16 cohorts, endothelium 101 / 14,
+epithelium 190 / 27. Pooling before the modulus removes the small-cohort bias: pairing-null mean 0.120 (fibroblasts,
+14 genes), 0.096 (endothelium), 0.071 (epithelium), against 0.41 / 0.36 / 0.36 for the A346 mean of moduli. MDE
+(2.49 SD) 0.164 / 0.161 (fibroblasts, 14 / core), 0.125 / 0.126 (endothelium), 0.092 / 0.096 (epithelium): all
+<= 0.25, **H387.1 decidable**. Companions on the real pairing, q95 14 / core: matched 0.404 / 0.415 (fibroblasts),
+0.438 / 0.469 (endothelium), 0.339 / 0.356 (epithelium); narrow responsive 0.541 / 0.511, 0.621 / 0.640, 0.357 / 0.351;
+broad 0.312 / 0.350, 0.406 / 0.432, 0.280 / 0.281. Analytic 90 % half-width of the pooled phase: 1.47 h (fibroblasts),
+1.41 h (endothelium) at R_C 0.3; 0.80 / 0.77 h at 0.5: **H387.2 decidable if R_C >= about 0.3**, read as registered
+(straddling the bound: "offset not resolved").
+**Part 2 (full model).** Pooled table: 34 A227 cohorts; patients with a host (any normal anchor): tumour fibroblasts 116
+(21 cohorts), endothelium 135 (24), malignant 96 (17). **G387 passes on the anchors** on both readouts (220 patients,
+3 anchor pairs; p_pairing 0.001, p_acrophase 0.001; clock share 0.648 vs null 0.115 on 14 genes, 0.748 vs 0.158 on the
+core loop). Blind simulated power (200 data sets per point; null threshold = q95 of the simulated coupling at c 0.02):
+MDE of c (power >= 0.8, grid step 0.1) 0.1-0.2 for every target, readout and |z| in {0.5, 1}: **H387.3 decidable**
+against its null. The matched-companion threshold of H387.3 is computed at scoring only (Part 2 companions not run
+here), so the H387.3 power against companions is not known in advance. Expected 90 % offset half-width at c 0.5:
+0.46-0.62 h (14 genes), 0.53-0.71 h (core): **H387.4 decidable**. The simulated null threshold stands in for the
+registered coupling permutation p in this note only; scoring uses the registered permutation p.
+**Decision.** All hypotheses decidable; the single scoring run proceeds as registered.
