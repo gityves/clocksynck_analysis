@@ -614,8 +614,10 @@ loudness is shared across a person's tissues (core loop), all fast deaths and vi
 against 200 matched (light grey) and 200 stress-responsive (dark grey) gene sets. B. how large the shared loudness is
 (cv2), same sets, all fast deaths. E (third panel). the clock's pairwise leverage under controls for batch, collection
 centre, cell-type markers and the main expression axes, against the matched sets' 95th percentile under the same
-control (A375). D (fourth panel). standardised effects on the person's scale (log host radius, 14 genes, A360) with 90 % intervals; black:
-interval excludes 0.
+control (A375). D (fourth panel). effect on the person's shared loudness (log host radius; standardised coefficient,
+90 % intervals; A360): glucocorticoid-target state on 14 genes and on the core loop (A361) with the same coefficient for
+200 matched and 200 stress-responsive gene sets (median, 5-95 %), immediate-early state, RIN, ischaemic time (number of
+tissues and time of death in the model, not shown; user 2026-11-25: wording and units shared with A-B).
 
 **Tags:** A336 part 2 registered (core loop blind); A367 registered (blind; H367.1 at power 0.775 by the user's
 decision); A361, A362, A363 registered; A366, A368 registered (living); A312, A360 registered; cv2 comparison post hoc.
@@ -646,7 +648,9 @@ decision); A361, A362, A363 registered; A366, A368 registered (living); A312, A3
 
 **Source:** `exploratory/A336_two_readouts/output/{person_gtex,person_gtex_companions}.csv`;
 `exploratory/A367_hardy_agonal/output/{tests,companions,gc}.csv`; `exploratory/A312_elasticity/output/{tissues,calib_level}.csv`;
-`exploratory/A358_A360_gain_sources/output/a360_coefficients.csv`; `exploratory/A368_muther_radial/output/tests.csv`;
+`exploratory/A358_A360_gain_sources/output/a360_coefficients.csv`;
+`exploratory/A361_A363_volume_mechanism/output/{systemic_tests,systemic_companions}.csv`;
+`exploratory/A368_muther_radial/output/tests.csv`;
 `exploratory/A364_living_volume/output/{posthoc_clock,posthoc_global}.csv`;
 `docs/results_preliminary.md` A312, A336, A360-A363, A366-A370, the size note and the post hoc skin entry.
 
@@ -663,7 +667,7 @@ Section 4 asks what sets the transfer and the organ's place in time. Source: `do
 | 4.2 The human muscle clock has inertia: 3.5 days into a 12 h shift it has moved 4 h, its outputs already follow | **new** (below): core loop 4 h earlier, excursion 0.38; outputs 11.6 h | A257, A261, A335 |
 | 4.3 When the body no longer reads the hour, the organ arrangement holds; only brain death moves it (former 3.last) | **new** (below) | A27, A293, A314, A317, A374 |
 | 4.3b Intensive care quiets the clocks; brain death keeps their amplitude | **new** (below) | A315, A335, A349 |
-| 4.4 A systemic glucocorticoid-like state quiets the body's clocks and displaces some organs | **new** (below) | A357, A359, A360, A361 |
+| 4.4 A systemic glucocorticoid-like state displaces some organs' clocks from the body's time | **new** (below; half slide) | A357, A359 |
 | 4.5 What sets an organ's gain | drive coherence (descriptive), reception, person volume; jet lag (in-house, to come) | registered 2026-11-24 |
 
 ## 4.1 Organ clocks run on their own; drives keep them in phase: removing a drive costs little, conflicting drives cost amplitude
@@ -929,38 +933,35 @@ contrast stays the pair-phase rho on slide 4.3.
 **Source:** `presentation/output/organs/couplings_{fast,slow,ventilated,brain_death}.csv`;
 `presentation/output/pair_phases/pairs.csv`; `exploratory/A317_braindeath_confirm/output/posthoc_loto.csv`; `docs/results_preliminary.md` A317 post hoc note.
 
-## 4.4 A systemic glucocorticoid-like state quiets the body's clocks and displaces some organs
+## 4.4 A systemic glucocorticoid-like state displaces some organs' clocks from the body's time
+
+(User, 2026-11-25: the clock-volume panel moved to slide 3.5 D, where its agonal caveat (A367) already stands; 4.4 keeps
+the organ panel, half slide.)
 
 **Bullets**
-1. People with a higher glucocorticoid-target state have quieter clocks across their organs: standardised
-   coefficient -0.235 (90 % -0.352 to -0.109; partial R^2 0.061, p 0.0006, 237 fast deaths; A360), -0.184 on the core
-   loop (-0.297 to -0.063), below all 200 matched and all 200 stress-responsive gene sets (A361).
-2. Not sample quality: RIN and ischaemic time together explain a partial R^2 of 0.005 (p 0.53; A360 H360.2).
-3. The same person-level state explains a small, clock-specific part of each organ's departure from the body's clock:
-   median R^2 0.027 against 0.008 for matched genes (A357 H357.2), above the organ's own matched 95th percentile in 6
-   of 25 organs, most in skeletal muscle (0.195), then liver (0.088), oesophago-gastric junction, both skins and
-   pituitary.
-4. Louder organs do not read this state more strongly (A359 H359.1 fail, rho 0.20).
+1. The person's glucocorticoid-like state, read from the person's other organs, explains a small, clock-specific part
+   of each organ's departure from the body's clock: median R^2 0.027 against 0.008 for matched genes (A357 H357.2).
+2. Above the organ's own matched 95th percentile in 6 of 25 organs, most in skeletal muscle (0.195), then liver
+   (0.088), oesophago-gastric junction, both skins and pituitary.
+3. Louder organs do not read this state more strongly (A359 H359.1 fail, rho 0.20).
+4. The same state goes with a quieter shared clock (slide 3.5 D), most likely agonal (A367).
 
-**Figure:** `figures/systemic_state/systemic_state.png` (`scripts/systemic_state.py`; wide). A. effect of the person's
-states and technical terms on the person's clock volume, with matched and stress-responsive companions for the
-glucocorticoid rows. B. per organ, R^2 of its departure on the person's state, against its matched 95th percentile.
+**Figure:** `figures/systemic_state/systemic_state.png` (`scripts/systemic_state.py`; half). Per organ, R^2 of its
+departure on the person's state, against its matched 95th percentile; organ-system colours.
 
-**Tags:** A360 (H360.1 pass, H360.2 fail), A361 (H361.1 pass, core loop blind), A357 (H357.2 pass; H357.1 not scored,
-not powered), A359 (H359.1 fail); display post hoc (user, 2026-11-25).
+**Tags:** A357 (H357.2 pass; H357.1 not scored, not powered), A359 (H359.1 fail); display post hoc (user, 2026-11-25).
 
 **Caveats (speaker notes)**
 - Deaths: an acute (agonal) glucocorticoid surge and a chronic state are not separated.
+  A357 pooled Hardy 1 and 2; the agonal split of A367 was not done for the departures (Hardy 1: 34 donors).
 - The state is a glucocorticoid-target gene score of the person's other organs (correlation with the person factor
   0.77), not measured cortisol.
-- Small effects: about 6 % of the person volume and about 3 % of an organ's departure (up to 20 % in muscle).
+- Small effect: about 3 % of an organ's departure (up to 20 % in muscle).
 - Organs differing in how strongly they read the state is descriptive: the heterogeneity test (H357.1) was not
   powered. Adrenal, kidney and stomach have wide matched ranges (few donors), so their values are not read.
-- 14 genes against core loop (-0.235 vs -0.184; difference -0.052, 90 % -0.116 to +0.016): not attributed to PER1,
-  PER2 and NR1D1 (no gene-drop null for this coefficient).
+- The core-loop departure is explained at least as well (median R^2 0.034; A357 descriptive).
 - Immediate-early reception tracks gain (rho 0.44, p 0.016; A359 companion, not a hypothesis): a lead only.
 - Link to 4.3: both ventilated groups are glucocorticoid-exposed (A136) and their clocks are quieter (4.3b).
 
-**Source:** `exploratory/A358_A360_gain_sources/output/{a360_coefficients,a360_tests,a359_tests}.csv`;
-`exploratory/A361_A363_volume_mechanism/output/{systemic_tests,systemic_companions}.csv`;
-`exploratory/A357_signal_departure/output/score_tissues.csv`; `docs/results_preliminary.md` A357, A359-A361.
+**Source:** `exploratory/A357_signal_departure/output/{score_tests,score_tissues}.csv`;
+`exploratory/A358_A360_gain_sources/output/a359_tests.csv`; `docs/results_preliminary.md` A357, A359, A367.

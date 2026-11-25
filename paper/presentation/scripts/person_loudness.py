@@ -11,12 +11,17 @@ B. How large the shared loudness is (cv2: shared squared coefficient of variatio
    deaths, core loop (post hoc size note): the clock is not above random genes.
 (Elasticity panel removed 2026-11-24 (user): every organ follows the scale nearly in proportion, A312, is stated in
    the speaker notes; `elasticity()` kept for a backup slide.)
-D. What tracks the person's scale (A360, registered; H360.1 pass, H360.2 fail): standardised coefficients of the log
-   host radius (14 genes) with donor-bootstrap 90 % intervals, 237 fast-death donors.
+D. What tracks the person's shared loudness (A360, registered; H360.1 pass, H360.2 fail; A361, core loop, H361.1 pass):
+   standardised coefficients of the log host radius with donor-bootstrap 90 % intervals, 237 fast-death donors;
+   glucocorticoid-target state on 14 genes and on the core loop, with the same coefficient for 200 matched (light grey)
+   and 200 stress-responsive (dark grey) gene sets (median, 5-95 %); immediate-early state, RIN and ischaemic time
+   (14 genes). Number of tissues and time of death are in the model, not shown (`systemic_state.volume`; the earlier
+   `tracks` display, all terms, is kept for a backup).
 
 Data: exploratory/A336_two_readouts/output/{person_gtex,person_gtex_companions}.csv;
 exploratory/A367_hardy_agonal/output/{tests,companions}.csv; exploratory/A312_elasticity/output/{tissues,calib_level}.csv;
-exploratory/A358_A360_gain_sources/output/a360_coefficients.csv; exploratory/A375_scale_confounds/output/tests.csv.
+exploratory/A358_A360_gain_sources/output/a360_coefficients.csv;
+exploratory/A361_A363_volume_mechanism/output/{systemic_tests,systemic_companions}.csv; exploratory/A375_scale_confounds/output/tests.csv.
 GTEx aggregates only.
 Output: presentation/figures/person_loudness/person_loudness.{svg,png} (wide).
 
@@ -31,6 +36,7 @@ from matplotlib.lines import Line2D
 
 import paperfig as pf
 from _systems import COLOR, gtex_system
+from systemic_state import volume
 
 PAPER = Path(__file__).resolve().parents[2]
 EXP = PAPER / "exploratory"
@@ -148,7 +154,10 @@ def main():
     gs, gcs = size(lay.axes["B"])
     lay.axes["B"].legend(handles=hd, loc="lower left", frameon=False, fontsize=8, handletextpad=0.5, handlelength=1.2)
     ctl = controls(lay.axes["E"])
-    co = tracks(lay.axes["D"])
+    co = volume(lay.axes["D"], pd.read_csv(EXP / "A358_A360_gain_sources/output/a360_coefficients.csv"),
+                pd.read_csv(EXP / "A361_A363_volume_mechanism/output/systemic_tests.csv"),
+                pd.read_csv(EXP / "A361_A363_volume_mechanism/output/systemic_companions.csv"),
+                xlabel="effect on the person's\nshared loudness\n[standardised coefficient]")
     fig = lay.finalize()
     print("GTEx core", round(g.leverage, 3), "matched q95", round(g.matched_q95, 3), "responsive q95", round(g.responsive_q95, 3))
     print("Hardy 1 core", round(h.lev_h1, 3), "matched q95", round(h.matched_q95_h1, 3), "responsive q95", round(h.responsive_q95_h1, 3))

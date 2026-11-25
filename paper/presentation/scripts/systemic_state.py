@@ -1,7 +1,8 @@
-"""Slide figure (results, drives, 4.4): a systemic glucocorticoid-like state quiets the body's clocks and displaces some
-organs.
+"""Slide figure (results, drives, 4.4): a systemic glucocorticoid-like state displaces some organs' clocks from the body's
+time.
 
-GTEx fast deaths; aggregates only.
+GTEx fast deaths; aggregates only. One panel (B below; half slide). `volume` (A) is drawn on slide 3.5, panel D
+(user, 2026-11-25: the volume link belongs to 3.5, with its agonal caveat, A367).
 A. Person clock volume (log host radius from all tissues, 237 persons) regressed on the person's systemic states and on
    technical terms (A360, registered; number of tissues and time of death in the model, not shown): standardised
    coefficients with 90 % intervals. Glucocorticoid-target state on the 14 clock genes (A360) and on the core loop
@@ -15,7 +16,7 @@ Status: A360 H360.1 pass, A361 H361.1 pass (core loop blind), A357 H357.2 pass; 
 2026-11-25).
 Data: exploratory/A358_A360_gain_sources/output/a360_coefficients.csv; exploratory/A361_A363_volume_mechanism/output/
 {systemic_tests,systemic_companions}.csv; exploratory/A357_signal_departure/output/score_tissues.csv.
-Output: presentation/figures/systemic_state/systemic_state.{svg,png} (wide).
+Output: presentation/figures/systemic_state/systemic_state.{svg,png} (half).
 
     python scripts/systemic_state.py
 """
@@ -46,7 +47,8 @@ SHORT = {"Adipose - Subcutaneous": "fat, subcutaneous", "Adipose - Visceral (Ome
          "Stomach": "stomach", "Thyroid": "thyroid"}
 
 
-def volume(ax, coef, tests, comp):
+def volume(ax, coef, tests, comp, xlabel="effect on the person's shared\nloudness [standardised coefficient]"):
+    """Standardised effects on the person's clock volume (log host radius; A360, A361) with companions."""
     c = coef[coef.model == "registered"].set_index("term")
     t = tests.set_index("test").loc["H361.1"]
     rows = [("glucocorticoid state\n14 clock genes", c.loc["gc", "std_coef"], c.loc["gc", "lo90"], c.loc["gc", "hi90"],
@@ -71,7 +73,7 @@ def volume(ax, coef, tests, comp):
     ax.set_yticks(range(len(rows)), [r[0] for r in rows])
     ax.tick_params(axis="y", length=0)
     ax.set_ylim(len(rows) - 0.5, -0.6)
-    ax.set_xlabel("effect on the person's clock volume\n[standardised coefficient]")
+    ax.set_xlabel(xlabel)
     return pd.DataFrame(out)
 
 
@@ -90,23 +92,16 @@ def departure(ax, t):
 def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
-    coef = pd.read_csv(EXP / "A358_A360_gain_sources/output/a360_coefficients.csv")
-    tests = pd.read_csv(EXP / "A361_A363_volume_mechanism/output/systemic_tests.csv")
-    comp = pd.read_csv(EXP / "A361_A363_volume_mechanism/output/systemic_companions.csv")
     tis = pd.read_csv(EXP / "A357_signal_departure/output/score_tissues.csv")
-    lay = pf.Layout.slide("AxB", kind="wide", col_ratios=[1, 0.25, 1], blank=("x",))
-    a = volume(lay.axes["A"], coef, tests, comp)
+    lay = pf.Layout.slide("B", kind="half")
     departure(lay.axes["B"], tis)
     present = {gtex_system(x) for x in tis.tissue}
-    h = [Line2D([], [], ls="", marker="o", ms=7, color=CS, label="clock genes"),
-         Line2D([], [], color=MATCHED, lw=2.2, label="matched genes (A: 5-95 %, B: 95th pct)"),
-         Line2D([], [], color=RESPONSIVE, lw=2.2, label="stress-responsive genes (5-95 %)")]
+    h = [Line2D([], [], color=MATCHED, lw=2.2, label="matched genes, 95th pct")]
     h += [Line2D([], [], ls="", marker="o", ms=7, color=c, label=s) for s, c in COLOR.items() if s in present]
-    lay.shared_legend("AxB", h, [x.get_label() for x in h], side="bottom", ncol=4, fontsize=9.5, handletextpad=0.3,
+    lay.shared_legend("B", h, [x.get_label() for x in h], side="bottom", ncol=3, fontsize=9.5, handletextpad=0.3,
                       columnspacing=1.0)
     fig = lay.finalize()
     pd.set_option("display.width", 200)
-    print(a.round(3).to_string(index=False))
     print(tis[["tissue", "r2_sig", "r2_matched_q95"]].sort_values("r2_sig", ascending=False).round(3).to_string(index=False))
     print("median R2", round(tis.r2_sig.median(), 3), "median matched median", round(tis.r2_matched_median.median(), 3),
           "above own q95:", int((tis.r2_sig > tis.r2_matched_q95).sum()), "of", len(tis))
