@@ -12197,3 +12197,14 @@ Tumour arm unchanged (0.65 h, not decidable: H389.3 descriptive). Companions (ma
 central 90 % of the pooled normal endothelial-fibroblast offsets is -0.81 to +0.80 h (14 genes), -0.74 to +0.74 h (core
 loop), median -0.06 / +0.04 h. **Decision:** one scoring run; H389.1 and, if it passes, H389.2 scored as registered; the
 rest descriptive.
+
+### A389 note 2 (2026-11-25, POST HOC, after scoring; on the user's question why random genes would be "more advanced"): companion comparison on standardised offsets
+The registered companion condition (clock offset outside the central 90 % of the matched sets' pooled offsets) compares
+a precise estimate (clock pairing R 0.5-0.8) with the scatter of imprecise ones (matched sets have no rhythm: their pair
+phase is poorly defined), while the concern of the pair-phase rule is a systematic same-person offset, i.e. a companion
+centre away from 0 (observed medians -0.06 / +0.04 h). Post hoc check, not replacing the H389.1 verdict: for the clock and
+each matched set, per organ the offset and its analytic SE (sqrt((1 - R^2) / (2 n R^2)), R and n of that set and organ),
+pooled over the same organs by inverse variance; z = pooled offset / pooled SE. Reported: the clock's z, the matched
+sets' z distribution (median, central 90 %), the share of sets with |z| >= |z_clock|, and the clock offset minus the
+companion median with the clock's interval; normal and tumour arms, 14 genes and core loop. Code:
+`paper/exploratory/A389_class_phase_order/scripts/a389_note2.py`.
