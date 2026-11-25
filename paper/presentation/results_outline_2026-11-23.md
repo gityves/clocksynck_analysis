@@ -911,6 +911,11 @@ is a post hoc display quantity (A257 erratum, 2026-11-25).
   moved towards behaviour cannot be read from the sign.
 - 14 genes against core loop (2.7 vs 4.1 h; 0.56 vs 0.38): not attributed to PER1, PER2 and NR1D1 (no gene-drop null;
   precision or the removed genes).
+- Panel B spread (post hoc, descriptive, 2026-11-25): per-subject shifts 0.7-9.3 h (SD 2.5 h). If every man had the
+  same true shift, with the observed between-subject scatter of the changes taken as noise, the SD would be 3.3 h
+  (5-95 % 1.9-4.8): the spread is what measurement noise gives, individual differences are not resolved. The
+  misaligned change is small (median |dm| 1.9 against a scatter of about 1.1 per component), so its angle is noisy.
+  Read B for direction (all 11 earlier), not for individual sizes.
 - The group amplitude (0.38) is below the median subject (0.47): subjects shift by different angles, and averaging
   vectors with different directions shrinks them.
 - Erratum: the earlier "about a third" (14 genes) and "about half" (core) came from R / cos s, which assumed the aligned
