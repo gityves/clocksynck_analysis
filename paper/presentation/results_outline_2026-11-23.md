@@ -1026,7 +1026,8 @@ departure on the person's state, against its matched 95th percentile; organ-syst
    +0.019, 90 % -0.021 to 0.060; obesity +0.004, -0.081 to 0.089; A164) and their loudness does not change relative to
    other organs (T2D -0.03, detection limit 0.33 on the log z2 ratio; A306).
 3. Hypertension, ischaemic heart disease, COPD, depression and smoking: body-wide coupling equivalent within +-0.05
-   (A233, five passes); no reordering of organs; heart and arteries within about 0.4 h. Lung and brain readouts are
+   (A233, five passes); no reordering of organs; hypertension organs within 0.45 h (-0.17 h, 90 % -0.43 to 0.10),
+   ischaemic heart disease within about 1.1 h (-0.20 h, -1.11 to 0.72). Lung and brain readouts are
    weak (peak-time detection limits 1.5 h and 3.1 h; COPD and depression coupling not decidable at the module).
 4. The one suggestive signal: smokers' lung is quieter (log ratio -0.51, not powered, detection limit 0.70; A306).
 
