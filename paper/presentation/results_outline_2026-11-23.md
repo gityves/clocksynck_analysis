@@ -1029,15 +1029,21 @@ departure on the person's state, against its matched 95th percentile; organ-syst
    (A233, five passes); no reordering of organs; hypertension organs within 0.45 h (-0.17 h, 90 % -0.43 to 0.10),
    ischaemic heart disease within about 1.1 h (-0.20 h, -1.11 to 0.72). Lung and brain readouts are
    weak (peak-time detection limits 1.5 h and 3.1 h; COPD and depression coupling not decidable at the module).
-4. The one suggestive signal: smokers' lung is quieter (log ratio -0.51, not powered, detection limit 0.70; A306).
+4. Across all 12 body tissues, cases' organs moved by at most 0.4-0.8 h relative to matched controls (A380; every
+   interval includes no movement): less than the spacing between organs (about 1 h) and far from brain death (at least
+   1.6 h). No condition moves the arrangement by a brain-death-sized amount (A379, upper bounds 0.22-0.53 against 0.62).
+5. The one suggestive signal: smokers' lung is quieter (log ratio -0.51, not powered, detection limit 0.70; A306).
 
 **Figure:** `figures/chronic_disease/chronic_disease.png` (`scripts/chronic_disease.py`; wide). Rows: seven conditions.
-A. coupling of the disease's own organs, case - control (d*); B. their peak time, case - control [h, + = later];
-C. their loudness relative to the companion organs (A306; three conditions). 90 % intervals; dashed: +-0.15 and +-1 h;
-grey ticks: detection limits; open: not powered.
+A. coupling of the disease's own organs, case - control (d*); B. how far the organs can have moved relative to
+matched controls (90 % compatibility interval of the organ scatter, 12 body tissues, A380), dotted: spacing between
+organs (1.02 h), shaded: brain death (at least 1.6 h, A374); C. loudness of the own organs relative to the companion
+organs (A306; three conditions). 90 % intervals; dashed: +-0.15; grey ticks: detection limits; open: not powered.
+(User, 2026-11-25: B replaces the module peak-time panel; its values stay in bullets 1 and 3.)
 
 **Tags:** A164 (H164.1-2 pass), A235 (H235.1 fail x2, equivalent within +-1 h), A233 (H233.c.1 pass x5, c.2-3 fail
-x5), A306 (five powered readouts not detected); display post hoc (user, 2026-11-25).
+x5), A306 (five powered readouts not detected), A379 (H379.1 fail x7, H379.2 pass x7), A380 (registered interval),
+A381 (H381.1 fail; post hoc in motivation, speaker notes only); display post hoc (user, 2026-11-25).
 
 **Caveats (speaker notes)**
 - Deaths; comorbidity not removed (hypertension with T2D, smoking with COPD); BMI imbalance in T2D fast deaths.
@@ -1047,6 +1053,10 @@ x5), A306 (five powered readouts not detected); display post hoc (user, 2026-11-
   detected (A336); the A233 nulls hold.
 - Unequal host spread biases group contrasts up to the equivalence bound (A258); contrasts here are at a common spread
   (d*) or relative to companion organs.
+- Arrangement scale (A379): on the brain-death statistic, obesity (D_rho 0.22, p 0.054, Holm 0.38), T2D (0.16) and
+  COPD (0.18) lean towards change, not significant; against their own controls COPD is within 0.4 h and obesity and T2D
+  within 0.8 h (A380). Pooled metabolic contrast not detected (A381, p 0.16; post hoc in motivation). The A379 arm
+  levels are not on the brain-death scale (mixed death types, reduced references).
 - Ageing (mouse: organs desynchronise): slide 3.6 (A231, A373).
 - Why (interpretation, plan 11.2): in mouse, desynchrony needs conflicting drives (rest-phase feeding), which human
   chronic disease rarely imposes; where human drives conflict, time moves (night shift, 4.2) and locally in inflamed
@@ -1056,4 +1066,6 @@ x5), A306 (five powered readouts not detected); display post hoc (user, 2026-11-
 **Source:** `exploratory/A164_gtex_metabolic_matched/output/a164_tests.csv`;
 `exploratory/A233_chronic_conditions/output/{score_tests,score_pooled}.csv`;
 `exploratory/A235_metabolic_offset/output/score_pooled.csv`; `exploratory/A306_disease_gain_departure/output/score_tests.csv`;
-`docs/results_preliminary.md` A164, A233, A235, A258, A306, A336.
+`exploratory/A379_disease_arrangement/output/tests.csv`; `exploratory/A380_disease_hours/output/intervals.csv`;
+`exploratory/A374_order_interval/output/intervals.csv`; `docs/results_preliminary.md` A164, A233, A235, A258, A306,
+A336, A374, A379-A381.

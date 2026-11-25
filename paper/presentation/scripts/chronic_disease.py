@@ -7,9 +7,11 @@ ischaemic heart disease (heart, coronary artery, aorta), COPD and smoking (lung)
 A. Coupling of the disease's own organs to the body's clock state, case minus control at a common host spread (module
    d*), 90 % interval; dashed: the registered equivalence bound +-0.15 (A164 H164.1-2 for diabetes and obesity; A233
    H233.c.3, not an equivalence test, for the others).
-B. Peak time of the disease's own organs, case minus control (module offset, drawn + = later: the clocksync offset
-   negated), 90 % interval; dashed: +-1 h. The mouse high-fat diet advances the liver by hours (A235: excluded).
-   Diabetes and obesity: A235 (A164 host, pooled); the others: A233.
+B. How far the organs can have moved relative to matched controls: 90 % compatibility interval of the organ scatter
+   (SD, h) from the arrangement of all 12 body tissues, cases against all their matched controls (A380, registered).
+   Dotted: the spacing between organs in fast deaths (median pair offset 1.02 h, A374); shaded: brain death, at least
+   1.6 h (A374, against fast deaths). Replaces the module peak-time panel (A233 / A235; user, 2026-11-25), whose values
+   stay in the speaker notes.
 C. Loudness of the disease's own organs relative to the companion organs (tibial nerve, both skins): module minus
    companion difference of the log z2 ratio (case over control), interval +-1.645 SD of the permutation null; grey
    tick: the MDE_80 on each side (A306; T2D, hypertension, smoking; smoking not powered, open). Other conditions not
@@ -17,7 +19,8 @@ C. Loudness of the disease's own organs relative to the companion organs (tibial
 
 Status: A164, A233, A235, A306 registered; display post hoc (user, 2026-11-25). GTEx aggregates only.
 Data: exploratory/A164_gtex_metabolic_matched/output/a164_tests.csv; exploratory/A233_chronic_conditions/output/
-score_pooled.csv; exploratory/A235_metabolic_offset/output/score_pooled.csv; exploratory/A306_disease_gain_departure/
+score_pooled.csv; exploratory/A235_metabolic_offset/output/score_pooled.csv; exploratory/A380_disease_hours/output/intervals.csv;
+exploratory/A374_order_interval/output/intervals.csv; exploratory/A306_disease_gain_departure/
 output/score_tests.csv.
 Output: presentation/figures/chronic_disease/chronic_disease.{svg,png} (wide).
 
@@ -78,6 +81,26 @@ def forest(ax, t, col, lo, hi, bound, xlabel, xlim):
     ax.tick_params(axis="y", length=0)
 
 
+def hours(ax, order):
+    t = pd.read_csv(EXP / "A380_disease_hours/output/intervals.csv").set_index("design")
+    ref = pd.read_csv(EXP / "A374_order_interval/output/intervals.csv")
+    ref = ref[ref.gene_set == "14 genes"].set_index("group")
+    bd = float(ref.loc["brain-dead organ donors", "lower_h"])
+    spacing = float(ref.loc["slow deaths (Hardy 4)", "median_abs_pair_offset_fast_h"])
+    xmax = 2.6
+    ax.axvspan(bd, xmax, color="#BBBBBB", alpha=0.25, lw=0, zorder=0)
+    ax.text(bd + 0.05, -0.45, f"brain death:\nat least {bd:.1f} h", fontsize=9, color=MUTED, va="top")
+    ax.axvline(spacing, color=MUTED, lw=0.8, ls=":", zorder=0)
+    for i, k in enumerate(order):
+        r = t.loc[k]
+        ax.plot([r.lower_h, r.upper_h], [i, i], color=CS, lw=4, solid_capstyle="butt", zorder=2)
+    ax.set_xlim(0, xmax)
+    ax.set_ylim(len(order) - 0.5, -0.5)
+    ax.set_xlabel("organs moved, relative to\nmatched controls [h]")
+    ax.tick_params(axis="y", length=0)
+    return t.loc[list(order), ["lower_h", "upper_h"]], bd, spacing
+
+
 def loudness(ax, g, order):
     for i, k in enumerate(order):
         if k not in g.index:
@@ -104,18 +127,19 @@ def main():
     forest(lay.axes["A"], t, "d_star", "d_lo", "d_hi", 0.15, "coupling of own organs,\ncase - control [d*]",
            (-0.45, 0.45))
     lay.axes["A"].set_yticks(range(len(t)), [ROWS[k] for k in t.index])
-    forest(lay.axes["B"], t, "peak_h", "peak_lo", "peak_hi", 1.0, "peak time of own organs,\ncase - control [h]",
-           (-4.6, 2.0))
+    hb = hours(lay.axes["B"], list(t.index))
     loudness(lay.axes["C"], g, list(t.index))
     for k in "BC":
         lay.axes[k].set_yticks(range(len(t)), [""] * len(t))
-    h = [Line2D([], [], color=MUTED, lw=0.8, ls="--", label="equivalence bound (±0.15, ±1 h)"),
+    h = [Line2D([], [], color=MUTED, lw=0.8, ls="--", label="equivalence bound (±0.15)"),
+         Line2D([], [], color=MUTED, lw=0.8, ls=":", label="spacing between organs"),
          Line2D([], [], color="#BBBBBB", lw=2, label="detection limit (80 % power)"),
          Line2D([], [], ls="", marker="o", ms=6, mfc="white", mec=CS, label="not powered")]
-    lay.shared_legend("ABC", h, [x.get_label() for x in h], side="bottom", ncol=3, fontsize=10, handletextpad=0.4)
+    lay.shared_legend("ABC", h, [x.get_label() for x in h], side="bottom", ncol=4, fontsize=10, handletextpad=0.4)
     fig = lay.finalize()
     pd.set_option("display.width", 200)
     print(t.round(3).to_string())
+    print(hb[0].to_string(), "brain death", hb[1], "spacing", round(hb[2], 2))
     print(g[["delta", "null_sd", "mde_80", "p", "p_holm", "verdict"]].round(3).to_string())
     print(pf.collisions(fig))
     pf.save(fig, OUT / "chronic_disease")
