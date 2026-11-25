@@ -8993,3 +8993,35 @@ R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsiv
 - No stop rule fires: H378.1 and H378.2 can be scored. The A378 GTEx gains are read from the reference map (200 boots).
 - Code: `exploratory/A378_core_shell_gain/scripts/a378.py --stage power`.
 <!-- src: paper/exploratory/A378_core_shell_gain/output/{power_tissues,power_contrasts}.csv -->
+
+## A378 (scored 2026-11-25; BLIND for the baboon trunk depots, every sheep gain and every GTEx part-1 ratio; one scoring run, seconds): place in the body does not set organ gain across species (H378.1 FAIL: core louder only in human); the GTEx squamous ratio is conserved in baboon, not in sheep forestomach, and the GTEx fat ratio is conserved in neither (H378.2 FAIL x2)
+
+| part | species | contrast | ratio core / shell (90 %) |
+|---|---|---|---|
+| 1 | human | aorta and coronary / tibial artery | 1.08 (1.00-1.17) |
+| 1 | human | suprapubic / lower-leg skin | 1.24 (1.09-1.40) |
+| 1 | baboon | abdominal / calf muscle | 1.40 (1.19-1.64) |
+| 1 | baboon | four trunk fats / subcutaneous fat | 0.84 (0.69-1.00) |
+| 1 | sheep | perirenal and caul / subcutaneous, tail, intermuscular fat | 1.13 (0.94-1.36) |
+| 1 | sheep | perirenal and caul / tail fat | 1.26 (0.97-1.63) |
+| 1 | species means | human / baboon / sheep | 1.16 (1.07-1.25) / 1.08 (0.96-1.22) / 1.13 (0.94-1.36) |
+| 2 | human / baboon / sheep | squamous: oesophagus mucosa / skin (sheep: forestomach) | 2.61 (2.32-2.92) / 1.39 (1.21-1.59) / 0.98 (0.82-1.17) |
+| 2 | human / baboon / sheep | fat: visceral / subcutaneous | 1.59 (1.47-1.73) / 0.99 (0.84-1.17) / 1.16 (0.86-1.56) |
+
+- **H378.1 FAIL.** Only the human species mean shows the core louder (1.16), and it rests on the skin pair, which sun
+  exposure confounds (registered limit); the arteries are at the line (1.08, lower bound 1.00). In the baboon the two
+  pairs go opposite ways: abdominal muscle louder than calf muscle (1.40), trunk fat not louder than subcutaneous fat
+  (0.84, upper bound 1.00). Sheep 1.13, interval including 1.
+- **Wool (stated prediction).** Not readable as registered: the reading needed baboon and human above 1 with sheep near
+  1; the baboon is not above 1, and sheep (1.13) is not smaller than human (1.16).
+- **H378.2 squamous FAIL (partly conserved).** The baboon oesophagus is louder than its skin (1.39, interval excluding
+  1; the GTEx direction at about a third of the log size); the sheep forestomach is not (0.98). The sheep forestomach is
+  a keratinised squamous lining but not oesophagus: the class match is approximate (registered limit).
+- **H378.2 fat FAIL.** The GTEx visceral / subcutaneous ratio (1.59) is not seen in the baboon (0.99, omental against
+  subcutaneous, values seen before registration) nor in sheep (1.16, interval including 1).
+- **Reading (registered).** Place in the body (core against shell) does not set organ gain consistently across species:
+  the body-temperature lead for the organ factor is not supported at these sizes (MDE 1.12-1.32-fold). Of the GTEx
+  same-class ratios, the squamous one is partly conserved in a timed primate, the fat one is not: the human fat-depot
+  difference may be specific to humans, to death, or to GTEx sampling. The organ factor stays open.
+- Code: `exploratory/A378_core_shell_gain/scripts/a378.py --stage score`.
+<!-- src: paper/exploratory/A378_core_shell_gain/output/{contrasts,tests,tissues,sheep_fit_unread}.csv -->
