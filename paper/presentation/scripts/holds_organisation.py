@@ -17,14 +17,17 @@ arc.
 A. Mouse liver core clock (A297, registered, H297.1 fail above the interval) against ad libitum: feeding rhythm removed
    (Greenwell arrhythmic) and the night-restricted control (open), feeding inverted (Manella day feeding, Xin day- vs
    night-restricted; the calibration), and the state expected for removal if cues add, (1 + rho) / 2 (open diamonds, colour of removal). Colours are conditions (reference grey).
-B. Human muscle after three days of 12 h-shifted sleep, light, activity and meals (Wefers 2018, 11 men, biopsies at
-   07:00 and 19:00): the 07:00-to-19:00 change against the aligned condition, for the core clock (14 clock genes, A257
-   H257.2 shift, H257.3 size; blue) and the rhythmic outputs (orange; 1,587 reference-rhythmic genes, A261 H261.3).
+B. Mouse organs under inverted feeding (slide 4.2): Manella 2021 day-fed against ad libitum (liver, white fat, lung;
+   A322, circles) and Xin 2021 day- against night-restricted (liver, heart, kidney, visceral fat; A324, squares):
+   amplitude ratio (radius, 90 % library-bootstrap interval) and shift (angle) of each organ's clock-gene state.
+   Dashed: the pure mix of the two drives, (1 - b) + b exp(i Delta), a straight chord from the reference to the fully
+   shifted state (Delta fitted per dataset, 11.28 and 11.42 h); a pure mix puts every organ on it. Organ-system colours.
+(`muscle`, human muscle under 12 h-shifted behaviour, A257 / A261, is kept for slide 4.3.)
 
 Data: exploratory/A293_organisation_levels/output/part1/{groups,sets}.csv; results/figure_3/output/cues_lost/walltime_hosts.csv;
 exploratory/A314_vent_walltime/output/groups.csv;
-exploratory/A297_feeding_model/output/tests.csv; exploratory/A257_nightshift_muscle/output/score_tests.csv;
-exploratory/A261_nightshift_programs/output/programs.csv. GTEx aggregates only.
+exploratory/A297_feeding_model/output/tests.csv; exploratory/A322_conflicting_drives/output/{ratios,fit}.csv and
+xin/{ratios,fit}.csv. GTEx aggregates only.
 Output: presentation/figures/holds_organisation/{holds_organisation,cue_removal}.{svg,png}.
 
     python scripts/holds_organisation.py
@@ -34,10 +37,12 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from matplotlib import patheffects
 from matplotlib.lines import Line2D
 from matplotlib.patches import Patch
 
 import paperfig as pf
+from _systems import COLOR, gtex_system
 
 PAPER = Path(__file__).resolve().parents[2]
 EXP = PAPER / "exploratory"
@@ -177,6 +182,47 @@ def muscle(ax, core, outputs):
                       ("rhythmic outputs", OUTPUTS, "o", False)])
 
 
+ORGAN = {"Liver": ("liver", "Liver"), "WAT": ("white fat", "Adipose"), "Lung": ("lung", "Lung"),
+         "liver": ("liver", "Liver"), "heart": ("heart", "Heart"), "kidney": ("kidney", "Kidney"),
+         "VAT": ("visceral fat", "Adipose")}  # tissue -> (label, GTEx-style name for the system colour)
+DATASET = {"manella": ("o", "day-fed vs ad libitum"), "xin": ("s", "day- vs night-restricted")}
+# label offsets [pt] and alignment per (dataset, tissue), clear of the neighbouring points and intervals
+PLACE = {("manella", "Liver"): ((-9, 0), "right"), ("xin", "liver"): ((-9, 0), "right"),
+         ("manella", "WAT"): ((9, 0), "left"), ("xin", "VAT"): ((-9, 0), "right"),
+         ("manella", "Lung"): ((6, -12), "left"), ("xin", "heart"): ((0, 11), "center"),
+         ("xin", "kidney"): ((9, 0), "left")}
+
+
+def chord(ax, delta_h):
+    """Pure mix of the two drives, (1 - b) + b exp(i Delta): a straight chord from the reference to the shifted state."""
+    t = 2 * np.pi * delta_h / 24
+    ax.plot([0, np.sin(t)], [1, np.cos(t)], color=MUTED, lw=1.0, ls="--", zorder=1)
+
+
+def organs(ax, tabs):
+    """Mouse organs under inverted feeding (A322 Manella, A324 Xin): amplitude ratio and shift against the reference
+    arm, with the pure-mix chord of each dataset (an organ's expected state is the chord point at its weight)."""
+    clockface(ax, 1.2, (0.5, 1), "mouse organs")
+    vector(ax, 1, 0, REF)
+    for name, (t, fit) in tabs.items():
+        chord(ax, float(fit.delta_h.iloc[0]))
+        mk = DATASET[name][0]
+        for r in t.itertuples():
+            lab, g = ORGAN[r.tissue]
+            c = COLOR[gtex_system(g)]
+            vector(ax, r.amp_ratio, r.shift_h, c, None, (r.amp_lo90, r.amp_hi90), None, marker=mk, size=40)
+            off, ha = PLACE[(name, r.tissue)]
+            th = 2 * np.pi * r.shift_h / 24
+            ax.annotate(lab, (r.amp_ratio * np.sin(th), r.amp_ratio * np.cos(th)), xytext=off,
+                        textcoords="offset points", ha=ha, va="center", fontsize=10, color=c,
+                        path_effects=[patheffects.withStroke(linewidth=3, foreground="white")])
+    h = [Line2D([], [], ls="", marker="o", ms=8, color=REF, label="reference arm")]
+    h += [Line2D([], [], ls="", marker=m, ms=8, mfc=INK, mec=INK, label=lab) for m, lab in DATASET.values()]
+    h += [Line2D([], [], color=MUTED, lw=1.0, ls="--", label="pure mix of drives")]
+    ax.legend(handles=h, loc="center left", bbox_to_anchor=(1.0, 0.5), frameon=False, fontsize=11.5,
+              handletextpad=0.3, labelspacing=0.8)
+
+
 def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
@@ -191,13 +237,15 @@ def main():
 
     lay = pf.Layout.slide("AB", kind="wide", col_ratios=[1, 1])
     liver(lay.axes["A"], pd.read_csv(EXP / "A297_feeding_model/output/tests.csv"))
-    t257 = pd.read_csv(EXP / "A257_nightshift_muscle/output/score_tests.csv")
-    core = t257[t257.test.str.startswith("H257.2")].iloc[0].copy()
-    damp = t257[t257.test.str.startswith("H257.3")].iloc[0]
-    core["R"], core["R_lo"], core["R_hi"] = damp.R, damp.lo90, damp.hi90
-    prog = pd.read_csv(EXP / "A261_nightshift_programs/output/programs.csv").set_index("program")
-    muscle(lay.axes["B"], core, prog.loc["ALL_RHYTHMIC"])
+    a322 = EXP / "A322_conflicting_drives/output"
+    tabs = {"manella": (pd.read_csv(a322 / "ratios.csv"), pd.read_csv(a322 / "fit.csv")),
+            "xin": (pd.read_csv(a322 / "xin/ratios.csv"), pd.read_csv(a322 / "xin/fit.csv"))}
+    organs(lay.axes["B"], tabs)
     fig = lay.finalize()
+    for name, (t, fit) in tabs.items():
+        print(name, "Delta", fit.delta_h.iloc[0])
+        print(t[["tissue", "amp_ratio", "amp_lo90", "amp_hi90", "shift_h", "b", "model_amp", "model_shift_h",
+                 "mahalanobis"]].round(3).to_string(index=False))
     print(pf.collisions(fig))
     pf.save(fig, OUT / "cue_removal")
 

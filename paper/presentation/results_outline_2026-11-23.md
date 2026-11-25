@@ -661,7 +661,7 @@ Section 4 asks what sets the transfer and the organ's place in time. Source: `do
 |---|---|---|
 | 4.1 When the body no longer reads the hour, the organ arrangement holds; only brain death moves it (former 3.last) | **new** (below) | A27, A293, A314, A317, A374 |
 | 4.1b Intensive care quiets the clocks; brain death keeps their amplitude | **new** (below) | A315, A335, A349 |
-| 4.2 Removing a drive keeps amplitude, conflicting drives cost it | mouse liver without a feeding rhythm; daytime feeding across organs, weights and amplitude kept; one-line suggestive mention: organs that weigh one drive in mouse (liver, heart) are the loudest in human, the balanced lung the quietest, adipose the exception (A358, descriptive, rho -0.6, 5 organs, below its criterion) | A297, A322, A324, A358 |
+| 4.2 Removing a drive keeps amplitude, conflicting drives cost it | **new** (below): mouse liver without a feeding rhythm; daytime feeding across organs, weights and amplitude kept; one-line suggestive mention: organs that weigh one drive in mouse (liver, heart) are the loudest in human, the balanced lung the quietest, adipose the exception (A358, descriptive, rho -0.6, 5 organs, below its criterion) | A297, A322, A324, A358 |
 | 4.3 A behavioural shift moves the human clock | night shift, muscle core loop +4 h, amplitude cost | A257, A335 |
 | 4.4 A systemic signal read unequally by organs | glucocorticoid-like person state explains a small part of each organ's departure | A357 |
 | 4.5 What sets an organ's gain | drive coherence (descriptive), reception, person volume; jet lag (in-house, to come) | registered 2026-11-24 |
@@ -768,3 +768,44 @@ descriptive; amplitude display exp(Q* / 2) post hoc.
 **Source:** `exploratory/A335_review_batch/output/{a315_core,matched,equivalence}.csv`;
 `exploratory/A315_braindeath_gain/output/descriptive.csv`; `exploratory/A349_icu_limits/output/part2_tissues.csv`;
 `presentation/output/organs/couplings.csv` (gain); `docs/results_preliminary.md` A315, A335, A349.
+
+## 4.2 Removing a drive keeps a clock's amplitude; conflicting drives cost it
+
+**Bullets**
+1. Mouse liver without a feeding rhythm (Greenwell, 1/8 of the food every 3 h, 18 + 18 libraries) keeps 0.72 of its
+   amplitude (90 % 0.66-0.79) and moves +1.6 h; if cues added, removal would leave 0.15-0.29 (calibrated on inverted
+   feeding). H297.1 FAIL, above the interval: inputs set the liver clock's phase, the oscillator holds its amplitude
+   (A297).
+2. Inverted feeding moves each organ by its weight on the feeding drive: the liver almost fully (11.3-11.7 h), lung,
+   heart and kidney 1.6-2.5 h (A322, A324).
+3. Conflict costs amplitude, but not as a pure mix of the two drives: lung, heart and kidney keep 0.50-0.65, above the
+   mix (H322.1 rejected, Q 31.9, p 0.0005; H324.1 PASS, Q 185); visceral fat loses more (0.11; H324.2 FAIL). Adipose, the
+   organ with the most balanced weights, loses most in both datasets (white fat 0.32, visceral fat 0.11).
+4. Suggestive only: the organs that weigh one drive in mouse (liver, heart) are the loudest in human, the balanced lung
+   the quietest, adipose the exception (Spearman -0.6, 5 organs, below the registered -0.7; A358, "not seen").
+
+**Figure:** `figures/holds_organisation/cue_removal.png` (`scripts/holds_organisation.py`, `cue_removal`; wide). Clock
+faces: angle = phase shift against the reference arm (clockwise = later), radius = amplitude ratio; 90 % library-
+bootstrap intervals. A. mouse liver: night-restricted (control), feeding inverted (Manella, Xin), feeding rhythm removed
+(Greenwell), and the removal expected if cues add (open diamonds). B. mouse organs under inverted feeding: Manella
+day-fed vs ad libitum (circles: liver, white fat, lung) and Xin day- vs night-restricted (squares: liver, heart, kidney,
+visceral fat); dashed: the pure mix of the two drives, a straight chord from the reference to the fully shifted state
+(Delta 11.28 and 11.42 h). Organ-system colours.
+
+**Tags:** A297 H297.1 FAIL (registered, NOT BLIND for the shifts); A322 H322.1 rejected (NOT BLIND); A324 H324.1 PASS,
+H324.2 FAIL (BLIND for heart, kidney, visceral fat); A358 descriptive, below its criterion.
+
+**Caveats (speaker notes)**
+- On the chord, an organ's expected state is the point at its fitted weight b (liver 0.84 / 0.72, white fat 0.65, lung
+  0.37, heart 0.23, kidney 0.28, visceral fat 0.45); lung sits 26 Mahalanobis units above its point, kidney 148, heart 17;
+  visceral fat 19 below.
+- Different laboratories, strains and protocols; amplitudes are read in each dataset's own projector; Manella's
+  reference is ad libitum, Xin's night-restricted feeding. Xin visceral fat and Manella white fat are different depots.
+- Removal and inversion are mouse liver only for the removal arm; the cross-organ panel is inversion only.
+- A358 is one line, never evidence: the balance b(1 - b) spans only 0.17-0.25 over the 5 organs.
+- Human muscle under 12 h-shifted behaviour (the former panel B) is slide 4.3.
+
+**Source:** `exploratory/A297_feeding_model/output/{tests,arms}.csv`;
+`exploratory/A322_conflicting_drives/output/{ratios,fit,tests}.csv` and `xin/{ratios,fit,tests}.csv`;
+`exploratory/A358_A360_gain_sources/output/{a358_organs,a358_tests}.csv`; `docs/results_preliminary.md` A297, A322,
+A324, A358.
