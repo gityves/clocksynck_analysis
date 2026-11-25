@@ -9133,3 +9133,42 @@ matched-set q95 of the same cancer x compartment (200 sets); 14 genes / core loo
   keeps a clock-shaped structure across tumours, colorectal does not); descriptive, n 15-38.
 - Code: `exploratory/A387_tumour_full_model/scripts/a387_per_cancer.py`.
 <!-- src: paper/exploratory/A387_tumour_full_model/output/score/{per_cancer_tests,per_cancer_companions}.csv -->
+
+## A389 (scored 2026-11-25; extended normal arm partly NOT BLIND (9 of 10 atlas organs' pair offsets computed in A272 / A274), tumour arm BLIND; one scoring run, rerun once after a fix of the C1 baseline, values otherwise identical): endothelium peaks about 0.5 h before fibroblasts in human organs (interval excluding 0 on both readouts, the mouse sign), but inside the range that expression-matched gene sets reach: H389.1 FAIL on the companion condition; organs differ (Q p 0.025)
+
+Pairwise readout (A272 / A293), cross-moments summed per organ, random effects over organs (DerSimonian-Laird); peak
+time, + = endothelium later; 90 % intervals from 2,000 half-samples (organs) and the random-effects SE (pooled).
+
+| arm, readout | organs / donors | pooled endothelium minus fibroblast | matched-set band (central 90 %) | Q p | tau (90 %) |
+|---|---|---|---|---|---|
+| normal, 14 genes | 10 / 608 | -0.49 h (-0.82 to -0.16) | -1.71 to +1.23 | 0.025 | 0.43 h (0.13-1.00) |
+| normal, core loop | 10 / 608 | -0.51 h (-0.97 to -0.05) | -1.67 to +2.72 | 0.002 | 0.66 h (0.40-1.62) |
+| tumour, 14 genes (descriptive) | 9 / 319 | -0.26 h (-0.75 to 0.23) | -1.49 to +2.03 | 0.019 | 0.61 h |
+| tumour, core loop (descriptive) | 9 / 319 | -0.87 h (-1.32 to -0.42) | -1.57 to +1.44 | 0.46 | 0.00 h |
+
+- **H389.1 FAIL.** Mouse sign and interval excluding 0 on both readouts, but the pooled offset lies inside the central
+  90 % of the matched sets' pooled offsets (pooled with the clock's weights; with n weights, as in power note 2, the band
+  is -0.81 to +0.80 h and the clock is still inside): a gene set without a clock reaches offsets of this size, so the
+  order is not shown clock-specific. **H389.2** not read (conditional); heterogeneity is present (Q p 0.025 / 0.002).
+- **Per organ (14 genes):** lung -1.31 h (-1.95 to -0.66), kidney -1.18 (-1.88 to -0.48), optic nerve -1.05 (-1.64 to
+  -0.55), head and neck -0.66, colon -0.48, ileum -0.35, breast -0.17 (-0.50 to 0.16), heart +0.07, anterior eye +0.15,
+  pancreas +1.67 (-0.96 to 3.15); 7 of 10 with the mouse sign.
+- **Secondary pairs (normal, descriptive):** endothelium minus mural -0.66 h (14 genes, interval including 0), -1.34 h
+  (-2.18 to -0.51, core); mural minus fibroblast +0.54 / +0.57 h (intervals including 0).
+- **C1 (gene level).** Per-gene class offsets (gene loadings of both classes on the same host, 28 normal units): 10 of 14
+  genes and 9 of 11 core genes with the pooled sign (CRY2 and CIART opposite): passes the 2/3 rule. Leave-one-gene-out:
+  the largest shift of the pooled offset is 0.08 h (normal) and 0.18 h (tumour), none more than half the offset: passes.
+- **C2.** Lung atlas subtypes only (A272 pairs, not blind); not re-read.
+- **C3.** Endothelium / fibroblast amplitude ratio, median over units, 0.80 (normal) and 0.82 (tumour), the class gain of
+  A293 (1 / 1.26 = 0.79): no amplitude loss that would point to a mixture of shifted subpopulations.
+- **D389 (gene drop).** Normal 14 minus core on the same weights +0.25 h (0.03 to 0.48): the core loop shows the order more
+  strongly; the trio drop's shift lies at the 94th percentile of the 364 three-gene drops. PER1, PER2 and NR1D1 do not
+  carry the order (if anything they dilute it).
+- **Reading (registered).** No conserved cell-class phase order is shown clock-specifically: the endothelium of human
+  organs leans about 0.5 h earlier than the fibroblasts (the mouse direction, about a third to half of its size, now with
+  10 organs and an interval excluding 0, consistent across genes and without amplitude loss), but non-clock gene sets
+  pooled over the same organs reach offsets of that size, and organs differ (lung, kidney and optic nerve about 1 h;
+  breast, heart, anterior eye about 0). A lead, not a result; "timing is an organ property" (A293) stays the registered
+  reading, with the qualification that the lean is consistent in sign and gene-uniform.
+- Code: `exploratory/A389_class_phase_order/scripts/{a389,a389_score}.py`.
+<!-- src: paper/exploratory/A389_class_phase_order/output/score/{organs,pooled,companion_pooled,c1_genes,c3_amplitude,d389_gene_drop}.csv; output/power_extended/power.csv -->
