@@ -11447,3 +11447,26 @@ genome PCs)". One explains it: named on the slide as a candidate source of the p
 **Limits.** Pairwise leverage (single tissues) is noisier than the half-host leverage of A336 (values lower; only the
 variants are compared); genome PCs may absorb part of a genuine body-wide scale (conservative for the clock); batch
 restriction lowers donors per pair. Aggregates only.
+
+## A376 (2026-11-25, on the user's request "add the test with stress responsive gene sets" for the blood slide 3.1b; one run, descriptive tests with companions; **NOT BLIND**: the clock-gene rhythmicity percentiles of all 20 tissues (blood 52.2, testis 92.3, brain 90.8-99.96, five solid 99.5-99.96; post hoc entry 2026-11-03 and its 2026-11-25 addendum); the living-blood predictor gene lists (TimeSignature, BodyTime) read before registration; **BLIND**: every companion and glucocorticoid-gene value below (none computed)): does the time-of-death signal of GTEx whole blood sit in the glucocorticoid / stress-responsive layer rather than in the clock genes? **GTEx v10 fast deaths with recorded time of death: whole blood, testis, 13 brain regions, five solid tissues (the 20 tissues of `blood_composition_posthoc`)**
+
+**Statistic (`exploratory/A376_blood_layers/scripts/a376_blood_layers.py`).** Per tissue, as in `blood_composition.py`
+(log2-normalised counts, expressed genes mean log2 >= 3): per-gene cosinor R^2 on time of death; a gene set's
+rhythmicity = median over its genes of the gene's percentile among all expressed genes. Sets: the 14 clock genes
+(`P.gtex()` waveform); 200 expression-matched sets and 200 responsive sets (`clocksync.paired.pseudo_waveforms`,
+kinds "matched" and "responsive", seed 376); descriptive: the expressed glucocorticoid targets
+(`controls.GC_TARGETS`) as one set, and the same statistics after regressing out the blood-cell composition scores.
+**H376.1 (blood, the user's reading).** In whole blood the responsive sets rank above the clock genes: the clock
+genes' rhythmicity at or below the responsive sets' 5th percentile, and the responsive median above the matched sets'
+95th percentile. Both parts needed.
+**H376.2 (specificity companion, the other 19 tissues).** Where a clock is read, the clock genes rank above the
+responsive layer: clock rhythmicity above the responsive 95th percentile in at least 15 of the 19 tissues (brain
+regions counted one by one).
+**Readings.** H376.1 and H376.2 pass: "in blood the hour of death is carried by the glucocorticoid / stress-responsive
+layer, not by the clock genes; elsewhere the clock genes lead". H376.1 fails on its first part: blood carries little
+time in either layer (the composition reading stays weak). H376.2 fails: the responsive layer keeps the hour as well
+as the clock genes in many tissues, and blood is not singular in that respect (written as such).
+**Limits.** The responsive pool is small (about 25-30 genes expressed per tissue), so the 200 sets overlap and their
+spread understates the uncertainty of a fixed pool; time of death in fast deaths partly reflects agonal stress, which
+also moves these genes; blood R^2 values are low (top-100 time genes 0.021), so percentiles near the top are coarse.
+Aggregates only.
