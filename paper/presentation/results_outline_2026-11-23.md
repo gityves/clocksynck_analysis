@@ -728,7 +728,7 @@ systematic distortion as scatter (conservative).
 1. Ventilated donors' clocks are quieter: clock-specific amplitude 0.82 of fast deaths (Q* +0.404, above all 200
    matched sets), core 0.80; unchanged by age / sex matching (Q* +0.389, core +0.459) (A315 descriptive, A335).
 2. The loss rises with the organ's loudness on the reference map (Spearman 0.77 over 11 tissues, gain of slide 3.1,
-   post hoc; A349 registered z2: 0.82 with blood, descriptive): thyroid, oesophagus mucosa and heart lose most.
+   post hoc; A349, descriptive: 0.83 with blood on the scale-free S = z2 V, erratum to its z2 readout): thyroid, oesophagus mucosa and heart lose most.
 3. Coupling to the body's clock falls too, compared at a common host spread: median d* 0.08 over the 11 tissues, clear
    in thyroid (0.28, 90 % 0.18-0.38) and visceral fat (0.20, 0.06-0.32), and larger in louder organs (Spearman 0.79,
    post hoc; A349, descriptive).
