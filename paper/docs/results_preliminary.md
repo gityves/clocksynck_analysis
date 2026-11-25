@@ -8713,3 +8713,20 @@ Pairwise leverage (median over 268 tissue pairs with >= 40 donors; 234 with the 
 - Pairwise leverages are lower than A336's half-host value (single tissues, more noise); only variants are compared.
 - Code: `exploratory/A375_scale_confounds/scripts/a375_confounds.py`.
 <!-- src: paper/exploratory/A375_scale_confounds/output/{tests,pairs}.csv -->
+
+## A376 (scored 2026-11-25; BLIND for every companion and glucocorticoid-gene value; one run, 23 s): in post-mortem whole blood the stress-responsive layer does not carry the hour of death either (H376.1 FAIL); everywhere else the clock genes lead it (H376.2 PASS, 19 of 19)
+
+GTEx v10 fast deaths, 20 tissues; rhythmicity = median percentile of a set's genes among all expressed genes (cosinor
+R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsive pool 15-28 expressed genes).
+- **H376.1 FAIL (both parts).** Whole blood (212 donors): clock genes 52.2; responsive sets median 36.1 (q05 36.1, q95
+  47.1), below the clock genes and below the matched sets (median 52.4, q95 68.5). The 11 glucocorticoid targets as
+  one set: 37.6. After removing composition: clock 44.8, responsive median 38.2, glucocorticoid targets 48.5.
+- **H376.2 PASS.** The clock genes rank above the responsive 95th percentile in all 19 other tissues (clock 90.8 to
+  99.97; responsive medians 27.1 to 76.5).
+- **Reading (registered).** Blood carries little time of death in either layer: the composition reading stays weak.
+  The responsive layer does not track the hour of death in any tissue (its medians span the matched sets' range), so
+  this post-mortem test cannot speak to the living-blood signatures, whose glucocorticoid genes follow the living
+  cortisol rhythm (agonal stress may dominate these genes at death; registered limit).
+- Limits: small responsive pool, so the sets overlap (q05 equals the median in blood); low R^2 in blood.
+- Code: `exploratory/A376_blood_layers/scripts/a376_blood_layers.py`.
+<!-- src: paper/exploratory/A376_blood_layers/output/{tissues,tests}.csv -->
