@@ -8841,3 +8841,30 @@ R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsiv
   (A374 rule, at the case count and against the same reduced reference) is reported at scoring for this reason.
 - Code: `exploratory/A379_disease_arrangement/scripts/a379.py --stage power`.
 <!-- src: paper/exploratory/A379_disease_arrangement/output/power.csv -->
+
+## A379 (scored 2026-11-25; BLIND for every arm's arrangement value; one scoring run, after a first run crashed in its progress print before any value was printed or written): no chronic condition moves the organ arrangement detectably (H379.1 FAIL x7), and a change of the brain-death size is excluded for all seven (H379.2 PASS x7)
+
+| condition | cases | reference | pairs | rho cases / controls | D_rho | p (Holm) | upper 90 % | matched / responsive q95 | noise-only rho at n (5-95 %) |
+|---|---|---|---|---|---|---|---|---|---|
+| T2D | 123 | 49 | 57 | 0.056 / 0.217 | 0.160 | 0.163 (0.98) | 0.430 | 0.062 / 0.081 | 0.564 (0.144-0.754), n 24 |
+| obesity | 139 | 152 | 66 | 0.217 / 0.435 | 0.218 | 0.054 (0.38) | 0.441 | 0.090 / 0.147 | 0.643 (0.356-0.778), n 76 |
+| hypertension | 191 | 89 | 66 | 0.300 / 0.290 | -0.010 | 0.53 (1.0) | 0.222 | 0.055 / 0.127 | 0.655 (0.420-0.791), n 44 |
+| ischaemic heart disease | 90 | 90 | 66 | 0.462 / 0.420 | -0.041 | 0.60 (1.0) | 0.231 | 0.052 / 0.062 | 0.587 (0.345-0.749), n 45 |
+| COPD | 88 | 100 | 66 | 0.148 / 0.328 | 0.180 | 0.20 (1.0) | 0.525 | 0.064 / 0.065 | 0.647 (0.255-0.800), n 50 |
+| depression | 62 | 188 | 64 | 0.217 / 0.311 | 0.094 | 0.33 (1.0) | 0.443 | 0.055 / 0.095 | 0.686 (0.403-0.854), n 62 |
+| smoking | 199 | 93 | 66 | 0.376 / 0.439 | 0.064 | 0.27 (1.0) | 0.228 | 0.074 / 0.082 | 0.391 (0.107-0.614), n 46 |
+
+- **H379.1 FAIL x7.** No condition moves the arrangement beyond the relabelling null after Holm. Obesity is nearest
+  (D_rho 0.218, p 0.054, Holm 0.38; above both companion q95); T2D and COPD lean the same way (0.160, 0.180), not
+  significant. Descriptive only.
+- **H379.2 PASS x7.** The upper 90 % bound of D_rho (0.22 to 0.53) lies below the brain-death 0.621 in every
+  condition: a brain-death-sized change of the arrangement is excluded.
+- **Scale caveat.** Both arms of every condition read lower than fast deaths subsampled from the same reference (controls
+  0.22-0.44 against noise-only medians 0.39-0.69): the arms mix ventilated and fast deaths (ventilated organs are pulled
+  toward 0 / 12 h, A109, A377) and the references are reduced (49-188). D_rho is read within a condition; arm levels are
+  not on the A293 / A317 scale, and the brain-death margin is compared with D_rho only.
+- **Reading (registered: H379.1 fails, H379.2 passes).** No chronic condition rearranges the organs at a size brain death
+  does; slide 5.1 can state "brain death 0.62; every chronic condition below 0.22-0.53 (90 % upper bound)". The obesity,
+  T2D and COPD leans are not findings.
+- Code: `exploratory/A379_disease_arrangement/scripts/a379.py --stage score`.
+<!-- src: paper/exploratory/A379_disease_arrangement/output/{tests,companions}.csv -->
