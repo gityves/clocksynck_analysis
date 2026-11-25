@@ -8890,3 +8890,30 @@ R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsiv
   registered, with this noted.
 - Code: `exploratory/A380_disease_hours/scripts/a380_a381.py --stage power`.
 <!-- src: paper/exploratory/A380_disease_hours/output/power.csv -->
+
+## A380 / A381 (scored 2026-11-25; BLIND for every case-against-control value; one scoring run, 93 s): no chronic condition has moved its organs detectably relative to matched controls; the organs moved by at most 0.4-0.8 h (A380); the pooled metabolic contrast is not detected (H381.1 FAIL, p 0.159)
+
+| design | cases / controls | pairs | rho (cases vs controls) | 90 % compatible organ scatter |
+|---|---|---|---|---|
+| T2D | 123 / 307 | 66 | 0.862 | 0-0.8 h |
+| obesity | 139 / 139 | 66 | 0.845 | 0-0.8 h |
+| hypertension | 191 / 234 | 66 | 0.903 | 0-0.5 h |
+| ischaemic heart disease | 90 / 257 | 66 | 0.885 | 0-0.4 h |
+| COPD | 88 / 252 | 66 | 0.884 | 0-0.4 h |
+| depression | 62 / 186 | 64 | 0.684 | 0-0.8 h |
+| smoking | 199 / 202 | 66 | 0.910 | 0-0.5 h |
+| metabolic pooled (A381) | 129 / 148 | 66 | 0.799 | 0-1.0 h |
+
+- **A380 (registered readout).** Every interval includes no movement. Upper bounds 0.4-0.8 h, below the fast-death
+  arrangement scale (median pair offset about 1 h) and below the brain-death lower bound (at least 1.6 h, A374). The
+  A379 leans of COPD (D_rho 0.18) do not survive the direct comparison (at most 0.4 h); obesity and T2D allow up to
+  0.8 h.
+- **A381 H381.1 FAIL.** r 0.799 against a relabelling null median 0.845, one-sided p 0.159. The companion criterion was
+  ill-posed at registration: random gene sets carry no arrangement, so their r is low (matched q05 0.04, responsive
+  0.306) and a clock value cannot fall below it; it plays no role here since p fails. Post hoc in motivation, as
+  registered.
+- **Reading (registered).** Relative to matched controls, chronic disease moves the organs by at most about half an
+  hour (0.8 h for T2D, obesity and depression): smaller than the arrangement and far from brain death. With A379 (no
+  brain-death-sized change) and A233 (no reordering), the chronic-disease null now has a bound in hours.
+- Code: `exploratory/A380_disease_hours/scripts/a380_a381.py --stage score`.
+<!-- src: paper/exploratory/A380_disease_hours/output/{intervals,sim,a381_companions}.csv -->
