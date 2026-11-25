@@ -9025,3 +9025,19 @@ R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsiv
   difference may be specific to humans, to death, or to GTEx sampling. The organ factor stays open.
 - Code: `exploratory/A378_core_shell_gain/scripts/a378.py --stage score`.
 <!-- src: paper/exploratory/A378_core_shell_gain/output/{contrasts,tests,tissues,sheep_fit_unread}.csv -->
+
+## A383 / A384 power note (2026-11-25; one run, 31 min; tissue counts, analytic power, standard errors, timing; no slope, no correlation and no companion statistic computed or read): A383 decidable in all three species (parts 1 and 2); A384 H384.1 passes its gate (power 0.94), H384.2 (baboon-sheep alone) does not (0.75 < 0.8): reported, not scored as a test
+
+| species | tissues | part 1 power at rho 0.6 (matched / responsive threshold) | SE of b | MDE of 1 - b | companion fit |
+|---|---|---|---|---|---|
+| human | 26 | 0.993 / 0.851 (thresholds 0.169 / 0.438) | 0.074 | 0.183 | - |
+| baboon | 35 | 0.999 / 0.938 (0.122 / 0.391) | 0.110 | 0.274 | 13 s |
+| sheep | 35 | 0.999 / 0.938 (0.122 / 0.391) | 0.072 | 0.179 | 41 s |
+
+- A384: organs shared human-baboon 17, human-sheep 13, baboon-sheep 20; median SE of log gain 0.055 (human), 0.130
+  (baboon), 0.123 (sheep); true log-gain SD taken from GTEx (0.402, not blind). Power at latent correlation 0.6:
+  H384.1 0.944 (gate passed), H384.2 0.749 (below 0.8: the baboon-sheep rho is reported descriptively, not scored as a
+  test, as registered).
+- The baboon fit (200 animal bootstraps) is in `baboon_fit.csv`; read at this stage for SEs and counts only.
+- Code: `exploratory/A383_species_organisation/scripts/a383_a384.py --stage power`.
+<!-- src: paper/exploratory/A383_species_organisation/output/{power_a383,power_a384,organs_a384}.csv -->
