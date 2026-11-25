@@ -12208,3 +12208,54 @@ pooled over the same organs by inverse variance; z = pooled offset / pooled SE. 
 sets' z distribution (median, central 90 %), the share of sets with |z| >= |z_clock|, and the clock offset minus the
 companion median with the clock's interval; normal and tumour arms, 14 genes and core loop. Code:
 `paper/exploratory/A389_class_phase_order/scripts/a389_note2.py`.
+
+## A391 (2026-11-26, on the user's instruction to settle the remaining cancer tests ("okay I will leave you work 9h, can you settle these remaining points ?", after the list: 1 proliferation at the cell level, 2 single-cell accounting of the bulk gain loss); staged: power (counts, proliferation labels, permutation and companion nulls, simulated power; no arm contrast of a clock quantity), then one scoring run; **NOT BLIND**: A304 (bulk: gain ratio 0.63 high vs low proliferation, departure not raised), A387 pooled values (tumour fibroblasts c 0.40 / 0.44, loudness ratio 0.69 / 0.80; endothelium 0.48 / 0.56, 0.82 / 1.02; cancer cells 0.03 / 0.10, 0.32 / 0.64) and its per-cancer values; **BLIND**: every quantity split by proliferation (never computed), the single-cell prediction of the bulk gain ratio): does proliferation quiet the tumour's stroma, or does the bulk gain loss come from the composition of the tumour?
+
+**Why.** In bulk, proliferating tumours express the patient's time at 0.63 of the gain of slow tumours without drifting
+from it (A304). Bulk cannot say whether the clock-carrying cells (stroma) are quieter in proliferating tumours, or whether
+a larger share of the tumour's clock RNA comes from quiet cancer cells (A305: not powered in bulk). A387 measures each
+compartment against the patient's normal stroma, so the two can be separated.
+
+**Data.** The A387 Part 2 table (34 cohorts; host = the patient's normal fibroblasts, endothelium, mural; strata cohort x
+chemistry). **Proliferation index** per patient: mean of the within-cohort z-scored log CPM of the Hallmark G2M genes,
+clock genes removed (the A127 score), in the patient's malignant (or tumour-epithelium) pseudobulk, from the A388
+genome-wide tables (A388 labels; patients without one are left out). Arms: high vs low, split at the median within
+cohort (cohorts with >= 4 labelled patients); the arms keep the cohort balance by construction.
+
+**Hypotheses** (core loop decides wording; each also on 14 genes; contrast on the A387 host, `Dataset.contrast`,
+host_prior "arm", permutations of the labels within cohort, 2,000, seed [391, 1]).
+- **H391.1 (primary): tumour fibroblasts are quieter in proliferating tumours:** high minus low log z2 ratio (the
+  loudness of the compartment's shared rhythm) < 0, one-sided permutation p < 0.05, and below the 5th percentile of the
+  same contrast for 200 expression-matched sets (A387 sets and genome tables, the same permutations).
+- **H391.2 (secondary): the same for tumour endothelium** (Holm with H391.1 within readout).
+- **Host check:** log V ratio of the arms (normal stroma host spread) with its p; if p < 0.05 the loudness readout is read
+  with that caveat (CLAUDE covariate rule: the arms' host spreads must match, d* and z2 are read at the common spread).
+- **D391.1 (descriptive):** d* (coupling at the common spread) and the offset difference of the arms, per compartment;
+  cancer cells' log z2 ratio and d*.
+- **D391.2 (descriptive, bulk accounting):** per arm, the tumour's predicted bulk loading on the patient's time
+  Z_arm = sum_k s_k z_k over tumour compartments k (fibroblasts, endothelium, mural, cancer cells; immune compartments
+  with their A387-style loading when a compartment has >= 8 patients per arm, else left out and named), z_k the complex
+  loading of compartment k on the host (`fit` per arm, reference = normal fibroblasts), s_k the compartment's mean share
+  of the tumour sample's UMI among the compartments used; predicted gain ratio |Z_high| / |Z_low| with a 90 % interval
+  from 500 patient bootstraps, beside the A304 bulk 0.63; and the two counterfactuals: shares of the high arm with the
+  loadings of the low arm (composition only) and the reverse (loadings only).
+- **D391.3 (gene drop):** as A387 D387.2 for H391.1-2.
+
+**Readings (fixed now).**
+- H391.1 pass: "proliferation quiets the tumour's fibroblasts: the loss of the patient's time reaches the
+  microenvironment", and D391.2 apportions the bulk loss between loadings and composition.
+- H391.1 fail with power: the stroma keeps its loudness in proliferating tumours; the bulk loss is read from D391.2
+  (composition counterfactual) and stated as "not detected in the stroma".
+- D391.2: if the predicted ratio's interval contains 0.63, the single-cell compartments account for the bulk loss;
+  otherwise the bulk loss has a part the measured compartments do not explain (e.g. cells not resolved).
+
+**Power stage (dated note before scoring; no arm contrast computed).** Patients with a proliferation label and a host per
+compartment and arm; `clocksync.power.mde` on permuted labels (the host-locked part damped in the "case" arm; it never
+evaluates the observed split) for tumour fibroblasts and endothelium, both readouts; the matched sets' contrast q05 under
+permuted labels. Decidable if a loudness ratio of 0.63 (the A304 bulk size, log -0.46) is detected with power >= 0.8;
+otherwise reported descriptively.
+
+**Limits.** (1) Cohorts as A387 (post hoc discovery set). (2) The proliferation index is cohort-relative. (3) D391.2 is a
+linear approximation (bulk = share-weighted sum of compartment loadings), ignoring compartments not measured.
+
+**Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A391_proliferation_cells/scripts/a391.py`.
