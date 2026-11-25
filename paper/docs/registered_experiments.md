@@ -11825,3 +11825,102 @@ Fail with power: not detected in sheep; the GTEx link fits the agonal course or 
 **Limits.** Untimed (GC targets have their own daily rhythm: host-phase harmonics absorb a shared daily pattern);
 project, breed and husbandry differ (project indicators); a score of a few genes.
 **Code.** As A385. Aggregates only.
+
+## A387 (2026-11-25, on the user's instruction "yes, write the amendment", after asking whether the A346 single-cell pairing could beat the full model and whether per-cohort |r| pooling adds power; staged: power (counts, gate on the normal-sample anchors, permutation nulls, companions, simulated power; no clock target statistic), then one scoring run; **NOT BLIND**: every A346 / A227 / A151 / A149 per-cohort uncorrected |complex correlation| (fibroblast 0.686 / core 0.683, 93 patients / 16 cohorts; endothelial 0.677 / 0.510, 101 / 14; malignant-normal epithelium 0.433 / 0.361, 190 / 27; matched q95 0.539 / 0.558, 0.512 / 0.529, 0.451 / 0.461), A138 H138.1 (malignant cells on the tumour-sample stromal host: pooled coupling 0.076, 0.014 to 0.139), D138.1 variance shares, A304 bulk gain and departure; **BLIND**: every cross-cohort complex-pooled pairing and its phase, every full-model coupling, relative amplitude and offset of a tumour compartment read on a host built from the patient's normal sample (none computed; grep of `results_preliminary.md` for "complex pool", "pooled complex", "tumour-minus-normal offset" empty, 2026-11-25)): with the full readout, do tumour fibroblasts, endothelium and cancer cells keep the time of the patient's normal stroma, and at what coupling, loudness and offset? **Single-cell tumour / adjacent-normal cohorts of A346 (A227 tables and cohort list; A149 units for epithelium)**
+
+**Why.** The single-cell tumour slide (presentation 6.1, panel B) rests on A346: per cohort the uncorrected |complex
+correlation| of a tumour compartment with the same compartment of the patient's normal sample, about 6 patients per
+cohort, pooled as a weighted mean of moduli. This (i) is the full model's poorest case, a host made of one noisy
+compartment, attenuated by both own terms and confounding coupling with loudness; (ii) keeps the small-sample upward
+bias of each |r| (pairing-null means 0.36-0.41) however many cohorts are added; (iii) discards the phase, so a tumour
+shifted by hours from its normal tissue would pair as well. Two readouts fix this: a complex-pooled pairing (moduli
+taken after pooling, phase = tumour-minus-normal offset), and the full model with a host built from the patient's
+normal-sample compartments, fitted jointly over cohorts. Tumour and normal samples come from one operation, so a
+tumour that keeps its patient's time has offset 0 by design; a non-zero offset is internal desynchrony. Reading the
+tumour against a host from another physical sample also keeps A346's protection against within-sample artefacts
+(dissociation, ambient RNA).
+
+**Data and units.** The A346 cohorts, tables and rules (`compute_a227.cohort_list`, `table`; A149 `pair_states` rules:
+>= 4 patients per cohort with both samples; states centred within chemistry stratum). Donor ids prefixed by cohort.
+Compartments: `adjacent_normal:{fibroblast, endothelial, mural}` (host anchors, stromal-vascular, CLAUDE.md anchor
+rule), `adjacent_normal:epithelium`, and the targets `tumour:fibroblast`, `tumour:endothelial`, `tumour:epithelium`
+(malignant, or tumour epithelium, as A149 S1). Readouts: 14 genes (A227 waveform) and core loop (`a336_common.core`).
+
+**Part 1, complex-pooled pairing (per target compartment, against the same compartment of the normal sample).**
+R_C = |sum_k sum_i z_T,ki conj(z_N,ki)| / sqrt(sum_k sum_i |z_T,ki|^2 x sum_k sum_i |z_N,ki|^2), states centred within
+cohort x chemistry stratum, k = cohort, i = patient (uncorrected, bounded by 1, as A346). Phase: arg of the pooled
+cross-moment, shown as peak time (+ = tumour later). Null: 10,000 permutations of the normal rows within cohort (seed
+`[387, kind, 1]`). Companions: the A346 matched and narrow responsive sets (same seeds, restricted to the core positions
+for the core readout), pooled identically. Calibration: the A346 placebo scheme (2,000 draws, normal rows permuted
+within chemistry stratum within cohort, every set re-paired identically, seeds `[387, k, d]`), p_cal =
+`clocksync.pairwise.calibrated_p`. Offset interval: 2,000 patient bootstraps within cohort, resampling patients
+without replacement at half size and rescaling (subsampling, because resampling with replacement inflates
+|correlation|, A149 method flaw); the angle's interval only, never the modulus's.
+
+**Part 2, full model.** One `clocksync.Dataset` over all cohorts: rows = (patient, compartment), strata = cohort x
+chemistry (own intercept per compartment and stratum, permutations within stratum), `mixed_strata` as needed, anchors
+= the three normal stromal-vascular compartments. Gate (`Dataset.gate`, 1,000 permutations) on the anchors. `fit`
+(n_boot 500, n_perm 1,000, anchor_readout "loo"): for each target, coupling c, relative amplitude |z| and offset arg z;
+reported against `adjacent_normal:fibroblast` as reference (amplitude 1, offset 0). Quantities read:
+- c of each tumour compartment, with its coupling p;
+- offset of each tumour compartment minus its normal counterpart (tumour minus normal fibroblasts, endothelium,
+  epithelium), shown as peak time, + = tumour later; 90 % bootstrap interval;
+- log relative amplitude |z_tumour| / |z_normal| of each pair (loudness), 90 % interval.
+Companions: the same fit (point estimates, no bootstrap) on the 200 matched and 200 narrow responsive waveforms
+(`clocksync.paired.pseudo_waveforms`, seeds `[387, family]`; tables extended with the companion genes as A346).
+Coupling comparisons between compartments are made only on the patients having both (common host spread).
+Sensitivity S387: each target read on a host without its own normal counterpart (fibroblasts on endothelial + mural;
+endothelium on fibroblast + mural), two anchors, so only non-anchor targets are read (as `fit` does).
+
+**Hypotheses** (Holm over the two stromal compartments within each hypothesis; the core loop decides wording; each on
+14 genes as well).
+- **G387 (gate):** the normal-sample anchors pass the gate (p < 0.05) on the readout. A failed gate makes Part 2
+  uninformative on that readout (never "decoupled").
+- **H387.1 (complex pairing, fibroblasts and endothelium):** R_C permutation p < 0.05 and p_cal against matched < 0.05.
+  Narrow responsive p_cal reported (A346: undecidable at this design on the core loop).
+- **H387.2 (keeps the patient's time, fibroblasts and endothelium):** the 90 % interval of the Part 1 phase lies inside
+  +-1.5 h (equivalence), conditional on H387.1 passing for that compartment.
+- **H387.3 (full-model coupling, fibroblasts and endothelium):** coupling p < 0.05 and c above the matched companions'
+  q95; conditional on G387.
+- **H387.4 (full-model offset, fibroblasts and endothelium):** the 90 % interval of the tumour-minus-normal offset lies
+  inside +-1.5 h; conditional on H387.3.
+- **D387.1 (descriptive):** cancer cells (malignant vs normal epithelium) on every Part 1 and Part 2 quantity; the
+  per-cohort and per-cancer values; the log amplitude ratios of all three pairs (compared, descriptively, with the A304
+  bulk gain); the A346 weighted mean of moduli recomputed on the same patients beside R_C.
+- **D387.2 (gene drop, CLAUDE.md rule):** for every core-loop quantity, the 14-minus-core difference on shared bootstraps
+  (Part 2) or subsamples (Part 1), and its position in the distribution of all 364 three-gene drops from the 14 genes
+  (point estimates). Attribution to PER1, PER2 and NR1D1 only if the trio drop lies below the 5th percentile of that
+  null or the paired interval excludes 0; otherwise "not decided: precision or the removed genes". Dropping three
+  genes makes the projection noisier, which alone shrinks c, R_C and the significance of every core-loop quantity (and
+  widens offset intervals); each 14-minus-core difference is set beside the shrinkage this reliability loss predicts
+  (half-host leverages, Spearman-Brown) and beside the random-drop null, and a core-loop result weaker than its
+  14-gene one is never read as a property of the trio by itself.
+
+**Power stage (dated note committed before scoring; no clock target statistic computed).** Patients and cohorts per
+target and per Part 2 table; G387 on the anchors (the anchors' covariance only, no target read); Part 1 permutation
+nulls (SD, MDE = 2.49 SD) and the companions on the real pairing; Part 2 simulated power (`clocksync.simulate` at the
+real design: patients per stratum, compartments, depths) for c in {0.3, 0.5, 0.7} and the width of the offset interval
+at c 0.5 and |z| 1, each computed separately for the 14-gene and the core-loop readout (the core loop has less
+power). A hypothesis whose MDE exceeds 0.25 (H387.1, H387.3), or whose expected offset interval is wider than
++-1.5 h (H387.2, H387.4), is declared undecidable now and reported descriptively.
+
+**Readings (fixed now).**
+- H387.1-4 pass for a compartment: "tumour <compartment> keep their patient's normal-tissue time: coupled to the normal
+  stroma (c = ...), within 1.5 h of it, at a loudness ratio of ..." (core loop; 14 genes if the core is undecidable,
+  saying so). This replaces the A346 pairing statement on slide 6.1.
+- H387.1 or H387.3 pass, H387.2 / H387.4 fail by an interval outside +-1.5 h: internal desynchrony of the tumour
+  compartment from its patient (registered, a new claim; checked against the matched companions' phases before wording).
+- H387.2 / H387.4 interval straddling the bound: "paired, offset not resolved".
+- H387.3 fails with G387 passing and power: the full model does not resolve the coupling seen as pairing; the slide keeps
+  the A346 pairing wording, labelled as pairing.
+- R_C below the A346 weighted mean of moduli on the same patients: the A346 value was carried by small-sample bias or
+  by phases that disagree between cohorts (D387.1 per-cohort phases decide which, descriptively).
+
+**Limits.** (1) The cohorts are A346's (post hoc discovery set; no independent cohort, A226). (2) One operation for both
+samples: a shared perioperative responsive state is the alternative the narrow family tests. (3) Pooling assumes one
+tumour-minus-normal offset and one loading per compartment across cancers; heterogeneity is shown per cancer
+(D387.1), not tested. (4) Few patients per stratum: stratum intercepts cost degrees of freedom (simulated in the power
+stage).
+
+**Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A387_tumour_full_model/scripts/a387.py`
+(`--stage power|score`; via `paper/common/run.sh`, RUN_CAP_GB 30, at most 4 workers).

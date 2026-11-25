@@ -64,12 +64,18 @@ backup slides. A second agent (the lead) runs analyses in parallel; see "Coordin
   the slide and tell the user.
 
 ## Limits of your role
-- **No new tests.** If a slide seems to need an analysis that has not been run:
-  - stop and tell the user. New hypotheses must be pre-registered (`docs/registered_experiments.md`), which is the
-    lead's job;
-  - plots that only redraw existing output CSVs are fine.
-- **Do not edit** `paper/docs/registered_experiments.md` or `paper/docs/results_preliminary.md`. If you find a number in
-  a results entry that disagrees with its output table, report it to the user.
+- **New tests, with the user.** If a slide needs an analysis that has not been run, propose it to the user; once they
+  agree, you may run it yourself during the conversation:
+  - a new hypothesis is still pre-registered: write the amendment in `paper/docs/registered_experiments.md` (next free
+    ID; check the lead has not taken it), show it to the user, commit it by path, and only then score it;
+  - score it, write the outcome to `paper/docs/results_preliminary.md`, and commit both by path;
+  - descriptive redraws or re-aggregations of existing output CSVs need no amendment; label them descriptive, or
+    post hoc if chosen after seeing results;
+  - put the code in `paper/exploratory/<amendment>/` (or `presentation/scripts/*_compute.py` for descriptive
+    aggregates), never in the lead's folders.
+- **Editing the docs:** add entries to `registered_experiments.md` and `results_preliminary.md` only for your own
+  amendments; do not rewrite other entries. If you find a number in a results entry that disagrees with its output
+  table, report it to the user.
 - **Long jobs** (> 20 min): only through `RUN_CAP_GB=.. paper/common/run.sh <script>` launched from the repo root,
   detached. At most 4 workers: the lead is using about 10 of the 16-worker budget.
 - **Controlled-access data:** GTEx time of death and protected phenotypes are aggregates only. Never print, plot or
