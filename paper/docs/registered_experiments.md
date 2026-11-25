@@ -12034,3 +12034,74 @@ pancreatic (descriptive only).
 
 **Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A388_malignant_tumour_host/scripts/`
 (`feasibility.py`, `breast_atlas.py`, `a388.py --stage power|score`; `paper/common/run.sh`, at most 8 workers).
+
+## A389 (2026-11-25, approved by the user ("approved, commit A389 and run both power stages"), on the user's question whether cell types of one organ keep a consistent phase shift; staged: power (counts, analytic and companion-based precision; no clock offset computed), then one scoring run; **NOT BLIND**: the A293 part 2 human per-atlas endothelial-minus-fibroblast offsets (kidney +1.50, lung +0.74, optic nerve +0.69, breast +0.24, anterior eye -0.39, ileum -0.00 h; pooled +0.46 h, 90 % 0.09 to 0.90; H293.3 FAIL) and the mouse timed and untimed offsets (A273, A279: endothelium earliest, then smooth muscle, then fibroblasts, colon and aorta); **BLIND**: every endothelial-minus-fibroblast or mural offset in the normal and tumour samples of the A387 cohorts and of the A388 tumour-only cohorts (computed inside the A387 fits as anchor readouts, never written or read), every per-gene offset, every subtype offset, every companion offset): do stromal-vascular cell classes of one organ keep a consistent phase order across organs (a cell-class property of timing), and is it kept in tumours? **Normal and tumour samples of the A387 cohorts, tumour samples of the A388 cohorts; A293 human atlases as a second, not-blind set**
+
+**Why.** Amplitude is a cell-class property (A293 H293.4: each class keeps its gain relative to endothelium across organs);
+phase was not shown to be (H293.3: 4 of 6 atlases with the mouse sign, pooled +0.46 h with an interval excluding 0, a
+sign test with 6 atlases cannot decide). Mouse, against known time, has a consistent order in colon and aorta
+(endothelium about 1.1-1.3 h before fibroblasts). The A387 normal samples add organs with both classes (colon, lung,
+liver, stomach, prostate, thyroid, pancreas), and the tumour samples ask whether the order survives in tumour stroma.
+
+**What a pseudobulk offset can and cannot show (fixed now).** A consistent offset between two classes' pseudobulks shows
+that the classes' average clock states differ. It does not by itself show that every cell is shifted: (i) composition
+(subtypes at different phases, e.g. arterial, capillary, venous endothelium, or cells at different locations) and (ii)
+gene-level waveform differences (one gene peaking later in one class) also move the projected average. Checks C1-C3
+narrow these down. Per-cell phase inference is not used: the available single-cell methods assume the same shared
+waveform with mean shifts and amplitude scaling as the pseudobulk model, so they cannot separate (i) or (ii) from a
+shift of every cell (user, 2026-11-25).
+
+**Units and estimator (the A293 part 2 / A272 pairwise readout, validated against known time in mouse, A273, A279).**
+Per cohort x sample type (normal, tumour): donors having both classes; stratum-centred clock states on one projector
+(`a149_lib.pair_states`); complex cross-moment of class A against class B. Per organ (normal: the cohort's tissue of
+origin; tumour: the cancer type) the cross-moments are summed over cohorts before the angle is taken (as A387 Part 1):
+offset theta_o (A minus B, shown as peak time, + = A later) and R_o; 90 % interval from 2,000 half-samples without
+replacement within cohort. Organ included with >= 8 donors having both classes. Pairs: endothelial minus fibroblast
+(primary), endothelial minus mural, mural minus fibroblast (secondary). Readouts: 14 genes and core loop.
+
+**Companions.** 200 expression-matched sets per cohort (A346 / A387 seeds and genome tables), pooled the same way. Pair-phase
+rule (CLAUDE.md, A371): same-person structure gives companion pair phases near 0, so the companions measure how much of
+an offset any gene set would show; the clock offset is read against their distribution, not against 0 alone.
+
+**Hypotheses** (core loop decides wording; each also on 14 genes).
+- **H389.1 (normal tissue, primary):** endothelial-minus-fibroblast offset pooled over organs (random effects on the
+  circle: inverse-variance weights from the half-sample variances, between-organ tau^2 by DerSimonian-Laird), with the
+  mouse sign (endothelium earlier) and a 90 % interval excluding 0, and outside the central 90 % of the matched sets'
+  pooled offsets.
+- **H389.2 (consistency, conditional on H389.1):** the order is a class property, not an organ one: the upper 90 % bound of
+  tau is below half the pooled offset, and every organ's offset has the pooled sign or an interval including it.
+  Organ-dependent if Q p < 0.05 and tau's lower bound > 0.
+- **H389.3 (tumour):** the same pooled offset in tumour stroma (A387 tumour samples and A388 tumour-only cohorts), with
+  the normal sign and an interval excluding 0; tumour minus normal on the organs with both, 90 % interval (descriptive).
+- **H389.4 (second set, not blind):** the A293 atlases added to the normal-tissue pool (random effects over atlases and
+  organs); reported beside H389.1, not replacing it.
+- **C1 gene-level uniformity (condition for wording):** per core-loop gene, the class offset of that gene's loading
+  (`Dataset.gene_loadings` of each class on the organ's stromal host); the offset is a clock-state shift if (a) >= 2/3 of
+  the core genes have the pooled sign and (b) no leave-one-gene-out pooled offset moves by more than half its value.
+- **C2 subtype robustness (condition for wording):** where cohorts or atlases label endothelial subtypes (arterial,
+  capillary, venous; lymphatic excluded) or fibroblast subtypes, each subtype against the other class, pooled as above;
+  passes if every subtype with >= 8 donors has the pooled sign. Counts and labels are listed at the power stage.
+- **C3 amplitude (descriptive):** the endothelial / fibroblast loudness ratio beside each offset; an offset with a ratio
+  near the class gain (A293 part 3) argues against a mixture of shifted subpopulations (a mixture lowers amplitude).
+- **D389 (gene drop, CLAUDE.md rule):** 14-minus-core differences of every pooled offset on shared half-samples, against
+  the 364 three-gene drops and the precision loss.
+
+**Readings (fixed now).**
+- H389.1 pass: "in human organs the endothelium's clock state peaks earlier than the fibroblasts' by x h".
+- H389.1 and H389.2 pass: "a cell-class property of timing: endothelium leads fibroblasts by about x h in every organ".
+- C1 and C2 pass in addition: "consistent with a shift of the endothelial clock itself rather than a mixture of
+  subpopulations or a single gene" (inference, labelled so). Without C1 and C2, no statement about individual cells.
+- H389.1 fail with power: no class order beyond the MDE in human organs; the mouse order is not general at this size.
+- H389.3 pass: the order survives in tumour stroma; fail with power: tumour stroma loses it (descriptive meaning only,
+  since tumours are quieter).
+
+**Power stage (dated note before scoring; no clock offset computed).** Donors with both classes per organ and sample
+type; subtype labels available; the analytic 90 % half-width of each organ's offset at R 0.5 and 0.3 (as A387); pooled
+MDE of the offset (2.49 x pooled SE at R 0.5); the matched sets' pooled offsets (comparators). H389.1 is decidable if the
+pooled MDE <= 0.5 h (between the human A293 estimate and the mouse size); otherwise reported descriptively.
+
+**Limits.** (1) Tissue of origin of the "normal" samples is adjacent to tumours. (2) Class labels differ between cohorts.
+(3) Organs are confounded with cohorts. (4) A consistent pseudobulk order cannot by itself exclude composition shared by
+all organs (the same subtype mix everywhere); C2 addresses this only where subtypes are labelled.
+
+**Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A389_class_phase_order/scripts/`.
