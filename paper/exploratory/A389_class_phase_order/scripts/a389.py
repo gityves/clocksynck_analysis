@@ -62,16 +62,10 @@ def studies(smoke):
     return s.head(4) if smoke else s
 
 
-def unit(study, cancer):
-    """Counts and companion cross-moments of every pair x sample type of one cohort (no clock cross-moment)."""
-    limit_threads(1)
-    warnings.filterwarnings("ignore")
-    try:
-        pb = M.table(study)
-    except Exception as e:  # noqa: BLE001
-        return dict(study=study, error=f"{type(e).__name__}: {e}"[:200])
-    out = dict(study=study, cancer=cancer, rows=[], comp={})
-    for si, (st, pre) in enumerate(SAMPLES.items()):
+def _pairs(out, pb, genome, key, si_list):
+    """Counts and companion cross-moments of every pair x sample type of one table (no clock cross-moment).
+    genome(a, b, pts) -> genome-wide table of the two compartments."""
+    for si, (st, pre) in si_list:
         for pi, (pn, (ka, kb)) in enumerate(PAIRS.items()):
             a, b = pre + ka, pre + kb
             if a not in set(pb.compartment) or b not in set(pb.compartment):
@@ -79,9 +73,9 @@ def unit(study, cancer):
             u = L.pair_states(pb, a, b, wf=BASE)
             if u is None:
                 continue
-            out["rows"].append(dict(study=study, cancer=cancer, sample=st, pair=pn, n=u["n"]))
+            out["rows"].append(dict(study=out["study"], cancer=out["cancer"], sample=st, pair=pn, n=u["n"]))
             try:
-                G = M.genome_pair(study, (a, b), u["pts"])
+                G = genome(a, b, u["pts"])
             except Exception as e:  # noqa: BLE001
                 out["rows"][-1]["genome_error"] = f"{type(e).__name__}: {e}"[:200]
                 continue
@@ -89,7 +83,7 @@ def unit(study, cancer):
             genes = [c for c in G.columns if c not in ("donor", "compartment", "stratum", "depth", "n_cells")]
             frac = ref[genes].div(ref.depth, axis=0)
             lm = np.log(frac.mean() + 1e-12)[(ref[genes].mean() >= 1) | frac.columns.isin(list(BASE.genes))]
-            rng = np.random.default_rng([389, si, pi, sum(map(ord, study))])
+            rng = np.random.default_rng([389, si, pi, sum(map(ord, key))])
             sets = pseudo_waveforms(lm, N_SET, rng, BASE, "matched")
             res = {}
             for rd, wfs in (("14", sets), ("core", [C.restrict(w, BASE, CORE) for w in sets])):
@@ -103,6 +97,87 @@ def unit(study, cancer):
                 res[rd] = (num, ea, eb)
             out["comp"][(st, pn)] = res
     return out
+
+
+def unit(study, cancer):
+    """A tumour / adjacent-normal cohort: both sample types."""
+    limit_threads(1)
+    warnings.filterwarnings("ignore")
+    try:
+        pb = M.table(study)
+    except Exception as e:  # noqa: BLE001
+        return dict(study=study, error=f"{type(e).__name__}: {e}"[:200])
+    out = dict(study=study, cancer=cancer, rows=[], comp={}, kind="cohort")
+    return _pairs(out, pb, lambda a, b, pts: M.genome_pair(study, (a, b), pts), study, list(enumerate(SAMPLES.items())))
+
+
+# healthy atlases (A389 note 1): atlas, site, organ, class -> compartments (summed per donor when several)
+ATLASES = [
+    ("heart", "heart", "heart", {"endothelial": ["heart:endothelial"], "fibroblast": ["heart:fibroblast"], "mural": ["heart:mural"]}),
+    ("lung_hlca", "lung", "lung", {"endothelial": ["lung:EC_arterial", "lung:EC_capillary", "lung:EC_venous"],
+                                   "fibroblast": ["lung:fibroblast"], "mural": ["lung:smooth_muscle"]}),
+    ("organ_breast", "breast", "breast", {"endothelial": ["breast:endothelial"], "fibroblast": ["breast:fibroblast_stromal"],
+                                          "mural": ["breast:mural_smooth_muscle"]}),
+    ("organ_colon", "colon", "colon", {"endothelial": ["colon:endothelial"], "fibroblast": ["colon:fibroblast_stromal"]}),
+    ("kong_colon", "colon", "colon", {"endothelial": ["colon:endothelial"], "fibroblast": ["colon:fibroblast_stromal"]}),
+    ("kong_ileum", "ileum", "ileum", {"endothelial": ["ileum:endothelial"], "fibroblast": ["ileum:fibroblast_stromal"]}),
+    ("kidney_sc", "kidney", "kidney", {"endothelial": ["kidney:endothelial"], "fibroblast": ["kidney:interstitial"]}),
+    ("organ_eye_anterior", "ciliary", "anterior eye", {"endothelial": ["eye_anterior:ciliary_endothelial"],
+                                                       "fibroblast": ["eye_anterior:ciliary_fibroblast_stromal"],
+                                                       "mural": ["eye_anterior:ciliary_mural_smooth_muscle"]}),
+    ("organ_eye_anterior", "trabecular", "anterior eye", {"endothelial": ["eye_anterior:trabecular_endothelial"],
+                                                          "fibroblast": ["eye_anterior:trabecular_fibroblast_stromal"]}),
+    ("organ_optic_nerve", "head", "optic nerve", {"endothelial": ["optic_nerve:head_endothelial"],
+                                                  "fibroblast": ["optic_nerve:head_fibroblast_stromal"],
+                                                  "mural": ["optic_nerve:head_mural_smooth_muscle"]}),
+    ("organ_optic_nerve", "nerve", "optic nerve", {"endothelial": ["optic_nerve:nerve_endothelial"],
+                                                   "fibroblast": ["optic_nerve:nerve_fibroblast_stromal"],
+                                                   "mural": ["optic_nerve:nerve_mural_smooth_muscle"]}),
+    ("endometrium", "endometrium", "endometrium", {"endothelial": ["endometrium:endothelial"], "fibroblast": ["endometrium:stromal"]}),
+    ("skin_ad_control", "skin", "skin", {"endothelial": ["skin:endothelial"], "fibroblast": ["skin:fibroblast"], "mural": ["skin:pericyte"]}),
+    ("lung_natri_control", "lung", "lung", {"endothelial": ["lung:EC_venous"], "fibroblast": ["lung:fibroblast"]}),
+    ("islets", "islet", "pancreas", {"endothelial": ["islet:endothelial"], "fibroblast": ["islet:stellate"]}),
+]
+BLIND_ATLASES = {"endometrium", "skin_ad_control", "lung_natri_control", "islets"}
+
+
+def atlas_unit(atlas, site, organ, classes):
+    """A healthy atlas site: genome-wide pseudobulks (`compute_a150.load_atlas`), classes relabelled
+    `adjacent_normal:<class>` (summed per donor over several compartments) so the cohort code applies."""
+    limit_threads(1)
+    warnings.filterwarnings("ignore")
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("compute_a150", EXP / "A150_atlas_specificity/scripts/compute_a150.py")
+    A150 = importlib.util.module_from_spec(spec)
+    sys.modules["compute_a150"] = A150
+    other = sys.modules.pop("_shared", None)          # the cancer `_shared` (figure 5) shadows the atlas_fits one
+    sys.path.insert(0, str(PAPER / "results/figure_2/scripts/atlas_fits"))
+    try:
+        spec.loader.exec_module(A150)
+    finally:
+        sys.path.pop(0)
+        if other is not None:
+            sys.modules["_shared"] = other
+    key = f"{atlas}|{site}"
+    try:
+        pb = A150.load_atlas(atlas, None, 0)["pb"]
+    except Exception as e:  # noqa: BLE001
+        return dict(study=key, error=f"{type(e).__name__}: {e}"[:200])
+    parts = []
+    for cls, comps in classes.items():
+        d = pb[pb.compartment.isin(comps)]
+        if not len(d):
+            continue
+        num = [c for c in d.columns if c not in ("donor", "compartment", "stratum")]
+        g = d.groupby("donor")
+        t = g[num].sum(min_count=1).reset_index()
+        t["stratum"] = g.stratum.first().to_numpy()
+        t["compartment"] = "adjacent_normal:" + cls
+        parts.append(t)
+    tab = pd.concat(parts, ignore_index=True)
+    out = dict(study=key, cancer=organ, rows=[], comp={}, kind="atlas", blind=atlas in BLIND_ATLASES)
+    return _pairs(out, tab, lambda a, b, pts: tab[tab.compartment.isin([a, b]) & tab.donor.isin(pts)], key,
+                  [(2, ("normal", "adjacent_normal:"))])
 
 
 def halfwidth_h(rho, n):
@@ -119,6 +194,25 @@ def stage_power(args):
     res = Parallel(n_jobs=args.genome_jobs)(delayed(unit)(s, c) for s, c in zip(S.study, S.cancer))
     with open(cache / "units.pkl", "wb") as f:
         pickle.dump(res, f)
+    summarize(res, out)
+
+
+def stage_power_atlas(args):
+    """A389 note 1: the cohort units of the power stage plus the healthy-atlas units."""
+    out = OUT / ("power_extended_smoke" if args.smoke else "power_extended")
+    cache = OUT / ("cache_smoke" if args.smoke else "cache")
+    out.mkdir(parents=True, exist_ok=True)
+    with open(cache / "units.pkl", "rb") as f:
+        res = pickle.load(f)
+    specs = ATLASES[:2] if args.smoke else ATLASES
+    log(f"{len(specs)} atlas sites")
+    at = Parallel(n_jobs=args.genome_jobs)(delayed(atlas_unit)(*x) for x in specs)
+    with open(cache / "units_atlas.pkl", "wb") as f:
+        pickle.dump(at, f)
+    summarize(res + at, out)
+
+
+def summarize(res, out):
     errs = pd.DataFrame([r for r in res if "error" in r])
     rows = pd.DataFrame([x for r in res if "rows" in r for x in r["rows"]])
     rows["organ"] = rows.cancer.map(ORGAN).fillna(rows.cancer)
@@ -171,9 +265,10 @@ def stage_power(args):
     log("C2 subtypes\n" + sub[["atlas", "a", "b", "n"]].to_string(index=False))
 
 
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--stage", choices=("power",), required=True)
+    ap.add_argument("--stage", choices=("power", "power_atlas"), required=True)
     ap.add_argument("--jobs", type=int, default=4)
     ap.add_argument("--genome-jobs", type=int, default=3)
     ap.add_argument("--smoke", action="store_true")
@@ -183,7 +278,7 @@ def main():
     if args.smoke:
         N_SET = 10
     t0 = time.time()
-    stage_power(args)
+    (stage_power if args.stage == "power" else stage_power_atlas)(args)
     log(f"done {(time.time() - t0) / 60:.1f} min")
 
 
