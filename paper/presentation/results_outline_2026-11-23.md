@@ -1009,3 +1009,50 @@ departure on the person's state, against its matched 95th percentile; organ-syst
 
 **Source:** `exploratory/A357_signal_departure/output/{score_tests,score_tissues}.csv`;
 `exploratory/A358_A360_gain_sources/output/a359_tests.csv`; `docs/results_preliminary.md` A357, A359, A367.
+
+---
+
+# 5. Chronic disease: the desynchrony predicted from mouse is not seen (built 2026-11-25)
+
+(User, 2026-11-25: age and sex are not chronic disease; they are slide 3.6. One slide here.)
+
+## 5.1 Chronic disease leaves the clock of its own organs in place
+
+**Bullets**
+1. Mouse: high-fat feeding advances the liver clock by hours. Human type 2 diabetes and obesity: metabolic organs peak
+   within about 0.3 h of matched controls (T2D -0.06 h, 90 % -0.31 to 0.19; obesity -0.15 h, -0.55 to 0.25); a shift
+   of 1 h or more is excluded (A235; registered fast-death test: T2D +0.02 h advance, MDE 0.37 h).
+2. "Metabolic disease disrupts peripheral clocks": coupling of the metabolic organs is equivalent within +-0.15 (T2D
+   +0.019, 90 % -0.021 to 0.060; obesity +0.004, -0.081 to 0.089; A164) and their loudness does not change relative to
+   other organs (T2D -0.03, detection limit 0.33 on the log z2 ratio; A306).
+3. Hypertension, ischaemic heart disease, COPD, depression and smoking: body-wide coupling equivalent within +-0.05
+   (A233, five passes); no reordering of organs; heart and arteries within about 0.4 h. Lung and brain readouts are
+   weak (peak-time detection limits 1.5 h and 3.1 h; COPD and depression coupling not decidable at the module).
+4. The one suggestive signal: smokers' lung is quieter (log ratio -0.51, not powered, detection limit 0.70; A306).
+
+**Figure:** `figures/chronic_disease/chronic_disease.png` (`scripts/chronic_disease.py`; wide). Rows: seven conditions.
+A. coupling of the disease's own organs, case - control (d*); B. their peak time, case - control [h, + = later];
+C. their loudness relative to the companion organs (A306; three conditions). 90 % intervals; dashed: +-0.15 and +-1 h;
+grey ticks: detection limits; open: not powered.
+
+**Tags:** A164 (H164.1-2 pass), A235 (H235.1 fail x2, equivalent within +-1 h), A233 (H233.c.1 pass x5, c.2-3 fail
+x5), A306 (five powered readouts not detected); display post hoc (user, 2026-11-25).
+
+**Caveats (speaker notes)**
+- Deaths; comorbidity not removed (hypertension with T2D, smoking with COPD); BMI imbalance in T2D fast deaths.
+- Panel B pools fast and ventilated deaths; A235's registered test used fast deaths (T2D +0.02 h, obesity +0.20 h
+  advance, 90 % within +-0.7 h).
+- On the core loop five loudness / departure nulls (A306) lose their equivalence (wider intervals), with nothing
+  detected (A336); the A233 nulls hold.
+- Unequal host spread biases group contrasts up to the equivalence bound (A258); contrasts here are at a common spread
+  (d*) or relative to companion organs.
+- Ageing (mouse: organs desynchronise): slide 3.6 (A231, A373).
+- Why (interpretation, plan 11.2): in mouse, desynchrony needs conflicting drives (rest-phase feeding), which human
+  chronic disease rarely imposes; where human drives conflict, time moves (night shift, 4.2) and locally in inflamed
+  skin (section 6). Wording: "the desynchrony extrapolated from mouse models and cultured cells is absent at our
+  detection limits", never "human clocks resist desynchrony".
+
+**Source:** `exploratory/A164_gtex_metabolic_matched/output/a164_tests.csv`;
+`exploratory/A233_chronic_conditions/output/{score_tests,score_pooled}.csv`;
+`exploratory/A235_metabolic_offset/output/score_pooled.csv`; `exploratory/A306_disease_gain_departure/output/score_tests.csv`;
+`docs/results_preliminary.md` A164, A233, A235, A258, A306, A336.
