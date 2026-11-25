@@ -11,9 +11,9 @@ Fill the bracketed counts from output tables (never from memory) before the draf
 > an approach that reads each tissue's clock against the same person's other tissues, so it needs no sampling time,
 > and apply it across the human lifespan in [N] tissues from [N] donors and [N] disease cohorts. Before birth, the
 > clock genes of selected organs already move together in the clock's pattern. In adults, organs keep their order
-> through chronic disease, and tumours stay paired with their patient's time, carried at least by their fibroblasts:
+> through chronic disease, and the fibroblasts of tumours keep the time of the same patient's normal tissue:
 > the desynchrony that mouse models predict for metabolic disease and ageing is absent at our detection limits. What
-> changes is how loudly tissues express that time: intensive care, chronic lesions and proliferating tumours quieten
+> changes is how loudly tissues express that time: intensive care, chronic lesions, tumour stroma and proliferating tumours quieten
 > tissues without moving their time. Inflamed psoriatic skin is the exception: its lesions run 1 to 1.5 h late against
 > the same person's skin, replicated in an independent cohort and more than atopic lesions. At the end of life,
 > brain-dead organ donors keep a shared clock but lose the healthy order between organs.
@@ -30,8 +30,13 @@ highlights.
   a single-organ shift of about 6-7 h, or a dispersion SD of 2.25 h, is detectable (A349; 5.6 h on the core loop),
   and the offsets are compressed by a shared non-temporal state (A109, A132b). In the text: "no large disruption";
   intensive care serves as the reference for brain death.
-- **Tumours.** "Stay paired" (A138, at the line on the core loop), "carried at least by their fibroblasts" (A346:
-  0.686 → 0.683 on the core loop, beyond matched and broad responsive genes). Not "only fibroblasts":
+- **Tumours (revised 2026-11-25, A387).** "The fibroblasts of tumours keep the time of the same patient's normal
+  tissue" replaces "tumours stay paired with their patient's time, carried at least by their fibroblasts": A387 is
+  registered and blind, on the full model (coupling c 0.40 on the core loop, 0.44 on 14 genes, beyond matched and
+  stress-responsive genes; peak -0.07 h, 90 % -0.77 to 0.63, against the patient's normal fibroblasts; loudness ratio
+  0.69, so "tumour stroma quietens" enters the loudness sentence). The bulk pairing (A138) stays in the results, at the
+  line on the core loop. Superseded record (A346, kept for the history): "Stay paired" (A138, at the line on the core
+  loop), "carried at least by their fibroblasts" (A346: 0.686 → 0.683 on the core loop). Still not "only fibroblasts":
   - tumour endothelium still pairs but is not beyond matched genes on the core loop (A346);
   - cancer cells are not resolved (A346 D346, A138 H138.1, A305);
   - immune pairing is not beyond responsive genes (A271);
@@ -69,7 +74,8 @@ highlights.
 | sentence | evidence | do not write |
 |---|---|---|
 | fetal clock genes "move together in the clock's pattern" in selected organs | A328 part a (blind; core loop clock-specific in del Valle), A340 (H340.1), organ selectivity in two species | "running", "24 h", "fetal clock", "maternal" / glucocorticoid entrainment (A338 one-sided, conditional on lifetime; A341 descriptive); the core loop is not shown in the cortex, lung or liver (A266, A269) |
-| tumours stay paired with the patient's time, carried at least by their fibroblasts | A138 H138.4 (beyond both families on 14 genes; at the line on the core loop, A336); A346 (fibroblasts on the core loop, beyond matched and broad responsive genes) | "only fibroblasts"; "stroma carries it" (endothelium not beyond matched genes on the core loop, A346); "cancer cells carry it" (D346, A138 H138.1); "immune cells carry it" (A271); replicated (no independent cohort, A226) |
+| the fibroblasts of tumours keep the time of the same patient's normal tissue | A387 (registered, blind; full model over 34 cohorts: c 0.40 core / 0.44 on 14 genes, beyond matched and narrow responsive genes; peak within 0.8 h of the normal fibroblasts, H387.4; holds without the counterpart in the host, S387; colorectal and lung fibroblasts per cancer, A387 note 1); bulk support A138 H138.4 (at the line on the core loop, A336) | "only fibroblasts"; "stroma carries it" (endothelium coupled on 14 genes, not beyond matched genes on the core loop, A387 H387.3); "cancer cells carry it" (cancer cells c 0.10 / 0.03, A387; cancer-type split pending, A388); "immune cells carry it" (A271); replicated (same discovery cohorts as A346; no independent cohort, A226) |
+| tumour stroma quietens | A387 D387.1 (tumour fibroblasts' loudness ratio 0.69, 0.51-0.86, core; 0.80 on 14 genes; endothelium 0.82, interval including 1) | "the tumour clock is broken"; endothelium "quieter" (interval includes 1) |
 | proliferating tumours quieten without drifting | A304 (gain 0.63, departure not raised; holds on the core loop; purity-stratified -0.266) | "cancer cells stay coupled" (A138 H138.1 failed; A304 is bulk) |
 | mouse-predicted desynchrony absent | A235 (high-fat-diet liver advance excluded, ±1 h), A164 / A306 (T2D, obesity), A231 (age), A233; positive controls A111, A129, A257 | "human clocks resist desynchrony": the drives stay aligned in these conditions; with conflicting drives time moves (A257) |
 | psoriatic lesions 1-1.5 h late, replicated, more than atopic lesions | A183 (blind, -1.45 h; core -1.00 h, A335), A54 held-out, A345 (pre-mRNA delay), A347 (pooled -1.51 / -0.96 h; psoriasis minus atopic -1.25 / -0.75 h) | "atopic lesions are on time" (equivalence failed; 7 of 8 series lean late); "clock-specific" in the abstract; hidradenitis leans late (descriptive) |
