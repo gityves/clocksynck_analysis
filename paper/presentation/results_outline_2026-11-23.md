@@ -315,6 +315,7 @@ maternal or ACTH signal remains open. No sampling times: these are shared states
 | 3.4a Louder organs are more coupled (human, baboon) | **revised** from `results.md` R2.1 (below) | `figures/organs_health/` |
 | 3.4b Because each organ's departure has a fixed size, not a fixed angle | **new** (below) | `figures/organs_departure/` |
 | 3.5 Persons differ in a body-wide expression scale; in deaths the clock follows it most reliably | **revised 2026-11-24** (below) | `figures/person_loudness/` |
+| 3.6 Age and sex change neither the organisation nor the loudness of the core clock | **revised** from `results.md` R2.4, timing panel replaced by A373 (below) | `figures/ageing_sex/` |
 
 CHIRAL concordance (A123) is slide 1.1. The ventilated and brain-dead rows of `results.md` R3.1 go to sections 4 and 7
 (`figures/holds_organisation/`, unchanged).
@@ -656,6 +657,45 @@ decision); A361, A362, A363 registered; A366, A368 registered (living); A312, A3
 `exploratory/A368_muther_radial/output/tests.csv`;
 `exploratory/A364_living_volume/output/{posthoc_clock,posthoc_global}.csv`;
 `docs/results_preliminary.md` A312, A336, A360-A363, A366-A370, the size note and the post hoc skin entry.
+
+
+## 3.6 Age and sex change neither the organisation nor the loudness of the core clock
+
+(User, 2026-11-25: age and sex are differences between healthy adults, not chronic disease; moved here from the
+section 5 plan. The timing panel (A234) is out of scope and goes to the notes.)
+
+**Bullets**
+1. CHIRAL's output-rhythm differences follow the type of death: old over young -0.67 (log ratio of rhythmic-gene counts,
+   their donor subsample) shrinks to -0.20 with death type matched (95 % -0.98 to 0.51) and 0.00 with RNA quality also
+   matched; female over male +0.61 to +0.23 (-0.08 to 0.60).
+2. The core clock's organisation is the same: coupling old - young +0.003 (90 % -0.027 to 0.033), female - male +0.020
+   (-0.003 to 0.043), both equivalent within +-0.15; organ offsets -0.05 h and +0.04 h, equivalent within +-1 h
+   (A231, A208).
+3. Old donors' clocks are not quieter: amplitude old / young 1.038 (90 % 0.995 to 1.083; A373 H373.2, equivalence
+   within +-10 %, pass), and their rhythmic outputs neither (1.030, 0.965 to 1.078; H373.3).
+
+**Figure:** `figures/ageing_sex/ageing_sex.png` (`scripts/ageing_sex.py`; wide). A. CHIRAL's statistic, re-read, on
+their subsample, all donors, matched on death type and on RNA quality; B. coupling difference d*; C. organ offset
+difference; D. amplitude old / young, core clock and rhythmic outputs, death type matched; dashed: the registered
+equivalence bounds.
+
+**Tags:** A231, A208, A373 registered (H231.1, H208.1, H373.2, H373.3 equivalence pass); panel A confirms archive A101b /
+A102b with CHIRAL's statistic (WP0 item 5), not clocksync.
+
+**Caveats (speaker notes)**
+- CHIRAL removed death type from mean expression by regression, which does not remove its effect on rhythm amplitude;
+  matching balances the groups (CLAUDE covariate rule). Wording: "with death type matched, the age dampening is no
+  longer seen and the female excess halves and is not significant", not "CHIRAL's results are artefacts".
+- Age range 21-70 (GTEx); T2D imbalanced after matching (A373); fast deaths alone lean slightly negative for
+  loudness (amplitude about 0.97, descriptive).
+- Timing (out of scope, notes only): internal time runs ahead of the recorded time of death by +0.64 h per decade in
+  the body (90 % 0.17 to 1.11) and +0.99 h in the brain; brain and body do not drift apart (A234). `timing()` kept for
+  a backup.
+- Full CHIRAL quotes and the drop tests: `results.md` R2.4 speaker notes.
+
+**Source:** `exploratory/WP0_integrity/output/chiral_tmm/{count_comparison_tmm_summary,sex_comparison_matched_summary}.csv`;
+`exploratory/A231_age_coupling/output/score_tests.csv`; `exploratory/A208_sex_coupling/output/tests.csv`;
+`exploratory/A373_age_loudness/output/{tests,out_tests}.csv`; `docs/results_preliminary.md` A208, A231, A234, A373.
 
 ---
 

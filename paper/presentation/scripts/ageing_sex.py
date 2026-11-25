@@ -1,4 +1,5 @@
-"""Slide figure (results, R2.4): ageing shifts the body's clock as a whole; neither age nor sex changes its organisation.
+"""Slide figure (results, 3.6; formerly R2.4): age and sex change neither the organisation nor the loudness of the core
+clock.
 
 A. CHIRAL's output-rhythm statistic, re-read (WP0 item 5, confirmation of archive A101b / A102b): total log ratio of the
    number of rhythmic genes, old (60-79 y) over young (< 50 y) and female over male, with CHIRAL's normalisation (TMM),
@@ -8,18 +9,23 @@ B, C. Core-clock organisation (clocksync, GTEx fast and ventilated donors matche
    coupling at a common host spread (d*) and of organ offsets, old - young (A231) and female - male (A208), with 90 %
    intervals; dashed: the registered equivalence bounds (+-0.15, +-1 h). Both registered (H231.1, H208.1 pass; offsets
    equivalent within +-1 h).
-D. Internal time (untimed host phase) minus recorded time of death, change per decade of age, body and brain hosts
-   (A234, registered, H234.1 and H234.3 pass), 90 % interval; fast deaths, strata Hardy x sex. A timed readout.
+D. Loudness, old (60-70 y) over young (21-49 y), donors matched on death type (A231 pairs): amplitude ratio of the
+   core clock (14 genes; A373 H373.2, registered, equivalence pass) and of each tissue's rhythmic output programme
+   (A373 H373.3), 90 % intervals; dashed: the registered equivalence margin (+-0.21 on the log variance, amplitude
+   0.90-1.11). Replaces the timing panel (user, 2026-11-25: body-wide shifts are out of scope); `timing()` (A234,
+   internal time advance per decade) is kept for a backup.
 
 Data: exploratory/WP0_integrity/output/chiral_tmm/{count_comparison_tmm_summary,sex_comparison_matched_summary}.csv;
 exploratory/A231_age_coupling/output/score_tests.csv; exploratory/A208_sex_coupling/output/tests.csv;
-exploratory/A234_internal_time_age/output/score_tests.csv. GTEx aggregates only.
+exploratory/A373_age_loudness/output/{tests,out_tests}.csv (A234_internal_time_age/output/score_tests.csv for
+`timing`). GTEx aggregates only.
 Output: presentation/figures/ageing_sex/ageing_sex.{svg,png}.
 
     python scripts/ageing_sex.py
 """
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import seaborn as sns
 from matplotlib.lines import Line2D
@@ -92,6 +98,25 @@ def timing(ax):
     ax.set_title("timing", fontsize=13, color=INK)
 
 
+def loudness(ax):
+    c = pd.read_csv(EXP / "A373_age_loudness/output/tests.csv").set_index("gene_set").loc["14 genes"]
+    o = pd.read_csv(EXP / "A373_age_loudness/output/out_tests.csv").set_index("test").loc["H373.3"]
+    rows = [("core clock", c, CS), ("rhythmic\noutputs", o, INK)]
+    for i, (_, r, col) in enumerate(rows):
+        ax.plot([r.amp_ratio_lo90, r.amp_ratio_hi90], [i, i], color=col, lw=1.6, zorder=1)
+        ax.scatter([r.amp_ratio], [i], s=34, color=col, zorder=2)
+    for b in (np.exp(-0.105), np.exp(0.105)):
+        ax.axvline(b, color=MUTED, lw=0.8, ls="--", zorder=0)
+    ax.axvline(1, color=MUTED, lw=0.6, zorder=0)
+    ax.set_xlim(0.84, 1.18)
+    ax.set_yticks(range(len(rows)), [r[0] for r in rows])
+    ax.tick_params(axis="y", length=0)
+    ax.set_ylim(len(rows) - 0.4, -0.6)
+    ax.set_xlabel("amplitude, old / young")
+    ax.set_title("loudness", fontsize=13, color=INK)
+    return pd.DataFrame([dict(row=lab, ratio=r.amp_ratio, lo=r.amp_ratio_lo90, hi=r.amp_ratio_hi90) for lab, r, _ in rows])
+
+
 def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
@@ -99,8 +124,9 @@ def main():
     chiral(lay.axes["A"])
     organisation(lay.axes["B"], "d_star", 0.15, "coupling difference, d*", "coupling")
     organisation(lay.axes["C"], "offset_h", 1.0, "organ offset difference [h]", "organ offsets")
-    timing(lay.axes["D"])
+    lo = loudness(lay.axes["D"])
     fig = lay.finalize()
+    print(lo.round(3).to_string(index=False))
     print(pf.collisions(fig))
     pf.save(fig, OUT / "ageing_sex")
 
