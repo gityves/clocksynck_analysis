@@ -11762,3 +11762,66 @@ differs between species (husbandry, diet, physiology), and the organ factor is n
 cortex; ruminant abomasum for stomach); untimed host-relative gains depend on which organs are anchors (all peripheral
 in each species); sheep are mixed breeds and ages.
 **Code.** As A383. Aggregates only.
+
+## A385 (2026-11-25, on the user's instruction "draft 1 and 4 and run the power stages" (item 1 of the comparative list: per-animal loudness); staged: power (animal counts, companion thresholds, detection limit; no clock leverage), then one scoring run; **NOT BLIND**: the GTEx person leverage (A312 / A336 part 2: 0.765 on 14 genes, 0.714 on the core loop, core matched q95 0.621), MuTHER (A331: 0.177; core 0.107, at the line), A375 (not a batch or centre effect in GTEx); **BLIND**: every sheep host radius, leverage and companion value): do animals differ in a clock loudness shared by their organs, as persons do in GTEx?
+
+**Why.** Slide 3.5: persons differ in how loudly all their organs express the shared rhythm (GTEx deaths, holds on the core
+loop; in living MuTHER twins at the line). A healthy species killed quickly, with many animals, tests whether this is
+general physiology or a property of human deaths.
+**Data.** SheepGTEx v0 (A263 genome-wide table), the 35 peripheral tissues, animals whose developmental stage (corrected,
+metadata Table S1) is adult or juvenile; prenatal and neonatal animals excluded. Project (BioProject) = stratum
+(clocksync mixed strata: intercepts per tissue and project).
+**Statistic.** A336 part 2 / A331 leverage: `Dataset(anchors = the 35 tissues, mixed_strata)`; 20 random halvings of
+the tissues (`elasticity.split_hosts`, seed [385, 1]); per halving, the animals present in both half-hosts;
+`radius_covariance` (radii residualised on two phase harmonics of both halves) computed **within each project** with
+>= 30 such animals; the project leverages are combined by Fisher z weighted by n - 3; median over halvings. Within-project
+leverage removes any project-level scale (batch, breed, age group, slaughter routine). Pooled over projects: reported.
+**Companions.** 200 expression-matched and 200 responsive sets (sheep mean log fraction, `pseudo_waveforms`, seeds
+[385, 2] and [385, 3]), the same statistic; core loop (11 genes) for the clock and for the sets on their core positions
+(A329 rule). Animals-permuted null (1,000 per halving set, seed [385, 4]).
+**H385.1.** 14 genes: leverage > 0 with permuted p < 0.05 and above the 95th percentile of both companion families.
+**H385.2.** The same on the core loop (A336 rule: the claim is made on the core loop).
+**Descriptive.** Leverage per project; pooled; by sex and stage (adult, juvenile) when >= 30 animals.
+**Power stage (committed before scoring).** Animals and projects eligible per halving; companion leverages (the
+thresholds; computed on the data, no clock value); the analytic detection limit L80 = q95 + (1.645 + 0.84) x SE, with
+SE = 1 / sqrt(sum over projects of (n - 3)) on the Fisher scale. Planning values: GTEx core 0.714, MuTHER 0.177. Gate:
+L80 <= 0.40 for the stricter companion (otherwise not decidable at a human-death size and not scored).
+**Readings (stated now).** Pass: animals, alive until a quick slaughter, differ in a shared clock loudness beyond
+companions; the person factor of slide 3.5 is general physiology. Fail with power (within the companions): not detected
+in sheep; the GTEx factor may belong to human deaths or to the slow agonal course, and MuTHER's borderline result then
+weighs more.
+**Limits.** Untimed; few tissues per animal (halves are small hosts, so leverages are lower than in GTEx at the same
+true spread: only the comparison with companions is read, not the size against GTEx); projects differ in tissues;
+slaughter time of day unknown (phase harmonics absorb a radius-phase relation).
+**Code.** `exploratory/A385_sheep_person/scripts/a385_a386.py --stage power | score`. Aggregates only.
+
+## A386 (2026-11-25, same instruction (item 4: the glucocorticoid state against the animal's clock volume); staged as A361: power (companion coefficients and analytic power, no clock coefficient), then one scoring run; **NOT BLIND**: A360 (GTEx: GC coefficient -0.235, partial R^2 0.061), A361 (core loop holds; companions tend to rise with the GC state: matched median +0.081), A359; **BLIND**: every sheep host radius, GC / IEG score and coefficient): does an animal's clock volume fall with its glucocorticoid-target state, as in GTEx deaths?
+
+**Why.** In GTEx fast deaths the person's clock volume falls with the systemic glucocorticoid-target state; an acute
+agonal surge and a chronic state cannot be separated there. Sheep die quickly at slaughter after a short, standard
+handling (an acute stress shared by all) and are healthy: a link here is not agonal.
+**Data.** As A385 (adult and juvenile animals, 35 peripheral tissues); animals with >= 4 peripheral tissues.
+**Animal volume.** log r_p, r_p = |posterior-mean host| from all the animal's peripheral tissues (`Dataset.host`,
+every peripheral tissue an anchor, mixed strata), as A360.
+**Covariates (animal level).** base: number of tissues, project indicators, cos and sin of the host phase (no time of
+death; the plane is not uniform over the day); technical: median log library depth, median mapping rate (metadata);
+systemic: GC and IEG states (A359 scores: `GC_TARGETS` minus clock genes, NFIL3 and BHLHE40; `IMMEDIATE_EARLY`; mean
+log fraction centred within tissue x project, standardised within tissue, averaged over the animal's tissues);
+demographic (descriptive): sex, stage.
+**H386.1 (14 genes).** Systemic-block partial R^2 permutation p < 0.05 (10,000, seed 386) and GC coefficient < 0 and
+below the 5th percentile of the matched and of the responsive sets' GC coefficients (200 each, the same model; their
+volume read from pseudo-clock hosts).
+**H386.2 (core loop).** The same with the volume on the core loop (the sets on their core positions): PER1, PER2 and
+NR1D1 are GC-receptor targets.
+**Reported.** Standardised coefficients with animal-bootstrap 90 % intervals (2000); the technical block's partial R^2;
+the demographic block.
+**Power stage (committed before scoring).** Animals eligible; companion GC coefficients (14 and core); SE of the GC
+coefficient from the design (OLS standard error of the standardised GC term given the covariates, with the outcome
+variance set to 1); threshold = min(matched q05, responsive q05, -1.96 SE); power at the A360 size (-0.235) and at half
+of it. Gate: power >= 0.8 at -0.235.
+**Readings (stated now).** Pass: the clock volume follows the glucocorticoid state in a healthy species without a
+dying process; the GTEx link is general physiology (chronic tone or the acute pre-slaughter surge; not separated).
+Fail with power: not detected in sheep; the GTEx link fits the agonal course or a human state.
+**Limits.** Untimed (GC targets have their own daily rhythm: host-phase harmonics absorb a shared daily pattern);
+project, breed and husbandry differ (project indicators); a score of a few genes.
+**Code.** As A385. Aggregates only.
