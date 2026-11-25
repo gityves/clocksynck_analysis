@@ -1023,8 +1023,7 @@ departure on the person's state, against its matched 95th percentile; organ-syst
    within about 0.3 h of matched controls (T2D -0.06 h, 90 % -0.31 to 0.19; obesity -0.15 h, -0.55 to 0.25); a shift
    of 1 h or more is excluded (A235; registered fast-death test: T2D +0.02 h advance, MDE 0.37 h).
 2. "Metabolic disease disrupts peripheral clocks": coupling of the metabolic organs is equivalent within +-0.15 (T2D
-   +0.019, 90 % -0.021 to 0.060; obesity +0.004, -0.081 to 0.089; A164) and their loudness does not change relative to
-   other organs (T2D -0.03, detection limit 0.33 on the log z2 ratio; A306).
+   +0.019, 90 % -0.021 to 0.060; obesity +0.004, -0.081 to 0.089; A164).
 3. Hypertension, ischaemic heart disease, COPD, depression and smoking: body-wide coupling equivalent within +-0.05
    (A233, five passes); no reordering of organs; hypertension organs within 0.45 h (-0.17 h, 90 % -0.43 to 0.10),
    ischaemic heart disease within about 1.1 h (-0.20 h, -1.11 to 0.72). Lung and brain readouts are
@@ -1032,17 +1031,21 @@ departure on the person's state, against its matched 95th percentile; organ-syst
 4. Across all 12 body tissues, cases' organs moved by at most 0.4-0.8 h relative to matched controls (A380; every
    interval includes no movement): less than the spacing between organs (about 1 h) and far from brain death (at least
    1.6 h). No condition moves the arrangement by a brain-death-sized amount (A379, upper bounds 0.22-0.53 against 0.62).
-5. The one suggestive signal: smokers' lung is quieter (log ratio -0.51, not powered, detection limit 0.70; A306).
+5. No condition quiets the body's clocks at the size conflicting drives do (night shift 0.38, mouse conflicting feeding
+   0.50-0.65): amplitude cases / controls 0.94-1.01, a 10 % loss excluded in T2D, obesity, hypertension, ischaemic heart
+   disease and smoking; COPD (0.958, 90 % 0.892-0.964) and depression (0.936, 0.875-0.969) lean quieter, not
+   significant (label p 0.12 and 0.053) (A382).
 
 **Figure:** `figures/chronic_disease/chronic_disease.png` (`scripts/chronic_disease.py`; wide). Rows: seven conditions.
 A. coupling of the disease's own organs, case - control (d*); B. how far the organs can have moved relative to
 matched controls (90 % compatibility interval of the organ scatter, 12 body tissues, A380), dotted: spacing between
-organs (1.02 h), shaded: brain death (at least 1.6 h, A374); C. loudness of the own organs relative to the companion
-organs (A306; three conditions). 90 % intervals; dashed: +-0.15; grey ticks: detection limits; open: not powered.
-(User, 2026-11-25: B replaces the module peak-time panel; its values stay in bullets 1 and 3.)
+organs (1.02 h), shaded: brain death (at least 1.6 h, A374); C. absolute clock loudness, cases / matched controls
+(A382), dashed: +-10 %, references: night shift (0.38, slide 4.2) and mouse organs under conflicting feeding (0.50-0.65,
+slide 4.1). 90 % intervals; dashed in A: +-0.15. (User, 2026-11-25: B replaces the module peak-time panel, C the
+relative-loudness panel (A306); their values stay in the bullets and notes.)
 
 **Tags:** A164 (H164.1-2 pass), A235 (H235.1 fail x2, equivalent within +-1 h), A233 (H233.c.1 pass x5, c.2-3 fail
-x5), A306 (five powered readouts not detected), A379 (H379.1 fail x7, H379.2 pass x7), A380 (registered interval),
+x5), A306 (five powered readouts not detected), A382 (H382.1 fail x7, H382.2 pass x5), A379 (H379.1 fail x7, H379.2 pass x7), A380 (registered interval),
 A381 (H381.1 fail; post hoc in motivation, speaker notes only); display post hoc (user, 2026-11-25).
 
 **Caveats (speaker notes)**
@@ -1057,6 +1060,13 @@ A381 (H381.1 fail; post hoc in motivation, speaker notes only); display post hoc
   COPD (0.18) lean towards change, not significant; against their own controls COPD is within 0.4 h and obesity and T2D
   within 0.8 h (A380). Pooled metabolic contrast not detected (A381, p 0.16; post hoc in motivation). The A379 arm
   levels are not on the brain-death scale (mixed death types, reduced references).
+- Relative loudness (A306, the former panel C): module minus companion organs, T2D -0.03, hypertension +0.21 (detection
+  limits 0.33-0.35 on the log z2 ratio); smokers' lung quieter (-0.51, not powered). A306 cancels a loss shared by a
+  person's organs; A382 does not.
+- A382 details: the bootstrap intervals exclude 1 for ischaemic heart disease, COPD and depression while the
+  registered label null does not (the bootstrap holds the matching fixed); on the core loop depression and COPD do not
+  lean (1.02, 0.98), T2D and ischaemic heart disease do (0.94, 0.95). Every condition leans quieter in fast deaths and
+  louder in ventilated deaths (descriptive): a property of the matched death-type arms, not of a disease (not tested).
 - Ageing (mouse: organs desynchronise): slide 3.6 (A231, A373).
 - Why (interpretation, plan 11.2): in mouse, desynchrony needs conflicting drives (rest-phase feeding), which human
   chronic disease rarely imposes; where human drives conflict, time moves (night shift, 4.2) and locally in inflamed
@@ -1067,8 +1077,9 @@ A381 (H381.1 fail; post hoc in motivation, speaker notes only); display post hoc
 `exploratory/A233_chronic_conditions/output/{score_tests,score_pooled}.csv`;
 `exploratory/A235_metabolic_offset/output/score_pooled.csv`; `exploratory/A306_disease_gain_departure/output/score_tests.csv`;
 `exploratory/A379_disease_arrangement/output/tests.csv`; `exploratory/A380_disease_hours/output/intervals.csv`;
-`exploratory/A374_order_interval/output/intervals.csv`; `docs/results_preliminary.md` A164, A233, A235, A258, A306,
-A336, A374, A379-A381.
+`exploratory/A374_order_interval/output/intervals.csv`; `exploratory/A382_disease_loudness/output/tests.csv`;
+`presentation/output/nightshift/summary.csv`; `exploratory/A322_conflicting_drives/output/{ratios,xin/ratios}.csv`;
+`docs/results_preliminary.md` A164, A233, A235, A258, A306, A336, A374, A379-A382.
 
 ---
 

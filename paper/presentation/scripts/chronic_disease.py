@@ -12,16 +12,19 @@ B. How far the organs can have moved relative to matched controls: 90 % compatib
    Dotted: the spacing between organs in fast deaths (median pair offset 1.02 h, A374); shaded: brain death, at least
    1.6 h (A374, against fast deaths). Replaces the module peak-time panel (A233 / A235; user, 2026-11-25), whose values
    stay in the speaker notes.
-C. Loudness of the disease's own organs relative to the companion organs (tibial nerve, both skins): module minus
-   companion difference of the log z2 ratio (case over control), interval +-1.645 SD of the permutation null; grey
-   tick: the MDE_80 on each side (A306; T2D, hypertension, smoking; smoking not powered, open). Other conditions not
-   tested.
+C. Absolute clock loudness, cases over matched controls: amplitude ratio exp(Q / 2), Q the median over tissue x cohort
+   cells of the log debiased clock-plane variance ratio, 90 % matched-set bootstrap interval (A382, registered);
+   dashed: the +-10 % equivalence margin. References: the human muscle clock after 3.5 days of 12 h-shifted behaviour
+   (core loop, 0.38; slide 4.2, `presentation/output/nightshift/summary.csv`) and mouse organs that resist inverted
+   feeding (lung, heart, kidney: 0.50-0.65; A322, A324). Replaces the relative-loudness panel (A306; user,
+   2026-11-25), whose values stay in the speaker notes.
 
 Status: A164, A233, A235, A306 registered; display post hoc (user, 2026-11-25). GTEx aggregates only.
 Data: exploratory/A164_gtex_metabolic_matched/output/a164_tests.csv; exploratory/A233_chronic_conditions/output/
 score_pooled.csv; exploratory/A235_metabolic_offset/output/score_pooled.csv; exploratory/A380_disease_hours/output/intervals.csv;
 exploratory/A374_order_interval/output/intervals.csv; exploratory/A306_disease_gain_departure/
-output/score_tests.csv.
+output/score_tests.csv; exploratory/A382_disease_loudness/output/tests.csv;
+presentation/output/nightshift/summary.csv; exploratory/A322_conflicting_drives/output/{ratios,xin/ratios}.csv.
 Output: presentation/figures/chronic_disease/chronic_disease.{svg,png} (wide).
 
     python scripts/chronic_disease.py
@@ -101,6 +104,31 @@ def hours(ax, order):
     return t.loc[list(order), ["lower_h", "upper_h"]], bd, spacing
 
 
+def absolute(ax, order):
+    t = pd.read_csv(EXP / "A382_disease_loudness/output/tests.csv").set_index("condition")
+    ns = pd.read_csv(PAPER / "presentation/output/nightshift/summary.csv").set_index("gene_set").loc["core loop"]
+    mouse = pd.concat([pd.read_csv(EXP / "A322_conflicting_drives/output/ratios.csv"),
+                       pd.read_csv(EXP / "A322_conflicting_drives/output/xin/ratios.csv")])
+    mouse = mouse[mouse.tissue.str.lower().isin(["lung", "heart", "kidney"])].amp_ratio
+    ax.axvspan(mouse.min(), mouse.max(), color="#BBBBBB", alpha=0.25, lw=0, zorder=0)
+    ax.text(mouse.mean(), -0.45, "mouse,\nconflicting\nfeeding", fontsize=8.5, color=MUTED, va="top", ha="center")
+    ax.axvline(ns.excursion_ratio, color=MUTED, lw=1.2, zorder=0)
+    ax.text(ns.excursion_ratio + 0.015, -0.45, "night\nshift", fontsize=8.5, color=MUTED, va="top", ha="left")
+    for b in (np.exp(-0.105), np.exp(0.105)):
+        ax.axvline(b, color=MUTED, lw=0.8, ls="--", zorder=0)
+    ax.axvline(1, color=MUTED, lw=0.6, zorder=0)
+    for i, k in enumerate(order):
+        r = t.loc[k]
+        ax.plot([r.amp_lo90, r.amp_hi90], [i, i], color=CS, lw=1.6, zorder=2)
+        ax.scatter([r.amp_ratio], [i], s=32, color=CS, zorder=3)
+    ax.set_xlim(0.3, 1.15)
+    ax.set_ylim(len(order) - 0.5, -0.5)
+    ax.set_xlabel("clock loudness, cases / controls\n[amplitude ratio]")
+    ax.tick_params(axis="y", length=0)
+    return t.loc[list(order), ["amp_ratio", "amp_lo90", "amp_hi90", "p_label"]], float(ns.excursion_ratio), \
+        (float(mouse.min()), float(mouse.max()))
+
+
 def loudness(ax, g, order):
     for i, k in enumerate(order):
         if k not in g.index:
@@ -128,19 +156,18 @@ def main():
            (-0.45, 0.45))
     lay.axes["A"].set_yticks(range(len(t)), [ROWS[k] for k in t.index])
     hb = hours(lay.axes["B"], list(t.index))
-    loudness(lay.axes["C"], g, list(t.index))
+    ab = absolute(lay.axes["C"], list(t.index))
     for k in "BC":
         lay.axes[k].set_yticks(range(len(t)), [""] * len(t))
-    h = [Line2D([], [], color=MUTED, lw=0.8, ls="--", label="equivalence bound (±0.15)"),
+    h = [Line2D([], [], color=MUTED, lw=0.8, ls="--", label="equivalence bound (±0.15; ±10 %)"),
          Line2D([], [], color=MUTED, lw=0.8, ls=":", label="spacing between organs"),
-         Line2D([], [], color="#BBBBBB", lw=2, label="detection limit (80 % power)"),
-         Line2D([], [], ls="", marker="o", ms=6, mfc="white", mec=CS, label="not powered")]
-    lay.shared_legend("ABC", h, [x.get_label() for x in h], side="bottom", ncol=4, fontsize=10, handletextpad=0.4)
+         ]
+    lay.shared_legend("ABC", h, [x.get_label() for x in h], side="bottom", ncol=2, fontsize=10, handletextpad=0.4)
     fig = lay.finalize()
     pd.set_option("display.width", 200)
     print(t.round(3).to_string())
     print(hb[0].to_string(), "brain death", hb[1], "spacing", round(hb[2], 2))
-    print(g[["delta", "null_sd", "mde_80", "p", "p_holm", "verdict"]].round(3).to_string())
+    print(ab[0].round(3).to_string(), "night shift", round(ab[1], 3), "mouse", ab[2])
     print(pf.collisions(fig))
     pf.save(fig, OUT / "chronic_disease")
 
