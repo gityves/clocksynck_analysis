@@ -315,7 +315,6 @@ maternal or ACTH signal remains open. No sampling times: these are shared states
 | 3.4a Louder organs are more coupled (human, baboon) | **revised** from `results.md` R2.1 (below) | `figures/organs_health/` |
 | 3.4b Because each organ's departure has a fixed size, not a fixed angle | **new** (below) | `figures/organs_departure/` |
 | 3.5 Persons differ in a body-wide expression scale; in deaths the clock follows it most reliably | **revised 2026-11-24** (below) | `figures/person_loudness/` |
-| 3.last The organ arrangement holds when the body no longer reads the hour (bridge to section 4) | **revised** from `results.md` R3.1 (below) | `figures/organ_arrangement/` |
 
 CHIRAL concordance (A123) is slide 1.1. The ventilated and brain-dead rows of `results.md` R3.1 go to sections 4 and 7
 (`figures/holds_organisation/`, unchanged).
@@ -347,7 +346,7 @@ tissues chosen for the deck).
 - Whole blood has no readable core clock (post hoc entry 2026-11-03): its phase interval spans 1.09 to 3.72 h.
 - The brain is read on a host built from peripheral tissues: its offset is relative to the periphery, and its low gain
   partly reflects that reference (R2.1, A289).
-- Fast deaths are the reference because their body clock reads the hour of death (R 0.63, slide 3.last).
+- Fast deaths are the reference because their body clock reads the hour of death (R 0.63, slide 4.1).
 
 **Source:** `presentation/output/organs/couplings.csv` (A263 R2 fit with donor bootstrap, `scripts/organs_compute.py`).
 
@@ -651,28 +650,50 @@ decision); A361, A362, A363 registered; A366, A368 registered (living); A312, A3
 `exploratory/A364_living_volume/output/{posthoc_clock,posthoc_global}.csv`;
 `docs/results_preliminary.md` A312, A336, A360-A363, A366-A370, the size note and the post hoc skin entry.
 
-## 3.last The organ arrangement is internal: it holds when the body's clock no longer reads the hour of death
+---
+
+# 4. Drives: where coupling to the body's time comes from (to build; revised 2026-11-24)
+
+Section 3 describes the organisation and explains coupling without drives (transfer over a fixed departure, 3.4a-b).
+Section 4 asks what sets the transfer and the organ's place in time. Source: `docs/COUPLING_SOURCES_2026-11-24.md`.
+
+| slide | content | entries |
+|---|---|---|
+| 4.1 When the body no longer reads the hour, the organ arrangement holds; only brain death moves it (former 3.last) | **new** (below) | A27, A293, A314, A317, A374 |
+| 4.1b Intensive care quiets the clocks; brain death keeps their amplitude | to build (below) | A315, A335, A349 |
+| 4.2 Removing a drive keeps amplitude, conflicting drives cost it | mouse liver without a feeding rhythm; daytime feeding across organs, weights and amplitude kept; one-line suggestive mention: organs that weigh one drive in mouse (liver, heart) are the loudest in human, the balanced lung the quietest, adipose the exception (A358, descriptive, rho -0.6, 5 organs, below its criterion) | A297, A322, A324, A358 |
+| 4.3 A behavioural shift moves the human clock | night shift, muscle core loop +4 h, amplitude cost | A257, A335 |
+| 4.4 A systemic signal read unequally by organs | glucocorticoid-like person state explains a small part of each organ's departure | A357 |
+| 4.5 What sets an organ's gain | drive coherence (descriptive), reception, person volume; jet lag (in-house, to come) | registered 2026-11-24 |
+
+## 4.1 When the body's clock no longer reads the hour, the organ arrangement holds; only brain death moves it
+
+(User, 2026-11-25: slide 3.last moved here, as the opening of the drives section: dying and intensive care are not
+physiological; brain death shown here rather than at the end of the life-course order. Amplitude: slide 4.1b.)
 
 **Bullets**
-1. The body's clock reads the hour of death in fast deaths (R 0.63, 244 donors), barely in slow deaths (0.16, 106) and
-   intermediate deaths (0.25, 51) (post hoc readout, A27).
+1. The body's clock reads the hour of death in fast deaths (R 0.63, 244 donors), barely in slow (0.16, 106),
+   intermediate (0.25, 51) or ventilated deaths (0.16, 79; brain death 0.17, 301) (A27 post hoc readout; A314,
+   descriptive).
 2. Slow deaths keep the fast-death organ arrangement: Fisher-Lee rho 0.78 (103 donors, 12 body tissues), above the 95th
-   percentile of 200 expression-matched (0.13) and 200 stress-responsive gene sets (0.44) (A293 H293.1, pass).
-   Intermediate deaths 0.62 (50 donors; responsive q95 0.57; descriptive).
-3. Kept at its own scale: given that similarity, the organs of slow deaths moved by at most 0.9 h (organ scatter SD;
-   core loop 0.6 h), against fast-death organ offsets of about 1 h (median 1.02 h); intermediate deaths at most 1.8 h
-   (A374, compatibility interval, 90 %).
-4. The arrangement is a property of the body, not imposed by the day at death.
+   percentile of matched (0.13) and stress-responsive gene sets (0.44) (A293 H293.1, pass); organs moved by at most
+   0.9 h (core 0.6 h), against an arrangement of about 1 h (median organ-pair offset 1.02 h) (A374).
+3. Ventilated donors with a living brain keep it too: rho 0.690 (79 donors), above the matched (0.108) and responsive
+   (0.318) 95th percentiles (A293 H293.2, pass), within sampling noise (expected 0.785, 5-95 % 0.519-0.879); organs
+   moved by at most 1.8 h (core 1.5 h) (A374).
+4. Brain death moves it: rho 0.161 at 79 donors, below the responsive 95th percentile; organs moved by at least 1.6 h
+   (core 1.2 h) (A317, A374; descriptive). The arrangement is internal and held by the living brain, not by the day.
 
-**Figure:** `figures/organ_arrangement/organ_arrangement.png` (`scripts/organ_arrangement.py`; half). Rows: fast (reference,
-dashed), slow, intermediate deaths. A. arrangement shared with fast deaths, clock genes (blue bar) with matched (light
-grey) and stress-responsive (dark grey) q95 lines; open diamond and line: median and 5-95 % expected from sampling
-noise alone (fast deaths at the group's donor count, post hoc). B. alignment R of the body clock to the hour of death. C. how far
-the organs can have moved: 90 % compatibility interval of the organ scatter (14 genes; A374), dashed: the size of the
-arrangement (median organ-pair offset in fast deaths, 1.02 h).
+**Figure:** `figures/intensive_care/intensive_care.png` (`scripts/intensive_care.py`; wide; the panels of the former
+slide 3.last with two rows added, user 2026-11-25). Rows: fast deaths (reference), slow, intermediate, ventilated with a
+living brain, brain death. A. organ arrangement shared with fast deaths (clock genes; matched and responsive 95th
+percentiles; diamond: expected from sampling noise at the group's donor count, brain death at 79). B. body clock
+aligned to the hour of death, R. C. 90 % compatibility interval of the organ scatter (arrow: upper bound beyond the
+simulated grid); dashed: the size of the arrangement. 14 genes; core loop in the notes.
 
-**Tags:** A293 part 1 registered, NOT BLIND (clock rho known from A109 / A132; companions new); intermediate deaths
-descriptive; panel B post hoc readout (A27); A374 registered (intervals blind, correlations not).
+**Tags:** A293 part 1 registered, NOT BLIND for the clock rho (known from A109 / A132; companions new): H293.1 slow and
+H293.2 ventilated pass; intermediate deaths and brain death descriptive. Panel B: A27 post hoc readout, A314
+descriptive. A374 registered (intervals blind, correlations not). A317 registered (brain death, H317.1 pass).
 
 **A374 note (speaker notes):** a detection limit ("a scatter of SD 2.25 h would be seen", A349) exceeds the
 arrangement itself; the compatibility interval says how far the organs can have moved. Upper bounds absorb any
@@ -690,72 +711,38 @@ systematic distortion as scatter (conservative).
   alone (fast deaths at the same n, post hoc): 0.796 (5-95 % 0.637-0.901) at 103 donors, 0.751 (0.491-0.871) at 50;
   both observed values lie inside (panel A, diamonds).
 
-**Source:** `exploratory/A293_organisation_levels/output/part1/groups.csv`;
+- Detection limit in intensive care: one organ must move about 6-7 h (6.75 h, 14 genes; core 5.6 h), or all organs
+  with an SD of 2.25 h, to be seen (A349). "Kept" means no large disruption, not unchanged.
+- Offsets in ventilated donors are compressed toward 0 / 12 h by a shared non-temporal axis (A109, A132b); removing it
+  relaxes the compression from 0.58 to about 0.77 (A349 D349.4, approximate).
+- Brain death: descriptive, inseparable from procurement in GTEx (A318 H318.2, A325, A327). Organ donors differ in RIN
+  and ischaemic time (not balanceable).
+
+**Source:** `exploratory/A314_vent_walltime/output/groups.csv`; `exploratory/A374_order_interval/output/noise_reference.csv`; `exploratory/A293_organisation_levels/output/part1/groups.csv`;
 `results/figure_3/output/cues_lost/walltime_hosts.csv`; `exploratory/A109_coupling_nulls/output/a109c_walltime.csv`;
-`exploratory/A374_order_interval/output/intervals.csv`; `docs/results_preliminary.md` A109c, A293, A374.
+`exploratory/A374_order_interval/output/intervals.csv`; `docs/results_preliminary.md` A109c, A293, A374. A314, A317, A349.
 
----
+## 4.1b Intensive care quiets the tissue clocks, most where they were loudest; brain death keeps their amplitude (to build)
 
-# 4. Drives: where coupling to the body's time comes from (to build; revised 2026-11-24)
+**Bullets (draft)**
+1. Ventilated donors' clocks are quieter: clock-specific amplitude 0.82 of fast deaths (Q* +0.404, above all 200
+   matched sets), core 0.80; unchanged by age / sex matching (Q* +0.389, core +0.459) (A315 descriptive, A335).
+2. The loss rises with the organ's clock strength (Spearman 0.82, 12 tissues; thyroid, oesophagus mucosa, heart lose
+   most; A349, descriptive). Blood "gains" (-1.95): no readable clock (slide 3.1b).
+3. Brain death keeps the amplitude of ventilated donors (1.02, 90 % 0.94-1.10, inside the registered equivalence margin
+   0.84-1.20; A315 H315.1 FAIL, A335 part 3).
+4. Amplitude falls with time on the ventilator among organ donors (longest vs shortest tertile Q* -0.236, 1st
+   percentile of matched sets; A315, descriptive).
 
-Section 3 describes the organisation and explains coupling without drives (transfer over a fixed departure, 3.4a-b).
-Section 4 asks what sets the transfer and the organ's place in time. Source: `docs/COUPLING_SOURCES_2026-11-24.md`.
-
-| slide | content | entries |
-|---|---|---|
-| 4.1 Intensive care quiets the clocks and keeps the order; brain death moves the order and keeps the amplitude | **new** (below) | A293, A315, A317, A335, A349, A374 |
-| 4.2 Removing a drive keeps amplitude, conflicting drives cost it | mouse liver without a feeding rhythm; daytime feeding across organs, weights and amplitude kept; one-line suggestive mention: organs that weigh one drive in mouse (liver, heart) are the loudest in human, the balanced lung the quietest, adipose the exception (A358, descriptive, rho -0.6, 5 organs, below its criterion) | A297, A322, A324, A358 |
-| 4.3 A behavioural shift moves the human clock | night shift, muscle core loop +4 h, amplitude cost | A257, A335 |
-| 4.4 A systemic signal read unequally by organs | glucocorticoid-like person state explains a small part of each organ's departure | A357 |
-| 4.5 What sets an organ's gain | drive coherence (descriptive), reception, person volume; jet lag (in-house, to come) | registered 2026-11-24 |
-
-## 4.1 Intensive care quiets the tissue clocks, most where they were loudest, and keeps the organ order; brain death moves the order and keeps the amplitude
-
-(User, 2026-11-25: brain death is shown here, with intensive care, rather than at the end of the life-course order.)
-
-**Bullets**
-1. Ventilated donors with a living brain keep the fast-death organ arrangement: rho 0.690 (79 donors, 12 body
-   tissues), above the matched (0.108) and stress-responsive (0.318) 95th percentiles (A293 H293.2, pass), and within
-   sampling noise (expected 0.785, 5-95 % 0.519-0.879). Organs moved by at most 1.8 h (core 1.5 h), about the size of
-   the arrangement (1.02 h) (A374).
-2. Their clocks are quieter: clock-specific amplitude 0.82 of fast deaths (Q* +0.404, above all 200 matched sets), core
-   0.80; unchanged by age / sex matching (Q* +0.389, core +0.459) (A315 descriptive, A335). The loss rises with the
-   organ's clock strength (Spearman 0.82, 12 tissues; thyroid, oesophagus mucosa, heart lose most; A349, descriptive).
-3. Brain death moves the arrangement (rho 0.161 at 79 donors, below the responsive 95th percentile; organs moved by at
-   least 1.6 h, core 1.2 h; A317, A374) and keeps the amplitude of ventilated donors (1.02, 90 % 0.94-1.10, inside the
-   registered equivalence margin 0.84-1.20; A315 H315.1 FAIL, A335 part 3).
-4. Reading: the body's state in intensive care sets loudness; the living brain holds the order.
-
-**Figure:** `figures/intensive_care/intensive_care.png` (`scripts/intensive_care.py`; half; the panels of slide 3.last
-with two rows added, user 2026-11-25). Rows: fast deaths (reference), slow, intermediate, ventilated with a living
-brain, brain death. A. organ arrangement shared with fast deaths (clock genes; matched and responsive 95th percentiles;
-diamond: expected from sampling noise at the group's donor count, brain death at 79). B. body clock aligned to the hour
-of death, R (A27; ventilated R 0.158, p 0.14; brain death 0.174, 301 donors; A314, descriptive). C. 90 % compatibility
-interval of the organ scatter (arrow: upper bound beyond the simulated grid); dashed: the size of the arrangement.
-Amplitude (bullet 2, brain-death amplitude in bullet 3) goes to a second figure: `scripts/icu_amplitude.py` (to
-redesign).
-
-**Tags:** A293 H293.2 registered (not blind for the clock rho, companions new); brain-dead rho descriptive; A315
-descriptive contrasts (registered) and H315.1 FAIL (powered); A335 registered (core loop blind); A374 registered
-(intervals blind); A349 descriptive; amplitude display exp(Q* / 2) post hoc.
+**Figure:** `scripts/icu_amplitude.py` (to redesign with the user).
 
 **Caveats (speaker notes)**
-- Detection limit at this design: one organ must move about 6-7 h (6.75 h, 14 genes; core 5.6 h), or all organs with
-  an SD of 2.25 h, to be seen (A349). "Order kept" means no large disruption, not unchanged.
-- Offsets in ventilated donors are compressed toward 0 / 12 h by a shared non-temporal axis (A109, A132b); removing
-  it relaxes the compression from 0.58 to about 0.77 (A349 D349.4, approximate).
-- The ventilated host spread is about half that of fast deaths (A349); panel D compares at a common spread. Blood
-  "gains" (-1.95): it has no readable clock (slide 3.1b).
-- Amplitude falls with time on the ventilator among organ donors (longest vs shortest tertile Q* -0.236, 1st
-  percentile of matched sets; A315, descriptive).
-- Brain death: descriptive, inseparable from procurement in GTEx (A318 H318.2, A325, A327). Organ donors differ in RIN
-  and ischaemic time (not balanceable); the brain-death amplitude is also equivalent after age matching (A335).
-- Raw clock-plane variance is lower in organ donors, as is the matched sets' (core Q -0.186): the equivalence is
-  clock-specific, relative to random genes.
-- Deaths only; the drives are not measured (intensive care withdraws light-dark, meals and activity cycles together).
+- The ventilated host spread is about half that of fast deaths (A349); per-tissue losses are compared at a common
+  spread.
+- Raw clock-plane variance is lower in organ donors, as is the matched sets' (core Q -0.186): the brain-death
+  equivalence is clock-specific, relative to random genes; also equivalent after age matching (A335).
+- Deaths only; intensive care withdraws light-dark, meal and activity cycles together.
 
-**Source:** `exploratory/A293_organisation_levels/output/part1/groups.csv`;
-`exploratory/A374_order_interval/output/{intervals,noise_reference}.csv`;
-`exploratory/A335_review_batch/output/{a315_core,matched,equivalence}.csv`; `exploratory/A315_braindeath_gain/output/descriptive.csv`;
-`exploratory/A349_icu_limits/output/{part1_limits,part2_tissues,d4_compression}.csv`; `docs/results_preliminary.md`
-A293, A315, A317, A335, A349, A374.
+**Source:** `exploratory/A335_review_batch/output/{a315_core,matched,equivalence}.csv`;
+`exploratory/A315_braindeath_gain/output/descriptive.csv`; `exploratory/A349_icu_limits/output/part2_tissues.csv`;
+`docs/results_preliminary.md` A315, A335, A349.

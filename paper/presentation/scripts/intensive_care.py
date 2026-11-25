@@ -16,7 +16,7 @@ Status: A293 part 1 registered (H293.1 slow, H293.2 ventilated: pass; intermedia
 registered; panel B post hoc readout (A27) and descriptive (A314). GTEx aggregates only (one value per group).
 Data: exploratory/A293_organisation_levels/output/part1/groups.csv; results/figure_3/output/cues_lost/walltime_hosts.csv;
 exploratory/A314_vent_walltime/output/groups.csv; exploratory/A374_order_interval/output/{intervals,noise_reference}.csv.
-Output: presentation/figures/intensive_care/intensive_care.{svg,png} (half).
+Output: presentation/figures/intensive_care/intensive_care.{svg,png} (wide).
 
     python scripts/intensive_care.py
 """
@@ -46,7 +46,7 @@ def wall():
 def main():
     pf.use_style("slide")
     OUT.mkdir(parents=True, exist_ok=True)
-    lay = pf.Layout.slide("ABC", kind="half", col_ratios=[1, 0.8, 0.8], align="all")
+    lay = pf.Layout.slide("ABC", kind="wide", col_ratios=[1, 0.8, 0.8], align="all")
     a = arrangement(lay.axes["A"], pd.read_csv(EXP / "A293_organisation_levels/output/part1/groups.csv"),
                     pd.read_csv(EXP / "A374_order_interval/output/noise_reference.csv"), R)
     b = external(lay.axes["B"], wall(), R, W)
