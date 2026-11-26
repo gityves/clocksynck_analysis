@@ -12454,3 +12454,21 @@ times more animals (2 per time point, so time and animal are no longer confounde
 in the mouse; the baboon result is species- or design-specific.
 **Limits.** 16 tissues (fewer than the baboon's 33); Western diet; arms pooled with a stratum intercept only.
 **Code.** `exploratory/A395_baboon_timed_gain/scripts/a395.py --species mouse --stage power | score`. Aggregates only.
+
+## A399 (2026-11-26, on the user's instruction "yes" (does lymphoid content explain the quiet sheep gut?); DESCRIPTIVE, no verdict; NOT BLIND for every organ gain (A383 / A394 fits, read in the A396 discussion); BLIND for every lymphoid and plasma-cell score (none computed)): is the quiet sheep digestive tract lymphocyte dilution rather than a local cue?
+
+**Why.** In sheep the whole digestive tract ranks 17-34 of 35 in loudness while fat and liver rank 1-7; the quietest gut
+segment is the ileum (a large Peyer's patch in young sheep), and lymph node and thymus are the quietest organs.
+Lymphocytes carry no readable clock (A281, A295), so lymphoid RNA dilutes a tissue's rhythm.
+**Scores (A295 markers; fixed now).** Lymphocyte: CD3D, CD3E, CD2, CD247, MS4A1, CD79A, CD19; plasma cell: JCHAIN, MZB1.
+Per sample log((sum of counts + 0.5) / depth); per tissue the median over samples.
+**Readout.** Over the sheep peripheral tissues (A383 fit, log relative amplitude): OLS of log gain on the tissue
+lymphocyte score (and, second, on both scores); the digestive tract (rumen, reticulum, omasum, abomasum, duodenum,
+jejunum, ileum, caecum, colon, rectum) minus the other tissues in mean log gain, raw and after the regression (tissue
+residuals). Same for baboon (digestive: OES, STF, DUO, ILE, CEC, ASC, DEC) as a comparison. Sensitivity: the regression
+fitted without the lymphoid organs (lymph node, thymus, spleen, bone marrow), so that the dilution slope is not set by
+them alone.
+**Readings (stated now).** Residual gut deficit near 0: the quiet sheep gut is lymphoid dilution (composition), not a
+feeding or local cue. Deficit largely kept: composition by these markers does not explain it; a local cue (continuous
+digesta, motility) stays the candidate. Descriptive only: tissue-level, 35 tissues, marker scores are proxies.
+**Code.** `exploratory/A396_gut_feeding/scripts/a399.py`. Aggregates only.
