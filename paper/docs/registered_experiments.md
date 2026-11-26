@@ -12632,3 +12632,23 @@ or day-of-week of procurement correlated with the hour (not addressed). Sheep (A
 not recorded): stated as a limit there.
 **Stop rule.** One run (`--check` first: 2 sets, nothing written or printed beyond the V0 reproduction).
 **Code.** `paper/exploratory/A336_two_readouts/scripts/a336c_time_of_death.py`. Aggregates only (controlled access).
+
+### A401 power note (2026-11-26; `a401.py --stage power`, 90 min, peak 21.1 GB; `output/power/{counts,counts_source,matched,critical_rho,p401,p401_classes,purity,decidability,dedup,excluded,dropped}.csv`; no cancer-cell statistic computed: every gate and fit used stromal rows only)
+**Table.** A388 cohorts with the relaxed unit (47 cohorts, 411 patients), 11 GEO builds, 11 Census datasets after the
+registered drops; 64 patients removed by patient id (28 Global Atlas donors = the on-disk Pal 2021 cohort; 36 MSK
+SPECTRUM donors = SRP329496); 25 generic ids (P1, ...) not checkable and kept (stated in `dedup.csv`); overlap under
+different ids (e.g. LuCA vs on-disk lung cohorts) cannot be excluded. **Dropped by missing clock genes:**
+integratedcancerce_7b20c613 (BIOKEY; neither ARNTL nor BMAL1 in the integrated gene set) and extended18485genes_19053a82
+(no CIART); every other Census set carries the gene under its current symbol BMAL1, mapped to ARNTL.
+**Matched cancers (>= 5 patients):** BRCA 79, COAD 71, LUAD 82 (adenocarcinoma-labelled cohorts), PRAD 42, KIRC 19, THCA
+17, LIHC 17, BLCA 10 (8 cancers; critical one-sided Spearman rho 0.643). KIRP, UCEC: none.
+**P401 (implementation choice not fixed by the registration: leave-one-out needs >= 3 stromal classes with >= 5
+patients each).** Gates pass in every matched cancer (p_pairing 0.001-0.002). Leave-one-out stroma coupling beyond the
+matched sets (Stouffer z over classes, one-sided): 14 genes LUAD z 3.13, BRCA 2.28, COAD 4.84, PRAD 2.55, THCA 6.76 (pass);
+core loop COAD 1.97 and THCA 3.43 pass, LUAD 1.35, BRCA 1.28, PRAD 0.40 fail. KIRC (fibroblasts in 1 patient), LIHC
+(fibroblasts in 4) and BLCA (mural in 2) have two stromal classes: not estimable. Non-matched cancers: stomach, ovary,
+mixed lung pass on both readouts; oesophagus, pancreas, cervix on 14 genes only; LUSC fails its gate.
+**Decision (registered rule, >= 7 matched cancers passing P401):** 5 of 8 on 14 genes, 2 of 8 on the core loop:
+**H401.1 not decidable; H401.2 likewise.** The scoring run reports D401 (the per-cancer table) and the H401.1 / H401.2
+correlations descriptively, on the cancers passing P401 per readout. TCGA purity (ABSOLUTE means): LUAD 0.461, BRCA 0.585,
+COAD 0.642, PRAD 0.601, KIRC 0.549, THCA 0.695, LIHC 0.687, BLCA 0.606.

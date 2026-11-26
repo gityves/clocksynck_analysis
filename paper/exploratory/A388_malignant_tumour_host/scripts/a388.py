@@ -177,7 +177,7 @@ def qualify(G):
 
 # ---- cohort tables ---------------------------------------------------------------------------------------------------
 
-def cohort_table(study, mal_label=None):
+def cohort_table(study, mal_label=None, min_anchor=2):
     """Pooled-format table of one cohort (clock genes only; target renamed `tumour:malignant`; patients with a malignant
     pseudobulk and >= 2 anchors) with the list of all its patients (for deduplication). Returns (table, all patients,
     malignant label) or an error string."""
@@ -199,7 +199,7 @@ def cohort_table(study, mal_label=None):
         pb["compartment"] = pb.compartment.where(pb.compartment != mal, MALT)
         n_anchor = pb[pb.compartment.isin(ANCHORS)].groupby("donor").compartment.nunique()
         has_mal = set(pb[pb.compartment == MALT].donor)
-        keep = sorted(d for d in has_mal if n_anchor.get(d, 0) >= 2)
+        keep = sorted(d for d in has_mal if n_anchor.get(d, 0) >= min_anchor)
         pb = pb[pb.donor.isin(keep)]
         pb = pb[(pb.compartment == MALT) | pb.compartment.isin(ANCHORS)]
         pb["stratum"] = pb.stratum.astype(str) if "stratum" in pb else ""
@@ -279,14 +279,15 @@ def dedup(tabs, allp, inv, h138):
 
 # ---- genome-wide pseudobulks of the anchors and the malignant compartment ---------------------------------------------
 
-def genome_cohort(study, mal, pts, keep):
+def genome_cohort(study, mal, pts, keep, cache=None):
     """Genome-wide pseudobulks (donor x compartment) of the malignant and anchor compartments of `pts` of one cohort, with the
     labels of the table (copy-number calls for `tumour:malignant` cohorts, as `a149_lib.genome_epithelium`; stromal classes
     by the marker rule, as `compute_a227.genome_pair`); rows restricted to `keep` = {(patient, compartment)}."""
     limit_threads(1)
     warnings.filterwarnings("ignore")
     K.install()  # routes the A226 cohorts of `cancer_common.studies.units` (a side effect lost in loky workers)
-    f = CACHE / f"genome_{study}.parquet"
+    cache = Path(cache) if cache else CACHE
+    f = cache / f"genome_{study}.parquet"
     if f.exists():
         G = pd.read_parquet(f)
         if {(d, c) for d, c in zip(G.donor, G.compartment)} == keep:
@@ -331,7 +332,7 @@ def genome_cohort(study, mal, pts, keep):
         miss = keep - {(d, c) for d, c in zip(G.donor, G.compartment)}
         if miss:
             return study, None, f"{len(miss)} table rows have no genome row"
-        CACHE.mkdir(parents=True, exist_ok=True)
+        cache.mkdir(parents=True, exist_ok=True)
         G.to_parquet(f)
         return study, G, ""
     except Exception as e:  # noqa: BLE001
