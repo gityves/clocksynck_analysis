@@ -9487,3 +9487,51 @@ Deota 2023, 48 mice (2 per ZT and arm), 15 of 16 peripheral tissues pass the tim
   the A394 scoring run, descriptively.
 - Code: `exploratory/A394_mouse_organisation/scripts/a394.py --stage power`.
 <!-- src: paper/exploratory/A394_mouse_organisation/output/{power_a394,companions_a394}.csv -->
+
+## A394 (scored 2026-11-26; BLIND for the mouse rho and every mouse companion statistic; one scoring run): the amplitude-coupling rule holds in the mouse beyond companions (rho 0.477, p 0.032, above matched q95 0.419 and responsive q95 0.394): H394.1 passes; H394.2 not decidable (power note), not scored
+
+Deota 2023, 48 mice, 16 peripheral tissues, feeding arm as stratum, A383 estimator.
+
+| | value |
+|---|---|
+| rho (own amplitude, coupling), 16 tissues | **0.477**, permutation p 0.032 |
+| matched / responsive q95 (clock percentile) | 0.419 (97.0) / 0.394 (96.5) |
+| per arm (descriptive): ad libitum / restricted | 0.462 / 0.391 (24 mice each) |
+| median peripheral coupling: clock / matched / responsive sets | 0.938 / 0.069 / 0.185 |
+| part 2 b (descriptive), 90 % | -0.473 (-0.589 to 0.415); companions matched 0.109 (-0.198 to 0.383), responsive 0.045 (-0.245 to 0.320) |
+| own term, log(clock 2 psi / median matched 2 psi) | median 1.394; positive in 16 / 16 tissues |
+
+- **H394.1 PASSES**: the amplitude-coupling rule now holds beyond companions in four mammals (human deaths, baboon,
+  sheep, mouse; the animals healthy, after a rapid death). The mouse clock sits near the coupling ceiling (median
+  0.94; mice in light-dark sampled around the clock have a wide host spread), and the rank relation still clears both
+  companion families, at the line (96.5-97th percentile).
+- H394.2 (mouse in the organ gain ranking) was not decidable (power 0.796; 100 usable sets) and is not scored: mouse
+  is not part of the A384 claim.
+- Part 2 descriptive: b is not resolved in the mouse (interval -0.59 to 0.42, 16 tissues); the clock's own term is
+  about 4 times that of matched genes (larger than in human and baboon, about 2.7 times).
+- Code: `exploratory/A394_mouse_organisation/scripts/a394.py --stage score`.
+<!-- src: paper/exploratory/A394_mouse_organisation/output/{tests_a394,descriptive_a394,power_a394}.csv -->
+
+## A396 (run 2026-11-26; DESCRIPTIVE, no verdict; part a BLIND until this run (mouse gains), part b not blind): the sheep gut is the quiet exception; the gut of mouse and human ranks in the upper part, baboon in the middle; the intensive-care proxy is not informative (A349 covers one digestive tissue)
+
+Part a: gut loudness rank (log relative amplitude, descending) among each species' organs.
+
+| species | organs ranked | gut organs (rank) | median rank | mean percentile | gut minus other organs, mean log gain |
+|---|---|---|---|---|---|
+| mouse | 16 | stomach 13, duodenum 7, jejunum 3, ileum 6 | 6.5 | 58 | +0.24 |
+| human | 17 | stomach 9, transverse colon 8, sigmoid colon 7, oesophagus muscularis 2 | 7.5 | 66 | +0.24 |
+| baboon | 24 | STF 16, ASC 17, DEC 18, DUO 9, ILE 15, CEC 20, OES 2 | 16 | 44 | +0.09 |
+| sheep | 20 | abomasum 15, colon 18, duodenum 17, ileum 19, caecum 16 | 17 | 16 | **-0.81** |
+
+- Mouse per arm: ad libitum median rank 6.5, gut minus other +0.31; night-restricted 5.0, +0.18 (no difference
+  expected, A49).
+- **Reading (registered, descriptive):** the expectation stated in advance is met (mouse gut in the upper half, median
+  rank 6.5 of 16). The sheep gut is quieter than its other organs by about 0.8 log gain (a factor of about 2.2), while
+  in mouse and human it is louder by about 0.24 and in baboon close to the rest. Consistent with a weak feeding cue in a
+  grazing, ruminating species; diet, husbandry and the organ map (abomasum for stomach) also differ. Four species, one
+  ruminant: a pattern, not a test.
+- **Part b not informative:** A349's per-tissue intensive-care table covers 12 tissues with enough ventilated donors;
+  the only digestive tissue is oesophagus mucosa (squamous lining), and liver is absent. The registered comparison
+  against the A297 arrhythmic-feeding benchmark (extra log z2 loss 0.65, 0.47 to 0.84) cannot be made from it.
+- Code: `exploratory/A396_gut_feeding/scripts/a396.py`.
+<!-- src: paper/exploratory/A396_gut_feeding/output/{part_a,part_a_arms,part_b}.csv -->
