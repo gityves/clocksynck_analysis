@@ -12259,3 +12259,13 @@ otherwise reported descriptively.
 linear approximation (bulk = share-weighted sum of compartment loadings), ignoring compartments not measured.
 
 **Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A391_proliferation_cells/scripts/a391.py`.
+
+### A391 power note (2026-11-26; `a391.py --stage power`, `output/power/{proliferation_index,arms,counts,power_reps,power_curve}.csv`; no arm contrast of a real clock quantity; the run was killed for memory (34.7 GB) while building the companion genome tables, after the power curve was written)
+Labels: 70 patients in 14 cohorts with a malignant pseudobulk in the A388 tables and a normal-stroma host (high 37 / low
+33); per arm, tumour fibroblasts 28 / 25, endothelium 37 / 33, cancer cells 27 / 24. Power of the one-sided loudness test
+(40 replicates per point, labels permuted within cohort, 200 permutations; a replicate with an undefined log z2 ratio,
+i.e. an arm's z2 truncated at 0, counts as not detected: fibroblasts 1-10 of 40 per point): at the A304 bulk size
+(amplitude 0.63, log z2 -0.92) **tumour fibroblasts 0.125 (14 genes) / 0.150 (core), endothelium 0.475 / 0.200**; at
+amplitude 0.5: fibroblasts 0.25 / 0.075, endothelium 0.70 / 0.35. **H391.1 and H391.2 are not decidable** (registered
+rule: power >= 0.8 at 0.63). By the registration both are reported descriptively; the companion comparators are built in
+the descriptive scoring run with one genome worker (memory). D391.2 (bulk accounting) is descriptive by design and is run.
