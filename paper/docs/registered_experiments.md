@@ -12367,6 +12367,12 @@ sheep tissue mix differs; animals with more tissues than a GTEx donor are capped
 untimed (phase harmonics absorb a radius-phase relation; a shared daily amplitude rhythm is not separable).
 **Code.** `exploratory/A385_sheep_person/scripts/a385b.py --stage power | check | score`. Aggregates only (GTEx:
 leverages only).
+**Deviation (2026-11-26, user: "let's test both on the core clock and on the full set, knowing that we had power of 0.70
+for the core clock only"; decided after the power note, before any sheep clock leverage was computed).** Scored despite
+the failed gate, with the design the registration chose (D1). Power on the core loop min(P_a, P_b) = 0.70; on 14 genes
+0.95. Both readouts are read with the registered criteria (> 0, sheep-permuted p < 0.05 within project, above both sheep
+companion q95). Reading fixed now: a core-loop pass is informative; a core-loop fail is not (GTEx's own factor fails in 30 %
+of thinned replicates). Still BLIND for every sheep clock leverage. Reported as a deviation.
 
 ## A395 (2026-11-26, on the user's instruction "yes go ahead" (item 8 of the comparative list: a timed version of the gain argument, baboon); staged: power (organs passing the timed precondition, organ-bootstrap SE of the slopes; no slope printed), then one scoring run; **NOT BLIND**: A383 (baboon untimed b -0.035, -0.224 to 0.146; companions b median 0.21 / 0.01), A330 / A36 timed gains |g| of 18 baboon organs (precondition: 17 pass), A289 baboon peripheral line; **BLIND**: every timed own noise psi of a baboon organ (no entry in `results_preliminary.md`; grep "timed psi", "timed own" empty, 2026-11-26), every slope below): with known sampling times, does an organ's own (unshared) clock noise grow with its gain?
 
