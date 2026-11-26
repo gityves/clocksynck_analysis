@@ -1,7 +1,7 @@
 """A385d (descriptive check of A385b, registered 2026-11-26): does the A385b design protect the sheep person leverage
 against a waveform mismatch under working-hours sampling, and does the sheep value depend on the waveform?
 
-Part 1 (simulation of the sheep D1 design): clock-gene counts redrawn with true phases in windows of 4-24 h per project,
+Part 1 (simulation of the sheep design, every animal; D1 reads the big projects): clock-gene counts redrawn with true phases in windows of 4-24 h per project,
 truth T0 (human waveform) or T1 (A400c mouse pattern), with or without a person factor; read with the human waveform and
 the A385b D1 statistic. Part 2 (real sheep): D1 leverage with the sheep read by the human (H), baboon (B, fitted on
 Mure 2018 with ZT) and mouse (Mo, A400c Mf) waveforms; sheep-permuted null; 50 + 50 companions per waveform.
@@ -157,8 +157,7 @@ def main():
     sets = {k: pseudo_waveforms(lm, N_SETS, np.random.default_rng([385, t]), M.WF, kind=k)[:n]
             for k, t in (("matched", 2), ("responsive", 3))}
     genes = sorted({g for ws in sets.values() for w in ws for g in w.genes} | set(GENES))
-    big = project.index[project.map(project.value_counts()) >= M.MIN_PROJECT]
-    sim = sheep[sheep.donor.isin(big)][M.META + GENES].reset_index(drop=True)
+    sim = sheep[M.META + GENES].reset_index(drop=True)  # every animal: hosts as in A385b; D1 reads the big projects
     lf = pd.DataFrame(log_frac(sim), columns=GENES)
     key = sim.compartment.astype(str) + "|" + sim.stratum.astype(str)
     wf = {"H": M.WF, "B": baboon_waveform(), "Mo": mouse_waveform()}
@@ -189,7 +188,7 @@ def main():
     sim_rows = C[C.truth.notna()] if "truth" in C else C.iloc[:0]
     sw = C[C.waveform.notna()]
     h = sw[(sw.kind == "clock") & (sw.waveform == "H")].set_index("readout").leverage
-    print(f"A385b reproduction (H): 14 genes {h['14 genes']:.4f} vs 0.5581; core {h['core']:.4f} vs 0.3163", flush=True)
+    print(f"A385b reproduction (H): 14 genes {h['14 genes']:.4f} vs 0.5577; core {h["core"]:.4f} vs 0.3159", flush=True)
     failed = int(C.error.notna().sum()) if "error" in C else 0
     if a.check:
         print(f"check ok; failed {failed}", flush=True)

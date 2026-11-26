@@ -12746,3 +12746,7 @@ which direction to trust. The core loop is reported the same way (A385b: 0.316, 
 **Limits.** Simulated tissues share one gain and no tissue phase offsets; the sheep slaughter window is unknown (hence
 the width grid); neither baboon nor mouse is a ruminant.
 **Code.** `paper/exploratory/A385_sheep_person/scripts/a385d.py`. Aggregates only.
+**Note 1 (2026-11-27, before any value; check run):** Part 1 simulates every sheep animal (not only the D1 projects),
+so that the hosts are built as in A385b (anchors absent from the big projects, e.g. adrenal, made the D1-only table
+unreadable); the D1 statistic still reads the projects with >= 30 animals. The check reproduced A385b exactly (0.5577 /
+0.3159).
