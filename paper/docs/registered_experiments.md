@@ -12539,3 +12539,20 @@ q95: the measured glucocorticoid state explains the 14-gene person loudness in s
 artefact). It barely moves (stays above the adjusted companion q95): the shared loudness is not the measured GC / IEG
 state. In between: partly. The scores are proxies: "not explained by the measured state" does not exclude a GC role.
 **Code.** `exploratory/A385_sheep_person/scripts/a385c.py`. Aggregates only.
+
+## A400b (2026-11-26, on the user's instruction "can you check if it is explained by phases, or other sources that would add confounders?"; DESCRIPTIVE CHECK of A400, one run; **NOT BLIND**: A400 (core 0.467, 14 genes 0.786; companions); **BLIND**: every adjusted leverage): is the mouse shared clock loudness a time-of-day, sampling or technical effect?
+
+**Concerns.** (1) Sampling time: mice were killed at 12 ZTs (2 per ZT and arm); if the radius of the clock state depends on
+time of day (a non-sinusoidal waveform, or a daily rhythm of the clock genes' amplitude), the two half-hosts of a
+mouse share it. A400 removed only two harmonics of the estimated phase. (2) Technical: library depth shared by a
+mouse's tissues (processed together). (3) Feeding arm (in A400 already).
+**Variants (radii residualised on the A400 terms plus):** V1: harmonics 1-4 of the recorded ZT; V2: ZT x arm cell
+indicators (24 cells of 2 mice: only differences between mice sampled at the same time and arm remain); V3: the mouse's
+median log depth and each half's median log depth; V4: V2 + V3. Unadjusted (V0) reproduces A400 first.
+**Reported per variant and readout (14 genes, core):** the clock leverage, its mice-permuted p (1,000 within arm, seed
+[400, 4]), the q95 of 100 companion sets (first 50 matched and 50 responsive A400 sets) adjusted the same way.
+Descriptive: R^2 of each half-host radius on the ZT x arm cells (how much of the radius is time of day).
+**Readings (stated now).** The core leverage stays above the adjusted companion q95 under V2 and V4: the shared loudness
+is not time of day, sampling cell or depth. It falls to the companions: A400 was carried by sampling time or depth.
+V2 leaves 24 residual degrees of freedom: a fall in size with a wide null is reported as "not decided".
+**Code.** `exploratory/A400_mouse_person/scripts/a400b.py`. Aggregates only.
