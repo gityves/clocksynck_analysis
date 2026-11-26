@@ -12269,3 +12269,51 @@ i.e. an arm's z2 truncated at 0, counts as not detected: fibroblasts 1-10 of 40 
 amplitude 0.5: fibroblasts 0.25 / 0.075, endothelium 0.70 / 0.35. **H391.1 and H391.2 are not decidable** (registered
 rule: power >= 0.8 at 0.63). By the registration both are reported descriptively; the companion comparators are built in
 the descriptive scoring run with one genome worker (memory). D391.2 (bulk accounting) is descriptive by design and is run.
+
+## A394 (2026-11-26, on the user's instruction "yes go ahead" (add mouse to the amplitude-coupling rule and to the organ gain ranks, after A383 / A384); staged: power (mouse counts, a mouse clock fit with 200 animal bootstraps read for standard errors and counts only, mouse companion statistics, analytic and simulated power; no mouse clock coupling, amplitude, gain or correlation printed), then one scoring run only for the hypotheses whose gate passes; **NOT BLIND**: every A383 / A384 result (human, baboon, sheep: rho 0.745 / 0.503 / 0.629; organ gains and ranks, `gains_a384.csv`; T 0.386), the archive A48 / A49 Deota and Wolff outputs (per-tissue untimed couplings on a brain host per feeding arm, e.g. adrenal 0.85 / 0.86; timed R^2 and timed gains per tissue and arm; A48: untimed coupling tracks timed R^2 per tissue in Wolff); **BLIND**: the Spearman of own amplitude and coupling over the mouse periphery on the peripheral-anchor setup, every mouse companion statistic, every cross-species correlation involving mouse): do mice show the amplitude-coupling rule beyond companions, and do mouse organs rank their gain as the other three species do?
+
+**Why.** A383 / A384: in human deaths, a living primate and sheep, organs with a stronger clock are more coupled to the
+body's clock state beyond companions, and the organ gain ranking is shared across species (carried by the two living
+species). The mouse is the reference species of circadian biology; a reader will ask for it. Deota 2023 (GSE190389) is
+the one mouse atlas on disk with many organs per animal: 48 mice (2 per ZT x 12 ZT x 2 feeding arms, Western diet ad
+libitum or 9 h night-time restricted), up to 22 tissues per mouse, 16 peripheral.
+**Data and fit (A383 estimator).** `common/datasets/mouse_ageing_deota` (raw counts, donor = mouse, stratum = feeding
+arm); mouse symbols matched by `clocksync.genes.canonical` (A48 convention); peripheral tissues = the 16 non-brain
+tissues kept by the builder's `tissue_qc`; brain regions (6) are targets only. `Dataset.fit(n_boot=0, gate=False)`,
+peripheral tissues as anchors read leave-one-out, arm as stratum (tissue x arm intercepts), clock = the 14 genes on the
+GTEx waveform. Sampling times are not used.
+**H394.1 (A383 part 1 in mouse).** rho = Spearman(own amplitude, coupling) over the peripheral tissues with both
+defined. Passes if rho > 0 with one-sided tissue-permutation p < 0.05 (10,000, seed [394, 1]) and rho above the 95th
+percentile of both mouse companion families (200 expression-matched, 200 responsive; `pseudo_waveforms` on the mouse
+mean log fraction, seeds [394, 2] and [394, 3]).
+**H394.2 (A384 with mouse).** Mouse log gain = `log_amp_rel` of the fit above. Organ map (added column, fixed now):
+Stomach, eWAT (visceral; epididymal, approximate for omentum / caul), iWAT (subcutaneous), Adrenal, Heart, Kidney cortex,
+Liver, Lung, Muscle mapped to the A384 rows of these organs; Duodenum, Ileum, Spleen to the baboon-sheep rows; new
+baboon-mouse rows PAN / Pancreas and KIM / Kidney medulla; BAT and Jejunum unmapped. Organs shared: human 9, baboon 14,
+sheep 12. T_m = mean of the three Spearman correlations of mouse with human, baboon and sheep (each over the organs the
+pair shares; the other species' gains are the A384 values). Null: mouse gains permuted over its mapped organs (10,000,
+seed [394, 4]). Companions: the A384 matched sets (`sets_a384.csv`) whose 14 genes are all present in the mouse table,
+fitted in mouse; their human, baboon and sheep gains are the stored A384 fits (`companion_fits.csv`, family a384).
+Passes if T_m > 0 with p < 0.05 and above the companions' 95th percentile (at least 150 usable sets; otherwise not
+decidable).
+**Reported.** Each mouse pairwise rho with its own permutation p and companion q95; per feeding arm (24 mice each), rho
+of H394.1 (descriptive); mouse A383 part 2 (b, 2000 tissue bootstraps, companion band) and own-term ratio
+(descriptive); the median peripheral coupling of the clock and of the companions (ceiling check: mice sampled around
+the clock in light-dark have a wide host spread).
+**Power stage and gates (committed before scoring).** Mouse peripheral tissues with both readouts; companion rho
+(H394.1) of the 400 sets and their median couplings; analytic power of H394.1 at a true rho of 0.6 against the larger
+companion q95 (Spearman SE sqrt(1.06 / (n - 3)), Fisher scale). H394.2: simulated power as A384 (latent organ factor
+shared between mouse and each other species at correlation 0.6; true log-gain SD from GTEx over the mapped organs; each
+species' bootstrap SE of log gain, mouse from the 200-bootstrap fit; 2000 simulations, 500 permutations of the mouse
+gains). Gate: power >= 0.8 for each hypothesis separately; a hypothesis below it is not decidable at this design and is
+not scored (it is reported as such: "the mouse atlases share too few organs / tissues").
+**Readings (stated now).** H394.1 pass: the amplitude-coupling rule holds in four mammals including the laboratory
+mouse under light-dark. Fail against a companion family: in the mouse, the rule is shared with that family (the timed
+design makes many genes rhythmic through feeding). H394.2 pass: mouse organs rank their gain as the other species do;
+the organ factor is conserved across four mammals. Fail with power: mouse gain ranks differ (laboratory light-dark,
+nocturnal feeding, Western diet), and the conserved ranking of A384 is not general to rodents.
+**Limits.** Western diet in both arms; nocturnal species; lab light-dark with sampling around the clock (the host spread
+is set by the design, not by inter-individual differences); 16 peripheral tissues bound the precision of H394.1; organ
+matching approximate (epididymal fat for omentum, muscle site, mouse adrenal includes medulla); A49 per-tissue values
+were seen on another setup (brain host).
+**Code.** `exploratory/A394_mouse_organisation/scripts/a394.py --stage power | check | score`. Aggregates only.
