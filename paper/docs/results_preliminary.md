@@ -9535,3 +9535,24 @@ Part a: gut loudness rank (log relative amplitude, descending) among each specie
   against the A297 arrhythmic-feeding benchmark (extra log z2 loss 0.65, 0.47 to 0.84) cannot be made from it.
 - Code: `exploratory/A396_gut_feeding/scripts/a396.py`.
 <!-- src: paper/exploratory/A396_gut_feeding/output/{part_a,part_a_arms,part_b}.csv -->
+
+## A394 H394.2 (scored 2026-11-26 as a registered DEVIATION: below its gates, power 0.796 and 100 companion sets; NOT BLIND, the mouse gains had been printed beside the other species' gains): mouse organs do not rank their loudness as human, baboon and sheep organs do (T_m 0.172, p 0.21, below the matched q95 0.373): fails
+
+| pair | organs | Spearman rho | permutation p (mouse permuted) | matched q95 |
+|---|---|---|---|---|
+| mouse-human | 9 | 0.200 | 0.305 | 0.584 |
+| mouse-baboon | 14 | 0.275 | 0.168 | 0.526 |
+| mouse-sheep | 12 | 0.042 | 0.452 | 0.665 |
+| **T_m (mean)** | | **0.172** | **0.210** | **0.373** (clock at the 76th percentile of 100 sets) |
+
+- **Fails** (registered criteria applied at the user's accepted power). Registered reading: mouse gain ranks differ
+  (laboratory light-dark, nocturnal feeding, Western diet), and the conserved ranking of A384 is not general to
+  rodents at this size. With 0.796 power at a latent organ correlation of 0.6, a fail argues against a shared ranking
+  that strong; a weaker one (as human-baboon, 0.375) is not excluded.
+- Descriptive (A396): the mouse gut is loud (small intestine ranks 3-7 of 16), the sheep gut quiet; mouse liver ranks 1
+  of 16 (log gain 0.86) and adrenal 11 (0.45), against human ranks 6 and 13 of 17. Organ-specific species differences (feeding, nocturnality)
+  are candidates, not tested.
+- Consequence for the wording: the loudness ranking is shared by baboon and sheep (and weakly with human), not by
+  the laboratory mouse; the coupling rule (H394.1) holds in all four.
+- Code: `exploratory/A394_mouse_organisation/scripts/a394.py --stage score --h394-2-deviation`.
+<!-- src: paper/exploratory/A394_mouse_organisation/output/{tests_a394_deviation,pairs_a394_deviation,companions_a394}.csv -->
