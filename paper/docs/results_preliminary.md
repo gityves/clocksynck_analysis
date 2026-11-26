@@ -9452,3 +9452,17 @@ Deota 2023, 48 mice (2 per ZT and arm), 15 of 16 peripheral tissues pass the tim
   the untimed version (A383 part 2) holds in three species but random gene sets share it.
 - Code: `exploratory/A395_baboon_timed_gain/scripts/a395.py --species mouse --stage score`.
 <!-- src: paper/exploratory/A395_baboon_timed_gain/output/mouse/tests.csv -->
+
+## Within-tissue proliferation and loudness (A398 scout; 2026-11-26; no clock quantity computed): not registered
+
+- Scout (`exploratory/A398_proliferation_gain/scripts/scout.py`; GTEx fast deaths, 27 peripheral tissues, Hallmark G2M
+  score without clock genes): within-tissue SD of the log score 0.05 (tibial nerve) to 0.34 (heart LV), 10-90 % fold
+  1.12 to 2.20; split-half reliability 0.91 to 0.996 (a real signal).
+- But it tracks immune and stromal content and RNA quality (Spearman with the lymphocyte score up to 0.62, transverse
+  colon; stromal up to 0.72, kidney cortex; RIN up to 0.60, heart LV), and marks lesions: samples with lesions in the
+  pathology notes score higher (thyroid inflammation +1.44 SD, skeletal muscle fibrosis / atrophy +1.33, liver fibrosis
+  +0.78; inflammation in liver, prostate, oesophagus mucosa, lung +0.30 to +0.50).
+- Decision (user, 2026-11-26): not registered. Even after removing immune and stromal content, higher proliferation in a
+  healthy tissue is likely driven by inflammation, which also quietens clocks (chronic lesions), so a clean
+  proliferation-loudness link cannot be isolated. The tumour result (A304) stays a tumour result.
+<!-- src: paper/exploratory/A398_proliferation_gain/output/scout/{tissues,pathology}.csv -->
