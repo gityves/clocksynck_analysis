@@ -12472,3 +12472,33 @@ them alone.
 feeding or local cue. Deficit largely kept: composition by these markers does not explain it; a local cue (continuous
 digesta, motility) stays the candidate. Descriptive only: tissue-level, 35 tissues, marker scores are proxies.
 **Code.** `exploratory/A396_gut_feeding/scripts/a399.py`. Aggregates only.
+
+## A400 (2026-11-26, on the user's instruction "go ahead with this" (mouse person loudness, the companion of A385b); staged: power (GTEx thinned to the mouse design; mouse companions; no mouse clock leverage), then one scoring run only if the gate passes; **NOT BLIND**: A336 part 2 (GTEx 0.765 / core 0.714; matched q95 0.621, responsive q95 0.725 / 0.692), A331, the A385 power stage, A394 (mouse clock fits: tissue-level only, no per-mouse host radius read), A397 (per-mouse phase departures computed inside the fit, not read); **BLIND**: every mouse clock leverage and every half-host radius): do mice differ in a clock loudness shared by their organs beyond companions?
+
+**Why.** Slide 3.5 (persons differ in a body-wide clock loudness) rests on GTEx deaths (MuTHER at the line); A385 was not
+decidable in sheep (thin sampling), A385b is running. Deota 2023 has 48 mice with 15-16 peripheral tissues each, so each
+half-host carries about 8 tissues of every animal. Inbred mice in one facility on one diet: a shared loudness would be
+neither genetic nor environmental in the usual sense.
+**Statistic (A385 / A385b leverage).** 20 random halvings of the 16 peripheral tissues (seed [400, 1]); per halving the two
+half-host radii of the mice present in both, residualised on two phase harmonics of both half-host phases, log tissue
+count per half and the feeding arm (indicator); correlation; median over halvings. `Dataset` on the 16 peripheral
+anchors, arm as stratum (A394 setup). 14 genes and core loop (claim on the core loop, A336 rule).
+**Companions.** 200 matched and 200 responsive mouse sets (the A394 sets: `pseudo_waveforms` seeds [394, 2] / [394, 3]),
+the same statistic; core readout on their core positions.
+**GTEx thinned to the mouse design (power).** 244 fast deaths, 27 peripheral tissues; replicate r (seed [400, 2, r]): each
+mouse is assigned a distinct GTEx donor with at least as many peripheral tissues (drawn at random) and keeps that many
+random tissues of the donor; the pseudo-animal takes the mouse's arm. Same statistic (A336 halvings of the 27 tissues).
+Clock: 40 replicates. Companions: the A336 sets (first 100 matched, 100 responsive), one replicate each.
+**Powers and gate (as A385b).** P_a = share of thinned-GTEx clock replicates above the larger thinned-GTEx companion q95;
+P_b = share above the larger mouse companion q95. Gate: min(P_a, P_b) >= 0.8 on the core loop; otherwise not decidable,
+reported with the thinned-GTEx clock median (the quantified limit).
+**H400.1 (core loop, scored only if the gate passes).** Mouse clock leverage > 0, mice-permuted p < 0.05 (1,000
+permutations of the B-half mice within arm; seed [400, 3]) and above the q95 of both mouse companion families. 14 genes
+reported with the same criteria.
+**Readings (stated now).** Pass: genetically identical mice in one facility differ in a clock loudness shared by their
+organs beyond companions: the person factor of slide 3.5 is general physiology, not a GTEx artefact, and not genetic.
+Fail with power: absent in inbred mice at a GTEx-sized effect; the human factor may be genetic, environmental or
+death-related. Not decidable: stated with the thinned-GTEx numbers.
+**Limits.** 48 animals; mice sampled around the clock (phases uniform; harmonics absorb a radius-phase relation); two
+feeding arms (indicator only); a rapid death, not living animals; GTEx thinning keeps GTEx's tissues.
+**Code.** `exploratory/A400_mouse_person/scripts/a400.py --stage power | check | score`. Aggregates only.
