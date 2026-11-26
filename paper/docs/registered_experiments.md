@@ -12508,6 +12508,10 @@ death-related. Not decidable: stated with the thinned-GTEx numbers.
 **Limits.** 48 animals; mice sampled around the clock (phases uniform; harmonics absorb a radius-phase relation); two
 feeding arms (indicator only); a rapid death, not living animals; GTEx thinning keeps GTEx's tissues.
 **Code.** `exploratory/A400_mouse_person/scripts/a400.py --stage power | check | score`. Aggregates only.
+**Deviation (2026-11-26, user: "yes go ahead let's score it"; decided after the power note, before any mouse clock
+leverage was computed).** Scored despite the failed gate: core power min(P_a, P_b) 0.35, 14 genes 0.875. Both readouts
+read with the registered criteria. Reading fixed now: a core-loop pass is informative, a core-loop fail is not; the
+14-gene readout is decidable. Still BLIND for every mouse clock leverage. Reported as a deviation.
 
 ### Numbering note (2026-11-26, slide / cancer agent): numbers used outside this registry
 A390 (`exploratory/A390_class_relay/`), A392 (`A392_stroma_replication/`) and A393 (`A393_metastasis/`) are feasibility

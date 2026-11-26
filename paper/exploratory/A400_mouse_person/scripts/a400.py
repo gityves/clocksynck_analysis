@@ -178,10 +178,10 @@ def power(n_jobs, check):
     print(P.round(3).to_string(index=False), f"\n({time.time() - t0:.0f}s)")
 
 
-def score():
+def score(deviation=False):
     limit_threads(1)
     P = pd.read_csv(OUT / "power.csv")
-    if not bool(P.gate.iloc[0]):
+    if not bool(P.gate.iloc[0]) and not deviation:
         print("gate failed in the power stage: not scored (registered)")
         return
     pb, per, _ = M.mouse_table()
@@ -200,8 +200,8 @@ def score():
                          null_q95=q95(null), mouse_matched_q95=p.mouse_matched_q95,
                          mouse_responsive_q95=p.mouse_responsive_q95,
                          passes=bool(lev > 0 and pv < 0.05 and lev > p.mouse_companion_q95)))
-    T = pd.DataFrame(rows)
-    T.to_csv(OUT / "tests.csv", index=False)
+    T = pd.DataFrame(rows).assign(deviation=bool(deviation))
+    T.to_csv(OUT / ("tests_deviation.csv" if deviation else "tests.csv"), index=False)
     print(T.round(4).to_string(index=False))
 
 
@@ -210,9 +210,11 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--stage", choices=["power", "check", "score"], required=True)
     ap.add_argument("--jobs", type=int, default=6)
+    ap.add_argument("--deviation", action="store_true",
+                    help="score despite the failed gate (user decision 2026-11-26; registered deviation)")
     a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
-    score() if a.stage == "score" else power(a.jobs, a.stage == "check")
+    score(a.deviation) if a.stage == "score" else power(a.jobs, a.stage == "check")
 
 
 if __name__ == "__main__":
