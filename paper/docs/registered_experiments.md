@@ -12512,9 +12512,9 @@ feeding arms (indicator only); a rapid death, not living animals; GTEx thinning 
 ### Numbering note (2026-11-26, slide / cancer agent): numbers used outside this registry
 A390 (`exploratory/A390_class_relay/`), A392 (`A392_stroma_replication/`) and A393 (`A393_metastasis/`) are feasibility
 checks only (counts, no clock statistic; not feasible, see `paper/docs/NIGHT_RUN_2026-11-26.md`) and are not registered;
-do not reuse these numbers. A401-A404 are reserved for the drafts in `paper/docs/drafts/DRAFT_A401-A404_2026-11-26.md`
+do not reuse these numbers. A401-A405 are reserved for the drafts in `paper/docs/drafts/DRAFT_A401-A404_2026-11-26.md` (A405: immunotherapy, descriptive)
 (cancer timekeeping across cancers; immune state vs internal time; tumour clock loudness vs immune state; immune
-compartments on the full model). The feasibility folder `exploratory/A394_cancer_timekeeping/` belongs to A401 and will
+compartments on the full model). The feasibility folder `exploratory/A401_cancer_timekeeping/` belongs to A401 and will
 be renamed once its agents finish (A394 is the lead's mouse organisation amendment).
 
 ## A385c (2026-11-26, on the user's instruction "yes go ahead" after asking whether the sheep person loudness could be the glucocorticoid released around death; DESCRIPTIVE CHECK of A385b, staged as one run; **NOT BLIND**: A385b (D1: 14 genes 0.558, core 0.316; companions), A386 (14-gene volume rises with the GC-target state, +0.147; core -0.051; systemic partial R^2 0.036); **BLIND**: every leverage after the GC / IEG adjustment): does the animal's glucocorticoid-target state explain the sheep shared clock loudness?
