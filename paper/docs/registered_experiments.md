@@ -12652,3 +12652,24 @@ mixed lung pass on both readouts; oesophagus, pancreas, cervix on 14 genes only;
 **H401.1 not decidable; H401.2 likewise.** The scoring run reports D401 (the per-cancer table) and the H401.1 / H401.2
 correlations descriptively, on the cancers passing P401 per readout. TCGA purity (ABSOLUTE means): LUAD 0.461, BRCA 0.585,
 COAD 0.642, PRAD 0.601, KIRC 0.549, THCA 0.695, LIHC 0.687, BLCA 0.606.
+
+### A401 note 1 (2026-11-26, on the user's instruction "yes go ahead", after the power note (not decidable) and before any cancer-cell value of the added data or any bulk pairing of the added TCGA projects is computed): more cancers and a two-class precondition
+**(a) Bulk side, new TCGA projects.** The A138 H138.4 statistic (`q3_lib` / `_shared` path: tumour and own-patient
+solid-tissue-normal recount3 samples, one projector, Poisson-corrected |complex correlation|, pairing null 10,000, gate of
+the normals by the A52 rule) is computed for STAD, ESCA, LUSC and HNSC (paired TCGA samples on disk; never computed:
+blind). A project enters the matched set if its normals pass the gate (as A138) and it has >= 10 pairs. Mapping: stomach
+STAD, oesophagus ESCA (all histologies pooled, as TCGA), lung squamous LUSC (single-cell cohorts labelled squamous), head
+and neck HNSC. The A83 clock-shaped share (H401.2) for these projects is computed the same way as A83 (all primaries),
+also blind.
+**(b) P401 for cancers with two stromal classes** (KIRC, LIHC, BLCA, and any added cancer in that case): the pairwise
+coupling of the two classes within the tumour (complex cross-moment pooled over the cancer's cohorts before the modulus,
+A387 Part 1 form) standardised against the same statistic for the 200 matched sets (z, one-sided p < 0.05), with the
+anchors-only gate as before. Cancers with >= 3 classes keep the leave-one-out form.
+**(c) Decidability on 14 genes.** The test H401.1 is decidable if >= 7 matched cancers pass P401 on 14 genes; the core
+loop is reported beside it on the cancers passing P401 on the core loop (descriptive if fewer than 7), and the wording
+follows the core loop only where it is decidable. Reason (stated before any value): the core-loop failures of P401 in
+LUAD, BRCA and PRAD (z 1.35, 1.28, 0.40) sit where the 14-gene values pass (3.13, 2.28, 2.55), as a precision loss from
+three fewer genes would (CLAUDE gene-drop rule).
+**(d) Breast adds BIOKEY** (Bassez 2021, 3CA copy with ARNTL; `$SCCC_DATA/bassez2021_3ca/`), pre-treatment biopsies only
+(the on-treatment ones follow one anti-PD-1 dose); its CELLxGENE copy stays excluded.
+The power stage is rerun with (a)-(d) and noted before scoring.
