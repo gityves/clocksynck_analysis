@@ -9534,6 +9534,13 @@ Part a: gut loudness rank (log relative amplitude, descending) among each specie
   the only digestive tissue is oesophagus mucosa (squamous lining), and liver is absent. The registered comparison
   against the A297 arrhythmic-feeding benchmark (extra log z2 loss 0.65, 0.47 to 0.84) cannot be made from it.
 - Code: `exploratory/A396_gut_feeding/scripts/a396.py`.
+- **Correction to the reading (2026-11-26, after the user asked why the gut helps the baboon-sheep rank agreement).**
+  The baboon gut summary (+0.09, median rank 16) is lifted by oesophagus (rank 2) and duodenum (9); the lower gut organs
+  the baboon shares with sheep rank low in both (baboon / sheep: stomach 16 / 15, colon 17 / 18, ileum 15 / 19, caecum
+  20 / 16; duodenum 9 / 17), which is why they raise the rank agreement. Sheep differ in magnitude (gut -0.81 log gain
+  below the other organs), not in rank. "Gut quieter than the rest" is therefore not specific to the grazing ruminant;
+  the size of the drop is. Feeding pattern, the sampled wall layers (GTEx sigmoid = muscularis, transverse = full
+  thickness; whole wall in the animal atlases) and species biology all remain open.
 <!-- src: paper/exploratory/A396_gut_feeding/output/{part_a,part_a_arms,part_b}.csv -->
 
 ## A394 H394.2 (scored 2026-11-26 as a registered DEVIATION: below its gates, power 0.796 and 100 companion sets; NOT BLIND, the mouse gains had been printed beside the other species' gains): mouse organs do not rank their loudness as human, baboon and sheep organs do (T_m 0.172, p 0.21, below the matched q95 0.373): fails
