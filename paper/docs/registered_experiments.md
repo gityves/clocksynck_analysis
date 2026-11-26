@@ -12317,6 +12317,11 @@ is set by the design, not by inter-individual differences); 16 peripheral tissue
 matching approximate (epididymal fat for omentum, muscle site, mouse adrenal includes medulla); A49 per-tissue values
 were seen on another setup (brain host).
 **Code.** `exploratory/A394_mouse_organisation/scripts/a394.py --stage power | check | score`. Aggregates only.
+**Deviation (2026-11-26, user: "let's keep the 0.796 as a good enough power"; decided after the power note, before any
+H394.2 statistic was computed).** H394.2 is scored despite its gates: power 0.796 (< 0.8) and 100 usable A384 companion
+sets (< 150; their q95 is less precise). **NOT BLIND**: the mouse gains were printed beside the human, baboon and sheep
+gains in the A394 scoring run and in A396 (no correlation computed). Everything else as registered (T_m, 10,000 mouse
+permutations, seed [394, 4], companion q95 over the usable sets). Reported as a deviation.
 
 ## A385b (2026-11-26, on the user's instruction "yes go ahead" after asking why A385 was not decidable and whether the GTEx person factor could be shown not to be a GTEx artefact; a redesign of A385 with a calibrated gate; staged: power (GTEx thinned to the sheep design; sheep companions under each candidate design; no sheep clock leverage), then one scoring run only if the gate passes; **NOT BLIND**: the A385 power stage (sheep companion leverages under the A385 design: matched median / q95 0.195 / 0.512 on 14 genes, 0.180 / 0.540 core; responsive q95 0.428 / 0.388; L80 0.64 / 0.66; 4 projects with >= 30 animals; sum n - 3 = 164) and the sheep tissue counts per animal and project (read 2026-11-26: median 5 tissues per animal; >= 8 tissues: 133 animals in 6 projects; >= 12: 108 in 5); A336 part 2 (GTEx fast deaths: clock leverage 0.765 / core 0.714; matched q95 0.621 / 0.621, responsive q95 0.725 / 0.692); A331 (MuTHER 0.177, core 0.107); A386 (sheep full-host radii entered a regression on the GC state; only its coefficients were read, no radius of a half-host and no leverage); **BLIND**: every sheep clock leverage under any design): do sheep differ in a clock loudness shared by their organs beyond companions, with a design whose power is calibrated on the GTEx person factor itself?
 

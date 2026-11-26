@@ -262,7 +262,7 @@ def check(n_jobs):
           f"({time.time() - t0:.0f}s)", sep="\n")
 
 
-def score():
+def score(deviation=False):
     limit_threads(4)
     t0 = time.time()
     P = pd.read_csv(OUT / "power_a394.csv", index_col=0).value
@@ -270,6 +270,10 @@ def score():
     pb, per, brain = mouse_table()
     tab = pd.read_csv(OUT / "mouse_fit.csv", index_col="tissue")
     S = pd.read_csv(OUT / "companions_a394.csv")
+    if deviation:  # H394.2 scored below its gates; companion statistics recomputed with the fixed columns
+        gate2 = True
+        S = companion_stats(pd.read_csv(OUT / "mouse_companion_fits.csv"), per, others())
+        S.to_csv(OUT / "companions_a394.csv", index=False)
     tests, pairs, desc = [], [], []
     # H394.1
     r, t = B.rho(tab, per)
@@ -330,8 +334,9 @@ def score():
                        "sheep": [o[2] for o in ORGANS], "mouse": MOUSE_KEYS, "log_gain_mouse": m,
                        **{f"log_gain_{sp}": G[sp] for sp in OTHERS}})
     T_, Pp, D = pd.DataFrame(tests), pd.DataFrame(pairs), pd.DataFrame(desc)
-    T_.to_csv(OUT / "tests_a394.csv", index=False)
-    Pp.to_csv(OUT / "pairs_a394.csv", index=False)
+    sfx = "_deviation" if deviation else ""
+    T_.to_csv(OUT / f"tests_a394{sfx}.csv", index=False)
+    Pp.to_csv(OUT / f"pairs_a394{sfx}.csv", index=False)
     D.to_csv(OUT / "descriptive_a394.csv", index=False)
     gt.to_csv(OUT / "gains_a394.csv", index=False)
     pd.set_option("display.width", 250)
@@ -343,9 +348,11 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--stage", choices=["power", "check", "score"], required=True)
     ap.add_argument("--jobs", type=int, default=4)
+    ap.add_argument("--h394-2-deviation", action="store_true",
+                    help="score H394.2 despite its gate (user decision 2026-11-26; registered deviation)")
     a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
-    {"power": lambda: power(a.jobs), "check": lambda: check(a.jobs), "score": score}[a.stage]()
+    {"power": lambda: power(a.jobs), "check": lambda: check(a.jobs), "score": lambda: score(a.h394_2_deviation)}[a.stage]()
 
 
 if __name__ == "__main__":
