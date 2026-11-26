@@ -9263,3 +9263,24 @@ registered rule allows only fewer workers).
   cells (which may not reflect tissue composition), and the stroma loudness at this size cannot confirm or exclude it.
 - Code: `exploratory/A391_proliferation_cells/scripts/a391.py --stage score --no-companions`.
 <!-- src: paper/exploratory/A391_proliferation_cells/output/score/{contrasts,bulk_accounting}.csv; output/power/{counts,power_curve}.csv -->
+
+## A385 / A386 power note (2026-11-26; one run, 5.7 h; companions and design only, no clock leverage, host radius or GC coefficient computed or read): A385 is not decidable (L80 0.641 on 14 genes, 0.663 on the core loop, against the registered 0.40): not scored; A386 is decidable (power 0.861 on 14 genes, 0.921 on the core loop, at the GTEx size -0.235)
+
+| readout | matched leverage median / q95 | responsive q95 | L80 | A385 gate | GC coef. matched median / q05 | responsive q05 | SE (design) | power at -0.235 / -0.118 | A386 gate |
+|---|---|---|---|---|---|---|---|---|---|
+| 14 genes | 0.195 / 0.512 | 0.428 | 0.641 | fail | 0.026 / -0.064 | -0.161 | 0.069 | 0.861 / 0.265 | pass |
+| core loop | 0.180 / 0.540 | 0.388 | 0.663 | fail | 0.023 / -0.079 | -0.140 | 0.067 | 0.921 / 0.369 | pass |
+
+- Design: 343 adult or juvenile animals in 21 projects, 35 peripheral tissues; per halving the within-project leverage
+  pools projects with >= 30 animals in both half-hosts (summed n - 3 = 164, so SE 0.078 on the Fisher scale). A386: 256
+  animals with >= 4 peripheral tissues and complete covariates; GC score on 8 genes, IEG score on 17.
+- A385: random expression-matched genes already give a within-project leverage of 0.195 (median) and up to 0.512
+  (q95): animals differ in how loudly all their organs express any gene set, as persons do in GTEx (A312 companions).
+  With that threshold and 164 degrees of freedom, only a clock leverage above 0.64 would be detected with 80 % power.
+  Not decidable at this size, not scored (as registered).
+- A386: the threshold is set by the responsive sets (q05 -0.161 on 14 genes, -0.140 on the core loop), below
+  -1.96 SE. Decidable at the GTEx coefficient; at half of it (-0.118) power is 0.27 / 0.37, so a fail would exclude
+  only a link as strong as in GTEx deaths.
+- Failed companion fits: 0 of 800.
+- Code: `exploratory/A385_sheep_person/scripts/a385_a386.py --stage power`.
+<!-- src: paper/exploratory/A385_sheep_person/output/{power,companions}.csv -->
