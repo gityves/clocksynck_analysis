@@ -64,7 +64,7 @@
   Budget for this project (user, 2026-10-26): at most 16 workers in total (four lanes of 4) and at most ~120 GB RAM
   summed over the RUN_CAP_GB of concurrent runs (read backed or chunked).
 - Data: `/mnt/max8tb/data/CoPhaser_data/cancer_circadian/` (`$SCCC_DATA`), with a `PROVENANCE.md` (URL, date, sha256)
-  per source. Self-imposed cap 500 GB (raised from 400 GB by the user, 2026-11-02). Processed matrices only, no FASTQ mapping on this machine.
+  per source. Self-imposed cap 700 GB (raised from 500 GB by the user, 2026-11-26, for public tumour datasets; 400 -> 500 GB on 2026-11-02). Processed matrices only, no FASTQ mapping on this machine.
   Exception (user, 2026-11-18 and 2026-11-20): open raw reads of the datasets listed in
   `paper/docs/prompts/server_mapping_jed_2026-11-20.md` are mapped on SCITAS Jed by a separate agent (counts only, no
   analysis there; 20 CHF budget). Deliveries arrive on the lab NAS (`upnae`, `sccc_mapping/`); copy them into
