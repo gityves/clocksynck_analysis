@@ -12421,6 +12421,8 @@ loudness, but intensive care also brings gut hypoperfusion, opioids and sedation
 (two species, descriptive; diet and husbandry also differ). Mouse gut low: the sheep pattern is not about feeding rhythm.
 Human proxy: reported as consistent or not, never as a test of continuous feeding.
 **Code.** `exploratory/A396_gut_feeding/scripts/a396.py` (after the A394 power stage; reads its fit file). Aggregates only.
+**Clarification (2026-11-26, before any value was read).** Part a reads the mouse gains, which are the blind input of
+A394 H394.2: A396 runs only after the A394 scoring run, so that A394 stays blind.
 
 ## A397 (2026-11-26, on the user's instruction "you can go for 2" (A395 replicated in the mouse); staged as A395: power (organs passing, organ-bootstrap SEs; no slope printed), then one scoring run; **NOT BLIND**: A395 (baboon b_t 0.22, -0.01 to 0.42; scatter slope -0.75), A383, the archive A49 timed gains and R^2 per Deota tissue and arm; **BLIND**: every timed own noise psi of a mouse tissue (A49 wrote no psi), every slope): does a mouse organ's timed own clock noise grow with its gain?
 
