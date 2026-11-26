@@ -12,9 +12,16 @@ cohorts with >= 4 labelled patients.
          (`clocksync.power.damped`, labels themselves permuted first: exchangeable arms), s in {1, 0.8, 0.63, 0.5};
          matched-set comparators: the same contrast on the 200 A387 matched sets under one random label permutation
          each (q05).                                                   -> output/power/*.csv
-  score  (after the power note)
+  score  (descriptive: the power note found H391.1-2 not decidable)
+         real-label contrasts (log z2 ratio with one-sided p, d*, offset difference, host log V ratio; 2,000 permutations
+         within cohort; 200 bootstraps) for tumour fibroblasts, endothelium and cancer cells; the matched sets' log z2
+         ratio on the real labels (q05, share <= clock); D391.2 bulk accounting: per arm Z = sum_k s_k z_k (z_k complex
+         loading on the host, `fit` per arm with reference = normal fibroblasts; s_k mean UMI share among the tumour
+         compartments fibroblast, endothelial, mural, malignant; immune compartments are not in the A387 table: left out),
+         predicted gain ratio |Z_high| / |Z_low| with 200 patient bootstraps within arm, and the composition-only and
+         loading-only counterfactuals.                                  -> output/score/*.csv
 
-    python a391.py --stage power [--jobs 6] [--genome-jobs 3] [--smoke]     (paper/common/run.sh, RUN_CAP_GB 30)
+    python a391.py --stage power|score [--jobs 6] [--genome-jobs 1] [--smoke]     (paper/common/run.sh, RUN_CAP_GB 30)
 """
 from __future__ import annotations
 
@@ -188,16 +195,140 @@ def stage_power(args):
     log("companions under permuted labels\n" + summ.round(3).to_string(index=False))
 
 
+TUMOUR = ["tumour:fibroblast", "tumour:endothelial", "tumour:mural", "tumour:malignant"]
+
+
+def arm_loadings(table, donors, rd, seed=None):
+    """Complex loading of each tumour compartment on the host (reference = normal fibroblasts) and UMI shares, on `donors`
+    (repeats allowed when bootstrapping: donors relabelled `<id>#<j>`)."""
+    limit_threads(1)
+    warnings.filterwarnings("ignore")
+    if seed is not None:
+        rows = []
+        for j, d in enumerate(donors):
+            t = table[table.donor == d].copy()
+            t["donor"] = f"{d}#{j}"
+            rows.append(t)
+        sub = pd.concat(rows, ignore_index=True)
+    else:
+        sub = table[table.donor.isin(donors)]
+    try:
+        f = cs.Dataset(sub, anchors=ANCHORS, waveform=R.READOUTS[rd], mixed_strata=True).fit(
+            n_boot=0, gate=False, reference=NORMAL["fibroblast"])
+    except Exception:  # noqa: BLE001
+        return None
+    t = f.table
+    tum = sub[sub.compartment.isin(TUMOUR)]
+    share = tum.groupby("donor").apply(lambda d: d.set_index("compartment").depth / d.depth.sum())
+    share = share.unstack().reindex(columns=TUMOUR).fillna(0).mean() if isinstance(share, pd.Series) else share.reindex(columns=TUMOUR).fillna(0).mean()
+    z = {k: (t.loc[k, "rel_amplitude"] * np.exp(1j * t.loc[k, "offset_h"] / R.HOURS)) if k in t.index and np.isfinite(t.loc[k, "rel_amplitude"]) else 0j
+         for k in TUMOUR}
+    return z, share.to_dict()
+
+
+def predicted(zs, sh):
+    return abs(sum(sh[k] * zs[k] for k in TUMOUR))
+
+
+def stage_score(args):
+    import a387_score as S
+    from clocksync.paired import pseudo_waveforms
+    out = OUT / "score"
+    out.mkdir(parents=True, exist_ok=True)
+    table = R.pooled_table(args.jobs, False)
+    lab = pd.read_csv(OUT / "power" / "arms.csv", index_col=0).iloc[:, 0]
+    lab.index = lab.index.astype(str)
+    blocks = pd.Series(lab.index.str.split("|").str[0], index=lab.index)
+    rows = []
+    for rd in R.READOUTS:
+        ds = cs.Dataset(table[table.donor.isin(lab.index)], anchors=ANCHORS, waveform=R.READOUTS[rd], mixed_strata=True)
+        ks = list(STROMA.values()) + [TARGETS["epithelium"]]
+        c = ds.contrast(lab, levels=("low", "high"), targets=ks, n_perm=2000, n_boot=200, seed=SEED, blocks=blocks,
+                        host_prior="arm")
+        for k in ks:
+            r = c.table.loc[k]
+            rows.append(dict(target=k, readout=rd, n_low=r["donors_low"], n_high=r["donors_high"], c_low=r["c_low"],
+                             c_high=r["c_high"], log_z2_ratio=r["log_z2_ratio"],
+                             p_less=perm_p(c.null["log_z2_ratio"][k], c.observed["log_z2_ratio"][k], "less"),
+                             se_log_z2=r.get("se_log_z2_ratio", np.nan), d_star=r["d_star"], p_star=r["p_star"],
+                             offset_diff_h=r["offset_diff_h"], p_offset=r["p_offset"], log_V_ratio=r["log_V_ratio"]))
+        log(f"contrast {rd} done")
+    T = pd.DataFrame(rows)
+    # matched sets on the real labels (one genome worker: memory)
+    keep = set(zip(table.donor, table.compartment))
+    studies = sorted({d.split("|", 1)[0] for d in lab.index})
+    Gs = Parallel(n_jobs=args.genome_jobs)(delayed(S.genome_cohort)(s, {x for x in keep if x[0].startswith(s + "|")})
+                                           for s in studies)
+    G = pd.concat([g for g in Gs if g is not None and len(g)], ignore_index=True)
+    G = G.drop(columns=["stratum"]).merge(table[["donor", "compartment", "stratum"]], on=["donor", "compartment"])
+    genes = [c for c in G.columns if c not in ("donor", "compartment", "stratum", "depth", "n_cells")]
+    genes = [g for g in genes if G[g].notna().all()]
+    ref = G[G.compartment.isin(ANCHORS)]
+    frac = ref[genes].div(ref.depth, axis=0)
+    lm = np.log(frac.mean() + 1e-12)[(ref[genes].mean() >= 1) | frac.columns.isin(list(BASE.genes))]
+    sets = pseudo_waveforms(lm, R.N_SET, np.random.default_rng([387, 0]), BASE, "matched")
+    used = sorted({g for w in sets for g in w.genes} | set(BASE.genes))
+    Gu = G[["donor", "compartment", "stratum", "depth"] + used]
+    log("genome tables built")
+
+    def comp_real(wfs, k, rd):
+        limit_threads(1)
+        warnings.filterwarnings("ignore")
+        o = []
+        for i, w in wfs:
+            try:
+                dd = cs.Dataset(Gu[Gu.donor.isin(lab.index)], anchors=ANCHORS, waveform=w, mixed_strata=True)
+                cc = dd.contrast(lab, levels=("low", "high"), targets=[k], n_perm=1, n_boot=0, seed=i, blocks=blocks,
+                                 host_prior="arm")
+                o.append(dict(target=k, readout=rd, set=i, log_z2=float(cc.observed["log_z2_ratio"][k])))
+            except Exception as e:  # noqa: BLE001
+                o.append(dict(target=k, readout=rd, set=i, error=str(e)[:150]))
+        return o
+    tasks = [(k, rd, [(i, w if rd == "14" else C.restrict(w, BASE, C.core(BASE))) for i, w in enumerate(sets)])
+             for k in STROMA.values() for rd in R.READOUTS]
+    comp = Parallel(n_jobs=args.jobs)(delayed(comp_real)(ch, k, rd) for k, rd, ws in tasks for ch in S.chunks(ws, args.jobs))
+    comp = pd.DataFrame([r for x in comp for r in x])
+    comp.to_csv(out / "companions_real.csv", index=False)
+    for i, r in T.iterrows():
+        cv = comp[(comp.target == r.target) & (comp.readout == r.readout)].log_z2 if "log_z2" in comp else pd.Series(dtype=float)
+        T.loc[i, "matched_q05"] = float(np.nanquantile(cv, .05)) if cv.notna().any() else np.nan
+        T.loc[i, "matched_share_le"] = float(np.nanmean(cv <= r.log_z2_ratio)) if cv.notna().any() else np.nan
+    T.to_csv(out / "contrasts.csv", index=False)
+    # D391.2 bulk accounting
+    acc = []
+    for rd in R.READOUTS:
+        hi, lo = list(lab.index[lab == "high"]), list(lab.index[lab == "low"])
+        zh, sh = arm_loadings(table, hi, rd)
+        zl, sl = arm_loadings(table, lo, rd)
+        rng = np.random.default_rng([SEED, 5, rd == "core"])
+        draws = [(list(rng.choice(hi, len(hi))), list(rng.choice(lo, len(lo)))) for _ in range(200)]
+        bh = Parallel(n_jobs=args.jobs)(delayed(arm_loadings)(table, d, rd, 1) for d, _ in draws)
+        bl = Parallel(n_jobs=args.jobs)(delayed(arm_loadings)(table, d, rd, 1) for _, d in draws)
+        ratios = np.array([predicted(*a) / predicted(*b) for a, b in zip(bh, bl) if a is not None and b is not None and predicted(*b) > 0])
+        acc.append(dict(readout=rd, predicted_ratio=predicted(zh, sh) / predicted(zl, sl),
+                        lo90=float(np.quantile(ratios, .05)), hi90=float(np.quantile(ratios, .95)), n_boot=len(ratios),
+                        composition_only=predicted(zl, sh) / predicted(zl, sl), loadings_only=predicted(zh, sl) / predicted(zl, sl),
+                        bulk_A304=0.63, **{f"share_high_{k.split(':')[1]}": sh[k] for k in TUMOUR},
+                        **{f"share_low_{k.split(':')[1]}": sl[k] for k in TUMOUR},
+                        **{f"absz_high_{k.split(':')[1]}": abs(zh[k]) for k in TUMOUR},
+                        **{f"absz_low_{k.split(':')[1]}": abs(zl[k]) for k in TUMOUR}))
+        log(f"accounting {rd} done")
+    pd.DataFrame(acc).to_csv(out / "bulk_accounting.csv", index=False)
+    pd.set_option("display.width", 250)
+    log("contrasts\n" + T.round(3).to_string(index=False))
+    log("accounting\n" + pd.DataFrame(acc).round(3).to_string(index=False))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--stage", choices=("power",), required=True)
+    ap.add_argument("--stage", choices=("power", "score"), required=True)
     ap.add_argument("--jobs", type=int, default=6)
     ap.add_argument("--genome-jobs", type=int, default=3)
     ap.add_argument("--smoke", action="store_true")
     args = ap.parse_args()
     limit_threads(1)
     t0 = time.time()
-    stage_power(args)
+    (stage_power if args.stage == "power" else stage_score)(args)
     log(f"done {(time.time() - t0) / 60:.1f} min")
 
 
