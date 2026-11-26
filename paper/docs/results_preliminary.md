@@ -9360,3 +9360,15 @@ sensitivity (descriptive, not registered as the test).
 - A385 (per-animal loudness) was not decidable and is not scored (power note).
 - Code: `exploratory/A385_sheep_person/scripts/a385_a386.py --stage score`.
 <!-- src: paper/exploratory/A385_sheep_person/output/{a386_tests,a386_coefficients,companions}.csv -->
+
+## A395 power note (2026-11-26; one run, 2 min; organ counts and organ-bootstrap SEs only, no slope read): decidable
+
+| readout | organs passing (of 35) | SE of b_t corrected / uncorrected | MDE of 1 - b_t (corrected) | SE of the scatter slope |
+|---|---|---|---|---|
+| 14 genes | 33 | 0.134 / 0.134 | 0.333 | 0.120 |
+| core loop | 34 | 0.163 / 0.145 | 0.406 | 0.129 |
+
+- Precondition: |a| above the q95 of 1,000 ZT permutations; 33 / 34 organs pass (>= 15 required). H395.1 is decidable
+  (2.49 SE <= 1). Per-organ |a|, psi and scatter are written (`organs_*.csv`) and read only at scoring.
+- Code: `exploratory/A395_baboon_timed_gain/scripts/a395.py --stage power`.
+<!-- src: paper/exploratory/A395_baboon_timed_gain/output/power.csv -->
