@@ -15,9 +15,15 @@ Stages:
   power  companions only (A385 leverages and A386 GC coefficients of the 400 sets, 14 genes and core positions), animal
          and project counts, analytic detection limit (A385) and power (A386). No clock value.
   check  2 sets, nothing written.
+  score  A386 only (A385 not decidable): the clock fit on 14 genes and on the core positions; systemic and technical
+         block partial R^2 against 10,000 permutations of the block rows (seed 386, as A360); standardised coefficients
+         with animal-bootstrap 90 % intervals (2000); GC coefficient against the q05 of the stored companion
+         coefficients (companions.csv, same model); demographic block (sex, stage) descriptive. Sensitivity
+         (descriptive): the systemic permutation within project.
 
     RUN_CAP_GB=30 paper/common/run.sh paper/exploratory/A385_sheep_person/scripts/a385_a386.py --stage power --jobs 4
-Outputs (`../output/`): companions.csv, power.csv. Aggregates only.
+    RUN_CAP_GB=30 paper/common/run.sh paper/exploratory/A385_sheep_person/scripts/a385_a386.py --stage score
+Outputs (`../output/`): companions.csv, power.csv; a386_tests.csv, a386_coefficients.csv. Aggregates only.
 """
 import argparse
 import sys
@@ -123,6 +129,106 @@ def gc_coef(a, projects):
     return float(beta[k]), se, len(a)
 
 
+BLOCKS = {"technical": ["log_depth", "mapping"], "systemic": ["gc", "ieg"], "demographic": ["male", "adult"]}
+
+
+def _X(a, cols):
+    """Intercept, project indicators and the standardised `cols`."""
+    Z = ((a[cols] - a[cols].mean()) / a[cols].std(ddof=1)).to_numpy(float)
+    P = pd.get_dummies(a.project, drop_first=True).to_numpy(float)
+    return np.column_stack([np.ones(len(a)), P, Z]), P.shape[1] + 1
+
+
+def _rss(y, X):
+    return float(((y - X @ np.linalg.lstsq(X, y, rcond=None)[0]) ** 2).sum())
+
+
+def partial_r2(a, block, given, rng, n=10_000, within=False):
+    """Partial R^2 of `block` given project + `given`; p from n permutations of the block rows (within project if
+    `within`)."""
+    y = a.log_r.to_numpy(float)
+    Xg, _ = _X(a, given)
+    Xb = ((a[block] - a[block].mean()) / a[block].std(ddof=1)).to_numpy(float)
+    r_red = _rss(y, Xg)
+    pr2 = 1 - _rss(y, np.column_stack([Xg, Xb])) / r_red
+    groups = [np.flatnonzero(a.project.to_numpy() == p) for p in a.project.unique()]
+    null = np.empty(n)
+    for k in range(n):
+        if within:
+            idx = np.arange(len(y))
+            for g in groups:
+                idx[g] = g[rng.permutation(len(g))]
+        else:
+            idx = rng.permutation(len(y))
+        null[k] = 1 - _rss(y, np.column_stack([Xg, Xb[idx]])) / r_red
+    return pr2, float((1 + np.sum(null >= pr2)) / (n + 1))
+
+
+def std_coefs(a, cols):
+    X, k0 = _X(a, cols)
+    y = ((a.log_r - a.log_r.mean()) / a.log_r.std(ddof=1)).to_numpy(float)
+    return np.linalg.lstsq(X, y, rcond=None)[0][k0:]
+
+
+def score(pbk, per, animals, gc, ieg, project):
+    """A386 scoring: clock on 14 genes and on the core positions."""
+    C = pd.read_csv(OUT / "companions.csv")
+    base = ["n_tissues", "ph_cos", "ph_sin"]
+    full = base + BLOCKS["technical"] + BLOCKS["systemic"]
+    tests, coefs = [], []
+    for gs, w, hyp in (("14 genes", WF, "H386.1"), ("core", CORE, "H386.2")):
+        rng = np.random.default_rng(386)
+        ds = cs.Dataset(pbk[META + list(w.genes)], anchors=per, waveform=w, mixed_strata=True, name=f"a386 {gs}",
+                        min_donors=5)
+        d = ds.data
+        tis = pd.Series(np.asarray(d.resection).astype(str))
+        h = ds.host(per)
+        h.index = h.index.astype(str)
+        an = animals.assign(n_tissues=tis.value_counts())
+        an["gc"], an["ieg"] = gc_states(pbk, d, gc), gc_states(pbk, d, ieg)
+        a = design(h, an).dropna(subset=["log_r"] + full)
+        beta, _, n = gc_coef(a, project)
+        r2_sys, p_sys = partial_r2(a, BLOCKS["systemic"], base + BLOCKS["technical"], rng)
+        _, p_sys_w = partial_r2(a, BLOCKS["systemic"], base + BLOCKS["technical"], rng, within=True)
+        r2_tech, p_tech = partial_r2(a, BLOCKS["technical"], base + BLOCKS["systemic"], rng)
+        c = C[C.label == gs]
+        q05 = {k: float(np.nanquantile(c[c.kind == k].gc_coef, 0.05)) for k in ("matched", "responsive")}
+        rank = {k: float((c[c.kind == k].gc_coef <= beta).mean()) for k in ("matched", "responsive")}
+        tests.append(dict(test=hyp, genes=gs, animals=n, projects=a.project.nunique(), gc_coef=beta,
+                          systemic_partial_r2=r2_sys, p_systemic=p_sys, p_systemic_within_project=p_sys_w,
+                          technical_partial_r2=r2_tech, p_technical=p_tech, matched_q05=q05["matched"],
+                          responsive_q05=q05["responsive"], frac_matched_le=rank["matched"],
+                          frac_responsive_le=rank["responsive"],
+                          passes=bool(p_sys < 0.05 and beta < 0 and beta < q05["matched"] and beta < q05["responsive"])))
+        b = std_coefs(a, full)
+        boot = []
+        for _ in range(2000):
+            s = a.iloc[rng.integers(0, len(a), len(a))]
+            try:
+                boot.append(std_coefs(s, full))
+            except (ValueError, np.linalg.LinAlgError):
+                continue
+        boot = np.array(boot)
+        coefs.append(pd.DataFrame({"genes": gs, "model": "registered", "term": full, "std_coef": b,
+                                   "lo90": np.nanquantile(boot, 0.05, 0), "hi90": np.nanquantile(boot, 0.95, 0),
+                                   "n_boot": len(boot)}))
+        ad = a.assign(male=a.sex.map({"Male": 1.0, "Female": 0.0}),
+                      adult=(a.stage == "Adult").astype(float)).dropna(subset=BLOCKS["demographic"])
+        r2_dem, p_dem = partial_r2(ad, BLOCKS["demographic"], full, rng)
+        tests.append(dict(test="demographic (descriptive)", genes=gs, animals=len(ad), systemic_partial_r2=r2_dem,
+                          p_systemic=p_dem))
+        coefs.append(pd.DataFrame({"genes": gs, "model": "with demographic (descriptive)",
+                                   "term": full + BLOCKS["demographic"],
+                                   "std_coef": std_coefs(ad, full + BLOCKS["demographic"])}))
+        print(f"{gs}: {n} animals done", flush=True)
+    T, K = pd.DataFrame(tests), pd.concat(coefs, ignore_index=True)
+    T.to_csv(OUT / "a386_tests.csv", index=False)
+    K.to_csv(OUT / "a386_coefficients.csv", index=False)
+    pd.set_option("display.width", 250)
+    print(T.round(4).to_string(index=False))
+    print(K.round(3).to_string(index=False))
+
+
 def halvings(per):
     """The 20 tissue halvings (as `elasticity.split_hosts`, seed [385, 1])."""
     rng = np.random.default_rng([385, 1])
@@ -178,7 +284,7 @@ def task(i):
 def main():
     warnings.simplefilter("ignore")
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--stage", choices=["power", "check"], required=True)
+    ap.add_argument("--stage", choices=["power", "check", "score"], required=True)
     ap.add_argument("--jobs", type=int, default=4)
     a = ap.parse_args()
     limit_threads(1)
@@ -201,6 +307,10 @@ def main():
     animals = pd.DataFrame({"project": project, "log_depth": dep}).join(md[["mapping", "stage", "sex"]])
     S.update(wfs=wfs, pb=pbk, per=per, project=project, animals=animals, gc=gc, ieg=ieg)
     del pb
+    if a.stage == "score":
+        score(pbk, per, animals, gc, ieg, project)
+        print(f"({time.time() - t0:.0f}s)")
+        return
     print(f"{len(per)} tissues, {pbk.donor.nunique()} animals, {project.nunique()} projects, GC {len(gc)} IEG {len(ieg)} "
           f"genes, {len(wfs)} waveforms ({time.time() - t0:.0f}s)", flush=True)
     rows = []

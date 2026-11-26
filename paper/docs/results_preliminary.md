@@ -9042,6 +9042,56 @@ R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsiv
 - Code: `exploratory/A383_species_organisation/scripts/a383_a384.py --stage power`.
 <!-- src: paper/exploratory/A383_species_organisation/output/{power_a383,power_a384,organs_a384}.csv -->
 
+## A383 / A384 (scored 2026-11-26; one scoring run, 6.5 h; BLIND for every companion statistic, every slope b and every cross-species correlation): stronger clocks are more coupled beyond companions in all three species (baboon at the responsive line); the own term grows far less than the gain, but so it does for random gene sets; organ gain ranks agree across species beyond matched genes, carried by the two living species
+
+**A383.** Peripheral tissues, `Dataset.fit(n_boot=0, gate=False)`, leave-one-out anchors; companions: the A263 sets
+(200 matched, 200 responsive per species). Part 2: b = slope of log(2 psi) on log S, 90 % tissue-bootstrap interval.
+
+| species | tissues | rho (own amplitude, coupling) | perm. p | matched / responsive q95 | H383.1 | b (90 %) | b core loop (90 %) | companion b median (q05-q95) matched / responsive | H383.2 |
+|---|---|---|---|---|---|---|---|---|---|
+| human (GTEx, reference setup) | 26 | 0.745 | 0.0001 | 0.276 / 0.415 | pass | 0.136 (0.042 to 0.259) | 0.137 (-0.017 to 0.258) | 0.060 (-0.143 to 0.260) / 0.032 (-0.135 to 0.254) | pass |
+| baboon | 35 | 0.503 | 0.0016 | 0.452 / 0.502 | pass, at the line | -0.035 (-0.224 to 0.146) | 0.141 (-0.219 to 0.342) | 0.206 (-0.021 to 0.421) / 0.006 (-0.174 to 0.201) | pass |
+| sheep | 35 | 0.629 | 0.0001 | 0.425 / 0.532 | pass | 0.276 (0.157 to 0.396) | 0.321 (0.191 to 0.454) | 0.105 (-0.028 to 0.260) / 0.106 (-0.046 to 0.223) | pass |
+
+- **H383.1 passes in all three species**: peripheral organs with a stronger own clock are more coupled to the body's
+  clock state, beyond matched and responsive genes, in a living primate and in sheep. Baboon sits at the responsive
+  line (0.503 against q95 0.502; 95 % of responsive sets below): there the rule is not separated from the
+  stress-responsive genes by a margin. Human on this setup reproduces A104 / A271 (0.745; A271 0.734 on its setup).
+- **H383.2 passes in all three species as registered** (every interval excludes 1): the own term grows far less than in
+  proportion to the gain. **But random gene sets do the same** (companion medians 0.01-0.21, q95 at most 0.42): b far
+  below 1 is a property of any gene set read by this estimator (with the registered downward bias of b, S and psi
+  being estimated from the same states), not a clock feature. The clock's b lies inside the companion bands in human
+  and baboon (baboon slightly below the matched q05); sheep's b (0.276) is above both companion q95s (14 genes; companion b
+  on the core positions not computed), i.e. the sheep clock's own term grows somewhat more with gain than random
+  genes', still far from proportional. Reading:
+  coupling rising with gain is compatible with a gain applied before a roughly constant own term, but part 2 does not
+  show that this is specific to the clock.
+- Descriptive, own term against matched genes (log of clock 2 psi / median matched 2 psi, per tissue): median 0.97
+  human, 1.04 baboon, 0.25 sheep (positive in 26 / 26, 33 / 35 and 26 / 35 tissues): the clock's unshared part is
+  larger than that of matched genes in human and baboon, close to it in sheep.
+
+**A384.** Log relative amplitude (gain) from the A383 fits, 13 organs in all three species plus pair-only organs.
+
+| | human-baboon | human-sheep | baboon-sheep | T (mean) |
+|---|---|---|---|---|
+| organs | 17 | 13 | 20 | |
+| Spearman rho | 0.375 | 0.132 | 0.653 | 0.386 |
+| permutation p | 0.068 | 0.330 | 0.0014 | 0.0062 |
+| matched q95 | | | 0.284 | 0.276 (median 0.046; 98 % of 200 sets below T) |
+
+- **H384.1 passes**: organ gain ranks agree across species beyond matched genes (T 0.386, p 0.006). The agreement is
+  carried by the two living species: baboon-sheep 0.653 (p 0.001, above the matched q95 0.284; **H384.2 reported only**,
+  power 0.75 < 0.8, as registered); human-baboon 0.375 (p 0.07), human-sheep 0.132 (p 0.33, 13 organs).
+- Descriptive (post hoc, gains_a384.csv; ranks among 17 human, 24 baboon, 20 sheep organs): visceral fat ranks high
+  in all three species (3 / 6 / 2), subcutaneous and perirenal fat in the two living ones (14 / 3 / 3; - / 4 / 1); the
+  sheep gut (abomasum, colon, duodenum, ileum, caecum) ranks low,
+  unlike human and baboon (ruminant digestion; the organ map flags stomach / abomasum as approximate).
+- Reading (registered): with power, the organ factor is in part a conserved organ property, shared by a living primate
+  and a ruminant; with A378, specific gain ratios still differ between species. The human-living disagreement is not
+  separated from GTEx deaths, the organ map and the smaller human-sheep overlap (13 organs).
+- Code: `exploratory/A383_species_organisation/scripts/a383_a384.py --stage score`.
+<!-- src: paper/exploratory/A383_species_organisation/output/{tests_a383,companions_a383,own_term_a383,tests_a384,gains_a384}.csv -->
+
 ## A387 (scored 2026-11-25; BLIND for every value below except the A346 mean of moduli; one scoring run, rerun once after a memory kill before any Part 2 output, same seeds): tumour fibroblasts are coupled to the patient's normal stroma on the full model (c 0.40 core, beyond matched genes), within 0.8 h of it and about 30 % quieter; tumour endothelium is coupled on 14 genes but not beyond matched genes on the core loop; cancer cells are barely coupled
 
 Single-cell tumour / adjacent-normal cohorts of A346. Part 1: complex-pooled pairing R_C (moduli taken after pooling the
@@ -9284,3 +9334,29 @@ registered rule allows only fewer workers).
 - Failed companion fits: 0 of 800.
 - Code: `exploratory/A385_sheep_person/scripts/a385_a386.py --stage power`.
 <!-- src: paper/exploratory/A385_sheep_person/output/{power,companions}.csv -->
+
+## A386 (scored 2026-11-26; one scoring run; BLIND for every sheep host radius, GC / IEG score and coefficient): the sheep clock volume does not fall with the glucocorticoid-target state (14 genes: the coefficient is positive; core loop: near 0, excluding the GTEx size); H386.1 and H386.2 fail with power
+
+SheepGTEx, 256 adult or juvenile animals with >= 4 peripheral tissues in 12 projects (project indicators in every
+model). Outcome log r (full host, every peripheral tissue an anchor). Standardised coefficients, animal-bootstrap 90 %
+intervals (2000). Permutation p from 10,000 permutations of the block rows (as A360); within-project permutation as a
+sensitivity (descriptive, not registered as the test).
+
+| readout | GC coefficient (90 %) | IEG coefficient (90 %) | systemic partial R^2, p (within project) | matched / responsive q05 of GC coef. | fraction of matched / responsive sets <= clock | technical partial R^2, p | test |
+|---|---|---|---|---|---|---|---|
+| 14 genes | +0.147 (0.029 to 0.253) | +0.097 (-0.011 to 0.210) | 0.036, 0.015 (0.012) | -0.064 / -0.161 | 0.96 / 0.98 | 0.032, 0.024 | H386.1 fail |
+| core loop | -0.051 (-0.172 to 0.057) | +0.075 (-0.059 to 0.210) | 0.007, 0.460 (0.461) | -0.079 / -0.140 | 0.12 / 0.28 | 0.028, 0.039 | H386.2 fail |
+
+- **Not detected in sheep, with power** (0.86 / 0.92 at the GTEx size -0.235). On the core loop the interval excludes
+  -0.235 (12 % of matched sets lower). On 14 genes the systemic block is significant, but
+  through a **positive** GC coefficient, the opposite sign to GTEx deaths and in the upper tail of the companions
+  (96 % of matched sets below). Reading (registered): the GTEx link (volume falling with the GC state) fits the agonal
+  course or a human state, not general physiology of a healthy animal killed quickly.
+- The positive 14-gene coefficient is not on the core loop (-0.051). PER1, PER2 and NR1D1 are GR targets, but by the
+  gene-drop rule this is **not decided: precision or the removed genes** (no drop null was registered for A386).
+- Technical scale enters the sheep volume (mapping rate -0.361, -0.614 to -0.122 on 14 genes; log depth +0.542, 0.193
+  to 0.910 on the core loop); both are in the model. Demographic block (sex, adult vs juvenile; descriptive): partial
+  R^2 0.007 (p 0.43) / 0.002 (p 0.75).
+- A385 (per-animal loudness) was not decidable and is not scored (power note).
+- Code: `exploratory/A385_sheep_person/scripts/a385_a386.py --stage score`.
+<!-- src: paper/exploratory/A385_sheep_person/output/{a386_tests,a386_coefficients,companions}.csv -->
