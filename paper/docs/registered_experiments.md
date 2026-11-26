@@ -12397,3 +12397,45 @@ organs amplify their own jitter with their clock, and the amplitude-coupling rul
 per time point (time and animal confounded; the animal correction uses the other organs); no companion (random gene
 sets have no timed rhythm); a ZT design in captivity.
 **Code.** `exploratory/A395_baboon_timed_gain/scripts/a395.py --stage power | score`. Aggregates only.
+
+## A396 (2026-11-26, on the user's instruction "you can register 1, ... a descriptive observation of the difference would be enough; is it identical to going to continuous feeding in human?"; DESCRIPTIVE, no verdict; part a BLIND (mouse gains: `A394_mouse_organisation/output/mouse_fit.csv` written by the A394 power stage, not read), part b NOT BLIND (A349 per-tissue values exist and were reported in aggregate; A384 gains read)): is the low loudness of the sheep gut a ruminant (continuous nutrient flow) feature, and does a human state without meals show it?
+
+**Origin (post hoc).** In the A384 gains table the sheep gut (abomasum, colon, duodenum, ileum, caecum) ranks low (15-19 of
+20), unlike the same organs in baboon and human. Ruminants graze and ruminate around the clock, and nutrient absorption
+from the rumen is continuous: the gut receives a weak feeding cue.
+**Part a (mouse, blind).** Mouse eats in nightly bouts (strong feeding rhythm). From the A394 clock fit (14 genes): the
+loudness rank (log relative amplitude, descending) of Stomach, Duodenum, Jejunum and Ileum among the 16 peripheral tissues;
+reported: their median rank, the mean percentile, and the same summary for the sheep gut (A384) and the baboon and human
+gut organs (A384 gains). Expectation stated now: mouse gut in the upper half (median rank <= 8 of 16). Per feeding arm
+(ad libitum vs night-restricted): the gut minus other-organ mean log gain, descriptive (A49 found the arms nearly
+identical in the timed truth, so no difference is expected).
+**Part b (human proxy, post hoc, not blind).** No human cohort has continuous feeding with many organs sampled. Ventilated
+GTEx donors (intensive care: enteral or parenteral feeding, often continuous, or none) are the only proxy. From A349
+(`part2_tissues.csv`, pooled design, 14 genes and core): per tissue, the log z2 ratio of fast deaths over ventilated
+donors (loudness lost in intensive care), regressed on the tissue's fast-death log gain (A349: the loss is largest in the
+loudest clocks); gut tissues (stomach, colon transverse and sigmoid, oesophagus gastro-oesophageal junction, muscularis
+and mucosa, small intestine where present) against the rest: mean residual difference with a tissue bootstrap 90 %
+interval. Reading: a gut-specific loss beyond the loudness trend is consistent with a meal-free state lowering gut
+loudness, but intensive care also brings gut hypoperfusion, opioids and sedation; it cannot identify feeding.
+**Readings (stated now).** Mouse gut high and sheep gut low: gut loudness differs between species with their feeding pattern
+(two species, descriptive; diet and husbandry also differ). Mouse gut low: the sheep pattern is not about feeding rhythm.
+Human proxy: reported as consistent or not, never as a test of continuous feeding.
+**Code.** `exploratory/A396_gut_feeding/scripts/a396.py` (after the A394 power stage; reads its fit file). Aggregates only.
+
+## A397 (2026-11-26, on the user's instruction "you can go for 2" (A395 replicated in the mouse); staged as A395: power (organs passing, organ-bootstrap SEs; no slope printed), then one scoring run; **NOT BLIND**: A395 (baboon b_t 0.22, -0.01 to 0.42; scatter slope -0.75), A383, the archive A49 timed gains and R^2 per Deota tissue and arm; **BLIND**: every timed own noise psi of a mouse tissue (A49 wrote no psi), every slope): does a mouse organ's timed own clock noise grow with its gain?
+
+**Data.** Deota 2023 (`common/datasets/mouse_ageing_deota`, clock genes; 48 mice, 2 per ZT x 12 ZT x 2 feeding arms),
+the 16 peripheral tissues (brain excluded), arm as stratum (one intercept per tissue and arm). `Dataset.timed_loadings`
+with ZT. Clock: 14 genes; core loop as second readout.
+**Everything else as A395:** precondition (|a| above the q95 of 1,000 ZT permutations over mice, seed [397, 1]; >= 10 of 16
+tissues, else not decidable); animal correction (refit at ZT + the mouse's mean linear departure over its other passing
+tissues); b_t = OLS slope of log psi on log |a|^2; 2000 tissue bootstraps (seed [397, 2]); phase scatter slope
+(descriptive).
+**H397.1.** b_t (animal-corrected, 14 genes): 90 % interval excludes 1. Reported: excludes 0; uncorrected; core loop;
+b_t per arm (descriptive).
+**Power stage.** Tissues passing; tissue-bootstrap SE (no b_t printed); decidable if 2.49 SE <= 1.
+**Readings (stated now).** Pass: the timed own-noise law of the baboon holds in a nocturnal rodent under light-dark, with 4
+times more animals (2 per time point, so time and animal are no longer confounded). Fail: organs amplify their own jitter
+in the mouse; the baboon result is species- or design-specific.
+**Limits.** 16 tissues (fewer than the baboon's 33); Western diet; arms pooled with a stratum intercept only.
+**Code.** `exploratory/A395_baboon_timed_gain/scripts/a395.py --species mouse --stage power | score`. Aggregates only.
