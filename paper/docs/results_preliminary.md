@@ -9372,3 +9372,39 @@ sensitivity (descriptive, not registered as the test).
   (2.49 SE <= 1). Per-organ |a|, psi and scatter are written (`organs_*.csv`) and read only at scoring.
 - Code: `exploratory/A395_baboon_timed_gain/scripts/a395.py --stage power`.
 <!-- src: paper/exploratory/A395_baboon_timed_gain/output/power.csv -->
+
+## A395 (scored 2026-11-26; BLIND for every timed psi and slope; one scoring run): with known times, a baboon organ's own clock noise grows far less than its squared gain (b_t 0.22, 90 % -0.01 to 0.42; excludes 1), and strong organs scatter less around clock time (slope -0.75): H395.1 passes; the A383 picture holds without the S / psi estimation coupling
+
+Baboon, 12 animals (ZT known), peripheral organs passing the timed precondition. b_t = slope of log psi (timed own
+noise beyond measurement) on log |a|^2 (timed gain); 1 = the organ amplifies its own jitter with its clock, 0 = a
+constant own term after the gain. Animal-corrected: each organ refitted at ZT + the animal's mean departure over its
+other organs. Intervals: 2000 organ bootstraps.
+
+| readout | organs | b_t corrected (90 %) | b_t uncorrected (90 %) | phase scatter slope on log abs a, corrected (90 %) |
+|---|---|---|---|---|
+| 14 genes | 33 | **0.219 (-0.010 to 0.420)** | 0.171 (-0.058 to 0.373) | -0.752 (-0.943 to -0.549) |
+| core loop | 34 | 0.295 (-0.016 to 0.493) | 0.313 (0.036 to 0.506) | -0.836 (-1.056 to -0.644) |
+
+- **H395.1 passes** (registered: the interval excludes 1). The own noise grows at most weakly with gain (b_t between 0
+  and about 0.4; the interval touches 0), and the phase scatter falls almost as 1 / gain (slope -0.75; -1 for a constant
+  own term): the two readouts agree (scatter ~ gain^(b_t - 1)).
+- Agrees with A383's untimed baboon b (-0.035, -0.224 to 0.146) within the intervals, now with gain (first moment) and
+  own noise (second moment around known time) estimated almost independently.
+- The animal correction barely moves b_t (0.17 -> 0.22): the shared departure of an animal from clock time is small
+  against the organs' own noise in this design.
+- Reading (registered): the unshared part of an organ's clock state does not scale with its gain; an organ's coupling
+  rises with its gain because the gain applies to the shared time before a roughly constant own term (local noise or
+  local cues). Limits: no companion (random gene sets have no timed rhythm), so A383's caution stands that b far below
+  1 is also what a constant measurement-like noise gives; 12 animals, one per time point; captivity, ZT design.
+- Code: `exploratory/A395_baboon_timed_gain/scripts/a395.py --stage score`.
+<!-- src: paper/exploratory/A395_baboon_timed_gain/output/tests.csv -->
+
+## Item 6 of the comparative list (sheep organ arrangement replicated between projects): not registered (2026-11-26, feasibility from counts and the GTEx reference map only)
+
+- Pair-phase rule: organs sharing one phase cannot show an order beyond companions. GTEx peripheral offsets
+  (`presentation/output/organs/couplings.csv`): 19 of 26 organs within -0.3 to +1.2 h; apart: adrenal +4.9 h, lung +2.9 h,
+  suprapubic skin +2.2 h (blood +2.3 h, prostate +1.5 h, testis -1.2 h).
+- Sheep coverage (animals per project, >= 10): adrenal in no project (6 animals in PRJEB19199); lung in PRJNA1000743 (48),
+  PRJNA1198671 (36), PRJNA1001016 (26); skin in PRJNA1198671 (35) and PRJNA485657 (19).
+- A between-project test could only read "lung (and skin) later than the rest", one or two organs: not an arrangement.
+  Not registered.
