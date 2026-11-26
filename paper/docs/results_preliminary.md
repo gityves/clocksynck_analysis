@@ -9677,3 +9677,19 @@ A385b D1 leverage; radii residualised in addition on the animal's GC and IEG sco
   precision or PER1 / PER2 / NR1D1" (gene-drop rule).
 - Code: `exploratory/A385_sheep_person/scripts/a385c.py`.
 <!-- src: paper/exploratory/A385_sheep_person/output/{c_summary,c_leverages}.csv -->
+
+## A400 power note (2026-11-26; one run, 3.6 h; GTEx thinned to the mouse design and mouse companions; no mouse clock leverage computed): not decidable on the core loop (P_a 0.35, P_b 1.00); decidable on 14 genes (min 0.875); not scored
+
+| readout | thinned-GTEx clock median (q10) | thinned-GTEx companion q95 | mouse matched median / q95 | mouse responsive q95 | P_a | P_b |
+|---|---|---|---|---|---|---|
+| 14 genes | 0.803 (0.744) | 0.746 | 0.061 / 0.325 | 0.614 | 0.875 | 1.000 |
+| core | 0.718 (0.662) | 0.740 | 0.059 / 0.330 | 0.205 | **0.350** | 1.000 |
+
+- **Gate fails** (registered: min(P_a, P_b) >= 0.8 on the core loop). 0 failed jobs of 1,280.
+- As in A385b, the limit is GTEx's own margin: with 48 donors of 15-16 tissues, GTEx's core-loop person factor (0.718)
+  does not clear GTEx's own companions (q95 0.740) in 65 % of replicates; companions rise with the many-tissue design as
+  fast as the clock. The mouse companions are low (core matched q95 0.330, responsive 0.205), so a GTEx-sized mouse
+  factor would clear them every time (P_b 1.00).
+- 14 genes: decidable (P_a 0.875, P_b 1.00); the registered claim is on the core loop.
+- Code: `exploratory/A400_mouse_person/scripts/a400.py --stage power`.
+<!-- src: paper/exploratory/A400_mouse_person/output/{power,gtex_thin,companions}.csv -->
