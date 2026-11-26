@@ -9651,3 +9651,29 @@ D1 (A385 design: within project, 4 projects with >= 30 animals, weight 164). She
   genes (GTEx, sheep; MuTHER at the line) and is clock-specific on the core loop only in GTEx deaths.
 - Code: `exploratory/A385_sheep_person/scripts/a385b.py --stage score --deviation`.
 <!-- src: paper/exploratory/A385_sheep_person/output/{b_tests_deviation,b_power,b_gtex_thin,b_sheep_companions}.csv -->
+
+## A385c (run 2026-11-26; DESCRIPTIVE CHECK; BLIND for every adjusted leverage; one run, 86 min): the sheep shared clock loudness is not the measured glucocorticoid or immediate-early state: adjusting for it leaves the 14-gene leverage unchanged (0.558 -> 0.555 / 0.557)
+
+A385b D1 leverage; radii residualised in addition on the animal's GC and IEG scores (A) or on both halves' scores (B);
+100 companion sets (50 matched, 50 responsive) adjusted the same way; sheep-permuted p (1,000).
+
+| readout | variant | clock leverage | p | matched / responsive q95 (100 sets) | companions below the clock | above both |
+|---|---|---|---|---|---|---|
+| 14 genes | unadjusted (A385b reproduced) | 0.558 | 0.001 | 0.528 / 0.448 | 98 % | yes |
+| 14 genes | A: animal GC + IEG | 0.555 | 0.001 | 0.538 / 0.440 | 98 % | yes |
+| 14 genes | B: half GC + IEG | 0.557 | 0.001 | 0.534 / 0.438 | 98 % | yes |
+| core | unadjusted | 0.316 | 0.001 | 0.623 / 0.381 | 80 % | no |
+| core | A | 0.345 | 0.001 | 0.633 / 0.357 | 84 % | no |
+| core | B | 0.365 | 0.001 | 0.643 / 0.368 | 86 % | no |
+
+- **Reading (registered): the shared loudness is not the measured GC / IEG state.** The 14-gene leverage does not move
+  (registered alternative: a fall to about 0.32 or below the adjusted companion q95), and stays above both adjusted
+  companion families. A pre-slaughter glucocorticoid surge, as measured by eight non-clock GR targets and 17
+  immediate-early genes, does not produce the 14-gene person loudness in sheep. The scores are proxies: a GC role that
+  they do not capture is not excluded.
+- On the core loop the adjustment raises the clock leverage slightly (0.316 -> 0.345 / 0.365), to the responsive q95
+  (0.357-0.368) but far below the matched q95 (0.62-0.64); still not beyond companions.
+- So the 14-gene / core-loop gap of A385b is not explained by the measured GC state either; it stays "not decided:
+  precision or PER1 / PER2 / NR1D1" (gene-drop rule).
+- Code: `exploratory/A385_sheep_person/scripts/a385c.py`.
+<!-- src: paper/exploratory/A385_sheep_person/output/{c_summary,c_leverages}.csv -->
