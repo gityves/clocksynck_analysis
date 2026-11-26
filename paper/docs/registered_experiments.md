@@ -12502,3 +12502,11 @@ death-related. Not decidable: stated with the thinned-GTEx numbers.
 **Limits.** 48 animals; mice sampled around the clock (phases uniform; harmonics absorb a radius-phase relation); two
 feeding arms (indicator only); a rapid death, not living animals; GTEx thinning keeps GTEx's tissues.
 **Code.** `exploratory/A400_mouse_person/scripts/a400.py --stage power | check | score`. Aggregates only.
+
+### Numbering note (2026-11-26, slide / cancer agent): numbers used outside this registry
+A390 (`exploratory/A390_class_relay/`), A392 (`A392_stroma_replication/`) and A393 (`A393_metastasis/`) are feasibility
+checks only (counts, no clock statistic; not feasible, see `paper/docs/NIGHT_RUN_2026-11-26.md`) and are not registered;
+do not reuse these numbers. A401-A404 are reserved for the drafts in `paper/docs/drafts/DRAFT_A401-A404_2026-11-26.md`
+(cancer timekeeping across cancers; immune state vs internal time; tumour clock loudness vs immune state; immune
+compartments on the full model). The feasibility folder `exploratory/A394_cancer_timekeeping/` belongs to A401 and will
+be renamed once its agents finish (A394 is the lead's mouse organisation amendment).
