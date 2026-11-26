@@ -9693,3 +9693,28 @@ A385b D1 leverage; radii residualised in addition on the animal's GC and IEG sco
 - 14 genes: decidable (P_a 0.875, P_b 1.00); the registered claim is on the core loop.
 - Code: `exploratory/A400_mouse_person/scripts/a400.py --stage power`.
 <!-- src: paper/exploratory/A400_mouse_person/output/{power,gtex_thin,companions}.csv -->
+
+## A400 (scored 2026-11-26 as a registered DEVIATION: gate failed, core power 0.35, 14 genes 0.875; BLIND for every mouse clock leverage; one scoring run): inbred mice differ in a clock loudness shared by their organs, beyond companions on the core loop (0.467) and on 14 genes (0.786)
+
+Deota 2023, 48 mice, 16 peripheral tissues, 20 halvings; radii residualised on phase harmonics, log tissue counts and
+the feeding arm. Mice-permuted null within arm (1,000).
+
+| readout | mouse clock leverage | permuted p (null q95) | matched / responsive q95 (clock percentile) | registered criteria | thinned-GTEx clock at this design (range of 40) |
+|---|---|---|---|---|---|
+| **core loop (H400.1)** | **0.467** | 0.001 (0.076) | 0.330 / 0.205 (99.5 / 100) | **pass** | 0.571 to 0.811 (all above) |
+| 14 genes | **0.786** | 0.001 (0.075) | 0.325 / 0.614 (99.5 / 100) | **pass** | 0.701 to 0.857 (37.5 % below the mouse) |
+
+- **Both readouts pass.** The core-loop pass is informative even at power 0.35 (registered reading of the deviation:
+  a pass is informative, a fail is not). Genetically identical mice in one facility on one diet (two feeding arms,
+  adjusted) differ in a clock loudness shared by their organs, beyond matched and stress-responsive genes, on the core
+  loop: the person factor of slide 3.5 is general physiology, not a GTEx artefact and not genetic.
+- Size: on 14 genes the mouse factor is GTEx-sized (inside the thinned-GTEx range); on the core loop smaller than any
+  thinned-GTEx replicate (0.467 against 0.571-0.811) but clearly beyond the mouse companions, which are low (core
+  matched median 0.059).
+- With A385b / A385c (sheep: 14 genes beyond companions, not the measured GC state; core not beyond) and MuTHER (living,
+  at the line), the shared clock loudness is now seen outside GTEx deaths in two species, on the core loop in the mouse.
+- Limits: a deviation from the registered gate; 48 animals of one strain, sampled around the clock in light-dark
+  (phase harmonics absorb a radius-phase relation); a rapid death; the factor's cause is not addressed (per-cell
+  amplitude, synchrony among cells, or a shared drive cannot be separated in bulk).
+- Code: `exploratory/A400_mouse_person/scripts/a400.py --stage score --deviation`.
+<!-- src: paper/exploratory/A400_mouse_person/output/{tests_deviation,power,companions,gtex_thin}.csv -->
