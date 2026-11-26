@@ -12556,3 +12556,50 @@ Descriptive: R^2 of each half-host radius on the ZT x arm cells (how much of the
 is not time of day, sampling cell or depth. It falls to the companions: A400 was carried by sampling time or depth.
 V2 leaves 24 residual degrees of freedom: a fall in size with a wide null is reported as "not decided".
 **Code.** `exploratory/A400_mouse_person/scripts/a400b.py`. Aggregates only.
+
+## A401 (2026-11-26, on the user's instruction "yes, go ahead with A401", from the draft `paper/docs/drafts/DRAFT_A401-A404_2026-11-26.md` after the public-data search and builds; staged: power (counts, deduplication, P401 stroma precondition on the anchors only, matched cancers, critical rho; no cancer-cell statistic), then one scoring run; **NOT BLIND**: the A138 per-cancer bulk pairing, the A83 clock-shaped shares, the A387 stroma couplings, and the A388 per-cancer cancer-cell couplings of its 288 patients (D388.1; D388.5 rho 0.90 core over breast, colorectal, liver, prostate, lung adenocarcinoma); **BLIND**: every cancer-cell coupling of the added data (GEO and CELLxGENE builds of 2026-11-26), the purity-weighted index P, and the per-cancer values of cancers added here): does a cancer type's bulk tumour-normal clock pairing follow from how much its cancer cells and its stroma keep time, weighted by tumour composition?
+
+**Data.** (1) The A388 deduplicated tumour table, with the unit relaxed to a malignant (or tumour-epithelium) pseudobulk
+plus >= 1 tumour stromal anchor (fibroblast, endothelial, mural; >= 50 cells; A149 rules); (2) the GEO builds
+`$SCCC_DATA/geo_tumour_a401/` with count units only (GSE207493 KIRC, GSE163203 and GSE191288 THCA, GSE135337 BLCA,
+GSE202051 untreated and GSE155698 PAAD, GSE148071 NSCLC (histology inferred: lung pooled, no LUAD / LUSC split from it),
+GSE125449 LIHC (HCC patients only for LIHC), GSE141445 PRAD, GSE197461 CESC, GSE212527 SARC; GSE103322, GSE72056 (TPM
+units) and GSE115978 (no stroma) excluded); (3) the CELLxGENE builds `$SCCC_DATA/cellxgene_tumour_a401/`.
+**Deduplication (fixed now).** Census datasets dropped as copies of on-disk cohorts: allcells_16023185 (GSE178341),
+asinglecellandspat_9fddb063 (Wu 2021, GSE176078), amultitissuesingle_b617ee1b (A226 donors), anintegratedcellat_9f222629
+(HLCA), extendedgbmap_56c4912d (GBmap; glioma has no fibroblasts), singlecellrnaseque_b6b5ea88 (OPSCC, A226),
+singlecelltranscri_5af90777 (RCC, A226); freshsamples_6c87755e dropped for its sibling frozensamples_34f5307e
+(Klughammer 2024; same patients). Within-collection and cross-source overlaps by patient id: a donor whose id (case-
+insensitive, punctuation removed) matches a donor of an on-disk cohort of the same cancer (Global Atlas vs Wu / Pal and
+the other breast datasets of its collection; LuCA vs the on-disk lung cohorts; integratedcancerce_7b20c613 vs any
+breast / skin cohort) is kept once, from the on-disk copy; every removal is listed in the power note.
+**Cancer types and TCGA mapping.** Breast BRCA; colorectal COAD; lung adenocarcinoma LUAD (cohorts labelled
+adenocarcinoma; mixed / NSCLC cohorts reported separately, not matched); liver HCC LIHC; prostate PRAD; kidney clear cell
+KIRC; papillary KIRP; thyroid THCA; bladder BLCA; endometrium UCEC. A cancer enters with >= 5 patients.
+**P401 (precondition per cancer, anchors only).** (i) Gate of the tumour stromal anchors (1,000 permutations, p < 0.05);
+(ii) each stromal class read on the host of the other stromal classes (leave-one-out, pooled host over the cancer's
+cohorts, cohort x chemistry strata) with c beyond the matched-set distribution on standardised values (z of c against
+200 matched sets, one-sided p < 0.05 pooled over the classes present). A cancer failing P401 is uninformative.
+Reported beside: stroma coupling against the range of the four A387 cancers; endothelium minus fibroblast phase against
+the A389 tumour range.
+**Per cancer (score stage).** Cancer-cell coupling c_mal on the tumour-stroma host (fit, 90 % intervals); excess over
+the matched-set median e_mal = max(c_mal - median_matched, 0); amplitude ratios A_k to tumour fibroblasts; stroma coupling
+to the patient's time c_str (A387: fibroblasts 0.40, endothelium 0.48 core / 0.44, 0.56 on 14 genes; per cancer where
+A387 has it); composition: malignant share = mean ABSOLUTE purity of the cancer's TCGA primaries; stroma share = 1 - purity
+split by the single-cell fibroblast : endothelial UMI ratio.
+**Index.** P = (s_mal A_mal sqrt(e_mal c_str) + sum over stroma s_k A_k sqrt(c_str)) / sqrt(sum_k s_k^2 A_k^2).
+**Hypotheses** (core loop decides wording; each also on 14 genes).
+- **H401.1 (primary):** Spearman of P with the A138 per-cancer pairing over the matched cancers passing P401, > 0, exact
+  one-sided p < 0.05. Decidable if >= 7 matched cancers (critical rho 0.714 at 7, 0.643 at 8).
+- **H401.2 (secondary):** Spearman of e_mal with the A83 clock-shaped share across tumours (TCGA all primaries; includes OV)
+  over matched cancers, > 0, one-sided p < 0.05.
+- **D401 (descriptive):** per-cancer table for a figure (c_mal, e_mal, standardised z, loudness, stroma coupling, P, bulk
+  pairing); lung adenocarcinoma vs other lung; non-TCGA-matched cancers (pancreas, stomach, ovary, oesophagus, cervix,
+  sarcoma, small-cell lung, head and neck) described.
+**Readings.** H401.1 pass: a cancer type's bulk tumour-normal pairing follows from cell-level timekeeping and
+composition (the stroma carries the patient's time, the cancer cells add to it where they keep time). Fail with >= 7
+cancers: the bulk ranking is not explained by these ingredients at this resolution. Not decidable (< 7): descriptive.
+**Limits.** (1) Marker-rule labels in most GEO sets. (2) The tumour-stroma host shares sample-level components with
+cancer cells (A388 D388.4); e_mal subtracts the matched-set median. (3) Composition from TCGA purity, not the single-cell
+mix. (4) Cancer types and studies are confounded.
+**Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a401.py`.
