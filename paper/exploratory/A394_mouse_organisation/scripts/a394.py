@@ -43,7 +43,7 @@ A383_OUT = PAPER / "exploratory" / "A383_species_organisation" / "output"
 SEED = 394
 WF = B.A.WF
 KEYS = ["donor", "compartment", "depth", "stratum"]
-FIT_COLS = B.FIT_COLS + ["log_amp_rel"]
+FIT_COLS = list(dict.fromkeys(B.FIT_COLS + ["log_amp_rel"]))  # no duplicate column
 N_SETS, N_PERM, N_BOOT_B, MIN_A384_SETS = 200, 10000, 2000, 150
 OTHERS = ("human", "baboon", "sheep")
 # organ universe: the A384 rows plus two baboon-mouse rows; mouse tissue keyed by the baboon code (fixed in A394)
@@ -283,19 +283,22 @@ def score():
         row[f"{k}_q95"], row[f"{k}_pct_below"] = float(np.nanquantile(v, 0.95)), float(100 * np.mean(v[np.isfinite(v)] < r))
     row["passes"] = bool(gate1 and r > 0 and row["p_perm"] < 0.05 and r > row["matched_q95"] and r > row["responsive_q95"])
     tests.append(row)
-    # H394.2
+    # H394.2: not computed when its gate failed (registered: not scored)
     G = other_gains(others())
     m = mouse_gains(tab)
-    rr = mouse_rhos(m, G)
-    T = float(np.mean(list(rr.values())))
-    nT, nP = perm_mouse(m, G, np.random.default_rng([SEED, 4]), N_PERM)
-    a = S[S.family == "a384"]
-    row = dict(test="H394.2", scored=bool(gate2), tissues=int((~np.isnan(m)).sum()), stat=T,
-               p_perm=float((1 + np.sum(nT >= T)) / (1 + N_PERM)), matched_q95=float(a.T_m.quantile(0.95)),
-               matched_pct_below=float(100 * np.mean(a.T_m.dropna() < T)), matched_valid=int(a.T_m.notna().sum()))
-    row["passes"] = bool(gate2 and T > 0 and row["p_perm"] < 0.05 and T > row["matched_q95"])
-    tests.append(row)
-    for sp in OTHERS:
+    if not gate2:
+        tests.append(dict(test="H394.2", scored=False, tissues=int((~np.isnan(m)).sum())))
+    rr = mouse_rhos(m, G) if gate2 else {}
+    if gate2:
+        T = float(np.mean(list(rr.values())))
+        nT, nP = perm_mouse(m, G, np.random.default_rng([SEED, 4]), N_PERM)
+        a = S[S.family == "a384"]
+        row = dict(test="H394.2", scored=True, tissues=int((~np.isnan(m)).sum()), stat=T,
+                   p_perm=float((1 + np.sum(nT >= T)) / (1 + N_PERM)), matched_q95=float(a.T_m.quantile(0.95)),
+                   matched_pct_below=float(100 * np.mean(a.T_m.dropna() < T)), matched_valid=int(a.T_m.notna().sum()))
+        row["passes"] = bool(T > 0 and row["p_perm"] < 0.05 and T > row["matched_q95"])
+        tests.append(row)
+    for sp in (OTHERS if gate2 else ()):
         k = ~np.isnan(m) & ~np.isnan(G[sp])
         pairs.append(dict(pair=f"mouse-{sp}", organs=int(k.sum()), rho=rr[sp],
                           p_perm=float((1 + np.sum(nP[sp] >= rr[sp])) / (1 + N_PERM)),

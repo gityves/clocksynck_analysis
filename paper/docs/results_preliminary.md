@@ -9466,3 +9466,24 @@ Deota 2023, 48 mice (2 per ZT and arm), 15 of 16 peripheral tissues pass the tim
   healthy tissue is likely driven by inflammation, which also quietens clocks (chronic lesions), so a clean
   proliferation-loudness link cannot be isolated. The tumour result (A304) stays a tumour result.
 <!-- src: paper/exploratory/A398_proliferation_gain/output/scout/{tissues,pathology}.csv -->
+
+## A394 power note (2026-11-26; one run, 78 min; companions, counts and power only, no mouse clock coupling, amplitude, gain or correlation read): H394.1 decidable (power 0.806); H394.2 not decidable (power 0.796 < 0.8; 100 usable A384 sets < 150), not scored
+
+| item | value |
+|---|---|
+| design | 48 mice, 16 peripheral tissues (all with both readouts), 6 brain regions (targets only) |
+| H394.1 companions: rho median / q95 | matched -0.111 / 0.419; responsive -0.022 / 0.394 |
+| companions' median peripheral coupling | matched 0.069, responsive 0.185 (no ceiling: random sets are not near 1) |
+| H394.1 power at rho 0.6 (threshold 0.419, 16 tissues) | **0.806 (gate passes)** |
+| H394.2 organs shared with mouse | human 9, baboon 14, sheep 12; median SE of mouse log gain 0.041 |
+| H394.2 power at latent 0.6 | **0.796 (gate fails)** |
+| A384 sets with all 14 genes in the mouse table | 100 (< 150 registered: not decidable on this count too) |
+
+- **Code error found after the run (no effect on the gates):** the companion fit columns held `log_amp_rel` twice, so
+  the in-memory gain lookup of the A384 companion sets returned nothing and their T_m was empty. The H394.1 companion
+  statistics use other columns and are unaffected; H394.2 fails its gate on power and on the set count regardless. Fixed
+  (`FIT_COLS` deduplicated); the score stage now skips H394.2 entirely (registered: not scored).
+- Mouse is not added to the gain-ranking claim (A384 stays three species). A396 part a reads the mouse gains after
+  the A394 scoring run, descriptively.
+- Code: `exploratory/A394_mouse_organisation/scripts/a394.py --stage power`.
+<!-- src: paper/exploratory/A394_mouse_organisation/output/{power_a394,companions_a394}.csv -->
