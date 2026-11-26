@@ -9646,9 +9646,12 @@ D1 (A385 design: within project, 4 projects with >= 30 animals, weight 164). She
   (0.548-0.654): if sheep had GTEx's core-loop factor, this design would have shown about 0.55-0.65.
 - 14 genes against core loop: 0.558 -> 0.316, with the companions' q95 unchanged (0.512 -> 0.540). By the gene-drop rule
   (no drop null registered): **not decided whether precision or PER1 / PER2 / NR1D1** (glucocorticoid-receptor targets;
-  A386 found no GC-state link with the sheep clock volume). Same pattern as MuTHER (A331: 0.177 -> 0.107, core at the line).
-- Reading: across three cohorts outside or alongside GTEx deaths, an organism-wide clock loudness shows on the 14
-  genes (GTEx, sheep; MuTHER at the line) and is clock-specific on the core loop only in GTEx deaths.
+  A386 found no GC-state link with the sheep clock volume). (Correction 2026-11-26: an earlier version compared this
+  with MuTHER "at the line"; A331 was withdrawn by A366 (biopsy timing) and A368 found no clock excess beyond matched
+  genes at matched phase.)
+- Reading: an organism-wide clock loudness shows on the 14 genes in GTEx deaths and sheep, and is clock-specific on the
+  core loop only in GTEx deaths. (MuTHER: withdrawn, A366 / A368.) Caveat added after A400b: untimed leverages can be
+  inflated by time of day; the sheep slaughter times are unknown.
 - Code: `exploratory/A385_sheep_person/scripts/a385b.py --stage score --deviation`.
 <!-- src: paper/exploratory/A385_sheep_person/output/{b_tests_deviation,b_power,b_gtex_thin,b_sheep_companions}.csv -->
 
@@ -9711,10 +9714,41 @@ the feeding arm. Mice-permuted null within arm (1,000).
 - Size: on 14 genes the mouse factor is GTEx-sized (inside the thinned-GTEx range); on the core loop smaller than any
   thinned-GTEx replicate (0.467 against 0.571-0.811) but clearly beyond the mouse companions, which are low (core
   matched median 0.059).
-- With A385b / A385c (sheep: 14 genes beyond companions, not the measured GC state; core not beyond) and MuTHER (living,
-  at the line), the shared clock loudness is now seen outside GTEx deaths in two species, on the core loop in the mouse.
+- **Withdrawn by A400b (same day):** the core-loop result is time of day (sampling cell explains 90 % of the radius;
+  within cells 0.095, p 0.12). The reading above does not stand.
 - Limits: a deviation from the registered gate; 48 animals of one strain, sampled around the clock in light-dark
   (phase harmonics absorb a radius-phase relation); a rapid death; the factor's cause is not addressed (per-cell
   amplitude, synchrony among cells, or a shared drive cannot be separated in bulk).
 - Code: `exploratory/A400_mouse_person/scripts/a400.py --stage score --deviation`.
 <!-- src: paper/exploratory/A400_mouse_person/output/{tests_deviation,power,companions,gtex_thin}.csv -->
+
+## A400b (run 2026-11-26; DESCRIPTIVE CHECK; BLIND for every adjusted leverage; one run, 39 min): the mouse shared clock loudness on the core loop is time of day: sampling cell explains 90 % of the half-host radius, and within ZT x arm cells the core leverage vanishes (0.467 -> 0.095, p 0.12); on 14 genes a within-cell leverage remains (0.586, p 0.001) but at the responsive line
+
+| readout | variant | clock leverage | p (null q95) | matched / responsive q95 (100 sets) | companions below | above both |
+|---|---|---|---|---|---|---|
+| core | V0 unadjusted (A400 reproduced) | 0.467 | 0.001 (0.080) | 0.324 / 0.167 | 100 % | yes |
+| core | V1 + ZT harmonics 1-4 | 0.306 | 0.001 (0.089) | 0.304 / 0.168 | 96 % | yes (at the line) |
+| core | **V2 + ZT x arm cells** | **0.095** | 0.124 (0.123) | 0.265 / 0.158 | 71 % | **no** |
+| core | V3 + depth | 0.440 | 0.001 (0.083) | 0.345 / 0.162 | 100 % | yes |
+| core | V4 cells + depth | 0.021 | 0.431 (0.157) | 0.236 / 0.170 | 55 % | no |
+| 14 genes | V0 | 0.786 | 0.001 (0.078) | 0.371 / 0.646 | 100 % | yes |
+| 14 genes | V1 | 0.679 | 0.001 (0.089) | 0.311 / 0.614 | 98 % | yes |
+| 14 genes | **V2** | **0.586** | 0.001 (0.132) | 0.350 / 0.613 | 96 % | no (below responsive q95) |
+| 14 genes | V3 | 0.763 | 0.001 (0.084) | 0.374 / 0.656 | 100 % | yes |
+| 14 genes | V4 | 0.625 | 0.001 (0.144) | 0.368 / 0.640 | 96 % | no |
+
+- **Time of day dominates the mouse clock radius**: the ZT x arm cells explain a median 90 % (core) and 88 % (14 genes)
+  of a half-host radius. Two harmonics of the estimated phase (A400) remove only part of it; ZT harmonics 1-4 more; the
+  cells all of it. Depth plays no role (V3).
+- **Core loop: the A400 result was carried by sampling time.** Between two mice killed at the same time in the same arm,
+  no shared core-loop loudness remains (0.095, p 0.12; 0.021 with depth). With about a dozen residual degrees of freedom
+  per halving the null is wide (q95 0.12-0.16): a small within-cell factor is not excluded, but the A400 size is.
+- **14 genes:** a within-cell shared loudness remains (0.586, p 0.001), above 96 % of companions but below the
+  responsive q95 (0.613): not clock-specific beyond stress-responsive genes.
+- **Consequences.** A400's reading ("general physiology, not genetic") is withdrawn: in the mouse the shared loudness is
+  the daily modulation of the clock state's radius, shared by all organs of a mouse killed at a given time. The same
+  mechanism can inflate any untimed person leverage when sampling times spread over the day: phase harmonics of the
+  estimated state do not remove it. It applies to GTEx (deaths at all hours) and, less, to sheep (working-hours
+  slaughter); neither leverage has been checked against recorded time.
+- Code: `exploratory/A400_mouse_person/scripts/a400b.py`.
+<!-- src: paper/exploratory/A400_mouse_person/output/{b_summary,b_leverages}.csv -->
