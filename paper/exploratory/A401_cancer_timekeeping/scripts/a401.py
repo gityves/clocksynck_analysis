@@ -41,6 +41,8 @@ import pandas as pd  # noqa: E402
 from joblib import Parallel, delayed  # noqa: E402
 from scipy.stats import norm  # noqa: E402
 
+sys.path.insert(0, str(EXP / "A138_cancer_estimability/scripts"))
+sys.path.insert(0, str(PAPER / "results/figure_5/scripts/cancer"))
 import a388 as B  # noqa: E402
 import a336_common as C  # noqa: E402
 import clocksync as cs  # noqa: E402
@@ -63,9 +65,12 @@ MALT = B.MALT
 SEED = 401
 META = B.META
 MIN_CELLS = 50
-MATCHED_TCGA = {"BRCA": "BRCA", "COAD": "COAD", "LUAD": "LUAD", "LIHC": "LIHC", "PRAD": "PRAD", "KIRC": "KIRC", "KIRP": "KIRP",
-                "THCA": "THCA", "BLCA": "BLCA", "UCEC": "UCEC"}
+ORIGINAL = {"BRCA": "BRCA", "COAD": "COAD", "LUAD": "LUAD", "LIHC": "LIHC", "PRAD": "PRAD", "KIRC": "KIRC", "KIRP": "KIRP",
+            "THCA": "THCA", "BLCA": "BLCA", "UCEC": "UCEC"}
+ADDED = {"STAD": "STAD", "ESCA": "ESCA", "LUSC": "LUSC", "HNSC": "HNSC"}  # note 1: bulk pairing computed here (blind)
+MATCHED_TCGA = dict(ORIGINAL)  # extended in stage_power with the added projects that pass the TCGA gate with >= 10 pairs
 FAMILY = {"LUAD": "lung", "lung_mixed": "lung", "LUSC": "lung", "lung_other": "lung", "SCLC": "lung"}
+BASSEZ = DATA / "bassez2021_3ca" / "pseudobulk.parquet"
 GEO_CANCER = {"GSE207493": "KIRC", "GSE163203": "THCA", "GSE191288": "THCA", "GSE135337": "BLCA", "GSE202051": "PAAD",
               "GSE155698": "PAAD", "GSE148071": "lung_mixed", "GSE125449": "LIHC", "GSE141445": "PRAD", "GSE197461": "CESC",
               "GSE212527": "SARC"}
@@ -221,11 +226,142 @@ def study_list(args):
     return studies, inv
 
 
+# ---- bulk side of the added projects (note 1 (a)) -------------------------------------------------------------------------
+
+def bulk_pairing(out, added):
+    """A138 H138.4 statistic and gate of the normals for the added TCGA projects, by the A138 path (`_shared.tcga_builder`
+    build, `pair_frames`, `q3_lib.reference_gate` rule: n_gate 200, rng [52, 0, i]; statistic `corr_stat`; pairing null
+    `perm_null`, 10,000, rng [138, 4, 0, i]; p as `score.perm_p`). BRCA (i = 1) is recomputed as the reproduction check
+    against `A138 .../score/per_unit.csv`. Added projects take i = 10..13 so that the original streams are unchanged."""
+    import q3_lib as q
+    from clocksync.paired import cohort_states, reference_gate
+    import _shared as sh
+    ref = pd.read_csv(EXP / "A138_cancer_estimability/output/score/per_unit.csv").query("hypothesis == 'H138.4'").set_index("unit")
+    b = sh.tcga_builder()
+    rows = []
+    for c, i in [("BRCA", 1)] + [(p, 10 + j) for j, p in enumerate(ADDED) if p in added]:
+        samples, _ = b.build([c])
+        case, rf = sh.pair_frames(samples, c)
+        r = dict(project=c, kind="reproduction" if c == "BRCA" else "added", pairs=len(case))
+        if len(case) < 10:
+            rows.append(dict(r, error="< 10 pairs"))
+            continue
+        yr = np.log(np.maximum(rf[q.GENES].astype(float), 1e-300)).sub(np.log(rf.depth.to_numpy(float)), axis=0).to_numpy()
+        g = reference_gate(yr, q.WF, 200, np.random.default_rng([52, 0, i]))
+        bt, vt, bn, vn = cohort_states(case, rf, True, q.WF)
+        za, zb = q.centred_complex(bt), q.centred_complex(bn)
+        obs = q.corr_stat(za, vt, zb, vn)
+        null = q.perm_null(za, vt, zb, vn, 10_000, np.random.default_rng([138, 4, 0, i]))
+        x = null[np.isfinite(null)]
+        r.update(gate_p=g["p"], gated=bool(g["p"] < 0.05), statistic=obs, null_mean=float(np.nanmean(null)),
+                 null_q95=float(np.quantile(x, .95)), p=float((1 + np.sum(x >= obs)) / (len(x) + 1)))
+        if c == "BRCA":
+            r.update(published_statistic=ref.statistic[c], published_null_mean=ref.null_mean[c], published_p=ref.p[c],
+                     published_gate_p=ref.gate_p[c], reproduced=bool(np.isclose(obs, ref.statistic[c], atol=1e-9)))
+        rows.append(r)
+        log(f"bulk pairing {c}: {len(case)} pairs, gate p {r['gate_p']:.4f}, statistic {obs:.4f}, p {r['p']:.4f}")
+    t = pd.DataFrame(rows)
+    t.to_csv(out / "bulk_pairing_added.csv", index=False)
+    return t
+
+
+def a83_share(out, added):
+    """A83 (a83 part b, `compute_tumour_gate.py`): clock-plane share of the 14 centred log fractions of ALL primary tumours
+    of a project (`reference_gate`, 200 permuted-acrophase planes); BRCA recomputed as the reproduction check. The share is
+    deterministic; the null (p, share_null) uses its own stream because A83's rng ran on after the paired loop."""
+    import _shared as sh
+    from clocksync.paired import log_expr, reference_gate
+    ref = pd.read_csv(PAPER / "results/figure_5/output/cancer/a83_all_tumours.csv").set_index("project")
+    b = sh.tcga_builder()
+    rows = []
+    for k, c in enumerate(["BRCA"] + [p for p in ADDED if p in added]):
+        tum = b.tumours(c)
+        y = log_expr(tum[sh.GENES].astype(float), tum.depth.to_numpy(float)).to_numpy()
+        g = reference_gate(y, sh.WF, 200, np.random.default_rng([401, 83, k]))
+        r = dict(project=c, kind="reproduction" if c == "BRCA" else "added", tumours=len(tum), share=g["share"],
+                 share_null=g["share_null_mean"], p=g["p"])
+        if c == "BRCA":
+            r.update(published_share=ref.share[c], published_tumours=int(ref.tumours[c]), published_p=ref.p[c],
+                     reproduced=bool(np.isclose(g["share"], ref.share[c], atol=1e-9) and len(tum) == ref.tumours[c]))
+        rows.append(r)
+        log(f"A83 share {c}: {len(tum)} tumours, share {g['share']:.4f}")
+    t = pd.DataFrame(rows)
+    t.to_csv(out / "a83_added.csv", index=False)
+    return t
+
+
+def build_bassez():
+    """BIOKEY (Bassez 2021, 3CA copy with ARNTL): pre-treatment samples only, donor `bassez2021|<sample>`."""
+    G = pd.read_parquet(BASSEZ)
+    G = G[G.timepoint == "Pre"]
+    G = G.drop(columns=[c for c in ("timepoint", "expansion", "cohort", "BC_type") if c in G])
+    G = tidy(G)
+    don = sorted(set(G.donor))
+    return finish(G, "bassez2021", {d: "BRCA" for d in don})
+
+
+# ---- two-class P401 (note 1 (b)) -----------------------------------------------------------------------------------------
+
+def rc_units(frame_c, classes):
+    """Per cohort (source): anchors-only table and the patients having both classes (>= 4)."""
+    out = []
+    a, b = classes
+    for s, f in frame_c.items():
+        da = set(f[f.compartment == a].donor)
+        db = set(f[f.compartment == b].donor)
+        pts = sorted(da & db)
+        if len(pts) >= 4:
+            out.append((s, f, pts))
+    return out
+
+
+def rc_pooled(units, classes, wf, cols):
+    """Complex-pooled |sum_k sum_i z_a conj(z_b)| / sqrt(sum |z_a|^2 sum |z_b|^2) (A387 Part 1 form) over cohorts; states
+    on one projector per cohort (`a149_lib.pair_states`, centred within stratum, then within cohort)."""
+    import a149_lib as L
+    num, ea, eb, n = 0j, 0.0, 0.0, 0
+    for s, f, pts in units:
+        pb = f[f.compartment.isin(classes)][META + cols]
+        p = L.pair_states(pb, classes[0], classes[1], wf=wf, pts=pts)
+        if p is None:
+            continue
+        za, zb = p["za"] - p["za"].mean(), p["zb"] - p["zb"].mean()
+        num += np.sum(za * np.conj(zb))
+        ea += float(np.sum(np.abs(za) ** 2))
+        eb += float(np.sum(np.abs(zb) ** 2))
+        n += len(za)
+    return (abs(num) / np.sqrt(ea * eb) if ea > 0 and eb > 0 else np.nan), n
+
+
+def rc_chunk(units, classes, ws, rd):
+    limit_threads(1)
+    warnings.filterwarnings("ignore")
+    out = []
+    for i, w in ws:
+        try:
+            r, n = rc_pooled(units, classes, w, list(w.genes))
+            out.append(dict(set=i, readout=rd, R=r, n=n))
+        except Exception as e:  # noqa: BLE001
+            out.append(dict(set=i, readout=rd, error=f"{type(e).__name__}: {e}"[:200]))
+    return out
+
+
 # ---- counts, matched cancers ---------------------------------------------------------------------------------------
 
 def critical_rho(n, alpha=0.05):
     """Exact one-sided critical Spearman rho (smallest rho with P(rho >= r) <= alpha) over all n! rankings."""
-    from scipy.stats import rankdata  # noqa: F401
+    if n > 9:  # exact enumeration is infeasible: Monte Carlo over 4,000,000 random rankings (seed 401), upper-tail rule as below
+        rng = np.random.default_rng([SEED, n])
+        x = np.arange(n)
+        d2 = np.concatenate([np.sum((x[None, :] - np.argsort(rng.random((200_000, n)), axis=1)) ** 2, axis=1) for _ in range(20)])
+        rho = 1 - 6 * d2 / (n * (n * n - 1))
+        vals = np.sort(np.unique(np.round(rho, 12)))[::-1]
+        best = np.nan
+        for r in vals:
+            if np.mean(rho >= r - 1e-12) > alpha + 1e-12:
+                break
+            best = r
+        return float(best)
     x = np.arange(n)
     chunks = []
     for p in itertools.permutations(range(n)):
@@ -290,6 +426,40 @@ def clock_task(table_c, classes, rd, n_perm):
     return rd, gate, c
 
 
+def two_class(c, base, classes, frames, ids, tab, Gu, ws, n_perm, args, rows, crow):
+    """P401 of a cancer with exactly two stromal classes: anchors-only gate (two compartments) and the complex-pooled pairwise
+    coupling of the classes against the same statistic of the 200 matched sets (z, one-sided p)."""
+    for rd in READOUTS:
+        wf = READOUTS[rd]
+        try:
+            g = cs.Dataset(tab, anchors=classes, waveform=wf, mixed_strata=True).gate(n_perm=n_perm, seed=SEED)
+            gate = dict(gate_p_pairing=g.p_pairing, gate_p_acrophase=g.p_acrophase, gate_clock_share=g.clock_share,
+                        gate_share_null_mean=g.share_null_mean, gate_passes=bool(g.passes), gate_error="")
+        except Exception as e:  # noqa: BLE001
+            gate = dict(gate_passes=False, gate_error=f"{type(e).__name__}: {e}"[:200])
+        fc = {s: f[f.donor.isin(ids) & f.compartment.isin(classes)] for s, f in frames.items()}
+        fc = {s: f for s, f in fc.items() if len(f)}
+        clock_units = rc_units({s: f[META + list(BASE.genes)] for s, f in fc.items()}, classes)
+        match_units = rc_units({s: f[[x for x in f.columns if x in set(META) | set(Gu.columns)]] for s, f in fc.items()}, classes)
+        if not clock_units:
+            rows.append(dict(base, readout=rd, form="pairwise", **gate, p401_pass=False, status="not estimable: no cohort with >= 4 pairs"))
+            continue
+        r_clock, n_pairs = rc_pooled(clock_units, classes, wf, list(wf.genes))
+        w_rd = [(i, w if rd == "14" else C.restrict(w, BASE, CORE)) for i, w in ws]
+        tasks = [(match_units, classes, w_rd[k::args.jobs * 2], rd) for k in range(args.jobs * 2) if w_rd[k::args.jobs * 2]]
+        comp = pd.DataFrame([r for x in Parallel(n_jobs=args.jobs)(delayed(rc_chunk)(*t) for t in tasks) for r in x])
+        v = comp.R.dropna().to_numpy() if "R" in comp else np.array([])
+        z = (r_clock - v.mean()) / v.std(ddof=1) if len(v) >= min(10, len(ws)) else np.nan
+        p = float(norm.sf(z))
+        crow.append(dict(cancer=c, readout=rd, cls="+".join(k.split(":")[1] for k in classes), form="pairwise", coupling=r_clock,
+                         matched_mean=float(v.mean()), matched_sd=float(v.std(ddof=1)), matched_median=float(np.median(v)),
+                         matched_q95=float(np.quantile(v, .95)), z=z, p_one_sided=p, share_matched_ge=float(np.mean(v >= r_clock)),
+                         n_matched_ok=len(v), n_pairs=n_pairs))
+        rows.append(dict(base, readout=rd, form="pairwise", n_classes_scored=2, z_pooled=z, p_pooled=p, **gate,
+                         p401_pass=bool(gate.get("gate_passes", False) and np.isfinite(p) and p < .05), status="ok"))
+    log(f"{c}: P401 (pairwise) done ({base['classes']})")
+
+
 def stage_p401(cancers, frames, donors, args, out):
     n_set = 6 if args.smoke else 200
     n_perm = 100 if args.smoke else 1000
@@ -304,10 +474,10 @@ def stage_p401(cancers, frames, donors, args, out):
         classes = [a for a in ANCH if Gc[Gc.compartment == a].donor.nunique() >= 5]
         base = dict(cancer=c, patients=len(ids), cohorts=donors[donors.cancer == c].source.nunique(), genes_all_cohorts=len(genes),
                     classes="+".join(k.split(":")[1] for k in classes))
-        if len(classes) < 3 or not set(B.BASE.genes) <= set(genes):
+        if len(classes) < 2 or not set(B.BASE.genes) <= set(genes):
             for rd in READOUTS:
-                rows.append(dict(base, readout=rd, p401_pass=False, status="not estimable: < 3 stromal classes with >= 5 patients"
-                                 if len(classes) < 3 else "not estimable: clock genes missing"))
+                rows.append(dict(base, readout=rd, p401_pass=False, status="not estimable: < 2 stromal classes with >= 5 patients"
+                                 if len(classes) < 2 else "not estimable: clock genes missing"))
             log(f"{c}: not estimable ({base['classes']})")
             continue
         Gc = Gc[Gc.compartment.isin(classes)].reset_index(drop=True)
@@ -318,6 +488,10 @@ def stage_p401(cancers, frames, donors, args, out):
         ws = list(enumerate(pseudo_waveforms(lm, n_set, np.random.default_rng([SEED, 0]), BASE, "matched")))
         used = sorted({g for _, w in ws for g in w.genes} | set(BASE.genes))
         Gu = Gc[META + used]
+        if len(classes) == 2:
+            two_class(c, base, classes, frames, ids, tab, Gu, ws, n_perm, args, rows, crow)
+            pd.DataFrame(rows).to_csv(out / "p401.csv", index=False)
+            continue
         clk = Parallel(n_jobs=min(2, args.jobs))(delayed(clock_task)(tab, classes, rd, n_perm) for rd in READOUTS)
         tasks = []
         for rd in READOUTS:
@@ -355,19 +529,18 @@ def stage_p401(cancers, frames, donors, args, out):
 # ---- purity -------------------------------------------------------------------------------------------------------------
 
 def purity_table(matched):
+    import _shared as sh
+    b = sh.tcga_builder()
     m = pd.read_csv(PURITY, sep="\t")
     m["case"] = m["array"].astype(str).str[:12]
     m = m[m["call status"] == "called"]
     p = m.drop_duplicates("case").set_index("case").purity
     rows = []
     for c in matched:
-        f = TCGA_CACHE / f"tcga_tumours_{MATCHED_TCGA[c]}.parquet"
-        if not f.exists():
-            rows.append(dict(cancer=c, tcga=MATCHED_TCGA[c], error="no TCGA cache"))
-            continue
-        b = pd.read_parquet(f, columns=["barcode"]).barcode.astype(str).str[:12]
-        v = p.reindex(b).dropna()
-        rows.append(dict(cancer=c, tcga=MATCHED_TCGA[c], primaries=len(b), with_purity=len(v), mean_purity=float(v.mean()),
+        smp = b.samples_of(MATCHED_TCGA[c])
+        t = smp[smp.sample_type == "Primary Tumor"].sort_values("barcode").drop_duplicates("patient")
+        v = p.reindex(t.patient).dropna()
+        rows.append(dict(cancer=c, tcga=MATCHED_TCGA[c], primaries=len(t), with_purity=len(v), mean_purity=float(v.mean()),
                          median_purity=float(v.median()), sd_purity=float(v.std())))
     return pd.DataFrame(rows)
 
@@ -378,6 +551,13 @@ def stage_power(args):
     out = OUT / ("power_smoke" if args.smoke else "power")
     out.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
+    added = list(ADDED)[:1] if args.smoke else list(ADDED)
+    bulk = bulk_pairing(out, added)
+    a83_share(out, added)
+    for _, r in bulk[bulk.kind == "added"].iterrows():
+        if r.get("gated") is True and r.pairs >= 10:
+            MATCHED_TCGA[r.project] = ADDED[r.project]
+    log(f"matched TCGA set: {sorted(MATCHED_TCGA)}")
     frames, dons, dropped = {}, [], []
     # (a) A388 cohorts
     f388, d388, drec, dr = build_a388(args)
@@ -399,6 +579,14 @@ def stage_power(args):
             log(f"{g}: {d.donor.nunique()} patients")
         except Exception as e:  # noqa: BLE001
             dropped.append(dict(source=g, stage="geo", error=f"{type(e).__name__}: {e}"[:300]))
+    if (BASSEZ.exists() and not args.smoke) or (BASSEZ.exists() and args.smoke):
+        try:
+            G, d = build_bassez()
+            frames["bassez2021"] = G
+            dons.append(d.assign(priority=1))
+            log(f"bassez2021 (Pre): {d.donor.nunique()} patients")
+        except Exception as e:  # noqa: BLE001
+            dropped.append(dict(source="bassez2021", stage="build", error=f"{type(e).__name__}: {e}"[:300]))
     # (c) Census
     cen = sorted(p.name[:-8] for p in CEN.glob("*.parquet") if p.name[:-8] not in DROP_CENSUS and not p.name.endswith("_merged.parquet"))
     if args.smoke:
@@ -467,12 +655,12 @@ def stage_power(args):
                   for s in frames]).to_csv(out / "genome_paths.csv", index=False)
     matched = [c for c in counts.cancer if c in MATCHED_TCGA and counts.set_index("cancer").patients[c] >= 5]
     nm = len(matched)
-    mt = pd.DataFrame([dict(cancer=c, tcga=MATCHED_TCGA[c], patients=int(counts.set_index("cancer").patients[c]), matched=c in matched)
-                       for c in MATCHED_TCGA if c in set(counts.cancer)])
+    mt = pd.DataFrame([dict(cancer=c, tcga=MATCHED_TCGA[c], patients=int(counts.set_index("cancer").patients[c]), matched=c in matched,
+                            added_project=c in ADDED) for c in MATCHED_TCGA if c in set(counts.cancer)])
     mt["n_matched"] = nm
-    mt["critical_rho_one_sided_05"] = critical_rho(nm) if 3 <= nm <= 10 else np.nan
+    mt["critical_rho_one_sided_05"] = critical_rho(nm) if 3 <= nm <= 14 else np.nan
     mt.to_csv(out / "matched.csv", index=False)
-    pd.DataFrame([dict(n=n, critical_rho=critical_rho(n)) for n in range(5, 10)]).to_csv(out / "critical_rho.csv", index=False)
+    pd.DataFrame([dict(n=n, critical_rho=critical_rho(n)) for n in range(5, 15)]).to_csv(out / "critical_rho.csv", index=False)
     log("counts\n" + counts.to_string(index=False))
     # P401 for every cancer with >= 5 patients
     cancers = [c for c in counts.cancer if counts.set_index("cancer").patients[c] >= 5]
@@ -482,8 +670,9 @@ def stage_power(args):
     for rd in READOUTS:
         p = P[(P.readout == rd) & P.cancer.isin(matched)]
         ps = int(p.p401_pass.sum())
-        dec.append(dict(readout=rd, matched_cancers=nm, matched_passing_p401=ps, needed=7, decidable=bool(ps >= 7),
-                        passing="+".join(p[p.p401_pass].cancer)))
+        dec.append(dict(readout=rd, role="primary (decides)" if rd == "14" else "beside (descriptive unless >= 7)",
+                        matched_cancers=nm, matched_passing_p401=ps, needed=7, decidable=bool(ps >= 7),
+                        passing="+".join(p[p.p401_pass].cancer), failing="+".join(p[~p.p401_pass].cancer)))
     pd.DataFrame(dec).to_csv(out / "decidability.csv", index=False)
     pd.set_option("display.width", 250)
     for n in ("matched", "p401", "p401_classes", "purity", "decidability"):

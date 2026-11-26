@@ -12706,3 +12706,19 @@ beyond measurement noise.
 read). The recorded ZT stands for the true phase. Feeding arms share one waveform per fold (group intercepts and
 amplitudes per tissue x arm only).
 **Code.** `paper/exploratory/A400_mouse_person/scripts/a400c.py`. One run.
+
+### A401 power note 2 (2026-11-26; note 1 applied; `a401.py --stage power`, 108 min, peak 22.1 GB; `output/power/{bulk_pairing_added,a83_added,p401,p401_classes,counts,matched,critical_rho,purity,decidability,dedup,dropped}.csv`; no cancer-cell statistic computed)
+**New bulk values (blind; A138 path reproduced exactly: BRCA 0.3212, gate p 0.005).** H138.4 pairing STAD 0.263 (34 pairs,
+gate p 0.010, p 0.104), ESCA 0.512 (13, 0.020, p 0.035), LUSC 0.279 (51, 0.005, p 0.020), HNSC 0.259 (43, 0.005, p 0.065):
+all four enter (gate passes, >= 10 pairs). A83 clock-shaped share (A83 reproduced exactly for BRCA, 0.2291): STAD 0.225,
+ESCA 0.195, LUSC 0.220, HNSC 0.340 (p values from a different permutation stream than A83: comparators only).
+**Matched cancers: 12** (BRCA 112 patients with BIOKEY pre-treatment, LUAD, COAD, ESCA 67, PRAD, STAD 29, KIRC, THCA, LIHC,
+HNSC 16, LUSC 14, BLCA). **P401, 14 genes (decides):** pass BRCA (z 1.92), LUAD 3.13, COAD 4.84, ESCA 3.41, PRAD 2.55, STAD
+3.59, THCA 6.76, KIRC 2.75 (two-class pairwise, endothelial + mural); fail LIHC (pairwise z 1.34), HNSC (1.12; gate p 0.118),
+LUSC (gate p 0.414), BLCA (not estimable: no cohort with >= 4 patients with both classes). **8 of 12 pass: H401.1 is
+decidable** on these 8 (exact one-sided critical Spearman rho 0.643 at n = 8). Core loop beside it: COAD, STAD, KIRC, THCA
+pass (4 of 12): descriptive. Implementation choices not fixed by the registration: >= 5 patients per stromal class; a
+cohort contributes to the pairwise form with >= 4 patients having both classes. Purity: ESCA 0.576, STAD 0.515, others as
+power note 1. Dropped: extended18485genes (no CIART), the Census copy of BIOKEY (no ARNTL; the 3CA copy is used).
+**Decision.** One scoring run: H401.1 on the 8 cancers passing P401 on 14 genes; H401.2 on the same set with the A83
+shares; core-loop values and all other cancers descriptive (D401).
