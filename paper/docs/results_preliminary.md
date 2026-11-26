@@ -9416,3 +9416,14 @@ other organs. Intervals: 2000 organ bootstraps.
   PRJNA1198671 (36), PRJNA1001016 (26); skin in PRJNA1198671 (35) and PRJNA485657 (19).
 - A between-project test could only read "lung (and skin) later than the rest", one or two organs: not an arrangement.
   Not registered.
+
+## A397 power note (2026-11-26; one run, 1.5 min; tissue counts and tissue-bootstrap SEs only, no slope read): decidable
+
+| readout | tissues passing (of 16) | SE of b_t corrected / uncorrected | MDE of 1 - b_t (corrected) | SE of the scatter slope |
+|---|---|---|---|---|
+| 14 genes | 15 | 0.236 / 0.329 | 0.589 | 0.269 |
+| core loop | 15 | 0.322 / 0.251 | 0.803 | 0.269 |
+
+- Deota 2023, 48 mice, arm as stratum. H397.1 decidable (2.49 SE <= 1), less precise than the baboon (16 tissues).
+- Code: `exploratory/A395_baboon_timed_gain/scripts/a395.py --species mouse --stage power`.
+<!-- src: paper/exploratory/A395_baboon_timed_gain/output/mouse/power.csv -->
