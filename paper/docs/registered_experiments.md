@@ -12516,3 +12516,22 @@ do not reuse these numbers. A401-A404 are reserved for the drafts in `paper/docs
 (cancer timekeeping across cancers; immune state vs internal time; tumour clock loudness vs immune state; immune
 compartments on the full model). The feasibility folder `exploratory/A394_cancer_timekeeping/` belongs to A401 and will
 be renamed once its agents finish (A394 is the lead's mouse organisation amendment).
+
+## A385c (2026-11-26, on the user's instruction "yes go ahead" after asking whether the sheep person loudness could be the glucocorticoid released around death; DESCRIPTIVE CHECK of A385b, staged as one run; **NOT BLIND**: A385b (D1: 14 genes 0.558, core 0.316; companions), A386 (14-gene volume rises with the GC-target state, +0.147; core -0.051; systemic partial R^2 0.036); **BLIND**: every leverage after the GC / IEG adjustment): does the animal's glucocorticoid-target state explain the sheep shared clock loudness?
+
+**Why.** PER1, PER2 and NR1D1 are glucocorticoid-receptor targets induced within tens of minutes; animals that were more
+stressed before slaughter would show them raised in every organ, a shared loudness on 14 genes but not on the core loop
+(the A385b pattern). Glucocorticoid released after death cannot act without circulation; the window is before death.
+**Scores (A386, non-clock genes).** GC: `GC_TARGETS` minus clock genes, NFIL3 and BHLHE40; IEG: `IMMEDIATE_EARLY` minus
+clock genes. Per sample the mean log fraction, centred within tissue x project and standardised within tissue; animal
+score = mean over its tissues; half score = mean over its tissues in that half.
+**Statistic.** A385b D1 leverage (A385 halvings, within project, Fisher-combined), radii residualised in addition on:
+(A) the animal's GC and IEG scores; (B) the GC and IEG scores of both halves. 14 genes and core loop. Reported per variant:
+the clock leverage (with the unadjusted value reproduced first), its sheep-permuted p (1,000 within project, seed
+[385, 5]) and the adjusted q95 of 100 companion sets (the first 50 matched and 50 responsive A385 sets, adjusted the
+same way).
+**Readings (stated now).** The 14-gene leverage falls to the core-loop value (about 0.32) or below the adjusted companion
+q95: the measured glucocorticoid state explains the 14-gene person loudness in sheep (a pre-slaughter stress
+artefact). It barely moves (stays above the adjusted companion q95): the shared loudness is not the measured GC / IEG
+state. In between: partly. The scores are proxies: "not explained by the measured state" does not exclude a GC role.
+**Code.** `exploratory/A385_sheep_person/scripts/a385c.py`. Aggregates only.
