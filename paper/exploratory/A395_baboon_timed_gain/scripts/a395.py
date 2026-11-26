@@ -9,7 +9,10 @@ Stages:
   power  passing organs; organ-bootstrap SE of b_t (14 genes, core; corrected and uncorrected); no slope printed.
   score  b_t with 90 % organ-bootstrap interval (H395.1: corrected, 14 genes), uncorrected, core loop; phase scatter.
 
-    paper/common/run.sh paper/exploratory/A395_baboon_timed_gain/scripts/a395.py --stage power
+--species mouse (A397): Deota 2023 (48 mice, 16 peripheral tissues, feeding arm as stratum), seed 397, >= 10 tissues;
+per-arm b_t (descriptive). Outputs in `../output/mouse/`.
+
+    paper/common/run.sh paper/exploratory/A395_baboon_timed_gain/scripts/a395.py [--species mouse] --stage power
 Outputs (`../output/`): organs.csv (per organ: |a|, psi, scatter; written in the power stage, read only at scoring),
 power.csv; tests.csv. Aggregates only.
 """
@@ -37,6 +40,22 @@ SEED = 395
 KEYS = ["donor", "compartment", "depth"]
 TRIO = ("PER1", "PER2", "NR1D1")
 N_PERM, N_BOOT, MIN_ORGANS = 1000, 2000, 15
+
+
+def use_mouse():
+    """A397 settings (called once from main before any computation)."""
+    global OUT, SEED, KEYS, MIN_ORGANS, load
+    OUT, SEED, KEYS, MIN_ORGANS, load = OUT / "mouse", 397, KEYS + ["stratum"], 10, load_mouse
+
+
+def load_mouse():
+    from common.datasets.mouse_ageing_deota.build import BRAIN, build
+    pb, donors = build()
+    pb["donor"] = pb.donor.astype(str)
+    per = sorted(c for c in pb.compartment.unique() if c not in BRAIN)
+    zt = donors.zt.astype(float)
+    zt.index = zt.index.astype(str)
+    return pb[pb.compartment.isin(per)].reset_index(drop=True), per, zt
 
 
 def load():
@@ -117,6 +136,11 @@ def tables():
         organs = list(passing.index[passing])
         out[lab] = (organ_table(ds, zt, organs), len(per), len(organs))
         print(lab, f"{len(organs)} of {len(per)} organs pass", flush=True)
+        if "stratum" in KEYS and lab == "14 genes":  # per arm (descriptive, A397), same passing tissues
+            for arm in sorted(pb.stratum.unique()):
+                sub = pb[pb.stratum == arm]
+                dsa = cs.Dataset(sub[KEYS + list(wf.genes)], anchors=per, waveform=wf, name=f"a397 {arm}", min_donors=5)
+                organ_table(dsa, zt.reindex(sub.donor.unique()), organs).to_csv(OUT / f"organs_arm_{arm}.csv")
     return out
 
 
@@ -147,9 +171,16 @@ def score():
             row = dict(readout=lab, slope=name, value=b, lo90=lo, hi90=hi, organs=len(x), decidable=p.decidable,
                        excludes_1=bool(hi < 1 or lo > 1), excludes_0=bool(lo > 0 or hi < 0))
             if lab == "14 genes" and name == "b_t corrected":
-                row["test"] = "H395.1"
+                row["test"] = "H397.1" if SEED == 397 else "H395.1"
                 row["passes"] = bool(p.decidable and row["excludes_1"])
             rows.append(row)
+    if "stratum" in KEYS:
+        for f in sorted(OUT.glob("organs_arm_*.csv")):
+            T = pd.read_csv(f, index_col="organ")
+            name, x, y = readouts(T)[0]
+            bs = boot(x, y, np.random.default_rng([SEED, 3]))
+            rows.append(dict(readout=f"14 genes, arm {f.stem.split('_')[-1]}", slope=name, value=slope(x, y),
+                             lo90=np.quantile(bs, 0.05), hi90=np.quantile(bs, 0.95), organs=len(x)))
     T = pd.DataFrame(rows)
     T.to_csv(OUT / "tests.csv", index=False)
     print(T.round(3).to_string(index=False))
@@ -159,7 +190,10 @@ def main():
     warnings.simplefilter("ignore")
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--stage", choices=["power", "score"], required=True)
+    ap.add_argument("--species", choices=["baboon", "mouse"], default="baboon")
     a = ap.parse_args()
+    if a.species == "mouse":
+        use_mouse()
     limit_threads(4)
     OUT.mkdir(parents=True, exist_ok=True)
     power() if a.stage == "power" else score()
