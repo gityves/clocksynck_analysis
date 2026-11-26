@@ -12362,3 +12362,38 @@ sheep tissue mix differs; animals with more tissues than a GTEx donor are capped
 untimed (phase harmonics absorb a radius-phase relation; a shared daily amplitude rhythm is not separable).
 **Code.** `exploratory/A385_sheep_person/scripts/a385b.py --stage power | check | score`. Aggregates only (GTEx:
 leverages only).
+
+## A395 (2026-11-26, on the user's instruction "yes go ahead" (item 8 of the comparative list: a timed version of the gain argument, baboon); staged: power (organs passing the timed precondition, organ-bootstrap SE of the slopes; no slope printed), then one scoring run; **NOT BLIND**: A383 (baboon untimed b -0.035, -0.224 to 0.146; companions b median 0.21 / 0.01), A330 / A36 timed gains |g| of 18 baboon organs (precondition: 17 pass), A289 baboon peripheral line; **BLIND**: every timed own noise psi of a baboon organ (no entry in `results_preliminary.md`; grep "timed psi", "timed own" empty, 2026-11-26), every slope below): with known sampling times, does an organ's own (unshared) clock noise grow with its gain?
+
+**Why.** A383 part 2: the untimed own term 2 psi grows far less than the shared term S (b near 0 in three species), but
+random gene sets do the same, and S and psi are estimated from the same states (an error moving variance between them
+biases b). With known times the gain is the organ's mean rhythm (first moment) and its own noise the residual variance
+around it (second moment), so the two are estimated almost independently. Readings of A383: if an organ only amplified
+everything it receives, its own jitter included, the own noise would scale with the squared gain (slope 1) and its phase
+scatter around clock time would not fall with gain; if the own term enters after the gain, the slope is near 0 and strong
+organs scatter less.
+**Data.** Baboon (Mure 2018; A263 table, 12 animals, ZT known), the peripheral tissues (`compute_brain_periphery_species`
+groups; brain excluded). One `Dataset` (peripheral anchors), `Dataset.timed_loadings("zt")`: per organ the timed gain
+|a| and the ML own noise psi beyond measurement noise. Clock: 14 genes on the GTEx waveform; core loop (11) as a second
+readout.
+**Precondition.** Organs whose |a| exceeds the q95 of 1,000 ZT permutations over animals (seed [395, 1]); at least 15
+organs, else not decidable.
+**Animal correction (primary).** psi includes the animal's own shared departure from clock time, multiplied by the
+organ's gain (which biases the slope towards 1). Per animal and organ k: delta_{s,-k} = mean phase departure
+(`clocksync.timed.departures`, linear) of animal s over its other passing organs; the organ is refitted with hours
+ZT_s + delta_{s,-k}; psi and |a| of organ k are read from that fit.
+**H395.1.** b_t = OLS slope of log psi on log |a|^2 over the passing organs (animal-corrected, 14 genes); 90 % interval from
+2000 organ bootstraps (seed [395, 2]). Passes if the interval excludes 1: the own noise does not scale with the squared
+gain (not an amplified own jitter). Reported: whether it excludes 0; the uncorrected b_t; the core loop.
+**Descriptive.** Phase scatter per organ (SD over animals of the animal-corrected phase departure, h) against log |a|
+(slope; -1 expected if the own noise is constant, measurement noise included); b_t against A383's untimed baboon b.
+**Power stage (committed before scoring).** Organs passing; organ-bootstrap SE of b_t (no b_t printed); MDE of 1 - b_t =
+2.49 SE. Decidable if 2.49 SE <= 1; otherwise reported descriptively.
+**Readings (stated now).** Pass with b_t near 0: with known time and independent estimates, the organ's own clock noise does
+not grow with its gain: A383's picture (a gain applied before a roughly constant own term) holds without the S / psi
+estimation coupling. Pass with 0 < b_t < 1: the own noise grows, less than in proportion. Fail (interval includes 1):
+organs amplify their own jitter with their clock, and the amplitude-coupling rule needs another source.
+**Limits.** 12 animals (psi from about 9 residual degrees of freedom per organ: noisy, organ bootstrap carries it); one animal
+per time point (time and animal confounded; the animal correction uses the other organs); no companion (random gene
+sets have no timed rhythm); a ZT design in captivity.
+**Code.** `exploratory/A395_baboon_timed_gain/scripts/a395.py --stage power | score`. Aggregates only.
