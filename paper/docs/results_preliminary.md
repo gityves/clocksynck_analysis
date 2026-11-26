@@ -9571,3 +9571,32 @@ Part a: gut loudness rank (log relative amplitude, descending) among each specie
   and gut segments together, which span a wide range); on the common organs human, baboon and sheep agree about
   equally and modestly (0.25-0.35), so GTEx does not stand out, and the mouse departs.
 <!-- src: paper/exploratory/A394_mouse_organisation/output/{tests_a394_deviation,pairs_a394_deviation,companions_a394}.csv -->
+
+## A399 (run 2026-11-26; DESCRIPTIVE; gains not blind, lymphoid scores blind until this run): lymphoid content accounts for about half of the quiet sheep gut; a deficit of about 0.2-0.3 log gain remains, and the forestomachs, poor in lymphocytes, are quiet too
+
+Tissue-level, 35 peripheral tissues per species; scores = median per tissue of log((marker counts + 0.5) / depth).
+
+| species | model | slope(s) per log score unit | R^2 | digestive minus other, mean log gain |
+|---|---|---|---|---|
+| sheep (10 digestive) | raw | | | **-0.559** |
+| | lymphocyte | -0.218 | 0.421 | -0.298 |
+| | lymphocyte + plasma cell | -0.116, -0.071 | 0.446 | **-0.211** |
+| | lymphocyte, fitted without lymphoid organs | -0.263 | 0.407 | -0.245 |
+| baboon (7 digestive) | raw | | | +0.070 |
+| | lymphocyte | -0.101 | 0.150 | +0.147 |
+| | lymphocyte + plasma cell | -0.124, +0.023 | 0.155 | +0.098 |
+
+- Lymphoid dilution is real in sheep (lymphocyte score explains 42 % of the tissue loudness spread, also without the
+  lymphoid organs) and accounts for about half of the gut deficit (-0.56 -> -0.21 to -0.30). The rest is not explained
+  by these markers.
+- Two observations point beyond composition (descriptive): (1) the sheep forestomachs carry few lymphocytes (rumen,
+  reticulum, omasum: lymphocyte score -10.0 to -10.3, as liver and fat) yet are quiet (log gain 0.19, 0.09, -0.01, against
+  0.6-1.0 for the low-lymphocyte non-digestive tissues); (2) at a similar lymphocyte score, the sheep intestine (-7.4 to
+  -8.6; log gain -0.58 to 0.01) is quieter than the baboon intestine (-8.2 to -8.8; 0.29 to 0.69). Cross-species marker
+  scores are only roughly comparable.
+- Reading (registered): deficit largely kept after composition -> a local cue of the digestive tract (continuous
+  digesta, rumination, motility) stays the candidate, with lymphoid dilution as a second, comparable part. Not a test.
+- Other quiet low-lymphocyte sheep tissues exist (uterus -0.55, soft horn -0.27, ovary -0.25, skin 0.11): the gut is
+  not the only exception.
+- Code: `exploratory/A396_gut_feeding/scripts/a399.py`.
+<!-- src: paper/exploratory/A396_gut_feeding/output/{a399_tissues,a399_summary}.csv -->
