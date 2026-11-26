@@ -9555,4 +9555,12 @@ Part a: gut loudness rank (log relative amplitude, descending) among each specie
 - Consequence for the wording: the loudness ranking is shared by baboon and sheep (and weakly with human), not by
   the laboratory mouse; the coupling rule (H394.1) holds in all four.
 - Code: `exploratory/A394_mouse_organisation/scripts/a394.py --stage score --h394-2-deviation`.
+- **Post hoc (2026-11-26, after the user found baboon-sheep the most alike surprising; descriptive, small n: Spearman SE
+  about 0.3 at 12 organs).** Pairwise rho of log gain, all mapped organs / without lymphoid (BOM, MEL, SPL) / without gut
+  (STF, ASC, DEC, DUO, ILE, CEC, OES) / without both: baboon-sheep 0.653 (20) / 0.642 (17) / 0.575 (15) / 0.322 (12);
+  human-baboon 0.375 / 0.375 / 0.346 / 0.346 (13); human-sheep 0.132 / 0.132 / 0.245 / 0.245 (11); mouse-human 0.200 /
+  0.200 / 0.262 / 0.262 (8); mouse-baboon 0.275 / 0.132 / 0.191 / -0.006 (10); mouse-sheep 0.042 / -0.091 / 0.200 /
+  -0.143 (8). Reading: the baboon-sheep agreement is carried by the organs only that pair shares in the map (lymphoid
+  and gut segments together, which span a wide range); on the common organs human, baboon and sheep agree about
+  equally and modestly (0.25-0.35), so GTEx does not stand out, and the mouse departs.
 <!-- src: paper/exploratory/A394_mouse_organisation/output/{tests_a394_deviation,pairs_a394_deviation,companions_a394}.csv -->
