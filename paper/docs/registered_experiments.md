@@ -12317,3 +12317,48 @@ is set by the design, not by inter-individual differences); 16 peripheral tissue
 matching approximate (epididymal fat for omentum, muscle site, mouse adrenal includes medulla); A49 per-tissue values
 were seen on another setup (brain host).
 **Code.** `exploratory/A394_mouse_organisation/scripts/a394.py --stage power | check | score`. Aggregates only.
+
+## A385b (2026-11-26, on the user's instruction "yes go ahead" after asking why A385 was not decidable and whether the GTEx person factor could be shown not to be a GTEx artefact; a redesign of A385 with a calibrated gate; staged: power (GTEx thinned to the sheep design; sheep companions under each candidate design; no sheep clock leverage), then one scoring run only if the gate passes; **NOT BLIND**: the A385 power stage (sheep companion leverages under the A385 design: matched median / q95 0.195 / 0.512 on 14 genes, 0.180 / 0.540 core; responsive q95 0.428 / 0.388; L80 0.64 / 0.66; 4 projects with >= 30 animals; sum n - 3 = 164) and the sheep tissue counts per animal and project (read 2026-11-26: median 5 tissues per animal; >= 8 tissues: 133 animals in 6 projects; >= 12: 108 in 5); A336 part 2 (GTEx fast deaths: clock leverage 0.765 / core 0.714; matched q95 0.621 / 0.621, responsive q95 0.725 / 0.692); A331 (MuTHER 0.177, core 0.107); A386 (sheep full-host radii entered a regression on the GC state; only its coefficients were read, no radius of a half-host and no leverage); **BLIND**: every sheep clock leverage under any design): do sheep differ in a clock loudness shared by their organs beyond companions, with a design whose power is calibrated on the GTEx person factor itself?
+
+**Why.** A385 was not decidable (detection limit 0.64 / 0.66 against a registered gate of 0.40). Two causes: random gene sets
+already carry a large animal-level loudness in sheep (q95 0.51), and animals are thinly sampled (median 5 tissues; only
+4 projects with >= 30 animals), so half-host radii are noisy and every leverage is attenuated. The 0.40 gate was not
+tied to any expected effect. The question that matters: if sheep had the GTEx person factor, would a sheep-shaped
+design see it beyond companions? GTEx thinned to the sheep design answers it directly, and selects the design.
+**Statistic (all designs; the A385 / A331 leverage).** Per halving (20 random halvings of the anchors; sheep: the A385
+halvings, seed [385, 1]; GTEx: the A336 halvings of the 27 peripheral tissues, seed [331, 1]), the two half-host radii of
+the animals present in both halves, residualised on two phase harmonics of both half-host phases (removes the dependence
+of the radius on phase under working-hours sampling, as in MuTHER) and on log tissue count in each half; leverage =
+their correlation; median over halvings.
+**Candidate designs (fixed now).** D1: A385 as registered (within-project leverage, projects with >= 30 animals in both
+halves, Fisher-combined with weights n - 3). D2_8 and D2_12: animals with >= 8 (>= 12) tissues in any project; one
+pooled correlation after also residualising on project indicators.
+**GTEx thinned to the sheep design (power, no sheep clock value).** 244 fast deaths (A336 rows), 27 peripheral tissues.
+Replicate r (seed [3852, r]): each sheep animal used by any design (224) is assigned a distinct GTEx donor (animals in
+decreasing tissue count; donor drawn at random among those with enough tissues; count capped at the donor's own) and
+keeps k random tissues of that donor, k = the animal's tissue count; the pseudo-animal takes the animal's project. One
+`Dataset` per waveform and replicate on the thinned rows (no strata, as A336); the statistic of each design. Clock (14
+genes, core loop): 40 replicates. Companions: the A336 sets (regenerated from the same seeds [336, 2, 1] / [336, 2, 2];
+first 100 matched and 100 responsive; the core readout on their core positions), each on its own replicate (r = 1000 +
+set). Check: the unthinned A336 clock leverage reproduced by the same code (radius_covariance, no tissue-count term).
+**Sheep companions (power, no clock).** The A385 sets (regenerated: seeds [385, 2] / [385, 3]; 200 matched, 200
+responsive; 14 genes and core positions) under every design; D1 must reproduce the stored A385 companion leverages.
+**Powers (per design and readout).** P_a = share of the 40 thinned-GTEx clock replicates above the larger q95 of the
+thinned-GTEx companions (the design sees GTEx's factor beyond companions in GTEx itself). P_b = share of the 40 above the
+larger q95 of the sheep companions under the design (a GTEx-sized clock factor would clear the sheep companions).
+**Design choice and gate.** The design with the highest min(P_a, P_b) on the core loop (ties: D1, then D2_8). Gate:
+min(P_a, P_b) >= 0.8 on the core loop. Otherwise not decidable; reported with P_a, P_b and the median thinned-GTEx clock
+leverage of each design (the quantified limit of the sheep data).
+**H385b.1 (core loop, scored only if the gate passes).** Sheep clock leverage under the chosen design > 0,
+animals-permuted p < 0.05 (1,000 permutations of the B-half animals, within project; seed [385, 4]) and above the q95
+of both sheep companion families. 14 genes reported with the same criteria (A336 rule: the claim is made on the core
+loop).
+**Readings (stated now).** Pass: sheep, healthy until a quick slaughter, differ in a clock loudness shared by their organs
+beyond companions; the GTEx person factor is not an artefact of GTEx (sampling, death course, post-mortem handling).
+Fail with power: a GTEx-sized factor is absent in sheep; the factor may belong to human deaths (with MuTHER at the line).
+Not decidable: the sheep data cannot see a GTEx-sized factor beyond companions; stated with the thinned-GTEx numbers.
+**Limits.** GTEx thinning keeps GTEx's tissues and death course: it calibrates the design, not the sheep biology; the
+sheep tissue mix differs; animals with more tissues than a GTEx donor are capped; a slaughter is still a death, fast;
+untimed (phase harmonics absorb a radius-phase relation; a shared daily amplitude rhythm is not separable).
+**Code.** `exploratory/A385_sheep_person/scripts/a385b.py --stage power | check | score`. Aggregates only (GTEx:
+leverages only).
