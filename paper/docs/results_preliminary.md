@@ -9786,3 +9786,60 @@ R^2 of a half-host radius on the 2 h bins (median over halvings and halves): clo
 - Code: `exploratory/A336_two_readouts/scripts/a336c_time_of_death.py`; `clocksync.elasticity.radius_covariance`
   gains `covariates` / `groups` (clocksync 42e6890).
 <!-- src: paper/exploratory/A336_two_readouts/output/{c_summary,c_leverages}.csv -->
+
+## A400c (run 2026-11-26; DESCRIPTIVE CHECK; BLIND for the mouse waveform, every radius decomposition, ellipticity and mouse-waveform leverage; one run, 95 min, after a check run that printed only the A400 reproduction): reading mouse genes with the human waveform bends the clock state into an ellipse (beyond noise), but that is only part of the time-of-day radius; read with a cross-fitted mouse waveform, mice killed at the same time in the same arm share a core-loop loudness far beyond companions (0.596), so A400b's within-cell loss was produced by the human waveform
+
+Deota 2023, 48 mice, 16 peripheral tissues. H = human GTEx waveform (A400, reproduced 0.4671 / 0.7857); Mx = mouse waveform
+cross-fitted (one mouse of each ZT x arm cell fits, the other is read; fold indicator in every model); Mf = fitted on
+all mice. Chance R^2 of the cells 0.489.
+
+**Radius over the day** (medians over halvings and halves; ellipticity = second ZT harmonic amplitude / mean radius,
+90 % mouse bootstrap):
+
+| waveform | readout | R^2 cells (F p) | incremental R^2, ZT harmonic 1 / 2 / 3 / 4 | ellipticity (90 %) |
+|---|---|---|---|---|
+| H | core | 0.899 (< 1e-4) | 0.171 / **0.322** / 0.053 / 0.022 | 0.125 (0.099-0.163) |
+| H | 14 genes | 0.879 (< 1e-4) | 0.065 / **0.445** / 0.105 / 0.025 | 0.173 (0.132-0.213) |
+| Mx | core | 0.837 (0.001) | **0.280** / 0.056 / 0.080 / 0.014 | 0.055 (0.043-0.092) |
+| Mx | 14 genes | 0.827 (0.001) | **0.188** / 0.088 / 0.139 / 0.003 | 0.063 (0.044-0.104) |
+| Mf | core / 14 genes | 0.855 / 0.834 | 0.329 / 0.056 / ... ; 0.196 / 0.086 / ... | 0.051 / 0.059 |
+
+**Leverage** (A400 statistic; mice-permuted p within arm; companions: H the A400b sets, Mx 50 + 50 sets read with the
+fold waveforms):
+
+| waveform | readout | V0 A400 | V1 + ZT harmonics 1-4 | V2 + ZT x arm cells | V2 matched / responsive q95 | V2 above both |
+|---|---|---|---|---|---|---|
+| H | core | 0.467 | 0.306 | 0.095 (p 0.08) | 0.265 / 0.158 | no |
+| H | 14 genes | 0.786 | 0.679 | 0.586 | 0.350 / 0.613 | no |
+| **Mx** | **core** | 0.742 | 0.538 | **0.596** (p 0.001) | 0.213 / 0.231 | **yes** |
+| Mx | 14 genes | 0.824 | 0.763 | 0.756 (p 0.001) | 0.243 / 0.326 | yes |
+| Mf | core | 0.706 | 0.504 | 0.479 (p 0.001) | 0.213 / 0.231 (Mx sets) | yes |
+| Mf | 14 genes | 0.813 | 0.725 | 0.599 (p 0.001) | 0.243 / 0.326 (Mx sets) | yes |
+
+**Mouse against human waveform** (Mf, 200 mouse bootstraps; log relative amplitude mouse minus GTEx; phase after the
+mean offset): every gene but CRY1, PER2 and CIART departs in amplitude beyond its interval: DBP +0.60 (0.56-0.63), PER1
++0.37, NPAS2 +0.27, NR1D2 +0.30; PER3 -0.47, TEF -0.47, CRY2 -0.36, RORA -0.36, ARNTL -0.27. Phases: DBP -1.9 h, CRY1
+-1.5 h, ARNTL -1.3 h; PER1 +2.3 h, CRY2 +1.9 h, RORA +1.4 h, PER2 +1.1 h (all intervals exclude 0).
+
+- **The user's mechanism holds for the shape, beyond noise.** With the human waveform the radius changes over the day
+  mainly at the second harmonic (incremental R^2 0.32 core, 0.45 on 14 genes), the ellipse signature, and the
+  ellipticity interval excludes 0 (0.10-0.16 core). The mouse waveform removes most of it (ellipticity 0.125 -> 0.055;
+  second-harmonic share 0.32 -> 0.06). The gene-level mismatch is large and well resolved (DBP, PER3, TEF, CRY2, ARNTL).
+- **But the time of day still sets most of the radius** with a mouse waveform (cells 0.84 against chance 0.49, F p
+  0.001), now mainly at the first harmonic (0.28 core): the clock state is larger at one time of day than 12 h later.
+  An off-centre circle (a centring or mesor offset that varies with sampling) and a true daily rhythm of clock-state
+  size both produce this; not separated here. Registered readings: the "waveform mismatch" prediction of a near-chance
+  cell R^2 fails; the second-harmonic part holds. Neither registered reading fits as a whole.
+- **Unexpected and the main consequence: within ZT x arm cells, the core-loop shared loudness is large with a mouse
+  waveform** (Mx 0.596, Mf 0.479; companions' q95 at most 0.23; p 0.001), while it vanished with the human waveform
+  (0.095). Two mice killed together differ in a clock loudness shared by their organs once their genes are read with
+  their own species' waveform. A400b's reading ("the mouse core-loop person loudness was time of day") is therefore
+  revised: time of day inflated the A400 value (V0 above V2 in every waveform), but a person factor beyond time and
+  beyond companions remains, and the human waveform hid it. How the ellipse suppresses the within-cell leverage is not
+  shown (a candidate: the ellipse turns each half-host's phase error into independent radius noise).
+- **Status.** Descriptive (A400c registered no verdict for this); the mouse person factor rests on a waveform fitted on
+  the same 48 mice (cross-fitted between mice, companions read the same way). A confirmatory test would need an
+  external mouse waveform (e.g. fitted on another timed mouse atlas) and a pure-noise simulation of the cross-fit.
+  Sheep (A385b) were also read with the human waveform: a sheep waveform learned untimed is the analogous check.
+- Code: `exploratory/A400_mouse_person/scripts/a400c.py`.
+<!-- src: paper/exploratory/A400_mouse_person/output/{c_radius,c_summary,c_leverages,c_waveforms}.csv -->
