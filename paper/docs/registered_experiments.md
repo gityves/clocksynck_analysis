@@ -12603,3 +12603,32 @@ cancers: the bulk ranking is not explained by these ingredients at this resoluti
 cancer cells (A388 D388.4); e_mal subtracts the matched-set median. (3) Composition from TCGA purity, not the single-cell
 mix. (4) Cancer types and studies are confounded.
 **Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a401.py`.
+
+## A336c (2026-11-26, on the user's instruction "go ahead, register A336c and run it", after A400b showed that the mouse core-loop person leverage was carried by sampling time (ZT x arm cells: 0.467 -> 0.095) and that phase harmonics of the estimated state do not remove a radius that changes with the hour; DESCRIPTIVE CHECK of A336 part 2, one run; **NOT BLIND**: A336 part 2 (GTEx fast deaths, 244 donors: leverage 0.765 on 14 genes, 0.714 on the core loop; matched q95 0.621 / 0.621, responsive q95 0.725 / 0.692; `A336_two_readouts/output/person_gtex.csv`), A312 / A331 power stage, A367 (person volume at full size in instantaneous deaths), A375 (not batch, collection centre or composition), A400 / A400b; **BLIND**: every leverage adjusted for the time of death, every R^2 of a half-host radius on the time of death (no entry in `results_preliminary.md`; grep of "radius" with "time of death" empty, 2026-11-26)): is the GTEx person loudness (slide 3.5) the time of death?
+
+**Concern.** GTEx deaths occur at all hours. If the radius of the body's clock state changes over the day (a
+non-sinusoidal waveform, or a daily rhythm of clock amplitude), both half-hosts of a donor share it, as all organs of a
+mouse killed at one ZT did (A400b: ZT x arm cells explained 90 % of the half-host radius, chance level about 49 %). A336
+residualised the radii only on two harmonics of both estimated phases, the adjustment that failed in the mouse.
+**Statistic.** A336 part 2 unchanged (`clocksync.elasticity.radius_covariance`, 20 halvings `split_hosts(..., 20,
+seed=[331, 1])`, median over halvings), with the recorded time of death added to the residualisation (new `covariates`
+/ `groups` arguments of `radius_covariance`, default unchanged):
+V0 none (must reproduce 0.765144 / 0.713847, else stop); V1 harmonics 1-4 of the time of death; **V2 2 h bins of the
+time of death (primary)**; V3 1 h bins (sensitivity). Both readouts (core loop decides, A336 rule; 14 genes reported).
+**Nulls.** Clock: donors permuted within 2 h bins (1,000 per halving set; seed [336, 3, 1]). Companions: the first 100
+matched and 100 responsive A336 sets (same seeds [336, 2, 1] / [336, 2, 2]; core positions for the core readout),
+adjusted the same way per variant.
+**Descriptive.** Median over halvings and halves of the R^2 of a half-host radius on the 2 h bins, raw and after A336's
+phase harmonics, for the clock and the companions' median, against the chance level (k - 1) / (n - 1). Bin count and
+smallest bin (aggregates).
+**Readings (stated now).** Core loop under V2: **holds** (leverage above the adjusted matched q95, within-bin p < 0.05):
+the GTEx person loudness is not the time of death; slide 3.5 stands (responsive q95 reported as in A336). **Falls** below
+the adjusted matched q95: slide 3.5's person factor was carried by time of death and is withdrawn on the core loop, as
+A400. V1 and V3 are read beside V2: holding under V2 but not V3 is "not decided at 1 h resolution". The R^2 against
+chance and companions gives the size of the time-of-day radius effect in human deaths. With 244 donors and 12 bins
+(about 20 donors each) the adjustment costs 11 degrees of freedom: unlike A400b, a fall is not a power artefact.
+**Limits.** Fast deaths only (Hardy 1-2; recorded time of death reliable). A time-of-death effect could also be season
+or day-of-week of procurement correlated with the hour (not addressed). Sheep (A385b) cannot be checked (slaughter times
+not recorded): stated as a limit there.
+**Stop rule.** One run (`--check` first: 2 sets, nothing written or printed beyond the V0 reproduction).
+**Code.** `paper/exploratory/A336_two_readouts/scripts/a336c_time_of_death.py`. Aggregates only (controlled access).
