@@ -9600,3 +9600,30 @@ Tissue-level, 35 peripheral tissues per species; scores = median per tissue of l
   not the only exception.
 - Code: `exploratory/A396_gut_feeding/scripts/a399.py`.
 <!-- src: paper/exploratory/A396_gut_feeding/output/{a399_tissues,a399_summary}.csv -->
+
+## A385b power note (2026-11-26; one run, 7.3 h; GTEx thinned to the sheep design and sheep companions; no sheep clock leverage computed): not decidable on the core loop (best design D1: P_a 0.70, P_b 1.00; gate 0.8); not scored
+
+Checks: the unthinned A336 clock leverage reproduced exactly (0.765 / 0.714); D1 reproduces the stored A385 sheep
+companion leverages; 0 failed jobs of 1,282.
+
+| readout | design | thinned-GTEx clock median (q10) | thinned-GTEx companion q95 | sheep companion q95 (matched median) | P_a | P_b |
+|---|---|---|---|---|---|---|
+| 14 genes | D1 | 0.686 (0.666) | 0.641 | 0.512 (0.195) | 0.950 | 1.000 |
+| 14 genes | D2_8 | 0.798 (0.770) | 0.746 | 0.577 (0.173) | 1.000 | 1.000 |
+| 14 genes | D2_12 | 0.813 (0.798) | 0.775 | 0.594 (0.176) | 0.975 | 1.000 |
+| core | **D1 (chosen)** | 0.601 (0.567) | 0.585 | 0.540 (0.180) | **0.700** | 1.000 |
+| core | D2_8 | 0.701 (0.676) | 0.730 | 0.658 (0.154) | 0.100 | 1.000 |
+| core | D2_12 | 0.714 (0.685) | 0.751 | 0.673 (0.138) | 0.025 | 0.950 |
+
+- **Gate fails** (registered: min(P_a, P_b) >= 0.8 on the core loop; best D1 0.700). Not scored.
+- **The limit is GTEx's own margin, not the sheep data.** P_b is 1.00 in every design: a GTEx-sized clock factor
+  would clear the sheep companions every time (sheep companions are no larger than GTEx's: matched medians 0.14-0.20).
+  What fails is P_a: thinned to the sheep design, the GTEx core-loop factor clears GTEx's own companions in only 70 %
+  of replicates (D1), and in 2.5-10 % with the many-tissue designs, where companions rise faster than the clock (as in
+  unthinned GTEx, where the core clock exceeds the responsive q95 only narrowly: 0.714 against 0.692). On 14 genes the
+  design is decidable (P_a 0.95-1.00), but the registered claim is on the core loop (A336 rule).
+- Reading (registered, not decidable): at a sheep-shaped design, even GTEx's own person factor is not reliably
+  separable from companions on the core loop; a sheep fail would therefore not be informative, a sheep pass would.
+- Thinning attenuates the GTEx clock leverage only moderately (D1: 0.765 -> 0.686 on 14 genes; 0.714 -> 0.601 core).
+- Code: `exploratory/A385_sheep_person/scripts/a385b.py --stage power`.
+<!-- src: paper/exploratory/A385_sheep_person/output/{b_power,b_gtex_thin,b_sheep_companions}.csv -->
