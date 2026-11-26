@@ -9239,3 +9239,27 @@ genes). 90 % intervals.
 - Code: `exploratory/A388_malignant_tumour_host/scripts/a388.py --stage score` (whole-cohort permutation engine reproduces
   `Dataset.contrast` d* exactly on the real data).
 <!-- src: paper/exploratory/A388_malignant_tumour_host/output/score/{gates,h388_1,h388_2,d388_1,d388_2_breast_er,d388_3,d388_3_drops,d388_4,d388_5,d388_5_pairs_14,d388_5_pairs_core}.csv -->
+
+## A391 (scored 2026-11-26, DESCRIPTIVE: the power note found H391.1-2 not decidable; proliferation split BLIND): the tumour stroma is not detectably quieter in proliferating tumours (no lean in the predicted direction), and the single-cell composition of the tumour does not change with proliferation; the bulk gain loss (A304) is not accounted for at this size
+
+70 patients (14 cohorts) with a malignant pseudobulk (A388 tables) and a normal-stroma host (A387), median split of the
+G2M index within cohort; contrasts on the A387 host (host_prior "arm", 2,000 permutations within cohort, 200
+bootstraps). Matched-set comparators not run (their genome build exceeded the 30 GB cap twice with one worker; the
+registered rule allows only fewer workers).
+- **Tumour fibroblasts (25 low / 28 high):** high minus low log z2 ratio +1.12 (14 genes; one-sided p for a loss 0.86; SE
+  2.18), +0.84 (core; p 0.76; SE 1.90); coupling 0.18 -> 0.48 (14 genes), 0.32 -> 0.29 (core); d* +0.34 (p 0.13) / +0.13.
+  No loss of loudness; the point estimates lean the other way, with very wide intervals.
+- **Tumour endothelium (33 / 37):** log z2 ratio +0.32 (p 0.70) / +0.51 (p 0.77); d* +0.10 / +0.18.
+- **Cancer cells (24 / 27):** coupling 0.02 -> 0.00 (14 genes), 0.08 -> 0.00 (core); log z2 ratio undefined (14 genes, an
+  arm at z2 = 0) and -3.11 (core, p 0.061).
+- **Host check:** log V ratio (high / low) -0.05 / -0.65 (fibroblast hosts), within the bootstrap spread.
+- **D391.2 (bulk accounting):** UMI shares of the tumour compartments barely differ between arms (cancer cells 0.447 high vs
+  0.468 low, fibroblasts 0.272 vs 0.229, endothelium 0.282 vs 0.303; tumour mural cells are not in the A387 table): the
+  composition-only counterfactual ratio is 1.02 / 1.03. The predicted bulk gain ratio is 1.50 (90 % 0.57 to 11.3) on 14
+  genes and 0.82 (0.23 to 5.08) on the core loop, intervals containing both 1 and the bulk 0.63: uninformative.
+- **Reading (descriptive).** At 25-37 patients per arm the single-cell design cannot see a bulk-sized loss (power 0.13-0.48),
+  and it does not show one; nor does the tumour's single-cell composition shift towards cancer cells with proliferation.
+  The bulk gain loss (A304) stays a bulk result: it is not explained by composition as captured by dissociated single
+  cells (which may not reflect tissue composition), and the stroma loudness at this size cannot confirm or exclude it.
+- Code: `exploratory/A391_proliferation_cells/scripts/a391.py --stage score --no-companions`.
+<!-- src: paper/exploratory/A391_proliferation_cells/output/score/{contrasts,bulk_accounting}.csv; output/power/{counts,power_curve}.csv -->
