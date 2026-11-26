@@ -9627,3 +9627,27 @@ companion leverages; 0 failed jobs of 1,282.
 - Thinning attenuates the GTEx clock leverage only moderately (D1: 0.765 -> 0.686 on 14 genes; 0.714 -> 0.601 core).
 - Code: `exploratory/A385_sheep_person/scripts/a385b.py --stage power`.
 <!-- src: paper/exploratory/A385_sheep_person/output/{b_power,b_gtex_thin,b_sheep_companions}.csv -->
+
+## A385b (scored 2026-11-26 as a registered DEVIATION: gate failed, core power 0.70, 14 genes 0.95; BLIND for every sheep clock leverage; one scoring run, design D1): sheep share a clock loudness across organs beyond companions on 14 genes (0.558, p 0.001, above both q95), not on the core loop (0.316, below both q95); on both readouts the sheep factor is smaller than GTEx's at the same design
+
+D1 (A385 design: within project, 4 projects with >= 30 animals, weight 164). Sheep-permuted null within project (1,000).
+
+| readout | sheep clock leverage | permuted p (null q95) | sheep matched / responsive q95 (clock percentile) | registered criteria | thinned-GTEx clock at this design: range of 40 replicates |
+|---|---|---|---|---|---|
+| core loop (H385b.1) | **0.316** | 0.001 (0.040) | 0.540 / 0.388 (81.5 / 86.0) | **fail** | 0.548 to 0.654 (all above the sheep value) |
+| 14 genes | **0.558** | 0.001 (0.040) | 0.512 / 0.428 (96.5 / 100) | **pass** | 0.637 to 0.720 (all above the sheep value) |
+
+- **14 genes (power 0.95): passes.** Healthy sheep killed quickly differ in a clock loudness shared by their organs,
+  beyond matched and stress-responsive genes: the person factor of slide 3.5 is not a GTEx artefact on the 14-gene
+  readout. It is smaller than GTEx's: every thinned-GTEx replicate at this design is higher (0.637-0.720).
+- **Core loop (power 0.70): fails.** The sheep share a core-loop loudness (p 0.001) but not beyond companions (81st-86th
+  percentile). Registered reading of the deviation: a core-loop fail is not informative (GTEx's own factor fails in 30 %
+  of thinned replicates). Descriptively the sheep core value (0.316) is also far below every thinned-GTEx replicate
+  (0.548-0.654): if sheep had GTEx's core-loop factor, this design would have shown about 0.55-0.65.
+- 14 genes against core loop: 0.558 -> 0.316, with the companions' q95 unchanged (0.512 -> 0.540). By the gene-drop rule
+  (no drop null registered): **not decided whether precision or PER1 / PER2 / NR1D1** (glucocorticoid-receptor targets;
+  A386 found no GC-state link with the sheep clock volume). Same pattern as MuTHER (A331: 0.177 -> 0.107, core at the line).
+- Reading: across three cohorts outside or alongside GTEx deaths, an organism-wide clock loudness shows on the 14
+  genes (GTEx, sheep; MuTHER at the line) and is clock-specific on the core loop only in GTEx deaths.
+- Code: `exploratory/A385_sheep_person/scripts/a385b.py --stage score --deviation`.
+<!-- src: paper/exploratory/A385_sheep_person/output/{b_tests_deviation,b_power,b_gtex_thin,b_sheep_companions}.csv -->
