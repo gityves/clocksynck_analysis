@@ -12,8 +12,10 @@ Fill the bracketed counts from output tables (never from memory) before the draf
 > and apply it across the human lifespan in [N] tissues from [N] donors and [N] disease cohorts. Before birth, the
 > clock genes of selected organs already move together in the clock's pattern. In adults, organs keep their order
 > through chronic disease, and the fibroblasts of tumours keep the time of the same patient's normal tissue:
-> the desynchrony that mouse models predict for metabolic disease and ageing is absent at our detection limits. What
-> changes is how loudly tissues express that time: intensive care, chronic lesions, tumour stroma and proliferating tumours quieten
+> the desynchrony that mouse models predict for metabolic disease and ageing is absent at our detection limits. Across
+> humans, baboons and sheep, organs that express the body's time more loudly are more tightly coupled to it, beyond
+> random genes, and organs rank alike in loudness across species; with known sampling times, an organ's own clock noise
+> barely grows with its loudness. What changes in disease is how loudly tissues express that time: intensive care, chronic lesions, tumour stroma and proliferating tumours quieten
 > tissues without moving their time. Inflamed psoriatic skin is the exception: its lesions run 1 to 1.5 h late against
 > the same person's skin, replicated in an independent cohort and more than atopic lesions. At the end of life,
 > brain-dead organ donors keep a shared clock but lose the healthy order between organs.
@@ -22,6 +24,9 @@ If it must be shortened, cut "and apply it across the human lifespan in [N] tiss
 highlights.
 
 **Changes from the 2026-11-22 version** (`STORY_AUDIT_2026-11-23.md` sections 1.2, 5 and 7, discussed with the user).
+- **Healthy organisation (added 2026-11-26, user, after A383 / A384 / A395).** New sentence on the amplitude-coupling
+  rule, the conserved loudness ranking and the timed own noise. "What changes" becomes "What changes in disease". Mouse
+  (A394) joins "humans, baboons and sheep" only if A394 is scored and passes. Adds about 50 words.
 - **The gap.** Now "never measured between the organs of the same people". The old sentence read as a per-person
   estimate (A259, A344).
 - **Before birth.** "Clock genes move together in the clock's pattern" replaces "the clock network moves as a whole".
@@ -80,6 +85,7 @@ highlights.
 | mouse-predicted desynchrony absent | A235 (high-fat-diet liver advance excluded, ±1 h), A164 / A306 (T2D, obesity), A231 (age), A233; positive controls A111, A129, A257 | "human clocks resist desynchrony": the drives stay aligned in these conditions; with conflicting drives time moves (A257) |
 | psoriatic lesions 1-1.5 h late, replicated, more than atopic lesions | A183 (blind, -1.45 h; core -1.00 h, A335), A54 held-out, A345 (pre-mRNA delay), A347 (pooled -1.51 / -0.96 h; psoriasis minus atopic -1.25 / -0.75 h) | "atopic lesions are on time" (equivalence failed; 7 of 8 series lean late); "clock-specific" in the abstract; hidradenitis leans late (descriptive) |
 | brain-dead donors keep a shared clock, lose the healthy order | A317 H317.1-2, A318, A336 part 4 (core loop), descriptive origin A132b | any cause; "time comes apart"; organ-level arrows (not stable across gene sets, A335) |
+| louder organs are more tightly coupled, beyond random genes, in humans, baboons and sheep; organs rank alike in loudness across species; own clock noise barely grows with loudness (known times) | A383 H383.1 (rho 0.745 / 0.503 / 0.629, above matched and responsive q95; baboon at the responsive line), A384 H384.1 (T 0.386, p 0.006, above matched q95; baboon-sheep 0.653, human-baboon 0.375, human-sheep 0.132), A395 H395.1 (baboon timed: b_t 0.22, -0.01 to 0.42; phase scatter slope -0.75) | "living" animals (healthy, rapid death: euthanasia, slaughter); "in every species pair" or "conserved in humans" (human-sheep 0.13); "the clock's own noise is uniquely constant" or "organs sense time better" (no companion in A395; random gene sets also give b far below 1 in A383); a cause of the loudness ranking (open; composition explains only 1.3-fold of 2.9-fold, A323); "mouse" before A394 |
 | intensive care: loudness falls; no large disruption of the order | A315, A335 (loudness; core loop, age / sex matched), A349 (host-referenced log z2 > 0; loss largest in the strongest clocks), A293 (order) | "time kept" without the limit (single organ about 6-7 h, dispersion SD 2.25 h; A349); "same offsets" (compressed, A132b); "amplitude" for the variance ratio; COVID cohorts (A109c) |
 
 ## Introduction outline (agreed)

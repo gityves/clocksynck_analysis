@@ -9042,7 +9042,7 @@ R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsiv
 - Code: `exploratory/A383_species_organisation/scripts/a383_a384.py --stage power`.
 <!-- src: paper/exploratory/A383_species_organisation/output/{power_a383,power_a384,organs_a384}.csv -->
 
-## A383 / A384 (scored 2026-11-26; one scoring run, 6.5 h; BLIND for every companion statistic, every slope b and every cross-species correlation): stronger clocks are more coupled beyond companions in all three species (baboon at the responsive line); the own term grows far less than the gain, but so it does for random gene sets; organ gain ranks agree across species beyond matched genes, carried by the two living species
+## A383 / A384 (scored 2026-11-26; one scoring run, 6.5 h; BLIND for every companion statistic, every slope b and every cross-species correlation): stronger clocks are more coupled beyond companions in all three species (baboon at the responsive line); the own term grows far less than the gain, but so it does for random gene sets; organ gain ranks agree across species beyond matched genes, carried by the two animal species (healthy, rapid death)
 
 **A383.** Peripheral tissues, `Dataset.fit(n_boot=0, gate=False)`, leave-one-out anchors; companions: the A263 sets
 (200 matched, 200 responsive per species). Part 2: b = slope of log(2 psi) on log S, 90 % tissue-bootstrap interval.
@@ -9054,7 +9054,7 @@ R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsiv
 | sheep | 35 | 0.629 | 0.0001 | 0.425 / 0.532 | pass | 0.276 (0.157 to 0.396) | 0.321 (0.191 to 0.454) | 0.105 (-0.028 to 0.260) / 0.106 (-0.046 to 0.223) | pass |
 
 - **H383.1 passes in all three species**: peripheral organs with a stronger own clock are more coupled to the body's
-  clock state, beyond matched and responsive genes, in a living primate and in sheep. Baboon sits at the responsive
+  clock state, beyond matched and responsive genes, in a primate and in sheep (healthy animals, rapid death). Baboon sits at the responsive
   line (0.503 against q95 0.502; 95 % of responsive sets below): there the rule is not separated from the
   stress-responsive genes by a margin. Human on this setup reproduces A104 / A271 (0.745; A271 0.734 on its setup).
 - **H383.2 passes in all three species as registered** (every interval excludes 1): the own term grows far less than in
@@ -9080,16 +9080,24 @@ R^2 on time of death); 200 matched and 200 responsive sets per tissue (responsiv
 | matched q95 | | | 0.284 | 0.276 (median 0.046; 98 % of 200 sets below T) |
 
 - **H384.1 passes**: organ gain ranks agree across species beyond matched genes (T 0.386, p 0.006). The agreement is
-  carried by the two living species: baboon-sheep 0.653 (p 0.001, above the matched q95 0.284; **H384.2 reported only**,
+  carried by the two animal species: baboon-sheep 0.653 (p 0.001, above the matched q95 0.284; **H384.2 reported only**,
   power 0.75 < 0.8, as registered); human-baboon 0.375 (p 0.07), human-sheep 0.132 (p 0.33, 13 organs).
 - Descriptive (post hoc, gains_a384.csv; ranks among 17 human, 24 baboon, 20 sheep organs): visceral fat ranks high
-  in all three species (3 / 6 / 2), subcutaneous and perirenal fat in the two living ones (14 / 3 / 3; - / 4 / 1); the
+  in all three species (3 / 6 / 2), subcutaneous and perirenal fat in the two animal species (14 / 3 / 3; - / 4 / 1); the
   sheep gut (abomasum, colon, duodenum, ileum, caecum) ranks low,
   unlike human and baboon (ruminant digestion; the organ map flags stomach / abomasum as approximate).
-- Reading (registered): with power, the organ factor is in part a conserved organ property, shared by a living primate
-  and a ruminant; with A378, specific gain ratios still differ between species. The human-living disagreement is not
+- Reading (registered): with power, the organ factor is in part a conserved organ property, shared by a primate
+  and a ruminant; with A378, specific gain ratios still differ between species. The human-animal disagreement is not
   separated from GTEx deaths, the organ map and the smaller human-sheep overlap (13 organs).
 - Code: `exploratory/A383_species_organisation/scripts/a383_a384.py --stage score`.
+- Wording (2026-11-26, user): baboons (Mure 2018, euthanised at each time point) and sheep (slaughter) are not living
+  donors. They are healthy animals sampled right after a rapid death: no agonal course and minutes, not hours, of
+  ischaemia, but acute handling stress (immediate-early genes, PER1) is not excluded. "Living" is kept for biopsy and
+  surgical cohorts (MuTHER, psoriasis, tumour resections).
+- Bearing on A323 (post hoc note): A323's "organ-level factor" was an inference by elimination that a GTEx-specific
+  technical attenuation could also produce; the species comparison it called for (check G1) is A384: baboon and sheep
+  rank organ gains alike (0.653), independently of GTEx processing, so the organ factor is at least in part an organ
+  property. Human-animal agreement is weak (0.375, 0.132), so a GTEx-specific component is not excluded.
 <!-- src: paper/exploratory/A383_species_organisation/output/{tests_a383,companions_a383,own_term_a383,tests_a384,gains_a384}.csv -->
 
 ## A387 (scored 2026-11-25; BLIND for every value below except the A346 mean of moduli; one scoring run, rerun once after a memory kill before any Part 2 output, same seeds): tumour fibroblasts are coupled to the patient's normal stroma on the full model (c 0.40 core, beyond matched genes), within 0.8 h of it and about 30 % quieter; tumour endothelium is coupled on 14 genes but not beyond matched genes on the core loop; cancer cells are barely coupled
