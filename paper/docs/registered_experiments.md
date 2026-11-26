@@ -12722,3 +12722,27 @@ cohort contributes to the pairwise form with >= 4 patients having both classes. 
 power note 1. Dropped: extended18485genes (no CIART), the Census copy of BIOKEY (no ARNTL; the 3CA copy is used).
 **Decision.** One scoring run: H401.1 on the 8 cancers passing P401 on 14 genes; H401.2 on the same set with the A83
 shares; core-loop values and all other cancers descriptive (D401).
+
+## A385d (2026-11-26, on the user's instruction "yes go ahead", after A400c (reading mouse genes with the human waveform bends the state into an ellipse, ellipticity 0.125 core; the mismatch both inflates the leverage across sampling times and hid a within-time person factor) and the user's remark that a sheep waveform cannot be learned untimed from working-hours samples (A123b / A145: untimed orderers fail in working hours); DESCRIPTIVE CHECK of A385b, one run; **NOT BLIND**: A385b (D1: 14 genes 0.558, core 0.316; companions), A385c, A400c (mouse waveform Mf and its ellipse), A395 (baboon timed fits, loadings only); **BLIND**: every simulated leverage, the baboon fitted waveform, every sheep leverage read with a baboon or mouse waveform): does the A385b design protect the sheep person leverage against a waveform mismatch under working-hours sampling, and does the sheep value depend on the waveform?
+
+**Part 1, simulation of the sheep design (no data value).** The D1 animals and tissues of A385b (projects with >= 30
+animals; real depths, tissues per animal). The 14 clock genes are replaced by Poisson counts with mean depth x
+exp(m + lam_a A_g cos(t_a - psi_g) + e): m = real mean log fraction per tissue x project; e ~ N(0, sd) per sample, sd =
+sqrt(max(s^2 - A_g^2 / 2, s^2 / 4)) with s the real within-tissue x project SD of the gene; one true phase t_a per animal
+= project centre (uniform) + uniform within a window of width W = 4, 8, 12 or 24 h. Truth T0 = the human waveform
+(no mismatch); T1 = the A400c mouse pattern (Mf relative amplitudes and phases, rescaled to the human mean amplitude):
+the mismatch measured in the mouse. Person factor: lam_a = 1 (none) or exp(u_a), u_a ~ N(0, 0.25). Read with the
+human waveform and the A385b D1 statistic (both readouts). 10 replicates per cell (seeds [385, 7, cell, r]).
+**Part 2, waveform swap on the real sheep data.** A385b D1 leverage with the sheep read by: H human GTEx (must reproduce
+0.558 / 0.316); B baboon waveform (`fit_waveform`, Mure 2018 peripheral tissues, hours = ZT, group = tissue); Mo mouse
+waveform (A400c Mf). Clock with the sheep-permuted null within project (1,000); companions 50 matched + 50 responsive
+(the A385c gene draws, seeds [385, 2] / [385, 3]) read with each waveform's amplitudes and phases (H: the A385c values).
+**Readings (stated now).** Part 1: with T1 and no person factor, a median D1 leverage below 0.2 at W <= 12 h means the
+design protects the sheep value from the mismatch (phase harmonics and within-project spread suffice); a median at or
+above the sheep companions' q95 (A385: 0.51 / 0.54) at W <= 12 h means it does not. T1 against T0 with a person factor
+gives the masking (as A400c). Part 2: the 14-gene sheep leverage under B and Mo within +-0.15 of 0.558 and still above
+both of its companion q95s: the sheep value does not depend on the waveform. A large move: it does, and Part 1 says
+which direction to trust. The core loop is reported the same way (A385b: 0.316, not beyond companions).
+**Limits.** Simulated tissues share one gain and no tissue phase offsets; the sheep slaughter window is unknown (hence
+the width grid); neither baboon nor mouse is a ruminant.
+**Code.** `paper/exploratory/A385_sheep_person/scripts/a385d.py`. Aggregates only.
