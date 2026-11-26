@@ -9427,3 +9427,28 @@ other organs. Intervals: 2000 organ bootstraps.
 - Deota 2023, 48 mice, arm as stratum. H397.1 decidable (2.49 SE <= 1), less precise than the baboon (16 tissues).
 - Code: `exploratory/A395_baboon_timed_gain/scripts/a395.py --species mouse --stage power`.
 <!-- src: paper/exploratory/A395_baboon_timed_gain/output/mouse/power.csv -->
+
+## A397 (scored 2026-11-26; BLIND for every timed psi and slope; one scoring run): in the mouse, the timed own noise grows with gain more than in the baboon (b_t 0.50, 90 % 0.29 to 1.05): H397.1 fails (the interval reaches 1); not decided between partial scaling and an amplified own jitter
+
+Deota 2023, 48 mice (2 per ZT and arm), 15 of 16 peripheral tissues pass the timed precondition; arm as stratum
+(intercepts only). Same estimator as A395. Intervals: 2000 tissue bootstraps.
+
+| readout | b_t corrected (90 %) | b_t uncorrected (90 %) | phase scatter slope, corrected (90 %) |
+|---|---|---|---|
+| 14 genes | **0.500 (0.286 to 1.050)** | 0.798 (0.613 to 1.561) | -0.545 (-0.828 to 0.083) |
+| core loop | 0.734 (0.233 to 1.231) | 0.930 (0.798 to 1.551) | -0.574 (-0.764 to 0.060) |
+| 14 genes, ad libitum arm only (descriptive) | 0.317 (-0.065 to 0.781) | | |
+| 14 genes, restricted arm only (descriptive) | 0.362 (0.240 to 0.931) | | |
+
+- **H397.1 FAILS** (registered: the interval must exclude 1; upper bound 1.05). The registered reading of a fail
+  ("organs amplify their own jitter in the mouse") is not supported either: the interval excludes 0.29 below and the
+  point estimate sits between the two models. With 15 tissues the mouse does not decide.
+- The animal correction matters far more than in the baboon (0.80 -> 0.50; baboon 0.17 -> 0.22): mice depart from
+  ZT individually by more, and that departure, multiplied by each tissue's gain, enters psi with slope 1.
+- Post hoc (descriptive, not a test): each feeding arm alone gives b_t 0.32 and 0.36, both intervals excluding 1. The
+  pooled fit gives the arms only separate intercepts; arm differences in a tissue's rhythm would enter psi in
+  proportion to the gain and push the pooled b_t towards 1. Not decided: precision or arm pooling.
+- Consequence for the wording: the timed own-noise law is shown in the baboon (A395) and not replicated in the mouse;
+  the untimed version (A383 part 2) holds in three species but random gene sets share it.
+- Code: `exploratory/A395_baboon_timed_gain/scripts/a395.py --species mouse --stage score`.
+<!-- src: paper/exploratory/A395_baboon_timed_gain/output/mouse/tests.csv -->
