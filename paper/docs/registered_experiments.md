@@ -12673,3 +12673,36 @@ three fewer genes would (CLAUDE gene-drop rule).
 **(d) Breast adds BIOKEY** (Bassez 2021, 3CA copy with ARNTL; `$SCCC_DATA/bassez2021_3ca/`), pre-treatment biopsies only
 (the on-treatment ones follow one anti-PD-1 dose); its CELLxGENE copy stays excluded.
 The power stage is rerun with (a)-(d) and noted before scoring.
+
+## A400c (2026-11-26, on the user's remark "for the mouse I suspect it could be driven by differences in amplitude between the mouse and the reference waveform; I am not sure this is significant over the measuring noise", after A400b and A336c; DESCRIPTIVE CHECK, one run; **NOT BLIND**: A400 / A400b (human-waveform mouse leverages; ZT x arm cells explain 90 % / 88 % of the half-host radius, chance about 49 %), A336c (GTEx, read with its own waveform: time of death explains no radius beyond chance); **BLIND**: the mouse-fitted waveform, every radius decomposition by ZT harmonic, every ellipticity, every leverage and radius R^2 under a mouse waveform): is the mouse time-of-day radius a projection artefact of reading mouse clock genes with the human GTEx waveform, and is it beyond noise?
+
+**Mechanism.** A400 read mouse states with `cs.gtex()`. If the mouse genes' relative amplitudes and phases differ from
+it, the projected clock state traces an ellipse (z(t) = A e^{it} + B e^{-it}) instead of a circle; its radius then
+changes with clock time, mainly at the second harmonic, and every organ of a mouse killed at a given ZT shares that.
+GTEx, read with a waveform learned on GTEx, would not show it (A336c).
+**Waveforms.** (H) human GTEx (A400). (Mx) mouse, **cross-fitted**: the two mice of each ZT x arm cell are split into
+fold 0 / fold 1 (sorted id); `clocksync.waveform.fit_waveform` on fold f (log fractions log((count + 0.5) / depth) of the
+14 genes, peripheral tissues, hours = recorded ZT, group = tissue x arm) reads the mice of the other fold (one
+`Dataset` per fold; fold indicator in every residualisation). (Mf) mouse, fitted on all mice (sensitivity). Core loop =
+the waveform's 11 core genes.
+**Per waveform and readout (14 genes, core).**
+(1) Radius by time: median over halvings and halves of the R^2 of a half-host radius on the ZT x arm cells (chance
+(k - 1) / (n - 1)), and the incremental R^2 of ZT harmonics 1, 2, 3, 4 (entered in order). (2) Ellipticity: amplitude
+of the second ZT harmonic of the radius divided by the mean radius (half A, median over halvings), 90 % interval from
+1,000 mouse bootstraps (resampling mice); F-test p of the cells on the radius. (3) Leverage (A400 statistic) under V0
+(A400 adjustments), V1 (+ ZT harmonics 1-4), V2 (+ ZT x arm cells), with the mice-permuted null within arm (1,000) and
+50 matched + 50 responsive companion sets read the same way (same gene draws as A400b; amplitudes and phases from the
+waveform in use).
+**Mouse vs human waveform (descriptive).** Per gene: mouse amplitude relative to the waveform's mean, minus the same
+for GTEx; phase difference (h) after removing the mean phase offset; 90 % intervals from 200 mouse bootstraps of the
+fit (Mf).
+**Readings (stated now).** Waveform mismatch (user's hypothesis): under Mx the cell R^2 falls to near chance (below
+0.6, i.e. adjusted R^2 < 0.2), the H radius modulation is mainly second harmonic, and the V0 leverage falls to the V2
+level without any time adjustment. Not the waveform (a daily rhythm of mouse clock amplitude, non-sinusoidal genes or
+the sacrifice session): the cell R^2 stays high under Mx and V0 stays inflated. Between: the share of the H modulation
+removed by Mx is reported. Noise: an ellipticity interval excluding 0 and a cell F-test p < 0.05 mean the modulation is
+beyond measurement noise.
+**Limits.** Fitting on 24 mice per fold adds noise to the Mx waveform (the cross-fit keeps it independent of the mice
+read). The recorded ZT stands for the true phase. Feeding arms share one waveform per fold (group intercepts and
+amplitudes per tissue x arm only).
+**Code.** `paper/exploratory/A400_mouse_person/scripts/a400c.py`. One run.
