@@ -89,11 +89,14 @@ def main():
     # merged mapping
     pd.concat([pd.read_csv(p) for p in sorted(OUT.glob("*_celltype_mapping.csv"))]).to_csv(OUT / "celltype_mapping.csv", index=False)
     # counts per TCGA code (tumour malignant/epithelial + k stromal at >= 50 cells), per donor x site
-    pb = pd.concat([pd.read_parquet(p, columns=["donor", "compartment", "n_cells", "tcga", "tissue_general", "disease"]).assign(dataset=p.stem)
-                    for p in sorted(OUT.glob("*.parquet"))])
+    import pyarrow.parquet as pq
+    pb = pd.concat([pd.read_parquet(p, columns=["donor", "compartment", "n_cells", "tcga", "tissue_general", "disease"]
+                                    + (["timepoint"] if "timepoint" in pq.read_schema(p).names else [])).assign(dataset=p.stem)
+                    for p in sorted(OUT.glob("*.parquet")) if "_merged" not in p.stem])
+    pb["timepoint"] = pb["timepoint"].fillna("") if "timepoint" in pb else ""
     t = pb[pb.compartment.str.startswith("tumour:") & (pb.n_cells >= 50)]
     t = t.assign(c=t.compartment.str.split(":").str[1])
-    unit = ["dataset", "donor", "tcga", "tissue_general"]
+    unit = ["dataset", "donor", "tcga", "tissue_general", "timepoint"]
     g = t.groupby(unit).apply(lambda x: pd.Series({
         "tumour": int(x.c.isin(["malignant", "epithelial"]).any()),
         "n_stroma": int(x.c.isin(STROMA).sum())}), include_groups=False).reset_index()
@@ -107,7 +110,7 @@ def main():
     g.groupby(["dataset", "tcga"]).agg(donor_sites_q1=("q1", "sum"), donor_sites_q2=("q2", "sum")).reset_index().to_csv(
         OUT / "counts_per_dataset_tcga.csv", index=False)
     # PROVENANCE
-    files = sorted(p for p in OUT.iterdir() if p.is_file() and p.name != "PROVENANCE.md")
+    files = sorted(p for p in OUT.rglob("*") if p.is_file() and p != OUT / "PROVENANCE.md")
     lines = ["# CELLxGENE Census tumour pseudobulks (A401)", "",
              f"- Built {time.strftime('%Y-%m-%d')} by `paper/exploratory/A401_cancer_timekeeping/scripts/build_census_tumour.py` "
              f"(+ `finalize_census_tumour.py`), Census 2025-11-08 (`cellxgene_census` 1.17.0, `census_env`), `is_primary_data == True`, "
@@ -126,7 +129,11 @@ def main():
         d = dd.loc[s["short"]]
         lines.append(f"| {s['short']} | {s['dataset_id']} | {d.collection_name} ({d.collection_id}) | {d.doi} | {s['tumour_label']} | "
                      f"{s['selected_donors']} | {s['pseudobulks']} | {s['genes']} |")
-    lines += ["", "## sha256", ""] + [f"- `{p.name}`  {sha256(p)}" for p in files]
+    lines += ["", "## Time-point split", "",
+              "`integratedcancerce_7b20c613.parquet` is split by sample / time point (columns `timepoint` Pre / Post, `sample` = Sample|timepoint, outcome, treatment, "
+              "study, ...); the earlier build keyed rows by donor only and mixed time points: kept as `integratedcancerce_7b20c613_merged.parquet` for reference. "
+              "`integratedcancerce_7b20c613_obs_columns.csv` lists all source obs columns. BIOKEY labels: `biokey_labels/` (own PROVENANCE.md).",
+              "", "## sha256", ""] + [f"- `{p.relative_to(OUT)}`  {sha256(p)}" for p in files]
     (OUT / "PROVENANCE.md").write_text("\n".join(lines) + "\n")
     print(tc.to_string())
     print("done", round(time.time() - t0), "s")

@@ -35,7 +35,7 @@ MYELOID = re.compile(r"macrophage|monocyte|dendritic|myeloid|microglia|kupffer",
 TNK = re.compile(r"\bT cell|T-regulatory|regulatory T|T helper|gamma-delta|T-cell|T lymphocyte|natural killer|\bNK\b|\bNKT\b|\bMAIT|mucosal invariant", re.I)
 BPLASMA = re.compile(r"\bB cell|B-cell|plasma cell|plasmablast|plasmacyte", re.I)
 OBS_COLS = ["soma_joinid", "donor_id", "cell_type", "assay", "tissue", "tissue_general", "disease", "sex",
-            "development_stage", "suspension_type", "raw_sum", "tissue_type", "dataset_id"]
+            "development_stage", "suspension_type", "raw_sum", "tissue_type", "dataset_id", "observation_joinid"]
 EXTRA_KEYS = re.compile(r"treat|therap|respon|chemo|drug|time|day|week|stage|grade|subtype|histolog|status|surviv|recur|"
                         r"prior|batch|sample|site|location|age|sex|gender|mutation|braak|pathol|biops|condition|diagnos|"
                         r"cohort|patient|tnm|molecular|hpv|msi|stage|risk", re.I)
@@ -70,7 +70,12 @@ def compartment(ct, state, has_mal):
     return "epithelial" if (S.EPI.search(ct) and not mal) else None
 
 
-def read_source_extras(dataset_id, obs_joinids_needed, threads=2):
+# datasets whose pseudobulks are split by time point (source-obs columns merged on observation_joinid)
+SPLIT_DATASETS = {"7b20c613-9add-43d1-87e9-defd3d9b9f8c": ["Sample", "pre_post", "outcome", "Treatment.or.Mode.of.Action", "Study_name",
+                                                              "Combined_outcome", "Primary_or_met", "Cancer_type_update"]}
+
+
+def read_source_extras(dataset_id, obs_joinids_needed, threads=2, only=None):
     """Donor-relevant columns of the source h5ad obs over anonymous S3 (treatment / response / time / stage ... fields)."""
     import cellxgene_census as cc
     import fsspec
@@ -81,8 +86,10 @@ def read_source_extras(dataset_id, obs_joinids_needed, threads=2):
     with fs.open(uri, "rb") as f, h5py.File(f, "r") as h:
         obs = h["obs"]
         for c in obs.keys():
-            if c.startswith("_") or re.search(r"ontology|dataset_id|is_primary|tissue_type", c) or not (c == "observation_joinid" or EXTRA_KEYS.search(c)) or c in ("donor_id", "sex", "tissue", "disease", "assay",
-                                                                      "development_stage", "suspension_type"):
+            if only is not None and c not in only and c != "observation_joinid":
+                continue
+            if only is None and (c.startswith("_") or re.search(r"ontology|dataset_id|is_primary|tissue_type", c) or not (c == "observation_joinid" or EXTRA_KEYS.search(c)) or c in ("donor_id", "sex", "tissue", "disease", "assay",
+                                                                      "development_stage", "suspension_type")):
                 continue
             try:
                 g = obs[c]
@@ -132,6 +139,17 @@ def _build_one(args):
         for c in obs.columns:
             if str(obs[c].dtype) == "category" or obs[c].dtype == object:
                 obs[c] = obs[c].astype(str)
+        xcols = []
+        if ds_id in SPLIT_DATASETS:
+            src, oj = read_source_extras(ds_id, None, only=SPLIT_DATASETS[ds_id])
+            src["observation_joinid"] = oj
+            obs = obs.merge(src, on="observation_joinid", how="left", validate="one_to_one")
+            obs["timepoint"] = obs.pre_post.astype(str)
+            obs["sample"] = obs.Sample.astype(str) + "|" + obs.timepoint
+            xcols = ["timepoint", "sample", "outcome", "Treatment.or.Mode.of.Action", "Study_name", "Combined_outcome",
+                     "Primary_or_met", "Cancer_type_update"]
+            log(f"split by time point: {obs.timepoint.value_counts().to_dict()}")
+        tp = (lambda x: "|" + x) if xcols else (lambda x: "")
         obs["is_tumour"] = obs.disease.map(lambda d: bool(S.TUMOUR.search(d)) and not S.EXCLUDE.search(d))
         obs["state"] = np.where(obs.is_tumour, "tumour", np.where(obs.disease == "normal", "adjacent_normal", "other"))
         has_mal = bool(obs[obs.is_tumour].cell_type.str.contains(S.MALIG).any())
@@ -153,11 +171,11 @@ def _build_one(args):
         mapping["compartment"] = [compartment(c, s, has_mal) or "" for s, c in zip(mapping.state, mapping.cell_type)]
         mapping.insert(0, "dataset", short)
         mapping["tumour_label"] = ("malignant" if has_mal else "epithelial")
-        o["sample_key"] = o.donor_id + "|" + o.state + "|" + o.tissue_general + "|" + o.assay
+        o["sample_key"] = o.donor_id + "|" + o.state + "|" + o.tissue_general + "|" + o.assay + (tp(o.timepoint) if xcols else "")
         med = o.groupby("sample_key").raw_sum.median()
         n_sample_cells = o.groupby("sample_key").size()
         u = o[o.comp.notna()].copy()
-        u["group"] = u.donor_id + "|" + u.state + "|" + u.comp + "|" + u.tissue_general + "|" + u.assay + "|" + u.disease
+        u["group"] = u.donor_id + "|" + u.state + "|" + u.comp + "|" + u.tissue_general + "|" + u.assay + "|" + u.disease + (tp(u.timepoint) if xcols else "")
         codes, uniq = pd.factorize(u.group)
         u["gidx"] = codes
         base = int(o.soma_joinid.min())
@@ -206,7 +224,7 @@ def _build_one(args):
         donor=("donor_id", "first"), state=("state", "first"), comp=("comp", "first"), tissue=("tissue", lambda x: ";".join(sorted(set(x)))),
         tissue_general=("tissue_general", "first"), assay=("assay", "first"), disease=("disease", "first"),
         suspension=("suspension_type", "first"), n_cells=("soma_joinid", "size"), obs_raw_sum=("raw_sum", "sum"),
-        sample_key=("sample_key", "first")).reindex(uniq)
+        sample_key=("sample_key", "first"), **{c: (c, "first") for c in xcols}).reindex(uniq)
     df = pd.DataFrame({
         "donor": f"{short}|" + meta_rows.donor.to_numpy(),
         "compartment": np.where(meta_rows.state == "tumour", "tumour:", "adjacent_normal:") + meta_rows.comp.to_numpy(),
@@ -216,7 +234,8 @@ def _build_one(args):
         "disease": meta_rows.disease.to_numpy(), "tissue": meta_rows.tissue.to_numpy(),
         "tissue_general": meta_rows.tissue_general.to_numpy(), "suspension": meta_rows.suspension.to_numpy(),
         "tcga": [S.tcga(d, tg) for d, tg in zip(meta_rows.disease, meta_rows.tissue_general)],
-        "obs_raw_sum": meta_rows.obs_raw_sum.to_numpy().astype(np.int64)})
+        "obs_raw_sum": meta_rows.obs_raw_sum.to_numpy().astype(np.int64),
+        **{c.replace(".", "_"): meta_rows[c].to_numpy() for c in xcols}})
     df = df[meta_rows.n_cells.to_numpy() >= MIN_CELLS]
     dense = dense[(meta_rows.n_cells.to_numpy() >= MIN_CELLS)]
     cols = {c: pa.array(df[c].to_numpy()) for c in df.columns}
@@ -231,7 +250,8 @@ def _build_one(args):
         tissue=("tissue", lambda x: ";".join(sorted(set(x)))), sex=("sex", lambda x: ";".join(sorted(set(x)))),
         development_stage=("development_stage", lambda x: ";".join(sorted(set(x)))),
         assay=("assay", lambda x: ";".join(sorted(set(x)))), n_cells_total=("soma_joinid", "size"),
-        has_normal=("state", lambda x: bool((x == "adjacent_normal").any()))).reset_index()
+        has_normal=("state", lambda x: bool((x == "adjacent_normal").any())),
+        **{c: (c, lambda x: ";".join(sorted(set(x)))) for c in xcols if c != "sample"}).reset_index()
     dn["tcga"] = [S.tcga(d.split(";")[0], t.split(";")[0]) if d else "" for d, t in zip(dn.disease, dn.tissue)]
     pv = df.pivot_table(index=df.donor.str.split("|").str[-1], columns="compartment", values="n_cells", aggfunc="sum")
     dn = dn.merge(pv.add_prefix("n_").reset_index().rename(columns={"donor": "donor_id", "index": "donor_id"}), on="donor_id", how="left")
@@ -261,7 +281,8 @@ def _build_one(args):
     comp = df.groupby("compartment").agg(pseudobulks=("n_cells", "size"), ge50=("n_cells", lambda x: int((x >= 50).sum())))
     stats = dict(dataset_id=ds_id, short=short, tumour_label="malignant" if has_mal else "epithelial", selected_donors=len(sel),
                  pseudobulks=len(df), genes=int(len(genes)), seconds=round(time.time() - t0),
-                 compartments=comp.to_dict("index"), file_bytes=out.stat().st_size)
+                 compartments=comp.to_dict("index"), file_bytes=out.stat().st_size,
+                 timepoints=(df.groupby("timepoint")["sample"].nunique().to_dict() if xcols else None))
     (OUTDIR / f"{short}_stats.json").write_text(json.dumps(stats, indent=1, default=int))
     log(f"done: {len(df)} pseudobulks, {len(genes)} genes, {out.stat().st_size / 1e6:.0f} MB")
     return short, "ok"
