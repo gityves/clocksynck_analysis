@@ -254,7 +254,19 @@ def stage_score(args):
                              offset_diff_h=r["offset_diff_h"], p_offset=r["p_offset"], log_V_ratio=r["log_V_ratio"]))
         log(f"contrast {rd} done")
     T = pd.DataFrame(rows)
-    # matched sets on the real labels (one genome worker: memory)
+    T.to_csv(out / "contrasts.csv", index=False)          # saved before the memory-heavy genome step
+    # matched sets on the real labels (one genome worker: memory); skipped with --no-companions (the genome build
+    # exceeded the 30 GB cap twice with one worker; descriptive run)
+    if not args.no_companions:
+        companions_real(args, table, lab, blocks, T, out)
+    else:
+        log("matched-set comparators skipped (--no-companions)")
+    accounting(args, table, lab, T, out)
+
+
+def companions_real(args, table, lab, blocks, T, out):
+    import a387_score as S
+    from clocksync.paired import pseudo_waveforms
     keep = set(zip(table.donor, table.compartment))
     studies = sorted({d.split("|", 1)[0] for d in lab.index})
     Gs = Parallel(n_jobs=args.genome_jobs)(delayed(S.genome_cohort)(s, {x for x in keep if x[0].startswith(s + "|")})
@@ -294,6 +306,9 @@ def stage_score(args):
         T.loc[i, "matched_q05"] = float(np.nanquantile(cv, .05)) if cv.notna().any() else np.nan
         T.loc[i, "matched_share_le"] = float(np.nanmean(cv <= r.log_z2_ratio)) if cv.notna().any() else np.nan
     T.to_csv(out / "contrasts.csv", index=False)
+
+
+def accounting(args, table, lab, T, out):
     # D391.2 bulk accounting
     acc = []
     for rd in R.READOUTS:
@@ -325,6 +340,7 @@ def main():
     ap.add_argument("--jobs", type=int, default=6)
     ap.add_argument("--genome-jobs", type=int, default=3)
     ap.add_argument("--smoke", action="store_true")
+    ap.add_argument("--no-companions", action="store_true")
     args = ap.parse_args()
     limit_threads(1)
     t0 = time.time()
