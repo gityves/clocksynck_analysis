@@ -9752,3 +9752,37 @@ the feeding arm. Mice-permuted null within arm (1,000).
   slaughter); neither leverage has been checked against recorded time.
 - Code: `exploratory/A400_mouse_person/scripts/a400b.py`.
 <!-- src: paper/exploratory/A400_mouse_person/output/{b_summary,b_leverages}.csv -->
+
+## A336c (run 2026-11-26; DESCRIPTIVE CHECK; BLIND for every time-of-death-adjusted leverage and radius R^2; one run, 2.0 h, after a check run that printed only the V0 reproduction): the GTEx person loudness is not the time of death: the core-loop leverage is unchanged within 2 h time-of-death bins (0.714 -> 0.714) and stays above both adjusted companion q95s; the time of death explains no more of a half-host radius than chance
+
+GTEx fast deaths, 244 donors, 27 peripheral tissues, A336 part 2 statistic; 12 bins of 2 h (smallest 10 donors).
+Null: donors permuted within 2 h bins (1,000); companions: the first 100 matched and 100 responsive A336 sets, adjusted
+the same way.
+
+| readout | variant | clock leverage | p (null q95) | matched / responsive q95 (100 sets) | % matched / responsive below | holds |
+|---|---|---|---|---|---|---|
+| core | V0 A336 (reproduced 0.713847) | 0.714 | 0.001 (0.056) | 0.664 / 0.688 | 97 / 96 | yes |
+| core | V1 harmonics 1-4 of time of death | 0.712 | 0.001 (0.044) | 0.669 / 0.686 | 97 / 96 | yes |
+| core | **V2 2 h bins (primary)** | **0.714** | 0.001 (0.030) | 0.665 / 0.684 | 97 / 96 | **yes, above both** |
+| core | V3 1 h bins | 0.710 | 0.001 (0.032) | 0.657 / 0.686 | 97 / 96 | yes |
+| 14 genes | V0 (reproduced 0.765144) | 0.765 | 0.001 (0.054) | 0.625 / 0.725 | 99 / 98 | yes |
+| 14 genes | V2 2 h bins | 0.769 | 0.001 (0.031) | 0.626 / 0.720 | 99 / 99 | yes, above both |
+
+R^2 of a half-host radius on the 2 h bins (median over halvings and halves): clock 0.042 (14 genes) and 0.059 (core) raw,
+0.036 / 0.039 after A336's phase harmonics; companions' median 0.045 / 0.044; chance level (k - 1) / (n - 1) 0.045.
+
+- **Holds (registered reading): slide 3.5 stands.** Within 2 h of death, donors still differ in a clock loudness shared
+  by their organs, at the A336 size and above matched and responsive genes on the core loop. All three adjustments agree
+  (0.710-0.714), so the 1 h sensitivity also holds.
+- **No time-of-day radius in human deaths.** The time of death explains a share of the radius equal to chance (0.04-0.06
+  against 0.045), against 90 % in the mouse (A400b, chance about 49 %). The A400b mechanism (a radius that changes with
+  the hour, shared by all organs of an animal killed at that hour) is strong in light-dark-housed inbred mice and absent
+  from GTEx deaths at this resolution. Candidate reasons (not tested): a less sharply time-locked human clock state, the
+  spread of individual phase at a given clock hour (A374), and a near-circular human waveform.
+- The companion q95s from 100 sets are slightly higher than A336's from 200 (core matched 0.664 against 0.621); the clock
+  clears both.
+- **Sheep (A385b) remain unchecked**: slaughter times are not recorded. Given that GTEx shows no time-of-day radius, the
+  sheep 14-gene value is less exposed than the mouse's was, but this is not a test.
+- Code: `exploratory/A336_two_readouts/scripts/a336c_time_of_death.py`; `clocksync.elasticity.radius_covariance`
+  gains `covariates` / `groups` (clocksync 42e6890).
+<!-- src: paper/exploratory/A336_two_readouts/output/{c_summary,c_leverages}.csv -->
