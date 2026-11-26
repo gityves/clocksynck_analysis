@@ -3,7 +3,7 @@
 Source: `$SCCC_DATA/mouse_ageing/Deota2023/GSE190389_geo/GSE190389_raw.csv.gz` (GSE190389, raw counts, 2 mice per arm
 and ZT, ZT 0-22, latin-1 encoded; tissues of the same mouse are inferred from the library names).
 Legacy builder replaced: `desync/validation/mouse_ageing/scripts/a49_deota.py:load` with `common.clock_table`.
-Used by: A49 (H49.1, H49.2).
+Used by: A49 (H49.1, H49.2); A394 (genes="all").
 
 Choices (as legacy): library names `<tissue>_<ZT>_<arm>_<mouse>_<run>`; the Excel-mangled space of "Kidney cortex"
 is repaired; runs of the same tissue x mouse are averaged and rounded half to even (np.rint); donor =
@@ -27,7 +27,8 @@ COMPANION = ["Heart", "Lung", "Spleen", "Kidney cortex", "Kidney medulla"]
 EXPR_MIN = 5.0
 
 
-def build() -> tuple[pd.DataFrame, pd.DataFrame]:
+def build(genes="clock") -> tuple[pd.DataFrame, pd.DataFrame]:
+    """(pseudobulk table, donors). genes: "clock" (default, A49) or "all" (every gene, canonical symbols; A394)."""
     b = pd.read_csv(SRC, index_col=0, encoding="latin-1")
     b.columns = [c.replace("æ", " ") for c in b.columns]
     rec = []
@@ -42,7 +43,7 @@ def build() -> tuple[pd.DataFrame, pd.DataFrame]:
     cnt = pd.DataFrame(np.array(cols), columns=b.index)
     meta = pd.DataFrame(rows).reset_index(drop=True)
     meta["stratum"] = meta.arm
-    pb = cs.from_bulk(cnt, meta, donor="donor", compartment="compartment", stratum="stratum")
+    pb = cs.from_bulk(cnt, meta, donor="donor", compartment="compartment", stratum="stratum", genes=genes)
     donors = meta.drop_duplicates("donor").set_index("donor")[["zt", "arm"]]
     return pb, donors
 
