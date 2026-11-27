@@ -13155,3 +13155,29 @@ primary set = cohorts outside the A227 list).
 - **Reading.** If (b) detects a 2-fold rhythm, A402b's null bounds composition rhythms of that size; if not, A402b says
   "unreadable at the mouse scale", not "absent".
 **Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a402c.py`; output `output/a402c/{r1,s1}.csv`.
+
+## A409 (2026-11-27; synthesis item H2, on the user's go-ahead for the synthesis plan; staged: power, then one scoring run; BLIND for every tumour radius covariance and every myeloid-loudness slope in the A387 cohorts; NOT BLIND: A387 couplings and loudness ratios, A403 / A403b (pooled tumour table, partly the same patients)): does the patient's clock loudness reach the tumour?
+**Question.** Persons differ in how loudly their tissues express the shared clock (GTEx person leverage, A360 / A361). If
+the tumour stroma is a passive part of the body's clock, a patient with a loud normal stroma has a loud tumour stroma.
+**Data.** A387 pooled table (A227 cohorts; adjacent-normal fibroblast, endothelium, mural as anchors; tumour fibroblast and
+endothelium as targets; 14 genes). Inventory (counts only): tumour fibroblasts 159 patients, with a normal endothelium 77,
+with normal fibroblast and endothelium 57; normal fibroblasts with normal endothelium 90.
+**Readout.** `clocksync.elasticity.radius_covariance` (radii residualised on the first two phase harmonics of both states):
+leverage = corr of the two radii, and the shared cv^2. States centred within stratum.
+- **H409.1 (primary):** tumour fibroblast state (`clocksync.pairwise.states`) against the patient's normal-stroma host
+  state (A387 host, the three normal anchors): leverage > 0, one-sided p < 0.05 from 2,000 within-stratum shuffles of the
+  tumour states, and above the matched pseudo-waveform q95 (200 sets, seeds [409, 0]; the same pseudo waveform for the
+  tumour state and the host). Responsive sets ([409, 1]) reported.
+- **Reference (descriptive):** normal fibroblast state against the host of the normal endothelium and mural cells (the
+  same readout inside normal tissue); tumour endothelium against the normal-stroma host.
+- **D409 (systemic or local, descriptive):** in the A387 patients, the A403 within-cohort slope of the tumour myeloid share
+  (log2 share of all tumour cells, >= 100 cells) on (a) the normal-stroma host loudness (log radius centred within
+  stratum) and (b) the tumour-stroma loudness (host of tumour fibroblasts and endothelium in the same table); 10,000
+  within-cohort permutations; both slopes on the same patients.
+**Power stage (before any observed tumour value).** Null SD of the H409.1 leverage from the shuffles (the identity pairing
+not evaluated); MDE = 2.49 x SD. H409.1 is scored if MDE <= 0.30 (a leverage of the size of half the GTEx person leverage on
+the core loop, 0.714 / 2, rounded down); otherwise it is descriptive.
+**Reading.** Pass: the patient's loudness reaches the tumour stroma (passive participation). Fail with power: the tumour
+stroma's loudness is set locally. D409: a myeloid slope on normal-stroma loudness as large as on tumour-stroma loudness
+reads "systemic"; only on the tumour stroma reads "local".
+**Code:** `paper/exploratory/A387_tumour_full_model/scripts/a409.py --stage power|score`; output `output/a409/`.
