@@ -13132,3 +13132,9 @@ immune PTPRC scores of the tumour) between arms, since CPTAC has no ABSOLUTE pur
 **Reading.** Pass: the A304 gain loss replicates in an independent paired cohort. Fail with power: the gain loss is not a
 general property of proliferating tumours (TCGA only).
 **Code:** `paper/exploratory/A304_cancer_gain_departure/scripts/a304r.py --stage power|score`; output `output/a304r/`.
+
+### A304r power note (2026-11-27; `a304r.py --stage power`, 0.4 min; `output/a304r/{calibration,design,power}.csv`; simulation only, no observed contrast)
+Design: 8 types, 713 pairs (LUAD 215, CCRCC 151, LSCC 96, SKCM 66, HNSCC 61, PDAC 52, UCEC 45, STAD 27), arms 13-108.
+500 replicates x 500 permutations: type I 0.044 (gain), 0.064 (departure); power of the gain readout 0.402 / 0.908 /
+**0.970** / 0.998 at k_G 0.85 / 0.7 / **0.63** / 0.5; departure 0.982 / 1.000 at k_D 1.5 / 2. **H304r.1 is scored**
+(power 0.97 >= 0.8 at the TCGA ratio). Simulated means: Q_G -0.419 at 0.63 (SD 0.125).
