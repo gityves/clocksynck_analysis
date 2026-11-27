@@ -13192,3 +13192,8 @@ leverage without any person effect. **Correction:** both radii are also residual
 (`radius_covariance(..., groups=stratum)`), so between-stratum scale is removed and strata of one or two patients carry
 no information; the shuffle null, the companions and the references use the same call. The power stage is rerun; the
 gate (MDE <= 0.30) is unchanged. H409.1 is reported as "not blind (note 1)".
+
+### A409 power note (2026-11-27, after note 1; `a409.py --stage power`, 6 s; `output/a409/power.csv`; shuffle null only)
+116 patients (tumour fibroblasts with the normal-stroma host) in 23 strata; within-stratum shuffles (2,000) with radii
+residualised on phase harmonics and stratum: null mean 0.001, SD 0.126, **MDE 0.313 > 0.30: H409.1 is descriptive**
+(not scored as a test). The score stage runs as registered for the descriptive readouts.
