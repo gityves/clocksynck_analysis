@@ -13112,3 +13112,23 @@ T/NK shares, proliferation; n_anchor and log depth).
   companions: the lead is not a phase effect. Shrunk towards 0 by more than half: the lead is largely the phase seen
   through the radius. In between: partly.
 **Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a403c.py`; output `output/a403c/{c1,c2}.csv`.
+
+## A304r (2026-11-27; synthesis item U2 / H5; registered replication of A304 H304.1 in CPTAC-3; BLIND for every CPTAC gain, departure and host-variance value; NOT BLIND: CPTAC pairs, gates and G2M tertiles (A186: pairing drop D 0.113, not clock-specific), A250 used the same pairs; A304 TCGA values known): proliferating tumours express less of the patient's time, a second paired cohort
+**Data.** CPTAC-3 open tumour / normal pairs of A186 (`A186_cptac_c1/output/cache`, 8 types, 713 pairs; every normal gate
+passes). States on one projector per type, Poisson-corrected (A186 `states`, the A138 construction).
+**Contrast and readouts** exactly as A304 (`lib_a304`): proliferation = A97 G2M score of the tumour (A186 `labels`), split
+at the median within type; types with >= 8 pairs per arm; gain Q_G = log(sum n G_high / sum n G_low), departure Q_R,
+host check Q_N, pooled with weights n; 2,000 within-type label permutations.
+- **H304r.1 (primary):** Q_G < 0, one-sided p < 0.05, and below the matched-set q05 (200 expression-matched pseudo-clock
+  sets per type, pooled per set index; seeds [3042, 7, i]); responsive sets ([3042, 8, i]) reported.
+- **H304r.2 (secondary):** departure rise, Q_R > 0, one-sided p < 0.05 and above the matched q95 (A304 found none).
+**Power stage (before any observed value).** The A304 simulator at the CPTAC design (arm sizes, Poisson variances,
+all-pairs moments; reliability: Lung for LUAD / LSCC, Kidney - Cortex for CCRCC, Skin - Not Sun Exposed for SKCM, Stomach
+for STAD, the median of these for HNSCC, PDAC, UCEC): rejection at 0.05 for k_G = 0.85, 0.7, 0.63 (the TCGA ratio), 0.5;
+k_D 1.5, 2. H304r.1 is scored if power at k_G = 0.63 >= 0.8; otherwise it is descriptive.
+**Descriptive.** Per type G, R and the high - low offset; the core loop (gain only; no gene-drop null is registered, so a
+fall on the core reads "not decided: precision or the removed genes"); a purity proxy (stromal COL1A1, COL1A2, DCN, LUM and
+immune PTPRC scores of the tumour) between arms, since CPTAC has no ABSOLUTE purity.
+**Reading.** Pass: the A304 gain loss replicates in an independent paired cohort. Fail with power: the gain loss is not a
+general property of proliferating tumours (TCGA only).
+**Code:** `paper/exploratory/A304_cancer_gain_departure/scripts/a304r.py --stage power|score`; output `output/a304r/`.
