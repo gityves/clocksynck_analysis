@@ -13197,3 +13197,32 @@ gate (MDE <= 0.30) is unchanged. H409.1 is reported as "not blind (note 1)".
 116 patients (tumour fibroblasts with the normal-stroma host) in 23 strata; within-stratum shuffles (2,000) with radii
 residualised on phase harmonics and stratum: null mean 0.001, SD 0.126, **MDE 0.313 > 0.30: H409.1 is descriptive**
 (not scored as a test). The score stage runs as registered for the descriptive readouts.
+
+## A410 (2026-11-27; synthesis item H1, on the user's go-ahead for the synthesis plan; staged: power, then one scoring run; BLIND for every lineage-coupling relation; NOT BLIND: per-cancer cancer-cell couplings (A401), A403 / A405 contribution code): do cancer cells keep the tumour's time while they keep their lineage identity?
+**Why.** Cancer cells keep time in lung adenocarcinoma, thyroid and kidney and not in breast, colorectal or ovary (A401),
+and these cancer types are the clock-structured ones in bulk. If clock participation follows cell identity, patients
+whose cancer cells retain more of their lineage program should show more cancer-cell coupling within a cancer type.
+**Data.** A401 pooled table, tumour-stroma host per cancer (A403); malignant pseudobulk (`tumour:malignant`, the A401
+rename) of the patients with a host. Cancers with a registered lineage program (7): LUAD (AT2: SFTPC SFTPB SFTPA1 SFTPA2
+NAPSA LAMP3 SLC34A2 ABCA3), THCA (thyroid differentiation: TG TPO TSHR PAX8 SLC26A4 DIO1 DIO2 FOXE1 NKX2-1 SLC5A5), BRCA
+(luminal: ESR1 PGR GATA3 FOXA1 XBP1 TFF1 AGR2 KRT18), PRAD (androgen-receptor luminal: AR KLK3 KLK2 NKX3-1 TMPRSS2 FOLH1
+ACP3), COAD (colonocyte: CDX1 CDX2 VIL1 KRT20 CEACAM5 CA2 SLC26A3 GUCA2A), STAD (gastric: MUC5AC TFF1 TFF2 GKN1 GKN2 PGC
+CLDN18 LIPF), KIRC (proximal tubule: LRP2 CUBN SLC34A1 SLC22A6 SLC3A1 SLC5A12 ALDOB). OV, PAAD, ESCA, CESC and lung_mixed
+have no single registered lineage axis and are not used.
+**Readouts.** y = per-patient cancer-cell contribution Re(m conj(b h)) / mean |m|^2 (A405 `contribution`; malignant 14-gene
+state m, tumour-stroma host h, b fitted per cancer). x = lineage score: mean within-cohort z of log2 CPM of the program
+genes in the genome-wide malignant pseudobulk (program scored in a cohort with >= half of its genes). Covariates: log
+malignant depth, log malignant cell count, n_anchor and log stromal depth (A403).
+- **H410.1:** pooled within-cohort slope of y on x (z-scored, stratum-centred, residualised on the covariates; patient
+  weights; 7 cancers) > 0, one-sided p < 0.05 (10,000 within-cohort permutations of x) and above the matched q95 of the
+  same slope with y from 200 matched pseudo-waveforms (pseudo-host and malignant states with the same pseudo waveform,
+  seeds [410, 0]); responsive ([410, 1]) reported.
+- **Descriptive:** per cancer slope with 90 % bootstrap interval; the same slope for tumour fibroblast contribution (a
+  compartment whose coupling should not depend on the cancer cells' lineage: a specificity check); core loop.
+**Power stage (no identity pairing of x and y).** Null SD of the pooled slope from the shuffles; MDE = 2.49 x SD. H410.1 is
+scored if MDE <= 0.20 (standardised slope); otherwise descriptive.
+**Caveat (registered).** Where the malignant compartment is `tumour:epithelial` without copy-number calls, normal
+epithelium inside the tumour raises both the lineage score and the coupling (normal epithelium keeps time); the tumour
+fibroblast check does not remove this. A positive H410.1 reads "lineage-linked participation, or contamination by
+normal epithelium", unless it holds in the cohorts with copy-number-called malignant cells (A388 cohorts; descriptive).
+**Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a410.py --stage power|score`; output `output/a410/`.
