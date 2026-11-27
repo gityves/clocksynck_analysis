@@ -13062,3 +13062,13 @@ and the simulated SE of the pooled f <= 0.15; otherwise descriptive.
 this test cannot separate. Single-cell clock counts are sparse (a few UMI per cell); the read-thinning control carries
 that. Cells of one class in a sample are a finite population (sampling without replacement: n <= 400 of usually more).
 **Code.** `paper/exploratory/A408_cell_sampling/scripts/a408.py --stage power | score`. Aggregates only.
+
+### A402b addendum 1 (2026-11-27, POST HOC, DESCRIPTIVE; after A402b was scored: myeloid phase agreement 0.704 / 0.681 known, without companion): is the shared phase across cancers clock-specific?
+Same table, readouts, per-cancer pooled cross products and agreement A = |sum_c n_c c_c| / sum_c n_c |c_c| as D1. Companions
+with a common phase axis across cancers: 200 matched and 200 stress-responsive pseudo-waveforms drawn ONCE (clocksync
+`pseudo_waveforms`, seeds [4022, 10] / [4022, 11]) from the mean expression of the pooled stroma of all 12 cancers, restricted
+to genes present in every cancer's stroma table; each set's pseudo-host fitted per cancer with that same waveform; A of
+each set for the same readout and patients. Reported: observed A, the companion median / q95 and the observed A's
+percentile, for both shares and the GC score, new patients and all. Reading: above both q95s = the shared phase is
+clock-specific; inside = a shared phase that any gene set carries (pair-phase rule). Code: `a402b.py --stage agree`;
+output `output/a402b/agreement_companions.csv`.
