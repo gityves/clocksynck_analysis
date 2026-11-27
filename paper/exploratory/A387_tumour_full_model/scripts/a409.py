@@ -70,7 +70,7 @@ def shuffles(a, st, n, rng):
 
 def null_lev(a, b, st, n, seed):
     P = shuffles(a, st, n, np.random.default_rng(seed))
-    return np.array([radius_covariance(a[p], b)["leverage"] for p in P])
+    return np.array([radius_covariance(a[p], b, groups=st)["leverage"] for p in P])
 
 
 def stage_power(args):
@@ -89,8 +89,8 @@ def comp_one(table, wfs):
         r = dict(family=fam, set=j)
         for lab, (tgt, anch) in PAIRS.items():
             try:
-                _, a, b, _ = pair_states(table, tgt, anch, w)
-                rc = radius_covariance(a, b)
+                _, a, b, st = pair_states(table, tgt, anch, w)
+                rc = radius_covariance(a, b, groups=st)
                 r[lab] = rc["leverage"]
             except Exception:  # noqa: BLE001  (a pseudo waveform without a fit: no value)
                 r[lab] = np.nan
@@ -152,7 +152,7 @@ def stage_score(args):
     rows = []
     for k, (lab, (tgt, anch)) in enumerate(PAIRS.items()):
         ids, a, b, st = pair_states(table, tgt, anch, BASE)
-        rc = radius_covariance(a, b)
+        rc = radius_covariance(a, b, groups=st)
         nul = null_lev(a, b, st, N_SHUF, [SEED, k])
         rows.append(dict(pair=lab, patients=len(ids), leverage=rc["leverage"], cv2=rc["cv2"], null_mean=float(nul.mean()),
                          null_sd=float(nul.std()), p_one_sided=float((np.sum(nul >= rc["leverage"]) + 1) / (N_SHUF + 1)),
