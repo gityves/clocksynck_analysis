@@ -10053,3 +10053,33 @@ baboon-fitted (descriptive; no companion comparison registered): b_t 0.460 (0.14
   animals, one per time point; mouse not replicated (A397).
 - Code: `exploratory/A395_baboon_timed_gain/scripts/a407.py --stage score`.
 <!-- src: paper/exploratory/A395_baboon_timed_gain/output/a407/{tests,tests_clock,companions_unread}.csv -->
+
+## A402b (scored 2026-11-27; one scoring run, 17.5 min, after the power stage; BLIND for every share-phase relation on the tumour-stroma host): tumour composition does not follow the phase of the tumour-stroma clock beyond companions; A229's T/NK result does not replicate (H402b.1 FAIL); the myeloid share leans (excess 0.044, p 0.07) with a peak hour shared across cancers, and the stromal glucocorticoid state follows the clock phase strongly
+Power note: registered_experiments.md (A402b power note): H402b.1 scored (MDE 0.073), myeloid descriptive (MDE 0.074 > 0.053).
+543 patients (379 in cohorts new relative to A246); 10,000 shared within-cohort permutations; 200 matched and 200
+stress-responsive pseudo-hosts per cancer (A403 sets).
+- **H402b.1 FAIL (T/NK share, 287 new patients, 21 cohorts):** r 0.260 vs null 0.235 (excess 0.025), p 0.19 (Holm 0.19);
+  below the matched q95 (0.304; median 0.249). Implied peak 15.0 h (90 % 11.5-16.8 h), not A229's 4.8 h. All patients:
+  excess 0.028, p 0.12.
+- **Myeloid share (descriptive):** new patients r 0.282, excess 0.044, p 0.073, below the matched q95 (0.313); all patients
+  excess 0.039, p 0.059 (q95 0.337). Implied peak 1.4 h (new; 90 % 22.8-3.5 h), 0.5 h (all; 22.3-2.4 h).
+- **D1 same phase everywhere?** Per cancer no share is beyond its matched q95; single cancers at p < 0.05: myeloid in LUAD
+  (new, excess 0.131, p 0.035) and STAD (all, 0.208, p 0.020). Phase agreement across cancers: myeloid 0.704 (new; null
+  0.317, q95 0.611, p 0.013) and 0.681 (all; p 0.013), its peaks between 0 and 5 h in 8 of 12 cancers (all patients: BRCA,
+  ESCA, KIRC, LUAD, OV, PAAD, STAD, lung_mixed); T/NK 0.671 (new, p 0.026) but 0.389 on all patients (p 0.28). The agreement
+  has no companion (not computed for pseudo-hosts): by the pair-phase rule a shared phase across cancers is not shown to be
+  clock-specific.
+- **D2 glucocorticoids:** the stromal GC-target score follows the host state strongly: r 0.385 (new; excess 0.165, p 1e-4;
+  all 0.376, p 1e-4), above the matched q95 (0.349) but below the responsive q95 (0.535, the family that contains GC
+  targets); implied peak 12.6 h. Shares with GC regressed out within cohort: T/NK excess -0.009 (p 0.61): the small T/NK
+  lean disappears; myeloid 0.042 (p 0.078): unchanged. Within-cohort correlation with the GC score: T/NK +0.11 (new) /
+  +0.03 (all); myeloid -0.11 / -0.15.
+- **D3 T/NK subtype markers (inside the T/NK pseudobulk):** none beyond matched q95. Treg (FOXP3, IL2RA) leans most: excess
+  0.038 (new, p 0.098), 0.044 (all, p 0.040; q95 0.365 vs r 0.315); CD8 0.024 / 0.028; NK 0.015 / 0.033; CD4 below null.
+- **Reading.** No composition-phase relation is shown beyond matched gene sets on the stroma host: A229's T/NK result does
+  not replicate on new patients and a new host (at the A229 size, MDE 0.073). The myeloid share is the only lean (about the
+  A246 size, which this design could not resolve) and it points to one hour in most cancers, near the end of the night on
+  the waveform axis, as a body-level driver would; that shared phase is not tested against companions. The stromal GC
+  state is strongly organised by the clock phase (expected for rhythmic GC targets) and absorbs the weak T/NK lean, not
+  the myeloid one. Treg markers lead among T/NK subtypes, below companions.
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/a402b/{power,tests,d1_cancer,d1_agreement,d2,d3}.csv -->
