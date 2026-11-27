@@ -135,10 +135,13 @@ def inflammation(hosts):
         Gc = h["Gc"]
         genes = V.inflammatory_genes([g for g in Gc.columns if g not in META])
         for lab, sub in (("infl_stroma", Gc), ("infl_fibro", Gc[Gc.compartment == "tumour:fibroblast"])):
+            if sub.empty:  # no fibroblast class in this cancer's host (e.g. KIRC)
+                continue
             t = sub.groupby("donor")[genes + ["depth"]].sum()
             lc = np.log2(t[genes].div(t.depth, axis=0) * 1e6 + 1)
-            coh = pd.Series([d.split("|")[0] for d in lc.index], index=lc.index)
-            z = lc.groupby(coh).transform(lambda x: (x - x.mean()) / x.std(ddof=0))
+            coh = np.array([d.split("|")[0] for d in lc.index])
+            g = lc.groupby(coh)
+            z = (lc - g.transform("mean")) / g.transform(lambda x: x.std(ddof=0)).replace(0, np.nan)
             z = z.loc[:, z.notna().mean() > 0.5]
             rows.append(pd.DataFrame({"donor": z.index, "score": z.mean(axis=1).to_numpy(), "kind": lab, "n_genes": len(genes)}))
     R = pd.concat(rows).pivot_table(index="donor", columns="kind", values="score").reset_index()
