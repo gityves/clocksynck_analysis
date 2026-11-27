@@ -10078,8 +10078,8 @@ stress-responsive pseudo-hosts per cancer (A403 sets).
   0.038 (new, p 0.098), 0.044 (all, p 0.040; q95 0.365 vs r 0.315); CD8 0.024 / 0.028; NK 0.015 / 0.033; CD4 below null.
 - **Reading.** No composition-phase relation is shown beyond matched gene sets on the stroma host: A229's T/NK result does
   not replicate on new patients and a new host (at the A229 size, MDE 0.073). The myeloid share is the only lean (about the
-  A246 size, which this design could not resolve) and it points to one hour in most cancers, near the end of the night on
-  the waveform axis, as a body-level driver would; that shared phase is not tested against companions. The stromal GC
+  A246 size, which this design could not resolve) and it points to one hour in most cancers (about 0-2 h on the
+  waveform clock-time axis), as a body-level driver would; that shared phase is not tested against companions. The stromal GC
   state is strongly organised by the clock phase (expected for rhythmic GC targets) and absorbs the weak T/NK lean, not
   the myeloid one. Treg markers lead among T/NK subtypes, below companions.
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/a402b/{power,tests,d1_cancer,d1_agreement,d2,d3}.csv -->
