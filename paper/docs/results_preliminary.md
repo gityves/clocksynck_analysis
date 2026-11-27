@@ -10151,7 +10151,7 @@ G2M split within type, 2,000 permutations, 200 matched and 200 responsive pseudo
   not readable. The bulk breast time reference (A146 addendum 1: 1.9 h error on a 10 h window) is the weaker of the two.
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/a402c/{r1,r1_splits,s1}.csv -->
 
-### A406 part 1 (simulation and gates, 2026-11-27; no real clock value read with E or E2)
+## A406 part 1 (simulation and gates, 2026-11-27; no real clock value read with E or E2): both gates pass (null median under the external waveform 0.023, power 100 %); the A400c cross-fit inflates a null design (median 0.194) but stays below its companion q95s
 Simulated Deota design (A400 mice and depths, A394 gains, A400c Mf truth, d_s ~ N(0, 1 h)), V2 core leverage, 20
 replicates per cell. Companion q95s are the real ones (E, E2: this amendment; Mx: A400c).
 

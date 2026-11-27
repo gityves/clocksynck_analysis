@@ -13247,3 +13247,74 @@ Fail with power: cancer-cell participation does not follow proliferation at this
 ### A411 power note (2026-11-27; `a411.py --stage power`, 11 min, peak 25 GB; `output/a411/{power,programs}.csv`; shuffles of x only)
 574 patients in the 12 cancers (x in 573); 560 in 47 cohorts enter the slope. Null mean -0.001, SD 0.044, **MDE 0.110 <=
 0.20: H411.1 is scored.**
+
+## A412 (2026-11-27, on the user's instruction "you have 12h, work autonomously on what you suggested" (health synthesis, hypothesis 1); staged: power (spread-matched null, simulation of the two readings, companion draws; no clock psi contrast), then one scoring run; **NOT BLIND**: A349 part 2 (fast vs ventilated host spread V 3.70 / 2.15, median log z2 ratio 0.14, coupling 0.69 / 0.44 on 14 genes; core similar); A349's `part2_tissues.csv` holds a per-tissue `log_psi_ratio` column computed 2026-11-23 and never reported (A349's erratum used psi only as weights); not read in this session; A395 / A407 (the timed own noise does not grow with gain, clock-specific). BLIND for every clock and companion psi contrast below.)
+**Question.** When the body's clock signal reaching an organ gets weaker, does the organ's own clock noise stay the
+same? Across organs (A395, A407) the own term does not grow with gain: the organ's gain applies to the shared time, not
+to its own fluctuation (uptake). Intensive care is a within-organ test: in GTEx ventilated donors with a living brain the
+shared rhythm S = z2 V falls (V about halves, A349). Population reading: if intensive care weakens the cells'
+entrainment to the body's time, S falls and the own term psi stays (uptake); if it scales the organ's whole clock
+signal (fewer clock cells, lower per-cell amplitude, damping), psi falls with S; if it adds local disorder, psi rises.
+**Data.** A349 part 2 exactly: GTEx fast deaths (Hardy 1-2) vs the 79 ventilated post-mortem donors with a living brain,
+the 12 A109 body tissues as targets, host anchored on the 15 A164 tissues, `Dataset.contrast`; 14 genes and core loop
+(PER1, PER2, NR1D1 dropped). **Primary design: matched** (A335 rule: sex exact, age caliper 5 y, ischaemic time; A349's
+matched sets); pooled descriptive.
+**Statistic.** Per tissue k: dpsi_k = log psi_fast - log psi_vent and dS_k = log S_fast - log S_vent (S = z2 V per group
+from the contrast's separate group estimates). Companion excess: dpsi*_k = dpsi_k - median over companion sets of their
+dpsi_k (200 expression-matched A263 GTEx sets, read with the clock positions, same contrast and donors). Primary
+kappa = median_k dpsi*_k / median_k dS_k (0 = uptake, 1 = psi scales with the shared rhythm, < 0 = added own noise);
+90 % interval from 500 donor bootstraps within groups (host fixed, as A349), companions' median recomputed in a 50-set
+subsample per draw.
+**Power stage (gates, stated now).** (i) *Spread-matched null:* fast-death donors restricted to a time-of-death window
+whose host spread V matches the ventilated V (window chosen on V alone, no psi read) give a within-fast pseudo-contrast
+(full fast vs window) where the truth is no change of psi; its kappa estimator bias must lie within +-0.15 of 0 (G412.1).
+(ii) *Simulation* (`clocksync.simulate` or states drawn from each tissue's fitted host model): both groups at the
+observed design (donor counts, depths, host anchors, V per group), truth A uptake (psi equal, S as observed), truth B
+scaling (psi_vent = psi_fast x S_vent / S_fast); 100 replicates each. G412.2 power: under A, >= 80 % of replicates have a
+kappa upper 90 % bound < 0.5 (bound from the replicate SD x 1.645); under B, the median kappa >= 0.7. If a gate fails the
+contrast is reported descriptively.
+**H412.1 (primary, 14 genes, matched).** The kappa 90 % interval lies below 0.5. Pass: the own term does not shrink with
+the shared rhythm under intensive care: the loss is a loss of uptake (entrainment), as across organs. Fail with the
+interval above 0.5: intensive care scales the organ's whole clock signal. Interval below 0 (described separately):
+intensive care adds own noise.
+**Descriptive.** Core loop (gene-drop rule: a 14 / core difference is "not decided: precision or the removed genes");
+pooled design; per tissue dpsi*_k against dS_k (Spearman); responsive companions; coupling implied at constant psi
+(S_vent / (S_vent + 2 psi_fast)) against observed c_vent.
+**Limits.** Ventilated donors differ in death course, sedation, feeding and light; RIN differs (companions absorb a
+generic noise rise); post-mortem; host spread V and gain z2 both fall, so kappa is relative to S, not to z2 alone.
+**Code:** `exploratory/A412_icu_own_noise/scripts/a412.py --stage power|score`; output `output/`. Aggregates only.
+
+## A413 (2026-11-27, same instruction (health synthesis, hypothesis 2); staged: power (precondition counts, companion null, injection power; no clock-output correlation), then one scoring run; **NOT BLIND**: A395 / A407 (per-organ timed gains and own noise of the clock and of the A407 output sets; their per-sample residuals were never correlated); A261 (mouse: daily programmes follow systemic signals more than the local clock). BLIND for every clock-output departure correlation.)
+**Question.** Do an organ's rhythmic outputs inherit its own clock's departure from clock time? A407: output programmes
+amplify their own noise with their gain (b_t about 0.73), the clock does not (0.23), as if outputs amplified an upstream
+fluctuation. If the local clock drives them, a sample whose clock runs early or loud has outputs that run early or loud
+too, beyond what the animal's other organs share. If outputs follow systemic signals, their departure follows the animal,
+not the organ's clock.
+**Data.** Mure 2018 baboon (A395 / A407: 12 animals, ZT known), peripheral organs passing the A395 precondition for the
+clock (baboon-fitted waveform, 14 genes, as A407) and, per output set, its own A407 precondition. Outputs: the 200 A407
+rhythmic sets (non-clock genes, matched to the clock on phase bin and expression tercile, each with its baboon-fitted
+waveform).
+**Departures.** Per sample s (animal i, organ k): r_s = z_s - zhat_s, zhat_s = a_k exp(i w ZT_i) from
+`Dataset.timed_loadings("zt", return_residuals=True)`; relative departure delta_s = r_s / zhat_s (real part = relative
+amplitude departure, imaginary part = phase departure in radians). Local part: delta_s minus the animal's mean delta over
+its other passing organs (leave-one-out).
+**Statistic.** For output set j: rho_j = Re sum_s dl_c,s conj(dl_j,s) / sqrt(sum |dl_c|^2 sum |dl_j|^2) over samples
+where both pass, dl = local part with per-organ standardisation (divided by the organ's RMS). Primary: rho_med = median
+over sets with >= 15 jointly passing organs.
+**Companions (technical baseline).** 200 expression-matched non-rhythmic 14-gene sets (A263 rule on the baboon table,
+seed [413, 0]) read at the clock positions with the clock's waveform (`as_set`); their residual r_s rotated and
+normalised by the clock's zhat_s; rho_med recomputed with each pseudo-clock in place of the clock (same output sets and
+samples). This captures library-level noise shared by any genes of one sample.
+**Power stage (gate, stated now).** Injection: each output set's residual replaced by zhat_j x dl_c (full inheritance of
+the clock's local relative departure) plus its own residuals permuted between animals within organ; 100 draws; power =
+fraction with rho_med above the companion q95. Gate >= 0.8 at full inheritance; the power at half inheritance (0.5 x dl_c)
+is reported.
+**H413.1.** rho_med (clock) above the companion q95 and one-sided p < 0.05 against 1,000 permutations of animals within
+organ for the clock residuals. Pass: in a primate, organ outputs follow their own clock's departure beyond library-level
+noise (the local clock transmits its timing to its outputs). Fail with power: outputs' departures are not tied to the
+local clock at this size; with A261, outputs follow systemic signals or their own noise.
+**Descriptive.** Phase-only (Im) and amplitude-only (Re) parts; the shared part (animal-mean departures of clock and
+outputs, 12 animals); rho by output phase bin; core loop (gene-drop rule).
+**Limits.** 12 animals, one per ZT; captivity, euthanasia; outputs selected as rhythmic in the same animals; residual
+precision limited by depth.
+**Code:** `exploratory/A395_baboon_timed_gain/scripts/a413.py --stage power|score`; output `output/a413/`.
