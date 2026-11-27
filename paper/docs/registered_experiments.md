@@ -12802,3 +12802,25 @@ distribution under shuffled readouts. A404: patients per immune compartment and 
 (`simulate.like(..., loading=z)`), companion q95 on the real data. A405: group sizes and the MDE of the pre-treatment
 differences from label-shuffled bootstraps.
 **Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a402_a405.py` (shared table code of a401.py).
+
+### A402-A405 power note (2026-11-27; `a402_a405.py --stage power`, run of 10:39-10:47 (slim tables of 51 sources), `output/power_a402_a405/{a402_power,a403_power,a403_counts,a405_power,dedup,excluded,dropped,slim_errors}.csv`; no target statistic computed; A404 below, separately)
+**Table.** 12 P401 cancers (BRCA, LUAD, COAD, ESCA, OV, PRAD, lung_mixed, PAAD, STAD, CESC, KIRC, THCA); 574 patients with a
+tumour-stroma host; slim all-compartment tables of 51 sources, no build error.
+**A402 (decision: closed at the power stage).** New patients relative to A246 (cohorts outside the A227 list): 368 patients
+in 24 cohorts for P1-P3, 274-295 in 17-21 cohorts for the other six programs; nine programs scored; per-program MDE
+0.063-0.075 (r units, 2,000 shuffled states). Omnibus null SD 0.382, **MDE 0.952 > 0.43: A402 is not registered** (all
+P401 patients, descriptive: null SD 0.360, MDE 0.897). Remark (not a change of rule): the omnibus T is the mean of
+programs standardised by their own null SD, so its null SD is set by the correlation between programs, not by the number
+of patients (A246: 0.340 on 73-169 patients per program); the registered threshold in T units could not be reached by
+more patients. A powered replication would need a criterion in r units (per-program MDE), which is a new amendment.
+**A403 (decision: scored as registered).** 529 patients in 45 cohorts with immune-hot score and proliferation (478 in 44
+with T/NK and myeloid shares, which need >= 100 cells). Pooled slope null SD 0.046 (immune-hot) and 0.046
+(proliferation), **MDE 0.115 and 0.114** (standardised slope, 10,000 within-cohort shuffles). Companion loudness (200
+matched pseudo-hosts per cancer) with shuffled readouts: slope median -0.007, q05 / q95 -0.075 / 0.066 (immune-hot);
+-0.005, -0.090 / 0.077 (proliferation). Per cancer MDE 0.29 (LUAD, BRCA) to 0.75 (THCA, 14 patients). Counts per cancer
+x cohort in `a403_counts.csv`.
+**A405 (descriptive).** With >= 50 cells per compartment: pre-treatment 33 patients with cancer cells and >= 1 stromal
+class (the registration said 36, from a count without the cell threshold), 28 with both time points (registered 31);
+expanders / non-expanders pre-treatment 8 / 23 (treatment-naive 6 / 18, neoadjuvant chemotherapy 2 / 5; 2 undefined).
+Pre-treatment loudness difference E vs NE (31 patients with the breast host): null SD 0.292, MDE 0.727 = 1.02 SD of
+loudness (2,000 label shuffles): only an effect of about one SD is detectable.

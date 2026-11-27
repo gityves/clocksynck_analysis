@@ -117,9 +117,11 @@ def census_cancer(disease):
     return None
 
 
-def tidy(G, cohort_prefix=None):
-    """Canonical gene symbols (duplicates summed) of a genome-wide pseudobulk frame."""
+def tidy(G, cohort_prefix=None, only=None):
+    """Canonical gene symbols (duplicates summed) of a genome-wide pseudobulk frame; `only`: keep only these canonical genes."""
     genes = [c for c in G.columns if c not in META and c not in ("sample", "median_umi", "units", "metadata")]
+    if only is not None:
+        genes = [c for c in genes if canonical(str(c)) in only]
     X = G[genes].copy()
     X.columns = [canonical(str(g)) for g in X.columns]
     X = X.T.groupby(level=0).sum().T.astype(np.float32)
@@ -137,10 +139,12 @@ def pool(G):
     return P[META + genes]
 
 
-def finish(G, source, cancer_of):
+def finish(G, source, cancer_of, all_comps=False):
     """Rows of the tumour malignant (renamed) and stromal compartments with >= 50 cells; donors with a malignant and >= 1
     anchor. Returns the genome-wide frame (or None) and the donor table."""
-    G = G[G.compartment.isin(["tumour:epithelial", MALT] + ANCH) & (G.n_cells >= MIN_CELLS)].copy()
+    keep = G.compartment.str.startswith("tumour:") & ~G.compartment.str.endswith(":unassigned") if all_comps \
+        else G.compartment.isin(["tumour:epithelial", MALT] + ANCH)
+    G = G[keep & (G.n_cells >= MIN_CELLS)].copy()
     G["compartment"] = G.compartment.where(G.compartment != "tumour:epithelial", MALT)
     G = pool(G)
     na = G[G.compartment.isin(ANCH)].groupby("donor").compartment.nunique()
@@ -150,16 +154,16 @@ def finish(G, source, cancer_of):
     return G, don
 
 
-def build_geo(g):
+def build_geo(g, all_comps=False, only=None):
     d = pd.read_csv(GEO / g / "donors.csv")
-    G = tidy(pd.read_parquet(GEO / g / "pseudobulk.parquet"))
+    G = tidy(pd.read_parquet(GEO / g / "pseudobulk.parquet"), only=only)
     cancer = {f"{g}|{p}": GEO_CANCER[g] for p in d.patient.astype(str)}
     if g == "GSE125449":
         cancer = {f"{g}|{p}": ("LIHC" if s == "HCC" else None) for p, s in zip(d.patient.astype(str), d.subtype)}
-    return finish(G, g, cancer)
+    return finish(G, g, cancer, all_comps)
 
 
-def build_census(s):
+def build_census(s, all_comps=False, only=None):
     G = pd.read_parquet(CEN / f"{s}.parquet")
     G = G[G.compartment.str.startswith("tumour:")]
     dis = G.groupby("donor").disease.agg(lambda x: x.value_counts().index[0])
@@ -175,8 +179,8 @@ def build_census(s):
     G = G[ok]
     G = G.rename(columns={"stratum": "stratum"})
     meta_drop = [c for c in ("disease", "tissue", "tissue_general", "suspension", "tcga", "n_cells_sample", "median_umi") if c in G]
-    G = tidy(G.drop(columns=meta_drop))
-    return finish(G, s, cancer)
+    G = tidy(G.drop(columns=meta_drop), only=only)
+    return finish(G, s, cancer, all_comps)
 
 
 def build_a388(args):
@@ -290,14 +294,14 @@ def a83_share(out, added):
     return t
 
 
-def build_bassez():
+def build_bassez(all_comps=False, only=None):
     """BIOKEY (Bassez 2021, 3CA copy with ARNTL): pre-treatment samples only, donor `bassez2021|<sample>`."""
     G = pd.read_parquet(BASSEZ)
     G = G[G.timepoint == "Pre"]
     G = G.drop(columns=[c for c in ("timepoint", "expansion", "cohort", "BC_type") if c in G])
-    G = tidy(G)
+    G = tidy(G, only=only)
     don = sorted(set(G.donor))
-    return finish(G, "bassez2021", {d: "BRCA" for d in don})
+    return finish(G, "bassez2021", {d: "BRCA" for d in don}, all_comps)
 
 
 # ---- two-class P401 (note 1 (b)) -----------------------------------------------------------------------------------------
