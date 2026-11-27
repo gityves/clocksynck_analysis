@@ -10010,3 +10010,18 @@ within-cohort permutation p (10,000), and the cancer's own companion range (200 
   supported inside the clock-bearing cells; colder tumours (fewer myeloid cells) have louder stromal clocks. Direction of
   cause open.
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/a403b/{d1,d2,d3,d3_drops,d4}.csv -->
+
+## A407 power note (2026-11-27; one run, 113 min, peak 1.8 GB; pool, set draws and passing-organ counts only, no companion b_t or slope read, no clock value under the baboon waveform): decidable (109 of 200 sets with >= 15 passing organs)
+
+- Pool (note 1, Fisher-combined cosinor over 35 peripheral tissues, BH q < 0.05; expression criterion and exclusions):
+  8,475 genes. Per 4 h phase bin: 139, 3,382, 405, 455, 3,852, 242 (two dominant phases); every bin x tercile cell
+  holds >= 35 genes, no terciles merged.
+- The rule admits 13 of the 14 clock genes (combined q 1.6e-8 to 9.4e-66); RORA is not rhythmic by it (q 0.149). Clock
+  bins: PER1-3, CRY2, DBP, TEF, CIART bin 0; CRY1 2; ARNTL, NPAS2, RORA 3; CLOCK 4; NR1D1 / NR1D2 5.
+- Sets with >= 15 passing organs: 109 of 200 (median 15 per set, range 5-28; the clock passes 33 under the GTEx
+  waveform, A395). Caveat for scoring: companion b_t rests on about half the organs of the clock's, so its band is wider
+  than the clock's own sampling noise alone; the registered comparison (clock below the companion q05) is conservative
+  for a pass, and a fail inside the band must be read with that.
+- Implementation choices beyond note 1: Fisher p clipped at 1e-300 with 2 x (finite tissues) df; tercile cuts from the
+  pool; core positions get their own precondition (descriptive). Code: `a407.py --stage power` (b4e4c22).
+<!-- src: paper/exploratory/A395_baboon_timed_gain/output/a407/{power,pool,sets}.csv -->
