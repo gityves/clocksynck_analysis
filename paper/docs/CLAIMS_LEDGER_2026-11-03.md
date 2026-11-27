@@ -225,3 +225,13 @@ clock (A404: not beyond responsive genes).
 **What would change this (unchanged, sharper):** a second cohort with recorded surgery or biopsy times, ideally single
 cell, would separate hour from internal time for programs and composition (REMAGUS times; outward request, user's
 decision).
+
+## Addendum 2026-11-27, evening (synthesis items U1-U3, H1, H2; PI review pending; corrections take precedence)
+
+| # | Sentence | Evidence | Limit | Avoid | Status |
+|---|---|---|---|---|---|
+| 6.16 (rev.) | In TCGA, proliferating tumours express the body's rhythm at lower gain without drifting from it; the loss is cancer-type dependent and does not replicate in CPTAC-3. | A304 (TCGA) gain ratio 0.63; A304r (CPTAC-3, 713 pairs, power 0.97 for 0.63): ratio 0.89, p 0.16, inside matched sets. TCGA's loss sits in bladder, breast, liver, prostate, thyroid, none in CPTAC-3; the three shared types show no clear loss in either. | Cancer mix differs between cohorts. | "Proliferating tumours lose the body's rhythm" (general). | B (was A) |
+| 6.17 (rev.) | Louder tumour-stroma clocks go with colder tumours, also on phase-free loudness. | A403c (post hoc): slope -0.102 -> -0.126 (p 0.006) beyond both companion families, I^2 0.03; loudness depends on phase less than random gene sets do (R^2 0.215, 4th percentile). The myeloid part weakens (-0.062, p 0.20). A409 D409: the myeloid link follows the tumour stroma's loudness (-0.192, p 0.040), not the normal stroma's (-0.001). | Post hoc; the registered A403 test missed Holm. | "Immune infiltration silences the clock." | C (lead, firmer) |
+| 6.10 (bound) | Composition rhythms against the tumour-stroma clock phase of about 3-fold peak-to-trough are excluded; 2-fold ones are not. | A402c: host reliability 0.70 (phase error about 1.8 h); A402b power 0.92-0.96 at 2.8-fold, 0.69-0.72 at 2-fold. | p-only power; companions not simulated. | "No time-of-day variation of tumour immune infiltration." | B (bound) |
+| 6.19 | A patient's clock loudness reaches the tumour stroma. | A409 (descriptive): leverage of tumour fibroblasts on the normal-stroma host 0.361, beyond matched (99.5th) and responsive (96.5th) sets; normal-fibroblast reference 0.485 (not beyond responsive). | Below its power gate (MDE 0.313 vs 0.30); null leak disclosed (note 1); 116 patients. | "Systemic loudness controls the tumour clock." | C |
+| 6.20 | Within a cancer type, lineage retention does not predict how much cancer cells keep the tumour's time. | A410 H410.1 FAIL with power: slope 0.046, p 0.20 (MDE 0.141), 365 patients, 7 cancers. | One program per cancer; pseudobulk scores. | "Differentiated tumours keep the clock" (within type). | B (bound) |
