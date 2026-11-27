@@ -9984,3 +9984,29 @@ non-expanders); 28 with both time points (7 / 19, 2 undefined).
 - **Reading (registered wording):** no visible difference; consistent with no link between the tumour clock and early
   T-cell expansion under anti-PD-1, but only effects of about one SD of loudness were detectable.
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/score_a403_a405/{a405_pre,a405_change}.csv -->
+
+## A403b (described 2026-11-27; POST HOC, DESCRIPTIVE, one run, 77 min): the colder-when-louder pattern is shared across cancers (I^2 0.13), is not explained by proliferation, is not attributable to the core loop's removed genes, and is absent from the stroma's own inflammatory state; the myeloid share drives the heterogeneity (BRCA, CESC)
+Registered after A403 was scored (not blind). Per-cancer values are 90 % intervals from 2,000 within-cohort bootstraps,
+within-cohort permutation p (10,000), and the cancer's own companion range (200 matched, 200 responsive pseudo-hosts).
+- **D1, immune-hot (529 patients, 45 cohorts):** pooled -0.102 (-0.181 to -0.005; fixed effect -0.123), I^2 0.13 (Q 12.7 on
+  12 cancers): negative in 7 of 12 (BRCA -0.223, ESCA -0.203, LUAD -0.186, PRAD -0.344, STAD -0.434, OV -0.090, THCA
+  -0.041), positive in CESC, COAD, KIRC, PAAD, lung_mixed. Beyond both companion families in one cancer each way: PRAD
+  below (-0.344, q05 -0.264 / -0.259), PAAD above (+0.327, q95 0.240 / 0.283). Most per-cancer intervals cross 0.
+- **D1, other readouts:** proliferation pooled -0.022 (I^2 0), T/NK share +0.016 (I^2 0): flat everywhere. Myeloid share
+  pooled -0.083 (-0.186 to -0.001, p 0.083, 478 patients) with I^2 0.54: BRCA -0.419 (-0.643 to -0.251, p 0.0002) and CESC
+  -0.556 (-0.849 to -0.059, p 0.014) below both companion q05s; others -0.290 to +0.261.
+- **D2 (proliferation as covariate):** immune-hot -0.105 (-0.200 to 0.002), p 0.020, I^2 0.17; within-cohort r(immune-hot,
+  proliferation) 0.175. Unchanged by the adjustment: proliferation does not account for the association.
+- **D3 (core loop, gene-drop rule):** core-loop slope -0.084 (-0.174 to 0.000) vs 14 genes -0.102. Among the 363 other
+  three-gene drops: median -0.090, q10 -0.111, q90 -0.056; the core sits at the 38.6th percentile towards zero (not in the
+  10 % tail). Paired 14 - core difference -0.018 (-0.085 to 0.062). The core loop's slope is what any three-gene drop gives:
+  the PER1 / PER2 / NR1D1 trio is not singled out; the small shrinkage is "not decided: precision or the removed genes".
+- **D4 (inflammation in the clock-bearing cells):** stromal A363 inflammatory score pooled -0.019 (-0.111 to 0.072, p 0.67,
+  529 patients), fibroblasts only -0.001 (p 0.99, 415 patients); I^2 0.13 and 0. One cancer beyond both companions (PRAD
+  stroma -0.377, p 0.019).
+- **Reading:** the A403 association is a weak, consistent pattern across cancers rather than a few outliers, independent of
+  proliferation and carried by the 14-gene clock as a whole. It tracks immune composition (myeloid share, strongly in BRCA
+  and CESC), not the inflammatory state of the stroma whose clock is read, so "less inflammation, louder clock" is not
+  supported inside the clock-bearing cells; colder tumours (fewer myeloid cells) have louder stromal clocks. Direction of
+  cause open.
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/a403b/{d1,d2,d3,d3_drops,d4}.csv -->
