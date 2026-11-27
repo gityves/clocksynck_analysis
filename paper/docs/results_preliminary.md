@@ -10248,3 +10248,19 @@ contribution on the tumour-stroma host against the malignant G2M index.
   bulk gain loss in CPTAC) and A391 (stroma not quieter), there is no single-cell or second-cohort support for a
   proliferation-linked loss of tumour clock expression beyond TCGA.
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/a411/{power,tests,per_cancer,companions}.csv -->
+
+## A414 (scored 2026-11-28; BLIND for every program-phase relation on the tumour-stroma host; one run, 19 min): the immune programs that follow the surgery hour in A146 do not follow the tumour-stroma clock phase beyond companions (H414.1-3 FAIL); T-cell activation leans (excess 0.057, p 0.033, Holm 0.099) with an implied peak near the A146 prediction
+Power: A402 power note (per-program MDE 0.065 / 0.075 / 0.074 on these patients). A402b statistic, 10,000 shared
+permutations, 200 matched and 200 responsive pseudo-hosts per cancer.
+| program | patients (new) | r | excess | p | Holm | matched q95 | implied peak (90 %) | A146 hour |
+|---|---|---|---|---|---|---|---|---|
+| P2 MHC-I | 368 | 0.244 | 0.025 | 0.160 | 0.321 | 0.321 | 17.3 h (9.2-4.2, wide) | 17 h |
+| P4 T-cell activation | 283 | 0.288 | 0.057 | 0.033 | 0.099 | 0.332 | 15.5 h (13.1-17.6) | 13 h |
+| P10 PD-1 | 274 | 0.252 | 0.022 | 0.220 | 0.321 | 0.345 | 1.3 h (17.2-8.1, wide) | 23 h |
+- **All patients (descriptive):** P2 excess 0.008 (p 0.35), P4 0.040 (p 0.054; peak 14.8 h, 12.1-16.6), P10 0.031 (p 0.10).
+- **Reading.** No program follows the stroma clock phase beyond matched pseudo-hosts; every r lies below the matched
+  median-to-q95 band's top. T-cell activation leans with a peak within about 2.5 h of the hour A146 predicted from the
+  mouse (on different axes: waveform vs mouse-transferred wall time), at an excess the design was not built to resolve
+  beyond companions (A402c: such sizes are below the readable range). A146's recorded-hour result is not reproduced
+  against internal time here, consistent with A146 addendum 1 ("not decided"), now in single cells.
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/a414/{tests,per_cancer}.csv -->

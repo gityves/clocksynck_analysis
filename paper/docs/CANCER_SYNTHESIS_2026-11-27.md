@@ -185,7 +185,7 @@ glioma (A247: precondition fails).
 | H2 | A409 | Descriptive (below power gate, null leak disclosed): tumour fibroblasts share the patient's clock loudness (leverage 0.361, beyond both families); the myeloid link is local to the tumour stroma. |
 | H1 | A410 | FAIL with power: lineage retention does not predict cancer-cell coupling within cancer types. |
 | H4 | A411 | FAIL with power: proliferation does not predict cancer-cell coupling (coupled cancers lean negative, not significant). |
-| H6 | A414 | Running. |
+| H6 | A414 | FAIL x3: no A146 program follows the stroma clock phase beyond companions; T-cell activation leans (p 0.033, Holm 0.099), peak 15.5 h vs A146 13 h. |
 | H3 | - | Not run: `orientation` reads random gene sets as strongly radial (A311), so it cannot separate damping from dephasing. |
 | H7 | - | Not run: incoherence bounds are 1-3 h and not clock-specific even in GTEx (A259); 60-80 patients would not inform. |
 | U4 | - | Not run: A336 already placed the trio drop (100 + trio); the full 364-drop null costs about 18 h here and would not change the core-vs-matched reading. |
