@@ -10204,3 +10204,19 @@ matched and 200 responsive pseudo-waveforms (the same for target and host).
   the test was just below its power gate and its null had leaked (note 1). The myeloid-loudness link of A403 is a
   property of the tumour stroma, not of the patient's systemic loudness.
 <!-- src: paper/exploratory/A387_tumour_full_model/output/a409/{power,tests,companions,d409}.csv -->
+
+## A410 (scored 2026-11-27; BLIND for every lineage-coupling relation; one scoring run, 39 min, after the power stage): cancer cells that retain more of their lineage program are not more coupled to the tumour's time (H410.1 FAIL with power: slope 0.046, p 0.20, MDE 0.141)
+Power note: registered_experiments.md (A410 power note). 7 cancers, 365 patients in 33 cohorts; per-patient cancer-cell
+contribution on the tumour-stroma host against the lineage-program score, covariates as registered.
+- **H410.1 FAIL:** pooled within-cohort slope +0.046 (null SD 0.055), one-sided p 0.205; matched pseudo-waveforms median
+  0.000, q95 0.109 (76th percentile); responsive median -0.033, q95 0.062 (91.5th).
+- **Checks (descriptive):** tumour-fibroblast contribution on the cancer cells' lineage score -0.022 (p 0.63); core loop
+  +0.002 (p 0.49).
+- **Per cancer (90 % bootstrap):** BRCA 0.035 (-0.19 to 0.26), COAD -0.178 (-0.41 to 0.29), KIRC 0.034, LUAD 0.093 (-0.32
+  to 0.36), PRAD 0.194 (-0.21 to 0.44), STAD 0.319 (-0.04 to 0.62), THCA -0.001; all p >= 0.10. Mean contribution per
+  cancer (the coupling level) ranks THCA 0.39, KIRC 0.35, LUAD 0.21, PRAD 0.15, STAD 0.11, BRCA 0.05, COAD 0.02, as A401.
+- **Reading.** Within a cancer type, patients whose cancer cells keep more of their lineage program do not keep more of the
+  tumour's time (a standardised slope of 0.14 is excluded at 80 % power). The between-cancer ranking of A401 is not
+  reproduced within cancers by lineage retention as measured here; the contamination caveat of the registration does not
+  arise (no positive slope).
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/a410/{power,programs,tests,per_cancer,companions}.csv -->
