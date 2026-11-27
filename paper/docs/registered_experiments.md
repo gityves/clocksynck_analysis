@@ -12953,3 +12953,22 @@ tercile cell holds fewer than 10 pool genes, the terciles of that bin are merged
 choices (log fraction log(max(count, 0.5) / depth) on the A263 baboon genome-wide rows; clock genes' bins from the same
 cosinor; pooled phase over all 35 tissues; one ZT-permutation sequence [407, 2] shared by sets and clock; waveform
 fitted on all peripheral rows) are as in the script header.
+
+## A403b (2026-11-27, POST HOC, DESCRIPTIVE; on the user's instruction after A403 was scored: "if pooled results are not significant we should then go fully descriptive and show how it looks like across all cancer types"; NOT BLIND: A403 pooled and per-cancer slopes known (pooled adjusted -0.102, p 0.025, Holm 0.0504; per cancer -0.434 to +0.327), A363 14-gene inflammatory coefficient known): tumour clock loudness and inflammation across cancer types
+**Data, host, loudness, readouts, adjustment** as A403 (12 P401 cancers, 529 patients). No test decides; every number is
+descriptive.
+- **D1 (per cancer):** adjusted slope of the immune-hot score on loudness per cancer with 90 % intervals from 2,000
+  patient bootstraps within cohort, the within-cohort permutation p (10,000), and the companion range of the same
+  cancer (q05 / q95 of the 200 matched and 200 responsive pseudo-host slopes); pooled beside it; heterogeneity: I^2 from
+  the per-cancer slopes and their bootstrap SDs. Same for proliferation, T/NK and myeloid shares.
+- **D2 (proliferation):** the immune-hot slope with the malignant G2M index added to the covariates (patients with both),
+  pooled and per cancer; the correlation of immune-hot and proliferation within cohort.
+- **D3 (core loop, gene-drop rule):** loudness from the core-loop host (14 genes minus PER1, PER2, NR1D1); the pooled
+  immune-hot slope; null of all 364 three-gene drops of the 14 genes (loudness from each drop's host); the core value's
+  percentile among drops (attributed to the trio only if in the 10 % tail towards zero); paired 14-minus-core difference on
+  2,000 shared patient bootstraps. Otherwise "not decided: precision or the removed genes".
+- **D4 (inflammation in the clock-bearing cells):** the A363 inflammatory score (Hallmark TNF-alpha via NF-kB minus
+  immediate-early, glucocorticoid-target and clock genes) in the stroma: mean within-cohort z of log CPM over the genes, in
+  the donor's summed stromal pseudobulk (and in fibroblasts only); its slope on loudness, pooled and per cancer, with the
+  matched / responsive companion loudness ranges. Composition caveat: immune infiltration does not enter this score.
+**Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a403b.py`; output `output/a403b/`.
