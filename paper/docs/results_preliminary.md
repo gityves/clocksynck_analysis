@@ -10220,3 +10220,17 @@ contribution on the tumour-stroma host against the lineage-program score, covari
   reproduced within cancers by lineage retention as measured here; the contamination caveat of the registration does not
   arise (no positive slope).
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/a410/{power,programs,tests,per_cancer,companions}.csv -->
+
+## Cattle and pig for the feeding prediction (health synthesis, hypothesis 3; feasibility from metadata only, 2026-11-27; no expression read): not registered
+- Question: would a second ruminant (cattle) show the quiet gut of sheep (A396 / A399) and a meal-feeding omnivore (pig)
+  not? Data on disk since 2026-10-15 (`$SCCC_DATA/farm_gtex/{cattle,pig}`, PROVENANCE.md); the archive's A34 already
+  judged both infeasible for host-referenced fits (no animal ID in the FarmGTEx tables; heuristic animal recovery).
+- Cattle, best project PRJNA522422 (explicit `umc_lab_id` tag): of 90 animals with a peripheral tissue, 43 carry exactly
+  liver, skeletal muscle and small intestine, 11 carry lymph node, lung, tonsil and nasopharynx, the rest one tissue.
+  The gut is one segment, and a host built from three peripheral tissues cannot rank organs; a gut-against-liver ratio
+  does not separate the feeding readings either (mouse liver ranks 1 of 16, so the ratio is low in mouse too). Other
+  cattle projects: rumen / jejunum / ileum only (PRJNA227138, 21 animals) or <= 18 animals.
+- Pig: about 50 recoverable animals over 11 studies of <= 10 animals each (archive A34).
+- Decision: not registered. A prospective test of the feeding reading needs a multi-organ atlas of a second ruminant or
+  of a grazing non-ruminant with gut segments and >= 10 peripheral organs per animal; none is on disk.
+<!-- src: $SCCC_DATA/farm_gtex/cattle/meta/individuals.tsv, raw/Metadata_FarmGTEx_cattle_V0.xlsx; archive legacy/desync/validation/farm_gtex/method.md -->
