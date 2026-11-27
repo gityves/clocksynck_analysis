@@ -358,9 +358,63 @@ def stage_score(args):
     log("D3\n" + pd.DataFrame(d3).round(4).to_string(index=False))
 
 
+def agreement(df, col, zcol="z"):
+    """Cross-cancer phase agreement of `col` against `zcol` (A = |sum n_c c_c| / sum n_c |c_c|) and the per-cancer cross products."""
+    un = cohort_units(df, col, zcol)
+    C = {}
+    for u in un.values():
+        C[u["cancer"]] = C.get(u["cancer"], 0) + u["n"] * cvals(u)
+    v = np.array(list(C.values()))
+    return float(abs(v.sum()) / abs(v).sum()) if len(v) else np.nan
+
+
+def stage_agree(args):
+    """Addendum 1: companions with one pseudo-waveform per set shared by all cancers (common phase axis)."""
+    from clocksync.paired import pseudo_waveforms
+    df, hosts = build(args)
+    df = df.merge(gc_score(hosts), on="donor", how="left")
+    common = set.intersection(*[set(h["Gc"].columns) - set(META) for h in hosts.values()])
+    pooledG = pd.concat([h["Gc"][META + sorted(common)] for h in hosts.values()], ignore_index=True)
+    genes = sorted(common)
+    frac = pooledG[genes].div(pooledG.depth, axis=0)
+    lm = np.log(frac.mean() + 1e-12)[(pooledG[genes].mean() >= 1) | frac.columns.isin(list(BASE.genes))]
+    log(f"common genes {len(common)}, expressed {len(lm)}")
+    del pooledG, frac
+    reads = [("tnk_share", "new"), ("myeloid_share", "new"), ("gc", "new"), ("tnk_share", "all"), ("myeloid_share", "all"), ("gc", "all")]
+    obs = {(c, lab): agreement(df[df.new] if lab == "new" else df, c) for c, lab in reads}
+    rows = []
+    for code, fam in ((10, "matched"), (11, "responsive")):
+        ws = pseudo_waveforms(lm, N_SET, np.random.default_rng([SEED, code]), BASE, fam)
+        tasks = [(j, c, h) for j in range(N_SET) for c, h in hosts.items()]
+        res = Parallel(n_jobs=args.jobs)(delayed(pseudo_states)(h["Gc"][META + sorted(set(ws[j].genes) | set(BASE.genes))], h["classes"], ws[j], h["stratum"])
+                                         for j, c, h in tasks)
+        Z = [[] for _ in range(N_SET)]
+        for (j, c, h), r in zip(tasks, res):
+            Z[j].append(r)
+        for j in range(N_SET):
+            zs = pd.concat(Z[j]) if Z[j] else pd.Series(dtype=complex)
+            d2 = df.assign(zp=df.donor.map(zs))
+            for c, lab in reads:
+                rows.append(dict(family=fam, set=j, readout=c, patients=lab, agreement=agreement(d2[d2.new] if lab == "new" else d2, c, "zp")))
+        log(f"{fam} companions done")
+    C = pd.DataFrame(rows)
+    C.to_csv(OUT / "agreement_companion_sets.csv", index=False)
+    out = []
+    for (c, lab), a in obs.items():
+        r = dict(readout=c, patients=lab, agreement=a)
+        for fam in ("matched", "responsive"):
+            v = C[(C.family == fam) & (C.readout == c) & (C.patients == lab)].agreement.dropna().to_numpy()
+            r.update({f"{fam}_n": len(v), f"{fam}_median": float(np.median(v)), f"{fam}_q95": float(np.quantile(v, .95)),
+                      f"{fam}_percentile": float(100 * np.mean(v < a))})
+        out.append(r)
+    T = pd.DataFrame(out)
+    T.to_csv(OUT / "agreement_companions.csv", index=False)
+    log("agreement companions\n" + T.round(4).to_string(index=False))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--stage", choices=("power", "score"), required=True)
+    ap.add_argument("--stage", choices=("power", "score", "agree"), required=True)
     ap.add_argument("--jobs", type=int, default=16)
     ap.add_argument("--genome-jobs", type=int, default=4)
     args = ap.parse_args()
@@ -368,7 +422,7 @@ def main():
     limit_threads(1)
     OUT.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
-    (stage_power if args.stage == "power" else stage_score)(args)
+    {"power": stage_power, "score": stage_score, "agree": stage_agree}[args.stage](args)
     log(f"done {(time.time() - t0) / 60:.1f} min")
 
 
