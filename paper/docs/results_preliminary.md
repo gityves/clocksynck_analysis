@@ -10185,3 +10185,22 @@ replicates per cell. Companion q95s are the real ones (E, E2: this amendment; Mx
   The myeloid share, which leans with the clock phase (A402b), loses about a quarter of its slope: the composition part
   of the lead partly travels with the phase. Post hoc throughout; the registered A403 verdict (H403.1 FAIL at Holm) stands.
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/a403c/{c1,c2}.csv -->
+
+## A409 (scored 2026-11-27; DESCRIPTIVE: H409.1 below its power gate (MDE 0.313 > 0.30) and not blind (note 1); one scoring run after a crash in the companion step that printed only the observed leverages): a patient's clock loudness reaches the tumour stroma (leverage 0.361, beyond matched and responsive pseudo-waveforms); the myeloid link of A403 is local: it follows the tumour stroma's loudness (-0.192, p 0.040), not the normal stroma's (-0.001)
+A387 pooled table, 14 genes; radii residualised on phase harmonics and stratum (note 1); 2,000 within-stratum shuffles; 200
+matched and 200 responsive pseudo-waveforms (the same for target and host).
+| pair | patients | leverage | p (shuffle) | matched median / q95 (pct) | responsive median / q95 (pct) |
+|---|---|---|---|---|---|
+| tumour fibroblast ~ normal-stroma host | 116 | 0.361 | 0.002 | 0.035 / 0.246 (99.5) | 0.154 / 0.348 (96.5) |
+| ref: normal fibroblast ~ normal endothelium + mural host | 93 | 0.485 | 0.0005 | 0.083 / 0.317 (100) | 0.395 / 0.659 (69.5) |
+| tumour endothelium ~ normal-stroma host | 135 | 0.291 | 0.004 | 0.069 / 0.251 (97.5) | 0.218 / 0.407 (73.0) |
+- Shared cv^2 0.065 (tumour fibroblast), 0.100 (normal fibroblast reference), 0.055 (tumour endothelium).
+- **D409:** tumour myeloid share (log2) on loudness, within cohort, 135 patients in 20 cohorts: normal-stroma loudness
+  -0.001 (p 0.99); tumour-stroma loudness (host of tumour fibroblasts and endothelium) -0.192 (p 0.040); within-stratum
+  correlation of the two loudnesses 0.256 (143 patients).
+- **Reading.** Patients whose normal stroma expresses the clock loudly have louder tumour fibroblasts, beyond what
+  expression-matched or stress-responsive gene sets share; the tumour stroma takes part in the person's clock loudness
+  about as the normal fibroblasts do (0.36 vs 0.49; the normal reference is not beyond the responsive sets). Descriptive:
+  the test was just below its power gate and its null had leaked (note 1). The myeloid-loudness link of A403 is a
+  property of the tumour stroma, not of the patient's systemic loudness.
+<!-- src: paper/exploratory/A387_tumour_full_model/output/a409/{power,tests,companions,d409}.csv -->
