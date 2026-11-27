@@ -10150,3 +10150,23 @@ G2M split within type, 2,000 permutations, 200 matched and 200 responsive pseudo
   against the stroma clock phase; a 2-fold rhythm would be missed about one time in three; rhythms of 1.4-fold or less are
   not readable. The bulk breast time reference (A146 addendum 1: 1.9 h error on a 10 h window) is the weaker of the two.
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/a402c/{r1,r1_splits,s1}.csv -->
+
+### A406 part 1 (simulation and gates, 2026-11-27; no real clock value read with E or E2)
+Simulated Deota design (A400 mice and depths, A394 gains, A400c Mf truth, d_s ~ N(0, 1 h)), V2 core leverage, 20
+replicates per cell. Companion q95s are the real ones (E, E2: this amendment; Mx: A400c).
+
+| read | null median (max) | person SD 0.25 median | matched q95 | responsive q95 | null reps above both q95 | power |
+|---|---|---|---|---|---|---|
+| E | 0.023 (0.475) | 0.683 | 0.260 | 0.199 | 20 % | 100 % |
+| E2 | 0.091 (0.515) | 0.650 | 0.308 | 0.114 | 10 % | 100 % |
+| Mx (cross-fit) | 0.194 (0.463) | 0.704 | 0.213 | 0.231 | 45 % | 100 % |
+
+- **G406.1 pass** (E null median 0.023 < 0.2 and below both E q95s). **G406.2 pass** (all 20 replicates under E above
+  both companion q95s and the permutation q95). H406.1 can be scored.
+- **Mx row.** The null median (0.194) stays below the real Mx companion q95s, so A400c is not withdrawn under the
+  registered rule. But the cross-fit inflates a null design (median 0.194 vs 0.023 under E; 45 % of null replicates
+  above both q95s): A400c's real 0.596 lies above every null replicate (max 0.463), yet its companion comparison is
+  optimistic. The mouse person factor rests on H406.1 (read with E), not on A400c.
+- Single null replicates reach 0.46-0.51 under every read, so one real value near 0.5 would not be decisive by itself
+  without the permutation and companion tests.
+<!-- src: paper/exploratory/A400_mouse_person/output/{d406_gates,d406_sim,d406_companions}.csv; A400c: output/c_summary.csv -->
