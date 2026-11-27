@@ -10025,3 +10025,31 @@ within-cohort permutation p (10,000), and the cancer's own companion range (200 
 - Implementation choices beyond note 1: Fisher p clipped at 1e-300 with 2 x (finite tissues) df; tercile cuts from the
   pool; core positions get their own precondition (descriptive). Code: `a407.py --stage power` (b4e4c22).
 <!-- src: paper/exploratory/A395_baboon_timed_gain/output/a407/{power,pool,sets}.csv -->
+
+## A407 (scored 2026-11-27; BLIND for every companion b_t and slope and for the clock under the baboon-fitted waveform; one scoring run, 2 min): the timed own-noise law is specific to the clock: rhythmic non-clock programmes of the same baboon organs amplify their own noise with their gain (companion b_t median 0.73), the clock does not (0.23, below every companion set): H407.1 passes
+
+| readout (14 positions, animal-corrected unless stated) | clock, baboon-fitted waveform (90 %) | companions (109 sets): q05 / median / q95 | companion sets at or below the clock |
+|---|---|---|---|
+| b_t | **0.226 (0.029 to 0.508)** | 0.487 / 0.729 / 0.988 | 0 % |
+| b_t uncorrected | 0.221 (0.042 to 0.484) | 0.514 / 0.780 / 1.047 | 0 % |
+| phase-scatter slope on log abs a | -0.752 (-0.926 to -0.506) | -0.698 / -0.334 / -0.053 | 1.8 % |
+
+Clock with the A395 GTEx waveform beside it: b_t 0.219, scatter slope -0.752 (33 organs either way). Core loop,
+baboon-fitted (descriptive; no companion comparison registered): b_t 0.460 (0.147 to 0.675), scatter slope -0.621.
+
+- **H407.1 passes** (registered: clock b_t below the companion q05). Rhythmic output genes, matched to the clock genes on
+  peak phase and expression and read with their own fitted waveform, give b_t 0.49-0.99 (median 0.73): their own noise
+  grows nearly in proportion to their squared gain, and their phase scatter barely falls with gain (median slope -0.33,
+  against -1 for a constant own term). The clock's own noise does not grow with its gain, and its scatter falls almost as
+  1 / gain, beyond 98 % of the companions.
+- **Reading (registered):** the constant own term is a clock property, not a property of timed rhythmic expression in
+  this design. Slide 3.4b can keep "an organ's own clock noise is roughly constant" (timed, baboon) with this companion;
+  the A383 caution (untimed b far below 1 for random genes, an estimator property) concerns the untimed version only.
+- The power-note caveat (companions pass about 15 organs, the clock 33) cannot produce this: the companion band is far
+  above the clock, not around it, and a noisier regressor would pull companion slopes towards 0, not towards 1.
+- Core loop: 0.46, higher than on 14 genes; not tested against companions and, by the gene-drop rule, not decided:
+  precision or the removed genes.
+- Limits as registered: rhythmic outputs follow the clock and systemic cues; pool selected on the same animals; 12
+  animals, one per time point; mouse not replicated (A397).
+- Code: `exploratory/A395_baboon_timed_gain/scripts/a407.py --stage score`.
+<!-- src: paper/exploratory/A395_baboon_timed_gain/output/a407/{tests,tests_clock,companions_unread}.csv -->
