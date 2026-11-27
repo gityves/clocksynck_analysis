@@ -10234,3 +10234,17 @@ contribution on the tumour-stroma host against the lineage-program score, covari
 - Decision: not registered. A prospective test of the feeding reading needs a multi-organ atlas of a second ruminant or
   of a grazing non-ruminant with gut segments and >= 10 peripheral organs per animal; none is on disk.
 <!-- src: $SCCC_DATA/farm_gtex/cattle/meta/individuals.tsv, raw/Metadata_FarmGTEx_cattle_V0.xlsx; archive legacy/desync/validation/farm_gtex/method.md -->
+
+## A411 (scored 2026-11-27; BLIND for every proliferation-coupling relation of cancer cells; one scoring run, 60 min, after the power stage): proliferating cancer cells are not detectably less coupled to the tumour's time (H411.1 FAIL with power: slope -0.034, p 0.22, MDE 0.110)
+Power note: registered_experiments.md (A411 power note). 12 cancers, 560 patients in 47 cohorts; per-patient cancer-cell
+contribution on the tumour-stroma host against the malignant G2M index.
+- **H411.1 FAIL:** pooled slope -0.034 (null SD 0.044), one-sided p 0.216; matched median -0.001, q05 -0.093 (26th
+  percentile); responsive q05 -0.087 (28.5th).
+- **Descriptive:** cancers with coupled cancer cells (LUAD, THCA, KIRC; 114 patients) -0.099 (p 0.16); tumour-fibroblast
+  contribution on the cancer cells' G2M +0.057 (p 0.87, lower tail); core loop -0.028 (p 0.26). Per cancer: COAD -0.248
+  (p 0.049), KIRC -0.315, STAD -0.289; CESC +0.466 (20 patients, p 0.042), OV +0.295; others within +-0.16.
+- **Reading.** At a standardised slope of 0.11 (80 % power), cancer-cell participation in the tumour's time does not
+  follow proliferation across 12 cancers; the coupled-cancer subset leans negative without reaching it. With A304r (no
+  bulk gain loss in CPTAC) and A391 (stroma not quieter), there is no single-cell or second-cohort support for a
+  proliferation-linked loss of tumour clock expression beyond TCGA.
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/a411/{power,tests,per_cancer,companions}.csv -->
