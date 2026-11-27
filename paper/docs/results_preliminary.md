@@ -10264,3 +10264,37 @@ permutations, 200 matched and 200 responsive pseudo-hosts per cancer.
   beyond companions (A402c: such sizes are below the readable range). A146's recorded-hour result is not reproduced
   against internal time here, consistent with A146 addendum 1 ("not decided"), now in single cells.
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/a414/{tests,per_cancer}.csv -->
+
+## A406 (scored 2026-11-28; BLIND for every clock value read with E or E2; one scoring run, 87 min, after the gates passed): H406.1 passes at the matched line (core 0.263 against q95 0.260), but the registered criterion passes 4 of 20 null replicates of the simulated design: the mouse core-loop person factor is not separated from individual phase departures; on 14 genes the shared loudness under the external waveform (0.601) lies beyond every null replicate and both companion q95s (descriptive)
+
+Deota 2023, 48 mice, 16 peripheral tissues, V2 = within ZT x arm cells; mice permuted within arm (1,000); companions
+100 matched + 100 responsive read with each external waveform. E = Wolff 2023, E2 = Manella 2021.
+
+| read | readout | V0 | V1 | **V2** | p (null q95) | matched / responsive q95 | above both | simulated null V2 median (max), 20 reps |
+|---|---|---|---|---|---|---|---|---|
+| E | **core (H406.1)** | 0.607 | 0.357 | **0.263** | 0.001 (0.124) | 0.260 / 0.199 | yes (by 0.003) | 0.023 (0.475) |
+| E2 | core | 0.478 | 0.329 | 0.209 | 0.004 (0.123) | 0.308 / 0.114 | no | 0.091 (0.515) |
+| E | 14 genes | 0.802 | 0.702 | 0.601 | 0.001 (0.125) | 0.301 / 0.497 | yes | 0.070 (0.380) |
+| E2 | 14 genes | 0.778 | 0.706 | 0.519 | 0.001 (0.124) | 0.353 / 0.538 | no (responsive) | 0.124 (0.349) |
+
+- **H406.1 passes as registered** (p 0.001, above both companion q95s), by 0.003 over the matched q95.
+- **Calibration (post hoc reading of the part-1 outputs):** in the simulated null design (no person factor, individual
+  departures d_s ~ N(0, 1 h)), 4 of 20 replicates meet the full H406.1 criterion under E (null q90 0.301); the real
+  0.263 sits at the 80th percentile of that null. A person factor of SD 0.25 would read 0.68 (median; every replicate
+  >= 0.47). So the core-loop pass does not separate a mouse person factor from individual phase departures; a factor, if
+  present on the core loop, is far below SD 0.25. The second external waveform (E2) does not pass (0.209 < 0.308).
+- **14 genes (descriptive):** under E, 0.601 lies beyond all 20 null replicates (max 0.380) and both companion q95s;
+  under E2, 0.519 beyond the null (max 0.349) and the matched q95 but at the responsive q95 (0.538). The 14-gene /
+  core gap is "not decided: precision or the removed genes" (no drop null registered).
+- **A400c revisited:** with an external waveform the within-cell core value falls from 0.596 (Mx) to 0.263 (E) /
+  0.209 (E2), as part 1 predicted from the cross-fit inflation. A400c's size is not confirmed.
+- **D406 (feeding arm, descriptive, direction only):** ad libitum minus night-restricted, V2 under E: core +0.071 (90 %
+  -0.484 to 0.135), 14 genes -0.381 (-0.359 to 0.089; the point estimate lies outside its bootstrap interval, a
+  small-sample bootstrap); per-arm values near or below their permutation q95 (12 cells of 2 mice). The two readouts
+  point opposite ways: no direction is read. Per-arm companion q95 (V2 core): matched 0.553 / 0.713, responsive 0.438 /
+  0.585.
+- **Reading.** The mouse joins the person-factor claim only on 14 genes and descriptively; on the core loop it is not
+  separated from individual departures. The person factor stands on GTEx (core, A336 / A336c / A367) and sheep (14 genes,
+  A385b-d).
+- Code: `exploratory/A400_mouse_person/scripts/a406.py --stage score`.
+<!-- src: paper/exploratory/A400_mouse_person/output/{d406_scores,d406_arms,d406_sim,d406_gates,d406_companions}.csv -->
