@@ -13319,17 +13319,17 @@ outputs, 12 animals); rho by output phase bin; core loop (gene-drop rule).
 precision limited by depth.
 **Code:** `exploratory/A395_baboon_timed_gain/scripts/a413.py --stage power|score`; output `output/a413/`.
 
-## A412 (2026-11-27; synthesis item H6, on the user's go-ahead for the synthesis plan; one scoring run (power known: A402 power note); BLIND for every program-phase relation on the tumour-stroma host; NOT BLIND: A146 (bulk breast: T-cell activation t 3.48, PD-1 3.22, MHC-I 2.15 against recorded hour; internal time not decidable), A246 (programs vs endothelial state, A227 cohorts), A402b / A402c): do the immune programs that follow the surgery hour follow the tumour-stroma clock phase?
+## A414 (2026-11-27; synthesis item H6, on the user's go-ahead for the synthesis plan; one scoring run (power known: A402 power note); BLIND for every program-phase relation on the tumour-stroma host; NOT BLIND: A146 (bulk breast: T-cell activation t 3.48, PD-1 3.22, MHC-I 2.15 against recorded hour; internal time not decidable), A246 (programs vs endothelial state, A227 cohorts), A402b / A402c): do the immune programs that follow the surgery hour follow the tumour-stroma clock phase?
 **Data, host, statistic** as A402b (543 patients; tumour-stroma host per cancer; r = |sum y conj z| / sqrt(...), centred within
 stratum, pooled with patient weights; 10,000 shared within-cohort permutations; excess = r - null mean). Primary set:
 cohorts outside the A227 list.
 **Readouts** (A246 construction, `compute_a246.readout`): P2 MHC-I (malignant), P4 T-cell activation (T/NK, residual on T/NK
 abundance), P10 PD-1 (T/NK, residual on abundance).
-- **H412.1-3:** for each program, permutation p < 0.05 (Holm over the three) and r above the matched pseudo-host q95 (A403
+- **H414.1-3:** for each program, permutation p < 0.05 (Holm over the three) and r above the matched pseudo-host q95 (A403
   sets, 200 per cancer); responsive reported. Gate (A402 power note, per-program MDE on these patients): P2 0.065, P4
   0.075, P10 0.074, all <= 0.076 (the A229 effect size): all three are scored.
 - **Descriptive:** all patients; implied peak hour of each program against the A146 predicted hours (P2 17 h, P4 13 h, P10
   23 h; waveform axis vs mouse-transferred wall time, not compared formally); per cancer.
 **Reading.** A pass reads "follows the tumour-stroma clock phase beyond matched genes", with the responsive comparison
 deciding between the clock and a body-wide pulse. A fail bounds program rhythms at the A402c scale (about 3-fold).
-**Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a412.py`; output `output/a412/`.
+**Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a414.py`; output `output/a414/`.
