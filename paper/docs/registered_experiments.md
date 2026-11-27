@@ -12750,3 +12750,55 @@ the width grid); neither baboon nor mouse is a ruminant.
 so that the hosts are built as in A385b (anchors absent from the big projects, e.g. adrenal, made the D1-only table
 unreadable); the D1 statistic still reads the projects with >= 30 animals. The check reproduced A385b exactly (0.5577 /
 0.3159).
+
+## A402-A405 (2026-11-27, on the user's instruction "go ahead with the power stages", from the drafts `paper/docs/drafts/DRAFT_A401-A404_2026-11-26.md`; data = the A401 pooled tumour table (A388 cohorts with >= 1 stromal anchor, 11 GEO builds, 11 CELLxGENE datasets, BIOKEY 3CA copy; deduplication of A401), host = the tumour's own stroma, restricted to cancers passing P401 on 14 genes (BRCA, LUAD, COAD, ESCA, PRAD, STAD, KIRC, THCA, plus the non-matched cancers passing P401: OV, lung_mixed, PAAD, CESC); staged: power for each (no target statistic), then one scoring run each; A401 results known: cancer-cell couplings per cancer)
+
+### A402 (conditional on power): immune state and the tumour's internal time, powered replication
+**Prior.** A146 part 2 and A246 (omnibus T -0.12, p 0.63, MDE 0.85; programs, states and statistic of A246); A229
+secondaries (tumour T/NK share and endothelial VCAM1 follow the tumour endothelial clock state).
+**Registered only if** the power stage gives an A246 omnibus MDE <= 0.43 on the patients new relative to A246 (the A227
+cohorts were A246's); otherwise closed at the power stage.
+**Design if registered.** A246 programs and statistic; state = the tumour-stroma host (posterior state of the pooled
+host per cancer, replacing the endothelial z); within-cohort permutations (10,000); 200 matched pseudo-host sets and 200
+narrow responsive pseudo-host sets as companions. **H402.1:** omnibus T > 0 on the new patients, Holm p < 0.05 and above
+the matched pseudo-host q95. **H402.2:** T/NK share follows the host state (blind replication of A229 H229.5), same rules.
+
+### A403: tumour clock loudness and the immune state
+**Loudness.** Per patient, log radius of the tumour-stroma host state (posterior mean |h|, pooled host per cancer,
+cohort x chemistry strata), centred within cohort x chemistry; for each matched / responsive pseudo-host set the same
+quantity (companion loudness).
+**Readouts.** Immune-hot score: mean within-cohort z of log CPM of CD8A, GZMB, IFNG, CXCL9, CXCL10, PRF1 in the tumour's
+all-compartment sum (sum of its tumour pseudobulks); T/NK share and myeloid share of the tumour's cells (n_cells);
+malignant proliferation index (A391 G2M score).
+**H403.1 (primary):** within-cohort slope of the immune-hot score on loudness, pooled (patient weights), two-sided
+permutation p (10,000, within cohort) < 0.05, and outside the central 90 % of the same slope with the companion
+loudnesses. **H403.2 (secondary):** proliferation on loudness, one-sided (lower loudness with higher proliferation, A304),
+same rules. Holm over the two. Covariates by stratification (cohort x chemistry) and adjustment (number of stromal
+anchors, log median stromal depth). Descriptive: T/NK and myeloid shares; per cancer.
+**Readings.** H403.1 pass: louder tumour clocks go with hotter (or colder, by sign) tumours, beyond what the shared
+sample state gives; association only. Fail with power: no link at the MDE.
+
+### A404: immune compartments of tumours on the full model
+**Design.** Targets tumour myeloid, T/NK, B / plasma; (a) host = the patient's normal stroma in the A387 cohorts (A387
+table); (b) host = the tumour stroma (A401 table). Coupling c (fit, n_boot 500, 90 %, n_perm 1000), loudness and offset
+against the stroma reference; 200 matched and 200 narrow responsive companion sets. **H404.1:** tumour myeloid coupling on
+the normal-stroma host: coupling p < 0.05 and above both families' q95. **H404.2:** the same on the tumour-stroma host,
+pooled over the P401 cancers. Holm over the two. T/NK and B / plasma descriptive (A281: no readable lymphocyte clock in
+healthy tissue). Per cancer descriptive.
+
+### A405 (descriptive): the tumour clock and anti-PD-1 response (BIOKEY)
+**Data.** Bassez 2021 3CA copy (`$SCCC_DATA/bassez2021_3ca/pseudobulk.parquet`): pre-treatment 36 patients with cancer cells
++ >= 1 stromal class at >= 50 cells; 31 with both time points (expanders 8, non-expanders 21, 2 undefined); cohorts
+treatment-naive / neoadjuvant chemotherapy. Precondition: breast passes P401 on 14 genes (A401).
+**Shown (no test).** (1) Pre-treatment: tumour clock loudness (A403 quantity), cancer-cell coupling contribution (per
+patient residual of the malignant state on the host), immune-hot score, expanders vs non-expanders, medians with 2,000
+patient-bootstrap 90 % intervals and the difference's MDE. (2) Pre vs on treatment within patient: change of loudness and
+of cancer-cell coupling (paired, log depth ratio as covariate), overall and by expansion; cohort as stratum. Readings
+limited to "consistent with" / "no visible difference" with the MDE.
+
+**Power stages (dated notes before scoring; no target statistic).** A402: A246 null of the omnibus on the new patients
+(shuffled states only), MDE. A403: null SD and MDE of the slope (shuffled readouts within cohort), companion slope
+distribution under shuffled readouts. A404: patients per immune compartment and host; blind simulator power
+(`simulate.like(..., loading=z)`), companion q95 on the real data. A405: group sizes and the MDE of the pre-treatment
+differences from label-shuffled bootstraps.
+**Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a402_a405.py` (shared table code of a401.py).
