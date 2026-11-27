@@ -13181,3 +13181,14 @@ the core loop, 0.714 / 2, rounded down); otherwise it is descriptive.
 stroma's loudness is set locally. D409: a myeloid slope on normal-stroma loudness as large as on tumour-stroma loudness
 reads "systemic"; only on the tumour stroma reads "local".
 **Code:** `paper/exploratory/A387_tumour_full_model/scripts/a409.py --stage power|score`; output `output/a409/`.
+
+### A409 note 1 (2026-11-27, after the first power run, before any observed value; a design correction with a disclosed partial unblinding)
+The first power run (`output/a409/power.csv` of 19:57, now superseded) gave a shuffle-null mean leverage of 0.214 (SD
+0.085, 116 patients, 23 strata), not about 0. Cause: states are centred within stratum, and in a stratum of two patients
+the centred states are opposite, so their radii are equal and a within-stratum shuffle leaves the radius pairing intact;
+the "null" therefore keeps part of the observed pairing. **H409.1 is no longer blind** (the null mean leaks that the
+pairing in small strata is positive). Second flaw: between-cohort scale differences of the radii would raise the pooled
+leverage without any person effect. **Correction:** both radii are also residualised on stratum indicators
+(`radius_covariance(..., groups=stratum)`), so between-stratum scale is removed and strata of one or two patients carry
+no information; the shuffle null, the companions and the references use the same call. The power stage is rerun; the
+gate (MDE <= 0.30) is unchanged. H409.1 is reported as "not blind (note 1)".
