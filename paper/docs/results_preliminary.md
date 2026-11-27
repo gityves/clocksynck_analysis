@@ -9935,3 +9935,52 @@ patients of cohorts outside the A227 list: 368 (P1-P3, 24 cohorts) and 274-295 (
 - **Reading:** A246 stands as the tumour-microenvironment result (no clock-state organisation of the programs detected);
   no replication on new patients.
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/power_a402_a405/a402_power.csv -->
+
+## A403 (scored 2026-11-27; one scoring run, 47 min with A404 / A405, after a smoke run on shuffled readouts): louder tumour clocks go with colder tumours beyond both companion families, but the primary misses Holm by a hair (H403.1 FAIL, slope -0.102, p 0.025, Holm 0.050); proliferation does not follow loudness (H403.2 FAIL)
+Power note and note 1: `registered_experiments.md` (commits 2229560, ffeab8c). 12 P401 cancers, tumour-stroma host; loudness =
+log host radius centred within cohort x chemistry; slopes in SD units, adjusted for stromal anchor count and log median
+stromal depth (primary), 10,000 within-cohort shuffles; companions 200 matched + 200 narrow responsive pseudo-hosts.
+- **H403.1 FAIL (immune-hot score, 529 patients, 45 cohorts):** slope -0.102 (null SD 0.046, MDE 0.114), two-sided p 0.025,
+  Holm 0.0504; beyond both families (matched q05 -0.088, responsive q05 -0.099; medians -0.015, -0.028). Unadjusted:
+  -0.105, p 0.018, also beyond both.
+- **H403.2 FAIL (proliferation, one-sided, slope < 0):** -0.022, p 0.32, Holm 0.32; within both families.
+- **Descriptive:** myeloid share -0.083 (p 0.090), T/NK share 0.016 (p 0.75). Per cancer (immune-hot, adjusted): 7 of 12
+  negative; STAD -0.434 (p 0.027), PRAD -0.344 (p 0.034), BRCA -0.223 (p 0.060), ESCA -0.203, LUAD -0.186; PAAD +0.327
+  (p 0.070), KIRC +0.287, CESC +0.167.
+- **Reading (registered rules):** not significant after Holm, so no claim. Descriptively the sign is the reverse of "hot
+  tumours keep time": tumours whose stroma carries a louder clock are, if anything, less inflamed, and the shared sample
+  state that pseudo-genes carry does not produce this slope. An association only; depth and anchor count are adjusted,
+  immune composition of the stroma is not.
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/score_a403_a405/{a403_tests,a403_per_cancer,a403_companions}.csv -->
+
+## A404 (scored 2026-11-27; same run): tumour macrophages are coupled to the patient's stroma clock, but not beyond the stress-responsive companions (H404.1 FAIL) and not beyond matched companions inside the tumour (H404.2 FAIL); among immune cells the myeloid compartment couples most, everywhere
+Power note and note 1: as A403. Fit n_boot 500, n_perm 1000 (p floor 0.001), 14 genes decide; companion q95 from the power stage.
+- **H404.1 FAIL (myeloid on the A387 normal-stroma host, 178 patients):** coupling 0.229 (90 % 0.169-0.341), p 0.001, Holm
+  0.002; above the matched q95 (0.220) but below the responsive q95 (0.377; responsive median 0.196). Amplitude 0.31 of the
+  fibroblast (0.25-0.39), offset +0.07 h (-0.69 to 1.01).
+- **H404.2 FAIL (myeloid on the pooled tumour-stroma host, 455 patients, 50 cohorts):** coupling 0.369 (0.305-0.429), p
+  0.001, Holm 0.002; on the 17-source companion table 0.431 (199 patients), below both q95 (0.510, 0.606); medians 0.187 /
+  0.377. Amplitude 0.43 (0.38-0.55), offset +0.31 h (-0.01 to 0.77).
+- **Descriptive:** T/NK and B / plasma couple weakly: normal-stroma host 0.088 and 0.080, tumour-stroma host 0.154 and
+  0.107, all far below companions (consistent with A281: no readable lymphocyte clock). Core loop: myeloid 0.162 (normal)
+  and 0.332 (tumour). Per cancer (14 genes, n_perm 200), myeloid coupling 0.21 (COAD, PRAD) to 0.71 (KIRC, 19 patients),
+  above T/NK in 11 of 12 cancers.
+- **Reading:** myeloid cells carry a clock state that moves with the stroma, with about a third of the fibroblast
+  amplitude and no phase offset, but a pulse shared by the sample (stress-responsive genes) moves them as much, so the
+  coupling is not shown to be circadian. Inside tumours, non-clock genes already couple immune cells to the stroma at
+  0.19-0.39, as the power note expected.
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/score_a403_a405/{a404_tests,a404_fits,a404_per_cancer}.csv; power_a402_a405/a404_power.csv -->
+
+## A405 (described 2026-11-27; DESCRIPTIVE, same run): in BIOKEY no difference in tumour clock loudness, immune-hot score or cancer-cell coupling between expanders and non-expanders, before or during anti-PD-1, at MDEs of about one SD
+Power note and note 1: as A403. Pre-treatment 31 patients with the breast host and an expansion label (8 expanders, 23
+non-expanders); 28 with both time points (7 / 19, 2 undefined).
+- **Pre-treatment (medians, 90 % bootstrap intervals; mean difference E - NE with its label-shuffle MDE):** loudness E 0.289
+  (-0.032 to 0.575) vs NE -0.061 (-0.137 to 0.238), difference 0.378 (MDE 0.726; 20 % of shuffles as large); immune-hot
+  0.105 vs 0.085, difference 0.155 (MDE 0.912); cancer-cell coupling contribution 0.057 vs 0.030, difference 0.024 (MDE
+  0.154).
+- **Pre vs on treatment (joint host, change at equal stromal depth, cohort as stratum):** loudness +0.052 (-0.171 to
+  0.257) overall; E -0.170, NE +0.079, E - NE -0.249 (-0.833 to 0.289; MDE 0.814). Contribution -0.001 (-0.068 to 0.061);
+  E - NE -0.058 (MDE 0.231).
+- **Reading (registered wording):** no visible difference; consistent with no link between the tumour clock and early
+  T-cell expansion under anti-PD-1, but only effects of about one SD of loudness were detectable.
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/score_a403_a405/{a405_pre,a405_change}.csv -->
