@@ -174,3 +174,23 @@ glioma (A247: precondition fails).
    - The REMAGUS request (outward-facing).
    - Downloads for H8.
    - Access to the Bieler data (Q44a).
+
+## 5. Progress, 2026-11-27 evening (autonomous run on this plan)
+
+| Item | Amendment | Outcome |
+|---|---|---|
+| U1 | A403c | The colder-louder lead is not a phase effect: on phase-free loudness -0.126 (p 0.006), beyond both families; loudness depends on phase less than random gene sets (4th percentile). The myeloid part weakens (-0.062). |
+| U2 / H5 | A304r | The proliferation gain loss does not replicate in CPTAC-3 (ratio 0.89, p 0.16, power 0.97); the TCGA loss sits in cancer types CPTAC lacks. Section 1.2's first row drops to B. |
+| U3 | A402c | Tumour-stroma host reliability 0.70 (phase error about 1.8 h). Composition rhythms of about 3-fold are excluded; 2-fold ones detected only at power 0.7. |
+| H2 | A409 | Descriptive (below power gate, null leak disclosed): tumour fibroblasts share the patient's clock loudness (leverage 0.361, beyond both families); the myeloid link is local to the tumour stroma. |
+| H1 | A410 | FAIL with power: lineage retention does not predict cancer-cell coupling within cancer types. |
+| H4 | A411 | FAIL with power: proliferation does not predict cancer-cell coupling (coupled cancers lean negative, not significant). |
+| H6 | A414 | Running. |
+| H3 | - | Not run: `orientation` reads random gene sets as strongly radial (A311), so it cannot separate damping from dephasing. |
+| H7 | - | Not run: incoherence bounds are 1-3 h and not clock-specific even in GTEx (A259); 60-80 patients would not inform. |
+| U4 | - | Not run: A336 already placed the trio drop (100 + trio); the full 364-drop null costs about 18 h here and would not change the core-vs-matched reading. |
+
+**What changed in the picture.** The proliferation statement weakens to a TCGA, cancer-type-dependent observation, and the
+single-cell tests find no proliferation or lineage dependence of cancer-cell coupling. Two leads firm up: the tumour stroma
+shares the patient's clock loudness (A409, descriptive) while its own loudness tracks immune coldness locally (A403c,
+A409 D409). The composition-phase nulls now carry a size: about 3-fold rhythms excluded.
