@@ -13226,3 +13226,16 @@ epithelium inside the tumour raises both the lineage score and the coupling (nor
 fibroblast check does not remove this. A positive H410.1 reads "lineage-linked participation, or contamination by
 normal epithelium", unless it holds in the cohorts with copy-number-called malignant cells (A388 cohorts; descriptive).
 **Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a410.py --stage power|score`; output `output/a410/`.
+
+## A411 (2026-11-27; synthesis item H4, on the user's go-ahead for the synthesis plan; staged with A410's code: power, then one scoring run; BLIND for every proliferation-coupling relation of cancer cells in the pooled table; NOT BLIND: A403 H403.2 (loudness vs proliferation, -0.022), A391 (A387 cohorts, descriptive), A304 / A304r (bulk gain loss in TCGA, not replicated in CPTAC)): are proliferating cancer cells less coupled to the tumour's time?
+**Data and y** as A410 (per-patient cancer-cell contribution on the tumour-stroma host), all 12 P401 cancers.
+**x** = malignant G2M index (A391 / A403: mean within-cohort z of log CPM of the Hallmark G2M genes, clock genes removed, in
+the malignant pseudobulk). Covariates as A410.
+- **H411.1:** pooled within-cohort slope of y on x < 0 (one-sided p < 0.05, 10,000 within-cohort permutations of x) and below
+  the matched q05 of the same slope with y from 200 matched pseudo-waveforms ([411, 0]); responsive ([411, 1]) reported.
+- **Descriptive:** per cancer; restricted to the three cancers whose cancer cells are coupled (LUAD, THCA, KIRC; A401);
+  tumour-fibroblast contribution on x (specificity); core loop.
+**Power stage.** Null SD of the pooled slope from shuffles of x; MDE = 2.49 x SD; scored if MDE <= 0.20.
+**Reading.** Pass: where cancer cells keep time, proliferating ones keep less of it (a cell-level counterpart of A304).
+Fail with power: cancer-cell participation does not follow proliferation at this size.
+**Code:** `a410.py --x prolif` (A410 script, x switched); output `output/a411/`.
