@@ -9843,3 +9843,33 @@ mean offset): every gene but CRY1, PER2 and CIART departs in amplitude beyond it
   Sheep (A385b) were also read with the human waveform: a sheep waveform learned untimed is the analogous check.
 - Code: `exploratory/A400_mouse_person/scripts/a400c.py`.
 <!-- src: paper/exploratory/A400_mouse_person/output/{c_radius,c_summary,c_leverages,c_waveforms}.csv -->
+
+## A401 (scored 2026-11-27; one scoring run, 125 min; cancer-cell values of the added data BLIND, the 5 A388 D388.5 cancers' ranks not blind): the composition index does not predict which cancers pair with the patient in bulk (H401.1 FAIL, rho 0.02); the cancer cells' own excess coupling tracks the bulk clock structure across tumours (H401.2 PASS, rho 0.66, p 0.043, fragile) and, descriptively, their standardised coupling ranks with the bulk pairing (rho 0.67)
+
+Pooled tumour table (A388 cohorts, 11 GEO builds, 11 CELLxGENE datasets, BIOKEY pre-treatment from the 3CA copy; 65 patients
+removed as duplicates); tests over the 8 matched cancers passing P401 on 14 genes (BRCA, LUAD, COAD, ESCA, PRAD, STAD, KIRC,
+THCA; exact one-sided Spearman, critical rho 0.643). 14 genes decide (A401 note 1); core loop beside it.
+- **H401.1 FAIL:** index P (purity-weighted stroma and cancer-cell timekeeping) against the A138 bulk pairing rho 0.024 (p
+  0.49); leave-one-cancer-out -0.25 to 0.36. Core loop on the same 8: -0.214.
+- **H401.2 PASS (secondary):** the cancer cells' excess coupling over matched genes (e_mal) against the A83 clock-shaped
+  share of all primary tumours rho 0.659 (p 0.0425); leave-one-cancer-out 0.536 to 0.703 (p 0.045 to 0.118: fragile,
+  holds at p < 0.05 only without LUAD or KIRC). Core loop on the same 8: 0.419 (p 0.149); on the 4 passing P401 on the core
+  (COAD, STAD, KIRC, THCA): 0.949 (p 0.083).
+- **Descriptive (14 genes, same 8):** the cancer cells' standardised coupling z_mal against the bulk pairing rho 0.667 (p
+  0.042); e_mal 0.539 (p 0.088); raw c_mal 0.381 (p 0.18). The index P, which adds stroma terms assumed equal across
+  cancers (A387 pooled couplings) and TCGA purity, loses this ranking.
+- **Per cancer (D401; cancer-cell coupling c_mal on the tumour-stroma host, 14 genes / core; z against 200 matched sets):**
+  thyroid 0.392 / 0.697 (17 patients; z 0.85 / 1.73), kidney clear cell 0.330 / 0.162 (19; z 1.37), lung adenocarcinoma 0.290
+  / 0.207 (82; z 2.37), cervix 0.257 / 0.319 (20), head and neck 0.238 / 0.327 (16), mixed lung 0.233 / 0.323 (35), prostate
+  0.208 / 0.050 (42), pancreas 0.171 / 0.233 (33), oesophagus 0.151 / 0.187 (67), liver 0.152 / 0.188 (17), stomach 0.071 /
+  0.000 (29), lung squamous 0.058 / 0.188 (14), breast 0.055 / 0.127 (112), ovary 0.011 / 0.000 (47), colorectal 0.004 / 0.000
+  (71), bladder 0.000 / 0.045 (10). Cancer-cell loudness relative to tumour fibroblasts 0.10 (colorectal) to 0.97 (cervix).
+- **Reading.** The registered model (bulk pairing = stroma plus cancer cells, weighted by purity) does not rank the cancers:
+  with the stroma coupling taken as equal across cancers it adds no information and dilutes the cancer-cell term. What
+  carries across cancers is the cancer cells themselves: cancer types whose cancer cells keep the tumour's time (thyroid,
+  kidney, lung adenocarcinoma) are those whose tumours keep a clock-shaped structure across patients in bulk (A83; registered
+  secondary, fragile) and pair with the patient (descriptive). Colorectal, breast, ovary and stomach cancer cells keep no
+  time beyond matched genes, and their tumours pair weakly in bulk. With 8 cancers this is a ranking, not a mechanism; the
+  core loop agrees in direction (0.42 on the 8, 0.95 on the 4 passing on the core) but is not tested.
+- Code: `exploratory/A401_cancer_timekeeping/scripts/a401.py --stage score`.
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/score/{h401,h401_leave_one_cancer_out,d401,per_cancer}.csv -->

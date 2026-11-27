@@ -545,19 +545,244 @@ def purity_table(matched):
     return pd.DataFrame(rows)
 
 
+# ---- score stage ---------------------------------------------------------------------------------------------------------
+
+A387 = EXP / "A387_tumour_full_model/output/score"
+A387_NAME = {"COAD": "colorectal", "LUAD": "lung", "lung_mixed": "lung", "LUSC": "lung", "LIHC": "liver", "PRAD": "prostate"}
+ALL_TCGA = {**ORIGINAL, **ADDED}
+N_BOOT, N_PERM_FIT = 500, 1000
+
+
+def fit_one(tab, classes, rd, targets, ref, n_boot, n_perm, readout):
+    limit_threads(1)
+    warnings.filterwarnings("ignore")
+    ds = cs.Dataset(tab, anchors=classes, waveform=READOUTS[rd], mixed_strata=True)
+    kw = dict(seed=SEED, n_perm=n_perm, gate=False, reference=ref, attenuation="df", level=0.90, anchor_readout=readout, targets=targets)
+    try:
+        t = ds.fit(n_boot=n_boot, **kw).table
+        t["interval_fallback"] = False
+    except ValueError as e:  # a bootstrap replicate without an estimate for the reference: point estimates only, no interval
+        t = ds.fit(n_boot=0, **kw).table
+        t["interval_fallback"] = f"no intervals ({str(e)[:80]})"
+    return t
+
+
+def mal_chunk(Gu, classes, ws, rd):
+    limit_threads(1)
+    warnings.filterwarnings("ignore")
+    out = []
+    for i, w in ws:
+        try:
+            t = cs.Dataset(Gu, anchors=classes, waveform=w, mixed_strata=True).fit(n_boot=0, gate=False, targets=[MALT]).table
+            out.append(dict(set=i, readout=rd, coupling=float(t.loc[MALT, "coupling"])))
+        except Exception as e:  # noqa: BLE001
+            out.append(dict(set=i, readout=rd, error=f"{type(e).__name__}: {e}"[:200]))
+    return out
+
+
+def spearman_exact(x, y):
+    """Spearman rho and the exact one-sided permutation p (all n! orderings of y; ties as average ranks)."""
+    from scipy.stats import rankdata
+    x, y = np.asarray(x, float), np.asarray(y, float)
+    n = len(x)
+    if n < 3 or np.std(x) == 0 or np.std(y) == 0:
+        return np.nan, np.nan
+    rx, ry = rankdata(x), rankdata(y)
+    cx, cy = rx - rx.mean(), ry - ry.mean()
+    den = np.sqrt((cx ** 2).sum() * (cy ** 2).sum())
+    rho = float((cx * cy).sum() / den)
+    perms = np.array(list(itertools.permutations(range(n))))
+    r = (cx[None, :] * cy[perms]).sum(1) / den
+    return rho, float(np.mean(r >= rho - 1e-12))
+
+
+def stage_score(args):
+    out = OUT / ("score_smoke" if args.smoke else "score")
+    out.mkdir(parents=True, exist_ok=True)
+    pw = OUT / "power"
+    t0 = time.time()
+    n_boot, n_perm, n_set = (20, 50, 6) if args.smoke else (N_BOOT, N_PERM_FIT, 200)
+    frames, donors, _ = pool_sources(args, out)
+    from joblib.externals.loky import get_reusable_executor
+    get_reusable_executor().shutdown(wait=True)
+    counts = pd.read_csv(pw / "counts.csv")
+    if not args.smoke:
+        now = donors.groupby("cancer").donor.nunique()
+        assert (now.reindex(counts.cancer).to_numpy() == counts.patients.to_numpy()).all(), "pool differs from the power stage"
+        log("pool reproduces the power-stage counts")
+    if args.smoke:  # code check: malignant rows' donor labels permuted within stratum
+        rng = np.random.default_rng(1)
+        for f in frames.values():
+            for st, g in f[f.compartment == MALT].groupby("stratum"):
+                f.loc[g.index, "donor"] = g.donor.to_numpy()[rng.permutation(len(g))]
+    p401 = pd.read_csv(pw / "p401.csv")
+    p401c = pd.read_csv(pw / "p401_classes.csv")
+    matched = pd.read_csv(pw / "matched.csv")
+    purity = pd.read_csv(pw / "purity.csv").set_index("cancer")
+    a387p = pd.read_csv(A387 / "part2_tests.csv")
+    a387c = pd.read_csv(A387 / "per_cancer_tests.csv")
+    from clocksync.paired import pseudo_waveforms
+    cancers = [c for c in counts.cancer if counts.set_index("cancer").patients[c] >= 5]
+    if args.smoke:
+        cancers = [c for c in cancers if c in set(donors.cancer)]
+    rows, comp_all = [], []
+    for c in cancers:
+        ids = set(donors[donors.cancer == c].donor)
+        parts = [f[f.donor.isin(ids) & f.compartment.isin([MALT] + ANCH)] for f in frames.values()]
+        parts = [p for p in parts if len(p)]
+        Gc = pd.concat(parts, join="inner", ignore_index=True)
+        genes = [g for g in Gc.columns if g not in META]
+        classes = [a for a in ANCH if Gc[(Gc.compartment == a)].donor.nunique() >= 5]
+        base = dict(cancer=c, patients=len(ids), cohorts=donors[donors.cancer == c].source.nunique(),
+                    classes="+".join(k.split(":")[1] for k in classes))
+        if len(classes) < 2 or not set(BASE.genes) <= set(genes):
+            for rd in READOUTS:
+                rows.append(dict(base, readout=rd, status="no host: < 2 stromal classes with >= 5 patients"))
+            log(f"{c}: no host")
+            continue
+        Gc = Gc[Gc.compartment.isin([MALT] + classes)].reset_index(drop=True)
+        tab = Gc[META + list(BASE.genes)]
+        npat = {k: Gc[Gc.compartment == k].donor.nunique() for k in classes}
+        ref = "tumour:fibroblast" if "tumour:fibroblast" in classes else max(classes, key=lambda k: npat[k])
+        mode = "loo" if len(classes) >= 3 else "full"
+        # composition from the single-cell pseudobulks of this cancer (depth = UMI)
+        dep = Gc.pivot_table(index="donor", columns="compartment", values="depth", aggfunc="sum")
+        s_sc = (dep[MALT] / dep[[MALT] + classes].sum(axis=1)).mean()
+        w = {k: dep[k].sum() / sum(dep[j].sum() for j in classes) for k in classes}
+        # matched sets (same draw as P401: the cancer's pooled anchors, genes in every cohort)
+        anc = Gc[Gc.compartment.isin(classes)]
+        frac = anc[genes].div(anc.depth, axis=0)
+        lm = np.log(frac.mean() + 1e-12)[(anc[genes].mean() >= 1) | frac.columns.isin(list(BASE.genes))]
+        ws = list(enumerate(pseudo_waveforms(lm, n_set, np.random.default_rng([SEED, 0]), BASE, "matched")))
+        used = sorted({g for _, wv in ws for g in wv.genes} | set(BASE.genes))
+        Gu = Gc[META + used]
+        tasks = [("fit_c", rd, dict(targets=[MALT], ref=None, n_boot=n_boot, n_perm=n_perm, readout="loo" if mode == "loo" else "full"))
+                 for rd in READOUTS]
+        tasks += [("fit_ref", rd, dict(targets=[MALT] + [k for k in classes], ref=ref, n_boot=n_boot, n_perm=0, readout=mode))
+                  for rd in READOUTS]
+        res = Parallel(n_jobs=min(args.jobs, len(tasks)))(
+            delayed(fit_one)(tab, classes, rd, kw["targets"], kw["ref"], kw["n_boot"], kw["n_perm"], kw["readout"]) for _, rd, kw in tasks)
+        fits = {(t[0], t[1]): r for t, r in zip(tasks, res)}
+        mt = []
+        for rd in READOUTS:
+            w_rd = [(i, wv if rd == "14" else C.restrict(wv, BASE, CORE)) for i, wv in ws]
+            for k in range(args.jobs * 2):
+                if w_rd[k::args.jobs * 2]:
+                    mt.append((Gu, classes, w_rd[k::args.jobs * 2], rd))
+        comp = pd.DataFrame([r for x in Parallel(n_jobs=args.jobs)(delayed(mal_chunk)(*t) for t in mt) for r in x])
+        comp.assign(cancer=c).to_csv(out / f"matched_{c}.csv", index=False)
+        for rd in READOUTS:
+            fc, fr = fits[("fit_c", rd)].loc[MALT], fits[("fit_ref", rd)]
+            m = comp[comp.readout == rd].coupling.dropna().to_numpy()
+            cm = float(fc.coupling)
+            z = (cm - m.mean()) / m.std(ddof=1)
+            e = max(cm - float(np.median(m)), 0.0)
+            amp = {k: float(np.exp(fr.loc[k, "log_amp_rel"])) for k in classes}
+            r = dict(base, readout=rd, status="ok", interval_fallback=str(fc.get("interval_fallback", False)) + "|" + str(fr.interval_fallback.iloc[0]),
+                     amplitude_reference=ref.split(":")[1], anchor_readout_amp=mode,
+                     c_mal=cm, c_lo90=fc.coupling_lo, c_hi90=fc.coupling_hi, p_c=fc.p_coupling, boundary_type=fc.boundary_type,
+                     host_reliability=fc.host_reliability, n_mal=int(fc.n), matched_mean=float(m.mean()), matched_sd=float(m.std(ddof=1)),
+                     matched_median=float(np.median(m)), matched_q95=float(np.quantile(m, .95)), z_mal=z, e_mal=e,
+                     share_matched_ge=float(np.mean(m >= cm)), n_matched_ok=len(m),
+                     A_mal=float(np.exp(fr.loc[MALT, "log_amp_rel"])), A_mal_lo=float(np.exp(fr.loc[MALT, "log_amp_lo"])),
+                     A_mal_hi=float(np.exp(fr.loc[MALT, "log_amp_hi"])), offset_mal_h=fr.loc[MALT, "offset_h"],
+                     offset_mal_lo=fr.loc[MALT, "offset_lo"], offset_mal_hi=fr.loc[MALT, "offset_hi"],
+                     **{f"A_{k.split(':')[1]}": amp[k] for k in classes},
+                     **{f"offset_{k.split(':')[1]}_h": float(fr.loc[k, "offset_h"]) for k in classes},
+                     sc_umi_share_mal=float(s_sc), **{f"w_{k.split(':')[1]}": float(w[k]) for k in classes})
+            # composition and c_str
+            if c in purity.index:
+                s_mal, s_src = float(purity.mean_purity[c]), "TCGA ABSOLUTE purity"
+            else:
+                s_mal, s_src = float(s_sc), "single-cell malignant UMI share (non-TCGA cancer)"
+            nm = A387_NAME.get(c)
+
+            def cstr(kind):
+                if nm is not None:
+                    q = a387c[(a387c.readout.astype(str) == rd) & (a387c.kind == kind) & (a387c.cancer == nm)]
+                    if len(q):
+                        return float(q.coupling.iloc[0]), f"A387 per cancer ({nm})"
+                q = a387p[(a387p.readout.astype(str) == rd) & (a387p.kind == kind)]
+                return float(q.coupling.iloc[0]), "A387 pooled"
+            cs_ = {}
+            for k in classes:
+                kind = "endothelial" if k.endswith("endothelial") else "fibroblast"
+                cs_[k] = cstr(kind)
+            c_chain = float(np.mean([v[0] for v in cs_.values()]))
+            sk = {k: (1 - s_mal) * w[k] for k in classes}
+            num = s_mal * r["A_mal"] * np.sqrt(e * c_chain) + sum(sk[k] * amp[k] * np.sqrt(cs_[k][0]) for k in classes)
+            den = np.sqrt((s_mal * r["A_mal"]) ** 2 + sum((sk[k] * amp[k]) ** 2 for k in classes))
+            r.update(s_mal=s_mal, s_mal_source=s_src, c_str_chain=c_chain, P=float(num / den),
+                     **{f"s_{k.split(':')[1]}": sk[k] for k in classes},
+                     **{f"c_str_{k.split(':')[1]}": cs_[k][0] for k in classes},
+                     **{f"c_str_{k.split(':')[1]}_source": cs_[k][1] + (" (mural uses the fibroblast value)" if k.endswith("mural") else "")
+                        for k in classes})
+            rows.append(r)
+        log(f"{c}: scored (reference {ref.split(':')[1]}, {mode})")
+        pd.DataFrame(rows).to_csv(out / "per_cancer.csv", index=False)
+    R = pd.DataFrame(rows)
+    # bulk and A83 values
+    a138 = pd.read_csv(EXP / "A138_cancer_estimability/output/score/per_unit.csv").query("hypothesis == 'H138.4'").set_index("unit").statistic
+    added = pd.read_csv(pw / "bulk_pairing_added.csv").query("kind == 'added'").set_index("project").statistic
+    bulk = pd.concat([a138, added])
+    a83 = pd.concat([pd.read_csv(PAPER / "results/figure_5/output/cancer/a83_all_tumours.csv").set_index("project").share,
+                     pd.read_csv(pw / "a83_added.csv").query("kind == 'added'").set_index("project").share])
+    R["tcga"] = R.cancer.map(ALL_TCGA)
+    R["bulk_pairing"] = R.tcga.map(bulk)
+    R["a83_share"] = R.tcga.map(a83)
+    pf = p401.set_index(["cancer", "readout"]).p401_pass
+    R["p401_pass"] = [bool(pf.get((c, str(rd)), False)) for c, rd in zip(R.cancer, R.readout)]
+    R["matched"] = R.cancer.isin(set(matched[matched.matched].cancer))
+    R.to_csv(out / "per_cancer.csv", index=False)
+    # D401 table: stroma couplings within the tumour from the power stage
+    pc = p401c.assign(readout=p401c.readout.astype(str)).pivot_table(index=["cancer", "readout"], columns="cls", values="coupling")
+    pc.columns = [f"tumour_stroma_coupling_{x}" for x in pc.columns]
+    D = R.merge(pc.reset_index().assign(readout=lambda d: d.readout.astype(str)), on=["cancer", "readout"], how="left")
+    D.to_csv(out / "d401.csv", index=False)
+    # H401.1 / H401.2 and descriptive variants
+    rowsH, loo = [], []
+    crit = pd.read_csv(pw / "critical_rho.csv").set_index("n").critical_rho
+
+    def sets(rd):
+        s14 = R[(R.readout == "14") & R.p401_pass & R.matched & R.P.notna()].cancer.tolist()
+        sc = R[(R.readout == "core") & R.p401_pass & R.matched & R.P.notna()].cancer.tolist()
+        return s14 if rd == "14" else sc, s14
+    for rd in READOUTS:
+        own, s14 = sets(rd)
+        for label, cs_set in (("passing P401 on this readout", own), ("the 14-gene passing set", s14)):
+            d = R[(R.readout == rd) & R.cancer.isin(cs_set)]
+            for hyp, xv, yv in (("H401.1 P vs bulk pairing", "P", "bulk_pairing"), ("H401.2 e_mal vs A83 share", "e_mal", "a83_share"),
+                                ("descriptive c_mal vs bulk pairing", "c_mal", "bulk_pairing"),
+                                ("descriptive e_mal vs bulk pairing", "e_mal", "bulk_pairing"),
+                                ("descriptive z_mal vs bulk pairing", "z_mal", "bulk_pairing")):
+                rho, p = spearman_exact(d[xv], d[yv])
+                n = len(d)
+                rowsH.append(dict(readout=rd, set=label, hypothesis=hyp, n=n, cancers="+".join(d.cancer), rho=rho, p_exact_one_sided=p,
+                                  critical_rho=float(crit.get(n, np.nan)),
+                                  decides=bool(rd == "14" and label.startswith("passing") and hyp.startswith("H401")),
+                                  passes=bool(p < 0.05) if np.isfinite(p) else False))
+        d14 = R[(R.readout == rd) & R.cancer.isin(s14)]
+        if rd == "14" or True:
+            for omit in d14.cancer:
+                d = d14[d14.cancer != omit]
+                for hyp, xv, yv in (("H401.1 P vs bulk pairing", "P", "bulk_pairing"), ("H401.2 e_mal vs A83 share", "e_mal", "a83_share")):
+                    rho, p = spearman_exact(d[xv], d[yv])
+                    loo.append(dict(readout=rd, omitted=omit, hypothesis=hyp, n=len(d), rho=rho, p_exact_one_sided=p))
+    H = pd.DataFrame(rowsH)
+    H.to_csv(out / "h401.csv", index=False)
+    pd.DataFrame(loo).to_csv(out / "h401_leave_one_cancer_out.csv", index=False)
+    pd.set_option("display.width", 250, "display.max_columns", 60)
+    log("H401\n" + H.round(4).to_string(index=False))
+    log("D401\n" + R[["cancer", "readout", "patients", "c_mal", "c_lo90", "c_hi90", "z_mal", "e_mal", "A_mal", "P", "bulk_pairing", "a83_share", "s_mal",
+                      "p401_pass"]].round(3).to_string(index=False))
+    log("leave-one-out\n" + pd.DataFrame(loo).round(4).to_string(index=False))
+    log(f"score done {(time.time() - t0) / 60:.1f} min")
+
+
 # ---- main ---------------------------------------------------------------------------------------------------------------
 
-def stage_power(args):
-    out = OUT / ("power_smoke" if args.smoke else "power")
-    out.mkdir(parents=True, exist_ok=True)
-    t0 = time.time()
-    added = list(ADDED)[:1] if args.smoke else list(ADDED)
-    bulk = bulk_pairing(out, added)
-    a83_share(out, added)
-    for _, r in bulk[bulk.kind == "added"].iterrows():
-        if r.get("gated") is True and r.pairs >= 10:
-            MATCHED_TCGA[r.project] = ADDED[r.project]
-    log(f"matched TCGA set: {sorted(MATCHED_TCGA)}")
+def pool_sources(args, out):
+    """Sources, deduplication and genome-wide frames of the power stage (same code path; writes excluded / dropped / dedup)."""
     frames, dons, dropped = {}, [], []
     # (a) A388 cohorts
     f388, d388, drec, dr = build_a388(args)
@@ -644,6 +869,21 @@ def stage_power(args):
     donors = donors[~donors.donor.isin(drop)].reset_index(drop=True)
     for s in list(frames):
         frames[s] = frames[s][~frames[s].donor.isin(drop)]
+    return frames, donors, f388
+
+
+def stage_power(args):
+    out = OUT / ("power_smoke" if args.smoke else "power")
+    out.mkdir(parents=True, exist_ok=True)
+    t0 = time.time()
+    added = list(ADDED)[:1] if args.smoke else list(ADDED)
+    bulk = bulk_pairing(out, added)
+    a83_share(out, added)
+    for _, r in bulk[bulk.kind == "added"].iterrows():
+        if r.get("gated") is True and r.pairs >= 10:
+            MATCHED_TCGA[r.project] = ADDED[r.project]
+    log(f"matched TCGA set: {sorted(MATCHED_TCGA)}")
+    frames, donors, f388 = pool_sources(args, out)
     # counts
     has = {(d, c): True for f in frames.values() for d, c in zip(f.donor, f.compartment)}
     counts = counts_tables(donors, has)
@@ -682,13 +922,13 @@ def stage_power(args):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--stage", choices=("power",), required=True)
+    ap.add_argument("--stage", choices=("power", "score"), required=True)
     ap.add_argument("--jobs", type=int, default=4)
     ap.add_argument("--genome-jobs", type=int, default=2)
     ap.add_argument("--smoke", action="store_true")
     args = ap.parse_args()
     limit_threads(1)
-    stage_power(args)
+    stage_score(args) if args.stage == "score" else stage_power(args)
 
 
 if __name__ == "__main__":
