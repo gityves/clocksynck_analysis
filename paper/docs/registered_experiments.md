@@ -12867,3 +12867,79 @@ on readouts / immune donors / expansion labels shuffled, which prints no target 
   samples added as separate rows (`<patient>|On`, the patient's stratum); per patient change of loudness and of the
   contribution (b from this joint host), OLS on cohort indicators and the log ratio of stromal depth (on / pre); the
   depth-adjusted mean change overall, by expansion and E minus NE, with 2,000 patient-bootstrap 90 % intervals.
+
+## A406 (2026-11-27, on the user's instruction "yes go for 1 and 2", after the review of the health section: the mouse person factor of A400c rests on a waveform fitted on the same 48 mice; staged: simulation and power (no real clock leverage under the external waveform), then one scoring run if decidable; **NOT BLIND**: A400 / A400b / A400c (human-waveform leverages; Mx core V2 0.596, Mf 0.479; the Mx / Mf waveforms and the mouse-human gene table), A385d (sheep simulation design), A394 / A397 mouse fits (tissue gains, timed departures); **BLIND**: the external waveforms, every Deota leverage read with them, every simulated leverage, every per-arm leverage): does a within-time person factor of mouse clock loudness survive a mouse waveform learned in other mice, and can the A400c cross-fit produce one from noise?
+
+**Why.** A400b: read with the human GTEx waveform, two mice killed at the same ZT in the same arm share no core-loop
+loudness (0.095). A400c: read with a mouse waveform cross-fitted on the same mice, they do (Mx 0.596, beyond companions).
+The value is descriptive: the waveform and the mice read come from one experiment, and the cross-fit has no noise null.
+**Data.** Deota 2023 (48 mice, 2 per ZT x feeding arm, 16 peripheral tissues; as A400). External waveforms:
+(E) Wolff 2023 (GSE201207, Esser lab; adrenal, heart, kidney, lung, skeletal muscle; young, aged and old pools, 12 CT in
+constant darkness; on disk): `clocksync.waveform.fit_waveform` on log fractions log((count + 0.5) / depth) of the 14
+genes, hours = CT, group = tissue x age. (E2, sensitivity) Manella 2021 (GSE159135; Alb-Cre controls only, liver, WAT,
+lung, ad libitum and daytime-fed arms, ZT0-22 every 2 h; on disk): hours = ZT, group = tissue x arm. Hypothalamus and
+every Bmal1-deleted sample excluded. Core loop = the waveform's 11 core genes. A constant phase offset between the
+waveform's clock (CT, ZT) and Deota's ZT cancels in the untimed statistic.
+**Statistic.** The A400 leverage under V0 (A400 adjustments), V1 (+ ZT harmonics 1-4) and **V2 (+ ZT x arm cells,
+primary)**, mice permuted within arm (1,000); companions 100 matched + 100 responsive (the A400c gene draws) read with the
+external waveform's amplitudes and phases at the clock positions (`as_set`, as A400c).
+**Part 1, simulation of the Deota design (no real leverage).** Every mouse and tissue of A400 with real depths. The 14
+genes are Poisson counts with mean depth x exp(m + lam_s g_k A_j cos(t_s - psi_j - phi_k) + e): m = real mean log
+fraction per tissue x arm; g_k, phi_k = the A394 mouse tissue gains and offsets; A_j, psi_j = the A400c Mf gene
+amplitudes and phases (truth); t_s = recorded ZT + d_s, d_s ~ N(0, 1 h) (an individual departure); e ~ N(0, sd) per
+sample as A385d (real within-tissue x arm SD minus the rhythm). Person factor lam_s = 1 or exp(u_s), u_s ~ N(0, 0.25).
+Read with (i) a Mx cross-fit refitted on the simulated mice exactly as A400c, (ii) E, (iii) E2. 20 replicates per cell
+(seeds [406, cell, r]). Companions for the decision: the real ones of the step above (they carry no clock value).
+**Gates (stated now).** G406.1, artefact: with lam_s = 1, the median simulated V2 core leverage under E is below 0.2 and
+below both real companion q95s under E. G406.2, power: with u_s SD 0.25, at least 80 % of the replicates read with E
+exceed both companion q95s and the permutation q95. H406.1 is scored only if both gates pass; otherwise the real
+leverage is reported as descriptive. The Mx row of part 1 is reported regardless (does the A400c cross-fit inflate a
+null design?).
+**H406.1.** Real Deota data read with E: V2 core-loop leverage with permutation p < 0.05 and above both companion q95s.
+**Readings (stated now).** Pass: mice killed at the same time differ in a clock loudness their organs share, on a waveform
+learned in another lab's mice; the mouse joins GTEx and sheep for the person factor (healthy animals, rapid death;
+inbred, so not explained by genotype). Fail with the gates passed: the A400c value depended on fitting the waveform on
+the same mice; the mouse is left out of the person-factor claim. If part 1 shows the Mx read of a null design at or above
+the real Mx companion q95s, A400c's value is withdrawn as a cross-fit artefact whatever H406.1 gives.
+**Descriptive.** 14 genes; V0 / V1; E2 beside E; the Mf / E gene-level waveform differences (as A400c, Mf vs GTEx).
+**D406, feeding arm (descriptive; prediction stated now).** If each mouse's own feeding rhythm drives the shared loudness,
+the night-restricted arm shows a smaller V2 core leverage than ad libitum. Per arm under E: leverage with arm-specific
+permutations and companions; the difference with a 90 % mouse-bootstrap interval (resampling mice within cell). With
+12 cells of 2 mice per arm this cannot decide; it is reported as a direction.
+**Limits.** Wolff pools 2 mice per sample and runs in constant darkness (CT); strains, ages and labs differ from Deota.
+The simulation gives tissues the A394 gains and offsets but one gene waveform, no non-sinusoidal shapes. Recorded ZT
+stands for the true phase.
+**Code.** `paper/exploratory/A400_mouse_person/scripts/a406.py --stage sim | score`. Aggregates only.
+
+## A407 (2026-11-27, same instruction (item 2 of the health review: A395 has no companion); staged: power (precondition counts for the companions; no clock value), then one scoring run; **NOT BLIND**: A395 (clock b_t 0.219, 90 % -0.010 to 0.420, read on the GTEx waveform; scatter slope -0.752; 33 passing organs), A383 (untimed companion b), A397 (mouse); **BLIND**: every companion b_t and scatter slope, the clock b_t read with a baboon-fitted waveform): is the timed own-noise law of A395 specific to the clock, or do rhythmic non-clock programmes of the same organs show it too?
+
+**Why.** A395 found, with known times, that a baboon organ's own clock noise barely grows with its gain (b_t 0.22) and its
+phase scatter falls almost as 1 / gain. It had no companion: random genes have no timed rhythm. Slide 3.4b and the
+"precision law" reading rest on it. A rhythmic output programme that receives the same daily signals gives the comparison:
+if it shows the same slope, the law is a property of timed rhythmic expression in this design (variation added after the
+rhythm), not of the clock.
+**Data.** As A395: baboon (Mure 2018, 12 animals, ZT known), peripheral tissues, `Dataset.timed_loadings("zt")`, animal
+correction, precondition (|a| above the q95 of 1,000 ZT permutations), >= 15 passing organs.
+**Rhythmic pool.** Per peripheral tissue, cosinor of the log fraction on ZT (the A395 input scale); a gene enters the
+pool if BH q < 0.05 in at least a quarter of the peripheral tissues and its median expression is at least the clock
+genes' lowest median in at least half of them. Excluded: the 14 clock genes and the clock-related list (ARNTL2, CLOCK,
+BHLHE40, BHLHE41, NFIL3, HLF, CRY1/2, PER1-3, NR1D1/2, RORA/B/C, DBP, TEF, CIART, CSNK1D/E, FBXL3, FBXL21). Pooled phase
+per gene = circular mean of the tissue phases weighted by amplitude.
+**Companions.** 200 sets (seed [407, 1]); each clock gene is replaced by a pool gene in the same pooled-phase bin (six
+bins of 4 h) and median-expression tercile, without replacement within a set; the 11 core positions of a set are those
+replacing the core genes. Each set's waveform is fitted on the baboon (`fit_waveform`, hours = ZT, group = tissue); the
+clock is re-read the same way (baboon-fitted 14-gene waveform; the GTEx-waveform A395 value beside it). Per set: passing
+organs, animal-corrected b_t (14 positions; core positions descriptive) and the phase-scatter slope.
+**Power stage (committed before scoring).** Number of sets with >= 15 passing organs (needs >= 100 of 200, else
+descriptive); companion b_t and slopes are computed and written but not read until the score stage; the clock under the
+baboon waveform is not computed.
+**H407.1.** Clock b_t (baboon waveform, corrected, 14 genes) below the q05 of the companion b_t: the constant own term is
+specific to the clock among rhythmic programmes.
+**Readings (stated now).** Pass: specific; 3.4b keeps "an organ's own clock noise is roughly constant" as a clock
+property. Fail with companions also far below 1 (median b_t < 0.5): the law is a property of timed rhythmic expression
+here; 3.4b says so and the coupling rule is presented as a precision law of rhythmic expression, not of the clock alone.
+Fail with companions near 1: the clock is not separated by this test but rhythmic outputs amplify their own noise; it is
+reported as such. The phase-scatter slope is compared the same way (descriptive).
+**Limits.** Rhythmic outputs receive the clock's own signal and systemic cues, so they are not independent of the clock;
+the pool is selected on the same animals (rhythm, not own noise, is selected); 12 animals, one per time point.
+**Code.** `paper/exploratory/A395_baboon_timed_gain/scripts/a407.py --stage power | score`. Aggregates only.
