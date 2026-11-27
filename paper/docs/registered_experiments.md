@@ -13081,3 +13081,17 @@ each set for the same readout and patients. Reported: observed A, the companion 
 percentile, for both shares and the GC score, new patients and all. Reading: above both q95s = the shared phase is
 clock-specific; inside = a shared phase that any gene set carries (pair-phase rule). Code: `a402b.py --stage agree`;
 output `output/a402b/agreement_companions.csv`.
+
+## A146 addendum 1 (2026-11-27, POST HOC, DESCRIPTIVE; NOT BLIND: A146 part 1 known (tumour S recorded 1.339, internal -0.056; internal minus recorded -1.39), A200 known (Spearman 0.558, median error 1.42 h)): is the internal-time null of A146 explained by the error of the internal-time estimate?
+**Data, programs, statistic** as A146 part 1 (GSE233242, 42 patients, tumour omnibus S over 10 programs, predicted hours).
+- **E1 (noise-injection null).** Calibration model est_day = a + b x recorded + e (OLS over the 42 patients; times on the
+  08-18 h window, no wrapping needed). Null of S_internal if the programs follow recorded time and are read through the
+  estimator: t_sim = a + b x recorded + e permuted across patients (10,000; seed 1461); S(t_sim) on the tumour programs.
+  Reported: its mean, q05 / q95, the observed S_internal's percentile and one-sided p (P(S_sim <= observed)). Sensitivity:
+  t_sim = recorded + (est_day - recorded) permuted (no compression). Same for the normal-tissue omnibus (P2-P10). Reading:
+  observed inside the central 90 % = the estimate's error is enough to explain the gap ("not decided: estimate
+  precision"); below q05 = the error alone does not explain it.
+- **E2 (structure of the error).** Spearman of the residual e with each tumour program score, with stromal (COL1A1, COL1A2,
+  DCN, LUM) and immune (PTPRC) content scores of the tumour library (mean z of log2(TPM + 1)), and with subtype (Kruskal-
+  Wallis); permutation p (10,000), no correction (descriptive).
+**Code:** `paper/exploratory/A146_tme_time/scripts/addendum1_noise.py` (seconds); output `output/addendum1_{e1,e2}.csv`.
