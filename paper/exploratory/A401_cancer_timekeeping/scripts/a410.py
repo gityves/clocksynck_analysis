@@ -21,12 +21,14 @@ import pandas as pd
 from joblib import Parallel, delayed
 
 import a403_a405_score as S
-from a402_a405 import BASE, CORE, META, U, cs, log, trim, centred, cancer_hosts, loudness_frame
+from a402_a405 import BASE, CORE, G2M, META, U, cs, log, trim, centred, cancer_hosts, loudness_frame
 from clocksync.config import limit_threads
 from clocksync.deviation import states as dev_states
 from clocksync.genes import canonical
 
-OUT = U.OUT / "a410"
+OUT = U.OUT / "a410"  # A411 (--x prolif): output/a411
+COUPLED = ("LUAD", "THCA", "KIRC")  # cancers whose cancer cells keep time (A401)
+SEED = 410
 MALT, FIB = U.MALT, "tumour:fibroblast"
 PROGRAMS = {"LUAD": "SFTPC SFTPB SFTPA1 SFTPA2 NAPSA LAMP3 SLC34A2 ABCA3",
             "THCA": "TG TPO TSHR PAX8 SLC26A4 DIO1 DIO2 FOXE1 NKX2-1 SLC5A5",
@@ -53,6 +55,15 @@ def lineage(Mc, cancer):
         return pd.Series(dtype=float), genes
     lc = np.log2(t[genes].div(t.depth, axis=0) * 1e6 + 1)
     return zcoh(lc).mean(axis=1), genes
+
+
+def prolif(Mc):
+    """Malignant G2M index (A391 / A403): mean within-cohort z of natural log1p CPM of the Hallmark G2M genes."""
+    t = Mc.drop_duplicates("donor").set_index("donor")
+    genes = [g for g in G2M if g in t.columns]
+    if len(genes) < 10:
+        return pd.Series(dtype=float), genes
+    return zcoh(np.log1p(t[genes].div(t.depth, axis=0) * 1e6)).mean(axis=1), genes
 
 
 def contrib(rows, host, stratum, wf):
@@ -106,14 +117,14 @@ def build(args):
     donors = donors[donors.cancer.isin(cancers)].reset_index(drop=True)
     hosts = cancer_hosts(frames, donors, cancers)
     mal = {}
-    for c in PROGRAMS:
+    for c in (PROGRAMS if args.x == "lineage" else list(hosts)):
         if c not in hosts:
             continue
         ids = set(donors[donors.cancer == c].donor)
         parts = [f[f.donor.isin(ids) & (f.compartment == MALT)] for f in frames.values()]
         parts = [p for p in parts if len(p)]
         Mc = pd.concat(parts, join="inner", ignore_index=True)
-        keep = sorted((set(hosts[c]["Gc"].columns) | set(PROGRAMS[c])) & set(Mc.columns))
+        keep = sorted((set(hosts[c]["Gc"].columns) | set(PROGRAMS.get(c, [])) | set(G2M)) & set(Mc.columns))
         mal[c] = Mc[keep].reset_index(drop=True)
     frames.clear()
     trim()
@@ -123,7 +134,7 @@ def build(args):
     rows, info = [], []
     for c, Mc in mal.items():
         h = hosts[c]
-        x, genes = lineage(Mc, c)
+        x, genes = lineage(Mc, c) if args.x == "lineage" else prolif(Mc)
         y = contrib(Mc.drop_duplicates("donor"), h["host"], h["stratum"], BASE)
         Gc = h["Gc"]
         yf = contrib(Gc[Gc.compartment == FIB].drop_duplicates("donor"), h["host"], h["stratum"], BASE) if (Gc.compartment == FIB).any() else pd.Series(dtype=float)
@@ -133,7 +144,7 @@ def build(args):
         d["log_mal_cells"] = np.log(m1.n_cells.reindex(d.index).astype(float))
         d["cancer"] = c
         rows.append(d.rename_axis("donor").reset_index())
-        info.append(dict(cancer=c, program_genes=" ".join(genes), n_genes=len(genes), n_registered=len(PROGRAMS[c]), patients=len(d)))
+        info.append(dict(cancer=c, program_genes=" ".join(genes), n_genes=len(genes), n_registered=len(PROGRAMS.get(c, G2M)), patients=len(d)))
     df = pd.concat(rows, ignore_index=True).merge(cov, on="donor", how="left")
     df["cohort"] = df.donor.str.split("|").str[0]
     df["stratum"] = df.donor.map(loud.set_index("donor").stratum)
@@ -145,7 +156,7 @@ def build(args):
 def stage_power(args):
     df, _, _ = build(args)
     un = units(df, "y", "x", COVS)
-    nul = perm_null(un, 2000, [410, 9])
+    nul = perm_null(un, 2000, [SEED, 9])
     T = pd.DataFrame([dict(patients=int(sum(u["n"] for u in un)), cohorts=len(un), null_mean=float(nul.mean()), null_sd=float(nul.std()),
                            mde=2.49 * float(nul.std()), gate=GATE, scored=bool(2.49 * nul.std() <= GATE))])
     T.to_csv(OUT / "power.csv", index=False)
@@ -169,8 +180,9 @@ def stage_score(args):
     df, hosts, mal = build(args)
     un = units(df, "y", "x", COVS)
     obs = pooled_slope(un)
-    nul = perm_null(un, N_PERM, [410, 1])
-    p = float((np.sum(nul >= obs - 1e-12) + 1) / (N_PERM + 1))
+    nul = perm_null(un, N_PERM, [SEED, 1])
+    lower = args.x == "prolif"  # A411 predicts a negative slope
+    p = float((np.sum((nul <= obs + 1e-12) if lower else (nul >= obs - 1e-12)) + 1) / (N_PERM + 1))
     # companions
     from clocksync.paired import pseudo_waveforms
     comp = {"matched": [[] for _ in range(N_SET)], "responsive": [[] for _ in range(N_SET)]}
@@ -182,7 +194,7 @@ def stage_score(args):
         lm = np.log(frac.mean() + 1e-12)[(Gc[genes].mean() >= 1) | frac.columns.isin(list(BASE.genes))]
         lm = lm[lm.index.isin(Mc.columns)]
         for code, fam in enumerate(("matched", "responsive")):
-            ws = pseudo_waveforms(lm, N_SET, np.random.default_rng([410, code]), BASE, fam)
+            ws = pseudo_waveforms(lm, N_SET, np.random.default_rng([SEED, code]), BASE, fam)
             res = Parallel(n_jobs=args.jobs)(delayed(pseudo_one)(c, Gc, Mc, h["classes"], h["stratum"], w) for w in ws)
             for j, r in enumerate(res):
                 comp[fam][j].append(r)
@@ -196,21 +208,27 @@ def stage_score(args):
             crow.append(dict(family=fam, set=j, slope=pooled_slope(u2) if u2 else np.nan))
     C = pd.DataFrame(crow)
     C.to_csv(OUT / "companions.csv", index=False)
-    row = dict(hypothesis="H410.1" if scored else "descriptive (power)", patients=int(sum(u["n"] for u in un)), cohorts=len(un),
+    row = dict(hypothesis=(f"H{SEED}.1" if scored else "descriptive (power)"), patients=int(sum(u["n"] for u in un)), cohorts=len(un),
                slope=obs, null_sd=float(nul.std()), p_one_sided=p)
     for fam in ("matched", "responsive"):
         v = C[C.family == fam].slope.dropna().to_numpy()
-        row.update({f"{fam}_n": len(v), f"{fam}_median": float(np.median(v)), f"{fam}_q95": float(np.quantile(v, .95)),
-                    f"{fam}_pct": float(100 * np.mean(v < obs))})
-    row["pass"] = bool(scored and p < 0.05 and obs > row["matched_q95"])
+        row.update({f"{fam}_n": len(v), f"{fam}_median": float(np.median(v)), f"{fam}_q05": float(np.quantile(v, .05)),
+                    f"{fam}_q95": float(np.quantile(v, .95)), f"{fam}_pct": float(100 * np.mean(v < obs))})
+    row["pass"] = bool(scored and p < 0.05 and (obs < row["matched_q05"] if lower else obs > row["matched_q95"]))
     rows = [row]
     # tumour-fibroblast check and core loop (descriptive)
     for lab, ycol in (("tumour fibroblast contribution (check)", "y_fib"),):
         u3 = units(df, ycol, "x", COVS)
-        n3 = perm_null(u3, N_PERM, [410, 2])
+        n3 = perm_null(u3, N_PERM, [SEED, 2])
         o3 = pooled_slope(u3)
         rows.append(dict(hypothesis=lab, patients=int(sum(u["n"] for u in u3)), cohorts=len(u3), slope=o3, null_sd=float(n3.std()),
-                         p_one_sided=float((np.sum(n3 >= o3 - 1e-12) + 1) / (N_PERM + 1))))
+                         p_one_sided=float((np.sum((n3 <= o3 + 1e-12) if lower else (n3 >= o3 - 1e-12)) + 1) / (N_PERM + 1))))
+    if lower:
+        u5 = units(df[df.cancer.isin(COUPLED)], "y", "x", COVS)
+        n5 = perm_null(u5, N_PERM, [SEED, 7])
+        o5 = pooled_slope(u5)
+        rows.append(dict(hypothesis="coupled cancers LUAD, THCA, KIRC (descriptive)", patients=int(sum(u["n"] for u in u5)), cohorts=len(u5),
+                         slope=o5, null_sd=float(n5.std()), p_one_sided=float((np.sum(n5 <= o5 + 1e-12) + 1) / (N_PERM + 1))))
     core_parts = []
     for c, Mc in mal.items():
         h = hosts[c]
@@ -218,10 +236,10 @@ def stage_score(args):
         core_parts.append(contrib(Mc.drop_duplicates("donor"), hc, h["stratum"], CORE))
     dcore = df.drop(columns="y").merge(pd.concat(core_parts).rename("y"), left_on="donor", right_index=True)
     u4 = units(dcore, "y", "x", COVS)
-    n4 = perm_null(u4, N_PERM, [410, 3])
+    n4 = perm_null(u4, N_PERM, [SEED, 3])
     o4 = pooled_slope(u4)
     rows.append(dict(hypothesis="core loop (descriptive)", patients=int(sum(u["n"] for u in u4)), cohorts=len(u4), slope=o4,
-                     null_sd=float(n4.std()), p_one_sided=float((np.sum(n4 >= o4 - 1e-12) + 1) / (N_PERM + 1))))
+                     null_sd=float(n4.std()), p_one_sided=float((np.sum((n4 <= o4 + 1e-12) if lower else (n4 >= o4 - 1e-12)) + 1) / (N_PERM + 1))))
     T = pd.DataFrame(rows)
     T.to_csv(OUT / "tests.csv", index=False)
     pd.set_option("display.width", 250, "display.max_columns", 30)
@@ -232,13 +250,13 @@ def stage_score(args):
         uc = units(d, "y", "x", COVS)
         if not uc:
             continue
-        rng = np.random.default_rng([410, 5, sum(map(ord, c))])
+        rng = np.random.default_rng([SEED, 5, sum(map(ord, c))])
         bs = []
         for _ in range(N_BOOT):
             idx = np.concatenate([rng.choice(g.index.to_numpy(), len(g)) for _, g in d.groupby("cohort")])
             ub = units(d.loc[idx].reset_index(drop=True), "y", "x", COVS)
             bs.append(pooled_slope(ub) if ub else np.nan)
-        nc = perm_null(uc, N_PERM, [410, 6, sum(map(ord, c))])
+        nc = perm_null(uc, N_PERM, [SEED, 6, sum(map(ord, c))])
         oc = pooled_slope(uc)
         pc.append(dict(cancer=c, patients=int(sum(u["n"] for u in uc)), cohorts=len(uc), slope=oc, lo90=float(np.nanquantile(bs, .05)),
                        hi90=float(np.nanquantile(bs, .95)), p_two_sided=float((np.sum(np.abs(nc) >= abs(oc) - 1e-12) + 1) / (N_PERM + 1)),
@@ -253,8 +271,12 @@ def main():
     ap.add_argument("--stage", choices=("power", "score"), required=True)
     ap.add_argument("--jobs", type=int, default=12)
     ap.add_argument("--genome-jobs", type=int, default=4)
+    ap.add_argument("--x", choices=("lineage", "prolif"), default="lineage", help="lineage (A410) or proliferation (A411)")
     args = ap.parse_args()
     args.smoke = False
+    global OUT, SEED
+    if args.x == "prolif":
+        OUT, SEED = U.OUT / "a411", 411
     limit_threads(1)
     OUT.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
