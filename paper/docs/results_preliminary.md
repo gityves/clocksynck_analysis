@@ -10116,3 +10116,22 @@ stroma of all 12 cancers, each fitted per cancer.
   is downgraded to "not decided: estimate precision". The same applies in spirit to the single-cell internal-time nulls
   (A146 part 2, A246, A402b), whose time reference is also a noisy per-patient estimate.
 <!-- src: paper/exploratory/A146_tme_time/output/{addendum1_e1,addendum1_e2}.csv -->
+
+## A304r (scored 2026-11-27; BLIND for every CPTAC gain, departure and host value; one scoring run, 15 s, after the power stage): the proliferation gain loss of A304 does not replicate in CPTAC-3 (H304r.1 FAIL with power 0.97): gain ratio 0.89, p 0.16, inside the matched sets; no departure rise (H304r.2 FAIL)
+Power note: registered_experiments.md (A304r power note): power 0.97 at the TCGA ratio 0.63. 8 types, 713 pairs, median
+G2M split within type, 2,000 permutations, 200 matched and 200 responsive pseudo-clock sets per type.
+- **H304r.1 FAIL:** Q_G -0.111 (gain ratio 0.89), p 0.164; matched sets median -0.016, q05 -0.540 (34.5th percentile);
+  responsive median -0.194 (69th percentile). Core loop (descriptive): -0.173 (ratio 0.84), p 0.107.
+- **H304r.2 FAIL:** Q_R +0.038, p 0.33 (matched q95 0.370). Host check Q_N -0.010 (p 0.89).
+- **Per type (G high / low):** LUAD 0.416 / 0.452, CCRCC 0.662 / 0.683, LSCC 0.263 / 0.416, SKCM 0.183 / 0.165, HNSCC 0.322 /
+  0.316, PDAC 0.389 / 0.393, UCEC 0.224 / 0.218, STAD 0.085 / 0.413 (27 pairs). Offsets high - low within +-0.9 h in the
+  five largest types.
+- **Overlap with TCGA.** The three types in both cohorts show no clear loss in either: kidney clear cell TCGA 0.390 / 0.469,
+  CPTAC 0.662 / 0.683; LUAD TCGA 0.560 / 0.506, CPTAC 0.416 / 0.452; UCEC 0.092 / 0.112 and 0.224 / 0.218. The TCGA loss sat
+  in BLCA, BRCA, LIHC, PRAD and THCA (A304 per_cancer), none of which CPTAC-3 has.
+- **Purity proxy (CPTAC has no ABSOLUTE):** the high-proliferation arm has less stromal signal in LSCC, HNSCC and STAD and
+  more in CCRCC; no consistent imbalance.
+- **Reading.** With power for the TCGA-sized loss, CPTAC-3 shows at most a small one (0.89, inside the matched range). A304
+  is not a general property of proliferating tumours: it is a TCGA result carried by cancer types CPTAC does not cover
+  (bladder, breast, liver, prostate, thyroid). Claim 6.16 (ledger) drops to "TCGA, cancer-type dependent" (status B).
+<!-- src: paper/exploratory/A304_cancer_gain_departure/output/a304r/{power,tests,per_type,companions,core,purity}.csv; output/score/per_cancer.csv -->
