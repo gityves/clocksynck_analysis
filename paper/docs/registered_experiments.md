@@ -12824,3 +12824,19 @@ class (the registration said 36, from a count without the cell threshold), 28 wi
 expanders / non-expanders pre-treatment 8 / 23 (treatment-naive 6 / 18, neoadjuvant chemotherapy 2 / 5; 2 undefined).
 Pre-treatment loudness difference E vs NE (31 patients with the breast host): null SD 0.292, MDE 0.727 = 1.02 SD of
 loudness (2,000 label shuffles): only an effect of about one SD is detectable.
+
+### A404 power note (2026-11-27; `a402_a405.py --stage power --stages a404 --jobs 2 --genome-jobs 1`, 104 min, peak 24 GB; `output/power_a402_a405/{a404_power,a404_companions,a404_companions_a}.csv`; no observed immune coupling; earlier attempts killed for memory, then a slim-table bug fixed in 2229560)
+**Patients (with a host).** (a) A387 normal-stroma host, 29 cohorts: myeloid 314 (178), T/NK 318 (179), B / plasma 285
+(167). (b) Tumour-stroma host, pooled P401 cancers, 50 cohorts: myeloid 455, T/NK 459, B / plasma 379 (all hosted).
+**Blind simulator** (|z| 0.5, 200 draws, null threshold = q95 at c 0.02): power at c 0.1 is 0.82-0.91 in (a) and
+0.95-1.00 in (b); MDE c 0.1 everywhere, on 14 genes and the core loop.
+**Companions on the real data (200 matched, 200 narrow responsive; 0 fit errors).** (a) normal-stroma host, myeloid:
+matched median / q95 0.043 / 0.220, responsive 0.196 / 0.377 (14 genes); core 0.051 / 0.248, 0.171 / 0.380. (b) tumour-
+stroma host (companions on the 17 GEO / Census / BIOKEY sources with genome-wide tables; the A388 cohorts are not in
+this comparator), myeloid: matched 0.187 / 0.510, responsive 0.377 / 0.606 (14 genes); core 0.257 / 0.588, 0.345 /
+0.588. T/NK and B / plasma similar (`a404_power.csv`).
+**Reading (before scoring).** The simulator is not the binding limit; the companion bar is: H404.1 needs a myeloid coupling
+above 0.38 (responsive q95), H404.2 above 0.61. In tumours non-clock gene sets already couple immune cells to the stroma
+at 0.19-0.39 (medians), the shared sample state that A401 met for cancer cells. A fail of H404.2 is therefore expected
+unless myeloid coupling is far above that of the A401 cancer cells; it will be reported with the companion medians, not
+as "decoupled". Decision: both scored as registered.
