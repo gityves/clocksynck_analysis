@@ -10135,3 +10135,18 @@ G2M split within type, 2,000 permutations, 200 matched and 200 responsive pseudo
   is not a general property of proliferating tumours: it is a TCGA result carried by cancer types CPTAC does not cover
   (bladder, breast, liver, prostate, thyroid). Claim 6.16 (ledger) drops to "TCGA, cancer-type dependent" (status B).
 <!-- src: paper/exploratory/A304_cancer_gain_departure/output/a304r/{power,tests,per_type,companions,core,purity}.csv; output/score/per_cancer.csv -->
+
+## A402c (run 2026-11-27; POST HOC, DESCRIPTIVE; one run, 10.7 min): the single-cell tumour-stroma time reference has reliability 0.70 (phase error about 1.8 h); A402b could detect a 2.8-fold composition rhythm (power 0.92-0.96) but only about two in three 2-fold rhythms: its null is "no rhythm of about 3-fold", not "no rhythm"
+- **R1 (20 gene-half splits per cancer, 574 hosted patients):** split-half rho 0.546 pooled; full-host reliability 0.70
+  (BRCA 0.59, OV 0.62, PAAD 0.63, PRAD 0.66, LUAD 0.71, COAD 0.76, ESCA 0.79, STAD 0.79, THCA 0.83, KIRC 0.85); approximate
+  phase error SD 1.77 h pooled (1.13 h KIRC to 2.25 h BRCA).
+- **S1 (A402b statistic, primary set, 200 replicates, p < 0.05 only; the companion condition is not simulated):**
+  | readout | fold peak-to-trough | power, ceiling | power, measured error |
+  |---|---|---|---|
+  | T/NK share (287) | 1.19 / 1.41 / 2.0 / 2.83 | 0.11 / 0.35 / 0.80 / 0.98 | 0.13 / 0.23 / 0.72 / 0.96 |
+  | myeloid share (286) | same | 0.11 / 0.30 / 0.81 / 0.98 | 0.08 / 0.25 / 0.69 / 0.92 |
+- **Reading.** The reference noise costs little at this size (2-fold: 0.80 -> 0.72); the limit is the number of patients
+  and the between-patient spread of the share. A402b's null excludes composition rhythms of about 3-fold peak-to-trough
+  against the stroma clock phase; a 2-fold rhythm would be missed about one time in three; rhythms of 1.4-fold or less are
+  not readable. The bulk breast time reference (A146 addendum 1: 1.9 h error on a 10 h window) is the weaker of the two.
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/a402c/{r1,r1_splits,s1}.csv -->
