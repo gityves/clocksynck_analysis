@@ -13138,3 +13138,20 @@ Design: 8 types, 713 pairs (LUAD 215, CCRCC 151, LSCC 96, SKCM 66, HNSCC 61, PDA
 500 replicates x 500 permutations: type I 0.044 (gain), 0.064 (departure); power of the gain readout 0.402 / 0.908 /
 **0.970** / 0.998 at k_G 0.85 / 0.7 / **0.63** / 0.5; departure 0.982 / 1.000 at k_D 1.5 / 2. **H304r.1 is scored**
 (power 0.97 >= 0.8 at the TCGA ratio). Simulated means: Q_G -0.419 at 0.63 (SD 0.125).
+
+## A402c (2026-11-27, POST HOC, DESCRIPTIVE; synthesis item U3; NOT BLIND: A402b results known; BLIND for every split-half reliability): how precise is the single-cell tumour-stroma time reference, and what composition rhythm could A402b detect?
+**Data and readouts** as A402b (543 patients, 12 P401 cancers, tumour-stroma host per cancer; T/NK and myeloid log2 shares;
+primary set = cohorts outside the A227 list).
+- **R1 (reliability of the host state).** Per cancer, 20 balanced splits of the 14 genes into halves spanning the plane
+  (`clocksync.deviation.split_genes`, seed [4023, cancer]); the host refitted on each half (same anchors and strata);
+  split-half complex correlation rho of the two half-host states (centred within stratum); full-host reliability by
+  Spearman-Brown, rel = 2 rho / (1 + rho); approximate phase error SD of the full host, (12 / pi) sqrt((1 - rel) / (2 rel))
+  h at the typical radius. Median over splits, patient-weighted pooling over cancers.
+- **S1 (detectable rhythm).** On the real A402b units: y replaced by y permuted within cohort plus A cos(phi_true - phi_0)
+  (phi_0 uniform per replicate), A = 0.125, 0.25, 0.5, 0.75 log2 (peak-to-trough 1.19, 1.41, 2.0, 2.83-fold). Two references:
+  (a) ceiling: phi_true = the observed host phase; (b) measured error: phi_true = observed phase + a normal error of the
+  R1 phase SD of the cancer. Statistic and null as A402b (pooled r, 1,000 shared within-cohort permutations); power =
+  share of 200 replicates with p < 0.05. Reported: the amplitude with power >= 0.8 per readout and reference.
+- **Reading.** If (b) detects a 2-fold rhythm, A402b's null bounds composition rhythms of that size; if not, A402b says
+  "unreadable at the mouse scale", not "absent".
+**Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a402c.py`; output `output/a402c/{r1,s1}.csv`.
