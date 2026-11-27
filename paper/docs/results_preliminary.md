@@ -10096,3 +10096,23 @@ stroma of all 12 cancers, each fitted per cancer.
   about 0.32), and the myeloid value is high in that range but not beyond it: the shared hour is not shown to be
   clock-specific (pair-phase rule), and A402b's reading stands (no composition-phase relation beyond companions).
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/a402b/{agreement_companions,agreement_companion_sets}.csv -->
+
+## A146 addendum 1 (run 2026-11-27; POST HOC, DESCRIPTIVE; one run, 33 s, A146 part 1 reproduced first): the internal-time null of A146 is what the estimator's error predicts: "not decided: estimate precision"; the error carries no program, content or subtype structure
+- **Calibration:** est_day = 3.43 + 0.59 x recorded + e, residual SD 1.86 h (window 08-18 h): the estimate is compressed
+  towards midday and its error is close to the spread of the surgery hours.
+- **E1 (tumour, 10,000 noise injections):** if the programs follow recorded time (S 1.339) and are read through this
+  estimator, S_internal is expected at 0.269 (90 % -0.317 to 0.844); observed -0.056 sits at the 18th percentile (p 0.18).
+  Without compression (recorded + permuted error): 0.345 (-0.164 to 0.849), observed at the 9.9th percentile. So the
+  internal - recorded gap of A146 (-1.39) is mostly the loss expected from the estimate: the A146 part 1 remark ("the
+  H146.1 MDE was below the H146.2 effect, so this is not only power") assumed an unattenuated effect and is withdrawn.
+- **E1 (normal tissue, P2-P10):** the observed internal-time S (1.031) is above what recorded-time programs would give
+  through the estimator (0.405, 90 % -0.239 to 1.070; 94th percentile): adjacent normal programs follow the estimate at
+  least as well as the hour (descriptive; the estimate is built from the same libraries' clock genes).
+- **E2:** the residual e correlates with no tumour program (|Spearman| <= 0.16, all p >= 0.30), nor with stromal (-0.03)
+  or immune content (0.13), nor subtype (Kruskal-Wallis p 0.52): no sign of a structured error cancelling the effect.
+- **Reading:** A146 cannot tell whether the tumour programs follow the patient's internal time or the hour of surgery:
+  with a 1.9 h estimation error on a 10 h window, even programs that follow the hour exactly would show a near-null
+  internal-time statistic. The recorded-time result (H146.2) stands; the "hospital clock, not internal time" contrast
+  is downgraded to "not decided: estimate precision". The same applies in spirit to the single-cell internal-time nulls
+  (A146 part 2, A246, A402b), whose time reference is also a noisy per-patient estimate.
+<!-- src: paper/exploratory/A146_tme_time/output/{addendum1_e1,addendum1_e2}.csv -->
