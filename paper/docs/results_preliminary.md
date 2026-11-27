@@ -10083,3 +10083,16 @@ stress-responsive pseudo-hosts per cancer (A403 sets).
   state is strongly organised by the clock phase (expected for rhythmic GC targets) and absorbs the weak T/NK lean, not
   the myeloid one. Treg markers lead among T/NK subtypes, below companions.
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/a402b/{power,tests,d1_cancer,d1_agreement,d2,d3}.csv -->
+
+## A402b addendum 1 (run 2026-11-27; POST HOC, DESCRIPTIVE; one run, 15 min): the myeloid share's shared peak hour across cancers is not clock-specific: inside the matched gene sets (92.5th percentile new patients, 86.5th all)
+Common-axis companions: 200 matched and 200 stress-responsive pseudo-waveforms drawn once from 11,116 genes expressed in the
+stroma of all 12 cancers, each fitted per cancer.
+- **Myeloid share:** agreement 0.704 (new) vs matched median 0.362, q95 0.747 (92.5th percentile); above the responsive q95
+  (0.559; 100th). All patients 0.681 vs matched q95 0.789 (86.5th), responsive q95 0.738 (88.5th).
+- **T/NK share:** 0.671 (new; 81st / 89th percentile), 0.389 (all; 53rd / 60.5th).
+- **Stromal GC score:** 0.712 (new) and 0.848 (all), inside both families (80.5th / 26th and 91.5th / 38th); the responsive
+  sets, which contain GC targets, agree across cancers more (medians 0.876 / 0.895).
+- **Reading:** matched gene sets also give a shared phase across cancers (medians 0.36-0.40 against the permutation null of
+  about 0.32), and the myeloid value is high in that range but not beyond it: the shared hour is not shown to be
+  clock-specific (pair-phase rule), and A402b's reading stands (no composition-phase relation beyond companions).
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/a402b/{agreement_companions,agreement_companion_sets}.csv -->
