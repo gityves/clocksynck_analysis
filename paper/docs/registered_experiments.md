@@ -13239,3 +13239,7 @@ the malignant pseudobulk). Covariates as A410.
 **Reading.** Pass: where cancer cells keep time, proliferating ones keep less of it (a cell-level counterpart of A304).
 Fail with power: cancer-cell participation does not follow proliferation at this size.
 **Code:** `a410.py --x prolif` (A410 script, x switched); output `output/a411/`.
+
+### A410 power note (2026-11-27; `a410.py --stage power`, 10 min, peak 22 GB; `output/a410/{power,programs}.csv`; shuffles of x only)
+372 patients in the 7 cancers (x in 371); 365 in 33 cohorts enter the slope. Null mean 0.002, SD 0.057, **MDE 0.141 <=
+0.20: H410.1 is scored.**
