@@ -10298,3 +10298,46 @@ Deota 2023, 48 mice, 16 peripheral tissues, V2 = within ZT x arm cells; mice per
   A385b-d).
 - Code: `exploratory/A400_mouse_person/scripts/a406.py --stage score`.
 <!-- src: paper/exploratory/A400_mouse_person/output/{d406_scores,d406_arms,d406_sim,d406_gates,d406_companions}.csv -->
+
+## A413 power note (2026-11-28; one run, 57 min, peak 1.7 GB; counts, companion null and injection only, no real clock-output correlation): decidable at full inheritance (power 1.00), blind to half inheritance (0.00)
+
+| item | value |
+|---|---|
+| organs passing, clock (baboon-fitted waveform, 14 genes) | 33 of 35 |
+| output sets with >= 15 organs jointly passing with the clock | 102 of 200 (median 15 joint organs) |
+| companions (200 pseudo-clocks): rho_med median / q05 / q95 | -0.028 / -0.267 / **0.248** |
+| injection, full inheritance: rho_med median (q05), power | 0.300 (0.292), **1.00** |
+| injection, half inheritance | 0.158 (0.149), 0.00 |
+| injection, none (calibration) | 0.000 (-0.010), 0.00 |
+
+- Gate (power >= 0.8 at full inheritance) passes: H413.1 is scored. The power is a step: outputs' own residuals are
+  large against the clock's local departure, so only an inheritance near 1 (about 0.8 or more) is detectable. A fail
+  therefore excludes full inheritance only, not a partial one.
+- Implementation beyond the registration: leave-one-out mean over the animal's other passing organs of each set;
+  per-organ complex RMS standardisation; pseudo-clocks use the clock's passing organs and are divided by the clock's
+  zhat; injected departure unstandardised; the A407 sets and permutations ([407, 2]) reused. Code: `a413.py` (22c68e6).
+<!-- src: paper/exploratory/A395_baboon_timed_gain/output/a413/{power,power_injection,companions}.csv -->
+
+## A413 (scored 2026-11-28; BLIND for every clock-output departure correlation; one scoring run, 81 s): baboon output programmes do not follow their organ clock's departure beyond library-level noise (H413.1 FAIL: rho_med 0.138, at the 80th percentile of pseudo-clocks, q95 0.248); full inheritance is excluded, a partial one is not
+
+| readout (102 output sets) | value | reference |
+|---|---|---|
+| **H413.1 rho_med, clock local departure vs outputs'** | **0.138** | companions q95 0.248 (20 % of pseudo-clocks >= the clock); permutation p 0.001 |
+| phase part (Im) / amplitude part (Re) | 0.187 / 0.078 | no companion (descriptive) |
+| shared part (animal means, 12 animals) | 0.129 | descriptive |
+| core loop (PER1, PER2, NR1D1 dropped) | 0.282 | random 3-gene drops: median 0.117, q05 0.005 (q95 not written) |
+
+- **H413.1 fails** on the companion condition. The clock's local departure does correlate with the outputs' (p 0.001
+  against shuffling animals within organ), but expression-matched non-rhythmic genes read at the clock positions
+  correlate as much (median -0.03, q95 0.25; 20 % at or above the clock): sample-level variation shared by any genes
+  of one library is enough. With the power note's step (power 1.00 at full inheritance, 0.00 at half), this excludes
+  outputs taking up the clock's whole local departure; a partial inheritance is not decided.
+- **Reading (registered):** in this design, a baboon organ's outputs do not visibly carry its own clock's departure
+  from clock time; with A261 (mouse), consistent with outputs following systemic signals or their own noise, not shown
+  here. A407's amplified output noise is therefore not traced to the local clock.
+- Descriptive: the phase part leads (0.187 vs 0.078). The core-loop value (0.282) is higher than the 14-gene one;
+  no core companion and no upper drop quantile were computed, so by the gene-drop rule: "not decided: precision or the
+  removed genes".
+  The "by phase bin" readout is degenerate (every set's modal bin is 0, as matched to the clock's dominant bin).
+- Code: `exploratory/A395_baboon_timed_gain/scripts/a413.py --stage score`.
+<!-- src: paper/exploratory/A395_baboon_timed_gain/output/a413/{tests,companions,power}.csv -->
