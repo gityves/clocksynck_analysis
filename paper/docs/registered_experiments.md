@@ -13062,6 +13062,15 @@ and the simulated SE of the pooled f <= 0.15; otherwise descriptive.
 this test cannot separate. Single-cell clock counts are sparse (a few UMI per cell); the read-thinning control carries
 that. Cells of one class in a sample are a finite population (sampling without replacement: n <= 400 of usually more).
 **Code.** `paper/exploratory/A408_cell_sampling/scripts/a408.py --stage power | score`. Aggregates only.
+**Note 1 (2026-11-27, before any thinned psi; from unit counts only).** (1) Only HLCA (`lung_hlca`) qualifies: the other
+per-cell files have ARNTL = 0 in every cell or no target classes, and the rest have no local per-cell file. A408 is a
+one-atlas test (lung); the pooled estimates pool classes within HLCA. (2) The per-cell files hold only the clock genes;
+the companions' per-cell counts are fetched by a CELLxGENE Census query (user, 2026-11-27): the HLCA dataset, the 50
+companion sets' genes only, cells of the target classes of the A17 healthy donors; logged in a `PROVENANCE.md` (Census
+version, query, sha256 of the saved file). (3) Targets: fibroblast, endothelial and mural classes, parenchyma and
+epithelium; myeloid and lymphocytes are not targets. (4) Cells enter the 400-cell pools under the A17 lung class rule and
+the A17 donor / assay filters, so that the thinned target and the unthinned host come from the same cells as the A17
+fits; unit counts are recomputed under these filters in the power stage.
 
 ### A402b addendum 1 (2026-11-27, POST HOC, DESCRIPTIVE; after A402b was scored: myeloid phase agreement 0.704 / 0.681 known, without companion): is the shared phase across cancers clock-specific?
 Same table, readouts, per-cancer pooled cross products and agreement A = |sum_c n_c c_c| / sum_c n_c |c_c| as D1. Companions
