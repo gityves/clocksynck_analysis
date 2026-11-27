@@ -12943,3 +12943,13 @@ reported as such. The phase-scatter slope is compared the same way (descriptive)
 **Limits.** Rhythmic outputs receive the clock's own signal and systemic cues, so they are not independent of the clock;
 the pool is selected on the same animals (rhythm, not own noise, is selected); 12 animals, one per time point.
 **Code.** `paper/exploratory/A395_baboon_timed_gain/scripts/a407.py --stage power | score`. Aggregates only.
+**Note 1 (2026-11-27, before any companion or clock value; a design change after seeing pool counts only).** The
+registered pool rule is unusable: with 12 animals per tissue, 20 of 35 peripheral tissues have no gene at BH q < 0.05,
+only 2 genes pass in >= 9 tissues, and the clock genes themselves are rhythmic in 0-9 tissues. Replacement rule: per
+gene, the per-tissue cosinor p values (F test, 2 and n - 3 df) are combined over the 35 peripheral tissues by Fisher's
+method; BH over genes; the pool is q < 0.05 with the registered expression criterion and exclusions. The combined p of
+each clock gene under the same rule is reported (a sanity check that the rule admits the clock). If a phase-bin x
+tercile cell holds fewer than 10 pool genes, the terciles of that bin are merged (reported). Other implementation
+choices (log fraction log(max(count, 0.5) / depth) on the A263 baboon genome-wide rows; clock genes' bins from the same
+cosinor; pooled phase over all 35 tissues; one ZT-permutation sequence [407, 2] shared by sets and clock; waveform
+fitted on all peripheral rows) are as in the script header.
