@@ -9873,3 +9873,53 @@ THCA; exact one-sided Spearman, critical rho 0.643). 14 genes decide (A401 note 
   core loop agrees in direction (0.42 on the 8, 0.95 on the 4 passing on the core) but is not tested.
 - Code: `exploratory/A401_cancer_timekeeping/scripts/a401.py --stage score`.
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/score/{h401,h401_leave_one_cancer_out,d401,per_cancer}.csv -->
+
+## A385d (run 2026-11-27; DESCRIPTIVE CHECK; BLIND for every simulated leverage and every sheep leverage under a baboon or mouse waveform; one run, 3.5 h, after check runs that printed only the A385b reproduction): the A385b design protects the sheep value from a waveform mismatch (a mismatched waveform with no person factor gives at most 0.18 on 14 genes at working-hours windows), and the sheep 14-gene leverage does not depend on the waveform (human 0.558, baboon 0.596, mouse 0.586, all above both companion q95s); the core loop stays not beyond companions under every waveform, and the simulation shows it has little sensitivity at working-hours windows
+
+**Part 1, simulation of the sheep design** (every animal; D1 reads the 4 projects with >= 30 animals; median and
+10-90 % of 10 replicates; read with the human waveform). T0 = truth is the human waveform; T1 = the A400c mouse pattern
+(mismatch); person factor = SD of log amplitude across animals.
+
+| truth | person SD | readout | W 4 h | W 8 h | W 12 h | W 24 h |
+|---|---|---|---|---|---|---|
+| T0 | 0 | 14 genes | -0.02 | 0.12 | 0.20 (0.12-0.27) | 0.10 |
+| T1 | 0 | 14 genes | 0.03 | 0.13 | **0.18 (0.13-0.23)** | 0.05 |
+| T0 | 0 | core | 0.00 | -0.02 | 0.05 | 0.04 |
+| T1 | 0 | core | 0.00 | 0.05 | 0.05 | 0.06 |
+| T0 | 0.25 | 14 genes | 0.02 | 0.28 | 0.39 | 0.40 |
+| T1 | 0.25 | 14 genes | 0.02 | 0.26 | 0.40 | 0.37 |
+| T0 | 0.25 | core | 0.02 | 0.04 | 0.07 | 0.24 |
+| T1 | 0.25 | core | 0.01 | 0.00 | 0.02 | 0.20 |
+
+- **Protection (registered reading):** with the mismatch and no person factor, the median stays below 0.2 at every
+  window up to 12 h (0.03 / 0.13 / 0.18); the design protects the sheep value. The 14-gene readout carries a small
+  time-spread artefact (up to about 0.2 median, 90 % 0.27) **with or without mismatch** (T0 gives the same): it does not
+  come from the waveform, and it is far below the sheep value (0.558) and the sheep companions' q95 (0.45-0.53).
+- **No masking by the mismatch** in this design: with a person factor, T1 reads as T0 (14 genes 0.40 against 0.39 at
+  12 h). The mouse masking (A400c) is not reproduced at the sheep design and the human amplitude scale.
+- **The core loop is nearly blind at working-hours windows:** a person factor of SD 0.25 gives a core median of 0.00-0.07
+  at W <= 12 h (0.20-0.24 only with whole-day sampling), against 0.26-0.40 on 14 genes. On a narrow arc, fewer genes and
+  the phase harmonics absorb most of the radius. Post hoc reading: the sheep core-loop fail (0.316, not beyond
+  companions) is not evidence that the sheep factor lacks the core loop; at this design the core readout has little
+  sensitivity. (A385b's power stage, calibrated on GTEx thinned, did not include a narrow sampling window.)
+
+**Part 2, waveform swap on the real sheep** (D1; sheep-permuted p within project, 1,000; companions 50 + 50 read with
+the same waveform; H companions: the A385c sets):
+
+| waveform | readout | leverage | p | matched / responsive q95 | above both |
+|---|---|---|---|---|---|
+| H human (A385b reproduced) | 14 genes | 0.558 | 0.001 | 0.528 / 0.448 | yes |
+| B baboon (timed fit) | 14 genes | **0.596** | 0.001 | 0.448 / 0.563 | yes |
+| Mo mouse (A400c Mf) | 14 genes | **0.586** | 0.001 | 0.584 / 0.419 | yes, at the matched line |
+| H | core | 0.316 | 0.001 | 0.623 / 0.381 | no |
+| B | core | 0.290 | 0.001 | 0.553 / 0.590 | no |
+| Mo | core | 0.357 | 0.001 | 0.656 / 0.461 | no |
+
+- **The sheep value does not depend on the waveform (registered reading):** 14 genes within +0.04 of 0.558 under both
+  timed animal waveforms, above both companion q95s each time (mouse at the matched line, 0.586 against 0.584). Core loop:
+  0.29-0.36, never beyond companions.
+- **Status of the sheep person factor:** a 14-gene shared clock loudness beyond companions, robust to the waveform and
+  not producible by a mismatch or a working-hours window in simulation; untimed (the true slaughter window is unknown).
+  The core loop is undecided, not negative.
+- Code: `exploratory/A385_sheep_person/scripts/a385d.py`.
+<!-- src: paper/exploratory/A385_sheep_person/output/{d_simulation,d_summary,d_leverages,d_waveforms}.csv -->
