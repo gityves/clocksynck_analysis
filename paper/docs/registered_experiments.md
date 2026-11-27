@@ -13009,3 +13009,10 @@ MDE <= 0.076 (the A229 T/NK excess); H402b.2 if MDE <= 0.053 (the A246 P8 excess
 - **D4 all patients** of the P401 cancers (A227 cohorts included): both shares, same statistics.
 Gene-drop rule: no core-loop readout is planned; 14 genes only.
 **Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a402b.py --stage power|score`; output `output/a402b/`.
+
+### A402b power note (2026-11-27; `a402b.py --stage power`, 13 min, peak 34 GB; `output/a402b/power.csv`; shuffled pairings only, no observed r)
+Table: 543 patients with the host and the slim readouts (379 in cohorts outside the A227 list). 2,000 shared within-cohort
+shuffles. Primary set: T/NK share 287 patients / 21 cohorts, null mean 0.236, SD 0.0295, **MDE 0.073 <= 0.076: H402b.1
+scored** (narrowly); myeloid share 286 / 21 (as the A402 P8 count), null SD 0.0298, **MDE 0.074 > 0.053: H402b.2
+descriptive**. All patients (descriptive): MDE 0.060 (T/NK, 436 / 41) and 0.061 (myeloid, 432 / 40). Holm runs over H402b.1
+alone.
