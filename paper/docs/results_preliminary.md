@@ -9923,3 +9923,15 @@ the same waveform; H companions: the A385c sets):
   The core loop is undecided, not negative.
 - Code: `exploratory/A385_sheep_person/scripts/a385d.py`.
 <!-- src: paper/exploratory/A385_sheep_person/output/{d_simulation,d_summary,d_leverages,d_waveforms}.csv -->
+
+## A402 (closed at the power stage 2026-11-27; not registered, not scored): a replication of A246 on the patients A246 did not have cannot reach the registered precision
+Power note: `registered_experiments.md` (A402-A405 power note, commit 2229560). Tumour-stroma host of the 12 P401 cancers;
+patients of cohorts outside the A227 list: 368 (P1-P3, 24 cohorts) and 274-295 (other programs, 17-21 cohorts).
+- **Decision (registered rule, omnibus MDE <= 0.43):** omnibus null SD 0.382, MDE 0.952: closed. No program value and no
+  omnibus value was computed. Per-program MDE 0.063-0.075 (r units).
+- **Why the rule could not be met:** the omnibus averages programs standardised by their own null SD, so its null SD (0.382
+  here, 0.340 in A246 on 73-169 patients per program) reflects the correlation between programs, not the number of
+  patients. A powered replication needs a criterion on the per-program r (a new amendment).
+- **Reading:** A246 stands as the tumour-microenvironment result (no clock-state organisation of the programs detected);
+  no replication on new patients.
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/power_a402_a405/a402_power.csv -->

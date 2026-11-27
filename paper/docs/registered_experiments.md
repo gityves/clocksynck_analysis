@@ -12840,3 +12840,30 @@ above 0.38 (responsive q95), H404.2 above 0.61. In tumours non-clock gene sets a
 at 0.19-0.39 (medians), the shared sample state that A401 met for cancer cells. A fail of H404.2 is therefore expected
 unless myeloid coupling is far above that of the A401 cancer cells; it will be reported with the companion medians, not
 as "decoupled". Decision: both scored as registered.
+
+### A403-A405 note 1 (2026-11-27, on the user's instruction "yes go ahead", after the power notes and before any target value): implementation of the scoring run
+Choices the registration does not fix, set before scoring. **Code:** `a402_a405.py --stage score` (one run; a smoke run first
+on readouts / immune donors / expansion labels shuffled, which prints no target value).
+- **A403.** Loudness and readouts as in the power stage (pre-treatment BIOKEY only). Adjustment: within each cohort, the
+  stratum-centred readout and loudness are both residualised on the number of stromal anchors and the log median stromal
+  depth (OLS, Frisch-Waugh), then z-scored; the pooled slope (patient weights) on these residuals is primary, the
+  unadjusted slope beside it. Permutations: the residualised readout shuffled within cohort (10,000; same seeds as the
+  power stage). Companions: the observed (residualised) readout against the loudness of each of 200 matched (seed [401,
+  0], as power) and 200 narrow responsive (seed [401, 1]) pseudo-hosts per cancer; H403.1 / H403.2 need the observed slope
+  outside the central 90 % of both families (H403.2, one-sided: below the 5 % quantile). Holm over H403.1 (two-sided p) and
+  H403.2 (one-sided p, slope < 0).
+- **A404.** 14 genes decide; core loop descriptive. Fit as A401: `fit(n_boot=500, n_perm=1000, gate=False, level=0.90,
+  attenuation="df")`, targets the three immune compartments; amplitude and offset from a second fit against the stroma
+  reference (fibroblast). H404.1: myeloid on the A387 normal-stroma table, p_coupling < 0.05 and coupling above both q95
+  of the power-stage companions (matched 0.220, responsive 0.377). H404.2: the pooled tumour-stroma table (50 cohorts),
+  p_coupling < 0.05 and, like for like, the myeloid coupling fitted on the 17 GEO / Census / BIOKEY sources (the companion
+  table) above both q95 (0.510, 0.606); the full-table coupling is also compared with them and reported. Holm over the two
+  p_coupling. Per cancer: n_boot 200, n_perm 200, descriptive.
+- **A405.** (1) Pre-treatment: loudness = A403 quantity; immune-hot score = A403 readout; cancer-cell coupling contribution
+  per patient = Re(m_i conj(b h_i)) / mean_j |m_j|^2, with m the malignant clock state (`clocksync.deviation.states`, 14
+  genes, centred within stratum), h the host state and b = sum m conj(h) / sum |h|^2 over the BRCA patients (the patient's
+  share of the cancer cells' host-explained variance). E vs NE: medians, 2,000 patient-bootstrap 90 % intervals, the
+  difference with its label-shuffle MDE. (2) Pre vs on: one host on the BRCA stroma table with the BIOKEY on-treatment
+  samples added as separate rows (`<patient>|On`, the patient's stratum); per patient change of loudness and of the
+  contribution (b from this joint host), OLS on cohort indicators and the log ratio of stromal depth (on / pre); the
+  depth-adjusted mean change overall, by expansion and E minus NE, with 2,000 patient-bootstrap 90 % intervals.
