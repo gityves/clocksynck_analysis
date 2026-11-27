@@ -172,7 +172,7 @@ def stage_score(args):
     from clocksync.paired import pseudo_waveforms
     wfs = [(f, j, w) for code, f in enumerate(("matched", "responsive"))
            for j, w in enumerate(pseudo_waveforms(lm, N_SET, np.random.default_rng([SEED, code]), BASE, f))]
-    cols = ["donor", "compartment", "stratum", "depth", "n_cells"]
+    cols = [c for c in ("donor", "compartment", "stratum", "depth", "n_cells") if c in G.columns]
     chunks = [wfs[i::args.jobs] for i in range(args.jobs)]
     res = Parallel(n_jobs=args.jobs)(delayed(comp_one)(G[cols + sorted({g for _, _, w in ch for g in w.genes} | set(BASE.genes))], ch)
                                      for ch in chunks)
