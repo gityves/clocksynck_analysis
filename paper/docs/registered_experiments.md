@@ -13016,3 +13016,49 @@ shuffles. Primary set: T/NK share 287 patients / 21 cohorts, null mean 0.236, SD
 scored** (narrowly); myeloid share 286 / 21 (as the A402 P8 count), null SD 0.0298, **MDE 0.074 > 0.053: H402b.2
 descriptive**. All patients (descriptive): MDE 0.060 (T/NK, 436 / 41) and 0.061 (myeloid, 432 / 40). Holm runs over H402b.1
 alone.
+
+## A408 (2026-11-27, on the user's instruction "okay, let's try this", after A407 (the timed own noise is clock-specific and does not grow with gain) and the user's remark that bulk signal comes from a population of cycling cells; staged: power (data rule, unit counts, read-thinning and simulation calibration; no clock thinning curve), then one scoring run; **NOT BLIND**: A17 / A293 atlas fits (class gains, coupling, psi at full size), A294b, A311, A395, A407; **BLIND**: every psi of a cell-thinned or read-thinned pseudobulk, every 1/n coefficient and share): is a class's own clock departure the sampling of its incoherent cells, or does it sit at a level above single cells?
+
+**Model (stated now).** A pseudobulk of n cells has clock state = shared part + tissue-level own part (common to the
+sample's cells) + the mean of the cells' incoherent parts. If cells are independent given the sample, psi(n) = psi_inf +
+s^2 / n, with s^2 the per-cell incoherent clock variance (for phase-scattered cells about A_cell^2 (1 - R^2) / 2).
+psi_inf is what subsampling cells cannot remove: a tissue-level input or units larger than one cell (patches, crypts,
+lobules) sampled at the biopsy level. If the own term were independent-cell sampling, bulk samples (millions of cells)
+would show none; GTEx shows one of constant size (A294b), so the question is which part dominates at the cell numbers
+of the atlases.
+**Data rule.** Healthy single-cell atlases of the A17 / A293 set with per-cell counts on disk (or rebuildable from local
+files) in which all 14 clock genes are present and ARNTL is non-zero; per atlas the A17 compartments (donor x class).
+A target class x atlas enters if >= 8 donors have >= 400 cells of the class and the host has >= 3 other compartments.
+Stromal-vascular classes (fibroblast, endothelial, mural) and parenchyma / epithelium are targets; lymphocytes are not
+(no readable clock, A281). The host is built from the full, unthinned pseudobulks of the other compartments.
+**Thinning.** Per target donor x class: 20 draws (seed [408, atlas, class, n, r]) of n in {25, 50, 100, 200, 400} cells
+without replacement, pseudobulked; the target compartment replaced by the thinned one, `Dataset.fit` as A17 (14 genes;
+core loop as a second readout), psi read for the target. **Read-thinning control:** the 400-cell pseudobulk binomially
+thinned to the depth of each n-cell draw (same cells, fewer counts), psi_reads(n). Cell-sampling part at n:
+Delta(n) = psi_cells(n) - psi_reads(n) (counting noise matched, so the model's measurement-noise correction cannot make
+it). **Companions:** 50 expression-matched gene sets (A263 rule, seed [408, 1]) through the same steps.
+**Estimands.** Per class x atlas, OLS of Delta(n) on 1 / n (through the origin): s^2 (clock) and the same for companions;
+share f = (s^2 / 400) / psi_cells(400): the part of the 400-cell own term that is cell sampling; plateau check: psi_cells
+at 200 vs 400 cells. Pooled over class x atlas with random effects (`clocksync.stats.meta`); 90 % intervals from donor
+bootstraps.
+**H408.1 (clock-specific incoherence).** Pooled clock s^2 above the q95 of the pooled companion s^2: the cells of a sample
+carry clock variance beyond matched genes that averages out as 1 / n.
+**H408.2 (level of the own term).** Pooled share f (clock minus companion-median share) with 90 % upper bound < 0.5: most
+of the own term at 400 cells is not independent-cell sampling.
+**Readings (stated now).** H408.2 passes: the own departure sits above single cells (a tissue-level input, or units larger
+than a cell sampled at the biopsy level), consistent with a constant own term in bulk; independent-cell sampling is
+excluded as its main source. H408.2 fails (f >= 0.5, psi still falling at 400 cells): at atlas sizes the own term is
+mostly cell sampling, so pseudobulk psi and bulk psi are different quantities; the bulk own term then needs units larger
+than cells (not testable by dissociated cells). H408.1 is reported either way: a pass says cells within a sample are not
+all in phase (R < 1) on the clock specifically; a fail with H408.2 passing is the "tissue-level" outcome with no
+detectable incoherence.
+**Descriptive.** psi_inf against class gain across class x atlas (the A407 slope at cell-class level); core loop.
+**Power stage (committed before scoring).** Entering class x atlas units and donors; a simulation calibrating the
+estimator: on the real 400-cell pseudobulks, per-cell clock states replaced by Poisson counts from cells with phase
+scatter giving s^2 at 0, 0.5 and 1 times psi_cells(400) of the matched companions (no real clock psi used), read
+through the same pipeline: bias of f and its donor-bootstrap SE. Decidable for H408.2 if >= 3 class x atlas units enter
+and the simulated SE of the pooled f <= 0.15; otherwise descriptive.
+**Limits.** Dissociation destroys spatial units: psi_inf includes biopsy-level units and every tissue-level input, which
+this test cannot separate. Single-cell clock counts are sparse (a few UMI per cell); the read-thinning control carries
+that. Cells of one class in a sample are a finite population (sampling without replacement: n <= 400 of usually more).
+**Code.** `paper/exploratory/A408_cell_sampling/scripts/a408.py --stage power | score`. Aggregates only.
