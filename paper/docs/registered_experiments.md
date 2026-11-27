@@ -13243,3 +13243,7 @@ Fail with power: cancer-cell participation does not follow proliferation at this
 ### A410 power note (2026-11-27; `a410.py --stage power`, 10 min, peak 22 GB; `output/a410/{power,programs}.csv`; shuffles of x only)
 372 patients in the 7 cancers (x in 371); 365 in 33 cohorts enter the slope. Null mean 0.002, SD 0.057, **MDE 0.141 <=
 0.20: H410.1 is scored.**
+
+### A411 power note (2026-11-27; `a411.py --stage power`, 11 min, peak 25 GB; `output/a411/{power,programs}.csv`; shuffles of x only)
+574 patients in the 12 cancers (x in 573); 560 in 47 cohorts enter the slope. Null mean -0.001, SD 0.044, **MDE 0.110 <=
+0.20: H411.1 is scored.**
