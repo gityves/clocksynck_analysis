@@ -54,7 +54,8 @@ from clocksync.config import limit_threads  # noqa: E402
 from clocksync.genes import canonical  # noqa: E402
 
 OUT = U.OUT / "power_a402_a405"
-CACHE = U.OUT / "cache_a402_a405"
+import os  # noqa: E402
+CACHE = U.OUT / os.environ.get("A402_CACHE", "cache_a402_a405")  # a402b: own cache with extra genes (env reaches the loky workers)
 MALT, META, BASE, CORE, ANCH = U.MALT, U.META, U.BASE, U.CORE, U.ANCH
 IMMUNE_HOT = ["CD8A", "GZMB", "IFNG", "CXCL9", "CXCL10", "PRF1"]
 IMMUNE = ["tumour:myeloid", "tumour:T_NK", "tumour:B_plasma"]
@@ -87,6 +88,7 @@ def g2m_genes():
 
 G2M = g2m_genes()
 NEEDED = set(canonical(g) for g in BASE.genes) | {g for v in P246.GENES.values() for g in v} | set(IMMUNE_HOT) | set(G2M)
+NEEDED |= {canonical(g) for g in os.environ.get("A402_EXTRA_GENES", "").split(",") if g}  # a402b: T/NK subtype markers
 
 
 # ---- slim tables of all tumour compartments ------------------------------------------------------------------------------
