@@ -13095,3 +13095,20 @@ output `output/a402b/agreement_companions.csv`.
   DCN, LUM) and immune (PTPRC) content scores of the tumour library (mean z of log2(TPM + 1)), and with subtype (Kruskal-
   Wallis); permutation p (10,000), no correction (descriptive).
 **Code:** `paper/exploratory/A146_tme_time/scripts/addendum1_noise.py` (seconds); output `output/addendum1_{e1,e2}.csv`.
+
+## A403c (2026-11-27, POST HOC, DESCRIPTIVE CHECK; synthesis item U1; NOT BLIND: A403 / A403b slopes known, A402b myeloid-phase lean known; BLIND for every loudness-phase relation and every phase-residualised slope): is the colder-louder lead a phase effect?
+**Why.** Loudness is the log radius of the tumour-stroma host read with the GTEx waveform. If the waveform does not fit
+tumour stroma, the radius depends on the phase (an elliptic or off-centre clock state, A400c), and a readout that varies
+with phase (the myeloid share leans with it, A402b) would then also vary with loudness.
+**Data, host, loudness, readouts, covariates** as A403 / A403b (12 P401 cancers, 529 patients; immune-hot, myeloid and
+T/NK shares, proliferation; n_anchor and log depth).
+- **C1 (phase dependence of loudness).** Per cancer, OLS of the stratum-centred loudness on stratum-centred cos phi, sin
+  phi, cos 2 phi, sin 2 phi (phi = arg of the host state): R^2 per cancer and patient-weighted pooled; the same R^2 for
+  the 200 matched and 200 responsive pseudo-hosts of each cancer (A403 sets; their own radius and phase) as reference.
+- **C2 (slopes on phase-free loudness).** Loudness replaced by its C1 residual (pseudo-hosts likewise); the A403b
+  statistics (pooled within-cohort slope, 2,000 bootstraps, 10,000 permutations, companion q05 / q95, per cancer, I^2)
+  for the four readouts.
+- **Reading.** The immune-hot slope on phase-free loudness within its bootstrap interval of -0.102 and beyond the
+  companions: the lead is not a phase effect. Shrunk towards 0 by more than half: the lead is largely the phase seen
+  through the radius. In between: partly.
+**Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a403c.py`; output `output/a403c/{c1,c2}.csv`.
