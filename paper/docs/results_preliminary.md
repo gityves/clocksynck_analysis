@@ -10170,3 +10170,18 @@ replicates per cell. Companion q95s are the real ones (E, E2: this amendment; Mx
 - Single null replicates reach 0.46-0.51 under every read, so one real value near 0.5 would not be decisive by itself
   without the permutation and companion tests.
 <!-- src: paper/exploratory/A400_mouse_person/output/{d406_gates,d406_sim,d406_companions}.csv; A400c: output/c_summary.csv -->
+
+## A403c (run 2026-11-27; POST HOC, DESCRIPTIVE CHECK; one run, 75 min; A403 reproduced first): the colder-louder lead is not a phase effect: on phase-free loudness the immune-hot slope is -0.126 (p 0.006), beyond both companion families; the myeloid-share link weakens (-0.083 -> -0.062, p 0.20), so part of it travelled with the phase
+- **C1 (phase dependence of loudness):** phase harmonics explain 0.215 of the within-stratum loudness variance (pooled,
+  543 patients), at the 4th percentile of the matched pseudo-hosts (median 0.284) and 4.5th of the responsive: the clock's
+  radius depends on phase less than a random gene set's. Per cancer 0.009 (lung_mixed) to 0.498 (KIRC); only COAD is high
+  (0.450, 92nd percentile).
+- **C2 (A403b statistics, pooled; raw -> phase-free loudness):** immune-hot -0.102 (-0.183 to -0.008, p 0.024) -> **-0.126
+  (-0.218 to -0.033, p 0.006)**, below the matched q05 (-0.095) and the responsive q05 (-0.106), I^2 0.03; myeloid share
+  -0.083 (p 0.087) -> -0.062 (-0.180 to 0.014, p 0.20), I^2 0.57; T/NK +0.016 -> +0.006; proliferation -0.022 -> -0.057
+  (p 0.21).
+- **Reading (registered):** the immune-hot slope on phase-free loudness lies within the bootstrap interval of -0.102 and
+  beyond the companions: the lead is not a phase effect, and removing the phase makes it more consistent across cancers.
+  The myeloid share, which leans with the clock phase (A402b), loses about a quarter of its slope: the composition part
+  of the lead partly travels with the phase. Post hoc throughout; the registered A403 verdict (H403.1 FAIL at Holm) stands.
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/a403c/{c1,c2}.csv -->
