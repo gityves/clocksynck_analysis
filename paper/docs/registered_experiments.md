@@ -12972,3 +12972,40 @@ descriptive.
   the donor's summed stromal pseudobulk (and in fibroblasts only); its slope on loudness, pooled and per cancer, with the
   matched / responsive companion loudness ranges. Composition caveat: immune infiltration does not enter this score.
 **Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a403b.py`; output `output/a403b/`.
+
+## A402b (2026-11-27; replaces the A402 decision rule, on the user's go-ahead; NOT BLIND to: A229 (T/NK share follows the tumour endothelial state, r 0.378 vs null 0.302, implied peak 4.8 h), A246 (myeloid share P8 on the endothelial state 0.360 vs 0.307, p 0.078), A403 / A403b (loudness against T/NK and myeloid shares on these patients: amplitude, not phase), the A402 power nulls (P8 MDE 0.072 on the new patients); BLIND for every share-phase relation on the tumour-stroma host): tumour composition and the phase of the tumour's internal time
+**Why a new rule.** A402's omnibus criterion could not be met at any size (A402 power note). A402b judges programs one by
+one, in r units, and narrows the question to the two immune shares.
+**Data, host, statistic.** As A402: 12 P401 cancers, tumour-stroma host per cancer (pooled stroma, 14 genes), state z =
+host x + iy; r = |sum y conj z| / sqrt(sum y^2 sum |z|^2) per cohort over patients centred within cohort x chemistry,
+pooled with patient weights (A229 / A246); null: y-state pairing shuffled within cohort, 10,000 permutations, one shared
+ordering per cohort for every readout. Effect = r minus its null mean ("excess"). Primary set: patients of cohorts
+outside the A227 list (new relative to A229 / A246).
+**Readouts.** T/NK share: log share of `tumour:T_NK` cells among all cells of the tumour sample (N >= 100; A229 H229.5).
+Myeloid share: A246 P8 (log2 myeloid share; r is scale-free).
+**Companions.** The same r with z from 200 matched and 200 stress-responsive pseudo-hosts per cancer (A403 sets, seeds
+[401, 0] / [401, 1]), pooled as the observed.
+**Power stage (nulls only, before any observed r).** MDE = 2.49 x pooled null SD on the primary set. H402b.1 is scored if
+MDE <= 0.076 (the A229 T/NK excess); H402b.2 if MDE <= 0.053 (the A246 P8 excess); otherwise descriptive. (A402 gives P8
+0.072 on these patients: H402b.2 is expected to be descriptive.)
+- **H402b.1 (T/NK share, replication of A229 H229.5 on new patients and a new host):** permutation p < 0.05 (Holm over the
+  scored hypotheses) and r above the matched-pseudo-host q95. The responsive q95 is reported beside it: above matched but
+  not above responsive reads "follows the stroma clock phase, not separable from a body-level stress / glucocorticoid
+  signal".
+- **H402b.2 (myeloid share):** same rules.
+**Descriptive (no test decides).**
+- **D1 same phase everywhere?** Per cancer: excess, permutation p, implied peak hour (A229 `peak_h` of the pooled cross
+  product) with a 90 % arc from 2,000 within-cohort patient bootstraps. Phase agreement across cancers A = |sum_c C_c| /
+  sum_c |C_c| (C_c the cancer's pooled cross product), its null from the shared permutations. A common phase is what a
+  body-level driver (the clock or glucocorticoids) predicts; cancer-specific phases point to local organisation. The T/NK
+  implied peak beside A229's 4.8 h (different state: stroma host vs endothelium, both on the waveform axis).
+- **D2 glucocorticoids.** Stromal glucocorticoid-target score (clocksync `GC_TARGETS`, mean within-cohort z of log2 CPM in
+  the summed tumour-stroma pseudobulk): (a) its r against the host state; (b) the shares' r after regressing the GC score
+  out within cohort; (c) within-cohort correlation of each share with the GC score. Caveat (CLAUDE.md): regression removes
+  a linear effect on the share, not a GC effect on the host's rhythm.
+- **D3 T/NK subtypes (marker composition inside the T/NK pseudobulk, not cell counts).** Scores (mean within-cohort z of
+  log2 CPM in `tumour:T_NK`): CD8 (CD8A, CD8B), CD4 helper (CD4, CD40LG), Treg (FOXP3, IL2RA), NK (KLRF1, NCR1, NCAM1); r
+  against the host state with companions; primary set and all patients.
+- **D4 all patients** of the P401 cancers (A227 cohorts included): both shares, same statistics.
+Gene-drop rule: no core-loop readout is planned; 14 genes only.
+**Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a402b.py --stage power|score`; output `output/a402b/`.
