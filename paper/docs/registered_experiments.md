@@ -13627,3 +13627,22 @@ composition (purer tumours carry less stroma, which carries the time); the proli
 section 1.2 is restated as composition. Both fail: not decided at this size; the proliferation statement stays descriptive.
 **Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A304_cancer_gain_departure/scripts/a424.py`;
 output `output/a424/`.
+
+### A424 power note and erratum (2026-11-28; `a424.py --stage power --jobs 4`, 56 s, peak 0.8 GB; `output/a424/power/{coverage,corr,power,design}.csv`; no clock statistic of the real pairs)
+**Erratum to the Concern (before any observed slope).** The A127 `purity` column is a stromal / immune marker score, high =
+LOW purity (`figure_5/.../_shared.py` docstring); it correlates with ABSOLUTE purity at -0.27 (THCA) to -0.75 (KIRP). A304's
+`purity_imbalance.csv` therefore says that high-proliferation arms carried MORE stromal / immune expression in 8 of 10
+cancers, not that they were purer. Against ABSOLUTE purity, proliferation is nearly independent within cancer (pooled r
+0.037; BLCA 0.44, the others -0.12 to 0.16; `corr.csv`), while the expression proxy correlates with proliferation at
+0.25 to 0.39 in COAD, KIRC, KIRP, LIHC, PRAD and THCA: the G2M score partly tracks infiltrate expression. The registered
+test (H424.1 / H424.2 with ABSOLUTE) is unchanged and still answers whether DNA purity explains the loss.
+**Coverage.** ABSOLUTE for 472 of 517 pairs (0.913 >= 0.80: ABSOLUTE used); the 45 pairs without it leave every
+regression (implementation choice). Per cancer 0.78 (COAD) to 1.00.
+**Power** (1,000 replicates x 1,000 permutations; `power.csv`). Type I error at 0.05: H424.1 0.049, H424.2 0.054. H424.1 at
+the rule point (k_G 0.5): 0.999 at alpha 0.025 (0.861 at k_G 0.7); H424.2 under the purity-only scenario: 0.994. The confound
+is small: under purity only, H424.1 without the adjustment rejects in 0.068 (0.055 adjusted). **Both scored.**
+**Added before scoring (descriptive (6)).** Because the expression proxy, not DNA purity, follows proliferation: the H424.1
+model with the A127 stromal / immune score as covariate instead of ABSOLUTE, and with both; same permutations and matched
+sets. A proliferation slope that survives ABSOLUTE but shrinks under the expression score reads "the gain loss follows
+infiltrate expression captured by the G2M score", not composition by DNA. CPTAC-3 purity (descriptive (5)): minus the mean
+of the stromal and immune scores (`a304r.gene_score`), z within type.
