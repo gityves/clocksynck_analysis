@@ -537,7 +537,7 @@ The paper has a systems mechanism, tested in independent examples:
 | a fast signal layer read by every cell, a clock layer in structural cells | A275, A279, A281-A287, A321 | holds |
 | loudness follows drive strength, conflict and composition | A315 / A335 (intensive care), A322 and A257 (conflicting drives), A304 (proliferation), A295 (composition, small) | holds as a pattern; the cell-level cause is undetermined (A334) |
 | quantitative oscillator model | A310, A311, A312, A323 | failed or much smaller than predicted (Supplement) |
-| gain is uptake of the body's time, the own term is added after it (2026-11-27) | A395 (timed baboon, b_t 0.22), A407 (beyond rhythmic outputs, b_t median 0.73); A383 / A394 (coupling rule in four mammals); A397 (mouse, undecided); A412 / A413 registered (intensive care; outputs and the local clock) | holds in the baboon, clock-specific; the one quantitative law that survives |
+| gain is uptake of the body's time, the own term is added after it (2026-11-27) | A395 (timed baboon, b_t 0.22), A407 (beyond rhythmic outputs, b_t median 0.73); A383 / A394 (coupling rule in four mammals); A397 (mouse, undecided); A412 (within organ, intensive care: S falls 1.9-fold, own noise unchanged beyond companions, kappa -0.05); A413 (baboon outputs do not carry the local clock's departure beyond library noise; full inheritance excluded) | holds across organs (baboon, clock-specific) and within organs under intensive care (human); the one quantitative law that survives |
 
 Credit the mouse consensus for the parts. The new content is the human demonstration of each part, and two human
 rules: conserved class gains and the personal departure.
