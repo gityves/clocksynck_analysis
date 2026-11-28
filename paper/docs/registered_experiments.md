@@ -13457,3 +13457,31 @@ permutations, excess over the null mean) on the observed data, and the same stat
 combinations that reproduce the slope (r 0.3 / 0.5 / 0.7, t0 0, +-2 h; 200 replicates each). Reading: an observed excess
 below the simulated q05 of every slope-reproducing combination excludes timing; inside them, timing stays possible.
 Code: `a403d.py --stage phase`; output `output/a403d/phase.csv`.
+
+## A418 (2026-11-28, on the user's question whether the fixed own noise is a highlight or a mention, after A412 / A415 / A417; the decisive within-organ specificity check; staged: power (pool and set counts, set dS; no set kappa), then one scoring run; **NOT BLIND**: A412 (clock kappa -0.054, 90 % -0.141 to 0.245; companions = non-rhythmic matched sets), A407 (in the baboon rhythmic outputs scale their own noise with gain, b_t median 0.73). BLIND for every output-set psi contrast.)
+**Question.** Is the intensive-care result (own noise unchanged while the shared rhythm falls) specific to the clock, or
+shared by any rhythmic programme of the same organs? If outputs amplify an upstream fluctuation (A407), their own term
+should fall with their shared rhythm (kappa near 1); if every rhythmic layer behaves like the clock, kappa near 0.
+**Data and contrast.** A412 exactly (GTEx fast deaths vs ventilated with a living brain, 12 body tissues, matched
+design, host anchored on the A164 tissues, the A412 estimator and bootstrap).
+**Output sets.** Pool: non-clock genes rhythmic by time of death in GTEx fast deaths (cosinor per tissue on the 12
+target tissues, Fisher-combined over tissues, BH q < 0.05; expression filter as A263); clock genes and the A263
+responsive genes excluded. 200 sets of 14 genes matched to the 14 clock genes on peak-phase bin (6 x 4 h, from the
+pooled cosinor) and expression tercile (seed [418, 0]); each set read at its own positions with a waveform fitted on
+fast deaths by time of death (amplitudes and phases per gene, A270 / A407 practice), host-referenced as the clock.
+Aggregates only (time of death is controlled access).
+**Statistic.** Per set j: kappa_j = median_k dpsi_j,k / median_k dS_j,k (A412's kappa without the companion excess:
+the sets are the comparison). Clock: A412's raw kappa recomputed in the same run (median dpsi / median dS, for a like
+comparison) and the registered excess kappa beside it.
+**Power stage (gate).** Pool size; sets with finite kappa; median set dS (must be >= 0.2 log: the sets must lose shared
+rhythm in intensive care, else not decidable); SD of kappa_j across sets reported. Gate: >= 100 finite sets and
+median dS >= 0.2.
+**H418.1.** The clock's raw kappa lies below the q05 of the output sets' kappa. Pass: within human organs too, the
+clock keeps its own term while rhythmic outputs lose theirs with the shared rhythm: the fixed own term is a clock
+property (highlight branch). Fail (clock inside the set band): intensive care leaves the own term of every rhythmic
+programme in place; a property of rhythmic expression under weaker systemic signals, not of the clock (mention
+branch).
+**Descriptive.** Output sets' median kappa and band; by phase bin; core loop.
+**Limits.** Post-mortem; outputs selected as rhythmic in the same fast-death donors; time-of-death waveform from the
+same donors (both groups read with it); the set kappa has no companion excess.
+**Code:** `exploratory/A412_icu_own_noise/scripts/a418.py --stage power|score`; output `output/a418/`.
