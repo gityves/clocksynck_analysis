@@ -13500,3 +13500,24 @@ same donors (both groups read with it); the set kappa has no companion excess.
   immune-hot; the endothelial slope adjusted for each score (a large shrink reads "the clock link runs with that
   program"); 10,000 permutations.
 **Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a419.py`; output `output/a419/`.
+
+## A420 (2026-11-28, POST HOC, DESCRIPTIVE; highlight checklist item "generality", on the user's go-ahead; NOT BLIND: A53 (TAURUS inflamed vs non-inflamed biopsies of one endoscopy: endothelial log amplitude +0.07, fibroblast +0.04, p 0.83), A230; BLIND for every IFN-gamma-loudness relation): does IFN-gamma activity go with a quieter endothelial clock in inflamed gut, within an endoscopy?
+**Data.** TAURUS genome pseudobulks (`$SCCC_DATA/ibd/TAURUS/pseudobulk_genome`; biopsy x class: endothelial 211,
+fibroblast 183), sample metadata of A230 (`output/data/taurus/donors.csv`: patient, timepoint, inflammation score,
+batch). Unit: biopsy; group: endoscopy (patient x timepoint), whose biopsies share the hour of sampling, so
+within-endoscopy differences carry no biopsy-time effect.
+**Readouts.** Loudness: log radius of the class's 14-gene state (`clocksync.pairwise.states`, one projector per class),
+states centred within library batch. x: the class's own IFN-gamma response score (STAT1, IRF1, CXCL9, CXCL10; mean
+within-batch z of log2 CPM) and, descriptively, the biopsy inflammation score.
+- **Statistic.** Pooled within-endoscopy slope (both centred within endoscopy, z-scored over the pooled residuals) of
+  loudness on IFN score, endoscopies with >= 2 biopsies of the class; 10,000 within-endoscopy permutations of x;
+  companions: the same slope with the loudness of 200 matched and 200 responsive pseudo-waveforms on the same rows.
+- **Reading.** A negative slope beyond companions: the tumour pattern generalises to inflamed gut, free of biopsy time.
+  Null: not shown outside tumours at this size (with A53).
+
+## A421 (2026-11-28, POST HOC, DESCRIPTIVE; highlight checklist item "mechanism", on the user's go-ahead; NOT BLIND: A419 (endothelial IFN score with CXCL9 / CXCL10 absorbs most of the endothelial slope); BLIND for the endothelium-intrinsic score relations): is A419's IFN signal intrinsic to tumour endothelium?
+Data and statistics as A419 S3, with an endothelium-intrinsic interferon-stimulated score that leaves out chemokines
+immune cells also make: STAT1, IRF1, GBP1, GBP4, PSMB9, TAP1 (mean within-cohort z of log2 CPM in the endothelial
+pseudobulk), and an immune-contamination score of the endothelial pseudobulk (PTPRC, CD3E, LYZ) as covariate. Reported:
+correlations of the intrinsic score with immune-hot and endothelial loudness; endothelial slope adjusted for the
+intrinsic score, for contamination, and both. Code: `a419.py --variant intrinsic`; output `output/a421/`.
