@@ -54,7 +54,9 @@ clock is present in postnatal tissue. Perturbations then fall on two axes:
 - **the personal departure** from the shared state did not grow where tested (tumours, chronic disease), and chronic
   systemic disease moved neither axis.
 
-What the field calls desynchrony is, at tissue resolution, mostly a loss of loudness, and the usual synchrony metrics
+Mechanism (2026-11-28, section 13): organ clocks behave as damped oscillators driven by the body's rhythm; they differ
+in drive, not in their own fluctuation, so coupling follows loudness. What the field calls desynchrony is, at tissue
+resolution, mostly a loss of loudness, and the usual synchrony metrics
 read mostly loudness. Below that resolution a loss of loudness can itself be desynchrony among cells, which public data
 cannot decide (A334).
 
@@ -626,3 +628,35 @@ Prompts: `prompts/audit_followups_2026-11-23.md` (gaps) and `prompts/mechanisms_
 
 Living organ-level evidence needs STARNET (dbGaP application, user and PI). Atlas donor type from A282 `arms.csv`;
 the four unclassified atlases are to be checked before their donor type is written in the paper.
+
+## 13. Highlight: organ clocks behave as damped oscillators driven by the body's rhythm (user, 2026-11-28)
+
+**Decision (user, 2026-11-28).** The fixed own fluctuation becomes a highlight, written as a model (easier to remember
+than the list of tests). Model, dictionary and fingerprint table: `METHOD.md` section 3b.
+
+**Core statement.** Each organ receives the body's time at its own volume (drive) and adds a local fluctuation of
+fixed size. Coupling to the body's time is set by the volume: loud organs keep time within about 1 h, quiet ones drift
+by about 3 h, although their clocks are no less steady. Intensive care lowers the drive and leaves the fluctuation
+unchanged, so organs lose coupling without becoming noisier. In dynamical terms: organs differ in how strongly they
+are driven, not in how they relax or fluctuate.
+
+**Highlight candidates (<= 85 characters).**
+- "Organ clocks differ in how strongly the body drives them, not in their own noise" (core)
+- "Intensive care weakens the drive to organ clocks without making them noisier" (companion)
+- alternative: "Loud organs keep body time because they are driven harder, not because they're steadier"
+
+**Evidence (fingerprint test, not a fit).** Across organs, timed baboon: b_t 0.23, below every rhythmic output set
+(0.49-0.99; outputs read as a readout scale, so the test can return 1) (A395, A407). Within organs, intensive care:
+kappa -0.05, coupling falls as predicted at fixed fluctuation (A412). Not cell sampling (A408). The fluctuation is not
+the hepatocyte oscillator's (A417, descriptive). Coupling follows loudness in four mammals (A383, A394).
+**Boundary.** Conflicting cues (kappa 0.50, A415) act as a change in damping: cells pulled to two times dephase.
+Outputs gain shared variation in intensive care while the clock loses it (A418, descriptive): clock and signal layer
+move apart.
+**Limits to state.** "Behave as", not "are"; ratios only (lambda, K, sigma not separated); one primate across organs
+(12 animals); mouse undecided (A397); human within-organ evidence post-mortem.
+**Placement.** Highlight 2 after "one time, many volumes"; a model box in Results (equation, dictionary, fingerprint
+table); slide 3.4b rebuilt around it (with the user, one element at a time); figure: two organs as circles of radius =
+volume with the same fluctuation cloud, plus an intensive-care copy (radius shrinks, cloud stays); timed baboon panel
+(clock vs outputs); intensive-care panel (observed vs fixed-fluctuation coupling). Tests in the supplement table.
+**Next test (would turn the fit into a forward prediction).** Frequency response: re-alignment time after a shift of
+known size (about 1 / lambda) similar in loud and quiet organs; candidates: in-house jet-lag data, A257 (one point).

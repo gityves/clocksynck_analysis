@@ -63,6 +63,50 @@ Cross-covariances C_kl of the centred log fractions of compartment pairs across 
     states;
   - a fit with stability < 0.8 is flagged.
 
+## 3b. Dynamical reading: organs as damped oscillators driven by the body's rhythm (2026-11-28)
+Interpretation layer, not part of the estimator. An organ's clock state z (clock plane: angle = phase, radius =
+amplitude) is read as a linear oscillator driven by the body's rhythm h(t):
+
+  dz/dt = (-lambda + i omega) z + K h(t) + xi(t)
+
+omega the organ clock's frequency (about 24 h), lambda its damping (relaxation of a perturbation), K the drive (how
+strongly the body's rhythm reaches the organ), xi local noise of strength sigma. Stationary state:
+z(t) = G h(t) + eta(t), with transfer function G = K / (lambda + i detuning) (about K / lambda) and eta an
+Ornstein-Uhlenbeck fluctuation of variance sigma^2 / (2 lambda). K does not enter the fluctuation.
+
+| text term | dynamical term | clocksync quantity |
+|---|---|---|
+| volume at which the organ receives the body's time | gain \|G\| at 24 h | relative amplitude \|z\| (gain), S = z2 V |
+| the organ's offset | phase lag arg G | arg z |
+| the organ's local fluctuation | stationary variance sigma^2 / 2 lambda | psi (D = 2 psi) |
+| how closely the organ keeps the body's time | forced share \|G\|^2 V / (\|G\|^2 V + 2 psi) | coupling c |
+| drift in hours | phase jitter about sqrt(psi / S) / omega | implied phase SD |
+
+**Fingerprints** (slope b of log psi on log gain^2 across organs; kappa = the same within an organ across a condition):
+
+| organs or conditions differ in | gain | fluctuation | b / kappa |
+|---|---|---|---|
+| drive K | proportional to K | unchanged | 0 |
+| damping lambda | 1 / lambda | 1 / lambda | 0.5 |
+| a readout scale on the whole state (dilution, per-cell amplitude, fewer clock cells) | scale | scale^2 | 1 |
+
+**Measured.** Clock across baboon organs, timed: b_t 0.23 (A395, A407), below every rhythmic output set (0.49-0.99, which
+read as a readout scale); within human organs, intensive care: kappa -0.05 (A412); not cell sampling (A408); in the
+hepatocyte Bmal1 KO liver under ad libitum feeding the fluctuation stays (A417, descriptive); conflicting feeding: kappa
+0.50 (A415), as if conflict also changed the damping. Reading: organs and the intensive-care condition differ mainly in
+drive K, not in damping or noise; the organ's own fluctuation is fixed and coupling follows the drive.
+**Cell level.** The organ is a population of self-sustained cell oscillators; its mean field behaves as a damped driven
+oscillator: lambda = the rate at which cells dephase from one another, K = how strongly the body's cues reset them,
+G = K / lambda = the synchrony the cue maintains, sigma^2 / 2 lambda = a fluctuation shared by the cells of a sample
+(tissue level; A408). A rigid organ-level limit cycle is not supported: it would give one amplitude for all organs and a
+phase-dominated fluctuation shrinking with K (A311: phase share 0.49; organ gains span about ninefold).
+**Not identified.** lambda, K and sigma separately (only ratios); whether sigma is local cue noise or intrinsic tissue
+noise. A frequency response (re-alignment time after a shift of known size, about 1 / lambda) would separate K from
+lambda: similar re-alignment times in loud and quiet organs would confirm that loudness is drive (A257 gives one point:
+the muscle core loop moved 4 h by day 3.5).
+**Wording.** "Organs behave as damped oscillators driven by the body's rhythm", never "are". Mouse across organs
+undecided (A397); human evidence within organs and post-mortem.
+
 ## 4. Group contrasts (`anchored.contrast`, `desync/common/common_v.py`)
 - **Pooled host.** One anchored host over all labelled donors; per group, z, psi and V of k on that host.
   - d = c_case - c_control.
