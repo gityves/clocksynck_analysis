@@ -49,7 +49,7 @@ sample size.
 | Endothelium | Beyond matched on 14 genes only (A346 core 0.510; A387 core c 0.481 < matched q95 0.515). Peaks before fibroblasts in normal organs, -0.49 h (-0.82 to -0.16), inside the matched band; tumours -0.26 / -0.87 h, descriptive (A389) | B / C |
 | Myeloid, T cells | Pair with the patient's normal clock beyond matched (A227: 0.581, 0.539), not beyond responsive (A271). Myeloid coupling to normal stroma 0.229, amplitude 0.31 of fibroblasts, offset +0.07 h, not beyond responsive (A404) | B |
 | Lymphocytes | No readable own clock (A281; A404: T/NK and B couple weakly, far below companions) | A (as a limit) |
-| Cancer cells | Barely coupled overall: c 0.13-0.15, not beyond matched (A388); c 0.100 / 0.032, loudness 0.32 (A387). Per cancer: thyroid 0.392, kidney 0.330, LUAD 0.290 (z 2.37); breast 0.055, ovary 0.011, colorectal 0.004 (A401). LUAD 0.66 beyond matched (A388, descriptive) A423: loose labels carry coupled normal epithelium (Delta 0.095, Holm 0.030; called-normal vs called-malignant COAD 0.405 / 0.001, STAD 0.514 / 0.072); purified halves still couple in LUAD (0.56, z 2.33), THCA / KIRC lean | A overall; LUAD B (A423); others C |
+| Cancer cells | Barely coupled overall: c 0.13-0.15, not beyond matched (A388); c 0.100 / 0.032, loudness 0.32 (A387). Per cancer: thyroid 0.392, kidney 0.330, LUAD 0.290 (z 2.37); breast 0.055, ovary 0.011, colorectal 0.004 (A401). LUAD 0.66 beyond matched (A388, descriptive). A423: loose labels carry coupled normal epithelium (Delta 0.095, Holm 0.030; called-normal vs called-malignant COAD 0.405 / 0.001, STAD 0.514 / 0.072); purified halves still couple in LUAD (0.56, z 2.33), THCA / KIRC lean | A overall; LUAD B (A423); others C |
 
 ### 1.4 Linking cells to bulk
 
