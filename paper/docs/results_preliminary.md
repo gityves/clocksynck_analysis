@@ -10341,3 +10341,56 @@ Deota 2023, 48 mice, 16 peripheral tissues, V2 = within ZT x arm cells; mice per
   The "by phase bin" readout is degenerate (every set's modal bin is 0, as matched to the clock's dominant bin).
 - Code: `exploratory/A395_baboon_timed_gain/scripts/a413.py --stage score`.
 <!-- src: paper/exploratory/A395_baboon_timed_gain/output/a413/{tests,companions,power}.csv -->
+
+## A412 power note (2026-11-28; one run, 63 min, peak 1.4 GB; within-fast window null, simulation, companion draws; no clock psi contrast between fast and ventilated donors): decidable
+
+| item | value |
+|---|---|
+| matched design | 210 fast controls, 79 ventilated; host spread V 3.55 / 2.09 (reproduces A349); median log S ratio 0.625 |
+| G412.1 spread-matched null: kappa, 4 time-of-death windows with V 2.08-2.16 (42-55 donors) | -0.156, -0.021, +0.367, -0.305; median **-0.088** (pass, within +-0.15); SD 0.288; median bootstrap SD 0.165 |
+| G412.2 truth A (psi equal): kappa median (SD) | 0.000 (0.108); power **1.00** (all upper bounds < 0.5) |
+| G412.2 truth B (psi scales with S): kappa median (SD) | **0.854** (0.226) (pass, >= 0.7) |
+| companions | 200 matched sets per design, 0 failed |
+
+- Both gates pass: H412.1 is scored. Caveat: the real-data window null scatters more (SD 0.29 across windows, 0.165 per
+  window bootstrap) than the simulation (0.108); the scored interval (donor bootstrap) carries the real noise, so the
+  simulated power is optimistic. The bias gate was read on the median window, as registered ("its kappa estimator
+  bias"); single windows lie outside +-0.15.
+- Implementation: S = z2 V from the host estimator of `Dataset.contrast` (`clocksync._core.host.on_host`, pooled host
+  over both groups); windows of the matched fast controls chosen on V alone (within 10 %, >= 40 donors); simulation with
+  `clocksync._core.host.simulator` per tissue and group at the observed S. Core-loop companions are the 14-gene ones
+  (descriptive only). Code: `a412.py` (2e65c2c).
+<!-- src: paper/exploratory/A412_icu_own_noise/output/{power_summary,power_null_windows,power_sim}.csv -->
+
+## A412 (scored 2026-11-28; BLIND for every clock and companion psi contrast; one scoring run, 146 s, after the power stage): in intensive care the shared rhythm reaching an organ falls about 1.9-fold while the organ's own clock noise does not change beyond random genes (kappa -0.05, 90 % -0.14 to 0.25): H412.1 passes; the loss is a loss of uptake, as across organs
+
+GTEx fast deaths vs ventilated donors with a living brain, 12 body tissues, matched design primary; kappa = median
+companion-excess dpsi / median dS (0 = own noise unchanged, 1 = it scales with the shared rhythm); 500 donor bootstraps.
+
+| readout | design | **kappa (90 %)** | median dpsi raw | median companion excess dpsi* | median dS | Spearman dpsi* vs dS (p) |
+|---|---|---|---|---|---|---|
+| **14 genes** | **matched (H412.1)** | **-0.054 (-0.141 to 0.245)** | -0.154 | -0.034 | 0.625 | 0.10 (0.75) |
+| 14 genes | pooled | -0.145 (-0.182 to 0.248) | -0.162 | -0.097 | 0.669 | 0.17 (0.60) |
+| core loop | matched | 0.236 (0.054 to 0.468) | -0.026 | 0.161 | 0.681 | -0.52 (0.085) |
+| core loop | pooled | 0.173 (0.013 to 0.414) | -0.032 | 0.117 | 0.677 | -0.47 (0.12) |
+
+- **H412.1 passes** (registered: interval below 0.5; it also includes 0). The shared rhythm S = z2 V falls by a median
+  0.63 log (about 1.9-fold) in ventilated donors, while the clock's own noise, net of the change random genes show, stays
+  put (excess -0.03 log). Raw psi is slightly higher in ventilated donors (dpsi -0.15), as it is for expression-matched
+  genes (generic noise rise of intensive care). Truth B (psi scaling with S) would read about 0.85 (power note).
+- **Coupling follows.** At constant psi, the ventilated coupling predicted from the fast-death psi (S_vent / (S_vent + 2
+  psi_fast)) is close to the observed one (per tissue, e.g. skeletal muscle 0.373 / 0.373, tibial artery 0.609 / 0.594,
+  lung 0.269 / 0.241; medians 0.51 / 0.44); observed is lower in 9 of 12 tissues, as the raw psi rise (shared with
+  random genes) implies. The coupling loss
+  of intensive care (A349: 0.69 -> 0.44) is what a weaker shared rhythm over an unchanged own term produces.
+- **Reading (registered).** Intensive care weakens the body's time signal that organs take up (cells less entrained to
+  it, at population level), not the organs' own clock fluctuation and not a scaling of the organ's whole clock signal
+  (fewer clock cells, lower per-cell amplitude, damping would shrink psi with S). This is the within-organ counterpart
+  of A395 / A407 (across organs): gain is uptake; the own term is added after it. With A304 / A304r (tumours: gain loss
+  without a departure rise), the uptake reading now covers three perturbation settings.
+- Core loop (descriptive; its companions are the 14-gene sets, not core positions): kappa 0.24 / 0.17, intervals below
+  0.5 but above 0; by the gene-drop rule "not decided: precision or the removed genes".
+- Caveat (power note): the real-data window null scatters more than the simulation (SD 0.29); the scored interval is the
+  donor bootstrap. Ventilated donors also differ in sedation, feeding, light and death course.
+- Code: `exploratory/A412_icu_own_noise/scripts/a412.py --stage score`.
+<!-- src: paper/exploratory/A412_icu_own_noise/output/{score_kappa,score_tissues,companions}.csv -->
