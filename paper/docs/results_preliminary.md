@@ -10430,3 +10430,14 @@ failed.
   `Dataset.timed_loadings`) on the A297 states with each library's Poisson covariance, one fit per arm; simulation at
   the state level; 50-of-100 companion subsample per bootstrap draw. Code: `a415.py` (ff8ad1d).
 <!-- src: paper/exploratory/A322_conflicting_drives/output/a415/{power_summary,companions_summary,score_kappa,score_units}.csv -->
+
+## Health synthesis hypotheses 4 and 5 (2026-11-28; feasibility from existing counts only, no clock value): not registered
+- **4, a daily rhythm of clock-state size** (the A400c time-of-day radius in mouse, cells resynchronised by the daily
+  cue): in the baboon each animal is one ZT, so a shared radius-by-ZT pattern cannot be told from an animal's loudness
+  (the person factor); in the mouse a two-harmonic gene waveform alone produces a first-harmonic radius modulation, so
+  the shape route must be removed first. No result of the paper depends on it (A400b / A406 work within ZT cells).
+  Left as a methods caveat, not tested.
+- **5, the person factor inside one cell class across organs**: the only multi-organ single-cell donors on hand are
+  Tabula Sapiens (A109b note: 5 donors with 7-9 organs, the other donors 1-2). A per-donor leverage needs tens of donors
+  (A400's 48 mice were underpowered on the core loop). Not decidable; not pursued.
+<!-- src: registered_experiments.md A109b note; A400c / A400b entries above -->
