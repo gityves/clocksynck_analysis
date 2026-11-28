@@ -10665,3 +10665,25 @@ response score; 10,000 within-endoscopy permutations; 200 matched and 200 respon
   endothelial slope; with it adjusted, the slope keeps three quarters of its size but loses significance. (A416 K2's
   composite adjustment used the summed stroma's contamination and barely moved the composite.)
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/a421/s3_intrinsic.csv -->
+
+## A422 (run 2026-11-28; POST HOC, DESCRIPTIVE; one run, 29 min): the endothelial colder-louder slope is an immune-RNA dilution artefact (all of it sits in the high-contamination half: -0.161 vs +0.152, difference 0.28, 90 % 0.02-0.51); the composite slope is not (low and high halves alike, difference 0.01; -0.114 without the top contamination tertile)
+Within-cohort median split of immune contamination (PTPRC, CD3E, LYZ, CD74) of the summed stroma (composite) or the
+endothelial pseudobulk; A403b statistics; halves drop cohorts with < 4 patients per half.
+| loudness | subset | patients | slope (90 %) | p |
+|---|---|---|---|---|
+| composite | all | 529 | -0.126 (-0.215 to -0.036) | 0.005 |
+| composite | low contamination half | 205 | -0.064 (-0.228 to 0.097) | 0.40 |
+| composite | high contamination half | 218 | -0.048 (-0.243 to 0.059) | 0.51 |
+| composite | without top tertile | 304 | -0.114 (-0.243 to 0.026) | 0.058 |
+| composite | low minus high | | +0.009 (-0.232 to 0.262) | |
+| endothelium | all | 427 | -0.107 (-0.187 to 0.007) | 0.032 |
+| endothelium | low contamination half | 161 | +0.152 (-0.025 to 0.317) | 0.066 |
+| endothelium | high contamination half | 171 | -0.161 (-0.322 to 0.010) | 0.045 |
+| endothelium | without top tertile | 244 | +0.033 (-0.101 to 0.165) | 0.62 |
+| endothelium | low minus high | | +0.278 (0.024 to 0.513) | |
+- **Reading.** In the endothelium the slope exists only where immune RNA contaminates the pseudobulk and reverses where it
+  does not: the endothelial clock-specific result of A416 / A419 is dilution of the clock signal by immune transcripts, and
+  is withdrawn. The composite shows no contamination dependence (halves equal; smaller in each half because halving
+  drops cohorts and patients) and keeps -0.114 without the most contaminated third: the stromal-composite lead is not
+  explained by dilution, though less precise than the full estimate.
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/a422/d1.csv -->
