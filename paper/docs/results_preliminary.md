@@ -10651,3 +10651,17 @@ response score; 10,000 within-endoscopy permutations; 200 matched and 200 respon
   property of inflamed tissue at this size. The tumour finding stays tumour-specific, or depends on a between-person
   factor that within-person designs remove.
 <!-- src: paper/exploratory/A230_ibd_local_offset/output/a420/{tests,companions}.csv -->
+
+## A421 (run 2026-11-28; POST HOC, DESCRIPTIVE; one run, 24 min): the endothelium's own interferon response does not go with a quieter endothelial clock (r +0.02); immune RNA in the endothelial pseudobulk does (r -0.09) and absorbs about a quarter of the endothelial slope
+- **Correlations (within cohort, 427-430 patients):** endothelium-intrinsic ISG score (STAT1, IRF1, GBP1, GBP4, PSMB9,
+  TAP1) vs immune-hot 0.51, vs endothelial loudness +0.02, vs the A419 IFN score 0.83; immune contamination of the
+  endothelial pseudobulk (PTPRC, CD3E, LYZ) vs immune-hot 0.25, vs endothelial loudness -0.09.
+- **Endothelial slope -0.107 (p 0.035), adjusted:** intrinsic ISG -0.074 (p 0.15); contamination -0.082 (p 0.11); both
+  -0.064 (p 0.21); A419 IFN score + contamination -0.022 (p 0.66).
+- **Reading.** The interferon response of the endothelial cells themselves is unrelated to their clock loudness, so
+  A419's shrink under the IFN adjustment reflects the score's collinearity with immune-hot, not an IFN effect on the
+  endothelial clock (A419's mechanism hint is withdrawn). Immune RNA carried in the endothelial pseudobulks is higher in
+  hot tumours and goes with a quieter endothelial state: a dilution artefact of this size explains part of the
+  endothelial slope; with it adjusted, the slope keeps three quarters of its size but loses significance. (A416 K2's
+  composite adjustment used the summed stroma's contamination and barely moved the composite.)
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/a421/s3_intrinsic.csv -->
