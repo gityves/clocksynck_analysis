@@ -121,15 +121,39 @@ def score():
     print(out.round(3).to_string(index=False))
 
 
+def arms():
+    """Post hoc, descriptive (user, 2026-11-28): b_t per feeding arm under E and H, on the tissues passing under each
+    waveform in the pooled fit (A397's per-arm rows, arm pooling as the remaining confound)."""
+    pb, per, zt = B.load_mouse()
+    B.S_ZT = zt
+    wfs = waveforms(pb)
+    rows = []
+    for name in ("E", "H"):
+        organs = list(pd.read_csv(OUT / f"organs_{name}_14_genes.csv").organ)
+        for arm in sorted(pb.stratum.unique()):
+            sub = pb[pb.stratum == arm]
+            ds = cs.Dataset(sub[B.KEYS + list(wfs[name].genes)], anchors=per, waveform=wfs[name],
+                            name=f"a425 {name} {arm}", min_donors=5)
+            T = B.organ_table(ds, zt.reindex(sub.donor.unique()), organs)
+            T.to_csv(OUT / f"arm_{name}_{arm}.csv")
+            for j, (lab, x, y) in enumerate(B.readouts(T)):
+                bs = B.boot(x, y, np.random.default_rng([SEED, 5, j]))
+                rows.append(dict(waveform=name, arm=arm, slope=lab, value=B.slope(x, y), lo90=np.quantile(bs, 0.05),
+                                 hi90=np.quantile(bs, 0.95), organs=len(x)))
+    out = pd.DataFrame(rows)
+    out.to_csv(OUT / "arms.csv", index=False)
+    print(out.round(3).to_string(index=False))
+
+
 def main():
     warnings.simplefilter("ignore")
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--stage", choices=["power", "score"], required=True)
+    ap.add_argument("--stage", choices=["power", "score", "arms"], required=True)
     a = ap.parse_args()
     B.use_mouse()
     limit_threads(4)
     OUT.mkdir(parents=True, exist_ok=True)
-    tables() if a.stage == "power" else score()
+    {"power": tables, "score": score, "arms": arms}[a.stage]()
 
 
 if __name__ == "__main__":

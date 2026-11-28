@@ -10755,3 +10755,51 @@ same way but are not beyond matched sets individually, and their splits are not 
 clonality computed against stroma). The synthesis clause becomes: cancer cells keep the patient's time in lung
 adenocarcinoma (thyroid and kidney lean); elsewhere the epithelium that does is largely non-malignant.
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/a423/score/{h423,d423_1_label_class,d423_2_called,d423_3_per_cancer,d423_3_h401_2}.csv -->
+
+## A425 per feeding arm (2026-11-28; POST HOC, DESCRIPTIVE, on the user's request; one run, 55 s; same tissues as the pooled fits): within one feeding arm the mouse slope under the external waveform is about 0.45-0.49, lower than pooled (0.64): arm pooling inflates it; the ad libitum arm excludes 1
+
+| waveform | arm | b_t corrected (90 %) | b_t uncorrected | scatter slope (90 %) |
+|---|---|---|---|---|
+| E, Wolff | ad libitum | 0.445 (-0.275 to 0.762) | 0.925 | -0.693 (-1.407 to -0.240) |
+| E, Wolff | night-restricted | 0.493 (0.243 to 1.024) | 0.664 | -0.504 (-0.953 to -0.100) |
+| H, GTEx (A397 reproduced) | ad libitum / night-restricted | 0.317 / 0.362 | 0.827 / 0.533 | -0.850 / -0.664 |
+
+- Pooling the two arms adds arm differences in each tissue's rhythm to psi in proportion to gain (A397 note): per arm
+  the slope falls from 0.64 to 0.45-0.49 under E. The ad libitum interval excludes 1 and includes the baboon's 0.22;
+  the night-restricted one reaches 1.02. The scatter slopes exclude 0 in both arms (phase scatter falls with gain).
+- Reading (descriptive): within an arm the mouse sits between the drive (0) and damping (0.5) fingerprints and is not
+  separated from the baboon; the pooled "departure" (A425) is partly arm pooling. Not a registered test; 15 tissues, 24
+  mice per arm.
+- Code: `a425.py --stage arms`.
+<!-- src: paper/exploratory/A395_baboon_timed_gain/output/a425/arms.csv -->
+
+## Re-alignment after a shift as a frequency-response check of the driven-oscillator reading (2026-11-28; POST HOC, DESCRIPTIVE, from logged values only, no new run)
+In a driven damped oscillator (METHOD 3b) a shift of the drive is followed by relaxation at the damping rate lambda,
+whatever the drive strength K: tissues or classes that differ in loudness through K should re-align at the same pace.
+Implied lambda from the fraction re-aligned f after t days, f = 1 - exp(-lambda t) (small-shift reading):
+
+| data | shift | t | moved | f | 1 / lambda |
+|---|---|---|---|---|---|
+| mouse aorta, all classes (A201) | 6 h advance | 5 d | -2.86 h (90 % -3.95 to -1.77) | 0.48 | 7.7 d (4.7-14.3) |
+| aorta smooth muscle / fibroblast / endothelium | | | -2.85 / -2.87 / -2.29 h | 0.47 / 0.48 / 0.38 | 7.8 / 7.7 / 10.4 d |
+| aorta macrophages (some libraries < 30 cells) | | | -3.98 h | 0.66 | 4.6 d |
+| human muscle core loop (A257 / A335) | 12 h behaviour shift | 3.5 d | 4.06 h (2.57-5.68) | 0.34 | 8.5 d (5.5-14.5) |
+| human muscle, 14 genes | | | 2.68 h (1.81-3.59) | 0.22 | 13.7 d |
+
+- **Consistent damping in two species, two tissues:** the organ clock relaxes with a time constant of about one to
+  two weeks (lightly damped: lambda about 0.1 per day against omega 6.3 per day). This is the inertia of slide 4.2,
+  now one number.
+- **Classes of different loudness re-align alike** in the aorta (smooth muscle and fibroblasts identical, endothelium
+  slightly slower; conserved class gains fibroblast 1.26, mural 0.92, endothelium 1.0, A293): consistent with classes
+  differing in drive, not damping. Weak: classes of one aorta are coupled to one another, gains are atlas-level, not
+  measured in this aorta, and macrophages rest on few cells.
+- **Where the linear model is only approximate.** For the 6 h advance a linear relaxation with this lambda predicts the
+  amplitude to dip to about 0.71 at this phase; observed 0.875 / 0.888 (A201): amplitude recovers faster than linear,
+  as for self-sustained cells (amplitude rigidity). For a 12 h (antiphase) shift a linear model predicts amplitude
+  collapse without a phase walk; observed excursion 0.38 with a 4 h walk: the organ clock is a lightly damped mean field
+  of self-sustained cells, linear in phase relaxation, not in amplitude. Also: after a light shift the SCN drive itself
+  re-entrains over days, so the aorta lambda is a lower bound on speed; the behavioural shift (A257) moves the drive at
+  once.
+- **Use.** A forward-prediction check of the model at descriptive level; the in-house jet-lag data are left out (few
+  mice sequenced; user, 2026-11-28).
+<!-- src: paper/exploratory/A201_aorta_jetlag/output/{tests,secondary}.csv; A335 table (results above); A293 families.csv -->
