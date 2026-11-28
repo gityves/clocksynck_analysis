@@ -653,7 +653,7 @@ the hepatocyte oscillator's (A417, descriptive). Coupling follows loudness in fo
 Outputs gain shared variation in intensive care while the clock loses it (A418, descriptive): clock and signal layer
 move apart.
 **Limits to state.** "Behave as", not "are"; ratios only (lambda, K, sigma not separated); one primate across organs
-(12 animals); mouse undecided (A397); human within-organ evidence post-mortem.
+(12 animals); mouse departs (b_t 0.50 human waveform, 0.64 Wolff waveform; A397, A425: not a waveform artefact; arm pooling not excluded); human within-organ evidence post-mortem.
 **Placement.** Highlight 2 after "one time, many volumes"; a model box in Results (equation, dictionary, fingerprint
 table); slide 3.4b rebuilt around it (with the user, one element at a time); figure: two organs as circles of radius =
 volume with the same fluctuation cloud, plus an intensive-care copy (radius shrinks, cloud stays); timed baboon panel
