@@ -228,8 +228,11 @@ def estimands(psi: pd.Series) -> dict:
     P = psi.rename_axis("k").reset_index()
     P[["kind", "n", "r"]] = P.k.str.split("|", expand=True)
     P["n"], P["r"] = P.n.astype(int), P.r.astype(int)
-    w = P.pivot_table(index=["n", "r"], columns="kind", values="psi")
-    delta = (w["cells"] - w["reads"]).groupby("n").mean()
+    w = P.pivot(index=["n", "r"], columns="kind", values="psi").reindex(columns=["cells", "reads"])
+    delta = (w["cells"] - w["reads"]).groupby("n").mean().reindex(NS)
+    if delta.isna().any() or w.loc[400, "cells"].notna().sum() == 0:  # a fit failed (host or target not estimable)
+        return dict(s2=np.nan, f=np.nan, s2_alt=np.nan, f_alt=np.nan, psi400=np.nan, psi200=np.nan,
+                    **{f"delta{n}": np.nan for n in NS})
     n = delta.index.to_numpy(float)
     x = 1.0 / n
     s2 = float(np.sum(x * delta.to_numpy()) / np.sum(x * x))
