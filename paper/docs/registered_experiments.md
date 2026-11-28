@@ -13646,3 +13646,23 @@ model with the A127 stromal / immune score as covariate instead of ABSOLUTE, and
 sets. A proliferation slope that survives ABSOLUTE but shrinks under the expression score reads "the gain loss follows
 infiltrate expression captured by the G2M score", not composition by DNA. CPTAC-3 purity (descriptive (5)): minus the mean
 of the stromal and immune scores (`a304r.gene_score`), z within type.
+
+## A425 (2026-11-28, on the user's go-ahead after noting that A397 read mouse genes with the human waveform; staged: power (precondition counts and organ-bootstrap SEs per waveform; per-organ tables written, no slope printed), then one scoring run; **NOT BLIND**: A397 (human waveform: b_t 0.500, 90 % 0.286-1.050; per arm 0.32 / 0.36), A400c (the human waveform bends mouse states into an ellipse, ellipticity 0.125 core), A406 (a waveform fitted on the same mice inflates untimed leverages), A407 (baboon-fitted vs GTEx waveform moved b_t 0.219 -> 0.226). BLIND for every timed psi and slope under a mouse waveform.)
+**Question.** Is the mouse non-replication of the timed own-noise law (A397) produced by the waveform? Read with the
+human waveform, a mouse organ's daily path is an ellipse; the misfit around a circular timed fit grows with the organ's
+amplitude and enters psi in proportion to gain^2, pushing b_t towards 1.
+**Data.** A397 exactly (Deota 2023, 48 mice, 16 peripheral tissues, arm as stratum, `a395.py` estimator: timed |a| and
+psi from `Dataset.timed_loadings("zt")`, animal correction, precondition with 1,000 ZT permutations, organ bootstrap).
+**Waveforms.** E (primary): Wolff 2023 peripheral tissues, fitted by CT, group tissue x age (A406's E); E2: Manella
+2021 Alb-Cre controls (A406's E2); Mf: fitted on Deota's peripheral tissues by ZT, group tissue x arm (descriptive:
+same mice); H: the GTEx waveform (A397 reproduced).
+**H425.1 (primary).** b_t (animal-corrected, 14 genes) read with E: 90 % organ-bootstrap interval excludes 1 (as
+H397.1). Pass: the own-noise law holds in the mouse with a mouse waveform; A397's failure was the human waveform.
+**H425.2 (secondary).** b_t(H) - b_t(E) > 0 with a 90 % paired organ-bootstrap interval above 0 (tissues passing under
+both): the human waveform inflates the slope.
+**Descriptive.** E2, Mf; core loop; scatter slope; per arm; per-organ ellipse misfit under H (second ZT harmonic of the
+residual modulus) against log gain.
+**Power (gate).** >= 10 tissues pass under E and 2.49 x SE(b_t) <= 1; else descriptive.
+**Limits.** Wolff runs in constant darkness (CT) with pooled mice, other strain and lab; 15-16 tissues; arm pooling
+(A397 post hoc note) unchanged.
+**Code:** `exploratory/A395_baboon_timed_gain/scripts/a425.py --stage power|score`; output `output/a425/`.
