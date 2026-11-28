@@ -13364,3 +13364,22 @@ dephasing"); per dataset; animal correction not possible (one tissue per library
 **Limits.** Two laboratories, 7 units; ZT design with 2-4 mice per time point; feeding arms differ in food intake and
 body temperature rhythms; the amplitude ratios were seen.
 **Code:** `exploratory/A322_conflicting_drives/scripts/a415.py --stage power|score`; output `output/a415/`.
+
+### A409 addendum 1 (2026-11-28, POST HOC, DESCRIPTIVE; on the user's question whether A409, like MuTHER (A331 -> A366 / A368), is explained by shared biopsy time on a hospital-hours arc; NOT BLIND: A409 leverages known (0.361 tumour fibroblast, 0.485 normal reference); BLIND for the geometry, the timing-only simulation and Q)
+Same 116 patients and states as H409.1 (tumour-fibroblast state, normal-stroma host state, centred within stratum); the
+normal-fibroblast reference (93) alongside.
+- **G1 geometry.** Elongation (major / minor eigenvalue, A366 `axes`) of the pooled within-stratum clouds of each state and
+  of the combined state (A366 `combined`), and per stratum with >= 6 patients.
+- **G2 reliability.** Split-half reliability of each state over 10 gene-half splits (`deviation.split_genes`; the host
+  refitted on each half): rel = 2 rho / (1 + rho).
+- **G3 timing-only simulation at the A409 design (A366 ring model, stratified).** Per stratum the observed patient count
+  and a mean phase uniform on the circle; patient phases N(stratum mean, sd); unit amplitude (no person loudness); noise
+  on each state at its G2 reliability; states centred within stratum; sd matched to the pooled within-stratum elongation
+  of the combined state (A366 grid, 20 replicates per grid point). 1,000 replicates through the A409 estimator
+  (`radius_covariance(groups=stratum)`); the same with a GTEx-size person loudness (log SD 0.352) and half of it.
+- **G4 A368 statistic.** Q (correlation of the perpendicular coordinates at matched arc position, A368 `Q`) on the pooled
+  within-stratum states; its timing-only and loudness distributions from G3's simulations, and 200 matched / 200
+  responsive pseudo-waveform values (A409 companion sets).
+**Reading.** Leverage and Q above the timing-only q95 (and Q above the matched q95): shared loudness beyond biopsy time;
+inside the timing-only range: A409 is what shared biopsy time produces (as A366 for MuTHER).
+**Code:** `paper/exploratory/A387_tumour_full_model/scripts/a409_timing.py`; output `output/a409/timing_*.csv`.
