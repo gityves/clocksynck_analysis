@@ -13532,3 +13532,98 @@ stromal pseudobulk (composite) and in the endothelial pseudobulk (endothelium); 
 - **Reading.** Dilution predicts the slope concentrated in the high-contamination half and near 0 in the low half; a low-half
   slope of the full size excludes dilution as its source.
 **Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a422.py`; output `output/a422/`.
+
+## A423 (2026-11-28, on the user's go-ahead for synthesis review item 1 ("go ahead with 1 and 2"); staged: power (counts, split validation on stored calls, simulated power; no clock statistic of any split compartment), then one scoring run; **NOT BLIND**: A401 per-cancer cancer-cell couplings on the pooled tumour table (THCA 0.39, KIRC 0.33, LUAD 0.29 z 2.37; BRCA 0.05, OV 0.01, COAD 0.00; 14 genes), A388 / A387 malignant couplings, A410 (lineage retention does not predict cancer-cell coupling between patients), A411; the label source of each A388 cohort (`A388.../feasibility/cohorts.csv`: thyroid all tumour epithelium, kidney 3 of 4 cohorts, lung 9 of 12, colorectal 4 of 11) was tabulated before writing, with no clock value; **BLIND**: every coupling of a within-patient split half, every coupling split by label class, every coupling of called-normal tumour epithelium): is the per-cancer cancer-cell coupling a contamination of loosely labelled cancer cells by normal epithelium?
+
+**Concern.** A388 / A401 call cancer cells by copy number only where >= 5 patients of a cohort are called; elsewhere the
+target is all tumour-sample epithelium (marker rule or author "epithelial" labels). The cancers read as "cancer cells join
+the tumour's time" (THCA, KIRC, LUAD) are mostly loosely labelled; the main uncoupled one (COAD) mostly called. Tumour
+samples of papillary thyroid, clear-cell kidney and lung adenocarcinoma carry normal thyrocytes, tubule and AT2 cells, and
+normal epithelium couples to the patient's stroma (A387: 0.43 uncorrected |r|). A mixture would raise the target coupling
+roughly by the normal share of its clock RNA. Papillary thyroid carcinoma is copy-number quiet, which is why its cohorts
+fall below the >= 5 called patients rule.
+
+**Label classes (fixed now, per source).** C = our copy-number calls (`$SCCC_DATA/cnv`, `cnv_a149`; A388 cohorts labelled
+`tumour:malignant`); A = author malignant labels (CELLxGENE "malignant cell" / "neoplastic cell", Wu "Cancer Epithelial",
+Pal inferCNV-annotated clusters, BIOKEY 3CA); E = all tumour epithelium (A388 cohorts labelled `tumour:epithelial`, GEO
+marker-rule builds, CELLxGENE "epithelial" datasets).
+
+**Within-patient split (primary readouts; sources with cell-level counts on disk: A388 cohorts and GEO builds; CELLxGENE
+sets have pseudobulks only and enter D423.1 only).** Cells = every tumour-sample epithelial cell of the patient (marker
+rule of `cancer_common.compartments`, i.e. the class-E definition, in every cohort). Split score per cell, with the 14 clock
+genes removed from every profile and score:
+- copy-number clonality (`cancer_common.cnv`: own-patient consensus minus other patients') from the stored calls where they
+  exist (also in class-E cohorts that have calls below the 5-patient rule); else computed with the same code against a
+  baseline of the cohort's own non-epithelial tumour cells (stromal and immune; classic inferCNV), used for ranking only;
+- THCA (copy-number quiet): a fixed papillary-carcinoma marker score instead, mean within-patient z of log CP10k of LGALS3,
+  KRT19, FN1, CITED1, SERPINA1, TIMP1, MET minus that of TFF3, TPO, DIO1, SLC26A7; clonality reported beside.
+Each patient's epithelial cells are split at the within-patient median into HIGH (more aberrant) and LOW halves; a patient
+enters with >= 50 cells in each half. Targets HIGH and LOW (and ALL, the unsplit epithelium, as reference) are read on the
+tumour-stroma host exactly as A401 (anchors fibroblast / endothelial / mural, pooled host per cancer, cohort x chemistry
+strata, `Dataset.fit`), 14 genes deciding (A401's readout), core loop reported.
+**Statistics.**
+- **H423.1 (primary): contamination signature.** Delta = c_LOW - c_HIGH pooled over every cancer with >= 5 split patients
+  (patient-weighted mean of per-cancer Delta), one-sided > 0. Null: HIGH / LOW labels swapped within patient at random
+  (1,000 draws, seed [423, 1]). Specificity: the same Delta for 200 expression-matched pseudo-clock sets per cancer
+  (`paired.pseudo_waveforms`, seed [423, 0], the A401 draw rule); the observed Delta must exceed the matched q95.
+- **H423.2 (primary): purified cancer cells.** c_HIGH pooled over LUAD, THCA, KIRC (the three cancers named in the
+  synthesis; Stouffer over per-cancer z of c_HIGH against its 200 matched sets, patient-weighted), one-sided z > 1.645.
+- Holm over the two.
+**Descriptive.** D423.1: per cancer, the A401 target relabelled by label class (C / A / E; `relabel`), c and z against
+matched sets, on the A401 table (all 51 sources). D423.2: split validation where calibrated calls exist: share of
+called-normal cells in LOW vs HIGH; and called-normal tumour epithelium vs called-malignant cells as two targets (patients
+with >= 50 cells of each). D423.3: per cancer c_ALL, c_HIGH, c_LOW, z, median UMI per half; A401 H401.2 rho recomputed with
+e_mal from c_HIGH.
+**Power stage.** Counts per cancer and source (patients with >= 50 cells per half; split source: stored calls, computed
+clonality, marker score); split validation D423.2 shares (no clock value); simulated power with `clocksync.simulate`
+at the real design (cells per half, depth, host reliability): power of H423.1 when the LOW half carries a normal share of
+0.2 / 0.4 of the clock RNA coupled at 0.43 and cancer cells at 0; power of H423.2 at c_HIGH 0.15 / 0.25. A primary with
+power < 0.8 at its stated point is reported descriptively.
+**Readings (stated now).**
+- H423.2 pass, H423.1 fail: the per-cancer cancer-cell coupling is not contamination; the synthesis clause stands.
+- H423.2 pass, H423.1 pass: cancer cells keep time where reported, and loose labels add Delta; purified values reported.
+- H423.2 fail with power, H423.1 pass: the per-cancer "joining" was normal epithelium in the target; the clause is withdrawn
+  and A401 D401 / H401.2 are restated as tumour epithelium.
+- Both fail with power: purified cancer-cell coupling in these cancers is below the MDE; the clause becomes "not resolved".
+**Limits.** The split score can track cell state (differentiation, depth) as well as malignancy; median UMI per half is
+reported and matched sets share the split. Computed clonality without a normal-epithelium baseline ranks generic
+epithelial patterns too (documented in `cnv.py`); the THCA marker score ranks papillary features, not clonality. Halves have
+fewer cells than ALL; z against matched sets absorbs the noise difference.
+**Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a423.py`;
+output `output/a423/`.
+
+## A424 (2026-11-28, on the user's go-ahead for synthesis review item 2; staged: power (simulation at the real design; no observed contribution slope), then one scoring run; **NOT BLIND**: A304 (H304.1 pooled Q_G -0.462; per-cancer G_case / G_ref, e.g. THCA 0.005 / 0.580, BRCA 0.186 / 0.365, LIHC 0.291 / 0.688; purity-proxy imbalance case vs reference in 8 of 10 cancers (`score/purity_imbalance.csv`); sensitivity with cells = cancer x purity half Q_G -0.266, p 0.037; H304.4 LumA vs other G 0.384 / 0.152), A304r (CPTAC-3 ratio 0.89, per-type values), A175, A186; **BLIND**: every proliferation or purity slope of the per-pair gain contribution, every ABSOLUTE-purity-adjusted gain, every PAM50-stratified proliferation contrast): is the TCGA proliferation gain loss tumour purity?
+
+**Concern.** The tumour stroma carries the patient's time (A346, A387) and cancer cells barely do (A388, A401). A purer
+tumour then expresses less of the patient's time for composition alone. High-proliferation tumours were purer than
+low-proliferation ones in 8 of 10 cancers (A127 expression proxy), the THCA arm most of all, and THCA contributes the largest
+share of the pooled loss (59 pairs x 0.575 drop in G). The A304 purity sensitivity used the expression proxy and halves.
+**Data.** A304's 517 TCGA pairs, projector, centring and Poisson correction unchanged. Purity: ABSOLUTE (`tcga_purity_absolute/
+mastercalls.txt`, `call status == called`, primary tumour aliquot of the pair), DNA-based and independent of expression;
+if fewer than 80 % of pairs have it, the A127 proxy is used for all (fixed now; coverage reported).
+**Per-pair gain contribution.** u_i = Re(z_T,i conj(z_N,i) exp(-i arg C_c)) / V_N,c, with C_c and V_N,c over all pairs of
+cancer c (A304 quantities); the cancer's mean of u equals its G up to the phase alignment, so u decomposes the gain over
+pairs.
+- **H424.1 (primary): proliferation at fixed purity.** Pooled within-cancer regression of u on proliferation (A127 score,
+  z within cancer) adjusted for purity (z within cancer), cancer intercepts, pair weights 1; one-sided slope < 0.
+  Freedman-Lane permutation (proliferation residualised on purity, residuals permuted within cancer; 10,000, seed [424, 1]).
+  Specificity: the same slope for the 200 matched sets of A304 (seed [304, 7, cancer index]); clock-specific below the
+  matched q05.
+- **H424.2 (secondary): purity at fixed proliferation.** The purity slope of the same model, one-sided < 0 (stroma
+  dilution), same permutation scheme with the roles exchanged, same companions.
+- Holm over the two.
+**Descriptive.** (1) A304's unadjusted proliferation slope of u (to show what the contribution form gives without purity);
+(2) leave-one-cancer-out of H424.1 and of A304 Q_G; (3) BRCA: proliferation slope within PAM50 strata (strata intercepts,
+`A217 subtypes_tcga.csv`); (4) per-cancer slopes and the correlation of proliferation with ABSOLUTE purity; heterogeneity
+(Cochran Q, I^2) of per-cancer slopes; (5) the same model on CPTAC-3 (A304r pairs, its `purity.csv`).
+**Power stage.** Simulation at the real design (A304 calibration of S, g, psi per cancer; observed proliferation and purity
+vectors): u generated with a gain that falls with proliferation by k_G = 0.5 across the within-cancer IQR (A304 rule
+point), independent of purity; and a purity-only scenario (gain proportional to stroma share 1 - purity). Power and type I
+error of H424.1 and H424.2 in each scenario, and the H424.1 false positive rate under the purity-only scenario without
+the purity adjustment (the confound size). Power < 0.8 at the rule point: descriptive.
+**Readings (stated now).** H424.1 holds, clock-specific: the TCGA proliferation gain loss is not purity; it stays a
+TCGA, cancer-type-dependent observation (A304r). H424.1 fails with power and H424.2 holds: the A304 gain loss is tumour
+composition (purer tumours carry less stroma, which carries the time); the proliferation statement leaves the main text and
+section 1.2 is restated as composition. Both fail: not decided at this size; the proliferation statement stays descriptive.
+**Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A304_cancer_gain_departure/scripts/a424.py`;
+output `output/a424/`.
