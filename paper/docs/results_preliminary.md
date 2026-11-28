@@ -10585,3 +10585,37 @@ difference 1.82 (-0.82 to 6.04). Registered H417.1 not decidable (gate); shown d
   noise; it shows instead that clock and outputs move in opposite directions under intensive care.
 - Code: `exploratory/A412_icu_own_noise/scripts/a418.py` (b4334d4); score stage implemented, gated, not run.
 <!-- src: paper/exploratory/A412_icu_own_noise/output/a418/{power,pool,sets}.csv; A412 score_kappa.csv -->
+
+## A408 (scored 2026-11-28; BLIND for every thinned clock psi; one scoring run, 1,893 s, 200 donor bootstraps per unit): the own term of a 400-cell pseudobulk is not cell sampling: sampling of independent cells makes under 1 % of it (f excess 0.0004, 90 % upper bound 0.0067; H408.2 PASS); no clock-specific incoherence among the cells of a sample is detected (s^2 1.30 below the companion q95 2.05; H408.1 FAIL)
+
+HLCA lung, 9 class units (donors with >= 400 cells), Delta(n) = psi_cells(n) - psi_reads(n) over n = 25-400 cells,
+companions 50 expression-matched sets.
+
+| unit | donors | clock s^2 | clock f | psi_cells(400) | psi_cells(200) | companions' median s^2 / f |
+|---|---|---|---|---|---|---|
+| AT1 | 20 | 2.30 | 0.0045 | 1.28 | 1.46 | 1.52 / 0.0062 |
+| AT2 | 69 | 1.01 | 0.0018 | 1.44 | 1.31 | 0.19 / 0.0016 |
+| EC capillary | 21 | 2.32 | 0.0041 | 1.43 | 2.11 | 1.57 / 0.0035 |
+| EC venous | 13 | 10.95 | 0.0199 | 1.38 | 2.77 | 1.61 / 0.0028 |
+| basal | 52 | 2.38 | 0.0137 | 0.44 | 0.44 | 0.76 / 0.0066 |
+| fibroblast | 27 | 2.06 | 0.0064 | 0.81 | 1.10 | 1.59 / 0.0050 |
+| multiciliated | 30 | -0.07 | -0.0005 | 0.35 | 0.53 | 0.40 / 0.0025 |
+| secretory | 12 | 8.47 | 0.0151 | 1.40 | 2.66 | 6.95 / 0.0073 |
+| smooth muscle | 8 | -13.35 | -0.0137 | 2.44 | 5.59 | -1.97 / -0.0008 |
+| **pooled** | | **1.30** (companion q95 2.05) | **excess 0.0004 (upper 0.0067)** | | | f median 0.0035 |
+
+- **H408.2 passes.** At 400 cells, the part of the clock's own term that independent-cell sampling makes is at most
+  0.7 % (upper bound), about the same as for random genes. Registered reading: the own departure sits above single
+  cells (a tissue-level input, or units larger than a cell sampled at the biopsy level), consistent with a constant
+  own term in bulk; independent-cell sampling is excluded as its main source.
+- **H408.1 fails.** The cells of one sample do carry variance that averages out as 1 / n (s^2 > 0 in 7 of 9 units), but
+  no more for the clock than for matched genes: no clock-specific incoherence among cells is detected at this depth.
+- psi_cells(200) above psi_cells(400) in most units is matched by the read-thinning control (Delta small): it is
+  counting depth, not cell sampling. Calibration (power note): near f = 0 only; bias -0.002 there.
+- **Reading with A412 / A417 (population level).** The clock's own term is not the finite sampling of cells (A408), it
+  does not change when the cells' entrainment to the body's time weakens (A412), and in the knockout liver it survives
+  the loss of the hepatocyte clock under ad libitum feeding (A417, descriptive). It behaves as a fluctuation of the
+  tissue or of its local inputs, shared by the cells of a sample, added after the organ takes up the body's time.
+- Limits: one atlas (lung), dissociated cells (spatial units destroyed), living and post-mortem donors mixed (HLCA).
+- Code: `exploratory/A408_cell_sampling/scripts/a408.py --stage score`.
+<!-- src: paper/exploratory/A408_cell_sampling/output/{tests,score_units,power,units}.csv -->
