@@ -24,6 +24,8 @@ OUT = U.OUT / "a419"
 ENDO = "tumour:endothelial"
 IFN = [canonical(g) for g in ("STAT1", "IRF1", "CXCL9", "CXCL10")]
 ADH = [canonical(g) for g in ("VCAM1", "ICAM1", "SELE")]
+ISG = [canonical(g) for g in ("STAT1", "IRF1", "GBP1", "GBP4", "PSMB9", "TAP1")]  # A421: endothelium-intrinsic
+CONTAM = [canonical(g) for g in ("PTPRC", "CD3E", "LYZ")]
 N_SET, N_BOOT = 200, 2000
 FAMS = {"matched": ("matched", 0), "responsive": ("responsive", 1), "responsive_broad": ("responsive_broad", 2), "placebo": ("matched", 7)}
 
@@ -67,7 +69,11 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--jobs", type=int, default=4)
     ap.add_argument("--genome-jobs", type=int, default=2)
+    ap.add_argument("--variant", choices=("main", "intrinsic"), default="main", help="intrinsic: A421 (S3 only, intrinsic ISG score)")
     args = ap.parse_args()
+    global OUT
+    if args.variant == "intrinsic":
+        OUT = U.OUT / "a421"
     args.smoke = False
     limit_threads(1)
     OUT.mkdir(parents=True, exist_ok=True)
@@ -84,17 +90,18 @@ def main():
         genes = [g for g in Gc.columns if g not in META]
         frac = Gc[genes].div(Gc.depth, axis=0)
         lm = np.log(frac.mean() + 1e-12)[(Gc[genes].mean() >= 1) | frac.columns.isin(list(BASE.genes))]
-        for f, (kind, code) in FAMS.items():
+        for f, (kind, code) in (FAMS.items() if args.variant == "main" else []):
             for j, w in enumerate(pseudo_waveforms(lm, N_SET, np.random.default_rng([U.SEED, code]), BASE, kind)):
                 try:
                     sets[f][j].append(K.class_loud(rows[META + list(w.genes)], w, c))
                 except Exception:  # noqa: BLE001
                     pass
         t = rows.set_index("donor")
-        sc.append(pd.DataFrame({"ifn": K.score(t, IFN), "adh": K.score(t, ADH)}).rename_axis("donor").reset_index())
+        sc.append(pd.DataFrame({"ifn": K.score(t, IFN), "adh": K.score(t, ADH), "isg": K.score(t, ISG),
+                                "contam": K.score(t, CONTAM)}).rename_axis("donor").reset_index())
         # split-half reliability of the endothelial state (S2 disattenuation)
         st = rows.stratum.astype(str)
-        for ga, gb in deviation.split_genes(BASE, 5, np.random.default_rng([4191, sum(map(ord, c))])):
+        for ga, gb in (deviation.split_genes(BASE, 5, np.random.default_rng([4191, sum(map(ord, c))])) if args.variant == "main" else []):
             za = centred(pairwise.states(rows, BASE.subset(list(ga))), st)
             zb = centred(pairwise.states(rows, BASE.subset(list(gb))), st)
             rho = abs(np.sum(za * np.conj(zb))) / np.sqrt(np.sum(abs(za) ** 2) * np.sum(abs(zb) ** 2))
@@ -102,6 +109,27 @@ def main():
         log(f"endothelium {c}")
     df = df.merge(pd.concat(obs).rename("loud_endo"), left_on="donor", right_index=True, how="left")
     df = df.merge(pd.concat(sc, ignore_index=True), on="donor", how="left")
+    if args.variant == "intrinsic":
+        out = []
+        for a, b in (("isg", "immune_hot"), ("isg", "loud_endo"), ("isg", "ifn"), ("contam", "immune_hot"), ("contam", "loud_endo")):
+            rr = []
+            for _, g in df.dropna(subset=[a, b]).groupby("cohort"):
+                if len(g) >= 4:
+                    x, y = centred(g[a].to_numpy(float), g.stratum), centred(g[b].to_numpy(float), g.stratum)
+                    if x.std() > 0 and y.std() > 0:
+                        rr.append((len(g), float(np.corrcoef(x, y)[0, 1])))
+            n3, r3 = np.array(rr).T
+            out.append(dict(pair=f"{a} ~ {b}", patients=int(n3.sum()), r_within_cohort=float((n3 * r3).sum() / n3.sum())))
+        for lab, covs in (("endothelial slope", B.BASECOV), ("+ intrinsic ISG", B.BASECOV + ["isg"]),
+                          ("+ contamination", B.BASECOV + ["contam"]), ("+ both", B.BASECOV + ["isg", "contam"]),
+                          ("+ IFN (A419) + contamination", B.BASECOV + ["ifn", "contam"])):
+            r = B.describe(df, "immune_hot", covs, None, [4211, len(covs)], loud_col="loud_endo")
+            out.append(dict(pair=lab, patients=r["patients"], slope=r["slope"], lo90=r["lo90"], hi90=r["hi90"], p_two_sided=r["p_two_sided"]))
+        T = pd.DataFrame(out)
+        T.to_csv(OUT / "s3_intrinsic.csv", index=False)
+        pd.set_option("display.width", 250)
+        log("A421\n" + T.round(4).to_string(index=False))
+        return
     o = B.slope(df, "immune_hot", B.BASECOV, "loud_endo")[0]
     sl = {}
     for f in FAMS:
