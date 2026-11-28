@@ -10481,3 +10481,39 @@ same rows.
   themselves lean negative (fibroblast matched median -0.040): part of the per-class effect is a quieter state of every
   gene set in hot tumours. Post hoc, descriptive.
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/a416/{k1,k2,k3}.csv -->
+
+## A417 power note and descriptive score (2026-11-28; power 228 s, G417.1 NOT met (power 0.18); scored once as DESCRIPTIVE, 30 s; BLIND until this run for every arm psi): removing an input barely lowers these organs' gain, so the input arm cannot test the own-noise rule; the hepatocyte Bmal1 knockout liver keeps its own noise under ad libitum feeding (kappa -0.13) and loses it with the gain under daytime feeding (0.72); the one input removal that lowers gain (arrhythmic feeding, liver) keeps its own noise (dpsi* 0.08 against dA 0.65)
+
+**Power.** 11 units, 7 kept: all four VIP-KO units fail the registered precondition by construction (two time levels of
+3 + 3 libraries give 20 label splits, so the observed |a| equals the permutation q95; a design flaw of the
+registration, not a weak signal). Simulated dA of the input arm about 0.1 (removing the feeding rhythm or the liver's
+signals barely changes WAT, lung and liver gain, A297), so kappa_I = dpsi* / dA has no usable precision (SD 5-13): under
+truth S only 18 % of replicates decide (gate 80 %); under N 0 % false positives. With all 11 units (sensitivity, added by
+the agent): 42 % / 3 %. kappa_O alone resolves (SD 0.08 under N). 100 companion sets per dataset, 0 failed.
+
+| unit (control > perturbed) | arm | libraries | dA | dpsi raw | companions' dpsi | **dpsi*** |
+|---|---|---|---|---|---|---|
+| Manella liver, Alb-Cre > BLKO, ad libitum | O | 24 / 24 | 2.430 | -0.124 | 0.181 | **-0.305** |
+| Manella liver, Alb-Cre > BLKO, daytime fed | O | 24 / 24 | 4.244 | 3.363 | 0.318 | **3.045** |
+| Greenwell liver, ad libitum > arrhythmic | I | 18 / 18 | 0.647 | 0.290 | 0.208 | **0.082** |
+| Manella WAT, AL / DF | I | 24 / 24 | 0.121 / -0.834 | -0.518 / 0.384 | -0.069 / 0.559 | -0.449 / -0.175 |
+| Manella lung, AL / DF | I | 24 / 24 | 0.124 / 0.228 | -0.319 / 0.350 | 0.113 / 0.426 | -0.431 / -0.075 |
+
+kappa_O 0.411 (90 % 0.267 to 0.591; AL -0.126 (-0.461 to 0.211), DF 0.717 (0.559 to 0.933)); kappa_I -1.41 (-5.5 to 1.3);
+difference 1.82 (-0.82 to 6.04). Registered H417.1 not decidable (gate); shown descriptively.
+
+- **Input removal.** Only the arrhythmic-feeding liver loses gain (dA 0.65, |a| about 1.4-fold lower); its own noise
+  does not move beyond companions (dpsi* 0.08): uptake-like, as intensive care (A412), but one unit. Removing the
+  liver's clock leaves WAT and lung gain unchanged (dA -0.8 to 0.2): no gain change, nothing to test.
+- **Oscillator removal (hepatocyte Bmal1 KO).** Under ad libitum feeding the liver loses gain 3.4-fold in |a| (dA 2.43)
+  with its own noise unchanged (dpsi* -0.31); under daytime feeding it loses more (dA 4.24) and its own noise falls with
+  it (dpsi* 3.05). The prediction "an oscillator loss scales the own term" holds only in the conflicting feeding arm,
+  where A415 also found scaling.
+- **Population reading (descriptive, two units).** If the own term came from the hepatocytes' own oscillators,
+  removing their clock should have removed it; under ad libitum feeding it stays. The own term then arises in what
+  remains rhythmic in the knockout liver (non-hepatocyte clocks and the systemically driven hepatocyte transcription),
+  i.e. it is set by the inputs' and tissue's fluctuation, not by the hepatocyte oscillator. Under daytime feeding the
+  KO liver's remaining rhythm is weak and feeding-driven, and both terms collapse. Not a test.
+- Descriptive units: Vollmers 2009 (microarray) and the Auerbach aorta are loadable; not computed.
+- Code: `exploratory/A322_conflicting_drives/scripts/a417.py` (a04f301).
+<!-- src: paper/exploratory/A322_conflicting_drives/output/a417/{power_summary,power_units,power_summary_allunits,score_units,score_kappa,companions_summary}.csv -->
