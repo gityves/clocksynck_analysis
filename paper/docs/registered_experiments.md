@@ -13449,3 +13449,11 @@ within-cohort slope (no covariates). 200 replicates per (r, t0).
 **Reading.** If no (r, t0) gives a median slope as negative as -0.126 (or q05 beyond it at r <= 0.5), shared biopsy time
 does not explain the lead; if plausible combinations reach it, the lead is not separable from timing.
 **Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a403d.py`; output `output/a403d/`.
+
+### A403d note 1 (2026-11-28, POST HOC, before computing it): does the immune-hot score itself follow the host phase as the timing reading requires?
+The timing reading (A403d) needs immune-hot to follow the true phase (r >= 0.3, peak within about 2 h of the arc centre).
+Test: the A402b statistic (pooled r of immune-hot against the stratum-centred host state, 2,000 shared within-cohort
+permutations, excess over the null mean) on the observed data, and the same statistic in A403d's simulations at the
+combinations that reproduce the slope (r 0.3 / 0.5 / 0.7, t0 0, +-2 h; 200 replicates each). Reading: an observed excess
+below the simulated q05 of every slope-reproducing combination excludes timing; inside them, timing stays possible.
+Code: `a403d.py --stage phase`; output `output/a403d/phase.csv`.

@@ -10517,3 +10517,18 @@ difference 1.82 (-0.82 to 6.04). Registered H417.1 not decidable (gate); shown d
 - Descriptive units: Vollmers 2009 (microarray) and the Auerbach aorta are loadable; not computed.
 - Code: `exploratory/A322_conflicting_drives/scripts/a417.py` (a04f301).
 <!-- src: paper/exploratory/A322_conflicting_drives/output/a417/{power_summary,power_units,power_summary_allunits,score_units,score_kappa,companions_summary}.csv -->
+
+## A403d (run 2026-11-28; POST HOC, DESCRIPTIVE; one run, 19 min, after a memory kill before any value): shared biopsy time can produce the colder-louder slope: if the immune-hot score peaks near the middle of the hospital window and follows the hour at r >= 0.3-0.5, timing alone gives -0.10 to -0.17 (observed -0.124 with the same estimator)
+- **Geometry:** 542 patients, 61 strata; pooled within-stratum host elongation 2.39, matched by a within-stratum phase SD
+  of 2.5 h (stratified arc model, host reliability 0.70).
+- **Timing-only slopes (no loudness differences; 200 replicates each):** the sign depends on where the immune peak t0 sits
+  relative to the arc centre. At t0 = 0 h (peak in the middle of the biopsy window) the median slope is -0.101 (r 0.3),
+  -0.166 (r 0.5), -0.240 (r 0.7), with 32 %, 78 % and 99 % of replicates at or below -0.126; at t0 = +-2 h about half
+  of that; at t0 = 6-18 h the slope is near 0 or positive (up to +0.24 at t0 = 12 h).
+- **Reading.** The estimator cannot tell a loudness effect from a readout that follows the hour, when the readout peaks
+  inside the biopsy window: patients at the centre of the arc sit near the centroid and read quiet, those at the ends
+  read loud. The phase-free correction (A403c) does not remove this (the estimated phase is noisy, as A366 showed). So
+  the lead stands only if the immune-hot score does not follow the hour with a peak inside the window. A146's
+  T-cell-activation program is predicted to peak at 13 h (near the window's centre), which makes the timing reading
+  plausible rather than remote. Decision needs the immune-hot score's own phase relation (A403d note 1).
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/a403d/{geometry,sim}.csv -->
