@@ -10568,3 +10568,20 @@ difference 1.82 (-0.82 to 6.04). Registered H417.1 not decidable (gate); shown d
   1/n - 1/400 reported); random-effects pooling (`clocksync.stats.meta`); scoring with 200 donor bootstraps per unit.
   Code: `a408.py`, `a408_census.py` (7f53d1e, c4e8713).
 <!-- src: paper/exploratory/A408_cell_sampling/output/{units,power,sim,companions_c400,check_cells_vs_a17}.csv -->
+
+## A418 power note (2026-11-28; one run, 1,111 s, peak 3 GB; set dS only, no set psi or kappa): not decidable: rhythmic output programmes do not lose shared rhythm in intensive care; they gain it (median set dS -0.56 log against the clock's +0.63)
+
+- Pool: 1,335 non-clock genes rhythmic by time of death in fast deaths (Fisher-combined cosinor over the 12 body
+  tissues, BH q < 0.05; clock, clock-like and A263 responsive genes excluded); per 4 h bin 148 / 151 / 363 / 218 / 129 /
+  326. 200 sets matched to the clock genes on phase bin and expression tercile, each read with its own fast-death
+  waveform; 200 finite, 0 errors.
+- **Gate fails** (registered: median set dS >= 0.2): median over sets of dS (log S_fast - log S_vent) **-0.562**
+  (q05 -1.471, q95 +0.221). H418.1 is not scored.
+- **Descriptive (post hoc reading of the gate quantity).** In ventilated donors with a living brain the shared,
+  host-referenced variation of rhythmic output programmes along their daily pattern is about 1.75-fold larger than in
+  fast deaths, while the clock's is 1.9-fold smaller (A412). The output layer follows a shared systemic state that
+  intensive care amplifies (drugs, stress hormones, feeding by infusion; cf. the signal layer, A275 / A279 and A261),
+  while the clock loses the body's time. So the intensive-care contrast cannot test whether outputs scale their own
+  noise; it shows instead that clock and outputs move in opposite directions under intensive care.
+- Code: `exploratory/A412_icu_own_noise/scripts/a418.py` (b4334d4); score stage implemented, gated, not run.
+<!-- src: paper/exploratory/A412_icu_own_noise/output/a418/{power,pool,sets}.csv; A412 score_kappa.csv -->
