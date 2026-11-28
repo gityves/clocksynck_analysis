@@ -182,7 +182,7 @@ glioma (A247: precondition fails).
 | U1 | A403c | The colder-louder lead is not a phase effect: on phase-free loudness -0.126 (p 0.006), beyond both families; loudness depends on phase less than random gene sets (4th percentile). The myeloid part weakens (-0.062). |
 | U2 / H5 | A304r | The proliferation gain loss does not replicate in CPTAC-3 (ratio 0.89, p 0.16, power 0.97); the TCGA loss sits in cancer types CPTAC lacks. Section 1.2's first row drops to B. |
 | U3 | A402c | Tumour-stroma host reliability 0.70 (phase error about 1.8 h). Composition rhythms of about 3-fold are excluded; 2-fold ones detected only at power 0.7. |
-| H2 | A409 | Descriptive (below power gate, null leak disclosed): tumour fibroblasts share the patient's clock loudness (leverage 0.361, beyond both families); the myeloid link is local to the tumour stroma. |
+| H2 | A409 (+ addendum 1) | Withdrawn: the leverage (0.361) is what shared biopsy time produces (timing-only median 0.62; loudness not readable at this design, as MuTHER A366). The myeloid link stays local to the tumour stroma. |
 | H1 | A410 | FAIL with power: lineage retention does not predict cancer-cell coupling within cancer types. |
 | H4 | A411 | FAIL with power: proliferation does not predict cancer-cell coupling (coupled cancers lean negative, not significant). |
 | H6 | A414 | FAIL x3: no A146 program follows the stroma clock phase beyond companions; T-cell activation leans (p 0.033, Holm 0.099), peak 15.5 h vs A146 13 h. |

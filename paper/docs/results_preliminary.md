@@ -10441,3 +10441,23 @@ failed.
   Tabula Sapiens (A109b note: 5 donors with 7-9 organs, the other donors 1-2). A per-donor leverage needs tens of donors
   (A400's 48 mice were underpowered on the core loop). Not decidable; not pursued.
 <!-- src: registered_experiments.md A109b note; A400c / A400b entries above -->
+
+## A409 addendum 1 (run 2026-11-28; POST HOC, DESCRIPTIVE; one run, 5 min; A409 leverages reproduced first): the tumour-normal stroma loudness leverage is not separable from shared biopsy time: at A409's design, shared timing alone gives a larger leverage (median 0.62) than observed (0.36), and a person loudness adds nothing the estimator can see
+- **G1 geometry:** the pooled within-stratum clouds lie on arcs: combined elongation 3.93 (tumour fibroblast pair) and 3.71
+  (normal reference); per stratum (>= 6 patients) 1.5 to 45. Fitted within-stratum phase SD 1.34 h and 0.57 h (small
+  strata inflate elongation, so these spreads are likely too narrow).
+- **G2:** split-half reliability 0.74 (tumour fibroblast) / 0.64 (host); 0.69 / 0.62 (reference).
+- **G3 (1,000 stratified ring simulations through the A409 estimator):** tumour fibroblast pair, leverage 0.361 at the 0th
+  percentile of timing-only (median 0.622, q95 0.725), 1.5th of half-GTEx loudness (median 0.565) and 1.3rd of GTEx
+  loudness (0.566); reference 0.485 at the 12.8th / 52.5th / 23.7th.
+- **G4 (A368 Q):** 0.444, at the 0.1th percentile of timing-only (median 0.685) and 0th of the loudness simulations, but
+  99.5th of matched (q95 0.348) and 88.5th of responsive pseudo-waveforms (q95 0.535).
+- **Reading.** As in MuTHER (A366), the A409 leverage is what shared biopsy time on hospital-hours arcs can produce; here
+  even more so: with about five patients per stratum, the timing-only and loudness simulations overlap almost completely
+  (0.62 vs 0.57), so this design cannot read a person loudness at all. The ring model over-produces (the observed values
+  sit below it), but in neither direction does it leave room for a loudness signal. Beating the pseudo-waveforms only
+  excludes technical sample-level scale, not time. A409's H409.1 reading is withdrawn: "the tumour stroma shares a
+  radius with the normal stroma that shared biopsy time explains; no evidence of a person-level clock amplitude in
+  human biopsies". The D409 myeloid slopes are radius-on-share regressions within cohort and are not affected by this
+  between-compartment argument.
+<!-- src: paper/exploratory/A387_tumour_full_model/output/a409/timing_{geometry,reliability,sim,tests,companions}.csv -->
