@@ -195,3 +195,74 @@ single-cell tests find no proliferation or lineage dependence of cancer-cell cou
 stroma's loudness tracks immune coldness locally (A403c, A409 D409). The apparent sharing of loudness between tumour and
 normal stroma (A409) is what shared biopsy time produces (addendum 1), as in MuTHER: a person-level amplitude factor is
 still not shown in human biopsies. The composition-phase nulls now carry a size: about 3-fold rhythms excluded.
+
+## 6. Scale, atlas and what the negatives bound (2026-11-28)
+
+### 6.1 What was analysed
+
+| Data | Size | Where |
+|---|---|---|
+| Single-cell tumours with stroma | 660 patients after deduplication (631 with a cancer label in the atlas), 51 sources (47 A388 cohorts, 11 GEO builds, 11 CELLxGENE datasets, BIOKEY), 19 cancer types | A388, A401-A422 |
+| Single-cell tumours with adjacent normal | 34 cohorts (A227 list) | A227, A346, A387, A409 |
+| Paired tumour-normal bulk | TCGA 517 pairs (10 cancers); CPTAC-3 713 pairs (8 types) | A138, A175, A186, A221, A249, A250, A304, A304r |
+| Tumour-only bulk | TCGA 6,024 tumours (23 projects), SCAN-B 3,073, METABRIC 1,980, lung adenocarcinoma 885, gastric 983, liver 465 | A127-A224 |
+| Timed and treatment cohorts | breast with recorded surgery hour (42), BIOKEY anti-PD-1 (31), POETIC and letrozole series | A146, A168, A169, A200, A405 |
+
+About 14,000 bulk tumours and 660 single-cell patients: the largest analysis of circadian organisation in human tumours we
+know of, and the only one at cell-type resolution against the patient's own clock.
+
+### 6.2 Per-cancer atlas (descriptive assembly of scored outputs; `A401_cancer_timekeeping/scripts/atlas_table.py`)
+
+| cancer | single-cell patients (cohorts) | cancer-cell coupling c (90 %) | z vs matched | cancer-cell amplitude / fibroblast | colder-louder slope (90 %) | TCGA pairs | TCGA tumour-normal corr | coupling to body time | TCGA gain ratio high / low prolif | CPTAC pairs | CPTAC gain ratio |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| BLCA | 10 (4) | 0.00 (0.00 to 1.00) | -0.92 | 0.37 |  | 19 | 0.52 |  | 0.41 |  |  |
+| BRCA | 112 (9) | 0.05 (0.02 to 0.18) | -1.52 | 0.31 | -0.22 (-0.43 to -0.05) | 112 | 0.32 | 0.18 | 0.51 |  |  |
+| CESC | 20 (2) | 0.26 (0.03 to 0.41) | 1.15 | 0.97 | 0.17 (-0.50 to 0.62) |  |  |  |  |  |  |
+| COAD | 71 (8) | 0.00 (0.00 to 0.12) | -0.78 | 0.10 | 0.04 (-0.24 to 0.28) | 41 | 0.21 | 0.06 | 1.93 |  |  |
+| ESCA | 67 (3) | 0.15 (0.04 to 0.31) | 1.16 | 0.54 | -0.20 (-0.40 to 0.05) |  |  |  |  |  |  |
+| HNSC | 16 (2) | 0.24 (0.00 to 0.60) | 0.72 | 0.86 |  |  |  |  |  | 61 | 1.02 |
+| KIRC | 19 (1) | 0.33 (0.09 to 0.63) | 1.37 | 0.39 | 0.29 (-0.18 to 0.76) | 72 | 0.42 | 0.27 | 0.83 | 151 | 0.97 |
+| KIRP |  |  |  |  |  | 32 | 0.29 | 0.12 | 2.11 |  |  |
+| LIHC | 17 (4) | 0.15 (0.00 to 0.53) | -0.09 | 0.67 |  | 50 | 0.49 | 0.37 | 0.42 |  |  |
+| LUAD | 82 (7) | 0.29 (0.17 to 0.41) | 2.37 | 0.52 | -0.19 (-0.40 to 0.06) | 58 | 0.49 | 0.54 | 1.11 | 215 | 0.92 |
+| LUSC | 14 (2) | 0.06 (0.03 to 0.74) | -0.38 | 0.59 |  |  |  |  |  | 96 | 0.63 |
+| OV | 47 (3) | 0.01 (0.00 to 0.13) | -0.93 | 0.36 | -0.09 (-0.39 to 0.18) |  |  |  |  |  |  |
+| PAAD | 33 (3) | 0.17 (0.05 to 0.40) | 0.71 | 0.32 | 0.33 (-0.13 to 0.65) |  |  |  |  | 52 | 0.99 |
+| PRAD | 42 (4) | 0.21 (0.05 to 0.45) | 0.65 | 0.69 | -0.34 (-0.61 to 0.02) | 52 | 0.43 | 0.26 | 0.54 |  |  |
+| SKCM |  |  |  |  |  |  |  |  |  | 66 | 1.11 |
+| STAD | 29 (3) | 0.07 (0.00 to 0.26) | 0.03 | 0.31 | -0.43 (-0.60 to 0.13) |  |  |  |  | 27 | 0.21 |
+| THCA | 17 (4) | 0.39 (0.12 to 0.75) | 0.85 | 0.85 | -0.04 (-0.95 to 0.44) | 59 | 0.30 | 0.11 | 0.01 |  |  |
+| UCEC |  |  |  |  |  | 22 | 0.08 |  | 0.82 | 45 | 1.03 |
+| lung_mixed | 35 (6) | 0.23 (0.07 to 0.47) | 1.00 | 0.59 | 0.02 (-0.39 to 0.43) |  |  |  |  |  |  |
+
+Columns: cancer-cell coupling to the tumour-stroma host and z against 200 matched sets (A401, 14 genes); cancer-cell
+amplitude relative to tumour fibroblasts (A401); colder-louder slope (A403b D1); TCGA tumour-normal correlation and
+coupling to body time (A304 A3, reproducing A138); gain ratio of high / low proliferation tumours, TCGA (A304) and CPTAC-3
+(A304r). Small cancers have wide intervals; per-cancer values are descriptive.
+
+### 6.3 What the negatives bound
+
+| Statement | Size | Bound |
+|---|---|---|
+| Clock readouts carry no prognostic or treatment information beyond proliferation (published signatures, TimeTeller, CYCLOPS magnitude, our signal) | SCAN-B, METABRIC, TCGA | hazard ratios 0.92-0.98 (A191-A194, A198) |
+| Proliferation does not lower coherence pan-cancer | 12 TCGA projects | T -0.032, MDE 0.087 (A172) |
+| Subclonal heterogeneity does not lower coherence | 5,499 tumours | MDE 0.058 (A213) |
+| Outside breast, subtypes do not differ | 2,388 tumours | MDE 0.025 (A219) |
+| The TCGA proliferation gain loss is not general | CPTAC-3, 713 pairs | ratio 0.89 vs 0.63, power 0.97 (A304r) |
+| Cancer-cell coupling does not follow proliferation | 560 patients | MDE 0.110 (A411) |
+| Cancer-cell coupling does not follow lineage retention | 365 patients | MDE 0.141 (A410) |
+| No composition rhythm against the stroma clock phase of about 3-fold | 543 patients | power 0.92-0.96 at 2.8-fold (A402b, A402c) |
+| The immune programs that follow the surgery hour do not follow the stroma clock phase | 274-368 patients | per-program MDE 0.065-0.075 (A414) |
+| Tumour clock and anti-PD-1 response | BIOKEY 31 | about one SD (A405) |
+| Published claims tested at scale and not supported | COFE "uncoupled" (A265, A267); CYCLOPS human TNBC phases (A140); TimeTeller and CYCLOPS prognosis (A193, A194); clock-gene prognosis beyond proliferation (A192) | - |
+
+### 6.4 Framing sentence (draft for the PI)
+
+"Across 19 cancer types, about 14,000 bulk tumours and 660 patients at single-cell resolution, tumours keep their
+patient's circadian time through the stroma; cancer cells join only in some cancer types; and no clock readout informs
+outcome beyond proliferation."
+
+### 6.5 Status of the colder-louder lead after the highlight checks (2026-11-28)
+Holds for the stromal composite (phase-free -0.126; not composition, A416; not dilution, A422; timing unlikely, A403d);
+the endothelial clock-specific part was an immune-RNA dilution artefact (A422) and the IFN mechanism is not supported
+(A421); not reproduced within person in inflamed gut (A420). Post hoc on seen data: status C until a blind replication.
