@@ -58,10 +58,53 @@ def slope_of(d, z, y):
     return S.W.pooled_slope(un) if un else np.nan
 
 
+def phase_r(d, z, y, n_perm=0, seed=0):
+    """A402b statistic: pooled r of y against the stratum-centred state over cohorts; permutation null of y within cohort."""
+    num, w, nul = 0.0, 0.0, np.zeros(n_perm)
+    rng = np.random.default_rng(seed)
+    for _, g in d.assign(_y=y, _z=z).groupby("cohort"):
+        if len(g) < 4:
+            continue
+        yy = centred(g._y.to_numpy(float), g.stratum)
+        zz = centred(g._z.to_numpy(), g.stratum)
+        den = np.sqrt(np.sum(yy ** 2) * np.sum(np.abs(zz) ** 2))
+        if den == 0:
+            continue
+        num += len(g) * abs(np.sum(yy * np.conj(zz))) / den
+        w += len(g)
+        if n_perm:
+            P = np.argsort(rng.random((n_perm, len(g))), axis=1)
+            nul += len(g) * np.abs((yy[P] * np.conj(zz)[None, :]).sum(1)) / den
+    return num / w, (nul / w if n_perm else None)
+
+
+def stage_phase(d, st, sd_hat, rng):
+    obs, nul = phase_r(d, d.z.to_numpy(), d.immune_hot.to_numpy(float), 2000, [4035])
+    rows = [dict(scenario="observed", r=np.nan, t0_h=np.nan, stat=obs, null_mean=float(nul.mean()), excess=obs - float(nul.mean()),
+                 p=float((np.sum(nul >= obs) + 1) / 2001))]
+    for r in R_GRID:
+        for t in (22, 0, 2):
+            ex = []
+            for _ in range(N_REP):
+                ph, z = sim_states(st, sd_hat, rng)
+                y = np.cos(ph - t * H)
+                y = r * (y / y.std()) + np.sqrt(1 - r ** 2) * rng.normal(size=len(y))
+                o, nn = phase_r(d, z, y, 200, rng.integers(1 << 30))
+                ex.append(o - nn.mean())
+            ex = np.array(ex)
+            rows.append(dict(scenario="timing-only", r=r, t0_h=t, excess_median=float(np.median(ex)), excess_q05=float(np.quantile(ex, .05)),
+                             share_le_observed=float(np.mean(ex <= rows[0]["excess"]))))
+        log(f"phase r {r} done")
+    T = pd.DataFrame(rows)
+    T.to_csv(OUT / "phase.csv", index=False)
+    log("phase\n" + T.round(4).to_string(index=False))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--jobs", type=int, default=12)
     ap.add_argument("--genome-jobs", type=int, default=4)
+    ap.add_argument("--stage", choices=("slope", "phase"), default="slope")
     args = ap.parse_args()
     args.smoke = False
     limit_threads(1)
@@ -95,6 +138,10 @@ def main():
     sd_hat = float(SD_GRID[np.argmin(np.abs(el - obs_el))])
     geo = pd.DataFrame([dict(patients=len(d), strata=len(set(st)), elongation_observed=obs_el, sd_hat_rad=sd_hat,
                              sd_hat_h=sd_hat / H, observed_slope_no_covariates=obs_slope)])
+    if args.stage == "phase":
+        stage_phase(d, st, sd_hat, rng)
+        log(f"done {(time.time() - t0) / 60:.1f} min")
+        return
     geo.to_csv(OUT / "geometry.csv", index=False)
     log("geometry\n" + geo.round(4).to_string(index=False))
     rows = []
