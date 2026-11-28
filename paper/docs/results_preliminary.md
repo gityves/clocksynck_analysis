@@ -10461,3 +10461,23 @@ failed.
   human biopsies". The D409 myeloid slopes are radius-on-share regressions within cohort and are not affected by this
   between-compartment argument.
 <!-- src: paper/exploratory/A387_tumour_full_model/output/a409/timing_{geometry,reliability,sim,tests,companions}.csv -->
+
+## A416 (run 2026-11-28; POST HOC, DESCRIPTIVE; one run, 40 min, after a crash on KIRC's missing fibroblast class before any value): the colder-louder lead is not a composition effect: it is present within each stromal class at the composite's size (fibroblast -0.099, endothelium -0.107, mural -0.126), beyond both companion families only in endothelium; composition covariates barely move the composite (-0.126 -> -0.113)
+Phase-free class loudness (each class's own state), A403b statistics, 200 matched and 200 responsive pseudo-waveforms on the
+same rows.
+| class | patients (cohorts) | slope (90 %) | p | matched median / q05 | responsive q05 | negative cancers | I^2 |
+|---|---|---|---|---|---|---|---|
+| fibroblast | 407 (34) | -0.099 (-0.205 to 0.013) | 0.057 | -0.040 / -0.124 | -0.158 | 8 of 11 | 0.00 |
+| endothelium | 427 (36) | -0.107 (-0.188 to 0.003) | 0.035 | -0.011 / -0.093 | -0.083 | 8 of 12 | 0.32 |
+| mural | 183 (18) | -0.126 (-0.265 to 0.050) | 0.11 | -0.020 / -0.143 | -0.142 | 7 of 9 | 0.00 |
+- **K2 (composite, phase-free):** -0.126 (p 0.006) -> -0.113 (-0.184 to 0.046, p 0.016) with log fibroblast / endothelial
+  cells, log stromal cells and the immune-contamination score of the stroma added. The contamination score correlates with
+  immune-hot (within-cohort r 0.35) but does not carry the slope; the class ratio barely relates to immune-hot (r -0.08).
+- **K3 (fibroblast subtypes):** myCAF-like and iCAF-like scores relate weakly to immune-hot (r 0.02, 0.08) and to fibroblast
+  loudness (-0.09, 0.05); the fibroblast slope adjusted for both is -0.176 (-0.269 to -0.022, p 0.001).
+- **Reading.** Each stromal class is quieter in hotter tumours, by about as much as the composite, so the lead is not the
+  stromal mix, nor immune RNA in the stromal pseudobulks, nor a CAF-subtype shift. Within single classes it is at the
+  companion line: beyond both families in endothelium; inside them in fibroblasts and mural cells, where the matched sets
+  themselves lean negative (fibroblast matched median -0.040): part of the per-class effect is a quieter state of every
+  gene set in hot tumours. Post hoc, descriptive.
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/a416/{k1,k2,k3}.csv -->
