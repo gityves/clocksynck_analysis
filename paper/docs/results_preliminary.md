@@ -10619,3 +10619,21 @@ companions 50 expression-matched sets.
 - Limits: one atlas (lung), dissociated cells (spatial units destroyed), living and post-mortem donors mixed (HLCA).
 - Code: `exploratory/A408_cell_sampling/scripts/a408.py --stage score`.
 <!-- src: paper/exploratory/A408_cell_sampling/output/{tests,score_units,power,units}.csv -->
+
+## A419 (run 2026-11-28; POST HOC, DESCRIPTIVE; one run, 25 min): the endothelial colder-louder slope is clock-specific against all three companion families with calibrated p 0.03; hot tumours' stroma runs at 0.84 of the cold tumours' clock amplitude (endothelium 0.91); adjusting for the endothelium's own IFN-gamma response removes most of the slope
+- **S1 (endothelial phase-free loudness, 427 patients; slope -0.107):** matched median -0.011, q05 -0.093 (3.0th
+  percentile); narrow responsive -0.003 / -0.083 (3.0th); broad responsive -0.010 / -0.083 (1.5th); placebo-calibrated
+  p 0.030 in each family (200 placebo matched sets).
+- **S2 (within-cohort immune-hot tertiles, hot / cold amplitude ratio, 90 % from 2,000 bootstraps):** composite host 0.84
+  (0.76-0.96); endothelial state 0.91 (0.80-1.03), whose split-half reliability is 0.52 (the endothelial ratio is
+  attenuated by state noise).
+- **S3 (endothelial pseudobulk):** IFN-gamma response score (STAT1, IRF1, CXCL9, CXCL10) correlates with immune-hot r 0.47
+  and with endothelial loudness -0.04; adhesion score (VCAM1, ICAM1, SELE) 0.07 and -0.02. Endothelial slope -0.107 (p
+  0.030) -> -0.043 (p 0.39) adjusted for IFN-gamma response, -0.062 (p 0.22) for adhesion, -0.038 for both.
+- **Reading.** In the endothelium, louder clocks in colder tumours are clock-specific against expression-matched,
+  stress-responsive and broad stress-responsive gene sets (calibrated p 0.03), and the stromal clock of the hottest
+  third of tumours runs at about 84 % of the coldest third's amplitude. The part of immune-hot that tracks loudness is
+  largely the part the endothelium itself shows as an IFN-gamma response: consistent with IFN-gamma activity reaching the
+  endothelium and going with a quieter clock, but not decisive (the adjustment uses a strong correlate of the readout;
+  the IFN score's own link to loudness is weak, -0.04). Post hoc throughout; a blind replication is what the claim needs.
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/a419/{s1,s1_sets,s2,s3}.csv -->
