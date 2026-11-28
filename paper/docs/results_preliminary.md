@@ -10546,3 +10546,25 @@ difference 1.82 (-0.82 to 6.04). Registered H417.1 not decidable (gate); shown d
   separately, not jointly). The lead stays post hoc and needs the remaining checklist items (clock specificity in
   endothelium, mechanism readouts, blind replication).
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/a403d/phase.csv -->
+
+## A408 power note (2026-11-28; Census companion download 15,665 s, simulation 7,222 s, peak 3 GB; no thinned clock psi computed): decidable (9 units, pooled SE of f 0.002), calibrated near f = 0 only
+
+- Companion per-cell counts: CELLxGENE Census 2025-11-08, HLCA dataset 9f222629..., 375,129 target-class cells x 673
+  genes (`$SCCC_DATA/cells/hlca_a408_companions/`, PROVENANCE.md, sha256 checked). Cells match the A17 `lung_hlca`
+  table exactly on 300 sampled rows (one added rule: groups < 10 cells dropped, as in the atlas build).
+- Units (donors with >= 400 cells of the class): AT2 69, basal 52, multiciliated 30, fibroblast 27, EC capillary 21,
+  AT1 20, EC venous 13, secretory 12, smooth muscle 8; EC arterial (7) and lymphatic EC (4) do not enter.
+- Simulation (registered levels read literally: per-cell variance s^2 = k x companion psi_cells(400), k 0 / 0.5 / 1;
+  10 replicates, 40 donor bootstraps): true f 0 / 0.0012 / 0.0025, pooled bias -0.0008 / -0.0016 / -0.0019, pooled
+  bootstrap SE 0.002 (SD over replicates 0.001-0.002). Decidable (>= 3 units, SE <= 0.15).
+- **Calibration limit.** At these levels f is near 0: a cell-sampling share of 0.5 at 400 cells would need per-cell
+  clock-state variance about 200 times the 400-cell psi (per-cell amplitude about 20 state units), which the agent
+  judged physically implausible; the estimator is therefore calibrated for bias and SE near f = 0, not at f = 0.5.
+  This is itself informative: with independent cells, sampling 400 of them cannot make a large part of the own term
+  unless cells are extremely heterogeneous (subpopulations with different clock states), which is what the real
+  thinning measures.
+- Implementation (note-2 choices): all pseudobulks of a unit fitted as separate non-anchor compartments of one
+  `Dataset` with the A17 anchors (leave-one-out); Delta(n) averaged over 20 draws, OLS on 1/n (alternative regressor
+  1/n - 1/400 reported); random-effects pooling (`clocksync.stats.meta`); scoring with 200 donor bootstraps per unit.
+  Code: `a408.py`, `a408_census.py` (7f53d1e, c4e8713).
+<!-- src: paper/exploratory/A408_cell_sampling/output/{units,power,sim,companions_c400,check_cells_vs_a17}.csv -->
