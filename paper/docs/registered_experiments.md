@@ -13333,3 +13333,34 @@ abundance), P10 PD-1 (T/NK, residual on abundance).
 **Reading.** A pass reads "follows the tumour-stroma clock phase beyond matched genes", with the responsive comparison
 deciding between the clock and a body-wide pulse. A fail bounds program rhythms at the A402c scale (about 3-fold).
 **Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a414.py`; output `output/a414/`.
+
+## A415 (2026-11-28, under the user's 12 h instruction "work autonomously on what you suggested" (health synthesis, hypothesis 1 extended after A412 passed); staged as A412: power (simulation at the observed amplitudes; companion draws; no clock psi contrast), then one scoring run; **NOT BLIND**: A322 / A324 (timed amplitude ratios conflict / control: Manella liver 0.712, WAT 0.319, lung 0.495; Xin liver 0.438, heart 0.589, kidney 0.648, VAT 0.111; "extra dephasing in visceral fat" read post hoc), A412 (intensive care: own noise unchanged, kappa -0.05), A395 / A407. BLIND for every timed own noise psi of these arms.)
+**Question.** When conflicting drives cost a mouse organ clock amplitude, does the organ's own clock noise stay (the net
+drive it takes up is weaker: uptake, as in intensive care, A412) or rise (cells or regions of the organ split between the
+drives differently in each animal: internal dephasing that varies between animals)? Population reading: a coherent
+re-synchronisation at an intermediate phase (A322's reading) leaves psi unchanged; an animal-specific split of the cell
+population between the two phases adds own variance as amplitude falls.
+**Data.** Manella 2021 Alb-Cre controls (daytime vs ad libitum feeding; liver, WAT, lung) and Xin 2021 (DRF vs NRF;
+liver, heart, kidney, VAT): the A322 / A324 states (`A297.liver_states`, one projector per tissue over both arms, QC'd
+clock genes); 7 tissue x dataset units.
+**Statistic.** Per unit u and arm: timed amplitude |a| (A297 `amplitude`, first harmonic, ZT known) and own noise psi =
+ML residual variance of the clock state around the arm's timed fit beyond Poisson measurement noise
+(`Dataset.timed_loadings` per arm, or the same estimator applied to the states). dA_u = log |a|^2 control - log |a|^2
+conflict (> 0: amplitude lost); dpsi_u = log psi control - log psi conflict. Companion excess dpsi*_u = dpsi_u - median
+over companion sets (100 expression-matched non-clock gene sets per dataset, A263 rule, read at the clock positions,
+same arms) when genome-wide counts are available; otherwise dpsi*_u = dpsi_u and the result is descriptive.
+kappa = median_u dpsi*_u / median_u dA_u (0 = own noise unchanged (uptake), 1 = scales with amplitude, < 0 = rises);
+90 % interval from 2,000 bootstraps of libraries within ZT and arm (A322 scheme).
+**Power stage (gates, stated now).** Simulation per unit at the observed design (libraries per ZT and arm, depths), the
+arm amplitudes reported in A322 / A324 and the control arm's psi: truth A (psi equal in both arms), truth B (psi scaled
+with |a|^2), truth C (conflict psi = control psi x 2); 100 replicates. G415.1: under A, >= 80 % of replicates have a 90 %
+interval (kappa +- replicate SD x 1.645) inside (-0.5, 0.5); under B the median kappa >= 0.7; under C the median kappa
+<= -0.3. If a gate fails: descriptive.
+**H415.1 (primary).** kappa's 90 % interval lies within (-0.5, 0.5). Pass: conflict, like intensive care, removes uptake
+without changing the organ's own fluctuation. Fail above: the organ's whole clock signal is scaled. Fail below (interval
+below -0.5 or kappa < -0.5): conflict adds own noise, an animal-specific split of the organ between drives.
+**Descriptive.** Per unit dpsi*_u against dA_u (VAT and WAT, the most balanced weights, highlighted: A324's "extra
+dephasing"); per dataset; animal correction not possible (one tissue per library in each arm is treated as independent).
+**Limits.** Two laboratories, 7 units; ZT design with 2-4 mice per time point; feeding arms differ in food intake and
+body temperature rhythms; the amplitude ratios were seen.
+**Code:** `exploratory/A322_conflicting_drives/scripts/a415.py --stage power|score`; output `output/a415/`.
