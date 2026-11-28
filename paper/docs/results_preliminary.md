@@ -10731,3 +10731,27 @@ Deota 2023, 15 of 16 tissues pass under every waveform; animal-corrected b_t, 14
   pooling. Core loop below the power gate under E / E2 (descriptive).
 - Code: `exploratory/A395_baboon_timed_gain/scripts/a425.py`.
 <!-- src: paper/exploratory/A395_baboon_timed_gain/output/a425/{power,tests,organs_*}.csv -->
+
+## A423 (scored 2026-11-28; BLIND for every split, label-class and called-cell coupling; one scoring run, 85 min, after the power note): normal epithelium inside tumours keeps the patient's time and inflates loosely labelled "cancer cells" (H423.1 PASS: less-aberrant half minus more-aberrant half Delta 0.095, beyond matched q95 0.063, Holm 0.030); the purified halves still couple in LUAD, THCA, KIRC pooled (H423.2 PASS: 0.432 vs matched 0.172, Holm 0.030), carried by LUAD
+440 split patients in 16 cancers (H423.1), 60 in LUAD / THCA / KIRC (H423.2); 14 genes decide.
+- **H423.1:** Delta = c_LOW - c_HIGH 0.0949; matched median 0.0181, q95 0.0629 (p 0.0149); label-swap q95 0.0471 (p 0.0010);
+  Holm 0.030: **PASS**. Core loop Delta 0.0817 (matched p 0.075): not decided on the core (precision or the removed genes).
+  Largest per-cancer gaps (c_HIGH -> c_LOW): ESCA 0.049 -> 0.250, STAD 0.097 -> 0.324, CESC 0.147 -> 0.396, HNSC 0.326 ->
+  0.575, COAD 0.012 -> 0.102, PAAD 0.171 -> 0.287.
+- **H423.2:** patient-weighted c_HIGH 0.432 against matched 0.172 (calibrated empirical p 0.0149, Holm 0.030): **PASS**.
+  Per cancer c_HIGH (z vs matched): LUAD 0.560 (2.33, 25 patients), THCA 0.387 (0.69, 16), KIRC 0.302 (1.12, 19); HIGH and
+  LOW close in all three (LUAD 0.560 / 0.645, THCA 0.387 / 0.459, KIRC 0.302 / 0.352). Registered Stouffer 2.57 (p 0.005).
+  Core: empirical p 0.035.
+- **D423.2 (called cells, same patients):** called-normal tumour epithelium couples, called-malignant cells do not, in
+  COAD (0.405, z 2.32 vs 0.001; 34 patients) and STAD (0.514, z 2.28 vs 0.072; 20); in LUAD both couple (normal 0.507,
+  malignant 0.477, z 1.26; 12 patients).
+- **D423.1 (label class):** LUAD class C (copy-number called) 0.493 (19 patients), class E 0.672 (6); COAD C 0.009, E 0.000;
+  BRCA A 0.123, E 0.022; THCA and KIRC are class E only (0.392, 0.330).
+- **D423.3:** A401 H401.2 rho 0.659 -> 0.683 (p 0.036) with e_mal from c_HIGH; core 0.949 unchanged (4 cancers).
+**Reading (registered branch "both pass").** Loose labels add normal epithelium, which keeps the patient's time (shown
+directly in COAD and STAD by copy-number calls), so tumour-epithelium couplings overstate cancer-cell timekeeping in ESCA,
+STAD, CESC, HNSC, COAD. In LUAD, purified and copy-number-called cancer cells keep the tumour's time; THCA and KIRC lean the
+same way but are not beyond matched sets individually, and their splits are not validated (THCA copy-number quiet; KIRC
+clonality computed against stroma). The synthesis clause becomes: cancer cells keep the patient's time in lung
+adenocarcinoma (thyroid and kidney lean); elsewhere the epithelium that does is largely non-malignant.
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/a423/score/{h423,d423_1_label_class,d423_2_called,d423_3_per_cancer,d423_3_h401_2}.csv -->

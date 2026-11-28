@@ -720,7 +720,7 @@ def score_cancer(c, t, args, n_set, n_swap):
     used = sorted({g for _, w in ws for g in w.genes} | set(BASE.genes))
     Gu = G[META + used]
     fits = Parallel(n_jobs=min(args.jobs, len(READOUTS)))(
-        delayed(U.fit_one)(tab, classes, rd, targets, None, 0, 0, t["mode"]) for rd in READOUTS)
+        delayed(U.fit_one)(tab, classes, rd, targets, None, 0 if args.smoke else 200, 0, t["mode"]) for rd in READOUTS)
     mt = []
     for rd in READOUTS:
         w_rd = [(i, w if rd == "14" else C.restrict(w, BASE, CORE)) for i, w in ws]
@@ -787,7 +787,7 @@ def stage_score(args):
                                  matched_mean=float(v.mean()), matched_sd=float(v.std(ddof=1)), matched_median=float(np.median(v)),
                                  matched_q95=float(np.quantile(v, .95)), z=float((r.coupling - v.mean()) / v.std(ddof=1)),
                                  e=max(float(r.coupling) - float(np.median(v)), 0.0), share_matched_ge=float(np.mean(v >= r.coupling)),
-                                 host_reliability=float(r.host_reliability), n_matched_ok=len(v),
+                                 host_reliability=float(r.host_reliability), c_lo90=float(r.coupling_lo), c_hi90=float(r.coupling_hi), n_matched_ok=len(v),
                                  median_umi_high=float(pp.median_umi_high.median()), median_umi_low=float(pp.median_umi_low.median())))
     pd.DataFrame(status).to_csv(out / "status.csv", index=False)
     if args.smoke:
@@ -828,21 +828,26 @@ def tests(R, matched_all, swaps_all, P, out):
         H.append(row)
         h2 = [c for c in H2_CANCERS if c in cs_]
         if h2:
+            wt = np.array([w[c] for c in h2], float)
             z = np.array([r.z[(c, "epi_high")] for c in h2])
-            for wname, wt in (("patient-weighted", np.array([w[c] for c in h2], float)), ("unweighted", np.ones(len(h2)))):
-                Z = float((wt * z).sum() / np.sqrt((wt ** 2).sum()))
-                H.append(dict(hypothesis="H423.2", readout=rd, weighting=wname, cancers="+".join(h2), patients=int(sum(w[c] for c in h2)),
-                              z_per_cancer=";".join(f"{c}:{x:.3f}" for c, x in zip(h2, z)), Z=Z, p_one_sided=float(norm.sf(Z)),
-                              passes=bool(Z > 1.645)))
+            Z = float((wt * z).sum() / np.sqrt((wt ** 2).sum()))
+            Zu = float(z.sum() / np.sqrt(len(z)))
+            obs = float((wt * np.array([r.coupling[(c, "epi_high")] for c in h2])).sum() / wt.sum())
+            mh = pd.DataFrame({c: sets[sets.cancer == c][HIGH] for c in h2}).dropna()
+            mm = (mh * (wt / wt.sum())).sum(1).to_numpy()
+            H.append(dict(hypothesis="H423.2", readout=rd, cancers="+".join(h2), patients=int(wt.sum()), weighted_mean_c_high=obs,
+                          matched_mean=float(mm.mean()), matched_q95=float(np.quantile(mm, .95)), n_matched=len(mm),
+                          p_one_sided=float((1 + np.sum(mm >= obs)) / (len(mm) + 1)), z_per_cancer=";".join(f"{c}:{x:.3f}" for c, x in zip(h2, z)),
+                          stouffer_patient_weighted=Z, stouffer_p=float(norm.sf(Z)), stouffer_unweighted=Zu))
     Hd = pd.DataFrame(H)
     p14 = Hd[(Hd.readout == "14") & (Hd.hypothesis == "H423.1")]
-    p2 = Hd[(Hd.readout == "14") & (Hd.hypothesis == "H423.2") & (Hd.weighting == "patient-weighted")]
+    p2 = Hd[(Hd.readout == "14") & (Hd.hypothesis == "H423.2")]
     if len(p14) and len(p2):
         ps = [max(float(p14.p_swap.iloc[0]), float(p14.p_matched.iloc[0])), float(p2.p_one_sided.iloc[0])]
         Hd.loc[p14.index, "p_primary"], Hd.loc[p2.index, "p_primary"] = ps
         Hd.loc[p14.index, "holm_p"], Hd.loc[p2.index, "holm_p"] = holm_rows(ps)
+        Hd["passes"], Hd["passes_holm"] = pd.Series([None] * len(Hd), dtype=object), pd.Series([None] * len(Hd), dtype=object)
         Hd.loc[p14.index, "passes"] = bool(ps[0] < .05 and Hd.loc[p14.index, "delta"].iloc[0] > Hd.loc[p14.index, "matched_q95"].iloc[0])
-        Hd["passes_holm"] = np.nan
         Hd.loc[p14.index, "passes_holm"] = bool(Hd.loc[p14.index, "holm_p"].iloc[0] < .05 and Hd.loc[p14.index, "passes"].iloc[0])
         Hd.loc[p2.index, "passes_holm"] = bool(Hd.loc[p2.index, "holm_p"].iloc[0] < .05)
     Hd.to_csv(out / "h423.csv", index=False)
