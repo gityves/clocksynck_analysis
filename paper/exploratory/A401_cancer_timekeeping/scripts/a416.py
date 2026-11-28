@@ -39,6 +39,8 @@ def zcoh(df):
 
 
 def score(t, genes):
+    if t.empty:  # no such class in this cancer (e.g. no fibroblasts in KIRC)
+        return pd.Series(dtype=float)
     g = [x for x in genes if x in t.columns]
     if len(g) < len(genes) / 2:
         return pd.Series(np.nan, index=t.index)
