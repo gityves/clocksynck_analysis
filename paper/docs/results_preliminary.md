@@ -10532,3 +10532,17 @@ difference 1.82 (-0.82 to 6.04). Registered H417.1 not decidable (gate); shown d
   T-cell-activation program is predicted to peak at 13 h (near the window's centre), which makes the timing reading
   plausible rather than remote. Decision needs the immune-hot score's own phase relation (A403d note 1).
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/a403d/{geometry,sim}.csv -->
+
+## A403d note 1 (run 2026-11-28; POST HOC, DESCRIPTIVE; one run, 12 min): the immune-hot score does not follow the host phase as the timing reading needs: observed phase association excess 0.010 (p 0.32), below every slope-reproducing timing scenario at r >= 0.5 and at the 1st-6.5th percentile at r = 0.3: timing is unlikely to explain the colder-louder lead
+- **Observed:** A402b statistic of immune-hot on the stratum-centred host state, 542 patients: r 0.264 vs null 0.254,
+  excess 0.010, p 0.32.
+- **Timing-only scenarios that reproduce the slope (A403d), phase-association excess, median (q05) / share of replicates at
+  or below the observed:** r 0.3: 0.054 (0.021) / 1 % (t0 -2 h), 0.041 (0.007) / 6.5 % (t0 0), 0.055 (0.010) / 5 % (t0 +2 h);
+  r 0.5: 0.091-0.132 / 0 %; r 0.7: 0.155-0.222 / 0 %.
+- **Reading.** For timing to produce the observed slope it needs immune-hot to follow the hour at r of about 0.3-0.5 with
+  a peak inside the window (A403d); such a readout would show a phase association the data do not show (r >= 0.5
+  excluded; r 0.3 at the 1st-6.5th percentile, and at r 0.3 only 32 % of replicates reach the slope). Shared biopsy time
+  is therefore an unlikely explanation of the lead; not formally excluded at r 0.3 (the two checks were simulated
+  separately, not jointly). The lead stays post hoc and needs the remaining checklist items (clock specificity in
+  endothelium, mechanism readouts, blind replication).
+<!-- src: paper/exploratory/A401_cancer_timekeeping/output/a403d/phase.csv -->
