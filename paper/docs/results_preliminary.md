@@ -10394,3 +10394,39 @@ companion-excess dpsi / median dS (0 = own noise unchanged, 1 = it scales with t
   donor bootstrap. Ventilated donors also differ in sedation, feeding, light and death course.
 - Code: `exploratory/A412_icu_own_noise/scripts/a412.py --stage score`.
 <!-- src: paper/exploratory/A412_icu_own_noise/output/{score_kappa,score_tissues,companions}.csv -->
+
+## A415 power note and score (2026-11-28; power 55 s, all gates pass; BLIND for every arm psi; one scoring run, 25 s): under conflicting feeding drives the mouse organ's own clock noise falls partly with its amplitude (kappa 0.50, 90 % 0.27 to 0.79): H415.1 fails (not within +-0.5) and the interval also straddles the scaling side; unlike intensive care (A412, -0.05), conflict is not a pure loss of uptake; the two laboratories differ
+
+Power (100 replicates per truth): truth A (psi equal) median kappa 0.004, SD 0.098, 100 % of intervals inside (-0.5, 0.5);
+truth B (psi scales with |a|^2) median 0.952; truth C (conflict psi doubled) median -0.493: decidable. Companions: 100
+expression-matched sets per dataset (Manella full counts; Xin TPM x 30 M / 1e6, the builder's pseudo-count rule), 0
+failed.
+
+| unit | libraries ctl / conflict | dA (log amp^2 lost) | dpsi raw | companions' dpsi | dpsi* (excess) |
+|---|---|---|---|---|---|
+| Manella liver | 24 / 24 | 0.680 | -0.880 | -0.090 | -0.790 |
+| Manella WAT | 24 / 24 | 2.285 | 0.139 | -0.562 | 0.701 |
+| Manella lung | 24 / 24 | 1.406 | -0.070 | 0.109 | -0.179 |
+| Xin liver | 28 / 28 | 1.651 | 1.199 | 0.209 | 0.990 |
+| Xin heart | 28 / 28 | 1.058 | 0.994 | -0.088 | 1.082 |
+| Xin kidney | 28 / 28 | 0.869 | 0.527 | 0.054 | 0.473 |
+| Xin VAT | 28 / 28 | 4.403 | 1.253 | -0.180 | 1.433 |
+| **kappa, all 7 (H415.1)** | | | | | **0.498 (0.268 to 0.794)** |
+| kappa, Manella / Xin (descriptive) | | | | | -0.128 (-0.324 to 0.267) / 0.765 (0.528 to 0.998) |
+
+(dpsi > 0: own noise lower under conflict.)
+- **H415.1 fails** (registered pass: interval within (-0.5, 0.5)). The interval excludes 0 (an unchanged own term) and
+  excludes a rise of own noise (truth C, the animal-specific split reading); it straddles 0.5, so neither the pure
+  uptake nor the full scaling reading is decided: under conflict about half of the amplitude loss is matched by a fall
+  of the own term.
+- **Laboratories differ (descriptive):** Manella's three tissues read as uptake (-0.13, interval inside +-0.5; liver's
+  own noise even rises), Xin's four as scaling (0.77; every tissue's own noise falls with its amplitude). Protocol (DF vs
+  DRF), depot, sequencing and Xin's pseudo-counts from TPM differ; 3 and 4 units.
+- **Population reading.** A pure loss of entrainment (uptake) leaves the own term; a loss of clock cells' amplitude or
+  synchronised share, or damping, shrinks the organ's whole signal, own term included. Conflict looks partly like the
+  latter (Xin), intensive care like the former (A412). The A324 "extra dephasing in VAT" as an animal-specific split is
+  not supported (VAT's own noise falls, dpsi* 1.43).
+- Implementation (agent; checked by reading the outputs): psi from `factor._known_f` (the estimator behind
+  `Dataset.timed_loadings`) on the A297 states with each library's Poisson covariance, one fit per arm; simulation at
+  the state level; 50-of-100 companion subsample per bootstrap draw. Code: `a415.py` (ff8ad1d).
+<!-- src: paper/exploratory/A322_conflicting_drives/output/a415/{power_summary,companions_summary,score_kappa,score_units}.csv -->
