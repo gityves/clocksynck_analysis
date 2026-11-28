@@ -13383,3 +13383,20 @@ normal-fibroblast reference (93) alongside.
 **Reading.** Leverage and Q above the timing-only q95 (and Q above the matched q95): shared loudness beyond biopsy time;
 inside the timing-only range: A409 is what shared biopsy time produces (as A366 for MuTHER).
 **Code:** `paper/exploratory/A387_tumour_full_model/scripts/a409_timing.py`; output `output/a409/timing_*.csv`.
+
+## A416 (2026-11-28, POST HOC, DESCRIPTIVE; on the user's question whether the colder-louder lead (A403 / A403b / A403c) is a compositional effect or present within stromal cell types; NOT BLIND: composite slopes known (A403 -0.102, phase-free -0.126); BLIND for every per-class slope and every composition-adjusted slope): colder-louder within fibroblasts, endothelium and mural cells?
+**Data** as A403c (12 P401 cancers; immune-hot score; covariates n_anchor and log stromal depth; patients with a host).
+- **K1 per-class loudness.** For each stromal class (tumour fibroblast, endothelium, mural) present in a patient: the
+  class's own 14-gene clock state (`clocksync.pairwise.states`, one projector per cancer and class), centred within
+  stratum; log radius; phase-free (A403c rule: residual on cos / sin of phi and 2 phi per cancer). Pooled within-cohort
+  slope of immune-hot on it (A403b `describe`: 2,000 bootstraps, 10,000 permutations), with the class-state loudness of
+  200 matched and 200 responsive pseudo-waveforms (A403 seeds, states on the same rows) as companions; per cancer.
+- **K2 composite with composition covariates.** The A403c phase-free composite slope with, added to the covariates:
+  log(fibroblast / endothelial cells), log stromal cell count, and an immune-contamination score of the summed stromal
+  pseudobulk (mean within-cohort z of log2 CPM of PTPRC, LYZ, CD3E, CD74).
+- **K3 fibroblast subtype (descriptive).** In the fibroblast pseudobulk, myofibroblast-like (ACTA2 TAGLN POSTN COL11A1
+  MMP11) and inflammatory-CAF (IL6 CXCL12 PDGFRA CFD DPT) scores: within-cohort correlation with immune-hot and with
+  fibroblast loudness; the fibroblast slope adjusted for both.
+**Reading.** Present within a class beyond its companions: cell-intrinsic in that class. Absent within every class while
+the composite holds: composition. K2 shrinking the composite towards 0: composition or immune RNA in the stroma.
+**Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a416.py`; output `output/a416/`.
