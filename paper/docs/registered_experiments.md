@@ -13521,3 +13521,14 @@ immune cells also make: STAT1, IRF1, GBP1, GBP4, PSMB9, TAP1 (mean within-cohort
 pseudobulk), and an immune-contamination score of the endothelial pseudobulk (PTPRC, CD3E, LYZ) as covariate. Reported:
 correlations of the intrinsic score with immune-hot and endothelial loudness; endothelial slope adjusted for the
 intrinsic score, for contamination, and both. Code: `a419.py --variant intrinsic`; output `output/a421/`.
+
+## A422 (2026-11-28, POST HOC, DESCRIPTIVE; on the user's go-ahead after A421 (immune RNA in the endothelial pseudobulk absorbs a quarter of the endothelial slope); NOT BLIND: A416 / A419 / A421 slopes; BLIND for every contamination-stratified slope): is the colder-louder slope immune-RNA dilution?
+**Data** as A416 / A419 (phase-free composite host loudness; phase-free endothelial class loudness; immune-hot; covariates
+n_anchor, log stromal depth). Contamination: mean within-cohort z of log2 CPM of PTPRC, CD3E, LYZ, CD74 in the summed
+stromal pseudobulk (composite) and in the endothelial pseudobulk (endothelium); split at the within-cohort median.
+- **D1.** Composite and endothelial slopes (A403b `describe`, 2,000 bootstraps, 10,000 permutations) in the low- and the
+  high-contamination half separately, and their difference with a bootstrap interval; also excluding the top within-cohort
+  contamination tertile.
+- **Reading.** Dilution predicts the slope concentrated in the high-contamination half and near 0 in the low half; a low-half
+  slope of the full size excludes dilution as its source.
+**Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a422.py`; output `output/a422/`.
