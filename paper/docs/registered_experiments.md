@@ -13485,3 +13485,18 @@ branch).
 **Limits.** Post-mortem; outputs selected as rhythmic in the same fast-death donors; time-of-death waveform from the
 same donors (both groups read with it); the set kappa has no companion excess.
 **Code:** `exploratory/A412_icu_own_noise/scripts/a418.py --stage power|score`; output `output/a418/`.
+
+## A419 (2026-11-28, POST HOC, DESCRIPTIVE; on the user's go-ahead for highlight checklist items 2-3, core loop dropped by the user (a weaker core slope is uninterpretable: fewer genes, noisier projection); NOT BLIND: A416 endothelial slope (-0.107) known; BLIND for the broad-family and calibrated comparisons, the effect size and every mechanism relation): the endothelial colder-louder slope: clock specificity, size and mechanism readouts
+**Data** as A416 (endothelial phase-free class loudness, immune-hot, covariates n_anchor and log stromal depth).
+- **S1 companions.** The endothelial slope against 200 matched, 200 narrow responsive and 200 broad responsive
+  (`responsive_broad`, A320) pseudo-waveforms (class states on the same rows); percentile of the observed slope in each
+  family; placebo-calibrated p per family (A285 logic): 200 further matched pseudo-waveforms (separate seed) used as if
+  they were the clock, each placed among the family; p_cal = share of placebos at or below the observed percentile.
+- **S2 effect size.** Within-cohort immune-hot tertiles: hot minus cold mean phase-free log radius of the endothelial
+  state, as an amplitude ratio exp(difference), with 2,000 within-cohort bootstraps; the same for the composite host; the
+  ratio's disattenuation by the class-state split-half reliability reported beside it.
+- **S3 mechanism readouts in the endothelial pseudobulk** (mean within-cohort z of log2 CPM): IFN-gamma response (STAT1,
+  IRF1, CXCL9, CXCL10), adhesion (VCAM1, ICAM1, SELE). Within-cohort correlations with endothelial loudness and with
+  immune-hot; the endothelial slope adjusted for each score (a large shrink reads "the clock link runs with that
+  program"); 10,000 permutations.
+**Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a419.py`; output `output/a419/`.
