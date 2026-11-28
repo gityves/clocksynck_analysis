@@ -653,10 +653,14 @@ the hepatocyte oscillator's (A417, descriptive). Coupling follows loudness in fo
 Outputs gain shared variation in intensive care while the clock loses it (A418, descriptive): clock and signal layer
 move apart.
 **Limits to state.** "Behave as", not "are"; ratios only (lambda, K, sigma not separated); one primate across organs
-(12 animals); mouse departs (b_t 0.50 human waveform, 0.64 Wolff waveform; A397, A425: not a waveform artefact; arm pooling not excluded); human within-organ evidence post-mortem.
+(12 animals); mouse: pooled arms 0.64 (A425, not a waveform artefact), within one arm 0.45-0.49 (post hoc; ad
+libitum excludes 1 and includes 0.22): intermediate, not separated from the baboon; human within-organ evidence
+post-mortem.
 **Placement.** Highlight 2 after "one time, many volumes"; a model box in Results (equation, dictionary, fingerprint
 table); slide 3.4b rebuilt around it (with the user, one element at a time); figure: two organs as circles of radius =
 volume with the same fluctuation cloud, plus an intensive-care copy (radius shrinks, cloud stays); timed baboon panel
 (clock vs outputs); intensive-care panel (observed vs fixed-fluctuation coupling). Tests in the supplement table.
-**Next test (would turn the fit into a forward prediction).** Frequency response: re-alignment time after a shift of
-known size (about 1 / lambda) similar in loud and quiet organs; candidates: in-house jet-lag data, A257 (one point).
+**Frequency response (descriptive, 2026-11-28).** Re-alignment after a shift gives 1 / lambda of about one to two
+weeks in mouse aorta (A201) and human muscle (A257 / A335); aortic classes of different loudness re-align alike, as a
+drive difference predicts; amplitude recovers faster than linear (self-sustained cells). Supplement or Discussion
+sentence; ties the model to the inertia slide (4.2). In-house jet-lag data left out (few mice sequenced; user).

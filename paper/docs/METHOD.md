@@ -105,8 +105,13 @@ noise. A frequency response (re-alignment time after a shift of known size, abou
 lambda: similar re-alignment times in loud and quiet organs would confirm that loudness is drive (A257 gives one point:
 the muscle core loop moved 4 h by day 3.5).
 **Wording.** "Organs behave as damped oscillators driven by the body's rhythm", never "are". Mouse across organs
-departs (b_t 0.50 with the human waveform, 0.64 with an external mouse waveform; A397, A425: not a waveform artefact;
-feeding-arm pooling not excluded); human evidence within organs and post-mortem.
+departs when the two feeding arms are pooled (b_t 0.64 with an external mouse waveform; A425: not a waveform
+artefact) but within one arm reads 0.45-0.49 (ad libitum interval excludes 1, includes the baboon's 0.22; post hoc):
+between drive and damping, not separated from the baboon; human evidence within organs and post-mortem.
+**Damping rate (descriptive, 2026-11-28).** Re-alignment after a shift gives 1 / lambda of about one to two weeks
+(mouse aorta 7.7 d after a 6 h advance, A201; human muscle core loop 8.5 d after a 12 h behaviour shift, A257 / A335):
+a lightly damped organ clock (lambda about 0.1 / day). Aortic classes of different loudness re-align alike, as a drive
+difference predicts. Phase relaxes as in the linear model; amplitude recovers faster than linear (self-sustained cells).
 
 ## 4. Group contrasts (`anchored.contrast`, `desync/common/common_v.py`)
 - **Pooled host.** One anchored host over all labelled donors; per group, z, psi and V of k on that host.
