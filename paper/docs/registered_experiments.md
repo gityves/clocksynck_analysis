@@ -13434,3 +13434,18 @@ noise floor (psi poorly estimated); VIP-KO has two time points; the liver loss o
 tissues (I arm).
 **Code:** `exploratory/A322_conflicting_drives/scripts/a417.py --stage power|score` (from `a415.py`); output
 `output/a417/`.
+
+## A403d (2026-11-28, POST HOC, DESCRIPTIVE; on the user's go-ahead for the highlight checklist, item 1; NOT BLIND: A403 / A403c / A416 slopes known; BLIND for every simulated slope and the host geometry): can shared biopsy time on hospital-hours arcs produce the colder-louder slope?
+**Why.** Loudness is the radius of a state on a hospital-hours arc (A366, A409 addendum 1: radius and arc position are
+linked), and immune programs follow the hour of surgery (A146). Shared time could make both move together.
+**Design (A409 addendum 1 adapted to one state and a readout).** The A403c table (529 patients with immune-hot, 45 cohorts,
+their strata and cancers). G1: elongation of the pooled within-stratum host states. G2: stratified arc model: every
+stratum centred on the same phase (hospital hours share the waveform axis) with a per-stratum offset N(0, 1 h), patient
+phases N(stratum phase, sd), unit amplitude (no loudness differences), noise at the host reliability 0.70 (A402c); sd
+matched to the observed pooled elongation (A366 grid). Immune-hot simulated as r cos(phi_true - t0) + sqrt(1 - r^2) e
+(r = 0.3, 0.5, 0.7; A146's T-cell activation corresponds to r about 0.48), t0 on a 2-h grid over 24 h. Through the A403c
+estimator: phase-free loudness (residual on the phase harmonics of the estimated state, per cancer) and the pooled
+within-cohort slope (no covariates). 200 replicates per (r, t0).
+**Reading.** If no (r, t0) gives a median slope as negative as -0.126 (or q05 beyond it at r <= 0.5), shared biopsy time
+does not explain the lead; if plausible combinations reach it, the lead is not separable from timing.
+**Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a403d.py`; output `output/a403d/`.
