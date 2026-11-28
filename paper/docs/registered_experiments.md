@@ -13693,3 +13693,45 @@ residual modulus) against log gain.
 **Limits.** Wolff runs in constant darkness (CT) with pooled mice, other strain and lab; 15-16 tissues; arm pooling
 (A397 post hoc note) unchanged.
 **Code:** `exploratory/A395_baboon_timed_gain/scripts/a425.py --stage power|score`; output `output/a425/`.
+
+## A426 (2026-11-28, on the user's instruction "replicate it if you think it is worth; if worth downloading the data, download it", after the unused-data inventory and the public scout of 2026-11-28 (scratchpad `a425_inventory`, `a426_public_scout`, `a426_step1`; cell counts and metadata only, no clock or immune value); staged: build, power (counts, gates on anchors only, shuffled-readout null, companions with shuffled readouts; no observed slope), then one scoring run; **NOT BLIND**: A403 (raw loudness slope -0.102, Holm 0.050), A403b, A403c (phase-free -0.126, p 0.006), A403d, A416, A419-A422 (endothelial part withdrawn; composite holds), all on the 529 A403 patients; **BLIND**: every loudness, immune-hot value and slope of the replication patients below): blind replication of the colder-louder lead
+**Claim tested** (its current form, synthesis 6.5): within cohorts, tumours whose stromal clock is louder are immune-colder.
+**Replication patients (none scored in A403; listed per patient before scoring).**
+- R1, on disk: patients of the A401 sources without a >= 50-cell cancer-cell pseudobulk; patients of cancers outside the
+  A403 set (BLCA, LIHC, HNSC, LUSC, SARC, SKCM, kidney_unspecified, unspecified, other solid carcinomas; not glioma, which
+  has no fibroblasts, nor haematological); on-disk sources never entered in A401; the 8 CELLxGENE breast primaries
+  labelled "exocrine gland"; the Wu / Pal breast patients (immune cells from author labels). Excluded as in A401: copies
+  and dedup removals, on-treatment and metastatic samples, adjacent-normal, CD45-sorted, normalised-only data.
+- R2: the 48 primary, untreated, unsorted CRC donors of the CELLxGENE CRC atlas not held on disk (Joanito 2022, Li 2023,
+  Qi 2022, MUI Innsbruck, Guo 2022, Chen 2021, Yang 2023), raw counts via the Census.
+- R3: Navin TNBC (CELLxGENE ceef2841-5333-46ac-92ef-ccbe0c20fe55), treatment-naive primaries, raw counts.
+- R4: GSE312983 (primary CRC snRNA), untreated samples, CellBender-filtered count matrices.
+Every sample passes the A149 rules (>= 50 cells per compartment, sample median UMI >= 1,500, presence rule); this is the
+depth gate for R4 (no other). Cell classes: author labels where they are mapped as in the A401 CELLxGENE builds, else the
+`cancer_common.compartments` marker rule. **Unit:** a patient with >= 2 tumour stromal classes (fibroblast, endothelial,
+mural; >= 50 cells each) and >= 50 immune cells. A patient's samples are pooled.
+**Host and loudness (A403 / A403c).** Per cancer, tumour-stroma host (anchors fibroblast / endothelial / mural, GTEx
+waveform, cohort x chemistry strata), fitted on the union of that cancer's A403 patients (if any) and its replication
+patients; loudness = log radius, made phase-free by the A403c C1 residual (two harmonics of the host phase, per cancer,
+stratum-centred). A cancer without A403 patients enters only if its anchors-only gate passes (1,000 permutations, p <
+0.05) with >= 8 replication patients. **Readout:** A403 immune-hot score (CD8A, GZMB, IFNG, CXCL9, CXCL10, PRF1; log CPM of
+the patient's all-compartment sum, within-stratum z). **Covariates:** number of stromal anchors and log median stromal
+depth, residualised within stratum (A403 note 1). Strata = cohort x chemistry among replication patients only; strata
+with < 3 replication patients are dropped.
+- **H426.1 (primary, the only test):** pooled within-stratum standardised slope of immune-hot on phase-free loudness,
+  replication patients only, < 0: one-sided permutation p < 0.05 (readout shuffled within stratum, 10,000, seed [426, 1])
+  and below the q05 of the same slope on 200 matched pseudo-hosts per cancer (phase-free likewise; seed [426, 0], the A401
+  draw rule).
+**Descriptive.** The A403 raw-loudness slope; per cancer and I^2; R1 held-out patients of A403 cohorts vs independent
+cohorts; scRNA vs snRNA (R4); T/NK and myeloid shares; a fixed-effect combination with A403c, labelled as mixing a post
+hoc discovery with a blind replication.
+**Power stage.** Counts per source, cancer and stratum; gates of new cancers; null SD of the slope from shuffles; power at
+true slopes -0.10 and -0.126 (normal approximation on the null SD); companion q05 with shuffled readouts.
+**Readings (stated now).** Pass: the colder-louder lead replicates blind; status B (association within tumours; direction
+not decided). Fail with power >= 0.8 at -0.126: not replicated at the discovery size; the lead is withdrawn from the main
+text. Fail with lower power: not replicated, inconclusive at the stated power; the lead stays C. Not clock-specific
+(inside the matched q05) with a significant slope: a shared sample-state association, not a clock statement.
+**Data.** Downloads (about 38 GB; cap 700 GB, 481 used) go to `$SCCC_DATA/{gse312983,navin_tnbc_cxg,crc_atlas_cxg}/` with
+`PROVENANCE.md` (URL, date, sha256), parsed only.
+**Stop rule.** Build, power note, then one scoring run. **Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a426.py`
+(+ build scripts); output `output/a426/`.
