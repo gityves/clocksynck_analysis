@@ -191,6 +191,7 @@ glioma (A247: precondition fails).
 | U4 | - | Not run: A336 already placed the trio drop (100 + trio); the full 364-drop null costs about 18 h here and would not change the core-vs-matched reading. |
 
 **What changed in the picture.** The proliferation statement weakens to a TCGA, cancer-type-dependent observation, and the
-single-cell tests find no proliferation or lineage dependence of cancer-cell coupling. Two leads firm up: the tumour stroma
-shares the patient's clock loudness (A409, descriptive) while its own loudness tracks immune coldness locally (A403c,
-A409 D409). The composition-phase nulls now carry a size: about 3-fold rhythms excluded.
+single-cell tests find no proliferation or lineage dependence of cancer-cell coupling. One lead firms up: the tumour
+stroma's loudness tracks immune coldness locally (A403c, A409 D409). The apparent sharing of loudness between tumour and
+normal stroma (A409) is what shared biopsy time produces (addendum 1), as in MuTHER: a person-level amplitude factor is
+still not shown in human biopsies. The composition-phase nulls now carry a size: about 3-fold rhythms excluded.
