@@ -10637,3 +10637,17 @@ companions 50 expression-matched sets.
   endothelium and going with a quieter clock, but not decisive (the adjustment uses a strong correlate of the readout;
   the IFN score's own link to loudness is weak, -0.04). Post hoc throughout; a blind replication is what the claim needs.
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/a419/{s1,s1_sets,s2,s3}.csv -->
+
+## A420 (run 2026-11-28; POST HOC, DESCRIPTIVE; one run, minutes): within an endoscopy of inflamed gut (biopsies sharing the hour), a biopsy's endothelial clock loudness does not fall with its own IFN-gamma response (r -0.003, p 0.97): the tumour pattern does not generalise to inflamed gut at this size
+TAURUS genome pseudobulks; within-endoscopy (patient x timepoint) correlation of class loudness with the class's IFN-gamma
+response score; 10,000 within-endoscopy permutations; 200 matched and 200 responsive pseudo-waveforms.
+- **Endothelium (202 biopsies, 66 endoscopies):** r -0.003 (p 0.97); matched median -0.063 (q05 -0.201; 75th percentile),
+  responsive median -0.052 (72.5th). Loudness vs inflammation score -0.173 (descriptive, no companion; random gene sets
+  lean the same way against the IFN score). IFN score vs inflammation score +0.64.
+- **Fibroblasts (174, 58):** r +0.018 (p 0.85); matched median -0.021, responsive -0.086. Loudness vs inflammation -0.080.
+- **Reading.** In inflamed gut, where biopsy time cannot act (biopsies of one endoscopy share the hour), the endothelial
+  and fibroblast clocks of IFN-gamma-active biopsies are not quieter than those of quieter biopsies of the same person;
+  with A53 (inflamed vs non-inflamed: endothelium +0.07 log amplitude) the tumour colder-louder pattern is not a general
+  property of inflamed tissue at this size. The tumour finding stays tumour-specific, or depends on a between-person
+  factor that within-person designs remove.
+<!-- src: paper/exploratory/A230_ibd_local_offset/output/a420/{tests,companions}.csv -->
