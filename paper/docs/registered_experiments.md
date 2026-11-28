@@ -13400,3 +13400,37 @@ inside the timing-only range: A409 is what shared biopsy time produces (as A366 
 **Reading.** Present within a class beyond its companions: cell-intrinsic in that class. Absent within every class while
 the composite holds: composition. K2 shrinking the composite towards 0: composition or immune RNA in the stroma.
 **Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a416.py`; output `output/a416/`.
+
+## A417 (2026-11-28, on the user's instruction "start doing it in parallel now", after the discussion of why the own noise stays fixed (A395 / A407 across organs, A412 intensive care) and A415 (conflict: kappa 0.50); staged as A415: power (simulation, companion draws; no psi contrast), then one scoring run; **NOT BLIND**: A129 / A111 (hepatocyte Bmal1 KO liver decouples, d* -0.287; VIP-KO results), A260 (timed log amplitude ratios KO / control), A297 (Greenwell arrhythmic feeding keeps the liver clock's amplitude), A206 (Cry1/2 DKO gate), A415 (estimator; conflict outcome). BLIND for every own noise psi of these arms.)
+**Question.** Does the fixed own noise mark perturbations of the input, and its loss perturbations of the oscillator? If
+organ clocks differ in how they take up the body's time (input) but run the same oscillator, removing an input lowers
+the gain with psi unchanged (kappa about 0), while removing or weakening the oscillator in the organ's cells shrinks the
+organ's whole clock signal, own term included (kappa about 0.5-1). Population reading: oscillator arm = fewer
+clock-carrying cells (hepatocytes lose Bmal1; the remaining signal comes from non-hepatocytes) or weaker cell clocks.
+**Units (perturbed vs control, same laboratory, timed).**
+- *Oscillator arm (O):* Manella 2021 liver, hepatocyte Bmal1 KO (BLKO) vs Alb-Cre, ad libitum and daytime feeding
+  (2 units).
+- *Input arm (I):* Greenwell 2019 liver, arrhythmic vs ad libitum feeding (feeding rhythm removed); GSE296764 liver and
+  heart, Bmal1-VIPKO (SCN clock removed) vs WT, ad libitum and restricted feeding where both exist (CT0 / CT12: a = (z_CT0
+  - z_CT12) / 2, psi from the within-time-point scatter); Manella WAT and lung, BLKO vs Alb-Cre in both feeding arms (the
+  liver's signals removed; 4 units).
+- *Descriptive only:* Vollmers 2009 Cry1/2 DKO liver (microarray: no counting-noise model, companions only); Auerbach
+  2026 aorta Bmal1 KO (clock collapsed, A279).
+**Statistic.** A415's per unit: dA_u = log |a|^2 control - log |a|^2 perturbed; dpsi_u = log psi control - log psi
+perturbed (psi beyond Poisson noise, `factor._known_f` as A415, one fit per arm); companion excess dpsi*_u with 100
+expression-matched non-clock sets per dataset (A263 rule, clock positions). kappa_arm = median_u dpsi*_u / median_u dA_u.
+Bootstrap (2,000): libraries within time point and arm, all units jointly; companions 50-of-100 per draw.
+**Power stage (gates, stated now).** Simulation at the observed design and arm amplitudes, control psi: truth S
+(O scales: psi with |a|^2; I constant), truth N (both constant), 100 replicates. G417.1: under S, >= 80 % of replicates
+have the 90 % interval of kappa_O - kappa_I above 0; under N, <= 10 %. Units whose control arm fails the A395
+precondition (timed |a| above the q95 of 1,000 time-label permutations) are dropped before the simulation.
+**H417.1 (primary).** kappa_O - kappa_I > 0 (90 % interval above 0). Pass: perturbing the oscillator moves the own noise
+with the gain, perturbing an input does not: the fixed own term marks the organ's oscillator. Fail with power: own noise
+does not separate input from oscillator perturbations at this size.
+**H417.2 / H417.3 (secondary, Holm over 2).** kappa_I interval within (-0.5, 0.5); kappa_O lower bound > 0.
+**Descriptive.** Per unit; per feeding arm; Vollmers and aorta; the input arm without the VIP-KO two-time-point units.
+**Limits.** Different laboratories in the two arms (Manella in both); the KO liver's residual clock may sit near the
+noise floor (psi poorly estimated); VIP-KO has two time points; the liver loss of BLKO is partly of input to the other
+tissues (I arm).
+**Code:** `exploratory/A322_conflicting_drives/scripts/a417.py --stage power|score` (from `a415.py`); output
+`output/a417/`.
