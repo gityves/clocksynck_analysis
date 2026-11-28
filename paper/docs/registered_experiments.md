@@ -13735,3 +13735,14 @@ text. Fail with lower power: not replicated, inconclusive at the stated power; t
 `PROVENANCE.md` (URL, date, sha256), parsed only.
 **Stop rule.** Build, power note, then one scoring run. **Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a426.py`
 (+ build scripts); output `output/a426/`.
+
+### A426 power note (2026-11-28; builds `build_a426/*.py` (downloads: GSE312983 untreated samples, Navin TNBC, 48 CRC-atlas donors by range reads; PROVENANCE.md per source in `$SCCC_DATA/{gse312983,navin_tnbc_cxg,crc_atlas_cxg}/`); `a426.py --stage power --jobs 4`, 14 min, peak 17.3 GB; `output/a426/power/{patients,counts,strata,cancers,gates,power,companions,sources}.csv`; no observed slope)
+**Patients.** 282 eligible units (R1 137, R2 46, R3 31, R4 68; R4 lost 72 samples to the median-UMI >= 1,500 rule, R3 70
+donors to the stroma rule; `patients.csv`). **Gates of new cancers** (anchors only): unspecified passes (p 0.002, 25
+patients); BLCA (p 0.080), LIHC (0.33), SARC (0.086) fail; ICC, LUSC, kidney_unspecified have < 8 patients. After strata
+with < 3 replication patients are dropped: **222 patients in 15 strata, 5 cancers** (COAD 118, BRCA 62, unspecified 25,
+PRAD 9, LUAD 8; `cancers.csv`).
+**Power** (`power.csv`). Shuffled-readout null SD of the phase-free slope 0.069 (analytic 0.070); companion q05 with
+shuffled readouts -0.124. Power at -0.126: 0.57 (permutation), 0.51 (permutation and companion); at -0.10: 0.42 / 0.37;
+MDE (80 %) 0.172. Below the registered 0.8: a fail reads **"not replicated, inconclusive at power 0.5"**, the lead stays C;
+a pass upgrades it to B. Scored once as registered.
