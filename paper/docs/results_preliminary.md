@@ -10708,3 +10708,26 @@ the per-pair slope is not. Together with A304r (no CPTAC replication) and the PA
 a tumour-state change shared by expression-matched genes and by subtype, not a clock-specific statement: it leaves the
 main text and stays descriptive (synthesis section 1.2, ledger row to update).
 <!-- src: paper/exploratory/A304_cancer_gain_departure/output/a424/score/{tests,unadjusted,pam50,loo,per_cancer,heterogeneity,infiltrate,cptac,companions}.csv -->
+
+## A425 (scored 2026-11-28; power 388 s, decidable on 14 genes; BLIND for every timed psi and slope under a mouse waveform; one scoring run, 10 s): the mouse non-replication of the own-noise law is not a waveform artefact: with mouse waveforms b_t is higher, not lower (Wolff 0.64, 90 % 0.25 to 1.12; H425.1 FAIL), and the human waveform does not inflate it (H - E -0.14, -0.22 to 0.28; H425.2 FAIL)
+
+Deota 2023, 15 of 16 tissues pass under every waveform; animal-corrected b_t, 14 genes, organ bootstrap.
+
+| waveform | b_t (90 %) | b_t uncorrected | scatter slope | ellipse misfit (median 2nd-harmonic share) |
+|---|---|---|---|---|
+| **E, Wolff (H425.1)** | **0.639 (0.247 to 1.121)** | 0.935 | -0.365 | 0.131 |
+| E2, Manella | 0.707 (0.286 to 1.126) | 0.936 | -0.325 | 0.103 |
+| Mf, Deota itself (descriptive) | 0.831 (0.270 to 1.206) | 1.021 | -0.212 | 0.118 |
+| H, GTEx (A397 reproduced) | 0.500 (0.303 to 1.059) | 0.798 | -0.545 | 0.116 |
+
+- **H425.1 fails**: under the external mouse waveform the interval reaches 1.12. **H425.2 fails**: the human waveform does
+  not inflate the slope (paired H - E -0.14). The residual misfit at the second harmonic is the same under every
+  waveform (0.10-0.13): A400c's ellipse distorts untimed states, not the timed residual. The registered mechanism (an
+  ellipse misfit growing with gain) is not what limits the mouse.
+- **Reading.** In the mouse the own term grows with gain at a slope of about 0.5-0.8 under any waveform, between the
+  damping (0.5) and readout-scale (1) fingerprints, against 0.22 in the baboon. The A397 caveat stands: per arm the
+  slope was lower (0.32 / 0.36 with H), and pooling two feeding arms enters psi in proportion to gain; not decided here.
+  The driven-oscillator reading across organs therefore rests on the baboon; the mouse departs or is confounded by arm
+  pooling. Core loop below the power gate under E / E2 (descriptive).
+- Code: `exploratory/A395_baboon_timed_gain/scripts/a425.py`.
+<!-- src: paper/exploratory/A395_baboon_timed_gain/output/a425/{power,tests,organs_*}.csv -->
