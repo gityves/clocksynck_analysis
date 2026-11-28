@@ -13592,6 +13592,33 @@ fewer cells than ALL; z against matched sets absorbs the noise difference.
 **Stop rule.** Power note, then one scoring run. **Code:** `paper/exploratory/A401_cancer_timekeeping/scripts/a423.py`;
 output `output/a423/`.
 
+### A423 power note (2026-11-28; `a423.py --stage power --jobs 2 --genome-jobs 2`, 28 min, peak 20.6 GB (earlier attempts killed for memory, fixed by a slim pool cache, not a higher cap); `output/a423/power/{counts,counts_cancer,patients,unsplit,label_classes,validation,validation_patients,power_h1,power_h2,power_per_cancer}.csv`; split pseudobulks cached in `output/a423/cache/`; no clock fit of any split target)
+**Counts.** 445 patients split in 17 cancers (`counts_cancer.csv`); 15 table patients unsplit (mostly < 100 epithelial cells).
+LUSC, SARC (no epithelium), SCLC, lung_other: 0 split. Wu (GSE176078) and Pal (GSE161529) breast atlases (class A, 31
+patients) not split (bespoke loaders), hence BRCA 23 of 112; CELLxGENE sets and BIOKEY enter D423.1 only. Split score:
+THCA marker score in all 16; computed clonality (stromal / immune baseline) in KIRC 19 of 19, LUAD 6 of 25 (19 stored
+calls), and in BRCA, CESC, ESCA, HNSC, OV, PAAD, PRAD, lung_mixed, unspecified (counts in `patients.csv`); stored-call
+clonality elsewhere. Check of computed clonality against stored clonality (GSE222315, no clock gene): Spearman 0.85, 0.91,
+0.99 per patient.
+**Split validation** (`validation.csv`; patient-weighted share of called-normal cells, LOW vs HIGH): COAD 0.340 / 0.082,
+LUAD 0.255 / 0.000, STAD 0.608 / 0.041, PRAD 0.647 / 0.005, BLCA 0.663 / 0.278. Largely tautological for clonality splits
+(calls threshold the same clonality). THCA marker split 0.777 / 0.750: uninformative, as THCA calls are uncalibrated
+(copy-number quiet); the THCA split is not validated. **Depth differs between halves** (LOW about half the median UMI of
+HIGH in clonality splits; THCA LOW 6.5k vs HIGH 20k in one patient): handled by the registered matched-set comparison,
+which shares the split; median UMI per half is reported in D423.3.
+**Power** (200 draws per cell, 440 patients in 16 cancers for H423.1; 60 patients for H423.2; `power_h1.csv`, `power_h2.csv`).
+H423.1: type I 0.05; power 0.98 / 0.99 (|z| 0.5 / 1) at a normal share of 0.4 in LOW, 0.07 / 0.08 at 0.2 (equal total
+clock variance; 0.23 / 0.30 under equal own noise). **Scored**: a fail excludes a normal share of about 0.4, not 0.2.
+H423.2: power at c_HIGH 0.25 0.985; at 0.15 0.76 / 0.82. **Scored**: a fail excludes purified coupling of 0.25 or more
+(A401 values on the whole epithelium: LUAD 0.29, KIRC 0.33, THCA 0.39), not 0.15.
+**Implementation change before scoring (H423.2 calibration).** The registered Stouffer over per-cancer z had type I 0.115
+at |z| 0.5 (0.065 at 1.0) in the simulation: c is bounded at 0 and its null is skewed, so mean / SD z-scores are
+anti-conservative. Primary statistic replaced, before any target value, by its calibrated form: the patient-weighted mean
+of c_HIGH over LUAD, THCA, KIRC against the same weighted mean over set index i of the 200 matched sets of each cancer
+(empirical one-sided p, pass at p < 0.05 after Holm). The registered Stouffer is reported beside. H423.1 p = max(label-swap
+p, matched-set p) (implementation choice). Stored clonality includes the 14 clock genes inside its 101-gene smoothing
+(cannot be recomputed; computed clonality and the THCA score exclude them).
+
 ## A424 (2026-11-28, on the user's go-ahead for synthesis review item 2; staged: power (simulation at the real design; no observed contribution slope), then one scoring run; **NOT BLIND**: A304 (H304.1 pooled Q_G -0.462; per-cancer G_case / G_ref, e.g. THCA 0.005 / 0.580, BRCA 0.186 / 0.365, LIHC 0.291 / 0.688; purity-proxy imbalance case vs reference in 8 of 10 cancers (`score/purity_imbalance.csv`); sensitivity with cells = cancer x purity half Q_G -0.266, p 0.037; H304.4 LumA vs other G 0.384 / 0.152), A304r (CPTAC-3 ratio 0.89, per-type values), A175, A186; **BLIND**: every proliferation or purity slope of the per-pair gain contribution, every ABSOLUTE-purity-adjusted gain, every PAM50-stratified proliferation contrast): is the TCGA proliferation gain loss tumour purity?
 
 **Concern.** The tumour stroma carries the patient's time (A346, A387) and cancer cells barely do (A388, A401). A purer
