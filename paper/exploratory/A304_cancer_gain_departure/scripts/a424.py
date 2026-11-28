@@ -12,14 +12,16 @@ Model: u ~ proliferation_z + purity_z (z within cancer), cancer intercepts, pair
           cancer; 10,000; seed [424, 1]); specificity: same slope on the 200 matched pseudo-clock sets of A304.
   H424.2  purity slope < 0 at fixed proliferation; roles exchanged (seed [424, 2]); Holm over the two.
 Descriptive (score): (1) unadjusted proliferation slope; (2) leave-one-cancer-out of H424.1 and of A304 Q_G; (3) BRCA slope
-within PAM50 strata; (4) per-cancer slopes, correlation of proliferation with purity, Cochran Q / I^2; (5) the model on CPTAC-3.
+within PAM50 strata; (4) per-cancer slopes, correlation of proliferation with purity, Cochran Q / I^2; (5) the model on CPTAC-3;
+(6) the H424.1 model with the A127 stromal / immune expression score ('infiltrate expression', natural sign: high = low purity)
+as covariate instead of ABSOLUTE purity, and with both (same permutation scheme, same 200 matched sets).
 
   power  simulation at the real design (A304 calibration of S, g, psi per cancer; observed proliferation and purity vectors,
          no clock slope): null, gain falling with proliferation (k_G across the within-cancer IQR), gain proportional to stroma
          share 1 - purity; rejection of H424.1 / H424.2 at 0.05 and 0.025, H424.1 without the purity adjustment (confound size);
          ABSOLUTE coverage and proliferation-purity correlation      -> output/a424/power/{power,design,coverage,corr}.csv
   score  refuses to run without power.csv      -> output/a424/score/{tests,unadjusted,per_cancer,heterogeneity,loo,pam50,cptac,
-                                                  companions,coverage}.csv
+                                                  companions,coverage,infiltrate}.csv
     python a424.py --stage power|score [--jobs 4] [--reps 1000] [--perms 1000]   (score: --perms 10000 --sets 200)
     python a424.py --check            (2 cancers, simulated states only; prints no observed slope)
 Long runs: RUN_CAP_GB=20 paper/common/run.sh a424.py --stage power
@@ -102,6 +104,8 @@ class Design:
         self.pp = zwithin(np.where(self.ok, self.t.purity, np.nan), self.g)
         self.gk = self.g[self.ok]
         self.xk, self.pk = self.px[self.ok], self.pp[self.ok]
+        self.ip = zwithin(np.where(self.ok, self.t.proxy, np.nan), self.g)      # infiltrate expression (A127 score)
+        self.ik = self.ip[self.ok]
 
     def split(self, u_all: np.ndarray) -> list[np.ndarray]:
         return [u_all[a:b] for a, b in zip(self.slices[:-1], self.slices[1:])]
@@ -166,12 +170,30 @@ def fl_test(y, x, p, g, n_perm, rng, adjust=True):
     return obs, L.p_less(null, obs)
 
 
+def fl_general(y, x, Z, g, n_perm, rng):
+    """Slope of x on y given covariates Z (n x k, centred within g), Freedman-Lane permutation within g; (slope, p less).
+    n_perm 0: slope only."""
+    H = Z @ np.linalg.pinv(Z)
+    yr = y - H @ y
+    xr = x - H @ x
+    obs = float(xr @ yr / (xr @ xr))
+    if not n_perm:
+        return obs, np.nan
+    Xp = perm_within(xr, g, n_perm, rng)
+    Xp = Xp - Xp @ H.T
+    null = (Xp @ yr) / (Xp * Xp).sum(1)
+    return obs, L.p_less(null, obs)
+
+
 def models(u_all: np.ndarray, D: Design, n_perm: int, rngs: dict | None, adjust_h1: bool = True) -> dict:
     """Pooled slopes (and permutation p when rngs is given) of u on proliferation / purity within cancer."""
     y = demean(u_all[D.ok], D.gk)
     x, p = demean(D.xk, D.gk), demean(D.pk, D.gk)
     res = dict(slope_prolif=float(two_slopes(y, x, p)[0]), slope_purity=float(two_slopes(y, x, p)[1]),
                slope_prolif_unadj=float(one_slope(y, x)), slope_purity_unadj=float(one_slope(y, p)))
+    Zi, Zb = demean(D.ik, D.gk)[:, None], np.c_[p, demean(D.ik, D.gk)]
+    res["slope_prolif_infil"] = fl_general(y, x, Zi, D.gk, 0, None)[0]
+    res["slope_prolif_both"] = fl_general(y, x, Zb, D.gk, 0, None)[0]
     if rngs is not None:
         res["p_prolif"] = fl_test(y, x, p, D.gk, n_perm, rngs["H424.1"])[1]
         res["p_purity"] = fl_test(y, p, x, D.gk, n_perm, rngs["H424.2"])[1]
@@ -442,6 +464,20 @@ def stage_score(a, cancers):
     het.to_csv(out / "heterogeneity.csv", index=False)
     leave_one_out(u_all, D, cells, a.perms).to_csv(out / "loo.csv", index=False)
     pam50(u_all, D, a.perms).to_csv(out / "pam50.csv", index=False)
+    d6 = []
+    y, x = demean(u_all[D.ok], D.gk), demean(D.xk, D.gk)
+    ii = demean(D.ik, D.gk)[:, None]
+    rng6 = np.random.default_rng([424, 7])
+    for name, key, Z in (("ABSOLUTE purity (H424.1)", "slope_prolif", demean(D.pk, D.gk)[:, None]),
+                         ("infiltrate expression (A127)", "slope_prolif_infil", ii),
+                         ("both", "slope_prolif_both", np.c_[demean(D.pk, D.gk), ii[:, 0]])):
+        slope, pv = fl_general(y, x, Z, D.gk, a.perms, rng6)
+        s = comp[key].dropna()
+        d6.append(dict(covariates=name, slope_prolif=slope, p=pv, matched_median=float(s.median()),
+                       matched_q05=float(s.quantile(.05)), matched_q95=float(s.quantile(.95)),
+                       matched_pct=float((s < slope).mean() * 100), clock_specific=bool(slope < s.quantile(.05)),
+                       pairs=int(D.ok.sum()), r_infiltrate_absolute=float(np.corrcoef(D.ik, D.pk)[0, 1])))
+    pd.DataFrame(d6).to_csv(out / "infiltrate.csv", index=False)
     cptac(a).to_csv(out / "cptac.csv", index=False)
     log("tests\n", T.round(4).to_string())
 
@@ -469,6 +505,9 @@ def check(a):
     u = np.concatenate(us)
     rngs = {"H424.1": np.random.default_rng(1), "H424.2": np.random.default_rng(2), "unadj": np.random.default_rng(3)}
     res = models(u, D, 50, rngs)
+    d6 = fl_general(demean(u[D.ok], D.gk), demean(D.xk, D.gk), np.c_[demean(D.pk, D.gk), demean(D.ik, D.gk)], D.gk, 50,
+                    np.random.default_rng(4))
+    assert np.isfinite(d6[1])
     T, het = per_cancer_table(u, D)
     loo = leave_one_out(u, D, cells, 50)
     pm = pam50(u, D, 50)

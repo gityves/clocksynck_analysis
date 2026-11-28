@@ -10687,3 +10687,24 @@ endothelial pseudobulk; A403b statistics; halves drop cohorts with < 4 patients 
   drops cohorts and patients) and keeps -0.114 without the most contaminated third: the stromal-composite lead is not
   explained by dilution, though less precise than the full estimate.
 <!-- src: paper/exploratory/A401_cancer_timekeeping/output/a422/d1.csv -->
+
+## A424 (scored 2026-11-28; BLIND for every contribution slope; one scoring run, 20 s, after the power note and erratum): the TCGA proliferation gain loss is not tumour purity, but in its continuous per-pair form it is not clock-specific (H424.1 slope -0.083, p 0.008, Holm 0.016, 21.5th percentile of matched sets: FAIL on specificity); purity has no gain slope at fixed proliferation (H424.2 FAIL); in breast the slope vanishes within PAM50 subtypes
+472 of 517 TCGA pairs with ABSOLUTE purity (power: 0.999 at the A304 rule point, 0.994 for the purity scenario).
+- **H424.1:** proliferation slope of the per-pair gain contribution at fixed ABSOLUTE purity -0.0828 (u per SD), p 0.0081,
+  Holm 0.0162; matched sets median -0.0283, q05 -0.1376 (observed at the 21.5th percentile): **not clock-specific**.
+  Unadjusted -0.0836: DNA purity does not move it (proliferation and ABSOLUTE purity r 0.037 within cancer).
+- **H424.2:** purity slope at fixed proliferation -0.0218, p 0.27 (matched 44th percentile): no stroma-dilution gain slope.
+- **Infiltrate expression (descriptive 6):** with the A127 stromal / immune score instead of ABSOLUTE -0.0823; both -0.0784;
+  none clock-specific (21-22nd percentile).
+- **Breast:** -0.0963 (SE 0.071) without strata; within PAM50 strata (LumA 55, LumB 21, Basal 15, Her2 9) -0.0052 (p 0.49),
+  -0.0048 with purity: the breast part of the loss is subtype (as A217 / A224 for coherence).
+- **Leave one cancer out:** slope -0.067 (THCA out) to -0.105 (KIRC out), p 0.003-0.030; A304 Q_G -0.300 (THCA out) to
+  -0.583 (LUAD out). Per-cancer slopes -0.281 (BLCA, n 19) to +0.054 (KIRC); no excess heterogeneity (Q 7.82, df 9, I^2 0).
+- **CPTAC-3** (713 pairs, purity = minus stromal / immune score): -0.042, p 0.067 (unadjusted -0.041).
+**Reading (registered "both fail" branch, H424.1 failing on specificity).** Neither DNA purity nor infiltrate expression
+explains the A304 loss, but the continuous form shows the matched genes falling with proliferation too (their median
+slope -0.028; the clock slope sits inside their distribution). The median-split Q_G of A304 was beyond the matched q05;
+the per-pair slope is not. Together with A304r (no CPTAC replication) and the PAM50 result, the proliferation gain loss is
+a tumour-state change shared by expression-matched genes and by subtype, not a clock-specific statement: it leaves the
+main text and stays descriptive (synthesis section 1.2, ledger row to update).
+<!-- src: paper/exploratory/A304_cancer_gain_departure/output/a424/score/{tests,unadjusted,pam50,loo,per_cancer,heterogeneity,infiltrate,cptac,companions}.csv -->

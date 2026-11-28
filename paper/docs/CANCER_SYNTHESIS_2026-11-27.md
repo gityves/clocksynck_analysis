@@ -34,7 +34,7 @@ sample size.
 
 | Finding | Evidence | Limit | Status |
 |---|---|---|---|
-| Gain falls, departure does not rise | A304: gain ratio 0.63 (Q_G -0.462, p 0.0055, below matched and responsive); core -0.668; departure Q_R -0.190 (power 1.00 for a doubling) | TCGA only; one normal per patient; bulk cannot say where the loss sits | A |
+| Gain falls, departure does not rise | A304: gain ratio 0.63 (Q_G -0.462, p 0.0055, below matched and responsive); core -0.668; departure Q_R -0.190 (power 1.00 for a doubling) | Not replicated in CPTAC-3 (A304r); per-pair slope not clock-specific, not purity, absent within breast PAM50 subtypes (A424) | C (descriptive) |
 | Pairing drops with proliferation | A175: D +0.158 (TCGA, clock-specific); A186 CPTAC D 0.113, not clock-specific (90th / 85th percentile) | Replicates in size, not in specificity | B |
 | Tumour-only coherence falls with proliferation or ER-negativity in some cancers | SCAN-B -0.123 / ER -0.343 (A127); METABRIC ER -0.229 (A166); LUAD -0.242 / -0.293 (A171); gastric -0.187 / -0.533 (A173) | Not pan-cancer (A172: -0.032, MDE 0.087); not METABRIC proliferation, not liver; damping vs rewiring not separable in bulk (A212) | A (where replicated) |
 | Proliferation per se does not swamp a clock | Regenerating liver -0.027 (MDE 0.064, A211); no recovery on arrest (A168 -0.010, MDE 0.196; A196) | Moderate rises not excluded | B |
