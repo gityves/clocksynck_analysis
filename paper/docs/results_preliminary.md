@@ -10467,9 +10467,9 @@ Phase-free class loudness (each class's own state), A403b statistics, 200 matche
 same rows.
 | class | patients (cohorts) | slope (90 %) | p | matched median / q05 | responsive q05 | negative cancers | I^2 |
 |---|---|---|---|---|---|---|---|
-| fibroblast | 407 (34) | -0.099 (-0.205 to 0.013) | 0.057 | -0.040 / -0.124 | -0.158 | 8 of 11 | 0.00 |
-| endothelium | 427 (36) | -0.107 (-0.188 to 0.003) | 0.035 | -0.011 / -0.093 | -0.083 | 8 of 12 | 0.32 |
-| mural | 183 (18) | -0.126 (-0.265 to 0.050) | 0.11 | -0.020 / -0.143 | -0.142 | 7 of 9 | 0.00 |
+| fibroblast | 407 (34) | -0.099 (-0.205 to 0.013) | 0.057 | -0.040 / -0.124 | -0.158 | 7 of 11 | 0.00 |
+| endothelium | 427 (36) | -0.107 (-0.188 to 0.003) | 0.035 | -0.011 / -0.093 | -0.083 | 9 of 12 | 0.32 |
+| mural | 183 (18) | -0.126 (-0.265 to 0.050) | 0.11 | -0.020 / -0.143 | -0.142 | 6 of 9 | 0.00 |
 - **K2 (composite, phase-free):** -0.126 (p 0.006) -> -0.113 (-0.184 to 0.046, p 0.016) with log fibroblast / endothelial
   cells, log stromal cells and the immune-contamination score of the stroma added. The contamination score correlates with
   immune-hot (within-cohort r 0.35) but does not carry the slope; the class ratio barely relates to immune-hot (r -0.08).
